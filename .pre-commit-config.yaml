@@ -1,0 +1,30 @@
+fail_fast: true
+default_stages: [commit]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+    - id: check-added-large-files
+    - id: check-merge-conflict
+    - id: check-ast
+    - id: check-json
+    - id: check-toml
+    - id: check-xml
+    - id: check-yaml
+  - repo: local
+    hooks:
+    - id: isort
+      name: Running isort on python files
+      language: system
+      entry: pipenv run isort
+      types: [python]
+    - id: black
+      name: Running black on python files
+      language: system
+      entry: pipenv run black
+      types: [python]
+    - id: flake8
+      name: Running flake8 on python files
+      language: system
+      entry: pipenv run flake8
+      types: [python]
