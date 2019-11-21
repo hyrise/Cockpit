@@ -7,10 +7,12 @@ repos:
     - id: check-added-large-files
     - id: check-merge-conflict
     - id: check-ast
+    - id: debug-statements
     - id: check-json
     - id: check-toml
     - id: check-xml
     - id: check-yaml
+    - id: pretty-format-json
   - repo: local
     hooks:
     - id: isort
