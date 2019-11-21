@@ -9,7 +9,7 @@ This can be done with the following commands if you're on macOS.
 brew install pipenv pyenv
 ```
 
-If you're on Linux, please refer to the installation guides of [`pipenv`](https://github.com/pypa/pipenv#installation) and [`pyenv`](https://github.com/pyenv/pyenv#installation).
+If you're on a different operating system, please refer to the installation guides of [`pipenv`](https://github.com/pypa/pipenv#installation) and [`pyenv`](https://github.com/pyenv/pyenv#installation).
 
 ```bash
 pyenv install 3.6.8
