@@ -4,19 +4,22 @@ from redis import Redis
 from rq import Queue
 
 from tasks.instanceManager import getStorageDataTask
-from tasks.loadGenerator import executeRawQueryTask
+from tasks.loadGenerator import executeRawQueryTask, executeRawWorkloadTask
 
 
 class hyriseInterface(object):
-    def __init__(self, instanceManager, loadGenerator):
-        self.instanceManager = instanceManager
-        self.loadGenerator = loadGenerator
+    def __init__(self):
+        self.instanceManager = instanceManager()
+        self.loadGenerator = loadGenerator()
 
     def getStorageData(self):
         return self.instanceManager.getStorageData()
 
     def executeRawQuery(self, query):
         return self.loadGenerator.executeRawQuery(query)
+
+    def executeRawWorkload(self, workload):
+        return self.loadGenerator.executeRawWorkload(workload)
 
 
 class QueueUser(object):
@@ -42,9 +45,10 @@ class loadGenerator(QueueUser):
     def executeRawQuery(self, query):
         return self.queue.enqueue(executeRawQueryTask, query)
 
+    def executeRawWorkload(self, workload):
+        return self.queue.enqueue(executeRawWorkloadTask, workload)
+
 
 if __name__ == "__main__":
-    im = instanceManager()
-    im.getStorageData()
-    lg = loadGenerator()
-    lg.executeRawQuery()
+    hi = hyriseInterface()
+    hi.start()
