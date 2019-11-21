@@ -1,6 +1,6 @@
 # Hyrise Cockpit
 
-## Installation
+## Setup
 
 You may need to install [`pipenv`](https://github.com/pypa/pipenv#installation), and a different python version (e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 This can be done with the following commands if you're on macOS.
@@ -52,10 +52,12 @@ This will trigger all configured pre-commit hooks, most notably:
 
 - Python utility [`isort`](https://github.com/timothycrosley/isort), to sort imports alphabetically, and automatically separated into sections.
 - Python code formatter [`black`](https://github.com/psf/black).
-  Blackened code looks the same regardless of the project you're reading. Formatting becomes transparent after a while and you can focus on the content instead.
+  Blackened code looks the same regardless of the project you're reading.
+  Formatting becomes transparent after a while and you can focus on the content instead.
 - Python utility [`flake8`](https://github.com/PyCQA/flake8).
 
 If some hooks fail, you will not be able to commit.
 You may bypass this by using the `git commit --no-verify`, but it's a good practice to avoid bypassing it.
-Instead, add the edits made by e.g. `isort` or `black` to the staging area, and commit with the pre-commit hooks passing. Some hooks, however, require you to change files manually, e.g. `flake8` warning you of an unused variable.
+Instead, add the edits made by e.g. `isort` or `black` to the staging area, and commit with the pre-commit hooks passing.
+Some hooks, however, require you to change files manually, e.g. `flake8` warning you of an unused variable.
 
