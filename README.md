@@ -1,6 +1,6 @@
 # Hyrise Cockpit
 
-## Installation
+## Setup
 
 You may need to install [`pipenv`](https://github.com/pypa/pipenv#installation), and a different python version (e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 This can be done with the following commands if you're on macOS.
