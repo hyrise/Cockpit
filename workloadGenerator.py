@@ -10,8 +10,26 @@ class WorkloadProducer(mp.Process):
     def generate_workload(self, n_queries=1):
         return random.choices(
             [
-                "SELECT l_returnflag, l_linestatus, SUM(l_quantity) as sum_qty, SUM(l_extendedprice) as sum_base_price, SUM(l_extendedprice*(1.0-l_discount)) as sum_disc_price, SUM(l_extendedprice*(1.0-l_discount)*(1.0+l_tax)) as sum_charge, AVG(l_quantity) as avg_qty, AVG(l_extendedprice) as avg_price, AVG(l_discount) as avg_disc, COUNT(*) as count_order FROM lineitem WHERE l_shipdate <= '1998-12-01' GROUP BY l_returnflag, l_linestatus ORDER BY l_returnflag, l_linestatus;",
-                "SELECT sum(l_extendedprice*l_discount) AS REVENUE FROM lineitem WHERE l_shipdate >= '1994-01-01' AND l_shipdate < '1995-01-01' AND l_discount BETWEEN .05 AND .07 AND l_quantity < 24;",
+                """SELECT
+            l_returnflag,
+            l_linestatus,
+            SUM(l_quantity) as sum_qty,
+            SUM(l_extendedprice) as sum_base_price,
+            SUM(l_extendedprice*(1.0-l_discount)) as sum_disc_price,
+            SUM(l_extendedprice*(1.0-l_discount)*(1.0+l_tax)) as sum_charge,
+            AVG(l_quantity) as avg_qty, AVG(l_extendedprice) as avg_price,
+            AVG(l_discount) as avg_disc, COUNT(*) as count_order
+            FROM lineitem
+            WHERE l_shipdate <= '1998-12-01'
+            GROUP BY l_returnflag, l_linestatus
+            ORDER BY l_returnflag, l_linestatus;""",
+                """SELECT
+            sum(l_extendedprice*l_discount) AS REVENUE
+            FROM lineitem
+            WHERE l_shipdate >= '1994-01-01'
+                AND l_shipdate < '1995-01-01'
+                AND l_discount BETWEEN .05
+                AND .07 AND l_quantity < 24;""",
                 f"SELECT * FROM nation WHERE n_nationkey = {random.randint(0, 24)};",
             ],
             weights=[1, 1, 100],

@@ -43,10 +43,12 @@ class instanceManager(QueueUser):
 
 class loadGenerator(QueueUser):
     def executeRawQuery(self, query):
-        return self.queue.enqueue(executeRawQueryTask, query)
+        job = self.queue.enqueue(executeRawQueryTask, query)
+        return self.busyWait(job)
 
     def executeRawWorkload(self, workload):
-        return self.queue.enqueue(executeRawWorkloadTask, workload)
+        job = self.queue.enqueue(executeRawWorkloadTask, workload)
+        return self.busyWait(job)
 
 
 if __name__ == "__main__":
