@@ -1,6 +1,7 @@
 import pandas as pd
-import psycopg2
 from rq.worker import Worker
+
+import psycopg2
 
 DATABASE_HOST = ""
 DATABASE_PORT = 0
@@ -25,12 +26,12 @@ class MyWorker(Worker):
         return super().work(*args, **kwargs)
 
 
-def getConnection():
+def get_connection():
     return connection_pool[0]
 
 
-def getStorageDataTask():
-    conn = getConnection()
+def get_storage_data_task():
+    conn = get_connection()
     meta_segments = pd.io.sql.read_sql_query("SELECT * FROM meta_segments;", conn)
     meta_segments.set_index(
         ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True

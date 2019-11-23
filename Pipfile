@@ -8,6 +8,8 @@ pre-commit = "*"
 black = "*"
 flake8 = "*"
 isort = "*"
+pep8-naming = "*"
+rope = "*"
 
 [packages]
 pandas = "*"
