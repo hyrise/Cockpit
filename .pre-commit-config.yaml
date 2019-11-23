@@ -30,9 +30,15 @@ repos:
       types: [python]
     - id: flake8
       name: Running flake8 on python files
-      description: '`flake8` is a command-line utility for enforcing style consistency across Python projects.'
+      description: 'flake8 is a command-line utility for enforcing style consistency across Python projects.'
       language: system
       entry: pipenv run flake8
+      types: [python]
+    - id: pydocstyle
+      name: Running pydocstyle on python files
+      description: 'pydocstyle is a static analysis tool for checking compliance with Python docstring conventions.'
+      entry: pipenv run pydocstyle
+      language: system
       types: [python]
     - id: bandit
       name: Running bandit on python files
