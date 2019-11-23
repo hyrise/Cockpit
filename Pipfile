@@ -12,6 +12,7 @@ isort = "*"
 [packages]
 pandas = "*"
 rq = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.6.8"
