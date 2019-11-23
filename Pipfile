@@ -17,6 +17,7 @@ pandas = "*"
 rq = "*"
 psycopg2 = "*"
 pyzmq = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.6.8"
