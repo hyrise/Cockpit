@@ -3,8 +3,11 @@ from time import sleep
 from redis import Redis
 from rq import Queue
 
-from tasks.instanceManager import get_storage_data_task
-from tasks.loadGenerator import execute_raw_query_task, execute_raw_workload_task
+from loadGenerator import (
+    execute_raw_query_task,
+    execute_raw_workload_task,
+    get_storage_data_task,
+)
 
 
 class HyriseInterface(object):
