@@ -48,34 +48,34 @@ class WorkloadGenerator(object):
         self.producers = []
 
     def start(self, producers=1):
-        [self.addProducer() for i in range(producers)]
+        [self.add_producer() for i in range(producers)]
 
     def stop(self):
-        [self.popProducer() for i in range(len(self.producers))]
+        [self.pop_producer() for i in range(len(self.producers))]
 
-    def addProducer(self):
+    def add_producer(self):
         p = WorkloadProducer(f"WorkloadProducer {len(self.producers)}")
         self.producers.append(p)
         p.start()
 
-    def popProducer(self):
+    def pop_producer(self):
         if self.producers:
             p = self.producers.pop()
             p.terminate()
             p.join()
 
-    def setProducers(self, number):
+    def set_producers(self, number):
         delta = number - len(self.producers)
         if delta < 0:
-            f = self.addProducer
+            f = self.add_producer
         elif delta > 0:
-            f = self.popProducer
+            f = self.pop_producer
         else:
             return
         [f() for _ in range(delta)]
-        return self.getProducers()
+        return self.get_producers()
 
-    def getProducers(self):
+    def get_producers(self):
         return len(self.producers)
 
 

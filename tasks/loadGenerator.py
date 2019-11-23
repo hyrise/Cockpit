@@ -1,7 +1,8 @@
 import time
 
-import psycopg2
 from rq.worker import Worker
+
+import psycopg2
 
 DATABASE_HOST = ""
 DATABASE_PORT = 0
@@ -26,19 +27,19 @@ class LoadWorker(Worker):
         return super().work(*args, **kwargs)
 
 
-def getConnection():
+def get_connection():
     return connection_pool[0]
 
 
-def executeRawQueryTask(query):
-    conn = getConnection()
+def execute_raw_query_task(query):
+    conn = get_connection()
     cur = conn.cursor()
     start = time.time()
     cur.execute(query)
     return time.time() - start
 
 
-def executeRawWorkloadTask(workload):
+def execute_raw_workload_task(workload):
     for query in workload:
         pass
         # cur.execute(query)

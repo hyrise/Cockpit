@@ -3,30 +3,30 @@ from time import sleep
 from redis import Redis
 from rq import Queue
 
-from tasks.instanceManager import getStorageDataTask
-from tasks.loadGenerator import executeRawQueryTask, executeRawWorkloadTask
+from tasks.instanceManager import get_storage_data_task
+from tasks.loadGenerator import execute_raw_query_task, execute_raw_workload_task
 
 
-class hyriseInterface(object):
+class HyriseInterface(object):
     def __init__(self):
-        self.instanceManager = instanceManager()
-        self.loadGenerator = loadGenerator()
+        self.instanceManager = InstanceManager()
+        self.loadGenerator = LoadGenerator()
 
-    def getStorageData(self):
-        return self.instanceManager.getStorageData()
+    def get_storage_data(self):
+        return self.instanceManager.get_storage_data()
 
-    def executeRawQuery(self, query):
-        return self.loadGenerator.executeRawQuery(query)
+    def execute_raw_query(self, query):
+        return self.loadGenerator.execute_raw_query(query)
 
-    def executeRawWorkload(self, workload):
-        return self.loadGenerator.executeRawWorkload(workload)
+    def execute_raw_workload(self, workload):
+        return self.loadGenerator.execute_raw_workload(workload)
 
 
 class QueueUser(object):
     def __init__(self):
         self.queue = Queue(connection=Redis())
 
-    def busyWait(self, job):
+    def busy_wait(self, job):
         # TODO use notify on finished instead
         while True:
             if job.get_status() == "finished":
@@ -35,22 +35,22 @@ class QueueUser(object):
             sleep(0.05)
 
 
-class instanceManager(QueueUser):
-    def getStorageData(self):
-        job = self.queue.enqueue(getStorageDataTask)
-        return self.busyWait(job)
+class InstanceManager(QueueUser):
+    def get_storage_data(self):
+        job = self.queue.enqueue(get_storage_data_task)
+        return self.busy_wait(job)
 
 
-class loadGenerator(QueueUser):
-    def executeRawQuery(self, query):
-        job = self.queue.enqueue(executeRawQueryTask, query)
-        return self.busyWait(job)
+class LoadGenerator(QueueUser):
+    def execute_raw_query(self, query):
+        job = self.queue.enqueue(execute_raw_query_task, query)
+        return self.busy_wait(job)
 
-    def executeRawWorkload(self, workload):
-        job = self.queue.enqueue(executeRawWorkloadTask, workload)
-        return self.busyWait(job)
+    def execute_raw_workload(self, workload):
+        job = self.queue.enqueue(execute_raw_workload_task, workload)
+        return self.busy_wait(job)
 
 
 if __name__ == "__main__":
-    hi = hyriseInterface()
+    hi = HyriseInterface()
     hi.start()
