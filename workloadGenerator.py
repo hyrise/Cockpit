@@ -1,11 +1,17 @@
+import json
 import multiprocessing as mp
 import random
 from time import sleep
+
+import zmq
 
 
 class WorkloadProducer(mp.Process):
     def __init__(self, name):
         super().__init__(name=name, daemon=True)
+        self.context = zmq.Context()
+        self.socket = self.context.socket(zmq.REQ)
+        self.socket.connect("tcp://localhost:5555")
 
     def generate_workload(self, n_queries=1):
         return random.choices(
@@ -37,6 +43,12 @@ class WorkloadProducer(mp.Process):
         )
 
     def run(self):
+        workload = self.generate_workload()
+        data = {}
+        data["Content-Type"] = "Workload"
+        data["Content"] = workload
+        request = json.dumps(data)
+        self.socket.send_string(request)
         # workload = self.generate_workload()
         # TODO send an IPC message to the Hyrise Interface with the workload
         # e.g. "ipc-call 'executeRawQuery' workload"
