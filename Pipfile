@@ -12,6 +12,7 @@ pep8-naming = "*"
 rope = "*"
 bandit = "*"
 pydocstyle = "*"
+flake8-bugbear = "*"
 
 [packages]
 pandas = "*"

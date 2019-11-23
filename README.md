@@ -54,7 +54,7 @@ This will trigger all configured pre-commit hooks, most notably:
 - Python code formatter [`black`](https://github.com/psf/black).
   Blackened code looks the same regardless of the project you're reading.
   Formatting becomes transparent after a while and you can focus on the content instead.
-- Python utility [`flake8`](https://github.com/PyCQA/flake8).
+- Python utility [`flake8`](https://github.com/PyCQA/flake8), with plugins [`pep8-naming`](https://github.com/PyCQA/pep8-naming) and [`flake8-bugbear`](https://github.com/PyCQA/flake8-bugbear).
 - Python utility [`pydocstyle`](https://github.com/PyCQA/pydocstyle), a static analysis tool for checking compliance with Python docstring conventions.
 - Python utility [`bandit`](https://github.com/PyCQA/bandit), a tool designed to find common security issues in Python code.
 
