@@ -1,8 +1,10 @@
+import json
 from time import sleep
 
 from redis import Redis
 from rq import Queue
 
+import zmq
 from loadGenerator import (
     execute_raw_query_task,
     execute_raw_workload_task,
@@ -55,5 +57,23 @@ class LoadGenerator(QueueUser):
 
 
 if __name__ == "__main__":
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://*:5555")
     hi = HyriseInterface()
-    hi.start()
+
+    while True:
+        message = socket.recv()
+        data = json.loads(message)
+        response = ""
+        if data["Content-Type"] == "query":
+            hi.executeRawQuery(data["Content"])
+            response = "OK"
+        elif data["Content-Type"] == "StorageData":
+            response = str(hi.getStorageData())
+        elif data["Content-Type"] == "Workload":
+            hi.executeRawWorkload(data["Content"])
+        else:
+            response = "Error"
+
+        socket.send_string(response)
