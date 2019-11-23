@@ -1,10 +1,10 @@
 import json
 from time import sleep
 
+import zmq
 from redis import Redis
 from rq import Queue
 
-import zmq
 from tasks import (
     execute_raw_query_task,
     execute_raw_workload_task,
@@ -69,11 +69,18 @@ if __name__ == "__main__":
         if data["Content-Type"] == "query":
             hi.execute_raw_query(data["Content"])
             response = "OK"
-        elif data["Content-Type"] == "StorageData":
-            response = str(hi.get_storage_data())
-        elif data["Content-Type"] == "Workload":
+        elif data["Content-Type"] == "workload":
             hi.execute_raw_workload(data["Content"])
+            response = "OK"
+        elif data["Content-Type"] == "storage_data":
+            response = str(hi.get_storage_data())
+        elif data["Content-Type"] == "throughput":
+            response = "[NOT IMPLEMENTED YET]"
+            pass
+        elif data["Content-Type"] == "runtime_information":
+            response = "[NOT IMPLEMENTED YET]"
+            pass
         else:
-            response = "Error"
+            response = "[Error]"
 
         socket.send_string(response)

@@ -20,6 +20,9 @@ rq = "*"
 psycopg2 = "*"
 pyzmq = "*"
 python-dotenv = "*"
+redis = "*"
+flask = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.6.8"
