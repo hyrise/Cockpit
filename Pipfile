@@ -10,6 +10,7 @@ flake8 = "*"
 isort = "*"
 pep8-naming = "*"
 rope = "*"
+bandit = "*"
 
 [packages]
 pandas = "*"

@@ -18,22 +18,25 @@ repos:
     hooks:
     - id: isort
       name: Running isort on python files
+      description: 'isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.'
       language: system
       entry: pipenv run isort
       types: [python]
     - id: black
       name: Running black on python files
+      description: 'Black: The uncompromising Python code formatter'
       language: system
       entry: pipenv run black
       types: [python]
     - id: flake8
       name: Running flake8 on python files
+      description: '`flake8` is a command-line utility for enforcing style consistency across Python projects.'
       language: system
       entry: pipenv run flake8
       types: [python]
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.6.2
-    hooks:
     - id: bandit
       name: Running bandit on python files
       description: 'Bandit is a tool for finding common security issues in Python code'
+      language: system
+      entry: pipenv run bandit
+      types: [python]
