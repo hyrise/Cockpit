@@ -55,6 +55,7 @@ This will trigger all configured pre-commit hooks, most notably:
   Blackened code looks the same regardless of the project you're reading.
   Formatting becomes transparent after a while and you can focus on the content instead.
 - Python utility [`flake8`](https://github.com/PyCQA/flake8).
+- Python utility [`bandit`](https://github.com/PyCQA/bandit), a tool designed to find common security issues in Python code.
 
 If some hooks fail, you will not be able to commit.
 You may bypass this by using the `git commit --no-verify`, but it's a good practice to avoid bypassing it.
