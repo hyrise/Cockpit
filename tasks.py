@@ -1,8 +1,9 @@
 import time
 
 import pandas as pd
-import psycopg2
 from rq.worker import Worker
+
+import psycopg2
 
 DATABASE_HOST = ""
 DATABASE_PORT = 0
@@ -24,10 +25,12 @@ class HyriseWorker(Worker):
         )
         connection.set_session(autocommit=True)
         connection_pool.append(connection)
+        # print(f"Connection poll filled: {id(connection_pool)}")
         return super().work(*args, **kwargs)
 
 
 def get_connection():
+    # print(f"Connection poll accessed: {id(connection_pool[0])}")
     return connection_pool[0]
 
 
