@@ -4,6 +4,7 @@ import random
 from time import sleep
 
 import zmq
+from psycopg2 import mogrify
 
 
 class WorkloadProducer(mp.Process):
@@ -36,7 +37,10 @@ class WorkloadProducer(mp.Process):
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
                 AND .07 AND l_quantity < 24;""",
-                f"SELECT * FROM nation WHERE n_nationkey = {random.randint(0, 24)};",
+                mogrify(
+                    "SELECT * FROM nation WHERE n_nationkey = %s",
+                    random.randint(0, 24),  # nosec
+                ),
             ],
             weights=[1, 1, 100],
             k=n_queries,
