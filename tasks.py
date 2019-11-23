@@ -55,7 +55,7 @@ def get_storage_data_task():
     return result.to_dict()
 
 
-def executeRawQueryTask(query):
+def execute_raw_query_task(query):
     conn = get_connection()
     cur = conn.cursor()
     start = time.time()
@@ -63,7 +63,7 @@ def executeRawQueryTask(query):
     return time.time() - start
 
 
-def executeRawWorkloadTask(workload):
+def execute_raw_workload_task(workload):
     for query in workload:
         pass
         # cur.execute(query)

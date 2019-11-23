@@ -1,7 +1,6 @@
 import pandas as pd
-from rq.worker import Worker
-
 import psycopg2
+from rq.worker import Worker
 
 DATABASE_HOST = ""
 DATABASE_PORT = 0
