@@ -31,3 +31,9 @@ repos:
       language: system
       entry: pipenv run flake8
       types: [python]
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.6.2
+    hooks:
+    - id: bandit
+      name: Running bandit on python files
+      description: 'Bandit is a tool for finding common security issues in Python code'
