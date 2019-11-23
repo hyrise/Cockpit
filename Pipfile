@@ -15,6 +15,7 @@ rope = "*"
 pandas = "*"
 rq = "*"
 psycopg2 = "*"
+pyzmq = "*"
 
 [requires]
 python_version = "3.6.8"
