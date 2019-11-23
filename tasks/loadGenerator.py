@@ -41,9 +41,7 @@ def execute_raw_query_task(query):
 
 
 def execute_raw_workload_task(workload):
-    for query in workload:
-        pass
-        # cur.execute(query)
-
+    pass
+    # for query in workload:
+    #     cur.execute(query)
     # TODO measure throughput
-    return 1
