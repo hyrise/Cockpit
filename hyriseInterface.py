@@ -1,11 +1,11 @@
 import json
 from time import sleep
 
-import zmq
 from redis import Redis
 from rq import Queue
 
-from loadGenerator import (
+import zmq
+from tasks import (
     execute_raw_query_task,
     execute_raw_workload_task,
     get_storage_data_task,
@@ -48,12 +48,12 @@ class InstanceManager(QueueUser):
 
 class LoadGenerator(QueueUser):
     def execute_raw_query(self, query):
-        job = self.queue.enqueue(execute_raw_query_task, query)
-        return self.busy_wait(job)
+        return self.queue.enqueue(execute_raw_query_task, query)
+        # return self.busy_wait(job)
 
     def execute_raw_workload(self, workload):
-        job = self.queue.enqueue(execute_raw_workload_task, workload)
-        return self.busy_wait(job)
+        return self.queue.enqueue(execute_raw_workload_task, workload)
+        # return self.busy_wait(job)
 
 
 if __name__ == "__main__":
@@ -67,12 +67,12 @@ if __name__ == "__main__":
         data = json.loads(message)
         response = ""
         if data["Content-Type"] == "query":
-            hi.executeRawQuery(data["Content"])
+            hi.execute_raw_query(data["Content"])
             response = "OK"
         elif data["Content-Type"] == "StorageData":
-            response = str(hi.getStorageData())
+            response = str(hi.get_storage_data())
         elif data["Content-Type"] == "Workload":
-            hi.executeRawWorkload(data["Content"])
+            hi.execute_raw_workload(data["Content"])
         else:
             response = "Error"
 
