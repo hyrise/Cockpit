@@ -1,10 +1,10 @@
 import json
 from time import sleep
 
+import zmq
 from redis import Redis
 from rq import Queue
 
-import zmq
 from loadGenerator import (
     execute_raw_query_task,
     execute_raw_workload_task,
