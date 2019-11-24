@@ -58,12 +58,26 @@ This will trigger all configured pre-commit hooks, most notably:
 - Python utility [`pydocstyle`](https://github.com/PyCQA/pydocstyle), a static analysis tool for checking compliance with Python docstring conventions.
 - Python utility [`bandit`](https://github.com/PyCQA/bandit), a tool designed to find common security issues in Python code.
 
+##### Failing hooks
+
 If some hooks fail, you will not be able to commit.
 You may bypass this by using the `git commit --no-verify`, but it's a good practice to avoid bypassing it.
 Instead, add the edits made by e.g. `isort` or `black` to the staging area, and commit with the pre-commit hooks passing.
 Some hooks, however, require you to change files manually, e.g. `flake8` warning you of an unused variable.
 
-You can run the pre-commit hooks on all files by running:
+##### Running a specific hook
+
+You can run a single hook by running:
+
+```bash
+pipenv run pre-commit hook-id
+```
+
+The id of the hook can be found in the [`.pre-commit-confing.yaml`](.pre-commit-config.yaml) file.
+
+##### Running hooks on all files
+
+You can run all the pre-commit hooks on all files by running:
 
 ```bash
 pipenv run pre-commit run --all-files
