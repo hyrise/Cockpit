@@ -1,3 +1,8 @@
+"""Module for executing tasks of a Queue.
+
+Includes a LoadWorker with a connection to a Hyrise DB.
+Includes different tasks ready to be executed.
+"""
 import time
 
 import psycopg2
@@ -15,7 +20,10 @@ connection_pool = []
 
 
 class LoadWorker(Worker):
+    """A worker establishing a connection before accepting tasks."""
+
     def work(self, *args, **kwargs):
+        """Establish a connection before accepting tasks."""
         connection = psycopg2.connect(
             dbname=DATABASE_NAME,
             user=DATABASE_USER,
@@ -29,10 +37,12 @@ class LoadWorker(Worker):
 
 
 def get_connection():
+    """Return the first connection of the pool."""
     return connection_pool[0]
 
 
 def execute_raw_query_task(query):
+    """Execute a SQL query, return the time it took."""
     conn = get_connection()
     cur = conn.cursor()
     start = time.time()
@@ -41,6 +51,7 @@ def execute_raw_query_task(query):
 
 
 def execute_raw_workload_task(workload):
+    """Execute a list of SQL queries, return the avg. time it took."""
     pass
     # for query in workload:
     #     cur.execute(query)

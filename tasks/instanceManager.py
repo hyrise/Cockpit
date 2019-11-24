@@ -1,3 +1,8 @@
+"""Module for executing tasks of a Queue.
+
+Includes a MyWorker with a connection to a Hyrise DB.
+Includes different tasks ready to be executed.
+"""
 import pandas as pd
 import psycopg2
 from rq.worker import Worker
@@ -14,7 +19,10 @@ connection_pool = []
 
 
 class MyWorker(Worker):
+    """A worker establishing a connection before accepting tasks."""
+
     def work(self, *args, **kwargs):
+        """Establish a connection before accepting tasks."""
         connection = psycopg2.connect(
             dbname=DATABASE_NAME,
             user=DATABASE_USER,
@@ -28,10 +36,12 @@ class MyWorker(Worker):
 
 
 def get_connection():
+    """Return the first connection of the pool."""
     return connection_pool[0]
 
 
 def get_storage_data_task():
+    """Return the storage metadata of a Hyrise DB."""
     conn = get_connection()
     meta_segments = pd.io.sql.read_sql_query("SELECT * FROM meta_segments;", conn)
     meta_segments.set_index(

@@ -1,3 +1,9 @@
+"""Module for executing tasks of a Queue.
+
+Includes a HyriseWorker with a connection to a Hyrise DB.
+Includes different tasks ready to be executed.
+"""
+
 import time
 
 import pandas as pd
@@ -16,7 +22,10 @@ connection_pool = []
 
 
 class HyriseWorker(Worker):
+    """A worker establishing a connection before accepting tasks."""
+
     def work(self, *args, **kwargs):
+        """Establish a connection before accepting tasks."""
         connection = psycopg2.connect(
             dbname=DATABASE_NAME,
             user=DATABASE_USER,
@@ -31,11 +40,13 @@ class HyriseWorker(Worker):
 
 
 def get_connection():
+    """Return the first connection of the pool."""
     # print(f"Connection poll accessed: {id(connection_pool[0])}")
     return connection_pool[0]
 
 
 def get_storage_data_task():
+    """Return the storage metadata of a Hyrise DB."""
     conn = get_connection()
     meta_segments = pd.io.sql.read_sql_query("SELECT * FROM meta_segments;", conn)
     meta_segments.set_index(
@@ -60,6 +71,7 @@ def get_storage_data_task():
 
 
 def execute_raw_query_task(query):
+    """Execute a SQL query, return the time it took."""
     conn = get_connection()
     cur = conn.cursor()
     start = time.time()
@@ -68,6 +80,7 @@ def execute_raw_query_task(query):
 
 
 def execute_raw_workload_task(workload):
+    """Execute a list of SQL queries, return the avg. time it took."""
     pass
     # for query in workload:
     #     cur.execute(query)

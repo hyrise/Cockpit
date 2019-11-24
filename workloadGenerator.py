@@ -1,3 +1,9 @@
+"""Module for generating workloads.
+
+Includes the main WorkloadGenerator, which uses multiple WorkloadProducers.
+The WorkloadGenerator manages the WorkloadProducers.
+The WorkloadProducers have IPC connections to a database interface.
+"""
 import json
 import multiprocessing as mp
 import random
@@ -8,13 +14,21 @@ from psycopg2 import mogrify
 
 
 class WorkloadProducer(mp.Process):
+    """A process responsible for generating and submitting workloads.
+
+    Workload generating logic is internal.
+    Workloads are submitted directly to a database interface with IPC.
+    """
+
     def __init__(self, name):
-        super().__init__(name=name, daemon=True)
+        """Initialize a WorkloadProducer with an IPC connection."""
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REQ)
         self.socket.connect("tcp://localhost:5555")
+        super().__init__(name=name, daemon=True)
 
     def generate_workload(self, n_queries=1):
+        """Return a list of queries forming a workload."""
         return random.choices(
             [
                 """SELECT
@@ -47,40 +61,49 @@ class WorkloadProducer(mp.Process):
         )
 
     def run(self):
+        """Generate a workload and submit it with IPC."""
         workload = self.generate_workload()
         data = {}
         data["Content-Type"] = "Workload"
         data["Content"] = workload
         request = json.dumps(data)
         self.socket.send_string(request)
-        # workload = self.generate_workload()
-        # TODO send an IPC message to the Hyrise Interface with the workload
-        # e.g. "ipc-call 'executeRawQuery' workload"
-        pass
 
 
 class WorkloadGenerator(object):
+    """A manager for multiple WorkloadProducers.
+
+    Producers may be added or popped sequentially, or set to a specific number.
+    The WorkloadGenerator may be started or stopped.
+    """
+
     def __init__(self):
+        """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
         self.producers = []
 
-    def start(self, producers=1):
-        [self.add_producer() for i in range(producers)]
+    def start(self, n_producers=1):
+        """Start generating workloads with n_producers."""
+        [self.add_producer() for i in range(n_producers)]
 
     def stop(self):
+        """Stop generating workloads and kill all WorkloadProducers."""
         [self.pop_producer() for i in range(len(self.producers))]
 
     def add_producer(self):
+        """Increase the number of WorkloadProducers by one."""
         p = WorkloadProducer(f"WorkloadProducer {len(self.producers)}")
         self.producers.append(p)
         p.start()
 
     def pop_producer(self):
+        """Decrease the number of WorkloadProducers by one."""
         if self.producers:
             p = self.producers.pop()
             p.terminate()
             p.join()
 
     def set_producers(self, number):
+        """Set the number of WorkloadProducers."""
         delta = number - len(self.producers)
         if delta < 0:
             f = self.add_producer
@@ -92,10 +115,12 @@ class WorkloadGenerator(object):
         return self.get_producers()
 
     def get_producers(self):
+        """Return the number of WorkloadProducers."""
         return len(self.producers)
 
 
 def main():
+    """Run a WorkloadGenerator demonstration."""
     gen = WorkloadGenerator()
     gen.start(1)
     sleep(5)
