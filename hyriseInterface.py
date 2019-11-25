@@ -85,6 +85,7 @@ def main():
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5555")
     hi = HyriseInterface()
+    print("Hyrise Interface running. Press Ctrl+C to stop.")
 
     while True:
         message = socket.recv()

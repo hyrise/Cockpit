@@ -6,7 +6,6 @@ If run as a module, a flask server application will be started.
 from json import dumps
 
 import zmq
-
 from flask import Flask
 from flask_cors import CORS
 
