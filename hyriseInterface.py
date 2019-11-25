@@ -44,7 +44,7 @@ class HyriseInterface(object):
                 self.execute_raw_workload(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
-                response = str(self.get_storage_data())
+                response = self.get_storage_data()
             elif data["Content-Type"] == "throughput":
                 response = "[NOT IMPLEMENTED YET]"
                 pass
@@ -81,7 +81,7 @@ class QueueUser(object):
         # TODO use notify on finished instead
         while True:
             if job.get_status() == "finished":
-                print(job.result)
+                # print(job.result)
                 return job.result
             sleep(0.05)
 

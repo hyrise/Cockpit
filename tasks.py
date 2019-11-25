@@ -4,6 +4,7 @@ Includes a HyriseWorker with a connection to a Hyrise DB.
 Includes different tasks ready to be executed.
 """
 
+import json
 import time
 
 import pandas as pd
@@ -61,13 +62,34 @@ def get_storage_data_task():
     encoding = pd.DataFrame(
         meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
     )
+    encoding["encoding"] = encoding["encoding"].apply(list)
+
     datatype = meta_segments.reset_index().set_index(["table", "column_name"])[
         ["column_data_type"]
     ]
-
     result = size.join(encoding).join(datatype)
 
-    return result.to_dict()
+    return create_storage_data_json(result)
+
+
+def create_storage_data_json(table):
+    """Create JSON string from storage data table."""
+    output = {}
+    grouped = table.reset_index().groupby("table")
+    for column in grouped.groups:
+        output[column] = {"size": 0, "number_columns": 0, "data": {}}
+        for _index, row in grouped.get_group(column).iterrows():
+            output[column]["number_columns"] = output[column]["number_columns"] + 1
+            output[column]["size"] = (
+                output[column]["size"] + row["estimated_size_in_bytes"]
+            )
+            output[column]["data"][row["column_name"]] = {
+                "size": row["estimated_size_in_bytes"],
+                "data_type": row["column_data_type"],
+                "encoding": row["encoding"],
+            }
+
+    return json.dumps(output)
 
 
 def execute_raw_query_task(query):
