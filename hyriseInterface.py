@@ -26,6 +26,36 @@ class HyriseInterface(object):
         self.instanceManager = InstanceManager()
         self.loadGenerator = LoadGenerator()
 
+    def start(self):
+        """Start with default values."""
+        context = zmq.Context()
+        socket = context.socket(zmq.REP)
+        socket.bind("tcp://*:5555")
+        print("Hyrise Interface running. Press Ctrl+C to stop.")
+
+        while True:
+            message = socket.recv()
+            data = loads(message)
+            response = ""
+            if data["Content-Type"] == "query":
+                self.execute_raw_query(data["Content"])
+                response = "OK"
+            elif data["Content-Type"] == "workload":
+                self.execute_raw_workload(data["Content"])
+                response = "OK"
+            elif data["Content-Type"] == "storage_data":
+                response = str(self.get_storage_data())
+            elif data["Content-Type"] == "throughput":
+                response = "[NOT IMPLEMENTED YET]"
+                pass
+            elif data["Content-Type"] == "runtime_information":
+                response = "[NOT IMPLEMENTED YET]"
+                pass
+            else:
+                response = "[Error]"
+
+            socket.send_string(response)
+
     def get_storage_data(self):
         """Get storage data from InstanceManager."""
         return self.instanceManager.get_storage_data()
@@ -80,35 +110,8 @@ class LoadGenerator(QueueUser):
 
 
 def main():
-    """Run the HyriseInterface."""
-    context = zmq.Context()
-    socket = context.socket(zmq.REP)
-    socket.bind("tcp://*:5555")
-    hi = HyriseInterface()
-    print("Hyrise Interface running. Press Ctrl+C to stop.")
-
-    while True:
-        message = socket.recv()
-        data = loads(message)
-        response = ""
-        if data["Content-Type"] == "query":
-            hi.execute_raw_query(data["Content"])
-            response = "OK"
-        elif data["Content-Type"] == "workload":
-            hi.execute_raw_workload(data["Content"])
-            response = "OK"
-        elif data["Content-Type"] == "storage_data":
-            response = str(hi.get_storage_data())
-        elif data["Content-Type"] == "throughput":
-            response = "[NOT IMPLEMENTED YET]"
-            pass
-        elif data["Content-Type"] == "runtime_information":
-            response = "[NOT IMPLEMENTED YET]"
-            pass
-        else:
-            response = "[Error]"
-
-        socket.send_string(response)
+    """Run a HyriseInterface."""
+    HyriseInterface().start()
 
 
 if __name__ == "__main__":
