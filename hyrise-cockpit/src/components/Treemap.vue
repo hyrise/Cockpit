@@ -4,17 +4,18 @@
 ></template>
 
 <script lang="ts">
-import Chart from "chart.js";
-import "chartjs-chart-treemap";
-import axios from "axios";
+import Chart from 'chart.js';
+import 'chartjs-chart-treemap';
+import axios from 'axios';
 import {
   createComponent,
   SetupContext,
   onMounted,
   watch,
   Ref,
-  ref
-} from "@vue/composition-api";
+  ref,
+} from '@vue/composition-api';
+import { useGeneratingTestData } from '../helpers/testData';
 
 interface Props {}
 
@@ -22,78 +23,72 @@ export default createComponent({
   setup(props: Props, context: SetupContext) {
     const treeMap = ref<Object>(null);
     const { treeData, getStorageData } = useStorageFetching();
-    const testData = [
-      {
-        table: "supplier",
-        column: "test",
-        size: 1000,
-        dataType: "int",
-        encoding: "test"
-      }
-    ];
+    const { generateStorageData } = useGeneratingTestData();
+    const testData = generateStorageData();
+
     function updateTreeMap() {
       //getStorageData();
       treeMap.value.update();
     }
 
     onMounted(() => {
-      const canvas: any = document.getElementById("treemap");
-      const map: any = canvas.getContext("2d");
+      const canvas: any = document.getElementById('treemap');
+      const map: any = canvas.getContext('2d');
       treeMap.value = new Chart(map, {
-        type: "treemap",
+        type: 'treemap',
         data: {
           datasets: [
             {
-              label: "Basic treemap",
+              label: 'Basic treemap',
               tree: testData, //treeData.value,
-              key: "size",
-              groups: ["table", "column"],
+              key: 'size',
+              groups: ['table', 'column'],
               spacing: 1,
               borderWidth: 1.5,
-              borderColor: "#f0ffff",
-              fontColor: "white",
-              fontFamily: "sans-serif",
+              borderColor: '#f0ffff',
+              fontColor: 'white',
+              fontFamily: 'sans-serif',
               fontSize: 16,
-              fontStyle: "normal",
-              hoverBackgroundColor: "#D3D3D3",
+              fontStyle: 'normal',
+              hoverBackgroundColor: '#D3D3D3',
               backgroundColor: function(map) {
                 const item = map.dataset.data[map.dataIndex];
                 if (item != undefined) {
                   switch (item.l) {
                     case 0:
                       switch (item.g) {
-                        case "lineitem":
-                          return "#1E90FF";
-                        case "orders":
-                          return "#FF7F24";
-                        case "partsupp":
-                          return "#32CD32";
-                        case "customer":
-                          return "#FF69B4";
-                        case "part":
-                          return "#FF4500";
-                        case "supplier":
-                          return "#FFFF00";
-                        case "nation":
-                          return "#9932CC";
-                        case "region":
-                          return "#8B4513";
+                        case 'lineitem':
+                          return '#0063c8';
+                        case 'orders':
+                          return '#0070e1';
+                        case 'partsupp':
+                          return '#007cfb';
+                        case 'customer':
+                          return '#1589ff';
+                        case 'part':
+                          return '#2f96ff';
+                        case 'supplier':
+                          return '#62b0ff';
+                        case 'nation':
+                          return '#76baff';
+                        case 'region':
+                          return '#afd6ff';
                       }
                   }
                 } else return null;
-              }
-            }
-          ]
+              },
+            },
+          ],
         },
         options: {
           maintainAspectRatio: true,
           title: {
             display: true,
-            text: "Hyrise Storage",
-            fontSize: 26
+            text: 'Hyrise Storage',
+            fontSize: 26,
           },
           legend: {
-            display: false
+            display: false,
           },
           tooltips: {
             titleFontSize: 16,
@@ -107,7 +102,7 @@ export default createComponent({
               label: function(item, data) {
                 const dataset = data.datasets[item.datasetIndex];
                 const dataItem = dataset.data[item.index];
-                return dataset.key + ": " + dataItem.v;
+                return dataset.key + ': ' + dataItem.v;
               },
               afterLabel: function(item, data) {
                 const dataset = data.datasets[item.datasetIndex];
@@ -116,25 +111,25 @@ export default createComponent({
                 switch (dataItem.l) {
                   case 1:
                     return (
-                      "encoding" +
-                      ": " +
+                      'encoding' +
+                      ': ' +
                       entry.encoding +
-                      "\n" +
-                      "data type" +
-                      ": " +
+                      '\n' +
+                      'data type' +
+                      ': ' +
                       entry.dataType
                     );
                   case 0:
                     return null;
                 }
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       });
       //setInterval(updateTreeMap, 1000);
     });
-  }
+  },
 });
 function useStorageFetching(): {
   treeData: Ref<Object[]>;
@@ -151,7 +146,7 @@ function useStorageFetching(): {
   function fetchStorageData(): Promise<Object> {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://192.168.30.126:5000/columninfo")
+        .get('http://192.168.30.126:5000/columninfo')
         .then(response => {
           resolve(response.data);
         })
@@ -163,15 +158,15 @@ function useStorageFetching(): {
 
   function transformDataFormat(data: Object) {
     const dataArray = [];
-    const tableData = data["columninfo"];
+    const tableData = data['columninfo'];
     for (let i = 0; i < tableData.length; i++) {
       const columnData = tableData[i];
       const entry = {};
-      entry["table"] = columnData[0];
-      entry["column"] = columnData[1];
-      entry["size"] = columnData[2];
-      entry["dataType"] = columnData[3];
-      entry["encoding"] = columnData[4];
+      entry['table'] = columnData[0];
+      entry['column'] = columnData[1];
+      entry['size'] = columnData[2];
+      entry['dataType'] = columnData[3];
+      entry['encoding'] = columnData[4];
       dataArray.push(entry);
     }
     return dataArray;

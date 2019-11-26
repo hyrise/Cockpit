@@ -9,24 +9,24 @@
         <Throughput />
       </div>
       <div class="treemap">
-        <Treemap />
+        <Treemap class="mt-10" />
       </div>
     </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
-import Throughput from "./components/Throughput.vue";
-import Treemap from "./components/Treemap.vue";
+import { createComponent, SetupContext, onMounted } from '@vue/composition-api';
+import Throughput from './components/Throughput.vue';
+import Treemap from './components/Treemap.vue';
 
 export default createComponent({
-  name: "App",
+  name: 'App',
 
   components: {
     Throughput,
-    Treemap
-  }
+    Treemap,
+  },
 });
 </script>
 <style scoped>
@@ -35,9 +35,9 @@ export default createComponent({
   max-height: 1000px;
 }
 .treemap {
-  margin-left: 100px;
+  margin-left: 10px;
   margin-right: 100px;
   margin-bottom: 50px;
-  margin-top: 50px;
+  margin-top: 150px;
 }
 </style>
