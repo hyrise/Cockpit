@@ -11,7 +11,7 @@ import zmq
 from redis import Redis
 from rq import Queue
 
-from settings import HI_HOST, HI_PORT
+from settings import HI_PORT
 from tasks import (
     execute_raw_query_task,
     execute_raw_workload_task,
@@ -29,11 +29,10 @@ class HyriseInterface(object):
 
     def start(self):
         """Start with default values."""
-        hi_host = HI_HOST
         hi_port = HI_PORT
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        socket.bind("tcp://" + hi_host + ":" + hi_port)
+        socket.bind("tcp://*:" + hi_port)
         print("Hyrise Interface running. Press Ctrl+C to stop.")
 
         while True:
@@ -83,6 +82,7 @@ class QueueUser(object):
         """Wait on job completion."""
         # TODO use notify on finished instead
         while True:
+            print("Still waiting with patience")
             if job.get_status() == "finished":
                 # print(job.result)
                 return job.result
