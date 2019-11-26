@@ -11,14 +11,14 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, onMounted } from '@vue/composition-api';
-import Throughput from './components/Throughput.vue';
+import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
+import Throughput from "./components/Throughput.vue";
 
 export default createComponent({
-  name: 'App',
+  name: "App",
 
   components: {
-    Throughput,
-  },
+    Throughput
+  }
 });
 </script>
