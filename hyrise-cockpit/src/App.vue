@@ -5,20 +5,39 @@
     </v-app-bar>
 
     <v-content>
-      <Throughput />
+      <div class="linechart">
+        <Throughput />
+      </div>
+      <div class="treemap">
+        <Treemap />
+      </div>
     </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
-import Throughput from "./components/Throughput.vue";
+import { createComponent, SetupContext, onMounted } from '@vue/composition-api';
+import Throughput from './components/Throughput.vue';
+import Treemap from './components/Treemap.vue';
 
 export default createComponent({
-  name: "App",
+  name: 'App',
 
   components: {
-    Throughput
-  }
+    Throughput,
+    Treemap,
+  },
 });
 </script>
+<style scoped>
+.linechart {
+  max-width: 1800px;
+  max-height: 1000px;
+}
+.treemap {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+</style>
