@@ -24,10 +24,10 @@ import {
   SetupContext,
   onMounted,
   Ref,
-  ref
-} from "@vue/composition-api";
-import axios from "axios";
-import LineChart from "./LineChart.vue";
+  ref,
+} from '@vue/composition-api';
+import axios from 'axios';
+import LineChart from './LineChart.vue';
 
 interface ThroughputResult {}
 
@@ -42,7 +42,7 @@ interface Data {
 
 export default createComponent({
   components: {
-    LineChart
+    LineChart,
   },
   setup(props: Props, context: SetupContext): Data {
     const { threads, setNumberOfThreads } = useThreadConfiguration();
@@ -62,10 +62,11 @@ export default createComponent({
 
     function resetData(): void {
       dataSet.value = [];
+      dataSet.value = [...dataSet.value];
     }
 
     return { dataSet, resetData, threads, setNumberOfThreads };
-  }
+  },
 });
 
 function useThroughputFetching(): {
@@ -91,7 +92,7 @@ function useThroughputFetching(): {
   function fetchThroughput(): Promise<Object> {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://192.168.30.126:5000/throughput/total")
+        .get('http://192.168.30.126:5000/throughput/total')
         .then(response => {
           resolve(response.data);
         })
@@ -111,7 +112,7 @@ function useThreadConfiguration(): {
 
   function getThreadNumber(): number {
     let threads = 0;
-    axios.get("http://192.168.30.126:5000/threads").then(response => {
+    axios.get('http://192.168.30.126:5000/threads').then(response => {
       threads = response.data.threads;
     });
     return threads;
@@ -119,7 +120,7 @@ function useThreadConfiguration(): {
 
   function setNumberOfThreads(): void {
     axios
-      .get("http://192.168.30.126:5000/threads/" + threads.value)
+      .get('http://192.168.30.126:5000/threads/' + threads.value)
       .then(response => {
         console.log(response.data.threads);
       });
