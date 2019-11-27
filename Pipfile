@@ -23,6 +23,7 @@ python-dotenv = "*"
 redis = "*"
 flask = "*"
 flask-cors = "*"
+apscheduler = "*"
 
 [requires]
 python_version = "3.6.8"
