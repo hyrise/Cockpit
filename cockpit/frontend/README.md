@@ -1,4 +1,4 @@
-# hyrise-cockpit
+# Cockpit Frontend
 
 ## Project setup
 
