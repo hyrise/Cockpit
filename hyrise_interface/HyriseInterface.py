@@ -7,9 +7,10 @@ These are responsible for submitting the requested jobs to a Queue.
 import json
 import time
 
-import redis
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
+from redis import Redis
+from rq import Queue
 
 import settings as s
 from InstanceManager import InstanceManager
@@ -29,10 +30,11 @@ class HyriseInterface(object):
         )
         self.scheduler.start()
         self.throughput_counter = "0"
-        self.r = redis.Redis()
+        self.redis = Redis()
         self.init_redis()
         self.instanceManager.get_storage_data()
         self.databases = dict()
+        # Add some instances as a demo
         self.add_hyrise_instance(
             "Hyrise 1",
             s.HYRISE1_HOST,
@@ -98,6 +100,7 @@ class HyriseInterface(object):
                 "port": port,
                 "user": user,
                 "password": password,
+                "queue": Queue(name=id, connection=self.redis),
             }
             return id
         return False
@@ -109,17 +112,23 @@ class HyriseInterface(object):
             return id
         return False
 
+    def multiplex(self, func, *args, **kwargs):
+        """Execute a function with the given args for each queue."""
+        for id in self.databases.keys():
+            queue = self.databases[id]["queue"]
+            func(queue, *args, **kwargs)
+
     def get_storage_data(self):
         """Get storage data from InstanceManager."""
-        return self.instanceManager.get_storage_data()
+        self.multiplex(self.instanceManager.get_storage_data,)
 
     def execute_raw_query(self, query):
         """Execute a SQL query."""
-        return self.loadGenerator.execute_raw_query(query)
+        self.multiplex(self.loadGenerator.execute_raw_query, query)
 
     def execute_raw_workload(self, workload):
         """Execute a list of SQL queries forming a workload."""
-        return self.loadGenerator.execute_raw_workload(workload)
+        self.multiplex(self.loadGenerator.execute_raw_workload, workload)
 
 
 def main():
