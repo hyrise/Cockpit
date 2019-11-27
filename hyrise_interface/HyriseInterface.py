@@ -9,12 +9,11 @@ import time
 
 import redis
 import zmq
-
-import settings as s
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from .InstanceManager import InstanceManager
-from .LoadGenerator import LoadGenerator
+import settings as s
+from InstanceManager import InstanceManager
+from LoadGenerator import LoadGenerator
 
 
 class HyriseInterface(object):
@@ -34,6 +33,20 @@ class HyriseInterface(object):
         self.init_redis()
         self.instanceManager.get_storage_data()
         self.databases = dict()
+        self.add_hyrise_instance(
+            "Hyrise 1",
+            s.HYRISE1_HOST,
+            s.HYRISE1_PORT,
+            s.HYRISE1_USER,
+            s.HYRISE1_PASSWORD,
+        )
+        self.add_hyrise_instance(
+            "Hyrise 2",
+            s.HYRISE2_HOST,
+            s.HYRISE2_PORT,
+            s.HYRISE2_USER,
+            s.HYRISE2_PASSWORD,
+        )
 
     def init_redis(self):
         """Set basic values in redis db."""
