@@ -72,7 +72,7 @@ class HyriseInterface(object):
             elif data["Content-Type"] == "throughput":
                 response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
-                response = "[NOT IMPLEMENTED YET]"
+                response = "[NOT IMPLEMENTED YETWorkload]"
                 pass
             else:
                 response = "[Error]"
