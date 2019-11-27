@@ -52,15 +52,15 @@ class HyriseInterface(object):
 
     def init_redis(self):
         """Set basic values in redis db."""
-        self.r.set("throughput", 0)
-        self.r.set("throughput_counter", 0)
-        self.r.set("start_time_intervall", time.time())
+        self.redis.set("throughput", 0)
+        self.redis.set("throughput_counter", 0)
+        self.redis.set("start_time_intervall", time.time())
 
     def update_throughput(self):
         """Update throughput."""
-        self.throughput_counter = self.r.get("throughput_counter").decode("utf-8")
+        self.throughput_counter = self.redis.get("throughput_counter").decode("utf-8")
         print(self.throughput_counter)
-        self.r.set("throughput_counter", 0)
+        self.redis.set("throughput_counter", 0)
 
     def start(self):
         """Start with default values."""
@@ -80,7 +80,7 @@ class HyriseInterface(object):
                 self.execute_raw_workload(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
-                response = self.r.get("storage_data").decode("utf-8")
+                response = self.redis.get("storage_data").decode("utf-8")
             elif data["Content-Type"] == "throughput":
                 response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
