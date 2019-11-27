@@ -11,13 +11,7 @@ import pandas as pd
 import psycopg2
 from rq.worker import Worker
 
-from settings import (
-    DATABASE_HOST,
-    DATABASE_NAME,
-    DATABASE_PASSWORD,
-    DATABASE_PORT,
-    DATABASE_USER,
-)
+import settings as s
 
 connection_pool = []
 
@@ -28,11 +22,11 @@ class HyriseWorker(Worker):
     def work(self, *args, **kwargs):
         """Establish a connection before accepting tasks."""
         connection = psycopg2.connect(
-            dbname=DATABASE_NAME,
-            user=DATABASE_USER,
-            password=DATABASE_PASSWORD,
-            host=DATABASE_HOST,
-            port=DATABASE_PORT,
+            dbname=s.DATABASE_NAME,
+            user=s.DATABASE_USER,
+            password=s.DATABASE_PASSWORD,
+            host=s.DATABASE_HOST,
+            port=s.DATABASE_PORT,
         )
         connection.set_session(autocommit=True)
         connection_pool.append(connection)
