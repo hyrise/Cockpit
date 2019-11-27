@@ -12,9 +12,9 @@ and import the variables from this module.
 """
 from os import getenv
 
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 DATABASE_HOST = getenv("DATABASE_HOST")
 DATABASE_PORT = getenv("DATABASE_PORT")
