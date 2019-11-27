@@ -9,17 +9,15 @@ import zmq
 from flask import Flask
 from flask_cors import CORS
 
-from settings import HI_HOST, HI_PORT
+import settings as s
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
 
-hi_host = HI_HOST
-hi_port = HI_PORT
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://" + hi_host + ":" + hi_port)  # socket of hyriseInterface instance
+socket.connect(f"tcp://{s.HI_HOST}:{s.HI_PORT}")  # socket of hyriseInterface instance
 
 
 def send_request(data):

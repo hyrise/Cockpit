@@ -12,8 +12,8 @@ import zmq
 from redis import Redis
 from rq import Queue
 
+import settings as s
 from apscheduler.schedulers.background import BackgroundScheduler
-from settings import HI_PORT
 from tasks import (
     execute_raw_query_task,
     execute_raw_workload_task,
@@ -52,10 +52,9 @@ class HyriseInterface(object):
 
     def start(self):
         """Start with default values."""
-        hi_port = HI_PORT
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        socket.bind("tcp://*:" + hi_port)
+        socket.bind(f"tcp://*:{s.HI_PORT}")
         print("Hyrise Interface running. Press Ctrl+C to stop.")
 
         while True:

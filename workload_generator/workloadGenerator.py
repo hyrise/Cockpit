@@ -10,7 +10,6 @@ import random
 from time import sleep
 
 import zmq
-from psycopg2 import mogrify
 
 
 class WorkloadProducer(mp.Process):
@@ -26,6 +25,13 @@ class WorkloadProducer(mp.Process):
         self.socket = self.context.socket(zmq.REQ)
         self.socket.connect("tcp://localhost:5555")
         super().__init__(name=name, daemon=True)
+
+    def generate_random(self):
+        """Return a simple query with a random number."""
+        # TODO maybe get a cursor and use mogrify?
+        return f"""SELECT *
+        FROM nation
+        WHERE n_nationkey = {random.randint(0, 24)}"""  # nosec
 
     def generate_workload(self, n_queries=1):
         """Return a list of queries forming a workload."""
@@ -51,10 +57,7 @@ class WorkloadProducer(mp.Process):
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
                 AND .07 AND l_quantity < 24;""",
-                mogrify(
-                    "SELECT * FROM nation WHERE n_nationkey = %s",
-                    random.randint(0, 24),  # nosec
-                ),
+                self.generate_random(),
             ],
             weights=[1, 1, 100],
             k=n_queries,
@@ -122,8 +125,9 @@ class WorkloadGenerator(object):
 def main():
     """Run a WorkloadGenerator demonstration."""
     gen = WorkloadGenerator()
+    print("WorkloadGenerator running for 120 seconds. Press CTRL+C to stop.")
     gen.start(1)
-    sleep(5)
+    sleep(120)
     gen.stop()
 
 
