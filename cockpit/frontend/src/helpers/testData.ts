@@ -12,61 +12,61 @@ export function useGeneratingTestData(): {
   function generateStorageData(): Object[] {
     return [
       {
-        table: 'lineitem',
-        column: 'column',
+        table: "lineitem",
+        column: "column",
         size: generateRandomNumber(90000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'orders',
-        column: 'column',
+        table: "orders",
+        column: "column",
         size: generateRandomNumber(80000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'partsupp',
-        column: 'column',
+        table: "partsupp",
+        column: "column",
         size: generateRandomNumber(70000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'customer',
-        column: 'column',
+        table: "customer",
+        column: "column",
         size: generateRandomNumber(60000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'part',
-        column: 'column',
+        table: "part",
+        column: "column",
         size: generateRandomNumber(50000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'supplier',
-        column: 'column',
+        table: "supplier",
+        column: "column",
         size: generateRandomNumber(40000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'nation',
-        column: 'column',
+        table: "nation",
+        column: "column",
         size: generateRandomNumber(30000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
+        dataType: "int",
+        encoding: "encoding"
       },
       {
-        table: 'region',
-        column: 'column',
+        table: "region",
+        column: "column",
         size: generateRandomNumber(10000, 10000),
-        dataType: 'int',
-        encoding: 'encoding',
-      },
+        dataType: "int",
+        encoding: "encoding"
+      }
     ];
   }
 

@@ -5,22 +5,22 @@
 </template>
 
 <script lang="ts">
-import Chart from 'chart.js';
+import Chart from "chart.js";
 import {
   createComponent,
   SetupContext,
   onMounted,
   watch,
   Ref,
-  ref,
-} from '@vue/composition-api';
+  ref
+} from "@vue/composition-api";
 
 interface Props {
   throughput: number[];
 }
 export default createComponent({
   props: {
-    throughput: { type: Array, default: [] },
+    throughput: { type: Array, default: [] }
   },
   setup(props: Props, context: SetupContext) {
     const chart = ref<Object>(null);
@@ -48,24 +48,24 @@ export default createComponent({
         if (props.throughput) {
           updateChartData();
         }
-      },
+      }
     ),
       onMounted(() => {
-        const canvas: any = document.getElementById('canvas');
-        const ctx: any = canvas.getContext('2d');
+        const canvas: any = document.getElementById("canvas");
+        const ctx: any = canvas.getContext("2d");
         chart.value = new Chart(ctx, {
-          type: 'line',
+          type: "line",
           data: {
             labels: labels.value,
             datasets: [
               {
-                label: 'Database',
-                backgroundColor: '#76baff',
+                label: "Database",
+                backgroundColor: "#76baff",
                 fill: true,
-                borderColor: '#2a93ff',
-                data: chartData.value,
-              },
-            ],
+                borderColor: "#2a93ff",
+                data: chartData.value
+              }
+            ]
           },
           options: {
             scales: {
@@ -73,38 +73,38 @@ export default createComponent({
                 {
                   scaleLabel: {
                     display: true,
-                    labelString: 'Throughput (in Queries /s)',
-                    fontSize: 16,
+                    labelString: "Throughput (in Queries /s)",
+                    fontSize: 16
                   },
                   ticks: {
                     beginAtZero: true,
-                    fontSize: 16,
+                    fontSize: 16
                   },
                   gridLines: {
-                    display: true,
-                  },
-                },
+                    display: true
+                  }
+                }
               ],
               xAxes: [
                 {
                   scaleLabel: {
                     display: true,
-                    labelString: 'Time (in s)',
-                    fontSize: 16,
+                    labelString: "Time (in s)",
+                    fontSize: 16
                   },
                   ticks: {
                     beginAtZero: true,
-                    fontSize: 16,
+                    fontSize: 16
                   },
                   gridLines: {
-                    display: true,
-                  },
-                },
-              ],
-            },
-          },
+                    display: true
+                  }
+                }
+              ]
+            }
+          }
         });
       });
-  },
+  }
 });
 </script>

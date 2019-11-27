@@ -16,17 +16,17 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, onMounted } from '@vue/composition-api';
-import Throughput from './components/Throughput.vue';
-import Treemap from './components/Treemap.vue';
+import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
+import Throughput from "./components/Throughput.vue";
+import Treemap from "./components/Treemap.vue";
 
 export default createComponent({
-  name: 'App',
+  name: "App",
 
   components: {
     Throughput,
-    Treemap,
-  },
+    Treemap
+  }
 });
 </script>
 <style scoped>
