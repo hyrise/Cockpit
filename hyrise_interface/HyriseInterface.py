@@ -33,6 +33,7 @@ class HyriseInterface(object):
         self.r = redis.Redis()
         self.init_redis()
         self.instanceManager.get_storage_data()
+        self.databases = dict()
 
     def init_redis(self):
         """Set basic values in redis db."""
@@ -74,6 +75,26 @@ class HyriseInterface(object):
                 response = "[Error]"
 
             socket.send_string(response)
+
+    def add_hyrise_instance(self, id, host, port, user, password, name=""):
+        """Add hyrise instance."""
+        if id not in self.databases.keys():
+            self.databases[id] = {
+                "name": name,
+                "host": host,
+                "port": port,
+                "user": user,
+                "password": password,
+            }
+            return id
+        return False
+
+    def pop_hyrise_instance(self, id):
+        """Remove hyrise instance."""
+        if id in self.databases.keys():
+            del self.databases[id]
+            return id
+        return False
 
     def get_storage_data(self):
         """Get storage data from InstanceManager."""
