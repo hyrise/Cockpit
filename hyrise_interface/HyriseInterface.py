@@ -7,14 +7,14 @@ These are responsible for submitting the requested jobs to a Queue.
 import json
 import time
 
-import redis
 import zmq
+from apscheduler.schedulers.background import BackgroundScheduler
+from redis import Redis
+from rq import Queue
 
 import settings as s
-from apscheduler.schedulers.background import BackgroundScheduler
-
-from .InstanceManager import InstanceManager
-from .LoadGenerator import LoadGenerator
+from InstanceManager import InstanceManager
+from LoadGenerator import LoadGenerator
 
 
 class HyriseInterface(object):
@@ -30,28 +30,43 @@ class HyriseInterface(object):
         )
         self.scheduler.start()
         self.throughput_counter = "0"
-        self.r = redis.Redis()
+        self.redis = Redis()
         self.init_redis()
         self.instanceManager.get_storage_data()
         self.databases = dict()
+        # Add some instances as a demo
+        self.add_hyrise_instance(
+            "Hyrise 1",
+            s.HYRISE1_HOST,
+            s.HYRISE1_PORT,
+            s.HYRISE1_USER,
+            s.HYRISE1_PASSWORD,
+        )
+        self.add_hyrise_instance(
+            "Hyrise 2",
+            s.HYRISE2_HOST,
+            s.HYRISE2_PORT,
+            s.HYRISE2_USER,
+            s.HYRISE2_PASSWORD,
+        )
 
     def init_redis(self):
         """Set basic values in redis db."""
-        self.r.set("throughput", 0)
-        self.r.set("throughput_counter", 0)
-        self.r.set("start_time_intervall", time.time())
+        self.redis.set("throughput", 0)
+        self.redis.set("throughput_counter", 0)
+        self.redis.set("start_time_intervall", time.time())
 
     def update_throughput(self):
         """Update throughput."""
-        self.throughput_counter = self.r.get("throughput_counter").decode("utf-8")
+        self.throughput_counter = self.redis.get("throughput_counter").decode("utf-8")
         print(self.throughput_counter)
-        self.r.set("throughput_counter", 0)
+        self.redis.set("throughput_counter", 0)
 
     def start(self):
         """Start with default values."""
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        socket.bind(f"tcp://*:{s.HI_PORT}")
+        socket.bind(f"tcp://{s.HYRISE_INTERFACE_HOST}:{s.HYRISE_INTERFACE_PORT}")
         print("Hyrise Interface running. Press Ctrl+C to stop.")
 
         while True:
@@ -65,7 +80,7 @@ class HyriseInterface(object):
                 self.execute_raw_workload(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
-                response = self.r.get("storage_data").decode("utf-8")
+                response = self.redis.get("storage_data").decode("utf-8")
             elif data["Content-Type"] == "throughput":
                 response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
@@ -85,6 +100,7 @@ class HyriseInterface(object):
                 "port": port,
                 "user": user,
                 "password": password,
+                "queue": Queue(name=id, connection=self.redis),
             }
             return id
         return False
@@ -96,17 +112,23 @@ class HyriseInterface(object):
             return id
         return False
 
+    def multiplex(self, func, *args, **kwargs):
+        """Execute a function with the given args for each queue."""
+        for id in self.databases.keys():
+            queue = self.databases[id]["queue"]
+            func(queue, *args, **kwargs)
+
     def get_storage_data(self):
         """Get storage data from InstanceManager."""
-        return self.instanceManager.get_storage_data()
+        self.multiplex(self.instanceManager.get_storage_data,)
 
     def execute_raw_query(self, query):
         """Execute a SQL query."""
-        return self.loadGenerator.execute_raw_query(query)
+        self.multiplex(self.loadGenerator.execute_raw_query, query)
 
     def execute_raw_workload(self, workload):
         """Execute a list of SQL queries forming a workload."""
-        return self.loadGenerator.execute_raw_workload(workload)
+        self.multiplex(self.loadGenerator.execute_raw_workload, workload)
 
 
 def main():
