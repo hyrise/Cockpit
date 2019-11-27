@@ -9,16 +9,12 @@ import time
 
 import redis
 import zmq
-from apscheduler.schedulers.background import BackgroundScheduler
-from redis import Redis
-from rq import Queue
 
 import settings as s
-from tasks import (
-    execute_raw_query_task,
-    execute_raw_workload_task,
-    get_storage_data_task,
-)
+from apscheduler.schedulers.background import BackgroundScheduler
+
+from .InstanceManager import InstanceManager
+from .LoadGenerator import LoadGenerator
 
 
 class HyriseInterface(object):
@@ -90,36 +86,6 @@ class HyriseInterface(object):
     def execute_raw_workload(self, workload):
         """Execute a list of SQL queries forming a workload."""
         return self.loadGenerator.execute_raw_workload(workload)
-
-
-class InstanceManager:
-    """A QueueUser submitting jobs concerning everything but load generation."""
-
-    def __init__(self):
-        """Initialize a QueueUser with a Redis Queue."""
-        self.queue = Queue(connection=Redis())
-
-    def get_storage_data(self):
-        """Submit a job to get storage data from database."""
-        self.queue.enqueue(get_storage_data_task)
-
-
-class LoadGenerator:
-    """A QueueUser submitting jobs concerning artificial load generation."""
-
-    def __init__(self):
-        """Initialize a QueueUser with a Redis Queue."""
-        self.queue = Queue(connection=Redis())
-
-    def execute_raw_query(self, query):
-        """Submit a job to execute a SQL query."""
-        return self.queue.enqueue(execute_raw_query_task, query)
-        # return self.busy_wait(job)
-
-    def execute_raw_workload(self, workload):
-        """Submit a job to execute a list of SQL queries forming a workload."""
-        return self.queue.enqueue(execute_raw_workload_task, workload)
-        # return self.busy_wait(job)
 
 
 def main():
