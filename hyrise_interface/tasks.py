@@ -105,7 +105,14 @@ def execute_raw_query_task(query):
 
 def execute_raw_workload_task(workload):
     """Execute a list of SQL queries, return the avg. time it took."""
-    pass
+    r = get_redis_connection()
+    conn = get_connection()
+    cur = conn.cursor()
+    for query in workload:
+        cur.execute(query)
+        r.set(
+            "throughput_counter", int(r.get("throughput_counter").decode("utf-8")) + 1
+        )
     # for query in workload:
     #     cur.execute(query)
     # TODO measure throughput

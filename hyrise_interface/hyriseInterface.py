@@ -4,16 +4,16 @@ Includes the HyriseInterface, which uses an InstanceManager and a LoadGenerator.
 These are responsible for submitting the requested jobs to a Queue.
 """
 
+import json
 import time
-from json import loads
 
 import redis
 import zmq
+from apscheduler.schedulers.background import BackgroundScheduler
 from redis import Redis
 from rq import Queue
 
 import settings as s
-from apscheduler.schedulers.background import BackgroundScheduler
 from tasks import (
     execute_raw_query_task,
     execute_raw_workload_task,
@@ -59,7 +59,7 @@ class HyriseInterface(object):
 
         while True:
             message = socket.recv()
-            data = loads(message)
+            data = json.loads(message)
             response = ""
             if data["Content-Type"] == "query":
                 self.execute_raw_query(data["Content"])
@@ -70,7 +70,7 @@ class HyriseInterface(object):
             elif data["Content-Type"] == "storage_data":
                 response = self.r.get("storage_data").decode("utf-8")
             elif data["Content-Type"] == "throughput":
-                response = self.throughput_counter
+                response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
                 response = "[NOT IMPLEMENTED YET]"
                 pass
@@ -101,8 +101,7 @@ class InstanceManager:
 
     def get_storage_data(self):
         """Submit a job to get storage data from database."""
-        job = self.queue.enqueue(get_storage_data_task)
-        return self.busy_wait(job)
+        self.queue.enqueue(get_storage_data_task)
 
 
 class LoadGenerator:
