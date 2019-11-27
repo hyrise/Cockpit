@@ -4,13 +4,15 @@ Includes the HyriseInterface, which uses an InstanceManager and a LoadGenerator.
 These are responsible for submitting the requested jobs to a Queue.
 """
 
+import time
 from json import loads
-from time import sleep
 
+import redis
 import zmq
 from redis import Redis
 from rq import Queue
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from settings import HI_PORT
 from tasks import (
     execute_raw_query_task,
@@ -26,6 +28,27 @@ class HyriseInterface(object):
         """Initialize a HyriseInterface with an InstanceManager and a LoadGenerator."""
         self.instanceManager = InstanceManager()
         self.loadGenerator = LoadGenerator()
+        self.scheduler = BackgroundScheduler()
+        self.scheduler.add_job(
+            func=self.update_throughput, trigger="interval", seconds=1,
+        )
+        self.scheduler.start()
+        self.throughput_counter = "0"
+        self.r = redis.Redis()
+        self.init_redis()
+        self.instanceManager.get_storage_data()
+
+    def init_redis(self):
+        """Set basic values in redis db."""
+        self.r.set("throughput", 0)
+        self.r.set("throughput_counter", 0)
+        self.r.set("start_time_intervall", time.time())
+
+    def update_throughput(self):
+        """Update throughput."""
+        self.throughput_counter = self.r.get("throughput_counter").decode("utf-8")
+        print(self.throughput_counter)
+        self.r.set("throughput_counter", 0)
 
     def start(self):
         """Start with default values."""
@@ -46,10 +69,9 @@ class HyriseInterface(object):
                 self.execute_raw_workload(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
-                response = self.get_storage_data()
+                response = self.r.get("storage_data").decode("utf-8")
             elif data["Content-Type"] == "throughput":
-                response = "[NOT IMPLEMENTED YET]"
-                pass
+                response = self.throughput_counter
             elif data["Content-Type"] == "runtime_information":
                 response = "[NOT IMPLEMENTED YET]"
                 pass
@@ -71,26 +93,12 @@ class HyriseInterface(object):
         return self.loadGenerator.execute_raw_workload(workload)
 
 
-class QueueUser(object):
-    """A class using a Queue to submit jobs to workers."""
+class InstanceManager:
+    """A QueueUser submitting jobs concerning everything but load generation."""
 
     def __init__(self):
         """Initialize a QueueUser with a Redis Queue."""
         self.queue = Queue(connection=Redis())
-
-    def busy_wait(self, job):
-        """Wait on job completion."""
-        # TODO use notify on finished instead
-        while True:
-            print("Still waiting with patience")
-            if job.get_status() == "finished":
-                # print(job.result)
-                return job.result
-            sleep(0.05)
-
-
-class InstanceManager(QueueUser):
-    """A QueueUser submitting jobs concerning everything but load generation."""
 
     def get_storage_data(self):
         """Submit a job to get storage data from database."""
@@ -98,8 +106,12 @@ class InstanceManager(QueueUser):
         return self.busy_wait(job)
 
 
-class LoadGenerator(QueueUser):
+class LoadGenerator:
     """A QueueUser submitting jobs concerning artificial load generation."""
+
+    def __init__(self):
+        """Initialize a QueueUser with a Redis Queue."""
+        self.queue = Queue(connection=Redis())
 
     def execute_raw_query(self, query):
         """Submit a job to execute a SQL query."""

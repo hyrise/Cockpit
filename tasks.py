@@ -5,10 +5,10 @@ Includes different tasks ready to be executed.
 """
 
 import json
-import time
 
 import pandas as pd
 import psycopg2
+import redis
 from rq.worker import Worker
 
 from settings import (
@@ -20,6 +20,7 @@ from settings import (
 )
 
 connection_pool = []
+redis_connection_pool = []
 
 
 class HyriseWorker(Worker):
@@ -36,6 +37,8 @@ class HyriseWorker(Worker):
         )
         connection.set_session(autocommit=True)
         connection_pool.append(connection)
+        r = redis.Redis()
+        redis_connection_pool.append(r)
         # print(f"Connection poll filled: {id(connection_pool)}")
         return super().work(*args, **kwargs)
 
@@ -46,8 +49,14 @@ def get_connection():
     return connection_pool[0]
 
 
+def get_redis_connection():
+    """Return the first connection of the redis pool."""
+    return redis_connection_pool[0]
+
+
 def get_storage_data_task():
     """Return the storage metadata of a Hyrise DB."""
+    r = get_redis_connection()
     conn = get_connection()
     meta_segments = pd.io.sql.read_sql_query("SELECT * FROM meta_segments;", conn)
     meta_segments.set_index(
@@ -68,8 +77,7 @@ def get_storage_data_task():
         ["column_data_type"]
     ]
     result = size.join(encoding).join(datatype)
-
-    return create_storage_data_json(result)
+    r.set("storage_data", create_storage_data_json(result))
 
 
 def create_storage_data_json(table):
@@ -93,12 +101,12 @@ def create_storage_data_json(table):
 
 
 def execute_raw_query_task(query):
-    """Execute a SQL query, return the time it took."""
+    """Execute a SQL query, save increment throughput counter in redis."""
+    r = get_redis_connection()
     conn = get_connection()
     cur = conn.cursor()
-    start = time.time()
     cur.execute(query)
-    return time.time() - start
+    r.set("throughput_counter", int(r.get("throughput_counter").decode("utf-8")) + 1)
 
 
 def execute_raw_workload_task(workload):
