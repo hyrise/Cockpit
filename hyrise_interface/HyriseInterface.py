@@ -51,7 +51,7 @@ class HyriseInterface(object):
         """Start with default values."""
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        socket.bind(f"tcp://*:{s.HI_PORT}")
+        socket.bind(f"tcp://{s.HYRISE_INTERFACE_HOST}:{s.HYRISE_INTERFACE_PORT}")
         print("Hyrise Interface running. Press Ctrl+C to stop.")
 
         while True:
