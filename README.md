@@ -19,11 +19,10 @@ cd Cockpit
 pyenv local 3.6.8
 ```
 
-If python 3.6.8 is failing to build on your machine, you probably want to install the python dependencies (from https://github.com/pyenv/pyenv/wiki/Common-build-problems).
+If python 3.6.8 is failing to build on your machine, you may need to install [these dependencies](https://github.com/pyenv/pyenv/wiki/Common-build-problems) before installing a python version with pyenv.
+
 ```bash
-sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
-libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev libffi-dev liblzma-dev python-openssl git libpq-dev
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git libpq-dev
 ```
 
 Run the following commands to bootstrap your environment.
