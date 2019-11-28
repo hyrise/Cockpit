@@ -11,6 +11,15 @@ brew install pipenv pyenv
 
 If you're on a different operating system, please refer to the installation guides of [`pipenv`](https://github.com/pypa/pipenv#installation) and [`pyenv`](https://github.com/pyenv/pyenv#installation), and make sure that you have the [prerequisites for `pyenv`](https://github.com/pyenv/pyenv/wiki/common-build-problems#prerequisites) installed.
 
+
+If python 3.6.8 is failing to build on your machine, you probably want to install the python dependencies (from https://github.com/pyenv/pyenv/wiki/Common-build-problems).
+```bash
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+```
+
+
 ```bash
 pyenv install 3.6.8
 
