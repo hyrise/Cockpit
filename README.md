@@ -23,7 +23,7 @@ If python 3.6.8 is failing to build on your machine, you probably want to instal
 ```bash
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
 libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git libpq-dev
 ```
 
 Run the following commands to bootstrap your environment.
