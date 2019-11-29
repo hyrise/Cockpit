@@ -39,7 +39,7 @@ export default createComponent({
     function updateChartData(): void {
       chartData.value = props.throughput;
       addLabels();
-      chart.value.update();
+      chart.value ? chart.value.update() : null;
     }
 
     watch(
