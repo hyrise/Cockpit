@@ -3,7 +3,8 @@
 Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
-from json import dumps
+import random
+from json import dumps, load
 
 import zmq
 from flask import Flask
@@ -11,6 +12,8 @@ from flask_cors import CORS
 
 import settings as s
 
+with open("storage_dummy.json", "r") as storage_dummy:
+    storage_data = load(storage_dummy)
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
@@ -31,17 +34,19 @@ def send_request(data):
 @app.route("/throughput")
 def get_throughput():
     """Return throughput information from database interface."""
-    data = {}
-    data["Content-Type"] = "throughput"
-    return send_request(data)
+    # data = {}
+    # data["Content-Type"] = "throughput"
+    # return send_request(data)
+    return str(random.randint(5000, 7000))  # nosec
 
 
 @app.route("/storage_data")
 def get_storage_data():
     """Return storage information from database interface."""
-    data = {}
-    data["Content-Type"] = "storage_data"
-    return send_request(data)
+    # data = {}
+    # data["Content-Type"] = "storage_data"
+    # return send_request(data)
+    return storage_data
 
 
 @app.route("/runtime_information")
