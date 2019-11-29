@@ -4,10 +4,7 @@ Includes a HyriseWorker with a connection to a Hyrise DB.
 Includes different tasks ready to be executed.
 """
 
-import pandas as pd
 from psycopg2 import connection
-
-import settings as s
 
 connection_pool = []
 redis_connection_pool = []
@@ -16,14 +13,18 @@ redis_connection_pool = []
 class Cursor:
     """Custom cursor class. Gets a connection and closes it with 'with'."""
 
+    def __init__(self, db_info):
+        """Initialize a custom cursor."""
+        self.db_info = db_info
+
     def __enter__(self):
         """Establish connection and cursor."""
         self.connection = connection(
-            dbname=s.HYRISE1_NAME,
-            user=s.HYRISE1_USER,
-            password=s.HYRISE1_PASSWORD,
-            host=s.HYRISE1_HOST,
-            port=s.HYRISE1_PORT,
+            dbname=self.db_info["name"],
+            user=self.db_info["user"],
+            password=self.db_info["password"],
+            host=self.db_info["host"],
+            port=self.db_info["port"],
         )
         self.cursor = self.connection.cursor()
         return self
@@ -38,42 +39,13 @@ class Cursor:
         self.cursor.execute(*args, **kwargs)
 
 
-def get_storage_data_task():
-    """Return the storage metadata of a Hyrise DB."""
-    with Cursor() as cur:
-        meta_segments = pd.io.sql.read_sql_query(
-            "SELECT * FROM meta_segments;", cur.connection
-        )
-        meta_segments.set_index(
-            ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
-        )
-
-        size = pd.DataFrame(
-            meta_segments["estimated_size_in_bytes"]
-            .groupby(level=["table", "column_name"])
-            .sum()
-        )
-        encoding = pd.DataFrame(
-            meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
-        )
-        encoding["encoding"] = encoding["encoding"].apply(list)
-
-        datatype = meta_segments.reset_index().set_index(["table", "column_name"])[
-            ["column_data_type"]
-        ]
-        result = size.join(encoding).join(datatype)
-        return (
-            result  # TODO return the result as json, current result might not be stable
-        )
-
-
-def execute(*args, **kwargs):
+def execute(db_info, *args, **kwargs):
     """Execute a SQL query."""
-    with Cursor() as c:
+    with Cursor(db_info) as c:
         c.execute(*args, **kwargs)
 
 
-def executemany(*args, **kwargs):
+def executemany(db_info, *args, **kwargs):
     """Execute many SQL queries."""
-    with Cursor() as c:
+    with Cursor(db_info) as c:
         c.executemany(*args, **kwargs)
