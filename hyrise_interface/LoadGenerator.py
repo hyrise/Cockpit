@@ -2,25 +2,18 @@
 
 LoadGenerator submits jobs to a Queue.
 """
-from redis import Redis
-from rq import Queue
 
-from tasks import execute_raw_query_task, execute_raw_workload_task
+
+from tasks import execute, executemany
 
 
 class LoadGenerator(object):
     """A QueueUser submitting jobs concerning artificial load generation."""
 
-    def __init__(self):
-        """Initialize a QueueUser with a Redis Queue."""
-        self.queue = Queue(connection=Redis())
-
-    def execute_raw_query(self, query):
+    def execute(self, queue, db_info, *args, **kwargs):
         """Submit a job to execute a SQL query."""
-        return self.queue.enqueue(execute_raw_query_task, query)
-        # return self.busy_wait(job)
+        return queue.enqueue(execute, db_info, *args, **kwargs)
 
-    def execute_raw_workload(self, workload):
+    def executemany(self, queue, db_info, *args, **kwargs):
         """Submit a job to execute a list of SQL queries forming a workload."""
-        return self.queue.enqueue(execute_raw_workload_task, workload)
-        # return self.busy_wait(job)
+        return queue.enqueue(executemany, db_info, *args, **kwargs)

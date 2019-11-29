@@ -74,10 +74,10 @@ class HyriseInterface(object):
             data = json.loads(message)
             response = ""
             if data["Content-Type"] == "query":
-                self.execute_raw_query(data["Content"])
+                self.execute(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "workload":
-                self.execute_raw_workload(data["Content"])
+                self.executemany(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
                 response = self.redis.get("storage_data").decode("utf-8")
@@ -116,19 +116,23 @@ class HyriseInterface(object):
         """Execute a function with the given args for each queue."""
         for id in self.databases.keys():
             queue = self.databases[id]["queue"]
-            func(queue, *args, **kwargs)
+            db_info = dict()  # TODO refactor
+            for key in self.databases[id].keys():
+                if key in ("name", "host", "port", "password", "user"):
+                    db_info[key] = self.databases[id][key]
+            func(queue, db_info, *args, **kwargs)
 
     def get_storage_data(self):
         """Get storage data from InstanceManager."""
         self.multiplex(self.instanceManager.get_storage_data,)
 
-    def execute_raw_query(self, query):
+    def execute(self, query):
         """Execute a SQL query."""
-        self.multiplex(self.loadGenerator.execute_raw_query, query)
+        self.multiplex(self.loadGenerator.execute, query)
 
-    def execute_raw_workload(self, workload):
+    def executemany(self, workload):
         """Execute a list of SQL queries forming a workload."""
-        self.multiplex(self.loadGenerator.execute_raw_workload, workload)
+        self.multiplex(self.loadGenerator.executemany, workload)
 
 
 def main():
