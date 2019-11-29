@@ -3,6 +3,7 @@
 Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
+import random
 from json import dumps
 
 import zmq
@@ -31,9 +32,10 @@ def send_request(data):
 @app.route("/throughput")
 def get_throughput():
     """Return throughput information from database interface."""
-    data = {}
-    data["Content-Type"] = "throughput"
-    return send_request(data)
+    # data = {}
+    # data["Content-Type"] = "throughput"
+    # return send_request(data)
+    return str(random.randint(5000, 7000))  # nosec
 
 
 @app.route("/storage_data")
