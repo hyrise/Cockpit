@@ -4,90 +4,76 @@ Includes a HyriseWorker with a connection to a Hyrise DB.
 Includes different tasks ready to be executed.
 """
 
-import json
-
 import pandas as pd
+from psycopg2 import connection
+
+import settings as s
 
 connection_pool = []
 redis_connection_pool = []
 
 
-def get_connection():
-    """Return the first connection of the pool."""
-    # print(f"Connection poll accessed: {id(connection_pool[0])}")
-    return connection_pool[0]
+class Cursor:
+    """Custom cursor class. Gets a connection and closes it with 'with'."""
 
+    def __enter__(self):
+        """Establish connection and cursor."""
+        self.connection = connection(
+            dbname=s.HYRISE1_NAME,
+            user=s.HYRISE1_USER,
+            password=s.HYRISE1_PASSWORD,
+            host=s.HYRISE1_HOST,
+            port=s.HYRISE1_PORT,
+        )
+        self.cursor = self.connection.cursor()
+        return self
 
-def get_redis_connection():
-    """Return the first connection of the redis pool."""
-    return redis_connection_pool[0]
+    def __exit__(self, type, value, traceback):
+        """Close connection and cursor."""
+        self.cursor.close()
+        self.connection.close()
+
+    def execute(self, *args, **kwargs):
+        """Hand execution to the underlying cursor."""
+        self.cursor.execute(*args, **kwargs)
 
 
 def get_storage_data_task():
     """Return the storage metadata of a Hyrise DB."""
-    r = get_redis_connection()
-    conn = get_connection()
-    meta_segments = pd.io.sql.read_sql_query("SELECT * FROM meta_segments;", conn)
-    meta_segments.set_index(
-        ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
-    )
-
-    size = pd.DataFrame(
-        meta_segments["estimated_size_in_bytes"]
-        .groupby(level=["table", "column_name"])
-        .sum()
-    )
-    encoding = pd.DataFrame(
-        meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
-    )
-    encoding["encoding"] = encoding["encoding"].apply(list)
-
-    datatype = meta_segments.reset_index().set_index(["table", "column_name"])[
-        ["column_data_type"]
-    ]
-    result = size.join(encoding).join(datatype)
-    r.set("storage_data", create_storage_data_json(result))
-
-
-def create_storage_data_json(table):
-    """Create JSON string from storage data table."""
-    output = {}
-    grouped = table.reset_index().groupby("table")
-    for column in grouped.groups:
-        output[column] = {"size": 0, "number_columns": 0, "data": {}}
-        for _index, row in grouped.get_group(column).iterrows():
-            output[column]["number_columns"] = output[column]["number_columns"] + 1
-            output[column]["size"] = (
-                output[column]["size"] + row["estimated_size_in_bytes"]
-            )
-            output[column]["data"][row["column_name"]] = {
-                "size": row["estimated_size_in_bytes"],
-                "data_type": row["column_data_type"],
-                "encoding": row["encoding"],
-            }
-
-    return json.dumps(output)
-
-
-def execute_raw_query_task(query):
-    """Execute a SQL query, save increment throughput counter in redis."""
-    r = get_redis_connection()
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute(query)
-    r.set("throughput_counter", int(r.get("throughput_counter").decode("utf-8")) + 1)
-
-
-def execute_raw_workload_task(workload):
-    """Execute a list of SQL queries, return the avg. time it took."""
-    r = get_redis_connection()
-    conn = get_connection()
-    cur = conn.cursor()
-    for query in workload:
-        cur.execute(query)
-        r.set(
-            "throughput_counter", int(r.get("throughput_counter").decode("utf-8")) + 1
+    with Cursor() as cur:
+        meta_segments = pd.io.sql.read_sql_query(
+            "SELECT * FROM meta_segments;", cur.connection
         )
-    # for query in workload:
-    #     cur.execute(query)
-    # TODO measure throughput
+        meta_segments.set_index(
+            ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
+        )
+
+        size = pd.DataFrame(
+            meta_segments["estimated_size_in_bytes"]
+            .groupby(level=["table", "column_name"])
+            .sum()
+        )
+        encoding = pd.DataFrame(
+            meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
+        )
+        encoding["encoding"] = encoding["encoding"].apply(list)
+
+        datatype = meta_segments.reset_index().set_index(["table", "column_name"])[
+            ["column_data_type"]
+        ]
+        result = size.join(encoding).join(datatype)
+        return (
+            result  # TODO return the result as json, current result might not be stable
+        )
+
+
+def execute(*args, **kwargs):
+    """Execute a SQL query."""
+    with Cursor() as c:
+        c.execute(*args, **kwargs)
+
+
+def executemany(*args, **kwargs):
+    """Execute many SQL queries."""
+    with Cursor() as c:
+        c.executemany(*args, **kwargs)
