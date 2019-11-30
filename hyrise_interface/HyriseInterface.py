@@ -5,12 +5,12 @@ These are responsible for submitting the requested jobs to a Queue.
 """
 
 import json
-import time
 
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from redis import Redis
 from rq import Queue
+from rq.registry import FinishedJobRegistry
 
 import settings as s
 from InstanceManager import InstanceManager
@@ -31,8 +31,6 @@ class HyriseInterface(object):
         self.scheduler.start()
         self.throughput_counter = "0"
         self.redis = Redis()
-        self.init_redis()
-        self.instanceManager.get_storage_data()
         self.databases = dict()
         # Add some instances as a demo
         self.add_hyrise_instance(
@@ -41,6 +39,7 @@ class HyriseInterface(object):
             s.HYRISE1_PORT,
             s.HYRISE1_USER,
             s.HYRISE1_PASSWORD,
+            s.HYRISE1_NAME,
         )
         self.add_hyrise_instance(
             "Hyrise 2",
@@ -48,19 +47,16 @@ class HyriseInterface(object):
             s.HYRISE2_PORT,
             s.HYRISE2_USER,
             s.HYRISE2_PASSWORD,
+            s.HYRISE2_NAME,
         )
-
-    def init_redis(self):
-        """Set basic values in redis db."""
-        self.redis.set("throughput", 0)
-        self.redis.set("throughput_counter", 0)
-        self.redis.set("start_time_intervall", time.time())
 
     def update_throughput(self):
         """Update throughput."""
-        self.throughput_counter = self.redis.get("throughput_counter").decode("utf-8")
-        print(self.throughput_counter)
-        self.redis.set("throughput_counter", 0)
+        throughput = 0
+        for id in self.databases.keys():
+            registry = self.databases[id]["finished job registry"]
+            throughput += registry.count
+        print(throughput)
 
     def start(self):
         """Start with default values."""
@@ -74,10 +70,10 @@ class HyriseInterface(object):
             data = json.loads(message)
             response = ""
             if data["Content-Type"] == "query":
-                self.execute_raw_query(data["Content"])
+                self.execute(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "workload":
-                self.execute_raw_workload(data["Content"])
+                self.executemany(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
                 response = self.redis.get("storage_data").decode("utf-8")
@@ -94,13 +90,15 @@ class HyriseInterface(object):
     def add_hyrise_instance(self, id, host, port, user, password, name=""):
         """Add hyrise instance."""
         if id not in self.databases.keys():
+            queue = Queue(name=id, connection=self.redis)
             self.databases[id] = {
                 "name": name,
                 "host": host,
                 "port": port,
                 "user": user,
                 "password": password,
-                "queue": Queue(name=id, connection=self.redis),
+                "queue": queue,
+                "finished job registry": FinishedJobRegistry(queue=queue),
             }
             return id
         return False
@@ -116,19 +114,19 @@ class HyriseInterface(object):
         """Execute a function with the given args for each queue."""
         for id in self.databases.keys():
             queue = self.databases[id]["queue"]
-            func(queue, *args, **kwargs)
+            db_info = dict()  # TODO refactor
+            for key in self.databases[id].keys():
+                if key in ("name", "host", "port", "password", "user"):
+                    db_info[key] = self.databases[id][key]
+            func(queue, db_info, *args, **kwargs)
 
-    def get_storage_data(self):
-        """Get storage data from InstanceManager."""
-        self.multiplex(self.instanceManager.get_storage_data,)
-
-    def execute_raw_query(self, query):
+    def execute(self, query):
         """Execute a SQL query."""
-        self.multiplex(self.loadGenerator.execute_raw_query, query)
+        self.multiplex(self.loadGenerator.execute, query)
 
-    def execute_raw_workload(self, workload):
+    def executemany(self, workload):
         """Execute a list of SQL queries forming a workload."""
-        self.multiplex(self.loadGenerator.execute_raw_workload, workload)
+        self.multiplex(self.loadGenerator.executemany, workload)
 
 
 def main():
