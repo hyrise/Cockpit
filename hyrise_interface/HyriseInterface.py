@@ -32,7 +32,6 @@ class HyriseInterface(object):
         self.throughput_counter = "0"
         self.redis = Redis()
         self.init_redis()
-        self.instanceManager.get_storage_data()
         self.databases = dict()
         # Add some instances as a demo
         self.add_hyrise_instance(
@@ -41,6 +40,7 @@ class HyriseInterface(object):
             s.HYRISE1_PORT,
             s.HYRISE1_USER,
             s.HYRISE1_PASSWORD,
+            s.HYRISE1_NAME,
         )
         self.add_hyrise_instance(
             "Hyrise 2",
@@ -48,6 +48,7 @@ class HyriseInterface(object):
             s.HYRISE2_PORT,
             s.HYRISE2_USER,
             s.HYRISE2_PASSWORD,
+            s.HYRISE2_NAME,
         )
 
     def init_redis(self):
@@ -121,10 +122,6 @@ class HyriseInterface(object):
                 if key in ("name", "host", "port", "password", "user"):
                     db_info[key] = self.databases[id][key]
             func(queue, db_info, *args, **kwargs)
-
-    def get_storage_data(self):
-        """Get storage data from InstanceManager."""
-        self.multiplex(self.instanceManager.get_storage_data,)
 
     def execute(self, query):
         """Execute a SQL query."""
