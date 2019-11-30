@@ -7,9 +7,12 @@ The WorkloadProducers have IPC connections to a database interface.
 import json
 import multiprocessing as mp
 import random
+from argparse import ArgumentParser
 from time import sleep
 
 import zmq
+
+import settings as s
 
 
 class WorkloadProducer(mp.Process):
@@ -23,7 +26,7 @@ class WorkloadProducer(mp.Process):
         """Initialize a WorkloadProducer with an IPC connection."""
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REQ)
-        self.socket.connect("tcp://localhost:5555")
+        self.socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
         super().__init__(name=name, daemon=True)
 
     def generate_random(self):
@@ -67,7 +70,7 @@ class WorkloadProducer(mp.Process):
         """Generate a workload and submit it with IPC."""
         workload = self.generate_workload()
         data = {}
-        data["Content-Type"] = "Workload"
+        data["Content-Type"] = "query"
         data["Content"] = workload
         request = json.dumps(data)
         self.socket.send_string(request)
@@ -123,11 +126,16 @@ class WorkloadGenerator(object):
 
 
 def main():
-    """Run a WorkloadGenerator demonstration."""
+    """Run a WorkloadGenerator."""
+    parser = ArgumentParser(description="Start a Workload Generator.")
+    parser.add_argument("runtime", type=int, help="how long to produce a workload (s)")
+    args = parser.parse_args()
     gen = WorkloadGenerator()
-    print("WorkloadGenerator running for 120 seconds. Press CTRL+C to stop.")
+    print(
+        f"WorkloadGenerator running for {args.runtime} seconds. Press CTRL+C to stop."
+    )
     gen.start(1)
-    sleep(120)
+    sleep(args.runtime)
     gen.stop()
 
 

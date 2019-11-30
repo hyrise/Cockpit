@@ -1,8 +1,4 @@
-"""Module for managing Hyrise databases.
-
-Includes the HyriseInterface, which uses an InstanceManager and a LoadGenerator.
-These are responsible for submitting the requested jobs to a Queue.
-"""
+"""Module for managing databases."""
 
 import json
 
@@ -13,56 +9,49 @@ from rq import Queue
 from rq.registry import FinishedJobRegistry
 
 import settings as s
-from InstanceManager import InstanceManager
-from LoadGenerator import LoadGenerator
+import task
 
 
-class HyriseInterface(object):
+class DatabaseManager(object):
     """An interface for concrete Hyrise databases."""
 
     def __init__(self):
-        """Initialize a HyriseInterface with an InstanceManager and a LoadGenerator."""
-        self.instanceManager = InstanceManager()
-        self.loadGenerator = LoadGenerator()
+        """Initialize a HyriseInterface."""
+        # Add scheduler
         self.scheduler = BackgroundScheduler()
         self.scheduler.add_job(
             func=self.update_throughput, trigger="interval", seconds=1,
         )
         self.scheduler.start()
-        self.throughput_counter = "0"
-        self.redis = Redis()
-        self.databases = dict()
+
+        # Initialize Redis connection
+        self.redis = Redis(s.QUEUE_HOST, s.QUEUE_PORT, s.QUEUE_DB, s.QUEUE_PASSWORD)
+
         # Add some instances as a demo
+        self.databases = dict()
         self.add_hyrise_instance(
-            "Hyrise 1",
-            s.HYRISE1_HOST,
-            s.HYRISE1_PORT,
-            s.HYRISE1_USER,
-            s.HYRISE1_PASSWORD,
-            s.HYRISE1_NAME,
+            "Hyrise 1", s.DB1_HOST, s.DB1_PORT, s.DB1_USER, s.DB1_PASSWORD, s.DB1_NAME,
         )
         self.add_hyrise_instance(
-            "Hyrise 2",
-            s.HYRISE2_HOST,
-            s.HYRISE2_PORT,
-            s.HYRISE2_USER,
-            s.HYRISE2_PASSWORD,
-            s.HYRISE2_NAME,
+            "Hyrise 2", s.DB2_HOST, s.DB2_PORT, s.DB2_USER, s.DB2_PASSWORD, s.DB2_NAME,
         )
 
     def update_throughput(self):
-        """Update throughput."""
+        """Update throughput of all databases, currently cumulative."""
         throughput = 0
         for id in self.databases.keys():
             registry = self.databases[id]["finished job registry"]
             throughput += registry.count
+            # TODO cleanup the registry
         print(throughput)
+        return throughput
 
     def start(self):
         """Start with default values."""
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        socket.bind(f"tcp://{s.HYRISE_INTERFACE_HOST}:{s.HYRISE_INTERFACE_PORT}")
+        print(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
+        socket.bind(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
         print("Hyrise Interface running. Press Ctrl+C to stop.")
 
         while True:
@@ -80,7 +69,7 @@ class HyriseInterface(object):
             elif data["Content-Type"] == "throughput":
                 response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
-                response = "[NOT IMPLEMENTED YETWorkload]"
+                response = "[NOT IMPLEMENTED YET]"
                 pass
             else:
                 response = "[Error]"
@@ -98,7 +87,9 @@ class HyriseInterface(object):
                 "user": user,
                 "password": password,
                 "queue": queue,
-                "finished job registry": FinishedJobRegistry(queue=queue),
+                "finished job registry": FinishedJobRegistry(
+                    "Hyrise 1", queue=queue, connection=self.redis
+                ),
             }
             return id
         return False
@@ -114,24 +105,20 @@ class HyriseInterface(object):
         """Execute a function with the given args for each queue."""
         for id in self.databases.keys():
             queue = self.databases[id]["queue"]
-            db_info = dict()  # TODO refactor
-            for key in self.databases[id].keys():
-                if key in ("name", "host", "port", "password", "user"):
-                    db_info[key] = self.databases[id][key]
-            func(queue, db_info, *args, **kwargs)
+            queue.enqueue(func, *args, **kwargs)
 
-    def execute(self, query):
+    def execute(self, query, vars=None):
         """Execute a SQL query."""
-        self.multiplex(self.loadGenerator.execute, query)
+        self.multiplex(task.execute, query, vars)
 
-    def executemany(self, workload):
+    def executemany(self, query, vars_list):
         """Execute a list of SQL queries forming a workload."""
-        self.multiplex(self.loadGenerator.executemany, workload)
+        self.multiplex(task.executemany, query, vars_list)
 
 
 def main():
-    """Run a HyriseInterface."""
-    HyriseInterface().start()
+    """Run a DatabaseManager."""
+    DatabaseManager().start()
 
 
 if __name__ == "__main__":

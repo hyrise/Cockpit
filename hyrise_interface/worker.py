@@ -1,4 +1,13 @@
-"""Includes a custom rq-worker."""
+"""Workers with a connection to a database.
+
+The connection to a database is established once.
+It will be handed to the jobs for improved performance.
+"""
+
+from argparse import ArgumentParser
+
+from redis import Redis
+from rq import Connection
 from rq.worker import (
     JobTimeoutException,
     StartedJobRegistry,
@@ -15,13 +24,17 @@ from rq.worker import (
     yellow,
 )
 
+import settings as s
+from database import HyriseDatabase  # Just for demo, should be dynamic later
+from job import ConnectionJob
 
-class HyriseWorker(Worker):
-    """A custom Hyrise Worker."""
 
-    def __init__(self, *args, **kwargs):
-        """Inititialze the worker with a connection."""
-        self.connection = 42  # TODO initialize connection
+class ConnectionWorker(Worker):
+    """A worker with a connection to a database."""
+
+    def __init__(self, database, *args, **kwargs):
+        """Inititialze the worker with a connection to a database."""
+        self.db_connection = database.connect()
         super().__init__(*args, **kwargs)
 
     def perform_job(self, job, queue, heartbeat_ttl=None):
@@ -37,7 +50,7 @@ class HyriseWorker(Worker):
             job.started_at = utcnow()
             timeout = job.timeout or self.queue_class.DEFAULT_TIMEOUT
             with self.death_penalty_class(timeout, JobTimeoutException, job_id=job.id):
-                rv = job.perform(self.connection)
+                rv = job.perform(self.db_connection)
 
             job.ended_at = utcnow()
 
@@ -79,3 +92,22 @@ class HyriseWorker(Worker):
                 self.log.info("Result will never expire, clean up result key manually")
 
         return True
+
+
+if __name__ == "__main__":
+    # CLI
+    parser = ArgumentParser(description="Start a ConnectionWorker.")
+    parser.add_argument("user", type=str, help="database user")
+    parser.add_argument("password", type=str, help="database password")
+    parser.add_argument("host", type=str, help="database host")
+    parser.add_argument("port", type=str, help="database port")
+    parser.add_argument("name", type=str, help="database name")
+    parser.add_argument("queue", type=str, help="database queue")
+    args = parser.parse_args()
+    # Setup
+    redis_connection = Redis(s.QUEUE_HOST, s.QUEUE_PORT, s.QUEUE_DB, s.QUEUE_PASSWORD)
+    database = HyriseDatabase(args.user, args.password, args.host, args.port, args.name)
+    # Start the worker
+    with Connection(redis_connection):
+        w = ConnectionWorker(database, [args.queue], job_class=ConnectionJob)
+        w.work()

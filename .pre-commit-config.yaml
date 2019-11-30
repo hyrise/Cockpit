@@ -5,15 +5,24 @@ repos:
     rev: v2.4.0
     hooks:
     - id: check-added-large-files
+      name: Checking for large files
       args: ['--maxkb=1000']
     - id: check-merge-conflict
+      name: Checking for merge conflicts
     - id: check-ast
+      name: Checking syntax of python files
     - id: debug-statements
+      name: Checking for debug statements
     - id: check-json
+      name: Checking json file syntax
     - id: check-toml
+      name: Checking toml file syntax
     - id: check-xml
+      name: Checking xml file syntax
     - id: check-yaml
+      name: Checking yaml file syntax
     - id: pretty-format-json
+      name: Formatting json files
       args: [--autofix, --indent=4, --no-sort-keys]
   - repo: local
     hooks:
