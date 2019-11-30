@@ -3,7 +3,7 @@ name: Python application
 on: [push]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -15,6 +15,9 @@ jobs:
         python-version: 3.6.9
     - name: Set up pipenv
       uses: dschep/install-pipenv-action@v1
-    - name: pre-commit hooks
+    - name: Install dev dependencies
+      run: |
+        pipenv install --dev
+    - name: Run all pre-commit hooks
       run: |
         pipenv run pre-commit run --all-files
