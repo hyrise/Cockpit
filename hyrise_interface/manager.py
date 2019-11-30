@@ -107,13 +107,13 @@ class DatabaseManager(object):
             queue = self.databases[id]["queue"]
             queue.enqueue(func, *args, **kwargs)
 
-    def execute(self, query):
+    def execute(self, query, vars=None):
         """Execute a SQL query."""
-        self.multiplex(task.execute, query)
+        self.multiplex(task.execute, query, vars)
 
-    def executemany(self, workload):
+    def executemany(self, query, vars_list):
         """Execute a list of SQL queries forming a workload."""
-        self.multiplex(task.executemany, workload)
+        self.multiplex(task.executemany, query, vars_list)
 
 
 def main():
