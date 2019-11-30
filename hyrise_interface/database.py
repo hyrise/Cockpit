@@ -12,16 +12,16 @@ class Database(ABC):
 
     def __init__(self, user, password, host, port, dbname):
         """Initialize the connection attributes."""
-        self.__user = user
-        self.__password = password
-        self.__host = host
-        self.__port = port
-        self.__dbname = dbname
+        self._user = user
+        self._password = password
+        self._host = host
+        self._port = port
+        self._dbname = dbname
 
     def __repr__(self):
         """Identify by connection information."""
         return "{:s}:{:s}@{:s}:{:d}/{:s}".format(
-            self.__user, self.__password, self.__host, self.__port, self.__dbname
+            self._user, self._password, self._host, self._port, self._dbname
         )
 
     @abstractmethod
@@ -36,9 +36,9 @@ class HyriseDatabase(Database):
     def connect(self):
         """Establish a connection to the Hyrise database."""
         return connect(
-            user=self.__user,
-            password=self.__password,
-            host=self.__host,
-            port=self.__port,
-            dbname=self.__dbname,
+            user=self._user,
+            password=self._password,
+            host=self._host,
+            port=self._port,
+            dbname=self._dbname,
         )

@@ -19,6 +19,11 @@ load_dotenv(find_dotenv())
 DB_MANAGER_HOST = getenv("DB_MANAGER_HOST")
 DB_MANAGER_PORT = getenv("DB_MANAGER_PORT")
 
+QUEUE_HOST = getenv("QUEUE_HOST")
+QUEUE_PORT = getenv("QUEUE_PORT")
+QUEUE_DB = getenv("QUEUE_DB")
+QUEUE_PASSWORD = getenv("QUEUE_PASSWORD")
+
 DB1_USER = getenv("DB1_USER")
 DB1_PASSWORD = getenv("DB1_PASSWORD")
 DB1_HOST = getenv("DB1_HOST")
