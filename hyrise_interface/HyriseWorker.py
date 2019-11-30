@@ -1,4 +1,19 @@
-from rq.worker import *  # TODO no star import
+"""Includes a custom rq-worker."""
+from rq.worker import (
+    JobTimeoutException,
+    StartedJobRegistry,
+    Worker,
+    as_text,
+    blue,
+    green,
+    pop_connection,
+    push_connection,
+    sys,
+    text_type,
+    traceback,
+    utcnow,
+    yellow,
+)
 
 
 class HyriseWorker(Worker):
@@ -10,9 +25,7 @@ class HyriseWorker(Worker):
         super().__init__(*args, **kwargs)
 
     def perform_job(self, job, queue, heartbeat_ttl=None):
-        """Performs the actual work of a job.  Will/should only be called
-            inside the work horse's process.
-            """
+        """Perform the actual work of a job."""
         self.prepare_job_execution(job, heartbeat_ttl)
         push_connection(self.connection)
 
@@ -34,7 +47,7 @@ class HyriseWorker(Worker):
             self.handle_job_success(
                 job=job, queue=queue, started_job_registry=started_job_registry
             )
-        except:
+        except Exception:
             job.ended_at = utcnow()
             exc_info = sys.exc_info()
             exc_string = self._get_safe_exception_string(
