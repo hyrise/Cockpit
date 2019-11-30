@@ -1,31 +1,23 @@
 name: Python application
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.6.9
       uses: actions/setup-python@v1
       with:
         python-version: 3.6.9
-    - name: Format check with black
+    - name: Install libpq PostgreSQL client
+      run: sudo apt-get -yqq install libpq-dev
+    - name: Install pipenv
+      uses: dschep/install-pipenv-action@v1
+    - name: Install pipenv virtual environment with dev dependencies
       run: |
-        pip install black
-        black . --check
-    - name: Lint with flake8
+        pipenv --bare install --dev
+    - name: Run all pre-commit hooks
       run: |
-        pip install flake8
-        pip install pydocstyle pep8-naming
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Security chheck with bandit
-      run: |
-        pip install bandit
-        bandit -r .
+        pipenv run pre-commit run --all-files
