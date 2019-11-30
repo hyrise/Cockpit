@@ -9,6 +9,7 @@ class ConnectionJob(Job):
     """A job getting a connection when performed."""
 
     def perform(self, db_connection, *args, **kwargs):
-        """Perform the job with a connection."""
+        """Perform the job with a connection, pass cursor to the task."""
         self.db_connection = db_connection
-        super().perform(*args, **kwargs)
+        with db_connection.cursor() as self.db_connection_cursor:
+            super().perform(*args, **kwargs)
