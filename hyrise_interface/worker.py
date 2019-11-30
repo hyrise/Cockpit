@@ -1,4 +1,9 @@
-"""Includes a custom rq-worker."""
+"""Workers with a connection to a database.
+
+The connection to a database is established once.
+It will be handed to the jobs for improved performance.
+"""
+
 from rq.worker import (
     JobTimeoutException,
     StartedJobRegistry,
@@ -16,13 +21,18 @@ from rq.worker import (
 )
 
 
-class HyriseWorker(Worker):
-    """A custom Hyrise Worker."""
+class ConnectionWorker(Worker):
+    """A worker with a connection to a database."""
 
-    def __init__(self, *args, **kwargs):
-        """Inititialze the worker with a connection."""
-        self.connection = 42  # TODO initialize connection
+    def __init__(self, database, *args, **kwargs):
+        """Inititialze the worker with a connection to a database."""
+        self.connection = database.connect()
         super().__init__(*args, **kwargs)
+
+    def __del__(self):
+        """Clean up by closing the connection."""
+        self.connection.close()
+        super().__del__()
 
     def perform_job(self, job, queue, heartbeat_ttl=None):
         """Perform the actual work of a job."""
