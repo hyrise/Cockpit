@@ -102,11 +102,12 @@ if __name__ == "__main__":
     parser.add_argument("host", type=str, help="database host")
     parser.add_argument("port", type=str, help="database port")
     parser.add_argument("name", type=str, help="database name")
+    parser.add_argument("queue", type=str, help="database queue")
     args = parser.parse_args()
     # Setup
     redis_connection = Redis(s.QUEUE_HOST, s.QUEUE_PORT, s.QUEUE_DB, s.QUEUE_PASSWORD)
     database = HyriseDatabase(args.user, args.password, args.host, args.port, args.name)
     # Start the worker
     with Connection(redis_connection):
-        w = ConnectionWorker(database, ["default"], job_class=ConnectionJob)
+        w = ConnectionWorker(database, [args.queue], job_class=ConnectionJob)
         w.work()
