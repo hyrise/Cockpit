@@ -4,7 +4,7 @@ Includes a HyriseWorker with a connection to a Hyrise DB.
 Includes different tasks ready to be executed.
 """
 
-from psycopg2 import connection
+from psycopg2 import connect
 
 connection_pool = []
 redis_connection_pool = []
@@ -19,7 +19,7 @@ class Cursor:
 
     def __enter__(self):
         """Establish connection and cursor."""
-        self.connection = connection(
+        self.connection = connect(
             dbname=self.db_info["name"],
             user=self.db_info["user"],
             password=self.db_info["password"],
