@@ -5,12 +5,12 @@ These are responsible for submitting the requested jobs to a Queue.
 """
 
 import json
-import time
 
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from redis import Redis
 from rq import Queue
+from rq.registry import FinishedJobRegistry
 
 import settings as s
 from InstanceManager import InstanceManager
@@ -31,7 +31,6 @@ class HyriseInterface(object):
         self.scheduler.start()
         self.throughput_counter = "0"
         self.redis = Redis()
-        self.init_redis()
         self.databases = dict()
         # Add some instances as a demo
         self.add_hyrise_instance(
@@ -51,17 +50,13 @@ class HyriseInterface(object):
             s.HYRISE2_NAME,
         )
 
-    def init_redis(self):
-        """Set basic values in redis db."""
-        self.redis.set("throughput", 0)
-        self.redis.set("throughput_counter", 0)
-        self.redis.set("start_time_intervall", time.time())
-
     def update_throughput(self):
         """Update throughput."""
-        self.throughput_counter = self.redis.get("throughput_counter").decode("utf-8")
-        print(self.throughput_counter)
-        self.redis.set("throughput_counter", 0)
+        throughput = 0
+        for id in self.databases.keys():
+            registry = self.databases[id]["finished job registry"]
+            throughput += registry.count
+        print(throughput)
 
     def start(self):
         """Start with default values."""
@@ -95,13 +90,15 @@ class HyriseInterface(object):
     def add_hyrise_instance(self, id, host, port, user, password, name=""):
         """Add hyrise instance."""
         if id not in self.databases.keys():
+            queue = Queue(name=id, connection=self.redis)
             self.databases[id] = {
                 "name": name,
                 "host": host,
                 "port": port,
                 "user": user,
                 "password": password,
-                "queue": Queue(name=id, connection=self.redis),
+                "queue": queue,
+                "finished job registry": FinishedJobRegistry(queue=queue),
             }
             return id
         return False
