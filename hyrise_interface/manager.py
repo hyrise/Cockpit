@@ -4,15 +4,13 @@ import json
 import threading
 
 import zmq
+from apscheduler.schedulers.background import BackgroundScheduler
 from redis import Redis
 from rq import Queue
 from rq.registry import FinishedJobRegistry
 
 import settings as s
 import task
-from apscheduler.schedulers.background import BackgroundScheduler
-
-NUMBER_SERVER_THREADS = 2
 
 
 class DatabaseManager(object):
@@ -70,7 +68,7 @@ class DatabaseManager(object):
             elif data["Content-Type"] == "throughput":
                 response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
-                response = "[NOT IMPLEMENTED YETWorkload]"
+                response = "[NOT IMPLEMENTED YET]"
                 pass
             else:
                 response = "[Error]"
@@ -80,15 +78,15 @@ class DatabaseManager(object):
     def start(self):
         """Start with default values."""
         print(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
-        url_worker = "inproc://workers"
-        url_client = "tcp://*:5555"
+        url_worker = s.URL_WORKER
+        url_client = s.URL_CLIENT
         context = zmq.Context.instance()
         clients = context.socket(zmq.ROUTER)
         clients.bind(url_client)
         workers = context.socket(zmq.DEALER)
         workers.bind(url_worker)
 
-        for i in range(NUMBER_SERVER_THREADS):
+        for _ in range(s.NUMBER_SERVER_THREADS):
             thread = threading.Thread(
                 target=self.server_worker_routine, args=(url_worker,)
             )

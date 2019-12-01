@@ -36,6 +36,4 @@ DB2_HOST = getenv("DB2_HOST")
 DB2_PORT = int(getenv("DB2_PORT"))
 DB2_NAME = getenv("DB2_NAME")
 
-NUMBER_SERVER_THREADS = int(getenv("NUMBER_SERVER_THREADS"))
-URL_WORKER = getenv("URL_WORKER")
-URL_CLIENT = getenv("URL_CLIENT")
+JOB_RESULT_TTL = int(getenv("JOB_RESULT_TTL"))
