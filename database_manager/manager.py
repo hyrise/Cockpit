@@ -34,7 +34,7 @@ class DatabaseManager(object):
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
-            "tcp://{:s}:{:s}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
+            "tcp://{:s}:{:4d}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
         )
         self._run()
 
@@ -67,34 +67,85 @@ class DatabaseManager(object):
             return id
         return False
 
-    def _handle_request(self, request):
-        if request["header"]["message"] == "add driver":
-            result = self._add_driver(
-                request["body"]["db_type"],
-                request["body"]["id"],
-                request["body"]["user"],
-                request["body"]["password"],
-                request["body"]["host"],
-                request["body"]["port"],
-                request["body"]["dbname"],
-            )
-            if request["header"]["message"] == "pop driver":
-                result = self._pop_driver(request["body"]["id"])
+    def _execute(self, query, vars=None):
+        for id in self._drivers.keys():
+            self._drivers[id].execute(query, vars)
+        return True
 
-            if request["header"]["message"] == "shutdown":
-                self._shutdown_requested = False
+    def _executemany(self, query, vars_list):
+        for id in self._drivers.keys():
+            self._drivers[id].executemany(query, vars_list)
+        return True
+
+    def _executelist(self, querylist):
+        for id in self._drivers.keys():
+            self._drivers[id].executelist(querylist)
+        return True
+
+    def _throughput(self):
+        result = dict()
+        for id in self._drivers.keys():
+            result[id] = self._drivers[id].throughput
+        return result
+
+    def _queue_length(self):
+        result = dict()
+        for id in self._drivers.keys():
+            result[id] = self._drivers[id].queue_length
+        return result
+
+    def _handle_request(self, request):
+        call = request["header"]["message"]
+        body = request["body"]
+
+        if call == "add driver":
+            result = self._add_driver(
+                body["db_type"],
+                body["id"],
+                body["user"],
+                body["password"],
+                body["host"],
+                body["port"],
+                body["dbname"],
+            )
+            if call == "pop driver":
+                result = self._pop_driver(body["id"])
+
+            if call == "execute":
+                result = self._execute(body["query"], body["vars"])
+
+            if call == "executemany":
+                result = self._execute(body["query"], body["vars_list"])
+
+            if call == "executelist":
+                result = self._execute(body["query_list"])
+
+            if call == "throughput":
+                result = self._throughput()
+
+            if call == "queue length":
+                result = self._queue_length()
+
+            if call == "shutdown":
+                self._shutdown_requested = True
+
         return result
 
     def _run(self):
         """Run the manager by enabling IPC."""
+        print("Database manager running. Press CTRL+C to quit.")
         while True:
             # Get the message
             message = self._socket.recv()
             request = loads(message)
 
-            response = responses[200]
-            if not self._handle_request(request):
+            result = self._handle_request(request)
+            if result is False:
                 response = responses[400]
+            elif result is True:
+                response = responses[200]
+            else:
+                response["body"] = result
 
             # Send the reply
             reply = dumps(response)

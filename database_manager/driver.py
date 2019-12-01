@@ -12,6 +12,7 @@ from rq import Queue
 from rq.registry import FinishedJobRegistry
 
 import settings as s
+import task
 from database import HyriseDatabase
 
 
@@ -50,6 +51,9 @@ class DatabaseDriver(ABC):
         self._scheduler.start()
 
     def _measure_throughput(self):
+        # TODO instead of counting jobs, the job.meta["n_queries"]
+        # should be counted, as executemany and executelist are countend
+        # as one job.
         now = time()
         throughput = self._finished_job_registry.connection.zremrangebyscore(
             self._finished_job_registry.key, 0, now + s.JOB_RESULT_TTL
@@ -64,6 +68,18 @@ class DatabaseDriver(ABC):
         result = (now, queue_length)
         self._queue_length.append(result)
         return result
+
+    def task_execute(self, query, vars=None):
+        """Task to enqueue a query to be executed by a worker."""
+        self._queue.enqueue(task.execute, query, vars)
+
+    def task_executemany(self, query, vars_list):
+        """Task to enqueue a query with multiple vars to be executed by a worker."""
+        self._queue.enqueue(task.executemany, query, vars_list)
+
+    def task_executelist(self, query_list):
+        """Task to enqueue a query list to be executed by a worker."""
+        self._queue.enqueue(task.executelist, query_list)
 
     @property
     def throughput(self):
