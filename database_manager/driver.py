@@ -18,7 +18,7 @@ class DatabaseDriver(ABC):
     """An abstract driver for a database."""
 
     def __init__(self, id, user, password, host, port, dbname, redis_connection):
-        """Initialize a Hyrise driver with a Hyrise db."""
+        """Initialize a database driver."""
         self._id = id
         self._init_database(user, password, host, port, dbname)
         self._init_queue(redis_connection)
@@ -76,7 +76,7 @@ class DatabaseDriver(ABC):
 
     def __repr__(self):
         """Return identification, most useful information."""
-        return f"Hyrise Driver {self._id}: {self._database}"
+        return f"DatabaseDriver {self._id}: {self._database}"
 
 
 class HyriseDriver(DatabaseDriver):
