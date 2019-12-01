@@ -31,7 +31,7 @@ class DatabaseDriver(ABC):
 
     def _init_queue(self, redis_connection):
         self._redis_connection = redis_connection
-        self._queue = Queue(connection=self._redis_connection)
+        self._queue = Queue(name=self._id, connection=self._redis_connection)
         self._finished_job_registry = FinishedJobRegistry(
             connection=self._redis_connection, queue=self._queue,
         )
