@@ -1,15 +1,18 @@
 """Module for managing databases."""
 
 import json
+import threading
 
 import zmq
-from apscheduler.schedulers.background import BackgroundScheduler
 from redis import Redis
 from rq import Queue
 from rq.registry import FinishedJobRegistry
 
 import settings as s
 import task
+from apscheduler.schedulers.background import BackgroundScheduler
+
+NUMBER_SERVER_THREADS = 2
 
 
 class DatabaseManager(object):
@@ -46,35 +49,54 @@ class DatabaseManager(object):
         print(throughput)
         return throughput
 
-    def start(self):
-        """Start with default values."""
-        context = zmq.Context()
+    def server_worker_routine(self, worker_url):
+        """Server worker routine."""
+        context = zmq.Context.instance()
         socket = context.socket(zmq.REP)
-        print(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
-        socket.bind(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
-        print("Hyrise Interface running. Press Ctrl+C to stop.")
+        socket.connect(worker_url)
 
         while True:
             message = socket.recv()
             data = json.loads(message)
             response = ""
             if data["Content-Type"] == "query":
-                self.execute(data["Content"])
+                self.execute_raw_query(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "workload":
-                self.executemany(data["Content"])
+                self.execute_raw_workload(data["Content"])
                 response = "OK"
             elif data["Content-Type"] == "storage_data":
                 response = self.redis.get("storage_data").decode("utf-8")
             elif data["Content-Type"] == "throughput":
                 response = json.dumps({"throughput": self.throughput_counter})
             elif data["Content-Type"] == "runtime_information":
-                response = "[NOT IMPLEMENTED YET]"
+                response = "[NOT IMPLEMENTED YETWorkload]"
                 pass
             else:
                 response = "[Error]"
 
             socket.send_string(response)
+
+    def start(self):
+        """Start with default values."""
+        print(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
+        url_worker = "inproc://workers"
+        url_client = "tcp://*:5555"
+        context = zmq.Context.instance()
+        clients = context.socket(zmq.ROUTER)
+        clients.bind(url_client)
+        workers = context.socket(zmq.DEALER)
+        workers.bind(url_worker)
+
+        for i in range(NUMBER_SERVER_THREADS):
+            thread = threading.Thread(
+                target=self.server_worker_routine, args=(url_worker,)
+            )
+            thread.start()
+
+        print("Hyrise Interface running. Press Ctrl+C to stop.")
+
+        zmq.proxy(clients, workers)
 
     def add_hyrise_instance(self, id, host, port, user, password, name=""):
         """Add hyrise instance."""
