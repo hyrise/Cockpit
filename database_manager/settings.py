@@ -35,3 +35,5 @@ DB2_PASSWORD = getenv("DB2_PASSWORD")
 DB2_HOST = getenv("DB2_HOST")
 DB2_PORT = getenv("DB2_PORT")
 DB2_NAME = getenv("DB2_NAME")
+
+JOB_RESULT_TTL = getenv("JOB_RESULT_TTL")

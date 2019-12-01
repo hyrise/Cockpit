@@ -11,6 +11,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from rq import Queue
 from rq.registry import FinishedJobRegistry
 
+import settings as s
 from database import HyriseDatabase
 
 
@@ -51,7 +52,7 @@ class DatabaseDriver(ABC):
     def _measure_throughput(self):
         now = time()
         throughput = self._finished_job_registry.connection.zremrangebyscore(
-            self._finished_job_registry.key, 0, now + 500
+            self._finished_job_registry.key, 0, now + s.JOB_RESULT_TTL
         )
         result = (now, throughput)
         self._throughput.append(result)
