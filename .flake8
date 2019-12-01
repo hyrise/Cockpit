@@ -1,5 +1,14 @@
 [flake8]
-ignore = E203, E266, E501, W503
+
+# extend-ignore
+# E203: https://github.com/psf/black#slices
+# W503: https://github.com/psf/black#line-breaks--binary-operators
+# E501: https://github.com/psf/black#line-breaks--binary-operators
+# I***: isort
+extend-ignore = E203, W503, E501, I
+
+# max-complexity: https://en.wikipedia.org/wiki/Cyclomatic_complexity#Limiting_complexity_during_development
+max-complexity = 10
+
+# max-line-length: https://github.com/psf/black#line-length
 max-line-length = 80
-max-complexity = 18
-select = B,C,E,F,W,T4,B9,N
