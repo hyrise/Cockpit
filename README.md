@@ -79,6 +79,7 @@ Now, install and initialize your virtual environment (this is a slight [workarou
 
 ```bash
 python -m pip install pipenv
+exec "$SHELL"
 pipenv --three --python=`which python`
 pipenv install
 ```
