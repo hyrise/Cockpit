@@ -4,13 +4,11 @@ Includes the main WorkloadGenerator, which uses multiple WorkloadProducers.
 The WorkloadGenerator manages the WorkloadProducers.
 The WorkloadProducers have IPC connections to a database interface.
 """
-import json
+
 import multiprocessing as mp
 import random
-from argparse import ArgumentParser
-from time import sleep
 
-import zmq
+from zmq import REP, REQ, Context
 
 import settings as s
 
@@ -24,23 +22,26 @@ class WorkloadProducer(mp.Process):
 
     def __init__(self, name):
         """Initialize a WorkloadProducer with an IPC connection."""
-        self.context = zmq.Context()
-        self.socket = self.context.socket(zmq.REQ)
-        self.socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
+        self._context = Context(io_threads=1)
+        self._socket = self._context.socket(REQ)
+        self._socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
         super().__init__(name=name, daemon=True)
 
-    def generate_random(self):
+    def _generate_random(self):
         """Return a simple query with a random number."""
-        # TODO maybe get a cursor and use mogrify?
-        return f"""SELECT *
+        return (
+            """SELECT *
         FROM nation
-        WHERE n_nationkey = {random.randint(0, 24)}"""  # nosec
+        WHERE n_nationkey = ?;""",
+            (random.randint(0, 24),),  # nosec
+        )
 
-    def generate_workload(self, n_queries=1):
+    def _generate_execute(self):
         """Return a list of queries forming a workload."""
         return random.choices(
             [
-                """SELECT
+                (
+                    """SELECT
             l_returnflag,
             l_linestatus,
             SUM(l_quantity) as sum_qty,
@@ -53,27 +54,32 @@ class WorkloadProducer(mp.Process):
             WHERE l_shipdate <= '1998-12-01'
             GROUP BY l_returnflag, l_linestatus
             ORDER BY l_returnflag, l_linestatus;""",
-                """SELECT
+                    (1,),
+                ),
+                (
+                    """SELECT
             sum(l_extendedprice*l_discount) AS REVENUE
             FROM lineitem
             WHERE l_shipdate >= '1994-01-01'
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
                 AND .07 AND l_quantity < 24;""",
-                self.generate_random(),
+                    (1,),
+                ),
+                self._generate_random(),
             ],
             weights=[1, 1, 100],
-            k=n_queries,
+            k=1,
         )
 
-    def run(self):
-        """Generate a workload and submit it with IPC."""
-        workload = self.generate_workload()
-        data = {}
-        data["Content-Type"] = "query"
-        data["Content"] = workload
-        request = json.dumps(data)
-        self.socket.send_string(request)
+    def start(self):
+        """Generate workloads and submit it with IPC."""
+        while True:
+            # TODO add shutdown event
+            request = {"header": {"status": 200, "message": "execute"}}
+            query = self._generate_execute(n_queries=1)[0]
+            request["body"] = {"query": query}
+            self._socket.send_json(request)
 
 
 class WorkloadGenerator(object):
@@ -85,58 +91,76 @@ class WorkloadGenerator(object):
 
     def __init__(self):
         """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
-        self.producers = []
+        self._producers = []
+        self._shutdown_requested = False
+        self._init_server()
+        self._start()
+        self._run()
 
-    def start(self, n_producers=1):
+    def _init_server(self):
+        self._context = Context(io_threads=1)
+        self._socket = self._context.socket(REP)
+        self._socket.bind("tcp://{:s}:{:4d}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
+
+    def _start(self, n_producers=0):
         """Start generating workloads with n_producers."""
-        [self.add_producer() for i in range(n_producers)]
+        [self._add_producer() for i in range(n_producers)]
 
-    def stop(self):
+    def _stop(self):
         """Stop generating workloads and kill all WorkloadProducers."""
-        [self.pop_producer() for i in range(len(self.producers))]
+        [self._pop_producer() for i in range(len(self._producers))]
 
-    def add_producer(self):
+    def _add_producer(self):
         """Increase the number of WorkloadProducers by one."""
         p = WorkloadProducer(f"WorkloadProducer {len(self.producers)}")
-        self.producers.append(p)
+        self._producers.append(p)
         p.start()
 
-    def pop_producer(self):
+    def _pop_producer(self):
         """Decrease the number of WorkloadProducers by one."""
-        if self.producers:
-            p = self.producers.pop()
+        if self._producers:
+            p = self._producers.pop()
             p.terminate()
             p.join()
 
-    def set_producers(self, number):
+    def _set_producers(self, number):
         """Set the number of WorkloadProducers."""
-        delta = number - len(self.producers)
+        delta = number - len(self._producers)
         if delta < 0:
-            f = self.add_producer
+            f = self._add_producer
         elif delta > 0:
-            f = self.pop_producer
+            f = self._pop_producer
         else:
             return
         [f() for _ in range(delta)]
-        return self.get_producers()
+        return self._get_producers()
 
-    def get_producers(self):
+    def _get_producers(self):
         """Return the number of WorkloadProducers."""
-        return len(self.producers)
+        return len(self._producers)
+
+    def _run(self):
+        """Run the generator by enabling IPC."""
+        while True:
+            # Get the message
+            request = self._socket.recv_json()
+
+            # TODO add server functionality as found in database manager
+
+            # Send the reply
+            self._socket.send_json(
+                request
+            )  # TODO send a response instead of the request
+
+            # Shutdown
+            if self._shutdown_requested:
+                self._stop()
+                break
 
 
 def main():
     """Run a WorkloadGenerator."""
-    parser = ArgumentParser(description="Start a Workload Generator.")
-    parser.add_argument("runtime", type=int, help="how long to produce a workload (s)")
-    args = parser.parse_args()
-    gen = WorkloadGenerator()
-    print(
-        f"WorkloadGenerator running for {args.runtime} seconds. Press CTRL+C to stop."
-    )
-    gen.start(1)
-    sleep(args.runtime)
-    gen.stop()
+    WorkloadGenerator()
 
 
 if __name__ == "__main__":

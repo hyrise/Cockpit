@@ -1,7 +1,5 @@
 """Module for managing databases."""
 
-from json import dumps, loads
-
 from redis import Redis
 from zmq import REP, Context
 
@@ -19,6 +17,7 @@ class DatabaseManager(object):
 
     def __init__(self):
         """Initialize a DatabaseManager."""
+        self._drivers = dict()
         self._shutdown_requested = False
         self._init_redis_connection()
         self._init_server()
@@ -30,7 +29,6 @@ class DatabaseManager(object):
         )
 
     def _init_server(self):
-        self._drivers = dict()
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
@@ -136,8 +134,7 @@ class DatabaseManager(object):
         print("Database manager running. Press CTRL+C to quit.")
         while True:
             # Get the message
-            message = self._socket.recv()
-            request = loads(message)
+            request = self._socket.recv_json()
 
             result = self._handle_request(request)
             if result is False:
@@ -148,8 +145,7 @@ class DatabaseManager(object):
                 response["body"] = result
 
             # Send the reply
-            reply = dumps(response)
-            self._socket.send_string(reply)
+            self._socket.send_json(response)
 
             # Shutdown
             if self._shutdown_requested:
