@@ -4,8 +4,6 @@ The connection to a database is established once.
 It will be handed to the jobs for improved performance.
 """
 
-from argparse import ArgumentParser
-
 from redis import Redis
 from rq import Connection
 from rq.worker import (
@@ -95,19 +93,10 @@ class ConnectionWorker(Worker):
 
 
 if __name__ == "__main__":
-    # CLI
-    parser = ArgumentParser(description="Start a ConnectionWorker.")
-    parser.add_argument("user", type=str, help="database user")
-    parser.add_argument("password", type=str, help="database password")
-    parser.add_argument("host", type=str, help="database host")
-    parser.add_argument("port", type=str, help="database port")
-    parser.add_argument("name", type=str, help="database name")
-    parser.add_argument("queue", type=str, help="database queue")
-    args = parser.parse_args()
     # Setup
     redis_connection = Redis(s.QUEUE_HOST, s.QUEUE_PORT, s.QUEUE_DB, s.QUEUE_PASSWORD)
-    database = HyriseDatabase(args.user, args.password, args.host, args.port, args.name)
+    database = HyriseDatabase(s.DB_USER, s.DB_PASSWORD, s.DB_HOST, s.DB_PORT, s.DB_NAME)
     # Start the worker
     with Connection(redis_connection):
-        w = ConnectionWorker(database, [args.queue], job_class=ConnectionJob)
+        w = ConnectionWorker(database, [s.DRIVER_ID], job_class=ConnectionJob)
         w.work()

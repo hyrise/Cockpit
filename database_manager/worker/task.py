@@ -26,4 +26,4 @@ def executelist(query_list):
     n_queries = len(query_list)
     job = get_current_job()
     job.meta["n_queries"] = n_queries
-    get_current_job().db_connection_cursor.executemany(query_list, range(n_queries))
+    job.db_connection_cursor.executemany(query_list, range(n_queries))

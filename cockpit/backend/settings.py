@@ -16,5 +16,11 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-HI_HOST = getenv("HI_HOST")
-HI_PORT = getenv("HI_PORT")
+DB_MANAGER_HOST = getenv("DB_MANAGER_HOST")
+DB_MANAGER_PORT = int(getenv("DB_MANAGER_PORT"))
+
+GENERATOR_HOST = getenv("GENERATOR_HOST")
+GENERATOR_PORT = int(getenv("GENERATOR_PORT"))
+
+BACKEND_HOST = getenv("GENERATOR_HOST")
+BACKEND_PORT = int(getenv("BACKEND_PORT"))

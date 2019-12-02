@@ -16,8 +16,9 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-DB_MANAGER_HOST = getenv("DB_MANAGER_HOST")
-DB_MANAGER_PORT = int(getenv("DB_MANAGER_PORT"))
-
-GENERATOR_HOST = getenv("GENERATOR_HOST")
-GENERATOR_PORT = int(getenv("GENERATOR_PORT"))
+DB_USER = getenv("DB_USER")
+DB_PASSWORD = getenv("DB_PASSWORD")
+DB_HOST = getenv("DB_HOST")
+DB_PORT = int(getenv("DB_PORT"))
+DB_NAME = getenv("DB_NAME")
+DRIVER_ID = getenv("DRIVER_ID")

@@ -4,7 +4,6 @@ A driver uses analyzers to measure data about a database.
 Includes a database object.
 """
 
-from abc import ABC, abstractmethod
 from time import time
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -12,11 +11,9 @@ from rq import Queue
 from rq.registry import FinishedJobRegistry
 
 import settings as s
-import task
-from database import HyriseDatabase
 
 
-class DatabaseDriver(ABC):
+class DatabaseDriver:
     """An abstract driver for a database."""
 
     def __init__(self, id, user, password, host, port, dbname, redis_connection):
@@ -27,9 +24,10 @@ class DatabaseDriver(ABC):
         self._init_measurements()
         self._init_scheduler()
 
-    @abstractmethod
     def _init_database(self, user, password, host, port, dbname):
-        pass
+        self._database = dict(
+            user=user, password=password, host=host, port=port, dbname=dbname
+        )
 
     def _init_queue(self, redis_connection):
         self._redis_connection = redis_connection
@@ -71,33 +69,26 @@ class DatabaseDriver(ABC):
 
     def task_execute(self, query, vars=None):
         """Task to enqueue a query to be executed by a worker."""
-        self._queue.enqueue(task.execute, query, vars)
+        self._queue.enqueue("task.execute", query, vars)
 
     def task_executemany(self, query, vars_list):
         """Task to enqueue a query with multiple vars to be executed by a worker."""
-        self._queue.enqueue(task.executemany, query, vars_list)
+        self._queue.enqueue("task.executemany", query, vars_list)
 
     def task_executelist(self, query_list):
         """Task to enqueue a query list to be executed by a worker."""
-        self._queue.enqueue(task.executelist, query_list)
+        self._queue.enqueue("task.executelist", query_list)
 
     @property
     def throughput(self):
-        """Get the 5 most recent throughput values."""
-        return self._throughput[-5:]
+        """Get the most recent throughput value."""
+        return self._throughput[-1]
 
     @property
     def queue_length(self):
-        """Get the 5 most recent queue_length values."""
-        return self._queue_length[-5:]
+        """Get the most recent queue_length value."""
+        return self._queue_length[-1]
 
     def __repr__(self):
         """Return identification, most useful information."""
         return f"DatabaseDriver {self._id}: {self._database}"
-
-
-class HyriseDriver(DatabaseDriver):
-    """A concrete Hyrise driver."""
-
-    def _init_database(self, user, password, host, port, dbname):
-        self._database = HyriseDatabase(user, password, host, port, dbname)
