@@ -69,17 +69,17 @@ class DatabaseManager(object):
 
     def _execute(self, query, vars=None):
         for id in self._drivers.keys():
-            self._drivers[id].execute(query, vars)
+            self._drivers[id].task_execute(query, vars)
         return True
 
     def _executemany(self, query, vars_list):
         for id in self._drivers.keys():
-            self._drivers[id].executemany(query, vars_list)
+            self._drivers[id].task_executemany(query, vars_list)
         return True
 
     def _executelist(self, querylist):
         for id in self._drivers.keys():
-            self._drivers[id].executelist(querylist)
+            self._drivers[id].task_executelist(querylist)
         return True
 
     def _throughput(self):
