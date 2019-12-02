@@ -71,4 +71,4 @@ def drivers():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)  # nosec
+    app.run(host=s.BACKEND_HOST, port=s.BACKEND_PORT)
