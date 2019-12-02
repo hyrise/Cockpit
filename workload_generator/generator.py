@@ -106,7 +106,9 @@ class WorkloadGenerator(object):
 
     def _start(self, n_producers=0):
         """Start generating workloads with n_producers."""
+        n_producers = 0 if n_producers <= 0 else n_producers
         [self._add_producer() for i in range(n_producers)]
+        return len(self._producers)
 
     def _stop(self):
         """Stop generating workloads and kill all WorkloadProducers."""
@@ -140,6 +142,24 @@ class WorkloadGenerator(object):
     def _get_producers(self):
         """Return the number of WorkloadProducers."""
         return len(self._producers)
+
+    def _handle_request(self, request):
+        call = request["header"]["message"]
+        body = request["body"]
+
+        result = False
+
+        if call == "start":
+            result = self._start(body["n_producers"])
+
+        if call == "stop":
+            result = self._stop()
+
+        if call == "shutdown":
+            self._shutdown_requested = True
+            result = True
+
+        return result
 
     def _run(self):
         """Run the generator by enabling IPC."""

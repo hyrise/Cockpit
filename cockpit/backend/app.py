@@ -23,24 +23,28 @@ generator_socket = context.socket(REQ)
 generator_socket.connect(f"tcp://{s.GENERATOR_HOST}:{s.GENERATOR_PORT}")
 
 
-def _send_message(message):
+def _send_message(socket, message):
     """Send an IPC message with data to a database interface, return the repsonse."""
-    db_manager_socket.send_json(message)
-    response = db_manager_socket.recv_json()
+    socket.send_json(message)
+    response = socket.recv_json()
     return response
 
 
 @app.route("/throughput")
 def get_throughput():
     """Return throughput information from database manager."""
-    response = _send_message({"header": {"message": "throughput"}, "body": {}})
+    response = _send_message(
+        db_manager_socket, {"header": {"message": "throughput"}, "body": {}}
+    )
     return response["body"]
 
 
 @app.route("/queue_length")
 def get_queue_length():
     """Return queue length information from database manager."""
-    response = _send_message({"header": {"message": "queue length"}, "body": {}})
+    response = _send_message(
+        db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
+    )
     return response["body"]
 
 
@@ -66,7 +70,25 @@ def drivers():
             "header": {"message": "pop driver"},
             "body": {"id": request_json["id"]},
         }
-    response = _send_message(message)
+    response = _send_message(db_manager_socket, message)
+    return response
+
+
+@app.route("/workload", methods=["POST", "DELETE"])
+def workload():
+    """Start or stop the workload generator."""
+    request_json = request.get_json()
+    if request.method == "POST":
+        message = {
+            "header": {"message": "start"},
+            "body": {"n_producers": request_json["n_producers"]},
+        }
+    elif request.method == "DELETE":
+        message = {
+            "header": {"message": "stop"},
+            "body": {},
+        }
+    response = _send_message(generator_socket, message)
     return response
 
 

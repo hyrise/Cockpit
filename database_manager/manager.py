@@ -128,6 +128,7 @@ class DatabaseManager(object):
 
         if call == "shutdown":
             self._shutdown_requested = True
+            result = True
 
         return result
 
