@@ -143,6 +143,7 @@ class DatabaseManager(object):
             request = self._socket.recv_json()
 
             result = self._handle_request(request)
+            response = responses[200]
             if result is False:
                 response = responses[400]
             elif result is True:
