@@ -4,7 +4,7 @@ from redis import Redis
 from zmq import REP, Context
 
 import settings as s
-from driver import HyriseDriver
+from driver import DatabaseDriver
 
 responses = {
     200: {"header": {"status": 200, "message": "OK"}},
@@ -37,9 +37,7 @@ class DatabaseManager(object):
         self._run()
 
     def _get_db_type(self, db_type):
-        if db_type == "Hyrise":
-            return HyriseDriver
-        return False
+        return DatabaseDriver  # TODO remove this method
 
     def _check_id_free(self, id):
         if id in self._drivers.keys():

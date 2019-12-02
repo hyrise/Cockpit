@@ -27,16 +27,4 @@ QUEUE_PORT = int(getenv("QUEUE_PORT"))
 QUEUE_DB = getenv("QUEUE_DB")
 QUEUE_PASSWORD = getenv("QUEUE_PASSWORD")
 
-DB1_USER = getenv("DB1_USER")
-DB1_PASSWORD = getenv("DB1_PASSWORD")
-DB1_HOST = getenv("DB1_HOST")
-DB1_PORT = int(getenv("DB1_PORT"))
-DB1_NAME = getenv("DB1_NAME")
-
-DB2_USER = getenv("DB2_USER")
-DB2_PASSWORD = getenv("DB2_PASSWORD")
-DB2_HOST = getenv("DB2_HOST")
-DB2_PORT = int(getenv("DB2_PORT"))
-DB2_NAME = getenv("DB2_NAME")
-
 JOB_RESULT_TTL = int(getenv("JOB_RESULT_TTL"))
