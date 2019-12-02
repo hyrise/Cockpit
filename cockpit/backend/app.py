@@ -4,15 +4,12 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+import rq_dashboard
 from flask import Flask, request
 from flask_cors import CORS
 from zmq import REQ, Context
 
 import settings as s
-
-app = Flask(__name__)
-cors = CORS(app)
-app.config["CORS_HEADERS"] = "Content-Type"
 
 context = Context(io_threads=1)
 
@@ -21,6 +18,13 @@ db_manager_socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
 
 generator_socket = context.socket(REQ)
 generator_socket.connect(f"tcp://{s.GENERATOR_HOST}:{s.GENERATOR_PORT}")
+
+app = Flask(__name__)
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
+
+app.config.from_object(rq_dashboard.default_settings)
+app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 
 
 def _send_message(socket, message):
