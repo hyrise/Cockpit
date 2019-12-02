@@ -8,5 +8,5 @@ If you have a local setup as specified in the projects [README](../README.md), y
 
 ```
 pipenv shell
-python monitor_prototype.py
+python app.py
 ```
