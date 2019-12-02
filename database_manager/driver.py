@@ -83,13 +83,13 @@ class DatabaseDriver(ABC):
 
     @property
     def throughput(self):
-        """Get the 5 most recent throughput values."""
-        return self._throughput[-5:]
+        """Get the most recent throughput value."""
+        return self._throughput[-1]
 
     @property
     def queue_length(self):
-        """Get the 5 most recent queue_length values."""
-        return self._queue_length[-5:]
+        """Get the most recent queue_length value."""
+        return self._queue_length[-1]
 
     def __repr__(self):
         """Return identification, most useful information."""

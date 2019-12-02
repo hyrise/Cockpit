@@ -1,7 +1,5 @@
 """Module for managing databases."""
 
-from json import dumps, loads
-
 from redis import Redis
 from zmq import REP, Context
 
@@ -19,6 +17,7 @@ class DatabaseManager(object):
 
     def __init__(self):
         """Initialize a DatabaseManager."""
+        self._drivers = dict()
         self._shutdown_requested = False
         self._init_redis_connection()
         self._init_server()
@@ -30,7 +29,6 @@ class DatabaseManager(object):
         )
 
     def _init_server(self):
-        self._drivers = dict()
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
@@ -98,6 +96,8 @@ class DatabaseManager(object):
         call = request["header"]["message"]
         body = request["body"]
 
+        result = False
+
         if call == "add driver":
             result = self._add_driver(
                 body["db_type"],
@@ -108,38 +108,43 @@ class DatabaseManager(object):
                 body["port"],
                 body["dbname"],
             )
-            if call == "pop driver":
-                result = self._pop_driver(body["id"])
+        if call == "pop driver":
+            result = self._pop_driver(body["id"])
 
-            if call == "execute":
-                result = self._execute(body["query"], body["vars"])
+        if call == "execute":
+            result = self._execute(body["query"], body["vars"])
 
-            if call == "executemany":
-                result = self._execute(body["query"], body["vars_list"])
+        if call == "executemany":
+            result = self._execute(body["query"], body["vars_list"])
 
-            if call == "executelist":
-                result = self._execute(body["query_list"])
+        if call == "executelist":
+            result = self._execute(body["query_list"])
 
-            if call == "throughput":
-                result = self._throughput()
+        if call == "throughput":
+            result = self._throughput()
 
-            if call == "queue length":
-                result = self._queue_length()
+        if call == "queue length":
+            result = self._queue_length()
 
-            if call == "shutdown":
-                self._shutdown_requested = True
+        if call == "shutdown":
+            self._shutdown_requested = True
+            result = True
 
         return result
 
     def _run(self):
         """Run the manager by enabling IPC."""
-        print("Database manager running. Press CTRL+C to quit.")
+        print(
+            "Database manager running on {:s}:{:4d}. Press CTRL+C to quit.".format(
+                s.DB_MANAGER_HOST, s.DB_MANAGER_PORT
+            )
+        )
         while True:
             # Get the message
-            message = self._socket.recv()
-            request = loads(message)
+            request = self._socket.recv_json()
 
             result = self._handle_request(request)
+            response = responses[200]
             if result is False:
                 response = responses[400]
             elif result is True:
@@ -148,9 +153,17 @@ class DatabaseManager(object):
                 response["body"] = result
 
             # Send the reply
-            reply = dumps(response)
-            self._socket.send_string(reply)
+            self._socket.send_json(response)
 
             # Shutdown
             if self._shutdown_requested:
                 break
+
+
+def main():
+    """Run a database manager."""
+    DatabaseManager()
+
+
+if __name__ == "__main__":
+    main()
