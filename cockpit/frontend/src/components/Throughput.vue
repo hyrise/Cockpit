@@ -31,7 +31,6 @@ import {
   watch
 } from "@vue/composition-api";
 import axios from "axios";
-import LineChart from "./LineChart.vue";
 import { useGeneratingTestData } from "../helpers/testData";
 import { useThroughputFetchService } from "../services/throughputService";
 import { useThreadConfigurationService } from "../services/threadService";
@@ -46,9 +45,6 @@ interface Data {
 }
 
 export default createComponent({
-  components: {
-    LineChart
-  },
   setup(props: Props, context: SetupContext): Data {
     const { threads, setNumberOfThreads } = useThreadConfigurationService();
     const {
@@ -59,10 +55,33 @@ export default createComponent({
 
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
+    const dataSet = ref<number[]>([1]);
 
     function updateChartData(): void {
-      addLabels();
+      if (throughputData.value.length === 0) {
+        labels.value.length = 0;
+        dataSet.value.length = 0;
+      } else if (throughputData.value.length) {
+        labels.value.push(labels.value.length.toString());
+        dataSet.value.length = 0;
+        for (let i = 0; i < throughputData.value.length; i++) {
+          dataSet.value.push(throughputData.value[i]);
+        }
+      }
+      if (throughputData.value.length > 5) {
+        labels.value.length = 0;
+        dataSet.value.length = 0;
+        for (
+          let i = throughputData.value.length - 5;
+          i < throughputData.value.length;
+          i++
+        ) {
+          labels.value.push(i.toString());
+          dataSet.value.push(throughputData.value[i]);
+        }
+      }
       chart.value ? chart.value.update() : null;
+      console.log(dataSet.value);
     }
 
     watch(
@@ -76,7 +95,6 @@ export default createComponent({
 
     const { generateThroughputData } = useGeneratingTestData();
 
-    // onMounted(() => setInterval(checkState, 1000));
     onMounted(() => setInterval(addTestData, 1000));
 
     onMounted(() => {
@@ -92,7 +110,7 @@ export default createComponent({
               backgroundColor: "#76baff",
               fill: true,
               borderColor: "#2a93ff",
-              data: throughputData.value
+              data: dataSet.value
             }
           ]
         },
@@ -149,24 +167,9 @@ export default createComponent({
       throughputData.value.length = 0;
     }
 
-    function addLabels(): void {
-      if (throughputData.value.length === 0) {
-        labels.value.length = 0;
-      }
-      if (throughputData.value.length) {
-        labels.value.push(labels.value.length.toString());
-      }
-    }
-
     return { throughputData, resetData, threads, setNumberOfThreads };
   }
 });
-/* function useLineChartConfiguration(): {
-  } {
-  
-
-    
-  } */
 </script>
 <style scoped>
 .chart {
