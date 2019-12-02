@@ -77,9 +77,11 @@ class WorkloadProducer(mp.Process):
         while True:
             # TODO add shutdown event
             request = {"header": {"status": 200, "message": "execute"}}
-            query = self._generate_execute(n_queries=1)[0]
+            query = self._generate_execute()[0]
             request["body"] = {"query": query}
+            request["body"]["vars"] = None
             self._socket.send_json(request)
+            self._socket.recv_json()  # We do not care about the reply
 
 
 class WorkloadGenerator(object):
@@ -112,7 +114,7 @@ class WorkloadGenerator(object):
 
     def _add_producer(self):
         """Increase the number of WorkloadProducers by one."""
-        p = WorkloadProducer(f"WorkloadProducer {len(self.producers)}")
+        p = WorkloadProducer(f"WorkloadProducer {len(self._producers)}")
         self._producers.append(p)
         p.start()
 
@@ -141,6 +143,11 @@ class WorkloadGenerator(object):
 
     def _run(self):
         """Run the generator by enabling IPC."""
+        print(
+            "Workload generator running on {:s}:{:4d}. Press CTRL+C to quit.".format(
+                s.GENERATOR_HOST, s.GENERATOR_PORT
+            )
+        )
         while True:
             # Get the message
             request = self._socket.recv_json()

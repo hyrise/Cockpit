@@ -19,8 +19,8 @@ load_dotenv(find_dotenv())
 DB_MANAGER_HOST = getenv("DB_MANAGER_HOST")
 DB_MANAGER_PORT = int(getenv("DB_MANAGER_PORT"))
 
-GENERATOR_HOST = getenv("DB_MANAGER_HOST")
-GENERATOR_PORT = int(getenv("DB_MANAGER_PORT"))
+GENERATOR_HOST = getenv("GENERATOR_HOST")
+GENERATOR_PORT = int(getenv("GENERATOR_PORT"))
 
 QUEUE_HOST = getenv("QUEUE_HOST")
 QUEUE_PORT = int(getenv("QUEUE_PORT"))
