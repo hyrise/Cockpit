@@ -1,6 +1,8 @@
 <template>
   <div class="chart mx-10 my-10">
-    <LineChart :throughput="throughputData" />
+    <div class="graph">
+      <canvas id="canvas" width="1200" height="600"></canvas>
+    </div>
     <div class="slider my-12">
       <v-slider
         v-model="threads"
@@ -19,15 +21,16 @@
 </template>
 
 <script lang="ts">
+import Chart from "chart.js";
 import {
   createComponent,
   SetupContext,
   onMounted,
   Ref,
-  ref
+  ref,
+  watch
 } from "@vue/composition-api";
 import axios from "axios";
-import LineChart from "./LineChart.vue";
 import { useGeneratingTestData } from "../helpers/testData";
 import { useThroughputFetchService } from "../services/throughputService";
 import { useThreadConfigurationService } from "../services/threadService";
@@ -42,9 +45,6 @@ interface Data {
 }
 
 export default createComponent({
-  components: {
-    LineChart
-  },
   setup(props: Props, context: SetupContext): Data {
     const { threads, setNumberOfThreads } = useThreadConfigurationService();
     const {
@@ -53,10 +53,105 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService();
 
+    const chart = ref<Object>(null);
+    const labels = ref<string[]>([]);
+    const dataSet = ref<number[]>([1]);
+
+    function updateChartData(): void {
+      if (throughputData.value.length === 0) {
+        labels.value.length = 0;
+        dataSet.value.length = 0;
+      } else if (throughputData.value.length) {
+        labels.value.push(labels.value.length.toString());
+        dataSet.value.length = 0;
+        for (let i = 0; i < throughputData.value.length; i++) {
+          dataSet.value.push(throughputData.value[i]);
+        }
+      }
+      if (throughputData.value.length > 5) {
+        labels.value.length = 0;
+        dataSet.value.length = 0;
+        for (
+          let i = throughputData.value.length - 5;
+          i < throughputData.value.length;
+          i++
+        ) {
+          labels.value.push(i.toString());
+          dataSet.value.push(throughputData.value[i]);
+        }
+      }
+      chart.value ? chart.value.update() : null;
+      console.log(dataSet.value);
+    }
+
+    watch(
+      () => throughputData.value,
+      () => {
+        if (throughputData.value) {
+          updateChartData();
+        }
+      }
+    );
+
     const { generateThroughputData } = useGeneratingTestData();
 
-    // onMounted(() => setInterval(checkState, 1000));
     onMounted(() => setInterval(addTestData, 1000));
+
+    onMounted(() => {
+      const canvas: any = document.getElementById("canvas");
+      const ctx: any = canvas.getContext("2d");
+      chart.value = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels.value,
+          datasets: [
+            {
+              label: "Database",
+              backgroundColor: "#76baff",
+              fill: true,
+              borderColor: "#2a93ff",
+              data: dataSet.value
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Throughput (in Queries /s)",
+                  fontSize: 16
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontSize: 16
+                },
+                gridLines: {
+                  display: true
+                }
+              }
+            ],
+            xAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Time (in s)",
+                  fontSize: 16
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontSize: 16
+                },
+                gridLines: {
+                  display: true
+                }
+              }
+            ]
+          }
+        }
+      });
+    });
 
     function addTestData(): void {
       throughputData.value.push(generateThroughputData());
