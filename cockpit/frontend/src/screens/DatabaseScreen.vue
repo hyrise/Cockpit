@@ -1,12 +1,12 @@
-<template> 
-    <div>
-      <div class="linechart">
-        <Throughput />
-      </div>
-      <div class="treemap">
-        <Treemap class="mt-10" />
-      </div>
+<template>
+  <div>
+    <div class="linechart">
+      <Throughput />
     </div>
+    <div class="treemap">
+      <Treemap class="mt-10" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

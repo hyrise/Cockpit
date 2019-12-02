@@ -6,8 +6,8 @@ import Home from "../screens/Home.vue";
 Vue.use(VueRouter);
 
 const routes = [
-    { path: "/", component: Home },
-    { path: "/database", component: DatabaseScreen }
+  { name: "home", path: "/", component: Home },
+  { name: "database", path: "/database", component: DatabaseScreen }
 ];
 
 export default new VueRouter({

@@ -1,15 +1,24 @@
 <template>
   <div id="home">
-  <h1>Hello App!</h1>
-  <p>
-    <!-- use router-link component for navigation. -->
-    <!-- specify the link by passing the `to` prop. -->
-    <!-- <router-link> will be rendered as an `<a>` tag by default -->
-    <router-link to="/database">Go to monitoring</router-link>
-    <router-link to="/">Go to workload generation</router-link>
-  </p>
-  <!-- route outlet -->
-  <!-- component matched by the route will render here -->
-  <router-view></router-view>
-</div>
+    <p>
+      <v-btn
+        x-large
+        class="ma-2 py-12"
+        tile
+        color="primary"
+        :to="{ name: 'database' }"
+      >
+        <v-icon left>mdi-monitor-cellphone</v-icon> Monitoring
+      </v-btn>
+      <v-btn
+        x-large
+        class="ma-2 py-12"
+        tile
+        color="primary"
+        :to="{ name: 'home' }"
+      >
+        <v-icon left>mdi-database-refresh</v-icon> Workload Generation
+      </v-btn>
+    </p>
+  </div>
 </template>
