@@ -1,6 +1,8 @@
 <template>
   <div class="chart mx-10 my-10">
-    <LineChart :throughput="throughputData" />
+    <div class="graph">
+      <canvas id="canvas" width="1200" height="600"></canvas>
+    </div>
     <div class="slider my-12">
       <v-slider
         v-model="threads"
@@ -19,12 +21,14 @@
 </template>
 
 <script lang="ts">
+import Chart from "chart.js";
 import {
   createComponent,
   SetupContext,
   onMounted,
   Ref,
-  ref
+  ref,
+  watch
 } from "@vue/composition-api";
 import axios from "axios";
 import LineChart from "./LineChart.vue";
@@ -53,10 +57,83 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService();
 
+    const chart = ref<Object>(null);
+    const labels = ref<string[]>([]);
+
+    function updateChartData(): void {
+      addLabels();
+      chart.value ? chart.value.update() : null;
+    }
+
+    watch(
+      () => throughputData.value,
+      () => {
+        if (throughputData.value) {
+          updateChartData();
+        }
+      }
+    );
+
     const { generateThroughputData } = useGeneratingTestData();
 
     // onMounted(() => setInterval(checkState, 1000));
     onMounted(() => setInterval(addTestData, 1000));
+
+    onMounted(() => {
+      const canvas: any = document.getElementById("canvas");
+      const ctx: any = canvas.getContext("2d");
+      chart.value = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels.value,
+          datasets: [
+            {
+              label: "Database",
+              backgroundColor: "#76baff",
+              fill: true,
+              borderColor: "#2a93ff",
+              data: throughputData.value
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Throughput (in Queries /s)",
+                  fontSize: 16
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontSize: 16
+                },
+                gridLines: {
+                  display: true
+                }
+              }
+            ],
+            xAxes: [
+              {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Time (in s)",
+                  fontSize: 16
+                },
+                ticks: {
+                  beginAtZero: true,
+                  fontSize: 16
+                },
+                gridLines: {
+                  display: true
+                }
+              }
+            ]
+          }
+        }
+      });
+    });
 
     function addTestData(): void {
       throughputData.value.push(generateThroughputData());
@@ -72,9 +149,24 @@ export default createComponent({
       throughputData.value.length = 0;
     }
 
+    function addLabels(): void {
+      if (throughputData.value.length === 0) {
+        labels.value.length = 0;
+      }
+      if (throughputData.value.length) {
+        labels.value.push(labels.value.length.toString());
+      }
+    }
+
     return { throughputData, resetData, threads, setNumberOfThreads };
   }
 });
+/* function useLineChartConfiguration(): {
+  } {
+  
+
+    
+  } */
 </script>
 <style scoped>
 .chart {
