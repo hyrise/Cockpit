@@ -4,6 +4,8 @@ The connection to a database is established once.
 It will be handed to the jobs for improved performance.
 """
 
+from os import getenv
+
 from redis import Redis
 from rq import Connection
 from rq.worker import (
@@ -22,7 +24,6 @@ from rq.worker import (
     yellow,
 )
 
-import settings as s
 from database import HyriseDatabase  # Just for demo, should be dynamic later
 from job import ConnectionJob
 
@@ -94,9 +95,20 @@ class ConnectionWorker(Worker):
 
 if __name__ == "__main__":
     # Setup
-    redis_connection = Redis(s.QUEUE_HOST, s.QUEUE_PORT, s.QUEUE_DB, s.QUEUE_PASSWORD)
-    database = HyriseDatabase(s.DB_USER, s.DB_PASSWORD, s.DB_HOST, s.DB_PORT, s.DB_NAME)
+    redis_connection = Redis(
+        getenv("QUEUE_HOST"),
+        getenv("QUEUE_PORT"),
+        getenv("QUEUE_DB"),
+        getenv("QUEUE_PASSWORD"),
+    )
+    database = HyriseDatabase(
+        getenv("DB_USER"),
+        getenv("DB_PASSWORD"),
+        getenv("DB_HOST"),
+        getenv("DB_PORT"),
+        getenv("DB_NAME"),
+    )
     # Start the worker
     with Connection(redis_connection):
-        w = ConnectionWorker(database, [s.DRIVER_ID], job_class=ConnectionJob)
+        w = ConnectionWorker(database, [getenv("DRIVER_ID")], job_class=ConnectionJob)
         w.work()
