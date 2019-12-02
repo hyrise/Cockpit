@@ -3,7 +3,6 @@ import VueCompositionApi from "@vue/composition-api";
 import vuetify from "./plugins/vuetify";
 import vueRouter from "./plugins/vueRouter";
 import App from "./App.vue";
-import Home from "./screens/Home.vue";
 
 Vue.config.productionTip = false;
 
