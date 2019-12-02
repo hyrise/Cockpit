@@ -1,43 +1,12 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
-      <b> Hyrise Cockpit </b>
-    </v-app-bar>
-
-    <v-content>
-      <div class="linechart">
-        <Throughput />
-      </div>
-      <div class="treemap">
-        <Treemap class="mt-10" />
-      </div>
-    </v-content>
-  </v-app>
+  <div id="app">
+    <v-app>
+      <v-app-bar app color="primary" dark>
+        <b> Hyrise Cockpit </b>
+      </v-app-bar>
+      <v-content>
+        <router-view />
+      </v-content>
+    </v-app>
+  </div>
 </template>
-
-<script lang="ts">
-import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
-import Throughput from "./components/Throughput.vue";
-import Treemap from "./components/Treemap.vue";
-
-export default createComponent({
-  name: "App",
-
-  components: {
-    Throughput,
-    Treemap
-  }
-});
-</script>
-<style scoped>
-.linechart {
-  max-width: 1800px;
-  max-height: 1000px;
-}
-.treemap {
-  margin-left: 10px;
-  margin-right: 100px;
-  margin-bottom: 50px;
-  margin-top: 150px;
-}
-</style>
