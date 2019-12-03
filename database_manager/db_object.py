@@ -46,15 +46,17 @@ class DbObject(object):
         """Get the storage data of the database."""
         return self.driver.get_storage_data
 
-    def update_throughput():
+    def update_throughput(self):
         """Update throughput of database."""
-        global throughput
-        global throughput_container
         sum = 0
-        for key, threadRuns in throughput_container.iteritems():
+        for key, threadRuns in self.throughput_container.iteritems():
             sum = sum + threadRuns[0]
             if not threadRuns[1]:
-                del throughput_container[key]
-        for threadRuns in range(throughput_container.values()):
+                del self.throughput_container[key]
+        for threadRuns in range(self.throughput_container.values()):
             threadRuns[0] = 0
-        throughput = sum
+        self.throughput = sum
+
+    def get_throughput(self):
+        """Get throughput of database."""
+        return self.throughput
