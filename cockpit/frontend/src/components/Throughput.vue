@@ -53,41 +53,42 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService();
 
+    const relevantThroughputData = throughputData["citadelle"];
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
     const dataSet = ref<number[]>([1]);
 
     function updateChartData(): void {
-      if (throughputData.value.length === 0) {
+      if (relevantThroughputData.length === 0) {
         labels.value.length = 0;
         dataSet.value.length = 0;
-      } else if (throughputData.value.length) {
+      } else if (relevantThroughputData.length) {
         labels.value.push(labels.value.length.toString());
         dataSet.value.length = 0;
-        for (let i = 0; i < throughputData.value.length; i++) {
-          dataSet.value.push(throughputData.value[i]);
+        for (let i = 0; i < relevantThroughputData.length; i++) {
+          dataSet.value.push(relevantThroughputData[i]);
         }
       }
-      if (throughputData.value.length > 5) {
+      if (relevantThroughputData.length > 5) {
         labels.value.length = 0;
         dataSet.value.length = 0;
         for (
-          let i = throughputData.value.length - 5;
-          i < throughputData.value.length;
+          let i = relevantThroughputData.length - 5;
+          i < relevantThroughputData.length;
           i++
         ) {
           labels.value.push(i.toString());
-          dataSet.value.push(throughputData.value[i]);
+          dataSet.value.push(relevantThroughputData[i]);
         }
       }
+      console.log(dataSet);
       chart.value ? chart.value.update() : null;
-      console.log(dataSet.value);
     }
 
     watch(
-      () => throughputData.value,
+      () => throughputData,
       () => {
-        if (throughputData.value) {
+        if (throughputData) {
           updateChartData();
         }
       }
@@ -95,7 +96,7 @@ export default createComponent({
 
     const { generateThroughputData } = useGeneratingTestData();
 
-    onMounted(() => setInterval(addTestData, 1000));
+    onMounted(() => setInterval(checkState, 1000));
 
     onMounted(() => {
       const canvas: any = document.getElementById("canvas");
@@ -159,7 +160,7 @@ export default createComponent({
 
     function checkState(): void {
       if (throughputQueryReadyState) {
-        getThroughput();
+        getThroughput(["citadelle", "auora"]);
       }
     }
 
