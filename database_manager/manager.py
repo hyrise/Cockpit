@@ -113,10 +113,10 @@ class DatabaseManager(object):
             result = self._execute(body["query"], body["vars"])
 
         if call == "executemany":
-            result = self._execute(body["query"], body["vars_list"])
+            result = self._executemany(body["query"], body["vars_list"])
 
         if call == "executelist":
-            result = self._execute(body["query_list"])
+            result = self._executelist(body["query_list"])
 
         if call == "throughput":
             result = self._throughput()
