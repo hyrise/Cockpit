@@ -71,14 +71,16 @@ class DatabaseDriver:
         return self.queue_length
 
     def _measure_storage(self):
+        return True  # TODO
         now = time()
         job = self._jobs["storage"]
         if job is None:
-            self._jobs["storage"] = self.enqueue("task.get_hyrise_storage")
+            self._jobs["storage"] = self._queue.enqueue("task.get_hyrise_storage")
             return
         if job.result is None:
             return
         self._metadata["storage"].append((now, job.result))
+        self._jobs["storage"] = None
         return self.storage
 
     def task_execute(self, query, vars=None):
@@ -96,17 +98,21 @@ class DatabaseDriver:
     @property
     def throughput(self):
         """Get the most recent throughput value."""
-        return self._throughput[-1]
+        return self._throughput[-1] if len(self._throughput) > 0 else (0, 0)
 
     @property
     def queue_length(self):
         """Get the most recent queue_length value."""
-        return self._queue_length[-1]
+        return self._queue_length[-1] if len(self._queue_length) > 0 else (0, 0)
 
     @property
     def storage(self):
         """Get the most recent storage metadata."""
-        return self._metadata["storage"][-1]
+        return (
+            self._metadata["storage"][-1]
+            if len(self._metadata["storage"]) > 0
+            else (0, 0)
+        )
 
     def __repr__(self):
         """Return identification, most useful information."""

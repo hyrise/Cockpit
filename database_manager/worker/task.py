@@ -2,10 +2,9 @@
 
 Mimics cursor functionality from psycopg2.
 """
+from pandas import DataFrame
+from pandas.io.sql import read_sql_query
 from rq.job import get_current_job
-
-from pd import DataFrame
-from pd.io.sql import read_sql_query
 
 
 def execute(query, vars=None):
