@@ -54,7 +54,7 @@ class WorkloadProducer(mp.Process):
             WHERE l_shipdate <= '1998-12-01'
             GROUP BY l_returnflag, l_linestatus
             ORDER BY l_returnflag, l_linestatus;""",
-                    (1,),
+                    None,
                 ),
                 (
                     """SELECT
@@ -64,7 +64,7 @@ class WorkloadProducer(mp.Process):
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
                 AND .07 AND l_quantity < 24;""",
-                    (1,),
+                    None,
                 ),
                 self._generate_random(),
             ],
@@ -77,9 +77,8 @@ class WorkloadProducer(mp.Process):
         while True:
             # TODO add shutdown event
             request = {"header": {"status": 200, "message": "execute"}}
-            query = self._generate_execute()[0]
-            request["body"] = {"query": query}
-            request["body"]["vars"] = None
+            query, vars = self._generate_execute()[0]
+            request["body"] = {"query": query, "vars": vars}
             self._socket.send_json(request)
             self._socket.recv_json()  # We do not care about the reply
 
@@ -104,7 +103,7 @@ class WorkloadGenerator(object):
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:4d}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
 
-    def _start(self, n_producers=0):
+    def _start(self, n_producers=1):  # Startup with 1 producer by default
         """Start generating workloads with n_producers."""
         n_producers = 0 if n_producers <= 0 else n_producers
         [self._add_producer() for i in range(n_producers)]
