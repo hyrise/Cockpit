@@ -77,8 +77,9 @@ class WorkloadProducer(mp.Process):
         while True:
             # TODO add shutdown event
             request = {"header": {"status": 200, "message": "execute"}}
-            query, vars = self._generate_execute()[0]
-            request["body"] = {"query": query, "vars": vars}
+            # query, vars = self._generate_execute()[0]
+            # request["body"] = {"query": query, "vars": vars}
+            request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
             self._socket.recv_json()  # We do not care about the reply
 
