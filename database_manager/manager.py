@@ -90,6 +90,12 @@ class DatabaseManager(object):
             result[id] = self._drivers[id].queue_length
         return result
 
+    def _storage(self):
+        result = dict()
+        for id in self._drivers.keys():
+            result[id] = self._drivers[id].storage
+        return result
+
     def _handle_request(self, request):
         call = request["header"]["message"]
         body = request["body"]
@@ -123,6 +129,9 @@ class DatabaseManager(object):
 
         if call == "queue length":
             result = self._queue_length()
+
+        if call == "storage":
+            result = self._storage()
 
         if call == "shutdown":
             self._shutdown_requested = True
