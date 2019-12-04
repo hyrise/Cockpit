@@ -34,6 +34,12 @@ def _send_message(socket, message):
     return response
 
 
+@app.route("/")
+def home():
+    """Display a greeting to a visitor."""
+    return "Hey there! You found our Database Cockpit."
+
+
 @app.route("/throughput")
 def get_throughput():
     """Return throughput information from database manager."""
