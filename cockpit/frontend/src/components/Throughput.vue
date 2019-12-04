@@ -38,7 +38,7 @@ import { useThreadConfigurationService } from "../services/threadService";
 interface Props {}
 
 interface Data {
-  throughputData: Ref<number[]>;
+  throughputData: Ref<{ [id: string]: number[] }>;
   resetData: () => void;
   threads: Ref<number>;
   setNumberOfThreads: () => void;
@@ -52,13 +52,14 @@ export default createComponent({
       throughputData,
       throughputQueryReadyState
     } = useThroughputFetchService();
-
-    const relevantThroughputData = throughputData["citadelle"];
+    console.log(throughputData);
+    var relevantThroughputData = [];
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
     const dataSet = ref<number[]>([1]);
 
     function updateChartData(): void {
+     relevantThroughputData = throughputData.value["citadelle"] || [];
       if (relevantThroughputData.length === 0) {
         labels.value.length = 0;
         dataSet.value.length = 0;
@@ -85,13 +86,18 @@ export default createComponent({
       chart.value ? chart.value.update() : null;
     }
 
+    function onTPChange() {
+      updateChartData();
+    }
+
     watch(
-      () => throughputData,
+      () => throughputData.value,
       () => {
-        if (throughputData) {
+        if(throughputData.value) {
+          console.log("update");
           updateChartData();
         }
-      }
+      }, { deep: true }
     );
 
     const { generateThroughputData } = useGeneratingTestData();
@@ -159,8 +165,8 @@ export default createComponent({
     }
 
     function checkState(): void {
-      if (throughputQueryReadyState) {
-        getThroughput(["citadelle", "auora"]);
+      if (throughputQueryReadyState.value) {
+        getThroughput(["citadelle", "york"], onTPChange);
       }
     }
 
