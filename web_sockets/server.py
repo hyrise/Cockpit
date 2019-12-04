@@ -4,6 +4,8 @@ import time
 
 import websockets
 
+import settings as s
+
 
 async def runtime_data(websocket, path):
     """Provide dummy runtime data."""
@@ -14,7 +16,9 @@ async def runtime_data(websocket, path):
         time.sleep(1)
 
 
-throughput_server = websockets.serve(runtime_data, "localhost", 8765)
+throughput_server = websockets.serve(
+    runtime_data, f"{s.WEBSOCKET_HOST}", s.WEBSOCKET_PORT
+)
 
 asyncio.get_event_loop().run_until_complete(throughput_server)
 asyncio.get_event_loop().run_forever()
