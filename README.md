@@ -2,33 +2,85 @@
 
 ## Setup
 
-You may need to install [`pipenv`](https://github.com/pypa/pipenv#installation), and a different python version (`3.6.8`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
-This can be done with the following commands if you're on macOS.
+You may need to install a different python version (`3.6.8`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+Installing pyenv can be done with the following commands:
+
+
+<details>
+<summary>macOS</summary>
 
 ```bash
-brew install pipenv pyenv
+brew install pyenv
 ```
 
-If you're on a different operating system, please refer to the installation guides of [`pipenv`](https://github.com/pypa/pipenv#installation) and [`pyenv`](https://github.com/pyenv/pyenv#installation), and make sure that you have the [prerequisites for `pyenv`](https://github.com/pyenv/pyenv/wiki/common-build-problems#prerequisites) installed.
+</details>
 
+<details>
+<summary>Ubuntu</summary>
 
 ```bash
+# Update package list
+sudo apt-get update
+
+# Dependencies commonly missing, causing issues with pyenv
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+
+# Pyenv install script
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+```
+
+Put the following in your `.bashrc` (or `.zshrc`, etc.):
+
+```bash
+export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+
+Restart your shell:
+
+```bash
+exec "$SHELL"
+```
+
+</details>
+
+Subsequently, the required version of Python can be installed and set with:
+
+```bash
+# Install Python 3.6.8
 pyenv install 3.6.8
 
+# Set the local (directory) Python version to 3.6.8
 cd Cockpit
 pyenv local 3.6.8
 ```
+Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
 
-If python 3.6.8 is failing to build on your machine, you may need to install [these dependencies](https://github.com/pyenv/pyenv/wiki/Common-build-problems) before installing a python version with pyenv.
+<details>
+<summary>macOS</summary>
 
 ```bash
-sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git libpq-dev
+brew install libpq postgresql
 ```
 
-Run the following commands to bootstrap your environment.
+</details>
+
+<details>
+<summary>Ubuntu</summary>
 
 ```bash
-cd Cockpit
+sudo apt-get install libpq-dev
+```
+
+</details>
+
+Now, install and initialize your virtual environment (this is a slight [workaround](https://github.com/pypa/pipenv/issues/3363#issuecomment-452171564) instead of calling `pipenv install` directly):
+
+```bash
+python -m pip install pipenv
+exec "$SHELL"
+pipenv --three --python=`which python`
 pipenv install
 ```
 
@@ -37,13 +89,9 @@ pipenv install
 Run the following commands to bootstrap your developer environment.
 
 ```bash
-cd Cockpit
 pipenv install --dev
-```
 
-Please make sure you enable the pre-commit hooks:
-
-```bash
+# Please make sure you enable the pre-commit hooks:
 pipenv run pre-commit install
 ```
 
@@ -80,7 +128,7 @@ You can run a single hook by running:
 pipenv run pre-commit hook-id
 ```
 
-The id of the hook can be found in the [`.pre-commit-confing.yaml`](.pre-commit-config.yaml) file.
+The id of the hook can be found in the [`.pre-commit-config.yaml`](.pre-commit-config.yaml) file.
 
 ##### Running hooks on all files
 
@@ -89,4 +137,3 @@ You can run all the pre-commit hooks on all files by running:
 ```bash
 pipenv run pre-commit run --all-files
 ```
-

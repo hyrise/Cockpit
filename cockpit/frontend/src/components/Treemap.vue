@@ -1,7 +1,8 @@
 <template>
   <div class="treemap">
-    <canvas id="treemap"></canvas></div
-></template>
+    <canvas id="treemap"></canvas>
+  </div>
+</template>
 
 <script lang="ts">
 import Chart from "chart.js";
@@ -16,22 +17,25 @@ import {
   ref
 } from "@vue/composition-api";
 import { useGeneratingTestData } from "../helpers/testData";
+import { StorageQueryResult } from "../types/storage";
+import { useStorageFetchService } from "../services/storageService";
 
 interface Props {}
 
 export default createComponent({
   setup(props: Props, context: SetupContext) {
     const treeMap = ref<Object>(null);
-    const { treeData, getStorageData } = useStorageFetching();
+    const { storageData, getStorage } = useStorageFetchService();
     const { generateStorageData } = useGeneratingTestData();
     const testData = generateStorageData();
 
     function updateTreeMap() {
-      //getStorageData();
+      //getStorage();
       treeMap.value.update();
     }
 
     onMounted(() => {
+      // TODO: outsourcing in helpers ts file for treemap creation
       const canvas: any = document.getElementById("treemap");
       const map: any = canvas.getContext("2d");
       treeMap.value = new Chart(map, {
@@ -40,7 +44,7 @@ export default createComponent({
           datasets: [
             {
               label: "Basic treemap",
-              tree: testData, //treeData.value,
+              tree: testData, //storageData.value,
               key: "size",
               groups: ["table", "column"],
               spacing: 1,
@@ -131,55 +135,6 @@ export default createComponent({
     });
   }
 });
-function useStorageFetching(): {
-  treeData: Ref<Object[]>;
-  getStorageData: () => void;
-} {
-  const treeData = ref<Object[]>([]);
-  function getStorageData() {
-    fetchStorageData().then(result => {
-      const currentData = transformDataFormat(result);
-      updateChartData(currentData);
-    });
-  }
-
-  function fetchStorageData(): Promise<Object> {
-    return new Promise((resolve, reject) => {
-      axios
-        .get("http://192.168.30.126:5000/columninfo")
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  }
-
-  function transformDataFormat(data: Object) {
-    const dataArray = [];
-    const tableData = data["columninfo"];
-    for (let i = 0; i < tableData.length; i++) {
-      const columnData = tableData[i];
-      const entry = {};
-      entry["table"] = columnData[0];
-      entry["column"] = columnData[1];
-      entry["size"] = columnData[2];
-      entry["dataType"] = columnData[3];
-      entry["encoding"] = columnData[4];
-      dataArray.push(entry);
-    }
-    return dataArray;
-  }
-
-  function updateChartData(newData: Object[]) {
-    treeData.value.length = 0;
-    for (let i = 0; i < newData.length; i++) {
-      treeData.value.push(newData[i]);
-    }
-  }
-  return { getStorageData, treeData };
-}
 </script>
 <style>
 .treemap {

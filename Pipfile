@@ -24,6 +24,8 @@ redis = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
+rq-dashboard = "*"
+websockets = "*"
 
 [requires]
 python_version = "3.6.8"
