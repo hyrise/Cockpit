@@ -34,7 +34,6 @@ class ConnectionWorker(Worker):
     def __init__(self, database, *args, **kwargs):
         """Inititialze the worker with a connection to a database."""
         self.db_connection = database.connect()
-        self.db_connection.set_session(autocommit=True)
         super().__init__(*args, **kwargs)
 
     def perform_job(self, job, queue, heartbeat_ttl=None):
