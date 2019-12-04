@@ -128,7 +128,7 @@ You can run a single hook by running:
 pipenv run pre-commit hook-id
 ```
 
-The id of the hook can be found in the [`.pre-commit-confing.yaml`](.pre-commit-config.yaml) file.
+The id of the hook can be found in the [`.pre-commit-config.yaml`](.pre-commit-config.yaml) file.
 
 ##### Running hooks on all files
 
