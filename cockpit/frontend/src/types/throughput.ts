@@ -1,3 +1,7 @@
 export interface ThroughputQueryResult {
-  throughput: number;
+  [id: string]: number[];
+}
+
+export interface ThroughputData {
+  [id: string]: number[];
 }
