@@ -99,7 +99,7 @@ if __name__ == "__main__":
         getenv("QUEUE_HOST"),
         getenv("QUEUE_PORT"),
         getenv("QUEUE_DB"),
-        getenv("QUEUE_PASSWORD"),
+        getenv("QUEUE_PASSWORD", None),
     )
     database = HyriseDatabase(
         getenv("DB_USER"),

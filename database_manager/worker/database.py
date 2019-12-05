@@ -35,10 +35,12 @@ class HyriseDatabase(Database):
 
     def connect(self):
         """Establish a connection to the Hyrise database."""
-        return connect(
+        conn = connect(
             user=self._user,
             password=self._password,
             host=self._host,
             port=self._port,
             dbname=self._dbname,
         )
+        conn.set_session(autocommit=True)
+        return conn

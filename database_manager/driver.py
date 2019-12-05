@@ -19,6 +19,8 @@ class DatabaseDriver:
     def __init__(self, id, user, password, host, port, dbname, redis_connection):
         """Initialize a database driver."""
         self._id = id
+        self._metadata = dict(storage=[])
+        self._jobs = dict(storage=None)
         self._init_database(user, password, host, port, dbname)
         self._init_queue(redis_connection)
         self._init_measurements()
@@ -46,6 +48,7 @@ class DatabaseDriver:
         self._scheduler.add_job(
             self._measure_queue_length, trigger="interval", seconds=1
         )
+        self._scheduler.add_job(self._measure_storage, trigger="interval", seconds=5)
         self._scheduler.start()
 
     def _measure_throughput(self):
@@ -58,14 +61,27 @@ class DatabaseDriver:
         )
         result = (now, throughput)
         self._throughput.append(result)
-        return result
+        return self.throughput
 
     def _measure_queue_length(self):
         now = time()
         queue_length = self._queue.count
         result = (now, queue_length)
         self._queue_length.append(result)
-        return result
+        return self.queue_length
+
+    def _measure_storage(self):
+        return True  # TODO
+        now = time()
+        job = self._jobs["storage"]
+        if job is None:
+            self._jobs["storage"] = self._queue.enqueue("task.get_hyrise_storage")
+            return
+        if job.result is None:
+            return
+        self._metadata["storage"].append((now, job.result))
+        self._jobs["storage"] = None
+        return self.storage
 
     def task_execute(self, query, vars=None):
         """Task to enqueue a query to be executed by a worker."""
@@ -82,12 +98,21 @@ class DatabaseDriver:
     @property
     def throughput(self):
         """Get the most recent throughput value."""
-        return self._throughput[-1]
+        return self._throughput[-1] if len(self._throughput) > 0 else (0, 0)
 
     @property
     def queue_length(self):
         """Get the most recent queue_length value."""
-        return self._queue_length[-1]
+        return self._queue_length[-1] if len(self._queue_length) > 0 else (0, 0)
+
+    @property
+    def storage(self):
+        """Get the most recent storage metadata."""
+        return (
+            self._metadata["storage"][-1]
+            if len(self._metadata["storage"]) > 0
+            else (0, 0)
+        )
 
     def __repr__(self):
         """Return identification, most useful information."""
