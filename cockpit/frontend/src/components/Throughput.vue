@@ -34,11 +34,14 @@ import axios from "axios";
 import { useGeneratingTestData } from "../helpers/testData";
 import { useThroughputFetchService } from "../services/throughputService";
 import { useThreadConfigurationService } from "../services/threadService";
+import { useDatabaseFetchService } from "../services/databaseService";
+import { ThroughputData } from "../types/throughput";
+import { Database } from "../types/database";
 
 interface Props {}
 
 interface Data {
-  throughputData: Ref<number[]>;
+  throughputData: Ref<ThroughputData>;
   resetData: () => void;
   threads: Ref<number>;
   setNumberOfThreads: () => void;
@@ -51,51 +54,50 @@ export default createComponent({
       getThroughput,
       throughputData,
       throughputQueryReadyState
-    } = useThroughputFetchService();
+    } = useThroughputFetchService(onTPChange);
+
+    const relevantDatabaseId = ref<string[]>(["citadelle"]); // this should be fetched for the current db (router variable)
+    const { databases } = useDatabaseFetchService();
+
 
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
-    const dataSet = ref<number[]>([1]);
+    const dataSet = ref<number[]>([]);
 
     function updateChartData(): void {
-      if (throughputData.value.length === 0) {
+      const relevantThroughputData =
+        throughputData.value[databases.value[0].id] || [];
+      if (relevantThroughputData.length === 0) {
         labels.value.length = 0;
         dataSet.value.length = 0;
-      } else if (throughputData.value.length) {
+      } else if (relevantThroughputData.length) {
         labels.value.push(labels.value.length.toString());
         dataSet.value.length = 0;
-        for (let i = 0; i < throughputData.value.length; i++) {
-          dataSet.value.push(throughputData.value[i]);
+        for (let i = 0; i < relevantThroughputData.length; i++) {
+          dataSet.value.push(relevantThroughputData[i]);
         }
       }
-      if (throughputData.value.length > 5) {
+      if (relevantThroughputData.length > 5) {
         labels.value.length = 0;
         dataSet.value.length = 0;
         for (
-          let i = throughputData.value.length - 5;
-          i < throughputData.value.length;
+          let i = relevantThroughputData.length - 5;
+          i < relevantThroughputData.length;
           i++
         ) {
           labels.value.push(i.toString());
-          dataSet.value.push(throughputData.value[i]);
+          dataSet.value.push(relevantThroughputData[i]);
         }
       }
+      console.log(dataSet);
       chart.value ? chart.value.update() : null;
-      console.log(dataSet.value);
     }
 
-    watch(
-      () => throughputData.value,
-      () => {
-        if (throughputData.value) {
-          updateChartData();
-        }
-      }
-    );
+    function onTPChange() {
+      updateChartData();
+    }
 
-    const { generateThroughputData } = useGeneratingTestData();
-
-    onMounted(() => setInterval(addTestData, 1000));
+    onMounted(() => setInterval(checkState, 1000));
 
     onMounted(() => {
       const canvas: any = document.getElementById("canvas");
@@ -153,18 +155,14 @@ export default createComponent({
       });
     });
 
-    function addTestData(): void {
-      throughputData.value.push(generateThroughputData());
-    }
-
     function checkState(): void {
-      if (throughputQueryReadyState) {
-        getThroughput();
+      if (throughputQueryReadyState.value) {
+        getThroughput(relevantDatabaseId.value);
       }
     }
 
     function resetData(): void {
-      throughputData.value.length = 0;
+      throughputData.value = {};
     }
 
     return { throughputData, resetData, threads, setNumberOfThreads };
