@@ -7,8 +7,8 @@ import settings as s
 from driver import DatabaseDriver
 
 responses = {
-    200: {"header": {"status": 200, "message": "OK"}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}},
+    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
+    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
 }
 
 
@@ -19,6 +19,18 @@ class DatabaseManager(object):
         """Initialize a DatabaseManager."""
         self._drivers = dict()
         self._shutdown_requested = False
+        self._server_calls = {
+            "add driver": self._call_add_driver,
+            "pop driver": self._call_pop_driver,
+            "get drivers": self._call_get_drivers,
+            "execute": self._call_execute,
+            "executemany": self._call_executemany,
+            "executelist": self._call_executelist,
+            "throughput": self._call_throughput,
+            "queue length": self._call_queue_length,
+            "storage": self._call_storage,
+            "shutdown": self._call_shutdown,
+        }
         self._init_redis_connection()
         self._init_server()
         self._run()
@@ -44,100 +56,83 @@ class DatabaseManager(object):
             return False
         return True
 
-    def _add_driver(self, db_type, id, user, password, host, port, dbname):
+    def _call_add_driver(self, body):
         """Add a database driver to the manager."""
-        db_type = db_type = self._get_db_type(db_type)
+        id = body["id"]
+        db_type = self._get_db_type(body["db_type"])
         if not db_type:
-            return False
+            return responses[400]
         if not self._check_id_free(id):
-            return False
+            return responses[400]
         self._drivers[id] = db_type(
-            id, user, password, host, port, dbname, self._redis_connection
+            id,
+            body["user"],
+            body["password"],
+            body["host"],
+            body["port"],
+            body["dbname"],
+            self._redis_connection,
         )
-        return id
+        return responses[200]
 
-    def _pop_driver(self, id):
+    def _call_pop_driver(self, body):
         """Remove a database driver from the manager."""
+        id = body["id"]
         if not self._check_id_free(id):
             del self._drivers[id]
-            return id
-        return False
+            return responses[200]
+        return responses[400]
 
-    def _execute(self, query, vars=None):
+    def _call_get_drivers(self, body):
+        response = responses[200]
+        response["body"] = {"ids": list(self._drivers.keys())}
+        return response
+
+    def _call_execute(self, body):
         for id in self._drivers.keys():
-            self._drivers[id].task_execute(query, vars)
-        return True
+            self._drivers[id].task_execute(body["query"], body["vars"])
+        return responses[200]
 
-    def _executemany(self, query, vars_list):
+    def _call_executemany(self, body):
         for id in self._drivers.keys():
-            self._drivers[id].task_executemany(query, vars_list)
-        return True
+            self._drivers[id].task_executemany(body["query"], body["vars_list"])
+        return responses[200]
 
-    def _executelist(self, querylist):
+    def _call_executelist(self, body):
         for id in self._drivers.keys():
-            self._drivers[id].task_executelist(querylist)
-        return True
+            self._drivers[id].task_executelist(body["querylist"])
+        return responses[200]
 
-    def _throughput(self):
+    def _call_throughput(self, body):
         result = dict()
         for id in self._drivers.keys():
             result[id] = self._drivers[id].throughput
-        return result
+        response = responses[200]
+        response["body"] = result
+        return response
 
-    def _queue_length(self):
+    def _call_queue_length(self, body):
         result = dict()
         for id in self._drivers.keys():
             result[id] = self._drivers[id].queue_length
-        return result
+        response = responses[200]
+        response["body"] = result
+        return response
 
-    def _storage(self):
+    def _call_storage(self, body):
         result = dict()
         for id in self._drivers.keys():
             result[id] = self._drivers[id].storage
-        return result
+        response = responses[200]
+        response["body"] = result
+        return response
 
-    def _handle_request(self, request):
-        call = request["header"]["message"]
-        body = request["body"]
+    def _call_shutdown(self, body):
+        self._shutdown_requested = True
+        return True
 
-        result = False
-
-        if call == "add driver":
-            result = self._add_driver(
-                body["db_type"],
-                body["id"],
-                body["user"],
-                body["password"],
-                body["host"],
-                body["port"],
-                body["dbname"],
-            )
-        if call == "pop driver":
-            result = self._pop_driver(body["id"])
-
-        if call == "execute":
-            result = self._execute(body["query"], body["vars"])
-
-        if call == "executemany":
-            result = self._executemany(body["query"], body["vars_list"])
-
-        if call == "executelist":
-            result = self._executelist(body["query_list"])
-
-        if call == "throughput":
-            result = self._throughput()
-
-        if call == "queue length":
-            result = self._queue_length()
-
-        if call == "storage":
-            result = self._storage()
-
-        if call == "shutdown":
-            self._shutdown_requested = True
-            result = True
-
-        return result
+    def _call_not_found(self, body):
+        return responses[400]
 
     def _run(self):
         """Run the manager by enabling IPC."""
@@ -150,14 +145,10 @@ class DatabaseManager(object):
             # Get the message
             request = self._socket.recv_json()
 
-            result = self._handle_request(request)
-            response = responses[200]
-            if result is False:
-                response = responses[400]
-            elif result is True:
-                response = responses[200]
-            else:
-                response["body"] = result
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
             # Send the reply
             self._socket.send_json(response)
