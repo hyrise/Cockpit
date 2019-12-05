@@ -1,9 +1,9 @@
-import { Ref, ref } from "@vue/composition-api";
-import axios from "axios";
-import { ThroughputQueryResult, ThroughputData } from "../types/throughput";
+import { Ref, ref } from '@vue/composition-api';
+import axios from 'axios';
+import { ThroughputQueryResult, ThroughputData } from '../types/throughput';
 
 export function useThroughputFetchService(
-  onChange: () => void
+  onChange: () => void,
 ): {
   getThroughput: (databaseIds: string[]) => void;
   throughputData: Ref<ThroughputData>;
@@ -15,11 +15,11 @@ export function useThroughputFetchService(
   function getThroughput(databaseIds: string[]): void {
     fetchThroughput().then(result => {
       throughputQueryReadyState.value = false;
-      for (let [databaseId, values] of Object.entries(result)) {
-        if (databaseIds.includes(databaseId)) {
-          addThroughputData(databaseId, values[1]);
+      Object.keys(result).forEach(key => {
+        if (databaseIds.includes(key)) {
+          addThroughputData(key, result[key][1]);
         }
-      }
+      });
       if (onChange) {
         onChange();
       }
@@ -38,7 +38,7 @@ export function useThroughputFetchService(
     return new Promise((resolve, reject) => {
       resolve({
         citadelle: [1234, 123],
-        york: [1234, 123]
+        york: [1234, 12],
       });
       // add backend link here
       //

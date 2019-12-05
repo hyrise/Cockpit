@@ -56,40 +56,65 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
 
-    const relevantDatabaseId = ref<string[]>(["citadelle"]); // this should be fetched for the current db (router variable)
+    // this should be fetched for the current db (router variable)
     const { databases } = useDatabaseFetchService();
-
 
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
-    const dataSet = ref<number[]>([]);
 
-    function updateChartData(): void {
-      const relevantThroughputData =
-        throughputData.value[databases.value[0].id] || [];
-      if (relevantThroughputData.length === 0) {
-        labels.value.length = 0;
-        dataSet.value.length = 0;
-      } else if (relevantThroughputData.length) {
-        labels.value.push(labels.value.length.toString());
-        dataSet.value.length = 0;
-        for (let i = 0; i < relevantThroughputData.length; i++) {
-          dataSet.value.push(relevantThroughputData[i]);
+    const dataMap = ref<ThroughputData>([]);
+    dataMap.value[databases.value[1].id] = [];
+    dataMap.value[databases.value[2].id] = [];
+
+    function updateDataset(
+      throughputData: ThroughputData,
+      databaseId: string
+    ): void {
+      const throughputDataSet = throughputData[databaseId];
+      const chartDataSet = dataMap.value[databaseId];
+      if (throughputDataSet.length === 0) {
+        chartDataSet.length = 0;
+      } else if (throughputDataSet.length) {
+        chartDataSet.length = 0;
+        for (let i = 0; i < throughputDataSet.length; i++) {
+          chartDataSet.push(throughputDataSet[i]);
         }
       }
-      if (relevantThroughputData.length > 5) {
-        labels.value.length = 0;
-        dataSet.value.length = 0;
+      if (throughputDataSet.length > 5) {
+        chartDataSet.length = 0;
         for (
-          let i = relevantThroughputData.length - 5;
-          i < relevantThroughputData.length;
+          let i = throughputDataSet.length - 5;
+          i < throughputDataSet.length;
           i++
         ) {
-          labels.value.push(i.toString());
-          dataSet.value.push(relevantThroughputData[i]);
+          chartDataSet.push(throughputDataSet[i]);
         }
       }
-      console.log(dataSet);
+    }
+
+    function updateLabels(throughputLength: number): void {
+      if (throughputLength === 0) {
+        labels.value.length = 0;
+      } else if (throughputLength) {
+        labels.value.push(labels.value.length.toString());
+      }
+      if (throughputLength > 5) {
+        labels.value.length = 0;
+        for (let i = throughputLength - 5; i < throughputLength; i++) {
+          labels.value.push(i.toString());
+        }
+      }
+    }
+
+    function updateChartData(): void {
+      const ThroughputDataSet = throughputData.value;
+      const databaseIds = Object.keys(dataMap.value);
+
+      databaseIds.forEach(id => {
+        updateDataset(ThroughputDataSet, id);
+      });
+      updateLabels(ThroughputDataSet[databaseIds[1]].length);
+
       chart.value ? chart.value.update() : null;
     }
 
@@ -110,9 +135,16 @@ export default createComponent({
             {
               label: "Database",
               backgroundColor: "#76baff",
-              fill: true,
+              fill: false,
               borderColor: "#2a93ff",
-              data: dataSet.value
+              data: dataMap.value.citadelle
+            },
+            {
+              label: "Database",
+              backgroundColor: "green",
+              fill: false,
+              borderColor: "green",
+              data: dataMap.value.york
             }
           ]
         },
@@ -157,7 +189,7 @@ export default createComponent({
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
-        getThroughput(relevantDatabaseId.value);
+        getThroughput(Object.keys(dataMap.value));
       }
     }
 
