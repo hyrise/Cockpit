@@ -51,15 +51,16 @@ export default createComponent({
       getThroughput,
       throughputData,
       throughputQueryReadyState
-    } = useThroughputFetchService();
-    console.log(throughputData);
+    } = useThroughputFetchService(onTPChange);
     var relevantThroughputData = [];
+
+    const relevantDatabaseId = ref<string>("citadelle"); // this should be fetched for the current db (router variable)
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
     const dataSet = ref<number[]>([1]);
 
     function updateChartData(): void {
-     relevantThroughputData = throughputData.value["citadelle"] || [];
+      relevantThroughputData = throughputData.value[relevantDatabaseId.value] || [];
       if (relevantThroughputData.length === 0) {
         labels.value.length = 0;
         dataSet.value.length = 0;
@@ -89,18 +90,6 @@ export default createComponent({
     function onTPChange() {
       updateChartData();
     }
-
-    watch(
-      () => throughputData.value,
-      () => {
-        if(throughputData.value) {
-          console.log("update");
-          updateChartData();
-        }
-      }, { deep: true }
-    );
-
-    const { generateThroughputData } = useGeneratingTestData();
 
     onMounted(() => setInterval(checkState, 1000));
 
@@ -135,7 +124,7 @@ export default createComponent({
                   fontSize: 16
                 },
                 gridLines: {
-                  display: true
+                  display: true["citadelle"]
                 }
               }
             ],
@@ -160,18 +149,14 @@ export default createComponent({
       });
     });
 
-    function addTestData(): void {
-      throughputData.value.push(generateThroughputData());
-    }
-
     function checkState(): void {
       if (throughputQueryReadyState.value) {
-        getThroughput(["citadelle", "york"], onTPChange);
+        getThroughput([relevantDatabaseId.value]);
       }
     }
 
     function resetData(): void {
-      throughputData.value.length = 0;
+      throughputData.value = {};
     }
 
     return { throughputData, resetData, threads, setNumberOfThreads };
