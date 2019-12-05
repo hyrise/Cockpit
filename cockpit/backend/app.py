@@ -67,10 +67,12 @@ def get_storage_metadata():
     return response["body"]
 
 
-@app.route("/drivers", methods=["POST", "DELETE"])
+@app.route("/drivers", methods=["GET", "POST", "DELETE"])
 def drivers():
     """Add or delete a driver to/from the database manager."""
     request_json = request.get_json()
+    if request.method == "GET":
+        message = {"header": {"message": "get drivers"}, "body": {}}
     if request.method == "POST":
         message = {
             "header": {"message": "add driver"},
