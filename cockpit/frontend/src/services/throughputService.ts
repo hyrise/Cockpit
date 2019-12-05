@@ -1,16 +1,16 @@
 import { Ref, ref } from "@vue/composition-api";
 import axios from "axios";
-import { ThroughputQueryResult } from "../types/throughput";
+import { ThroughputQueryResult, ThroughputData } from "../types/throughput";
 
 export function useThroughputFetchService(
   onChange: () => void
 ): {
   getThroughput: (databaseIds: string[]) => void;
-  throughputData: Ref<{ [id: string]: number[] }>;
+  throughputData: Ref<ThroughputData>;
   throughputQueryReadyState: Ref<boolean>;
 } {
   const throughputQueryReadyState = ref<boolean>(true);
-  var throughputData = ref<{ [id: string]: number[] }>({});
+  var throughputData = ref<ThroughputData>({});
 
   function getThroughput(databaseIds: string[]): void {
     fetchThroughput().then(result => {

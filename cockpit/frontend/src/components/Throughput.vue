@@ -34,11 +34,12 @@ import axios from "axios";
 import { useGeneratingTestData } from "../helpers/testData";
 import { useThroughputFetchService } from "../services/throughputService";
 import { useThreadConfigurationService } from "../services/threadService";
+import { ThroughputData } from "../types/throughput";
 
 interface Props {}
 
 interface Data {
-  throughputData: Ref<{ [id: string]: number[] }>;
+  throughputData: Ref<ThroughputData>;
   resetData: () => void;
   threads: Ref<number>;
   setNumberOfThreads: () => void;
@@ -52,15 +53,15 @@ export default createComponent({
       throughputData,
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
-    var relevantThroughputData = [];
 
-    const relevantDatabaseId = ref<string>("citadelle"); // this should be fetched for the current db (router variable)
+    const relevantDatabaseId = ref<string[]>(["citadelle"]); // this should be fetched for the current db (router variable)
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
-    const dataSet = ref<number[]>([1]);
+    const dataSet = ref<number[]>([]);
 
     function updateChartData(): void {
-      relevantThroughputData = throughputData.value[relevantDatabaseId.value] || [];
+      const relevantThroughputData =
+        throughputData.value[relevantDatabaseId.value[0]] || [];
       if (relevantThroughputData.length === 0) {
         labels.value.length = 0;
         dataSet.value.length = 0;
@@ -151,7 +152,7 @@ export default createComponent({
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
-        getThroughput([relevantDatabaseId.value]);
+        getThroughput(relevantDatabaseId.value);
       }
     }
 
