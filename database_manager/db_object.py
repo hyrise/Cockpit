@@ -95,10 +95,6 @@ class DbObject(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def execute_query(self, query):
-        """Put single query in queue."""
-        self._task_queue.put(query)
-
     def get_throughput_counter(self):
         """Return throughput."""
         return self._throughput_counter
@@ -129,7 +125,6 @@ class DbObject(object):
 
     def clean_exit(self):
         """Clean exit."""
-        print(f"lost {self._lost}")
         self._close_pool()
         self._close_connections()
         self._close_queue()
