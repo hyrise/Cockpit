@@ -25,6 +25,12 @@ class DatabaseDriver:
         self._init_queue(redis_connection)
         self._init_measurements()
         self._init_scheduler()
+        self.throughput_file = ("tp.csv", "a")
+        with open(*self.throughput_file) as f:
+            print("timestamp", "throughput", file=f, sep=",")
+        self.queue_length_file = ("ql.csv", "a")
+        with open(*self.queue_length_file) as f:
+            print("timestamp", "queue_length", file=f, sep=",")
 
     def _init_database(self, user, password, host, port, dbname):
         self._database = dict(
@@ -61,6 +67,8 @@ class DatabaseDriver:
         )
         result = (now, throughput)
         self._throughput.append(result)
+        with open(*self.throughput_file) as f:
+            print(*result, file=f, sep=",")
         return self.throughput
 
     def _measure_queue_length(self):
@@ -68,6 +76,8 @@ class DatabaseDriver:
         queue_length = self._queue.count
         result = (now, queue_length)
         self._queue_length.append(result)
+        with open(*self.queue_length_file) as f:
+            print(*result, file=f, sep=",")
         return self.queue_length
 
     def _measure_storage(self):
