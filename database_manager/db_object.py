@@ -128,3 +128,4 @@ class DbObject(object):
         self._close_pool()
         self._close_connections()
         self._close_queue()
+        self.scheduler.shutdown()
