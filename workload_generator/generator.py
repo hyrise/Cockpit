@@ -7,14 +7,17 @@ The WorkloadProducers have IPC connections to a database interface.
 
 import json
 import random
+from os import getenv
 
 import zmq
 from flask import Flask, Response
 from flask_cors import CORS
 
-PUBLISHER_SOCKET_URL = ""  # please add url here
-BACKEND_HOST = ""
-BACKEND_PORT = ""
+WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL = getenv(
+    "WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL"
+)
+WORKLOAD_GENERATOR_BACKEND_HOST = getenv("WORKLOAD_GENERATOR_BACKEND_HOST")
+WORKLOAD_GENERATOR_BACKEND_PORT = getenv("WORKLOAD_GENERATOR_BACKEND_PORT")
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -22,7 +25,7 @@ app.config["CORS_HEADERS"] = "Content-Type"
 
 context = zmq.Context()
 publisher = context.socket(zmq.PUB)
-publisher.bind(PUBLISHER_SOCKET_URL)
+publisher.bind(WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL)
 
 
 def generate_simple_workload():
@@ -104,4 +107,4 @@ def execute_heavy_workload():
 
 
 if __name__ == "__main__":
-    app.run(host=BACKEND_HOST, port=BACKEND_PORT)
+    app.run(host=WORKLOAD_GENERATOR_BACKEND_HOST, port=WORKLOAD_GENERATOR_BACKEND_PORT)

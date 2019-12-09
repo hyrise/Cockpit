@@ -1,5 +1,7 @@
 """The driver represents an interface to the database."""
 
+from os import getenv
+
 import psycopg2
 
 
@@ -23,7 +25,7 @@ class Driver(object):
             user=self._user,
             password=self._password,
             host=self._host,
-            port="____",  # Add Port
+            port=getenv("DB_PORT"),
             database=self._dbname,
         )
         return connection_pool

@@ -1,13 +1,14 @@
 """Module for monitoring a database interface."""
 import json
+from os import getenv
 
 import zmq
 from flask import Flask, request
 from flask_cors import CORS
 
-DB_MANAGER_SOCKET_URL = ""
-BACKEND_HOST = ""
-BACKEND_PORT = ""
+MONITOR_REQ_URL = getenv("MONITOR_REQ_URL")
+MONITOR_BACKEND_HOST = getenv("MONITOR_BACKEND_HOST")
+MONITOR_BACKEND_PORT = getenv("MONITOR_BACKEND_PORT")
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -15,7 +16,7 @@ app.config["CORS_HEADERS"] = "Content-Type"
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect(DB_MANAGER_SOCKET_URL)
+socket.connect(MONITOR_REQ_URL)
 
 
 @app.route("/throughput")
@@ -50,4 +51,4 @@ def drivers():
 
 
 if __name__ == "__main__":
-    app.run(host=BACKEND_HOST, port=BACKEND_PORT)
+    app.run(host=MONITOR_BACKEND_HOST, port=MONITOR_BACKEND_PORT)

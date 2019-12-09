@@ -1,5 +1,6 @@
 """The data base manager is managing all databases."""
 import sys
+from os import getenv
 
 import psycopg2
 import zmq
@@ -8,8 +9,8 @@ from db_object import DbObject
 from driver import Driver
 
 NUMBER_THREADS = 8
-SUB_URL = ""  # please add subscriber Socket url
-REP_URL = ""  # please add reply socket url
+SUB_URL = getenv("WORKER_SUB_URL")
+REP_URL = getenv("MANAGER_REP_URL")
 
 responses = {
     200: {"header": {"status": 200, "message": "OK"}},
