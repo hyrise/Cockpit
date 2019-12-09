@@ -81,7 +81,7 @@ class WorkloadProducer(mp.Process):
             # query, vars = self._generate_execute()[0]
             # request["body"] = {"query": query, "vars": vars}
             queries = list()
-            for _ in range(0, 10):
+            for _ in range(10):
                 queries.append("SELECT 1;")
             request["body"] = {"querylist": queries}
             print(queries)
