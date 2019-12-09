@@ -1,4 +1,3 @@
 export interface Database {
-    id: string
-  }
-  
+  id: string;
+}

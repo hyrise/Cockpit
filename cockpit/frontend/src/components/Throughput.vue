@@ -1,21 +1,35 @@
 <template>
-  <div class="chart mx-10 my-10">
-    <div class="graph">
-      <canvas id="canvas" width="1200" height="600"></canvas>
-    </div>
-    <div class="slider my-12">
-      <v-slider
-        v-model="threads"
-        v-on:click="setNumberOfThreads"
-        thumb-label="always"
-        min="0"
-        max="32"
-        label="Number of Threads"
-      >
-      </v-slider>
-      <v-btn outlined large color="#1E90FF" @click="resetData">
-        Reset
-      </v-btn>
+  <div>
+    <div class="chart mx-10 my-10">
+      <v-row align="center">
+        <v-col cols="6" class="mx-10">
+          <v-select
+            v-model="selectedDatabaseIds"
+            :items="databaseIds"
+            chips
+            label="databases"
+            multiple
+            outlined
+          ></v-select>
+        </v-col>
+      </v-row>
+      <div class="graph">
+        <canvas id="canvas" width="1200" height="600"></canvas>
+      </div>
+      <div class="slider my-12">
+        <v-slider
+          v-model="threads"
+          v-on:click="setNumberOfThreads"
+          thumb-label="always"
+          min="0"
+          max="32"
+          label="Number of Threads"
+        >
+        </v-slider>
+        <v-btn outlined large color="#1E90FF" @click="resetData">
+          Reset
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +59,8 @@ interface Data {
   resetData: () => void;
   threads: Ref<number>;
   setNumberOfThreads: () => void;
+  databaseIds: Ref<string[]>;
+  selectedDatabaseIds: Ref<string[]>;
 }
 
 export default createComponent({
@@ -57,14 +73,14 @@ export default createComponent({
     } = useThroughputFetchService(onTPChange);
 
     // this should be fetched for the current db (router variable)
-    const { databases } = useDatabaseFetchService();
-
+    const { databaseIds } = useDatabaseFetchService();
+    var selectedDatabaseIds = ref<string[]>([]);
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
 
-    const dataMap = ref<ThroughputData>([]);
-    dataMap.value[databases.value[1].id] = [];
-    dataMap.value[databases.value[2].id] = [];
+    const dataMap = ref<ThroughputData>({});
+    dataMap.value[databaseIds.value[1]] = [];
+    dataMap.value[databaseIds.value[2]] = [];
 
     function updateDataset(
       throughputData: ThroughputData,
@@ -91,6 +107,13 @@ export default createComponent({
         }
       }
     }
+
+    watch(
+      () => selectedDatabaseIds.value,
+      ids => {
+        console.log(ids); // do updateing here
+      }
+    );
 
     function updateLabels(throughputLength: number): void {
       if (throughputLength === 0) {
@@ -197,13 +220,20 @@ export default createComponent({
       throughputData.value = {};
     }
 
-    return { throughputData, resetData, threads, setNumberOfThreads };
+    return {
+      throughputData,
+      resetData,
+      threads,
+      setNumberOfThreads,
+      databaseIds,
+      selectedDatabaseIds
+    };
   }
 });
 </script>
 <style scoped>
 .chart {
   max-width: 1200px;
-  max-height: 600px;
+  max-height: 900px;
 }
 </style>
