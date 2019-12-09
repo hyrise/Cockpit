@@ -43,34 +43,33 @@ def home():
 @app.route("/throughput")
 def get_throughput():
     """Return throughput information from database manager."""
-    response = _send_message(
+    return _send_message(
         db_manager_socket, {"header": {"message": "throughput"}, "body": {}}
     )
-    return response["body"]
 
 
 @app.route("/queue_length")
 def get_queue_length():
     """Return queue length information from database manager."""
-    response = _send_message(
+    return _send_message(
         db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
     )
-    return response["body"]
 
 
 @app.route("/storage")
 def get_storage_metadata():
     """Return storage metadata from database manager."""
-    response = _send_message(
+    return _send_message(
         db_manager_socket, {"header": {"message": "storage"}, "body": {}}
     )
-    return response["body"]
 
 
-@app.route("/drivers", methods=["POST", "DELETE"])
+@app.route("/drivers", methods=["GET", "POST", "DELETE"])
 def drivers():
     """Add or delete a driver to/from the database manager."""
     request_json = request.get_json()
+    if request.method == "GET":
+        message = {"header": {"message": "get drivers"}, "body": {}}
     if request.method == "POST":
         message = {
             "header": {"message": "add driver"},
