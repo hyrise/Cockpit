@@ -25,10 +25,10 @@ class DatabaseDriver:
         self._init_queue(redis_connection)
         self._init_measurements()
         self._init_scheduler()
-        self.throughput_file = ("tp.csv", "a")
+        self.throughput_file = (f"tp-{self._id}.csv", "a")
         with open(*self.throughput_file) as f:
             print("timestamp", "throughput", file=f, sep=",")
-        self.queue_length_file = ("ql.csv", "a")
+        self.queue_length_file = (f"ql-{self._id}.csv", "a")
         with open(*self.queue_length_file) as f:
             print("timestamp", "queue_length", file=f, sep=",")
 
