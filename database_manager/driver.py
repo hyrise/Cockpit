@@ -2,7 +2,7 @@
 
 from os import getenv
 
-import psycopg2
+from psycopg2 import pool
 
 
 class Driver(object):
@@ -19,7 +19,7 @@ class Driver(object):
 
     def _create_connection_pool(self, number_threads):
         """Create thread save connection pool."""
-        connection_pool = psycopg2.pool.ThreadedConnectionPool(
+        connection_pool = pool.ThreadedConnectionPool(
             0,
             number_threads,
             user=self._user,
