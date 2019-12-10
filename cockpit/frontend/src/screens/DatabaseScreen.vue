@@ -34,6 +34,4 @@ export default createComponent({
   margin-bottom: 50px;
   margin-top: 150px;
 }
-
-
 </style>
