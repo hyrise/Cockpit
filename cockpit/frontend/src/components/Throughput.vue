@@ -95,7 +95,8 @@ export default createComponent({
             {
               y: throughputData.value[id] ? throughputData.value[id].slice(Math.max(throughputData.value[id].length - 5, 1)) : [],
               mode: "lines",
-              line: { color: "#80CAF6" }
+              line: { color: "#80CAF6" },
+              name: id
             }
           ];
         }, []);
