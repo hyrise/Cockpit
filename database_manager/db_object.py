@@ -33,7 +33,8 @@ def task_execute_querys(
     while True:
         # If Queue is emty go to wait status
         task = task_queue.get(block=True)
-        cur.execute(task)
+        # string_task = ''.join(str(v) for v in task[0])
+        cur.execute(task[0], task[1])
         throughput_data_container[str(worker_id)] = (
             throughput_data_container[str(worker_id)] + 1
         )
@@ -106,6 +107,7 @@ class DbObject(object):
             throughput_data = throughput_data + self._throughput_data_container[str(i)]
             self._throughput_data_container[str(i)] = 0
         self._throughput_counter = throughput_data
+        # print(f"Queue Size : {self._task_queue.qsize()} throughput: {self._throughput_counter}")
 
     def _close_pool(self):
         """Close worker pool."""
