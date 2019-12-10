@@ -29,15 +29,12 @@ publisher = context.socket(zmq.PUB)
 publisher.bind(WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL)
 
 
-def generate_simple_workload():
+def generate_simple_workload(number_queries):
     """Generate simple workload."""
-    workload = []
-    for _ in range(100000):
-        workload.append(("SELECT 1;", None))
-    dictionary = {}
-    dictionary["Content"] = workload
-    data = json.dumps(dictionary)
-    return data
+    queries = []
+    for _ in range(number_queries):
+        queries.append(("SELECT 1;", None))
+    return queries
 
 
 def generate_random():
@@ -46,7 +43,7 @@ def generate_random():
     return (query, (secrets.randbelow(24),))
 
 
-def generate_heavy_workload(scale):
+def generate_heavy_workload(number_queries):
     """Generate heavy workload."""
     queries = random.choices(
         [
@@ -79,10 +76,30 @@ def generate_heavy_workload(scale):
             generate_random(),
         ],
         weights=[1, 1, 100],
-        k=1000 * scale,
+        k=number_queries,
     )
+
+    return queries
+
+
+def create_heavy_workload_packages(number_packages, number_queries):
+    """Create packages with heavy queries."""
     dictionary = {}
-    dictionary["Content"] = queries
+    packages = []
+    for _ in range(number_packages):
+        packages.append(generate_heavy_workload(number_queries))
+    dictionary["Content"] = packages
+    data = json.dumps(dictionary)
+    return data
+
+
+def create_simple_workload_packages(number_packages, number_queries):
+    """Create packages with simple queries."""
+    dictionary = {}
+    packages = []
+    for _ in range(number_packages):
+        packages.append(generate_simple_workload(number_queries))
+    dictionary["Content"] = packages
     data = json.dumps(dictionary)
     return data
 
@@ -90,7 +107,7 @@ def generate_heavy_workload(scale):
 @app.route("/simple_workload")
 def execute_simple_workload():
     """Send simple workload to subscribers."""
-    workload = generate_simple_workload()
+    workload = create_simple_workload_packages(10, 20000)
     publisher.send_string(workload)
     return Response(status=200)
 
@@ -98,7 +115,7 @@ def execute_simple_workload():
 @app.route("/heavy_workload")
 def execute_heavy_workload():
     """Send heavy workload to subscribers."""
-    workload = generate_heavy_workload(20)
+    workload = create_heavy_workload_packages(10, 1000)
     publisher.send_string(workload)
     return Response(status=200)
 
