@@ -32,12 +32,13 @@ def task_execute_querys(
     cur = connection.cursor()
     while True:
         # If Queue is emty go to wait status
-        task = task_queue.get(block=True)
+        tasks = task_queue.get(block=True)
         # string_task = ''.join(str(v) for v in task[0])
-        cur.execute(task[0], task[1])
-        throughput_data_container[str(worker_id)] = (
-            throughput_data_container[str(worker_id)] + 1
-        )
+        for task in tasks:
+            cur.execute(task[0], task[1])
+            throughput_data_container[str(worker_id)] = (
+                throughput_data_container[str(worker_id)] + 1
+            )
 
 
 class DbObject(object):
