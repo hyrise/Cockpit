@@ -7,6 +7,7 @@ The WorkloadProducers have IPC connections to a database interface.
 
 import json
 import random
+import secrets
 from os import getenv
 
 import zmq
@@ -32,7 +33,7 @@ def generate_simple_workload():
     """Generate simple workload."""
     workload = []
     for _ in range(100000):
-        workload.append("SELECT 1;")
+        workload.append(("SELECT 1;", None))
     dictionary = {}
     dictionary["Content"] = workload
     data = json.dumps(dictionary)
@@ -41,12 +42,8 @@ def generate_simple_workload():
 
 def generate_random():
     """Return a simple query with a random number."""
-    return (
-        """SELECT *
-    FROM nation
-    WHERE n_nationkey = ?;""",
-        (random.randint(0, 24),),  # nosec
-    )
+    query = """SELECT * FROM nation WHERE n_nationkey = (%s);"""
+    return (query, (secrets.randbelow(24),))
 
 
 def generate_heavy_workload(scale):
@@ -76,7 +73,7 @@ def generate_heavy_workload(scale):
             WHERE l_shipdate >= '1994-01-01'
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
-                AND .07 AND l_quantity < 24;""",
+                AND .07 AND l_quantity < 24.0;""",
                 None,
             ),
             generate_random(),
