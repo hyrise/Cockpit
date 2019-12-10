@@ -14,9 +14,7 @@
           ></v-select>
         </v-col>
       </v-row>
-      <div class="graph">
-        <canvas id="canvas" width="1200" height="600"></canvas>
-      </div>
+      <div id="graph"></div>
       <div class="slider my-12">
         <v-slider
           v-model="threads"
@@ -53,6 +51,7 @@ import { useThreadConfigurationService } from "../services/threadService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { ThroughputData } from "../types/throughput";
 import { Database } from "../types/database";
+import * as Plotly from "plotly.js";
 
 interface Props {}
 
@@ -80,79 +79,37 @@ export default createComponent({
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
 
-    const dataMap= ref<ThroughputData>({});
-    dataMap.value[databaseIds.value[1]] = [];
-    dataMap.value[databaseIds.value[2]] = [];
-
-    function initializeDataSets(databases: string[]): ThroughputData {
-      const dataSets: ThroughputData = {};
-      databases.forEach(id => {
-        dataSets[id]= [];
-      })
-      return dataSets;
-    }
-
-
-    function updateDataset(
-      throughputData: ThroughputData,
-      databaseId: string
-    ): void {
-      const throughputDataSet = throughputData[databaseId];
-      const chartDataSet = dataMap.value[databaseId];
-      if (throughputDataSet.length === 0) {
-        chartDataSet.length = 0;
-      } else if (throughputDataSet.length) {
-        chartDataSet.length = 0;
-        for (let i = 0; i < throughputDataSet.length; i++) {
-          chartDataSet.push(throughputDataSet[i]);
-        }
-      }
-      if (throughputDataSet.length > 5) {
-        chartDataSet.length = 0;
-        for (
-          let i = throughputDataSet.length - 5;
-          i < throughputDataSet.length;
-          i++
-        ) {
-          chartDataSet.push(throughputDataSet[i]);
-        }
-      }
-    }
+    onMounted(() => {
+      //let graphDiv = document.getElementById('graph');
+      Plotly.newPlot("graph", [
+        { y: [], mode: "lines", line: { color: "#80CAF6" } }
+      ]);
+    });
 
     watch(
       () => selectedDatabaseIds.value,
-      ids => {
-       // console.log(ids); // do updating here
-       console.log(initializeDataSets(ids))
-       //dataMap.value=initializeDataSets(ids.length==0?["citadelle", "york"]:ids);
-       //updateChartData();
+      selectedDatabaseIds => {
+        const data = selectedDatabaseIds.reduce((result, id) => {
+          return [
+            ...result,
+            {
+              y: throughputData.value[id] ? throughputData.value[id].slice(Math.max(throughputData.value[id].length - 5, 1)) : [],
+              mode: "lines",
+              line: { color: "#80CAF6" }
+            }
+          ];
+        }, []);
+        Plotly.purge("graph");
+        Plotly.plot("graph", data);
       }
     );
 
-    function updateLabels(throughputLength: number): void {
-      if (throughputLength === 0) {
-        labels.value.length = 0;
-      } else if (throughputLength) {
-        labels.value.push(labels.value.length.toString());
-      }
-      if (throughputLength > 5) {
-        labels.value.length = 0;
-        for (let i = throughputLength - 5; i < throughputLength; i++) {
-          labels.value.push(i.toString());
-        }
-      }
-    }
-
     function updateChartData(): void {
-      const ThroughputDataSet = throughputData.value;
-      const databaseIds = Object.keys(dataMap.value);
+      const data = { y: Object.values(throughputData.value).map(throughput => (throughput.slice(Math.max(throughput.length - 5, 1))))};
 
-      databaseIds.forEach(id => {
-        updateDataset(ThroughputDataSet, id);
-      });
-      updateLabels(ThroughputDataSet[databaseIds[0]].length);
+      console.log(data, 'data');
 
-      chart.value ? chart.value.update() : null;
+      Plotly.update("graph", data, {});
     }
 
     function onTPChange() {
@@ -161,72 +118,9 @@ export default createComponent({
 
     onMounted(() => setInterval(checkState, 1000));
 
-    onMounted(() => {
-      const canvas: any = document.getElementById("canvas");
-      const ctx: any = canvas.getContext("2d");
-      chart.value = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: labels.value,
-          datasets: [
-            {
-              label: Object.keys(dataMap.value)[0],
-              backgroundColor: "#76baff",
-              fill: false,
-              borderColor: "#2a93ff",
-              data: dataMap.value.citadelle
-            },
-            {
-              label: Object.keys(dataMap.value)[1],
-              backgroundColor: "lightblue",
-              fill: false,
-              borderColor: "lightblue",
-              data: dataMap.value.york
-            }
-          ]
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: "Throughput (in Queries /s)",
-                  fontSize: 16
-                },
-                ticks: {
-                  beginAtZero: true,
-                  fontSize: 16
-                },
-                gridLines: {
-                  display: true
-                }
-              }
-            ],
-            xAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: "Time (in s)",
-                  fontSize: 16
-                },
-                ticks: {
-                  beginAtZero: true,
-                  fontSize: 16
-                },
-                gridLines: {
-                  display: true
-                }
-              }
-            ]
-          }
-        }
-      });
-    });
-
     function checkState(): void {
       if (throughputQueryReadyState.value) {
-        getThroughput(Object.keys(dataMap.value));
+        getThroughput(selectedDatabaseIds.value);
       }
     }
 
