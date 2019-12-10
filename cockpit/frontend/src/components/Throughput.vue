@@ -10,6 +10,7 @@
             label="databases"
             multiple
             outlined
+            prepend-icon="mdi-database"
           ></v-select>
         </v-col>
       </v-row>
@@ -40,6 +41,7 @@ import {
   createComponent,
   SetupContext,
   onMounted,
+  computed,
   Ref,
   ref,
   watch
@@ -78,9 +80,18 @@ export default createComponent({
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
 
-    const dataMap = ref<ThroughputData>({});
+    const dataMap= ref<ThroughputData>({});
     dataMap.value[databaseIds.value[1]] = [];
     dataMap.value[databaseIds.value[2]] = [];
+
+    function initializeDataSets(databases: string[]): ThroughputData {
+      const dataSets: ThroughputData = {};
+      databases.forEach(id => {
+        dataSets[id]= [];
+      })
+      return dataSets;
+    }
+
 
     function updateDataset(
       throughputData: ThroughputData,
@@ -111,7 +122,10 @@ export default createComponent({
     watch(
       () => selectedDatabaseIds.value,
       ids => {
-        console.log(ids); // do updateing here
+       // console.log(ids); // do updating here
+       console.log(initializeDataSets(ids))
+       //dataMap.value=initializeDataSets(ids.length==0?["citadelle", "york"]:ids);
+       //updateChartData();
       }
     );
 
@@ -136,7 +150,7 @@ export default createComponent({
       databaseIds.forEach(id => {
         updateDataset(ThroughputDataSet, id);
       });
-      updateLabels(ThroughputDataSet[databaseIds[1]].length);
+      updateLabels(ThroughputDataSet[databaseIds[0]].length);
 
       chart.value ? chart.value.update() : null;
     }
@@ -156,17 +170,17 @@ export default createComponent({
           labels: labels.value,
           datasets: [
             {
-              label: "Database",
+              label: Object.keys(dataMap.value)[0],
               backgroundColor: "#76baff",
               fill: false,
               borderColor: "#2a93ff",
               data: dataMap.value.citadelle
             },
             {
-              label: "Database",
-              backgroundColor: "green",
+              label: Object.keys(dataMap.value)[1],
+              backgroundColor: "lightblue",
               fill: false,
-              borderColor: "green",
+              borderColor: "lightblue",
               data: dataMap.value.york
             }
           ]
