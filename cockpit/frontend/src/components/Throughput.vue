@@ -122,8 +122,10 @@ export default createComponent({
 
     function updateChartData(): void {
       const data = {
-        y: Object.values(throughputData.value).map(throughput =>
-          throughput.slice(Math.max(throughput.length - 30, 1))
+        y: Object.values(selectedDatabaseIds.value).map(id =>
+          throughputData.value[id].slice(
+            Math.max(throughputData.value[id].length - 30, 1)
+          )
         )
       };
 
