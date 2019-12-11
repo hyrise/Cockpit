@@ -16,12 +16,9 @@ export function useThroughputFetchService(
     fetchThroughput().then(result => {
       throughputQueryReadyState.value = false;
       Object.keys(result).forEach(key => {
-        if (databaseIds.includes(key)) {
-          addThroughputData(key, result[key][1]);
-        } else {
-          addThroughputData(key, null);
-        }
+        addThroughputData(key, result[key]);
       });
+      console.log(throughputData, "tp");
       if (onChange) {
         onChange();
       }
@@ -38,21 +35,15 @@ export function useThroughputFetchService(
 
   function fetchThroughput(): Promise<ThroughputQueryResult> {
     return new Promise((resolve, reject) => {
-      resolve({
-        citadelle: [1234, 123],
-        york: [1234, 12]
-      });
-      // add backend link here
-      //
-      //
-      // axios
-      //   .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/throughput")
-      //   .then(response => {
-      //     resolve(response.data);
-      //   })
-      //   .catch(error => {
-      //     reject(error);
-      //   });
+      axios
+        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/throughput")
+        .then(response => {
+          console.log(response.data.body);
+          resolve(response.data.body);
+        })
+        .catch(error => {
+          reject(error);
+        });
     });
   }
   return { getThroughput, throughputQueryReadyState, throughputData };

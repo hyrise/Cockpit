@@ -115,14 +115,21 @@ export default createComponent({
       }
     );
 
+    function getMaxLength(): number {
+      return selectedDatabaseIds.value.reduce((currentMax, id) => {
+        return Math.max(throughputData.value[id].length, currentMax);
+      }, 0);
+    }
+
     function updateChartData(): void {
       const data = {
         y: Object.values(selectedDatabaseIds.value).map(
           id => throughputData.value[id]
         )
       };
-      const xMax = Math.max(throughputData.value.citadelle.length, 30);
-      const xMin = Math.max(throughputData.value.citadelle.length - 30, 0);
+      const maxSelectedLength = getMaxLength();
+      const xMax = Math.max(maxSelectedLength, 30);
+      const xMin = Math.max(maxSelectedLength - 30, 0);
       const xAxisLayout = {
         xaxis: {
           range: [xMin, xMax]

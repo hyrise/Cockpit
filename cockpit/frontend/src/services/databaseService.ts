@@ -18,7 +18,10 @@ export function useDatabaseFetchService(): {
   }
 
   function getDummyDatabases(): Database[] {
-    return [{ id: "aurora" }, { id: "citadelle" }, { id: "york" }];
+    return [
+      { id: "vm-citadelle.eaalab.hpi.uni-potsdam.de" },
+      { id: "vm-york.eaalab.hpi.uni-potsdam.de" }
+    ];
   }
 
   function getDummyDatabaseIds(): string[] {
