@@ -16,6 +16,7 @@
         "core-js": "^3.3.2",
         "plotly.js": "^1.51.2",
         "plotly.js-dist": "^1.51.2",
+        "random-material-color": "^1.0.5",
         "vue": "^2.6.10",
         "vue-chartjs": "^3.5.0",
         "vue-router": "^3.1.3",

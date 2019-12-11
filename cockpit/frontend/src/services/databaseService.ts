@@ -1,32 +1,52 @@
 import { Ref, ref } from "@vue/composition-api";
-import { Database } from "../types/database";
+import { Database, DatabaseColor } from "../types/database";
 import axios from "axios";
+
+var randomMC = require("random-material-color");
 
 export function useDatabaseFetchService(): {
   getDatabases: () => void;
   getDummyDatabases: () => void;
   databases: Ref<Database[]>;
   databaseIds: Ref<string[]>;
+  getDatabaseColor: (databaseId: string) => string;
 } {
   const databases = ref<Database[]>(getDummyDatabases());
-  const databaseIds = ref<string[]>(getDummyDatabaseIds());
+  const databaseIds = ref<string[]>(getDatabaseIds());
+  //const databaseColors = ref<string[]>(getDatabaseColors());
 
-  function getDatabases(): void {
-    axios.get("http://192.168.30.126:5000/").then(response => {
-      databases.value = response.data;
-    });
+  function getDatabases(): Database[] {
+    axios
+      .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/drivers")
+      .then(response => {
+        return response.data.body.ids.map(database => ({
+          id: database
+        }));
+      });
+  }
+
+  let databaseColorMap: DatabaseColor = {};
+
+  function getDatabaseColor(databaseId: string): string {
+    if (!databaseColorMap[databaseId]) {
+      databaseColorMap[databaseId] = randomMC.getColor();
+    }
+    return databaseColorMap[databaseId];
   }
 
   function getDummyDatabases(): Database[] {
-    return [
-      { id: "vm-citadelle.eaalab.hpi.uni-potsdam.de" },
-      { id: "vm-york.eaalab.hpi.uni-potsdam.de" }
-    ];
+    return [{ id: "citadelle" }, { id: "york" }];
   }
 
-  function getDummyDatabaseIds(): string[] {
-    return databases.value.map(database => database.id);
+  function getDatabaseIds(): string[] {
+    return databases.value ? databases.value.map(database => database.id) : [];
   }
 
-  return { getDatabases, databases, getDummyDatabases, databaseIds };
+  return {
+    getDatabases,
+    databases,
+    getDummyDatabases,
+    databaseIds,
+    getDatabaseColor
+  };
 }

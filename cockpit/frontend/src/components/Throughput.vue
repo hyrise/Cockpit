@@ -73,38 +73,36 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
 
-    const { databaseIds } = useDatabaseFetchService();
+    const { databaseIds, getDatabaseColor } = useDatabaseFetchService();
     var selectedDatabaseIds = ref<string[]>([]);
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
-    const layout = {
+    const layout: any = {
       title: "Throughput",
       xaxis: {
-        title: "time in s"
+        title: "time in s",
+        range: [0, 30]
       },
       yaxis: {
-        title: "queries per second"
+        title: "1000 queries per second",
+        rangemode: "tozero"
       }
     };
 
     onMounted(() => {
-      Plotly.newPlot(
-        "graph",
-        [{ y: [], mode: "lines", line: { color: "#80CAF6" } }],
-        layout
-      );
+      Plotly.newPlot("graph", [{ y: [], mode: "lines+markers" }], layout);
     });
 
     watch(
       () => selectedDatabaseIds.value,
       selectedDatabaseIds => {
-        const data = selectedDatabaseIds.reduce((result, id) => {
+        const data = selectedDatabaseIds.reduce((result, id): any => {
           return [
             ...result,
             {
               y: throughputData.value[id] ? throughputData.value[id] : [],
-              mode: "lines",
-              line: { color: "#80CAF6" },
+              mode: "lines+markers",
+              line: { color: getDatabaseColor(id) },
               name: id
             }
           ];
@@ -129,9 +127,14 @@ export default createComponent({
       const maxSelectedLength = getMaxLength();
       const xMax = Math.max(maxSelectedLength, 30);
       const xMin = Math.max(maxSelectedLength - 30, 0);
-      const xAxisLayout = {
+      const xAxisLayout: any = {
         xaxis: {
+          title: "time in s",
           range: [xMin, xMax]
+        },
+        yaxis: {
+          title: "1000 queries per second",
+          rangemode: "tozero"
         }
       };
 
