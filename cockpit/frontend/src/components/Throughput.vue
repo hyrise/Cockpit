@@ -78,12 +78,22 @@ export default createComponent({
     var selectedDatabaseIds = ref<string[]>([]);
     const chart = ref<Object>(null);
     const labels = ref<string[]>([]);
+    const layout = {
+      title: "Throughput",
+      xaxis: {
+        title: "time in s"
+      },
+      yaxis: {
+        title: "queries per second"
+      }
+    };
 
     onMounted(() => {
-      //let graphDiv = document.getElementById('graph');
-      Plotly.newPlot("graph", [
-        { y: [], mode: "lines", line: { color: "#80CAF6" } }
-      ]);
+      Plotly.newPlot(
+        "graph",
+        [{ y: [], mode: "lines", line: { color: "#80CAF6" } }],
+        layout
+      );
     });
 
     watch(
@@ -93,22 +103,29 @@ export default createComponent({
           return [
             ...result,
             {
-              y: throughputData.value[id] ? throughputData.value[id].slice(Math.max(throughputData.value[id].length - 5, 1)) : [],
+              y: throughputData.value[id]
+                ? throughputData.value[id].slice(
+                    Math.max(throughputData.value[id].length - 30, 1)
+                  )
+                : [],
               mode: "lines",
               line: { color: "#80CAF6" },
               name: id
             }
           ];
         }, []);
+        console.log(data);
         Plotly.purge("graph");
-        Plotly.plot("graph", data);
+        Plotly.plot("graph", data, layout);
       }
     );
 
     function updateChartData(): void {
-      const data = { y: Object.values(throughputData.value).map(throughput => (throughput.slice(Math.max(throughput.length - 5, 1))))};
-
-      console.log(data, 'data');
+      const data = {
+        y: Object.values(throughputData.value).map(throughput =>
+          throughput.slice(Math.max(throughput.length - 30, 1))
+        )
+      };
 
       Plotly.update("graph", data, {});
     }
