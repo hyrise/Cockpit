@@ -103,18 +103,13 @@ export default createComponent({
           return [
             ...result,
             {
-              y: throughputData.value[id]
-                ? throughputData.value[id].slice(
-                    Math.max(throughputData.value[id].length - 30, 1)
-                  )
-                : [],
+              y: throughputData.value[id] ? throughputData.value[id] : [],
               mode: "lines",
               line: { color: "#80CAF6" },
               name: id
             }
           ];
         }, []);
-        console.log(data);
         Plotly.purge("graph");
         Plotly.plot("graph", data, layout);
       }
@@ -122,14 +117,19 @@ export default createComponent({
 
     function updateChartData(): void {
       const data = {
-        y: Object.values(selectedDatabaseIds.value).map(id =>
-          throughputData.value[id].slice(
-            Math.max(throughputData.value[id].length - 30, 1)
-          )
+        y: Object.values(selectedDatabaseIds.value).map(
+          id => throughputData.value[id]
         )
       };
+      const xMax = Math.max(throughputData.value.citadelle.length, 30);
+      const xMin = Math.max(throughputData.value.citadelle.length - 30, 0);
+      const xAxisLayout = {
+        xaxis: {
+          range: [xMin, xMax]
+        }
+      };
 
-      Plotly.update("graph", data, {});
+      Plotly.update("graph", data, xAxisLayout);
     }
 
     function onTPChange() {
