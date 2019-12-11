@@ -18,6 +18,8 @@ export function useThroughputFetchService(
       Object.keys(result).forEach(key => {
         if (databaseIds.includes(key)) {
           addThroughputData(key, result[key][1]);
+        } else {
+          addThroughputData(key, null);
         }
       });
       if (onChange) {
