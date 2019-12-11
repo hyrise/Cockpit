@@ -8,11 +8,5 @@ If you have a local setup as specified in the projects [README](../README.md), a
 
 ```
 pipenv shell
-python manager.py
-```
-
-Once the Database Manager is running, start up a worker for each driver added to the manager by running:
-
-```bash
-python worker.py
+python db_manager.py
 ```
