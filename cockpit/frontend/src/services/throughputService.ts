@@ -5,14 +5,14 @@ import { ThroughputQueryResult, ThroughputData } from "../types/throughput";
 export function useThroughputFetchService(
   onChange: () => void
 ): {
-  getThroughput: (databaseIds: string[]) => void;
+  getThroughput: () => void;
   throughputData: Ref<ThroughputData>;
   throughputQueryReadyState: Ref<boolean>;
 } {
   const throughputQueryReadyState = ref<boolean>(true);
   var throughputData = ref<ThroughputData>({});
 
-  function getThroughput(databaseIds: string[]): void {
+  function getThroughput(): void {
     fetchThroughput().then(result => {
       throughputQueryReadyState.value = false;
       Object.keys(result).forEach(key => {

@@ -73,7 +73,6 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
 
-    // this should be fetched for the current db (router variable)
     const { databaseIds } = useDatabaseFetchService();
     var selectedDatabaseIds = ref<string[]>([]);
     const chart = ref<Object>(null);
@@ -147,7 +146,7 @@ export default createComponent({
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
-        getThroughput(selectedDatabaseIds.value);
+        getThroughput();
       }
     }
 
