@@ -16,7 +16,7 @@ export function useThroughputFetchService(
     fetchThroughput().then(result => {
       throughputQueryReadyState.value = false;
       Object.keys(result).forEach(key => {
-        addThroughputData(key, result[key][1]);
+        addThroughputData(key, result[key][1] * 5000);
       });
       if (onChange) {
         onChange();
