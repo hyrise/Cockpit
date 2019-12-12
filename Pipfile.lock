@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9b6a052cb84299311a356ef6acf5a87481e5c189b89770dfd67c29d3ea784d45"
+            "sha256": "c794aa5fa4e70e3d9f132d90a96404de2b76ce10eaab6be6e76b5b56697d579d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -373,6 +373,10 @@
                 "sha256:c155c6a2653593ccb300462f6ef533583a913e17857cfef8fc617c246b6dc245"
             ],
             "version": "==3.0.5"
+        },
+        "hyrisecockpit": {
+            "editable": true,
+            "path": "."
         },
         "identify": {
             "hashes": [
