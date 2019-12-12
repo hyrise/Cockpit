@@ -18,7 +18,7 @@ responses = {
 }
 
 
-class DbManager(object):
+class DatabaseManager(object):
     """DbManager."""
 
     def __init__(self):
@@ -124,7 +124,7 @@ class DbManager(object):
 
 def main():
     """Run a database manager."""
-    DbManager()
+    DatabaseManager()
 
 
 if __name__ == "__main__":

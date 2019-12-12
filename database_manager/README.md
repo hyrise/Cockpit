@@ -8,5 +8,5 @@ If you have a local setup as specified in the projects [README](../README.md), a
 
 ```
 pipenv shell
-python db_manager.py
+python manager.py
 ```
