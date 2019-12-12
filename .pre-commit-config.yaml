@@ -56,3 +56,4 @@ repos:
       language: system
       entry: pipenv run bandit
       types: [python]
+      args: [--exclude, tests]
