@@ -21,3 +21,6 @@ jobs:
     - name: Run all pre-commit hooks
       run: |
         pipenv run pre-commit run --all-files
+    - name: Run all python tests
+      run: |
+        pipenv run pytest
