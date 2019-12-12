@@ -1,10 +1,9 @@
-"""The data base manager is managing all databases."""
-import sys
+"""Module for managing databases."""
 from os import getenv
 
-import psycopg2
-import zmq
+from zmq import REP, Context
 
+import settings as s
 from db_object import DbObject
 from driver import Driver
 
@@ -19,110 +18,70 @@ responses = {
 
 
 class DatabaseManager(object):
-    """DbManager."""
+    """A manager for database drivers."""
 
     def __init__(self):
         """Initialize a DatabaseManager."""
         self._drivers = dict()
-        self._throughput = dict()
+        self._server_calls = {
+            "add database": self._call_add_database,
+            "throughput": self._call_throughput,
+        }
+        self._init_server()
         self._run()
 
-    def _add_database(self, user, password, host, port, dbname):
+    def _init_server(self):
+        self._context = Context(io_threads=1)
+        self._socket = self._context.socket(REP)
+        self._socket.bind(
+            "tcp://{:s}:{:4d}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
+        )
+        self._run()
+
+    def _call_add_database(self, body):
         """Add database and initialize driver for it."""
         driver = Driver(
-            user=user,
-            password=password,
-            host=host,
-            port=port,
-            dbname=dbname,
-            number_threads=NUMBER_THREADS,
+            user=body["user"],
+            password=body["password"],
+            host=body["host"],
+            port=body["port"],
+            dbname=body["dbname"],
+            n_threads=body["n_threads"],
         )
         db_instance = DbObject(NUMBER_THREADS, driver, SUB_URL)
-        self._drivers[host] = db_instance
-        self._throughput[host] = 0
+        self._drivers[body["id"]] = db_instance
+        self._throughput[body["id"]] = 0
+        return responses[200]
 
-    def _get_throughput(self):
+    def _call_throughput(self, body):
         """Get the throughput of all databases."""
         for database, database_object in self._drivers.items():
             self._throughput[database] = database_object.get_throughput_counter()
-        return self._throughput
-
-    def _clean_up(self):
-        """Perform clean exit on all databases."""
-        for database_object in self._drivers.values():
-            database_object.clean_exit()
-
-    def _validate_connection(self, body):
-        """Validate if the connection data are correct."""
-        try:
-            connection = psycopg2.connect(
-                user=body["user"],
-                password=body["password"],
-                host=body["host"],
-                port=int(body["port"]),
-                dbname=body["dbname"],
-            )
-            connection.close()
-            return True
-        except psycopg2.Error:
-            # return e
-            return False
-
-    def _handle_request(self, request):
-        """Handle requests."""
-        call = request["header"]["message"]
-        body = request["body"]
-        result = False
-
-        if call == "add database":
-            validate = self._validate_connection(body)
-            if not validate:
-                return False
-            self._add_database(
-                user=body["user"],
-                password=body["password"],
-                host=body["host"],
-                port=int(body["port"]),
-                dbname=body["dbname"],
-            )
-            result = True
-
-        if call == "throughput":
-            result = self._get_throughput()
-
-        return result
+        response = responses[200]
+        response["body"]["throughput"] = self._throughput
+        return response
 
     def _call_not_found(self, body):
         return responses[400]
 
     def _run(self):
-        """Initialize server."""
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        socket.bind(REP_URL)
-
-        print("Database manager running. Press CTRL+C to quit.")
-
+        """Run the manager by enabling IPC."""
+        print(
+            "Database manager running on {:s}:{:4d}. Press CTRL+C to quit.".format(
+                s.DB_MANAGER_HOST, s.DB_MANAGER_PORT
+            )
+        )
         while True:
-            try:
-                request = socket.recv_json()
-                result = self._handle_request(request)
-                response = responses[200]
-                if not result:
-                    response = responses[400]
-                elif result is True:
-                    response = responses[200]
-                else:
-                    response["body"] = result
+            # Get the message
+            request = self._socket.recv_json()
 
-                socket.send_json(response)
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
-            except KeyboardInterrupt:
-                print("interrupt recived")
-                if len(self._drivers) > 0:
-                    self._clean_up()
-                    sys.exit()
-                sys.exit()
+            # Send the reply
+            self._socket.send_json(response)
 
 
 def main():
