@@ -5,50 +5,43 @@ The WorkloadGenerator manages the WorkloadProducers.
 The WorkloadProducers have IPC connections to a database interface.
 """
 
-import json
+import multiprocessing as mp
 import random
-import secrets
-from os import getenv
 
-import zmq
-from flask import Flask, Response
-from flask_cors import CORS
+from zmq import REP, REQ, Context
 
-WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL = getenv(
-    "WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL"
-)
-WORKLOAD_GENERATOR_BACKEND_HOST = getenv("WORKLOAD_GENERATOR_BACKEND_HOST")
-WORKLOAD_GENERATOR_BACKEND_PORT = getenv("WORKLOAD_GENERATOR_BACKEND_PORT")
-
-app = Flask(__name__)
-cors = CORS(app)
-app.config["CORS_HEADERS"] = "Content-Type"
-
-context = zmq.Context()
-publisher = context.socket(zmq.PUB)
-publisher.bind(WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL)
+import settings as s
 
 
-def generate_simple_workload(number_queries):
-    """Generate simple workload."""
-    queries = []
-    for _ in range(number_queries):
-        queries.append(("SELECT 1;", None))
-    return queries
+class WorkloadProducer(mp.Process):
+    """A process responsible for generating and submitting workloads.
 
+    Workload generating logic is internal.
+    Workloads are submitted directly to a database interface with IPC.
+    """
 
-def generate_random():
-    """Return a simple query with a random number."""
-    query = """SELECT * FROM nation WHERE n_nationkey = (%s);"""
-    return (query, (secrets.randbelow(24),))
+    def __init__(self, name):
+        """Initialize a WorkloadProducer with an IPC connection."""
+        self._context = Context(io_threads=1)
+        self._socket = self._context.socket(REQ)
+        self._socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
+        super().__init__(name=name, daemon=True)
 
+    def _generate_random(self):
+        """Return a simple query with a random number."""
+        return (
+            """SELECT *
+        FROM nation
+        WHERE n_nationkey = ?;""",
+            (random.randint(0, 24),),  # nosec
+        )
 
-def generate_heavy_workload(number_queries):
-    """Generate heavy workload."""
-    queries = random.choices(
-        [
-            (
-                """SELECT
+    def _generate_execute(self):
+        """Return a list of queries forming a workload."""
+        return random.choices(
+            [
+                (
+                    """SELECT
             l_returnflag,
             l_linestatus,
             SUM(l_quantity) as sum_qty,
@@ -61,64 +54,147 @@ def generate_heavy_workload(number_queries):
             WHERE l_shipdate <= '1998-12-01'
             GROUP BY l_returnflag, l_linestatus
             ORDER BY l_returnflag, l_linestatus;""",
-                None,
-            ),
-            (
-                """SELECT
+                    None,
+                ),
+                (
+                    """SELECT
             sum(l_extendedprice*l_discount) AS REVENUE
             FROM lineitem
             WHERE l_shipdate >= '1994-01-01'
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
-                AND .07 AND l_quantity < 24.0;""",
-                None,
-            ),
-            generate_random(),
-        ],
-        weights=[1, 1, 100],
-        k=number_queries,
-    )
+                AND .07 AND l_quantity < 24;""",
+                    None,
+                ),
+                self._generate_random(),
+            ],
+            weights=[1, 1, 100],
+            k=1,
+        )
 
-    return queries
-
-
-def create_heavy_workload_packages(number_packages, number_queries):
-    """Create packages with heavy queries."""
-    dictionary = {}
-    packages = []
-    for _ in range(number_packages):
-        packages.append(generate_heavy_workload(number_queries))
-    dictionary["Content"] = packages
-    data = json.dumps(dictionary)
-    return data
-
-
-def create_simple_workload_packages(number_packages, number_queries):
-    """Create packages with simple queries."""
-    dictionary = {}
-    packages = []
-    for _ in range(number_packages):
-        packages.append(generate_simple_workload(number_queries))
-    dictionary["Content"] = packages
-    data = json.dumps(dictionary)
-    return data
+    def start(self):
+        """Generate workloads and submit it with IPC."""
+        while True:
+            # TODO add shutdown event
+            # request = {"header": {"status": 200, "message": "execute"}}
+            request = {"header": {"status": 200, "message": "executelist"}}
+            # query, vars = self._generate_execute()[0]
+            # request["body"] = {"query": query, "vars": vars}
+            queries = list()
+            for _ in range(10):
+                queries.append("SELECT 1;")
+            request["body"] = {"querylist": queries}
+            print(queries)
+            # request["body"] = {"query": "SELECT 1;", "vars": None}
+            self._socket.send_json(request)
+            self._socket.recv_json()  # We do not care about the reply
 
 
-@app.route("/simple_workload")
-def execute_simple_workload():
-    """Send simple workload to subscribers."""
-    workload = create_simple_workload_packages(10, 20000)
-    publisher.send_string(workload)
-    return Response(status=200)
+class WorkloadGenerator(object):
+    """A manager for multiple WorkloadProducers.
+
+    Producers may be added or popped sequentially, or set to a specific number.
+    The WorkloadGenerator may be started or stopped.
+    """
+
+    def __init__(self):
+        """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
+        self._producers = []
+        self._shutdown_requested = False
+        self._init_server()
+        self._start()
+        self._run()
+
+    def _init_server(self):
+        self._context = Context(io_threads=1)
+        self._socket = self._context.socket(REP)
+        self._socket.bind("tcp://{:s}:{:4d}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
+
+    def _start(self, n_producers=1):  # Startup with 1 producer by default
+        """Start generating workloads with n_producers."""
+        n_producers = 0 if n_producers <= 0 else n_producers
+        [self._add_producer() for i in range(n_producers)]
+        return len(self._producers)
+
+    def _stop(self):
+        """Stop generating workloads and kill all WorkloadProducers."""
+        [self._pop_producer() for i in range(len(self._producers))]
+
+    def _add_producer(self):
+        """Increase the number of WorkloadProducers by one."""
+        p = WorkloadProducer(f"WorkloadProducer {len(self._producers)}")
+        self._producers.append(p)
+        p.start()
+
+    def _pop_producer(self):
+        """Decrease the number of WorkloadProducers by one."""
+        if self._producers:
+            p = self._producers.pop()
+            p.terminate()
+            p.join()
+
+    def _set_producers(self, number):
+        """Set the number of WorkloadProducers."""
+        delta = number - len(self._producers)
+        if delta < 0:
+            f = self._add_producer
+        elif delta > 0:
+            f = self._pop_producer
+        else:
+            return
+        [f() for _ in range(delta)]
+        return self._get_producers()
+
+    def _get_producers(self):
+        """Return the number of WorkloadProducers."""
+        return len(self._producers)
+
+    def _handle_request(self, request):
+        call = request["header"]["message"]
+        body = request["body"]
+
+        result = False
+
+        if call == "start":
+            result = self._start(body["n_producers"])
+
+        if call == "stop":
+            result = self._stop()
+
+        if call == "shutdown":
+            self._shutdown_requested = True
+            result = True
+
+        return result
+
+    def _run(self):
+        """Run the generator by enabling IPC."""
+        print(
+            "Workload generator running on {:s}:{:4d}. Press CTRL+C to quit.".format(
+                s.GENERATOR_HOST, s.GENERATOR_PORT
+            )
+        )
+        while True:
+            # Get the message
+            request = self._socket.recv_json()
+
+            # TODO add server functionality as found in database manager
+
+            # Send the reply
+            self._socket.send_json(
+                request
+            )  # TODO send a response instead of the request
+
+            # Shutdown
+            if self._shutdown_requested:
+                self._stop()
+                break
 
 
-@app.route("/heavy_workload")
-def execute_heavy_workload():
-    """Send heavy workload to subscribers."""
-    workload = create_heavy_workload_packages(10, 1000)
-    publisher.send_string(workload)
-    return Response(status=200)
+def main():
+    """Run a WorkloadGenerator."""
+    WorkloadGenerator()
 
 
 if __name__ == "__main__":
-    app.run(host=WORKLOAD_GENERATOR_BACKEND_HOST, port=WORKLOAD_GENERATOR_BACKEND_PORT)
+    main()
