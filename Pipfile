@@ -16,7 +16,6 @@ flake8-bugbear = "*"
 
 [packages]
 pandas = "*"
-rq = "*"
 psycopg2 = "*"
 pyzmq = "*"
 python-dotenv = "*"
@@ -24,7 +23,6 @@ redis = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
-rq-dashboard = "*"
 websockets = "*"
 
 [requires]
