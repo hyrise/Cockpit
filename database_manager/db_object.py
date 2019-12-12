@@ -124,10 +124,11 @@ class DbObject(object):
         self._task_queue.close()
         print("Queue closed")
 
-    def clean_exit(self):
+    def __exit__(self):
         """Clean exit."""
         self._close_pool()
         self._close_connections()
         self._close_queue()
         self.update_throughput_job.remove()
         self.scheduler.shutdown()
+        super().__exit__()

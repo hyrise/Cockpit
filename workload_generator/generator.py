@@ -12,6 +12,11 @@ from zmq import PUB, REP, Context
 
 import settings as s
 
+responses = {
+    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
+    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
+}
+
 
 class WorkloadProducer(mp.Process):
     """A process responsible for generating and submitting workloads.
@@ -75,7 +80,7 @@ class WorkloadProducer(mp.Process):
     def start(self):
         """Generate workloads and submit it with IPC."""
         while True:
-            # TODO add shutdown event
+            # TODO add shutdown
             # request = {"header": {"status": 200, "message": "execute"}}
             request = {"header": {"status": 200, "message": "executelist"}}
             # query, vars = self._generate_execute()[0]
@@ -84,6 +89,7 @@ class WorkloadProducer(mp.Process):
             for _ in range(10):
                 queries.append("SELECT 1;")
             request["body"] = {"querylist": queries}
+            print(queries)
             # request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
             self._socket.recv_json()  # We do not care about the reply
@@ -98,6 +104,11 @@ class WorkloadGenerator(object):
 
     def __init__(self):
         """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
+        self._server_calls = {
+            "start": self._call_start,
+            "stop": self._call_stop,
+            "shutdown": self._call_shutdown,
+        }
         self._producers = []
         self._shutdown_requested = False
         self._init_server()
@@ -108,16 +119,6 @@ class WorkloadGenerator(object):
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:4d}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
-
-    def _start(self, n_producers=1):  # Startup with 1 producer by default
-        """Start generating workloads with n_producers."""
-        n_producers = 0 if n_producers <= 0 else n_producers
-        [self._add_producer() for i in range(n_producers)]
-        return len(self._producers)
-
-    def _stop(self):
-        """Stop generating workloads and kill all WorkloadProducers."""
-        [self._pop_producer() for i in range(len(self._producers))]
 
     def _add_producer(self):
         """Increase the number of WorkloadProducers by one."""
@@ -148,23 +149,23 @@ class WorkloadGenerator(object):
         """Return the number of WorkloadProducers."""
         return len(self._producers)
 
-    def _handle_request(self, request):
-        call = request["header"]["message"]
-        body = request["body"]
+    def _call_start(self, body):
+        """Start generating workloads with n_producers."""
+        n_producers = body["n_producers"]
+        [self._add_producer() for i in range(n_producers)]
+        return responses[200]
 
-        result = False
+    def _call_stop(self, body):
+        """Stop generating workloads and kill all WorkloadProducers."""
+        [self._pop_producer() for i in range(len(self._producers))]
+        return responses[200]
 
-        if call == "start":
-            result = self._start(body["n_producers"])
+    def _call_shutdown(self, body):
+        self._shutdown_requested = True
+        return responses[200]
 
-        if call == "stop":
-            result = self._stop()
-
-        if call == "shutdown":
-            self._shutdown_requested = True
-            result = True
-
-        return result
+    def _call_not_found(self, body):
+        return responses[400]
 
     def _run(self):
         """Run the generator by enabling IPC."""
@@ -177,12 +178,13 @@ class WorkloadGenerator(object):
             # Get the message
             request = self._socket.recv_json()
 
-            # TODO add server functionality as found in database manager
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
             # Send the reply
-            self._socket.send_json(
-                request
-            )  # TODO send a response instead of the request
+            self._socket.send_json(response)
 
             # Shutdown
             if self._shutdown_requested:
