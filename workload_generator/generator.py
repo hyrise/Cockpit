@@ -8,7 +8,7 @@ The WorkloadProducers have IPC connections to a database interface.
 import multiprocessing as mp
 import random
 
-from zmq import REP, REQ, Context
+from zmq import PUB, REP, Context
 
 import settings as s
 
@@ -23,8 +23,8 @@ class WorkloadProducer(mp.Process):
     def __init__(self, name):
         """Initialize a WorkloadProducer with an IPC connection."""
         self._context = Context(io_threads=1)
-        self._socket = self._context.socket(REQ)
-        self._socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
+        self._socket = self._context.socket(PUB)
+        self._socket.connect(s.WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL)
         super().__init__(name=name, daemon=True)
 
     def _generate_random(self):
