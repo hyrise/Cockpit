@@ -17,6 +17,11 @@ responses = {
     400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
 }
 
+responses = {
+    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
+    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
+}
+
 
 class WorkloadProducer(mp.Process):
     """A process responsible for generating and submitting workloads.

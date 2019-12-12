@@ -4,9 +4,12 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0
     hooks:
+    - id: no-commit-to-branch
+      name: Checking if you can commit to this branch directly
+      args: [--branch, master, --branch, dev]
     - id: check-added-large-files
       name: Checking for large files
-      args: ['--maxkb=1000']
+      args: [--maxkb=1000]
     - id: check-merge-conflict
       name: Checking for merge conflicts
     - id: check-ast
