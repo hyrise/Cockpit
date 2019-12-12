@@ -1,10 +1,16 @@
-"""Module for managing databases."""
+"""The data base manager is managing all databases."""
+import sys
+from os import getenv
 
-from redis import Redis
-from zmq import REP, Context
+import psycopg2
+import zmq
 
-import settings as s
-from driver import DatabaseDriver
+from db_object import DbObject
+from driver import Driver
+
+NUMBER_THREADS = 8
+SUB_URL = getenv("WORKER_SUB_URL")
+REP_URL = getenv("MANAGER_REP_URL")
 
 responses = {
     200: {"header": {"status": 200, "message": "OK"}, "body": {}},
@@ -13,149 +19,110 @@ responses = {
 
 
 class DatabaseManager(object):
-    """A manager for database drivers."""
+    """DbManager."""
 
     def __init__(self):
         """Initialize a DatabaseManager."""
         self._drivers = dict()
-        self._shutdown_requested = False
-        self._server_calls = {
-            "add driver": self._call_add_driver,
-            "pop driver": self._call_pop_driver,
-            "get drivers": self._call_get_drivers,
-            "execute": self._call_execute,
-            "executemany": self._call_executemany,
-            "executelist": self._call_executelist,
-            "throughput": self._call_throughput,
-            "queue length": self._call_queue_length,
-            "storage": self._call_storage,
-            "shutdown": self._call_shutdown,
-        }
-        self._init_redis_connection()
-        self._init_server()
+        self._throughput = dict()
         self._run()
 
-    def _init_redis_connection(self):
-        self._redis_connection = Redis(
-            s.QUEUE_HOST, s.QUEUE_PORT, s.QUEUE_DB, s.QUEUE_PASSWORD
+    def _add_database(self, user, password, host, port, dbname):
+        """Add database and initialize driver for it."""
+        driver = Driver(
+            user=user,
+            password=password,
+            host=host,
+            port=port,
+            dbname=dbname,
+            number_threads=NUMBER_THREADS,
         )
+        db_instance = DbObject(NUMBER_THREADS, driver, SUB_URL)
+        self._drivers[host] = db_instance
+        self._throughput[host] = 0
 
-    def _init_server(self):
-        self._context = Context(io_threads=1)
-        self._socket = self._context.socket(REP)
-        self._socket.bind(
-            "tcp://{:s}:{:4d}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
-        )
-        self._run()
+    def _get_throughput(self):
+        """Get the throughput of all databases."""
+        for database, database_object in self._drivers.items():
+            self._throughput[database] = database_object.get_throughput_counter()
+        return self._throughput
 
-    def _get_db_type(self, db_type):
-        return DatabaseDriver  # TODO remove this method
+    def _clean_up(self):
+        """Perform clean exit on all databases."""
+        for database_object in self._drivers.values():
+            database_object.clean_exit()
 
-    def _check_id_free(self, id):
-        if id in self._drivers.keys():
+    def _validate_connection(self, body):
+        """Validate if the connection data are correct."""
+        try:
+            connection = psycopg2.connect(
+                user=body["user"],
+                password=body["password"],
+                host=body["host"],
+                port=int(body["port"]),
+                dbname=body["dbname"],
+            )
+            connection.close()
+            return True
+        except psycopg2.Error:
+            # return e
             return False
-        return True
 
-    def _call_add_driver(self, body):
-        """Add a database driver to the manager."""
-        id = body["id"]
-        db_type = self._get_db_type(body["db_type"])
-        if not db_type:
-            return responses[400]
-        if not self._check_id_free(id):
-            return responses[400]
-        self._drivers[id] = db_type(
-            id,
-            body["user"],
-            body["password"],
-            body["host"],
-            body["port"],
-            body["dbname"],
-            self._redis_connection,
-        )
-        return responses[200]
+    def _handle_request(self, request):
+        """Handle requests."""
+        call = request["header"]["message"]
+        body = request["body"]
+        result = False
 
-    def _call_pop_driver(self, body):
-        """Remove a database driver from the manager."""
-        id = body["id"]
-        if not self._check_id_free(id):
-            del self._drivers[id]
-            return responses[200]
-        return responses[400]
+        if call == "add database":
+            validate = self._validate_connection(body)
+            if not validate:
+                return False
+            self._add_database(
+                user=body["user"],
+                password=body["password"],
+                host=body["host"],
+                port=int(body["port"]),
+                dbname=body["dbname"],
+            )
+            result = True
 
-    def _call_get_drivers(self, body):
-        response = responses[200]
-        response["body"] = {"ids": list(self._drivers.keys())}
-        return response
+        if call == "throughput":
+            result = self._get_throughput()
 
-    def _call_execute(self, body):
-        for id in self._drivers.keys():
-            self._drivers[id].task_execute(body["query"], body["vars"])
-        return responses[200]
-
-    def _call_executemany(self, body):
-        for id in self._drivers.keys():
-            self._drivers[id].task_executemany(body["query"], body["vars_list"])
-        return responses[200]
-
-    def _call_executelist(self, body):
-        for id in self._drivers.keys():
-            self._drivers[id].task_executelist(body["querylist"])
-        return responses[200]
-
-    def _call_throughput(self, body):
-        result = dict()
-        for id in self._drivers.keys():
-            result[id] = self._drivers[id].throughput
-        response = responses[200]
-        response["body"] = result
-        return response
-
-    def _call_queue_length(self, body):
-        result = dict()
-        for id in self._drivers.keys():
-            result[id] = self._drivers[id].queue_length
-        response = responses[200]
-        response["body"] = result
-        return response
-
-    def _call_storage(self, body):
-        result = dict()
-        for id in self._drivers.keys():
-            result[id] = self._drivers[id].storage
-        response = responses[200]
-        response["body"] = result
-        return response
-
-    def _call_shutdown(self, body):
-        self._shutdown_requested = True
-        return True
+        return result
 
     def _call_not_found(self, body):
         return responses[400]
 
     def _run(self):
-        """Run the manager by enabling IPC."""
-        print(
-            "Database manager running on {:s}:{:4d}. Press CTRL+C to quit.".format(
-                s.DB_MANAGER_HOST, s.DB_MANAGER_PORT
-            )
-        )
+        """Initialize server."""
+        context = zmq.Context()
+        socket = context.socket(zmq.REP)
+        socket.bind(REP_URL)
+
+        print("Database manager running. Press CTRL+C to quit.")
+
         while True:
-            # Get the message
-            request = self._socket.recv_json()
+            try:
+                request = socket.recv_json()
+                result = self._handle_request(request)
+                response = responses[200]
+                if not result:
+                    response = responses[400]
+                elif result is True:
+                    response = responses[200]
+                else:
+                    response["body"] = result
 
-            # Handle the call
-            response = self._server_calls.get(
-                request["header"]["message"], self._call_not_found
-            )(request["body"])
+                socket.send_json(response)
 
-            # Send the reply
-            self._socket.send_json(response)
-
-            # Shutdown
-            if self._shutdown_requested:
-                break
+            except KeyboardInterrupt:
+                print("interrupt recived")
+                if len(self._drivers) > 0:
+                    self._clean_up()
+                    sys.exit()
+                sys.exit()
 
 
 def main():
