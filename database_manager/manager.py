@@ -13,8 +13,8 @@ SUB_URL = getenv("WORKER_SUB_URL")
 REP_URL = getenv("MANAGER_REP_URL")
 
 responses = {
-    200: {"header": {"status": 200, "message": "OK"}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}},
+    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
+    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
 }
 
 
@@ -91,6 +91,9 @@ class DatabaseManager(object):
             result = self._get_throughput()
 
         return result
+
+    def _call_not_found(self, body):
+        return responses[400]
 
     def _run(self):
         """Initialize server."""
