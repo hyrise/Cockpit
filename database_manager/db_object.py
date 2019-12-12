@@ -1,6 +1,5 @@
 """The database object represents the instanz of a database."""
 
-import atexit
 import json
 from multiprocessing import Manager, Process, Queue
 
@@ -58,11 +57,10 @@ class DbObject(object):
         self._start_workers()
         self._lost = 0
         self.scheduler = BackgroundScheduler()
-        self.scheduler.add_job(
+        self.update_throughput_job = self.scheduler.add_job(
             func=self.update_throughput_data, trigger="interval", seconds=1,
         )
         self.scheduler.start()
-        atexit.register(lambda: self.scheduler.shutdown())
 
     def _init_throughput_data_container(self):
         """Initialize meta data container."""
@@ -131,4 +129,5 @@ class DbObject(object):
         self._close_pool()
         self._close_connections()
         self._close_queue()
+        self.update_throughput_job.remove()
         self.scheduler.shutdown()
