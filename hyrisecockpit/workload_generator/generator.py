@@ -10,7 +10,7 @@ import random
 
 from zmq import PUB, REP, Context
 
-import settings as s
+from hyrisecockpit import settings as s
 
 
 class WorkloadProducer(mp.Process):

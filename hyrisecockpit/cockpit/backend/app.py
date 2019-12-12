@@ -8,7 +8,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from zmq import REQ, Context
 
-import settings as s
+from hyrisecockpit import settings as s
 
 context = Context(io_threads=1)
 
