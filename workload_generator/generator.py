@@ -84,7 +84,6 @@ class WorkloadProducer(mp.Process):
             for _ in range(10):
                 queries.append("SELECT 1;")
             request["body"] = {"querylist": queries}
-            print(queries)
             # request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
             self._socket.recv_json()  # We do not care about the reply
