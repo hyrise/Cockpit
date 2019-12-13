@@ -1,5 +1,7 @@
 """Module for managing databases."""
 
+import sys
+
 from zmq import REP, Context
 
 import settings as s
@@ -63,6 +65,11 @@ class DatabaseManager(object):
     def _call_not_found(self, body):
         return responses[400]
 
+    def _clean_exit(self):
+        """Perform clean exit on all databases."""
+        for database_object in self._drivers.values():
+            database_object.clean_exit()
+
     def _run(self):
         """Run the manager by enabling IPC."""
         print(
@@ -71,16 +78,24 @@ class DatabaseManager(object):
             )
         )
         while True:
-            # Get the message
-            request = self._socket.recv_json()
+            try:
+                # Get the message
+                request = self._socket.recv_json()
 
-            # Handle the call
-            response = self._server_calls.get(
-                request["header"]["message"], self._call_not_found
-            )(request["body"])
+                # Handle the call
+                response = self._server_calls.get(
+                    request["header"]["message"], self._call_not_found
+                )(request["body"])
 
-            # Send the reply
-            self._socket.send_json(response)
+                # Send the reply
+                self._socket.send_json(response)
+
+            except KeyboardInterrupt:
+                print("interrupt recived")
+                if len(self._drivers) > 0:
+                    self._clean_exit()
+                    sys.exit()
+                sys.exit()
 
 
 def main():
