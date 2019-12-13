@@ -29,7 +29,7 @@ apscheduler = "*"
 websockets = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8.0"
 
 [pipenv]
 allow_prereleases = true
