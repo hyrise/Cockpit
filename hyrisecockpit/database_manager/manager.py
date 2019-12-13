@@ -2,6 +2,7 @@
 
 import sys
 
+import psycopg2
 from zmq import REP, Context
 
 import settings as s
@@ -35,8 +36,28 @@ class DatabaseManager(object):
         )
         self._run()
 
+    def _validate_connection(self, body):
+        """Validate if the connection data are correct."""
+        try:
+            connection = psycopg2.connect(
+                user=body["user"],
+                password=body["password"],
+                host=body["host"],
+                port=int(body["port"]),
+                dbname=body["dbname"],
+            )
+            connection.close()
+            return (True, None)
+        except psycopg2.Error:
+            return (False, "Database connectioin refused")
+
     def _call_add_database(self, body):
         """Add database and initialize driver for it."""
+        valid, error = self._validate_connection(body)
+        if not valid:
+            response = responses[400]
+            response["body"] = error
+            return response
         driver = Driver(
             user=body["user"],
             password=body["password"],
