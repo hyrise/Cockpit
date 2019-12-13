@@ -1,6 +1,5 @@
 """The database object represents the instanz of a database."""
 
-import json
 from multiprocessing import Manager, Process, Queue
 
 import zmq
@@ -15,11 +14,10 @@ def task_fill_task_queue(workload_publisher_url, task_queue):
     subscriber.setsockopt_string(zmq.SUBSCRIBE, "")
 
     while True:
-        content = subscriber.recv_string()
-        data = json.loads(content)
-        querys = data["Content"]
-        for i in range(len(querys)):
-            task_queue.put(querys[i])
+        content = subscriber.recv_json()
+        tasks = content["body"]["querylist"]
+        for task in tasks:
+            task_queue.put(task)
 
 
 def task_execute_querys(
@@ -31,13 +29,11 @@ def task_execute_querys(
     cur = connection.cursor()
     while True:
         # If Queue is emty go to wait status
-        tasks = task_queue.get(block=True)
-        # string_task = ''.join(str(v) for v in task[0])
-        for task in tasks:
-            cur.execute(task[0], task[1])
-            throughput_data_container[str(worker_id)] = (
-                throughput_data_container[str(worker_id)] + 1
-            )
+        task = task_queue.get(block=True)
+        cur.execute(task[0], task[1])
+        throughput_data_container[str(worker_id)] = (
+            throughput_data_container[str(worker_id)] + 1
+        )
 
 
 class DbObject(object):
