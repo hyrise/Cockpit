@@ -2,6 +2,8 @@
 
 from multiprocessing import Manager, Process, Queue
 
+import pandas as pd
+import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -102,7 +104,53 @@ class DbObject(object):
             throughput_data = throughput_data + self._throughput_data_container[str(i)]
             self._throughput_data_container[str(i)] = 0
         self._throughput_counter = throughput_data
-        # print(f"Queue Size : {self._task_queue.qsize()} throughput: {self._throughput_counter}")
+
+    def get_storage_data(self):
+        """Get storage data from the database."""
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+        sql = "SELECT * FROM meta_segments;"
+
+        meta_segments = sqlio.read_sql_query(sql, connection)
+
+        meta_segments.set_index(
+            ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
+        )
+        size = pd.DataFrame(
+            meta_segments["estimated_size_in_bytes"]
+            .groupby(level=["table", "column_name"])
+            .sum()
+        )
+
+        encoding = pd.DataFrame(
+            meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
+        )
+        encoding["encoding"] = encoding["encoding"].apply(list)
+        datatype = meta_segments.reset_index().set_index(["table", "column_name"])[
+            ["column_data_type"]
+        ]
+
+        result = size.join(encoding).join(datatype)
+        self._connection_pool.putconn(connection)
+        return self.create_storage_data_dictionary(result)
+
+    def create_storage_data_dictionary(self, result):
+        """Sort storage data to dictionary."""
+        output = {}
+        grouped = result.reset_index().groupby("table")
+        for column in grouped.groups:
+            output[column] = {"size": 0, "number_columns": 0, "data": {}}
+            for _, row in grouped.get_group(column).iterrows():
+                output[column]["number_columns"] = output[column]["number_columns"] + 1
+                output[column]["size"] = (
+                    output[column]["size"] + row["estimated_size_in_bytes"]
+                )
+                output[column]["data"][row["column_name"]] = {
+                    "size": row["estimated_size_in_bytes"],
+                    "data_type": row["column_data_type"],
+                    "encoding": row["encoding"],
+                }
+        return output
 
     def _close_pool(self):
         """Close worker pool."""

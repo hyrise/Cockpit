@@ -9,10 +9,15 @@ import settings as s
 from db_object import DbObject
 from driver import Driver
 
-responses = {
-    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
-}
+
+def create_response(code):
+    """Create new response dictionary."""
+    if code == 200:
+        return {"header": {"status": 200, "message": "OK"}, "body": {}}
+    if code == 400:
+        return {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}}
+    else:
+        return {}
 
 
 class DatabaseManager(object):
@@ -24,6 +29,7 @@ class DatabaseManager(object):
         self._server_calls = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
+            "storage": self._call_storage,
         }
         self._init_server()
         self._run()
@@ -53,9 +59,10 @@ class DatabaseManager(object):
 
     def _call_add_database(self, body):
         """Add database and initialize driver for it."""
+        n_additional_connection = 1
         valid, error = self._validate_connection(body)
         if not valid:
-            response = responses[400]
+            response = create_response(400)
             response["body"] = error
             return response
         driver = Driver(
@@ -64,7 +71,7 @@ class DatabaseManager(object):
             host=body["host"],
             port=body["port"],
             dbname=body["dbname"],
-            n_threads=int(body["n_threads"]),
+            n_connections=int(body["n_threads"]) + n_additional_connection,
         )
         db_instance = DbObject(
             int(body["n_threads"]),
@@ -72,19 +79,27 @@ class DatabaseManager(object):
             "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
         )
         self._drivers[body["id"]] = db_instance
-        return responses[200]
+        return create_response(200)
 
     def _call_throughput(self, body):
         """Get the throughput of all databases."""
         throughput = {}
         for database, database_object in self._drivers.items():
             throughput[database] = database_object.get_throughput_counter()
-        response = responses[200]
+        response = create_response(200)
         response["body"]["throughput"] = throughput
         return response
 
+    def _call_storage(self, body):
+        storage = {}
+        for database, database_object in self._drivers.items():
+            storage[database] = database_object.get_storage_data()
+        response = create_response(200)
+        response["body"]["storage"] = storage
+        return response
+
     def _call_not_found(self, body):
-        return responses[400]
+        return create_response(400)
 
     def _clean_exit(self):
         """Perform clean exit on all databases."""
