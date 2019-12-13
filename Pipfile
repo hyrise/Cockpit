@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+hyrisecockpit = {editable = true,path = "."}
 pre-commit = "*"
 black = "*"
 flake8 = "*"
@@ -13,6 +14,8 @@ rope = "*"
 bandit = "*"
 pydocstyle = "*"
 flake8-bugbear = "*"
+pytest = "*"
+pytest-testdox = "*"
 
 [packages]
 pandas = "*"

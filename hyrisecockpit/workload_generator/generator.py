@@ -10,7 +10,17 @@ import random
 
 from zmq import PUB, REP, Context
 
-import settings as s
+from hyrisecockpit import settings as s
+
+responses = {
+    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
+    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
+}
+
+responses = {
+    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
+    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
+}
 
 responses = {
     200: {"header": {"status": 200, "message": "OK"}, "body": {}},
@@ -29,7 +39,9 @@ class WorkloadProducer(mp.Process):
         """Initialize a WorkloadProducer with an IPC connection."""
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(PUB)
-        self._socket.connect(s.WORKLOAD_GENERATOR_PUBLISHER_SOCKET_URL)
+        self._socket.bind(
+            "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT)
+        )
         super().__init__(name=name, daemon=True)
 
     def _generate_random(self):
@@ -92,7 +104,6 @@ class WorkloadProducer(mp.Process):
             print(queries)
             # request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
-            self._socket.recv_json()  # We do not care about the reply
 
 
 class WorkloadGenerator(object):
@@ -112,13 +123,11 @@ class WorkloadGenerator(object):
         self._producers = []
         self._shutdown_requested = False
         self._init_server()
-        self._start()
-        self._run()
 
     def _init_server(self):
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
-        self._socket.bind("tcp://{:s}:{:4d}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
+        self._socket.bind("tcp://{:s}:{:s}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
 
     def _add_producer(self):
         """Increase the number of WorkloadProducers by one."""
@@ -167,10 +176,10 @@ class WorkloadGenerator(object):
     def _call_not_found(self, body):
         return responses[400]
 
-    def _run(self):
+    def run(self):
         """Run the generator by enabling IPC."""
         print(
-            "Workload generator running on {:s}:{:4d}. Press CTRL+C to quit.".format(
+            "Workload generator running on {:s}:{:s}. Press CTRL+C to quit.".format(
                 s.GENERATOR_HOST, s.GENERATOR_PORT
             )
         )
@@ -194,7 +203,7 @@ class WorkloadGenerator(object):
 
 def main():
     """Run a WorkloadGenerator."""
-    WorkloadGenerator()
+    WorkloadGenerator().run()
 
 
 if __name__ == "__main__":
