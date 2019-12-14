@@ -7,8 +7,10 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from driver import Driver
 
-def task_fill_task_queue(workload_publisher_url, task_queue):
+
+def fill_queue(workload_publisher_url, task_queue):
     """Fill the queue."""
     context = zmq.Context()
     subscriber = context.socket(zmq.SUB)
@@ -22,17 +24,15 @@ def task_fill_task_queue(workload_publisher_url, task_queue):
             task_queue.put(task)
 
 
-def task_execute_querys(
-    worker_id, task_queue, throughput_data_container, connection_pool
-):
+def execute_querys(worker_id, task_queue, throughput_data_container, connection_pool):
     """Define workers work loop."""
     connection = connection_pool.getconn()
     connection.set_session(autocommit=True)
     cur = connection.cursor()
     while True:
         # If Queue is emty go to wait status
-        task = task_queue.get(block=True)
-        cur.execute(task[0], task[1])
+        query, parameters = task_queue.get(block=True)
+        cur.execute(query, parameters)
         throughput_data_container[str(worker_id)] = (
             throughput_data_container[str(worker_id)] + 1
         )
@@ -41,19 +41,25 @@ def task_execute_querys(
 class DbObject(object):
     """Represents database."""
 
-    def __init__(self, number_worker, driver, workload_publisher_url):
+    def __init__(self, access_data, workload_publisher_url):
         """Initialize database object."""
-        self.number_worker = number_worker
+        self._number_workers = int(access_data["n_threads"])
+        self._number_additional_connections = 1
+        self._driver = Driver(
+            access_data, self._number_workers + self._number_additional_connections
+        )
+        self._connection_pool = self._driver.get_connection_pool()
+
+        self._task_queue = Queue(0)
+        self._manager = Manager()
+
         self.workload_publisher_url = workload_publisher_url
         self._throughput_counter = 0
-        self._manager = Manager()
-        # Queue has infinite size
-        self._task_queue = Queue(0)
-        self._connection_pool = driver.get_connection_pool()
         self._throughput_data_container = self._init_throughput_data_container()
         self._worker_pool = self._init_worler_pool()
+
         self._start_workers()
-        self._lost = 0
+
         self.scheduler = BackgroundScheduler()
         self.update_throughput_job = self.scheduler.add_job(
             func=self.update_throughput_data, trigger="interval", seconds=1,
@@ -63,16 +69,16 @@ class DbObject(object):
     def _init_throughput_data_container(self):
         """Initialize meta data container."""
         throughput_data_container = self._manager.dict()
-        for i in range(self.number_worker):
+        for i in range(self._number_workers):
             throughput_data_container[str(i)] = 0
         return throughput_data_container
 
     def _init_worler_pool(self):
         """Initialize a pool of workers."""
         worker_pool = []
-        for i in range(self.number_worker):
+        for i in range(self._number_workers):
             p = Process(
-                target=task_execute_querys,
+                target=execute_querys,
                 args=[
                     i,
                     self._task_queue,
@@ -82,8 +88,7 @@ class DbObject(object):
             )
             worker_pool.append(p)
         subscriber_process = Process(
-            target=task_fill_task_queue,
-            args=[self.workload_publisher_url, self._task_queue],
+            target=fill_queue, args=[self.workload_publisher_url, self._task_queue],
         )
         worker_pool.append(subscriber_process)
         return worker_pool
@@ -100,7 +105,7 @@ class DbObject(object):
     def update_throughput_data(self):
         """Put meta data from all workers together."""
         throughput_data = 0
-        for i in range(self.number_worker):
+        for i in range(self._number_workers):
             throughput_data = throughput_data + self._throughput_data_container[str(i)]
             self._throughput_data_container[str(i)] = 0
         self._throughput_counter = throughput_data
@@ -156,17 +161,14 @@ class DbObject(object):
         """Close worker pool."""
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
-        print("Worker terminatet")
 
     def _close_connections(self):
         """Close connections."""
         self._connection_pool.closeall()
-        print("Connectio pool closed")
 
     def _close_queue(self):
         """Close queue."""
         self._task_queue.close()
-        print("Queue closed")
 
     def clean_exit(self):
         """Clean exit."""

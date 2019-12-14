@@ -6,14 +6,9 @@ from psycopg2 import Error, connect, pool
 class Driver(object):
     """Interface to database."""
 
-    def __init__(self, user, password, host, port, dbname, n_connections):
+    def __init__(self, access_data, n_connections):
         """Initialize the connection."""
-        self._user = user
-        self._password = password
-        self._host = host
-        self._port = port
-        self._dbname = dbname
-        self._connection_pool = self._create_connection_pool(n_connections)
+        self._connection_pool = self._create_connection_pool(access_data, n_connections)
 
     @classmethod
     def validate_connection(cls, access_data):
@@ -31,16 +26,16 @@ class Driver(object):
         except Error:
             return (False, "Database connectioin refused")
 
-    def _create_connection_pool(self, n_connections):
+    def _create_connection_pool(self, access_data, n_connections):
         """Create thread save connection pool."""
         connection_pool = pool.ThreadedConnectionPool(
             0,
             n_connections,
-            user=self._user,
-            password=self._password,
-            host=self._host,
-            port=self._port,
-            database=self._dbname,
+            user=access_data["user"],
+            password=access_data["password"],
+            host=access_data["host"],
+            port=int(access_data["port"]),
+            dbname=access_data["dbname"],
         )
         return connection_pool
 

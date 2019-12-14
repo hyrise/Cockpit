@@ -46,24 +46,13 @@ class DatabaseManager(object):
 
     def _call_add_database(self, body):
         """Add database and initialize driver for it."""
-        n_additional_connection = 1
         valid, error = Driver.validate_connection(body)
         if not valid:
             response = create_response(400)
             response["body"] = error
             return response
-        driver = Driver(
-            user=body["user"],
-            password=body["password"],
-            host=body["host"],
-            port=body["port"],
-            dbname=body["dbname"],
-            n_connections=int(body["n_threads"]) + n_additional_connection,
-        )
         db_instance = DbObject(
-            int(body["n_threads"]),
-            driver,
-            "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
+            body, "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
         )
         self._drivers[body["id"]] = db_instance
         return create_response(200)
