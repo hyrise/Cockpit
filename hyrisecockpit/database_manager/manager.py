@@ -13,7 +13,7 @@ def create_response(code):
     """Create new response dictionary."""
     if code == 200:
         return {"header": {"status": 200, "message": "OK"}, "body": {}}
-    if code == 400:
+    elif code == 400:
         return {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}}
     else:
         return {
