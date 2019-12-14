@@ -56,6 +56,7 @@ class DbObject(object):
 
         self.workload_publisher_url = workload_publisher_url
         self._throughput_counter = 0
+        self._system_data = {}
         self._throughput_data_container = self._init_throughput_data_container()
         self._worker_pool = self._init_worler_pool()
 
@@ -64,6 +65,9 @@ class DbObject(object):
         self.scheduler = BackgroundScheduler()
         self.update_throughput_job = self.scheduler.add_job(
             func=self.update_throughput_data, trigger="interval", seconds=1,
+        )
+        self.update_system_data_job = self.scheduler.add_job(
+            func=self.update_system_data, trigger="interval", seconds=1,
         )
         self.scheduler.start()
 
@@ -105,6 +109,18 @@ class DbObject(object):
 
     def get_system_data(self):
         """Return system data."""
+        return self._system_data
+
+    def update_throughput_data(self):
+        """Put meta data from all workers together."""
+        throughput_data = 0
+        for i in range(self._number_workers):
+            throughput_data = throughput_data + self._throughput_data_container[str(i)]
+            self._throughput_data_container[str(i)] = 0
+        self._throughput_counter = throughput_data
+
+    def update_system_data(self):
+        """Update system data for database instance."""
         # mocking system data
         cpu_data = []
         for _ in range(16):
@@ -122,15 +138,7 @@ class DbObject(object):
             "buffers": 169537536,
         }
 
-        return {"cpu": cpu_data, "memory": memory_data}
-
-    def update_throughput_data(self):
-        """Put meta data from all workers together."""
-        throughput_data = 0
-        for i in range(self._number_workers):
-            throughput_data = throughput_data + self._throughput_data_container[str(i)]
-            self._throughput_data_container[str(i)] = 0
-        self._throughput_counter = throughput_data
+        self._system_data = {"cpu": cpu_data, "memory": memory_data}
 
     def get_storage_data(self):
         """Get storage data from the database."""
@@ -198,5 +206,6 @@ class DbObject(object):
         self._close_connections()
         self._close_queue()
         self.update_throughput_job.remove()
+        self.update_system_data_job.remove()
         self.scheduler.shutdown()
         # super().__exit__()
