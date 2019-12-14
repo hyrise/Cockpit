@@ -34,6 +34,7 @@ class DatabaseManager(object):
             "storage": self._call_storage,
             "system data": self._call_system_data,
             "delete database": self._call_delete_database,
+            "queue length": self._call_queue_length,
         }
         self._init_server()
         self._run()
@@ -82,6 +83,14 @@ class DatabaseManager(object):
             system_data[database] = database_object.get_system_data()
         response = create_response(200)
         response["body"]["system_data"] = system_data
+        return response
+
+    def _call_queue_length(self, body):
+        queue_length = {}
+        for database, database_object in self._drivers.items():
+            queue_length[database] = database_object.get_queue_length()
+        response = create_response(200)
+        response["body"]["queue_length"] = queue_length
         return response
 
     def _call_delete_database(self, body):

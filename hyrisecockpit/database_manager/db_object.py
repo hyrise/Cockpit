@@ -111,6 +111,10 @@ class DbObject(object):
         """Return system data."""
         return self._system_data
 
+    def get_queue_length(self):
+        """Return queue length."""
+        return self._task_queue.qsize()
+
     def update_throughput_data(self):
         """Put meta data from all workers together."""
         throughput_data = 0
