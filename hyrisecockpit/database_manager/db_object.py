@@ -1,5 +1,6 @@
 """The database object represents the instanz of a database."""
 
+import secrets
 from multiprocessing import Manager, Process, Queue
 
 import pandas as pd
@@ -101,6 +102,27 @@ class DbObject(object):
     def get_throughput_counter(self):
         """Return throughput."""
         return self._throughput_counter
+
+    def get_system_data(self):
+        """Return system data."""
+        # mocking system data
+        cpu_data = []
+        for _ in range(16):
+            cpu_data.append(secrets.randbelow(1001) / 10)
+        memory_data = {
+            "available": 8467795968,
+            "used": 2525601792,
+            "cached": 4237438976,
+            "percent": 32.1,
+            "free": 5536755712,
+            "inactive": 2687451136,
+            "active": 3657117696,
+            "shared": 1149366272,
+            "total": 12469334016,
+            "buffers": 169537536,
+        }
+
+        return {"cpu": cpu_data, "memory": memory_data}
 
     def update_throughput_data(self):
         """Put meta data from all workers together."""

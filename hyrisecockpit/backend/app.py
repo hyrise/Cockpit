@@ -52,6 +52,14 @@ def get_queue_length():
     )
 
 
+@app.route("/system_data")
+def get_system_data():
+    """Return throughput information from database manager."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "system data"}, "body": {}}
+    )
+
+
 @app.route("/storage")
 def get_storage_metadata():
     """Return storage metadata from database manager."""

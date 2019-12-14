@@ -32,6 +32,7 @@ class DatabaseManager(object):
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
             "storage": self._call_storage,
+            "system data": self._call_system_data,
         }
         self._init_server()
         self._run()
@@ -72,6 +73,14 @@ class DatabaseManager(object):
             storage[database] = database_object.get_storage_data()
         response = create_response(200)
         response["body"]["storage"] = storage
+        return response
+
+    def _call_system_data(self, body):
+        system_data = {}
+        for database, database_object in self._drivers.items():
+            system_data[database] = database_object.get_system_data()
+        response = create_response(200)
+        response["body"]["system_data"] = system_data
         return response
 
     def _call_not_found(self, body):
