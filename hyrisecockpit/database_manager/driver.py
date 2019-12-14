@@ -1,6 +1,6 @@
 """The driver represents an interface to the database."""
 
-from psycopg2 import pool
+from psycopg2 import Error, connect, pool
 
 
 class Driver(object):
@@ -14,6 +14,22 @@ class Driver(object):
         self._port = port
         self._dbname = dbname
         self._connection_pool = self._create_connection_pool(n_connections)
+
+    @classmethod
+    def validate_connection(cls, access_data):
+        """Validate if the connection data are correct."""
+        try:
+            connection = connect(
+                user=access_data["user"],
+                password=access_data["password"],
+                host=access_data["host"],
+                port=int(access_data["port"]),
+                dbname=access_data["dbname"],
+            )
+            connection.close()
+            return (True, None)
+        except Error:
+            return (False, "Database connectioin refused")
 
     def _create_connection_pool(self, n_connections):
         """Create thread save connection pool."""
@@ -31,3 +47,6 @@ class Driver(object):
     def get_connection_pool(self):
         """Return the connection pool."""
         return self._connection_pool
+
+
+# Driver.validate_connection = classmethod(Driver.validate_connection)
