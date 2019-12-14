@@ -4,9 +4,9 @@ import sys
 
 from zmq import REP, Context
 
-import settings as s
 from db_object import DbObject
 from driver import Driver
+from hyrisecockpit import settings as s
 
 
 def create_response(code):
