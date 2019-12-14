@@ -89,7 +89,7 @@ def drivers():
         }
     elif request.method == "DELETE":
         message = {
-            "header": {"message": "pop driver"},
+            "header": {"message": "delete database"},
             "body": {"id": request_json["id"]},
         }
     response = _send_message(db_manager_socket, message)

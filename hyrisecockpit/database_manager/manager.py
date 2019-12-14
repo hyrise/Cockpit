@@ -33,6 +33,7 @@ class DatabaseManager(object):
             "throughput": self._call_throughput,
             "storage": self._call_storage,
             "system data": self._call_system_data,
+            "delete database": self._call_delete_database,
         }
         self._init_server()
         self._run()
@@ -82,6 +83,14 @@ class DatabaseManager(object):
         response = create_response(200)
         response["body"]["system_data"] = system_data
         return response
+
+    def _call_delete_database(self, body):
+        database = self._drivers.pop(body["id"], None)
+        if not database:
+            return create_response(400)
+        database.clean_exit()
+        del database
+        return create_response(200)
 
     def _call_not_found(self, body):
         return create_response(400)
