@@ -1,13 +1,11 @@
 <template>
-  <div class="treemap">
-    <canvas id="treemap"></canvas>
+  <div class="treemap mx-10 my-10">
+    <div id="treemap">
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import Chart from "chart.js";
-import "chartjs-chart-treemap";
-import axios from "axios";
 import {
   createComponent,
   SetupContext,
@@ -19,6 +17,8 @@ import {
 import { useGeneratingTestData } from "../helpers/testData";
 import { StorageQueryResult } from "../types/storage";
 import { useStorageFetchService } from "../services/storageService";
+import * as Plotly from "plotly.js";
+
 
 interface Props {}
 
@@ -28,117 +28,42 @@ export default createComponent({
     const { storageData, getStorage } = useStorageFetchService();
     const { generateStorageData } = useGeneratingTestData();
     const testData = generateStorageData();
+    
 
-    function updateTreeMap() {
-      //getStorage();
-      treeMap.value.update();
-    }
+    const labels = ['hyrise' ,...testData.map(entry => entry.table),...testData.map(entry => entry.column)];
+    const parents = [ "" ,...testData.map(entry => "hyrise"),...testData.map(entry => entry.table)];
+    const sizes = [0, ...testData.map(entry => 0)  ,...testData.map(entry => entry.size)];
+    
+
+    const data:any = [{
+      type: "treemap",
+      labels: labels,
+      parents: parents,
+      values:  sizes,
+      textinfo: "label+value+percent parent+percent entry",
+      outsidetextfont: {"size": 20, "color": "#377eb8"},
+      marker: {"line": {"width": 2}},
+      pathbar: {"visible": false}
+    }];
+
+      var layout = {
+        autosize: false,
+        width: 1200,
+        height: 900};
 
     onMounted(() => {
-      // TODO: outsourcing in helpers ts file for treemap creation
-      const canvas: any = document.getElementById("treemap");
-      const map: any = canvas.getContext("2d");
-      treeMap.value = new Chart(map, {
-        type: "treemap",
-        data: {
-          datasets: [
-            {
-              label: "Basic treemap",
-              tree: testData, //storageData.value,
-              key: "size",
-              groups: ["table", "column"],
-              spacing: 1,
-              borderWidth: 1.5,
-              borderColor: "#f0ffff",
-              fontColor: "white",
-              fontFamily: "sans-serif",
-              fontSize: 16,
-              fontStyle: "normal",
-              hoverBackgroundColor: "#D3D3D3",
-              backgroundColor: function(map) {
-                const item = map.dataset.data[map.dataIndex];
-                if (item != undefined) {
-                  switch (item.l) {
-                    case 0:
-                      switch (item.g) {
-                        case "lineitem":
-                          return "#0063c8";
-                        case "orders":
-                          return "#0070e1";
-                        case "partsupp":
-                          return "#007cfb";
-                        case "customer":
-                          return "#1589ff";
-                        case "part":
-                          return "#2f96ff";
-                        case "supplier":
-                          return "#62b0ff";
-                        case "nation":
-                          return "#76baff";
-                        case "region":
-                          return "#afd6ff";
-                      }
-                  }
-                } else return null;
-              }
-            }
-          ]
-        },
-        options: {
-          maintainAspectRatio: true,
-          title: {
-            display: true,
-            text: "Hyrise Storage",
-            fontSize: 26
-          },
-          legend: {
-            display: false
-          },
-          tooltips: {
-            titleFontSize: 16,
-            bodyFontSize: 14,
-            callbacks: {
-              title: function(item, data) {
-                const itemDate = item[0];
-                return data.datasets[itemDate.datasetIndex].data[itemDate.index]
-                  .g;
-              },
-              label: function(item, data) {
-                const dataset = data.datasets[item.datasetIndex];
-                const dataItem = dataset.data[item.index];
-                return dataset.key + ": " + dataItem.v;
-              },
-              afterLabel: function(item, data) {
-                const dataset = data.datasets[item.datasetIndex];
-                const dataItem = dataset.data[item.index];
-                const entry = dataItem._data.children[0];
-                switch (dataItem.l) {
-                  case 1:
-                    return (
-                      "encoding" +
-                      ": " +
-                      entry.encoding +
-                      "\n" +
-                      "data type" +
-                      ": " +
-                      entry.dataType
-                    );
-                  case 0:
-                    return null;
-                }
-              }
-            }
-          }
-        }
-      });
-      //setInterval(updateTreeMap, 1000);
+       console.log(labels,parents,sizes)
+       Plotly.newPlot('treemap', data, layout)
     });
-  }
+
+    }
 });
+  
+  
 </script>
 <style>
 .treemap {
-  max-width: 1600px;
-  max-height: 800px;
-}
+    width: 100%;
+    
+  }
 </style>

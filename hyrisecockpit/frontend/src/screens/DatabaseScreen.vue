@@ -7,8 +7,8 @@
       <v-divider class="mb-4"></v-divider>
       <Throughput />
     </div>
-    <div class="treemap">
-      <Treemap class="mt-10" />
+    <div class="treemap mx-12">
+      <Treemap />
     </div>
   </div>
 </template>
