@@ -108,17 +108,17 @@ class DatabaseManager(object):
         database = self._databases.pop(body["id"], None)
         if not database:
             return create_response(400)
-        database.clean_exit()
+        database.exit()
         del database
         return create_response(200)
 
     def _call_not_found(self, body):
         return create_response(400)
 
-    def _clean_exit(self):
+    def _exit(self):
         """Perform clean exit on all databases."""
         for database_object in self._databases.values():
-            database_object.clean_exit()
+            database_object.exit()
 
     def _run(self):
         """Run the manager by enabling IPC."""
@@ -142,7 +142,7 @@ class DatabaseManager(object):
 
             except KeyboardInterrupt:
                 if len(self._databases) > 0:
-                    self._clean_exit()
+                    self._exit()
                 sys.exit()
 
 

@@ -204,7 +204,7 @@ class DbObject(object):
         """Close queue."""
         self._task_queue.close()
 
-    def clean_exit(self):
+    def exit(self):
         """Clean exit."""
         self._close_pool()
         self._close_connections()
