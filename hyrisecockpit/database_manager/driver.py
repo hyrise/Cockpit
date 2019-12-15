@@ -24,7 +24,7 @@ class Driver(object):
             connection.close()
             return (True, None)
         except Error:
-            return (False, "Database connectioin refused")
+            return (False, "Database connection refused")
 
     def _create_connection_pool(self, access_data, n_connections):
         """Create thread save connection pool."""
