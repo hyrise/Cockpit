@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python 3.6.9
+    - name: Set up Python 3.8.0
       uses: actions/setup-python@v1
       with:
-        python-version: 3.6.9
+        python-version: 3.8.0
     - name: Install libpq PostgreSQL client
       run: sudo apt-get -yqq install libpq-dev
     - name: Install pipenv
@@ -21,3 +21,15 @@ jobs:
     - name: Run all pre-commit hooks
       run: |
         pipenv run pre-commit run --all-files
+    - name: Run all python tests
+      run: |
+        pipenv run pytest
+      env:
+        BACKEND_HOST: 127.0.0.1
+        BACKEND_PORT: 6000
+        DB_MANAGER_HOST: 127.0.0.1
+        DB_MANAGER_PORT: 6555
+        GENERATOR_HOST: 127.0.0.1
+        GENERATOR_PORT: 6001
+        WORKLOAD_SUB_HOST: 127.0.0.1
+        WORKLOAD_PUBSUB_PORT: 6556

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="linechart">
+    <div class="linechart mx-12">
+      <div class="mt-6 mb-2">
+        <b> Throughput Monitoring </b>
+      </div>
+      <v-divider class="mb-4"></v-divider>
       <Throughput />
     </div>
     <div class="treemap">
