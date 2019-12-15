@@ -1,31 +1,44 @@
 <template>
-  <div class="chart mx-10 my-10">
-    <div class="graph">
-      <canvas id="canvas" width="1200" height="600"></canvas>
-    </div>
-    <div class="slider my-12">
-      <v-slider
-        v-model="threads"
-        v-on:click="setNumberOfThreads"
-        thumb-label="always"
-        min="0"
-        max="32"
-        label="Number of Threads"
-      >
-      </v-slider>
-      <v-btn outlined large color="#1E90FF" @click="resetData">
-        Reset
-      </v-btn>
+  <div>
+    <div class="chart mx-10 my-10">
+      <v-row align="center">
+        <v-col cols="6" class="mx-10">
+          <v-select
+            v-model="selectedDatabaseIds"
+            :items="databaseIds"
+            chips
+            label="databases"
+            multiple
+            outlined
+            prepend-icon="mdi-database"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <div id="graph"></div>
+      <div class="slider my-12">
+        <v-slider
+          v-model="threads"
+          v-on:click="setNumberOfThreads"
+          thumb-label="always"
+          min="0"
+          max="32"
+          label="Number of Threads"
+        >
+        </v-slider>
+        <v-btn outlined large color="#1E90FF" @click="resetData">
+          Reset
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Chart from "chart.js";
 import {
   createComponent,
   SetupContext,
   onMounted,
+  computed,
   Ref,
   ref,
   watch
@@ -34,7 +47,11 @@ import axios from "axios";
 import { useGeneratingTestData } from "../helpers/testData";
 import { useThroughputFetchService } from "../services/throughputService";
 import { useThreadConfigurationService } from "../services/threadService";
+import { useDatabaseFetchService } from "../services/databaseService";
 import { ThroughputData } from "../types/throughput";
+import { Database } from "../types/database";
+import * as Plotly from "plotly.js";
+
 
 interface Props {}
 
@@ -43,6 +60,8 @@ interface Data {
   resetData: () => void;
   threads: Ref<number>;
   setNumberOfThreads: () => void;
+  databaseIds: Ref<string[]>;
+  selectedDatabaseIds: Ref<string[]>;
 }
 
 export default createComponent({
@@ -54,105 +73,22 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
 
-    const relevantDatabaseId = ref<string[]>(["citadelle"]); // this should be fetched for the current db (router variable)
-    const chart = ref<Object>(null);
-    const labels = ref<string[]>([]);
-    const dataSet = ref<number[]>([]);
+    const { databaseIds, getDatabaseColor } = useDatabaseFetchService();
 
-    function updateChartData(): void {
-      const relevantThroughputData =
-        throughputData.value[relevantDatabaseId.value[0]] || [];
-      if (relevantThroughputData.length === 0) {
-        labels.value.length = 0;
-        dataSet.value.length = 0;
-      } else if (relevantThroughputData.length) {
-        labels.value.push(labels.value.length.toString());
-        dataSet.value.length = 0;
-        for (let i = 0; i < relevantThroughputData.length; i++) {
-          dataSet.value.push(relevantThroughputData[i]);
-        }
-      }
-      if (relevantThroughputData.length > 5) {
-        labels.value.length = 0;
-        dataSet.value.length = 0;
-        for (
-          let i = relevantThroughputData.length - 5;
-          i < relevantThroughputData.length;
-          i++
-        ) {
-          labels.value.push(i.toString());
-          dataSet.value.push(relevantThroughputData[i]);
-        }
-      }
-      console.log(dataSet);
-      chart.value ? chart.value.update() : null;
-    }
+    const { getDataset, getLayout } = useThroughputLineChartConfiguration();
 
-    function onTPChange() {
-      updateChartData();
-    }
-
-    onMounted(() => setInterval(checkState, 1000));
+    const selectedDatabaseIds = ref<string[]>([]);
 
     onMounted(() => {
-      const canvas: any = document.getElementById("canvas");
-      const ctx: any = canvas.getContext("2d");
-      chart.value = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: labels.value,
-          datasets: [
-            {
-              label: "Database",
-              backgroundColor: "#76baff",
-              fill: true,
-              borderColor: "#2a93ff",
-              data: dataSet.value
-            }
-          ]
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: "Throughput (in Queries /s)",
-                  fontSize: 16
-                },
-                ticks: {
-                  beginAtZero: true,
-                  fontSize: 16
-                },
-                gridLines: {
-                  display: true["citadelle"]
-                }
-              }
-            ],
-            xAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: "Time (in s)",
-                  fontSize: 16
-                },
-                ticks: {
-                  beginAtZero: true,
-                  fontSize: 16
-                },
-                gridLines: {
-                  display: true
-                }
-              }
-            ]
-          }
-        }
-      });
+      Plotly.newPlot("graph", [getDataset()], getLayout());
+      setInterval(checkState, 1000);
+
     });
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
-        getThroughput(relevantDatabaseId.value);
+        getThroughput();
+
       }
     }
 
@@ -160,13 +96,105 @@ export default createComponent({
       throughputData.value = {};
     }
 
-    return { throughputData, resetData, threads, setNumberOfThreads };
+    function onTPChange() {
+      updateChartDatasets();
+
+    }
+
+    // watch for changes in selected databases
+    watch(
+      () => selectedDatabaseIds.value,
+      selectedDatabaseIds => {
+        const newDatasets = selectedDatabaseIds.reduce((result, id): any => {
+          return [
+            ...result,
+            getDataset(
+              throughputData.value[id] ? throughputData.value[id] : [],
+              getDatabaseColor(id),
+              id
+            )
+          ];
+        }, []);
+        Plotly.purge("graph");
+        Plotly.plot("graph", newDatasets, getLayout());
+      }
+    );
+
+    function getMaxDatasetLength(): number {
+      return selectedDatabaseIds.value.reduce((currentMax, id) => {
+        return Math.max(throughputData.value[id].length, currentMax);
+      }, 0);
+    }
+
+    function updateChartDatasets(): void {
+      const newData = {
+        y: Object.values(selectedDatabaseIds.value).map(
+          id => throughputData.value[id]
+        )
+      };
+      const maxSelectedLength = getMaxDatasetLength();
+
+      Plotly.update(
+        "graph",
+        newData,
+        getLayout(
+          Math.max(maxSelectedLength, 30),
+          Math.max(maxSelectedLength - 30, 0)
+        )
+      );
+    }
+
+    return {
+      throughputData,
+      resetData,
+      threads,
+      setNumberOfThreads,
+      databaseIds,
+      selectedDatabaseIds
+    };
   }
 });
+
+function useThroughputLineChartConfiguration(): {
+  getDataset: (
+    throughputData?: number[],
+    color?: string,
+    databaseId?: string
+  ) => Object;
+  getLayout: (xMin?: number, xMax?: number) => Object;
+} {
+  function getLayout(xMin: number = 0, xMax: number = 30): Object {
+    return {
+      title: "Throughput",
+      xaxis: {
+        title: "time in s",
+        range: [xMin, xMax]
+      },
+      yaxis: {
+        title: "Queries per second",
+        rangemode: "tozero"
+      }
+    };
+  }
+
+  function getDataset(
+    throughputData: number[] = [],
+    color: string = "",
+    databaseId: string = ""
+  ): Object {
+    return {
+      y: throughputData,
+      mode: "lines+markers",
+      line: { color: color },
+      name: databaseId
+    };
+  }
+  return { getDataset, getLayout };
+}
 </script>
 <style scoped>
 .chart {
   max-width: 1200px;
-  max-height: 600px;
+  max-height: 900px;
 }
 </style>
