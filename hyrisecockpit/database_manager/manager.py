@@ -47,9 +47,20 @@ class DatabaseManager(object):
         )
         self._run()
 
+    def _validate_connection_data(self, body):
+        """Validate if input data is correct."""
+        valid, error = Driver.validate_connection(body)
+        new_id = body["id"] in self._databases
+        if not valid:
+            return (valid, error)
+        elif new_id:
+            return (False, "Id already exists")
+        else:
+            return (True, None)
+
     def _call_add_database(self, body):
         """Add database and initialize driver for it."""
-        valid, error = Driver.validate_connection(body)
+        valid, error = self._validate_connection_data(body)
         if not valid:
             response = create_response(400)
             response["body"] = error
