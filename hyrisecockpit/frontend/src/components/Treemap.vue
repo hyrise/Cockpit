@@ -1,7 +1,6 @@
 <template>
   <div class="treemap mx-10 my-10">
-    <div id="treemap">
-    </div>
+    <div id="treemap"></div>
   </div>
 </template>
 
@@ -19,7 +18,6 @@ import { StorageQueryResult } from "../types/storage";
 import { useStorageFetchService } from "../services/storageService";
 import * as Plotly from "plotly.js";
 
-
 interface Props {}
 
 export default createComponent({
@@ -28,42 +26,51 @@ export default createComponent({
     const { storageData, getStorage } = useStorageFetchService();
     const { generateStorageData } = useGeneratingTestData();
     const testData = generateStorageData();
-    
 
-    const labels = ['hyrise' ,...testData.map(entry => entry.table),...testData.map(entry => entry.column)];
-    const parents = [ "" ,...testData.map(entry => "hyrise"),...testData.map(entry => entry.table)];
-    const sizes = [0, ...testData.map(entry => 0)  ,...testData.map(entry => entry.size)];
-    
+    const labels = [
+      "hyrise",
+      ...testData.map(entry => entry.table),
+      ...testData.map(entry => entry.column)
+    ];
+    const parents = [
+      "",
+      ...testData.map(entry => "hyrise"),
+      ...testData.map(entry => entry.table)
+    ];
+    const sizes = [
+      0,
+      ...testData.map(entry => 0),
+      ...testData.map(entry => entry.size)
+    ];
 
-    const data:any = [{
-      type: "treemap",
-      labels: labels,
-      parents: parents,
-      values:  sizes,
-      textinfo: "label+value+percent parent+percent entry",
-      outsidetextfont: {"size": 20, "color": "#377eb8"},
-      marker: {"line": {"width": 2}},
-      pathbar: {"visible": false}
-    }];
+    const data: any = [
+      {
+        type: "treemap",
+        labels: labels,
+        parents: parents,
+        values: sizes,
+        textinfo: "label+value+percent parent+percent entry",
+        outsidetextfont: { size: 20, color: "#377eb8" },
+        marker: { line: { width: 2 } },
+        pathbar: { visible: false }
+      }
+    ];
 
-      var layout = {
-        autosize: false,
-        width: 1200,
-        height: 900};
+    var layout = {
+      autosize: false,
+      width: 1200,
+      height: 900
+    };
 
     onMounted(() => {
-       console.log(labels,parents,sizes)
-       Plotly.newPlot('treemap', data, layout)
+      console.log(labels, parents, sizes);
+      Plotly.newPlot("treemap", data, layout);
     });
-
-    }
+  }
 });
-  
-  
 </script>
 <style>
 .treemap {
-    width: 100%;
-    
-  }
+  width: 100%;
+}
 </style>

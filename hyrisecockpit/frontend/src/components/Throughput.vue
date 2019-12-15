@@ -52,7 +52,6 @@ import { ThroughputData } from "../types/throughput";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 
-
 interface Props {}
 
 interface Data {
@@ -82,13 +81,11 @@ export default createComponent({
     onMounted(() => {
       Plotly.newPlot("graph", [getDataset()], getLayout());
       setInterval(checkState, 1000);
-
     });
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
         getThroughput();
-
       }
     }
 
@@ -98,7 +95,6 @@ export default createComponent({
 
     function onTPChange() {
       updateChartDatasets();
-
     }
 
     // watch for changes in selected databases
