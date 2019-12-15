@@ -1,0 +1,194 @@
+<body>
+    <h1>Test Cockpit</h1>
+    <h4>Add database<h4/>
+    <p>
+        <p><input id="user" type="text" value=""> (User)<p/>
+        <p><input id="password" type="text" value=""> (Password) <p/> 
+        <p><input id="host" type="text" value=""> (Host) <p/>
+        <p><input id="port" type="text" value=""> (Port) <p/>          
+        <p><input id="dbname" type="text" value=""> (Database name) <p/>   
+        <button id="add_db">Add database</button>
+    <p/>
+    <h4>Databases</h4>
+    <p id="databases">
+    </p>
+    <p>
+        <h4>Workloads</h4>
+        <button id="simple_workload">Simple Workload</button>
+        <button id="heavy_workload">heavy Workload</button>
+    </p>
+    <h4>Throughput</h4> 
+    <p id="throughput">
+    </p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script type="text/javascript">
+
+        let WORKLOAD_GENERATOR_URL = ""
+        let MONITOR_URL = ""
+
+        function create_labels(){
+            labels = [];
+            for (let i = 0; i < 20; i++) {
+                if (i == 20 - 1){
+                    labels.push("now");
+                }else{
+                    labels.push("-" + (20 - i - 1) + "s");
+                }
+            } 
+            return labels;  
+        }
+
+        function generate_default_numbers(){
+            data = [];
+            for (let i = 0; i < 20; i++){
+                data.push(0);
+            }
+            return data;
+        }
+
+        function create_graph(canvas, host){
+            let data = generate_default_numbers();
+            let chart = new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: create_labels(),
+                datasets: [{
+                    label: 'Throughput: ' + host ,
+                    data: data,
+                    backgroundColor: 'rgba(70, 130, 180, 0.6)',
+                    borderColor: 'rgba(70, 130, 180, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+              legend: {
+                  labels: {
+                      fontColor: 'black',
+                       fontSize: 24
+                  }
+              },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 20,
+                            beginAtZero: true,
+                            suggestedMax: 10000
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 20,
+                            fontColor: 'white'
+                        }
+                    }],
+                }
+
+            }
+        });
+        database_charts.set(host, chart)
+        databases_throughput.set(host, data)
+        }
+
+        function addData(chart, data) {
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.push(data);
+            });
+            chart.update();
+        }
+
+        async function postData(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+
+                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return await response.json(); // parses JSON response into native JavaScript objects
+        }
+
+        async function addDatabase() {
+            let host = document.getElementById('host').value
+            let json = {
+                "user": document.getElementById('user').value,
+                "password": document.getElementById('password').value,
+                "host": host,
+                "port": document.getElementById('port').value,
+                "dbname": document.getElementById('dbname').value
+            }
+
+
+            const response = await postData(MONITOR_URL + 'database', json);
+
+
+            if (response["header"]["status"] != 200) {
+                window.alert("Database Error");
+                return 0;  
+            }
+
+
+            let node = document.createElement("div");
+            node.innerHTML = json.host;
+            node.style = "border:1px solid black";
+            node.style.width = "200px"
+            document.getElementById("databases").appendChild(node);
+
+            let graphContainer = document.createElement("p");
+            graphContainer.setAttribute("id", host);
+            let canvas = document.createElement("canvas");
+            canvas.setAttribute("id", host + "Canvas");
+
+            graphContainer.appendChild(canvas);
+            document.getElementById("throughput").appendChild(graphContainer);
+
+            create_graph(canvas.getContext('2d'), host);
+
+            canvas.style.width  = '800px';
+            canvas.style.height = '400px';
+        }
+
+
+        async function update_charts(url){
+            const response = await fetch(url);
+            let data = await response.json()
+            let databases = data["body"]
+            for (database_name in databases) {
+                throughput = databases_throughput.get(database_name)
+                throughput.pop()
+                throughput.unshift(databases[database_name])
+                databases_throughput.set(database_name, throughput)
+            }
+            for (let [key, value] of databases_throughput) {
+                addData(database_charts.get(key), value)
+            }
+        }
+
+        async function execute_workload(url){
+            const response = await fetch(url);
+            let data = await response            
+        }
+
+        let databases_throughput = new Map()
+        let database_charts = new Map()
+        document.getElementById("add_db").addEventListener("click", addDatabase);
+        document.getElementById("simple_workload").addEventListener("click", () => {
+            execute_workload(WORKLOAD_GENERATOR_URL + 'simple_workload')
+        })
+        document.getElementById("heavy_workload").addEventListener("click", () => {
+            execute_workload(WORKLOAD_GENERATOR_URL + 'heavy_workload')
+        })
+
+        setInterval(() => {
+            update_charts(MONITOR_URL + 'throughput');
+        }, 1000)
+
+    </script>
+</body>

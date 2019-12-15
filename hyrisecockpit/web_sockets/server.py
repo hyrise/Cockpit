@@ -4,7 +4,7 @@ import time
 
 import websockets
 
-import settings as s
+from hyrisecockpit import settings as s
 
 
 async def runtime_data(websocket, path):

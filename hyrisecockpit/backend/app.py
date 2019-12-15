@@ -4,12 +4,11 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
-import rq_dashboard
 from flask import Flask, request
 from flask_cors import CORS
 from zmq import REQ, Context
 
-import settings as s
+from hyrisecockpit import settings as s
 
 context = Context(io_threads=1)
 
@@ -22,9 +21,6 @@ generator_socket.connect(f"tcp://{s.GENERATOR_HOST}:{s.GENERATOR_PORT}")
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
-
-app.config.from_object(rq_dashboard.default_settings)
-app.register_blueprint(rq_dashboard.blueprint, url_prefix="/rq")
 
 
 def _send_message(socket, message):
@@ -43,34 +39,33 @@ def home():
 @app.route("/throughput")
 def get_throughput():
     """Return throughput information from database manager."""
-    response = _send_message(
+    return _send_message(
         db_manager_socket, {"header": {"message": "throughput"}, "body": {}}
     )
-    return response["body"]
 
 
 @app.route("/queue_length")
 def get_queue_length():
     """Return queue length information from database manager."""
-    response = _send_message(
+    return _send_message(
         db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
     )
-    return response["body"]
 
 
 @app.route("/storage")
 def get_storage_metadata():
     """Return storage metadata from database manager."""
-    response = _send_message(
+    return _send_message(
         db_manager_socket, {"header": {"message": "storage"}, "body": {}}
     )
-    return response["body"]
 
 
-@app.route("/drivers", methods=["POST", "DELETE"])
+@app.route("/drivers", methods=["GET", "POST", "DELETE"])
 def drivers():
     """Add or delete a driver to/from the database manager."""
     request_json = request.get_json()
+    if request.method == "GET":
+        message = {"header": {"message": "get drivers"}, "body": {}}
     if request.method == "POST":
         message = {
             "header": {"message": "add driver"},
