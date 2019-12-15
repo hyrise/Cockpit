@@ -12,7 +12,7 @@ class Driver(object):
 
     @classmethod
     def validate_connection(cls, access_data):
-        """Validate if the connection data are correct."""
+        """Validate if the connection data is correct."""
         try:
             connection = connect(
                 user=access_data["user"],
@@ -21,10 +21,11 @@ class Driver(object):
                 port=int(access_data["port"]),
                 dbname=access_data["dbname"],
             )
-            connection.close()
-            return (True, None)
         except Error:
             return (False, "Database connection refused")
+        finally:
+            connection.close()
+            return (True, None)
 
     def _create_connection_pool(self, access_data, n_connections):
         """Create thread save connection pool."""
