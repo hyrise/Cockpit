@@ -13,8 +13,8 @@ export function useThroughputFetchService(
   var throughputData = ref<ThroughputData>({});
 
   function getThroughput(): void {
+    throughputQueryReadyState.value = false;
     fetchThroughput().then(result => {
-      throughputQueryReadyState.value = false;
       Object.keys(result).forEach(key => {
         addThroughputData(key, result[key][1] * 5000);
       });

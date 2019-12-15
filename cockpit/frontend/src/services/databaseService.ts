@@ -13,9 +13,8 @@ export function useDatabaseFetchService(): {
 } {
   const databases = ref<Database[]>(getDummyDatabases());
   const databaseIds = ref<string[]>(getDatabaseIds());
-  //const databaseColors = ref<string[]>(getDatabaseColors());
 
-  function getDatabases(): Database[] {
+  function getDatabases(): void {
     axios
       .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/drivers")
       .then(response => {

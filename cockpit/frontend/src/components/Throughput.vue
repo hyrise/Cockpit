@@ -74,78 +74,15 @@ export default createComponent({
     } = useThroughputFetchService(onTPChange);
 
     const { databaseIds, getDatabaseColor } = useDatabaseFetchService();
-    var selectedDatabaseIds = ref<string[]>([]);
-    const chart = ref<Object>(null);
-    const labels = ref<string[]>([]);
-    const layout: any = {
-      title: "Throughput",
-      xaxis: {
-        title: "time in s",
-        range: [0, 30]
-      },
-      yaxis: {
-        title: "1000 queries per second",
-        rangemode: "tozero"
-      }
-    };
+
+    const { getDataset, getLayout } = useThroughputLineChartConfiguration();
+
+    const selectedDatabaseIds = ref<string[]>([]);
 
     onMounted(() => {
-      Plotly.newPlot("graph", [{ y: [], mode: "lines+markers" }], layout);
+      Plotly.newPlot("graph", [getDataset()], getLayout());
+      setInterval(checkState, 1000);
     });
-
-    watch(
-      () => selectedDatabaseIds.value,
-      selectedDatabaseIds => {
-        const data = selectedDatabaseIds.reduce((result, id): any => {
-          return [
-            ...result,
-            {
-              y: throughputData.value[id] ? throughputData.value[id] : [],
-              mode: "lines+markers",
-              line: { color: getDatabaseColor(id) },
-              name: id
-            }
-          ];
-        }, []);
-        Plotly.purge("graph");
-        Plotly.plot("graph", data, layout);
-      }
-    );
-
-    function getMaxLength(): number {
-      return selectedDatabaseIds.value.reduce((currentMax, id) => {
-        return Math.max(throughputData.value[id].length, currentMax);
-      }, 0);
-    }
-
-    function updateChartData(): void {
-      const data = {
-        y: Object.values(selectedDatabaseIds.value).map(
-          id => throughputData.value[id]
-        )
-      };
-      const maxSelectedLength = getMaxLength();
-      const xMax = Math.max(maxSelectedLength, 30);
-      const xMin = Math.max(maxSelectedLength - 30, 0);
-      const xAxisLayout: any = {
-        xaxis: {
-          title: "time in s",
-          range: [xMin, xMax]
-        },
-        yaxis: {
-          title: "1000 queries per second",
-          rangemode: "tozero"
-        }
-      };
-
-      Plotly.update("graph", data, xAxisLayout);
-    }
-
-    function onTPChange() {
-      updateChartData();
-    }
-
-    onMounted(() => setInterval(checkState, 1000));
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
@@ -155,6 +92,53 @@ export default createComponent({
 
     function resetData(): void {
       throughputData.value = {};
+    }
+
+    function onTPChange() {
+      updateChartDatasets();
+    }
+
+    // watch for changes in selected databases
+    watch(
+      () => selectedDatabaseIds.value,
+      selectedDatabaseIds => {
+        const newDatasets = selectedDatabaseIds.reduce((result, id): any => {
+          return [
+            ...result,
+            getDataset(
+              throughputData.value[id] ? throughputData.value[id] : [],
+              getDatabaseColor(id),
+              id
+            )
+          ];
+        }, []);
+        Plotly.purge("graph");
+        Plotly.plot("graph", newDatasets, getLayout());
+      }
+    );
+
+    function getMaxDatasetLength(): number {
+      return selectedDatabaseIds.value.reduce((currentMax, id) => {
+        return Math.max(throughputData.value[id].length, currentMax);
+      }, 0);
+    }
+
+    function updateChartDatasets(): void {
+      const newData = {
+        y: Object.values(selectedDatabaseIds.value).map(
+          id => throughputData.value[id]
+        )
+      };
+      const maxSelectedLength = getMaxDatasetLength();
+
+      Plotly.update(
+        "graph",
+        newData,
+        getLayout(
+          Math.max(maxSelectedLength, 30),
+          Math.max(maxSelectedLength - 30, 0)
+        )
+      );
     }
 
     return {
@@ -167,6 +151,43 @@ export default createComponent({
     };
   }
 });
+
+function useThroughputLineChartConfiguration(): {
+  getDataset: (
+    throughputData?: number[],
+    color?: string,
+    databaseId?: string
+  ) => Object;
+  getLayout: (xMin?: number, xMax?: number) => Object;
+} {
+  function getLayout(xMin: number = 0, xMax: number = 30): Object {
+    return {
+      title: "Throughput",
+      xaxis: {
+        title: "time in s",
+        range: [xMin, xMax]
+      },
+      yaxis: {
+        title: "Queries per second",
+        rangemode: "tozero"
+      }
+    };
+  }
+
+  function getDataset(
+    throughputData: number[] = [],
+    color: string = "",
+    databaseId: string = ""
+  ): Object {
+    return {
+      y: throughputData,
+      mode: "lines+markers",
+      line: { color: color },
+      name: databaseId
+    };
+  }
+  return { getDataset, getLayout };
+}
 </script>
 <style scoped>
 .chart {
