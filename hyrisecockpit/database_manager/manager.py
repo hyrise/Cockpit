@@ -27,7 +27,7 @@ class DatabaseManager(object):
 
     def __init__(self):
         """Initialize a DatabaseManager."""
-        self._drivers = dict()
+        self._databases = dict()
         self._server_calls = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
@@ -57,13 +57,13 @@ class DatabaseManager(object):
         db_instance = DbObject(
             body, "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
         )
-        self._drivers[body["id"]] = db_instance
+        self._databases[body["id"]] = db_instance
         return create_response(200)
 
     def _call_throughput(self, body):
         """Get the throughput of all databases."""
         throughput = {}
-        for database, database_object in self._drivers.items():
+        for database, database_object in self._databases.items():
             throughput[database] = database_object.get_throughput_counter()
         response = create_response(200)
         response["body"]["throughput"] = throughput
@@ -71,7 +71,7 @@ class DatabaseManager(object):
 
     def _call_storage(self, body):
         storage = {}
-        for database, database_object in self._drivers.items():
+        for database, database_object in self._databases.items():
             storage[database] = database_object.get_storage_data()
         response = create_response(200)
         response["body"]["storage"] = storage
@@ -79,7 +79,7 @@ class DatabaseManager(object):
 
     def _call_system_data(self, body):
         system_data = {}
-        for database, database_object in self._drivers.items():
+        for database, database_object in self._databases.items():
             system_data[database] = database_object.get_system_data()
         response = create_response(200)
         response["body"]["system_data"] = system_data
@@ -87,14 +87,14 @@ class DatabaseManager(object):
 
     def _call_queue_length(self, body):
         queue_length = {}
-        for database, database_object in self._drivers.items():
+        for database, database_object in self._databases.items():
             queue_length[database] = database_object.get_queue_length()
         response = create_response(200)
         response["body"]["queue_length"] = queue_length
         return response
 
     def _call_delete_database(self, body):
-        database = self._drivers.pop(body["id"], None)
+        database = self._databases.pop(body["id"], None)
         if not database:
             return create_response(400)
         database.clean_exit()
@@ -106,7 +106,7 @@ class DatabaseManager(object):
 
     def _clean_exit(self):
         """Perform clean exit on all databases."""
-        for database_object in self._drivers.values():
+        for database_object in self._databases.values():
             database_object.clean_exit()
 
     def _run(self):
@@ -131,7 +131,7 @@ class DatabaseManager(object):
 
             except KeyboardInterrupt:
                 print("interrupt recived")
-                if len(self._drivers) > 0:
+                if len(self._databases) > 0:
                     self._clean_exit()
                     sys.exit()
                 sys.exit()
