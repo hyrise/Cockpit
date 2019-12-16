@@ -6,7 +6,7 @@ from copy import deepcopy
 from zmq import REP, Context
 
 from custom_exceptions import IdNotValidException
-from db_object import DbObject
+from database import Database
 from driver import Driver
 from hyrisecockpit import settings as s
 
@@ -53,7 +53,7 @@ class DatabaseManager(object):
             response["body"] = str(e)
             return response
 
-        db_instance = DbObject(
+        db_instance = Database(
             body, "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
         )
         self._databases[body["id"]] = db_instance

@@ -39,7 +39,7 @@ def execute_queries(worker_id, task_queue, throughput_data_container, connection
         )
 
 
-class DbObject(object):
+class Database(object):
     """Represents database."""
 
     def __init__(self, access_data, workload_publisher_url):
