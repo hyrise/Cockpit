@@ -72,17 +72,17 @@ class Database(object):
 
         self._start_workers()
 
-        self.scheduler = BackgroundScheduler()
-        self.update_throughput_job = self.scheduler.add_job(
-            func=self.update_throughput_data, trigger="interval", seconds=1,
+        self._scheduler = BackgroundScheduler()
+        self._update_throughput_job = self._scheduler.add_job(
+            func=self._update_throughput_data, trigger="interval", seconds=1,
         )
-        self.update_system_data_job = self.scheduler.add_job(
-            func=self.update_system_data, trigger="interval", seconds=1,
+        self._update_system_data_job = self._scheduler.add_job(
+            func=self._update_system_data, trigger="interval", seconds=1,
         )
-        self.update_chunks_data_job = self.scheduler.add_job(
-            func=self.update_chunks_data, trigger="interval", seconds=5,
+        self._update_chunks_data_job = self._scheduler.add_job(
+            func=self._update_chunks_data, trigger="interval", seconds=5,
         )
-        self.scheduler.start()
+        self._scheduler.start()
 
     def _init_throughput_data_container(self):
         """Initialize meta data container."""
@@ -140,7 +140,7 @@ class Database(object):
             failed_task.append(self._failed_task_queue.get())
         return failed_task
 
-    def update_throughput_data(self):
+    def _update_throughput_data(self):
         """Put meta data from all workers together."""
         throughput_data = 0
         for i in range(self._number_workers):
@@ -148,7 +148,7 @@ class Database(object):
             self._throughput_data_container[str(i)] = 0
         self._throughput_counter = throughput_data
 
-    def update_system_data(self):
+    def _update_system_data(self):
         """Update system data for database instance."""
         # mocking system data
         cpu_data = []
@@ -173,7 +173,7 @@ class Database(object):
             "database_threads": 8,
         }
 
-    def update_chunks_data(self):
+    def _update_chunks_data(self):
         """Update chunks data for database instance."""
         # mocking chunks data
 
@@ -224,9 +224,9 @@ class Database(object):
 
         result = size.join(encoding).join(datatype)
         self._connection_pool.putconn(connection)
-        return self.create_storage_data_dictionary(result)
+        return self._create_storage_data_dictionary(result)
 
-    def create_storage_data_dictionary(self, result):
+    def _create_storage_data_dictionary(self, result):
         """Sort storage data to dictionary."""
         output = {}
         grouped = result.reset_index().groupby("table")
@@ -262,8 +262,8 @@ class Database(object):
         self._close_pool()
         self._close_connections()
         self._close_queue()
-        self.update_throughput_job.remove()
-        self.update_system_data_job.remove()
-        self.update_chunks_data_job.remove()
-        self.scheduler.shutdown()
+        self._update_throughput_job.remove()
+        self._update_system_data_job.remove()
+        self._update_chunks_data_job.remove()
+        self._scheduler.shutdown()
         # super().__exit__()
