@@ -60,6 +60,14 @@ def get_system_data():
     )
 
 
+@app.route("/chunks_data")
+def get_chunks_data():
+    """Return chunks data information for every database."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
+    )
+
+
 @app.route("/storage")
 def get_storage_metadata():
     """Return storage metadata from database manager."""

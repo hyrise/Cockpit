@@ -29,6 +29,7 @@ class DatabaseManager(object):
             "system data": self._call_system_data,
             "delete database": self._call_delete_database,
             "queue length": self._call_queue_length,
+            "chunks data": self._call_chunks_data,
         }
         self._init_server()
 
@@ -90,6 +91,15 @@ class DatabaseManager(object):
             queue_length[database] = database_object.get_queue_length()
         response = deepcopy(responses[200])
         response["body"]["queue_length"] = queue_length
+        return response
+
+    def _call_chunks_data(self, body):
+        """Get chunks data of all databases."""
+        chunks_data = {}
+        for database, database_object in self._databases.items():
+            chunks_data[database] = database_object.get_chunks_data()
+        response = deepcopy(responses[200])
+        response["body"]["chunks_data"] = chunks_data
         return response
 
     def _call_delete_database(self, body):

@@ -57,6 +57,7 @@ class Database(object):
         self.workload_publisher_url = workload_publisher_url
         self._throughput_counter = 0
         self._system_data = {}
+        self._chunks_data = {}
         self._throughput_data_container = self._init_throughput_data_container()
         self._worker_pool = self._init_worler_pool()
 
@@ -68,6 +69,9 @@ class Database(object):
         )
         self.update_system_data_job = self.scheduler.add_job(
             func=self.update_system_data, trigger="interval", seconds=1,
+        )
+        self.update_chunks_data_job = self.scheduler.add_job(
+            func=self.update_chunks_data, trigger="interval", seconds=5,
         )
         self.scheduler.start()
 
@@ -111,6 +115,10 @@ class Database(object):
         """Return system data."""
         return self._system_data
 
+    def get_chunks_data(self):
+        """Return chunks data."""
+        return self._chunks_data
+
     def get_queue_length(self):
         """Return queue length."""
         return self._task_queue.qsize()
@@ -125,7 +133,7 @@ class Database(object):
 
     def update_system_data(self):
         """Update system data for database instance."""
-        # mocking system data
+        # mocking system data
         cpu_data = []
         for _ in range(16):
             cpu_data.append(secrets.randbelow(1001) / 10)
@@ -147,6 +155,30 @@ class Database(object):
             "memory": memory_data,
             "database_threads": 8,
         }
+
+    def update_chunks_data(self):
+        """Update chunks data for database instance."""
+        # mocking chunks data
+
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+
+        sql = """SELECT "table", column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY "table", column_name;"""
+        meta_segments = sqlio.read_sql_query(sql, connection)
+
+        self._connection_pool.putconn(connection)
+
+        chunks_data = {}
+        grouped = meta_segments.reset_index().groupby("table")
+        for column in grouped.groups:
+            chunks_data[column] = {}
+            for _, row in grouped.get_group(column).iterrows():
+                data = []
+                for _ in range(row["n_chunks"]):
+                    current = secrets.randbelow(500)
+                    data.append(current if (current < 100) else 0)
+                chunks_data[column][row["column_name"]] = data
+        self._chunks_data = chunks_data
 
     def get_storage_data(self):
         """Get storage data from the database."""
@@ -215,5 +247,6 @@ class Database(object):
         self._close_queue()
         self.update_throughput_job.remove()
         self.update_system_data_job.remove()
+        self.update_chunks_data_job.remove()
         self.scheduler.shutdown()
         # super().__exit__()
