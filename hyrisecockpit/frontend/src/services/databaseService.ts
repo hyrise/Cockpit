@@ -1,7 +1,7 @@
-import { Ref, ref } from '@vue/composition-api';
-import { Database } from '../types/database';
-import axios from 'axios';
-import colors from 'vuetify/lib/util/colors';
+import { Ref, ref } from "@vue/composition-api";
+import { Database } from "../types/database";
+import axios from "axios";
+import colors from "vuetify/lib/util/colors";
 
 export function useDatabaseFetchService(): {
   getDatabases: () => void;
@@ -13,10 +13,10 @@ export function useDatabaseFetchService(): {
 
   function getDatabases(): void {
     axios
-      .get('http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/drivers')
+      .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/drivers")
       .then(response => {
         return response.data.body.ids.map(database => ({
-          id: database,
+          id: database
         }));
       });
   }
@@ -29,13 +29,13 @@ export function useDatabaseFetchService(): {
 
   function getDummyDatabases(): Database[] {
     return [
-      { id: 'citadelle', color: getDatabaseColor() },
-      { id: 'york', color: getDatabaseColor() },
+      { id: "citadelle", color: getDatabaseColor() },
+      { id: "york", color: getDatabaseColor() }
     ];
   }
 
   return {
     getDatabases,
-    databases,
+    databases
   };
 }
