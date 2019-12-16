@@ -3,6 +3,7 @@
 import sys
 
 from zmq import REP, Context
+from copy import deepcopy
 
 from hyrisecockpit import settings as s
 
