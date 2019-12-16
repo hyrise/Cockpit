@@ -60,3 +60,11 @@ repos:
       entry: pipenv run bandit
       types: [python]
       args: [--exclude, tests]
+    - id: mypy
+      name: Running mypy on python files
+      entry: pipenv run mypy
+      language: system
+      types: [python]
+      args: ["--ignore-missing-imports", "--scripts-are-modules"]
+      require_serial: true
+      additional_dependencies: []

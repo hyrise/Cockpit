@@ -16,6 +16,7 @@ pydocstyle = "*"
 flake8-bugbear = "*"
 pytest = "*"
 pytest-testdox = "*"
+mypy = "*"
 
 [packages]
 pandas = "*"
