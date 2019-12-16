@@ -27,27 +27,53 @@ export default createComponent({
     const { generateStorageData } = useGeneratingTestData();
     const testData = generateStorageData();
 
+    const hyriseInstances = Object.keys(testData.body.storage);
+
+    const tables = [];
+    const attributes = [];
+    const attributesSize = [];
+    hyriseInstances.forEach(element => {
+      const tablesPerInstance =  Object.keys(testData.body.storage[element]);
+      tables.push(tablesPerInstance);
+      });
+    hyriseInstances.forEach(element => {
+       tables.forEach(tablesPerInstance => {
+         tablesPerInstance.forEach(table => {
+          const attribute = Object.keys(testData.body.storage[element][table].data);
+          attributes.push(attribute);
+          attribute.forEach(attr =>  attributesSize.push(testData.body.storage[element][table].data[attr].size));
+         });
+  
+      });
+    });
+
+    const tablesFlat = tables.flat();
+    const attrFlat = attributes.flat();
+
     const labels = [
-      "hyrise",
-      ...testData.map(entry => entry.table),
-      ...testData.map(entry => entry.column)
+      ...hyriseInstances,
+      ...tables,
+      ...attributes,
     ];
     const parents = [
-      "",
-      ...testData.map(entry => "hyrise"),
-      ...testData.map(entry => entry.table)
+      ...hyriseInstances.map(entry => ""),
+      ...tablesFlat.map((tablesPerInstance,index) => hyriseInstances[index] ),
+      ...attrFlat.map((attributesPerTable,index) => tablesFlat[index])
     ];
     const sizes = [
-      0,
-      ...testData.map(entry => 0),
-      ...testData.map(entry => entry.size)
+      ...hyriseInstances.map(entry => 0),
+      ...tables.map(entry => 0),
+      ...attributesSize,
     ];
-
+    
+    console.log(labels.flat(), 'labels');
+    console.log(parents.flat(), 'p');
+    console.log(sizes, 's');
     const data: any = [
       {
         type: "treemap",
-        labels: labels,
-        parents: parents,
+        labels: labels.flat(),
+        parents: parents.flat(),
         values: sizes,
         textinfo: "label+value+percent parent+percent entry",
         outsidetextfont: { size: 20, color: "#377eb8" },
@@ -63,7 +89,6 @@ export default createComponent({
     };
 
     onMounted(() => {
-      console.log(labels, parents, sizes);
       Plotly.newPlot("treemap", data, layout);
     });
   }
