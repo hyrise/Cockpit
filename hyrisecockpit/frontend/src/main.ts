@@ -4,10 +4,14 @@ import vuetify from "./plugins/vuetify";
 import vueRouter from "./plugins/vueRouter";
 import App from "./App.vue";
 import { useDatabaseFetchService } from "./services/databaseService";
+import colors from 'vuetify/lib/util/colors'
+
 
 Vue.use(VueCompositionApi);
-
+console.log(colors.amber.base)
 const { databases } = useDatabaseFetchService();
+
+
 
 Vue.config.productionTip = false;
 Vue.prototype.$databases = databases;

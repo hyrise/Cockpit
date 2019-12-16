@@ -1,14 +1,14 @@
 import { Ref, ref } from "@vue/composition-api";
 import { Database } from "../types/database";
 import axios from "axios";
+import { useColorConfiguration } from "../helpers/colors"
 
 export function useDatabaseFetchService(): {
   getDatabases: () => void;
-  getDummyDatabases: () => void;
   databases: Ref<Database[]>;
 } {
-  const dummyColors = ["green", "red", "blue"]; // TODO: use array of material design colors
   const databases = ref<Database[]>(getDummyDatabases());
+  const { getDatabaseColor }= useColorConfiguration();
 
   function getDatabases(): void {
     axios
@@ -21,19 +21,17 @@ export function useDatabaseFetchService(): {
   }
 
   function getDummyDatabases(): Database[] {
+    console.log('database')
+    console.log(getDatabaseColor);
     return [
-      { id: "citadelle", color: dummyColors[0] },
-      { id: "york", color: dummyColors[1] }
+      { id: "citadelle", color: getDatabaseColor() },
+      { id: "york", color: 'green' }
     ];
-  }
-
-  function getDatabaseIds(): string[] {
-    return databases.value ? databases.value.map(database => database.id) : [];
   }
 
   return {
     getDatabases,
     databases,
-    getDummyDatabases
   };
 }
+
