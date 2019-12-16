@@ -1,4 +1,4 @@
-"""The custom exeption module defines exeptions for database interactions."""
+"""The exeption module defines exeptions for database interactions."""
 
 
 class ConnectionNotValidException(Exception):
@@ -6,8 +6,8 @@ class ConnectionNotValidException(Exception):
 
     def __init__(self, message, errors):
         """Initialize a ConnectionNotValidException."""
-        super().__init__(message)
         self.errors = errors
+        super().__init__(message)
 
 
 class IdNotValidException(Exception):
