@@ -1,19 +1,28 @@
 """Module for managing databases."""
 
 import sys
-from copy import deepcopy
 
 from zmq import REP, Context
 
-from custom_exceptions import IdNotValidException
-from database import Database
-from driver import Driver
 from hyrisecockpit import settings as s
+
+from .database import Database
+from .driver import Driver
+from .exception import IdNotValidException
 
 responses = {
     200: {"header": {"status": 200, "message": "OK"}, "body": {}},
     400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
+    500: {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "body": {}},
 }
+
+
+def get_response(code):
+    """Return a blueprint of a response."""
+    return responses.get(
+        code,
+        {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "body": {}},
+    )
 
 
 class DatabaseManager(object):
@@ -50,7 +59,7 @@ class DatabaseManager(object):
             if new_id:
                 raise IdNotValidException("Id not valid")
         except Exception as e:
-            response = deepcopy(responses[400])
+            response = get_response(400)
             response["body"] = str(e)
             return response
 
@@ -58,14 +67,14 @@ class DatabaseManager(object):
             body, "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
         )
         self._databases[body["id"]] = db_instance
-        return deepcopy(responses[200])
+        return get_response(200)
 
     def _call_throughput(self, body):
         """Get the throughput of all databases."""
         throughput = {}
         for database, database_object in self._databases.items():
             throughput[database] = database_object.get_throughput_counter()
-        response = deepcopy(responses[200])
+        response = get_response(200)
         response["body"]["throughput"] = throughput
         return response
 
@@ -73,7 +82,7 @@ class DatabaseManager(object):
         storage = {}
         for database, database_object in self._databases.items():
             storage[database] = database_object.get_storage_data()
-        response = deepcopy(responses[200])
+        response = get_response(200)
         response["body"]["storage"] = storage
         return response
 
@@ -81,7 +90,7 @@ class DatabaseManager(object):
         system_data = {}
         for database, database_object in self._databases.items():
             system_data[database] = database_object.get_system_data()
-        response = deepcopy(responses[200])
+        response = get_response(200)
         response["body"]["system_data"] = system_data
         return response
 
@@ -89,17 +98,17 @@ class DatabaseManager(object):
         queue_length = {}
         for database, database_object in self._databases.items():
             queue_length[database] = database_object.get_queue_length()
-        response = deepcopy(responses[200])
+        response = get_response(200)
         response["body"]["queue_length"] = queue_length
         return response
 
     def _call_delete_database(self, body):
         database = self._databases.pop(body["id"], None)
         if not database:
-            return deepcopy(responses[400])
+            return get_response(400)
         database.exit()
         del database
-        return deepcopy(responses["200"])
+        return get_response(200)
 
     def _call_failed_tasks(self, body):
         failed_tasks = {}
@@ -110,7 +119,7 @@ class DatabaseManager(object):
         return response
 
     def _call_not_found(self, body):
-        return deepcopy(responses[200])
+        return get_response(200)
 
     def _exit(self):
         """Perform clean exit on all databases."""

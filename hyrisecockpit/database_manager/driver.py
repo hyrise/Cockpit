@@ -2,7 +2,7 @@
 
 from psycopg2 import Error, connect, pool
 
-from custom_exceptions import ConnectionNotValidException
+from .exception import ConnectionNotValidException
 
 
 class Driver(object):
