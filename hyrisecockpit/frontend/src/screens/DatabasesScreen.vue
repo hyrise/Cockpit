@@ -86,10 +86,7 @@
             <v-btn color="blue darken-1" text @click="newDatabaseDialog = false"
               >Close</v-btn
             >
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="openDatabaseScreen('item')"
+            <v-btn color="blue darken-1" text @click="createNewDatabase()"
               >Save</v-btn
             >
           </v-card-actions>
@@ -110,11 +107,13 @@ import {
   watch
 } from "@vue/composition-api";
 import { useDatabaseFetchService } from "../services/databaseService";
+import axios from "axios";
 
 interface Props {}
 interface Data {
   databaseIds: Ref<string[]>;
   openDatabaseScreen: (string) => void;
+  createNewDatabase: () => void;
   newDatabaseDialog: boolean;
   n_threads: Ref<string>;
   id: Ref<string>;
@@ -139,7 +138,34 @@ export default createComponent({
 
     function openDatabaseScreen(databaseId: string): void {
       console.log(databaseId);
-      console.log(n_threads, "n_threads");
+    }
+
+    function createNewDatabase(): void {
+      const databaseData = {
+        n_threads: n_threads.value,
+        id: id.value,
+        user: user.value,
+        password: password.value,
+        host: host.value,
+        port: port.value,
+        dbname: dbname.value
+      };
+      addDatabase(databaseData);
+    }
+
+    function addDatabase(databaseData: any): void {
+      console.log("test");
+      axios
+        .post(
+          "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database",
+          databaseData
+        )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
 
     return {
@@ -152,7 +178,8 @@ export default createComponent({
       dbname,
       databaseIds: databaseIds,
       openDatabaseScreen: openDatabaseScreen,
-      newDatabaseDialog: false
+      newDatabaseDialog: false,
+      createNewDatabase: createNewDatabase
     };
   }
 });
