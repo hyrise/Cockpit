@@ -30,7 +30,6 @@ class DatabaseManager(object):
             "queue length": self._call_queue_length,
         }
         self._init_server()
-        self._run()
 
     def _init_server(self):
         self._context = Context(io_threads=1)
@@ -38,7 +37,6 @@ class DatabaseManager(object):
         self._socket.bind(
             "tcp://{:s}:{:s}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
         )
-        self._run()
 
     def _validate_connection_data(self, body):
         """Validate if input data is correct."""
@@ -113,8 +111,8 @@ class DatabaseManager(object):
         for database_object in self._databases.values():
             database_object.exit()
 
-    def _run(self):
-        """Run the manager by enabling IPC."""
+    def start(self):
+        """Start the manager by enabling IPC."""
         print(
             "Database manager running on {:s}:{:s}. Press CTRL+C to quit.".format(
                 s.DB_MANAGER_HOST, s.DB_MANAGER_PORT
@@ -141,7 +139,7 @@ class DatabaseManager(object):
 
 def main():
     """Run a database manager."""
-    DatabaseManager()
+    DatabaseManager().start()
 
 
 if __name__ == "__main__":
