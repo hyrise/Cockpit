@@ -8,7 +8,7 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from driver import Driver
+from .driver import Driver
 
 
 def fill_queue(workload_publisher_url, task_queue):

@@ -4,10 +4,11 @@ import sys
 
 from zmq import REP, Context
 
-from custom_exceptions import IdNotValidException
-from database import Database
-from driver import Driver
 from hyrisecockpit import settings as s
+
+from .database import Database
+from .driver import Driver
+from .exception import IdNotValidException
 
 responses = {
     200: {"header": {"status": 200, "message": "OK"}, "body": {}},
