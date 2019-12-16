@@ -7,7 +7,7 @@
         <button id="add_db_HY2">Add default DB 2</button>        
     </p>
     <p>
-        <p><input id="n_threads" type="text" value=""> (Number Threads)<p/>
+        <p><input id="number_worker" type="text" value=""> (Number Threads)<p/>
         <p><input id="db_id" type="text" value=""> (id) <p/> 
         <p><input id="user" type="text" value=""> (User)<p/>
         <p><input id="password" type="text" value=""> (Password) <p/> 
@@ -123,7 +123,7 @@
 
         function get_filed_data(){
             let json = {
-                "n_threads" : document.getElementById('n_threads').value,
+                "number_worker" : document.getElementById('number_worker').value,
                 "id": document.getElementById('db_id').value,
                 "user": document.getElementById('user').value,
                 "password": document.getElementById('password').value,
@@ -131,7 +131,6 @@
                 "port": document.getElementById('port').value,
                 "dbname": document.getElementById('dbname').value,
             }
-            console.log(json)
             return json
         }
 
@@ -140,9 +139,8 @@
 
             const response = await postData(MONITOR_URL + '/database', json);
 
-
             if (response["header"]["status"] != 200) {
-                window.alert("Database Error");
+                window.alert(response["body"]);
                 return 0;  
             }
 
@@ -206,7 +204,7 @@
 
         document.getElementById("add_db_HY1").addEventListener("click", () => {
             let HY1 = {
-                "n_threads" : "",
+                "number_worker" : "",
                 "id": "",
                 "user": "",
                 "password": "",
@@ -219,7 +217,7 @@
 
         document.getElementById("add_db_HY2").addEventListener("click", () => {
             let HY2 = {
-                "n_threads" : "",
+                "number_worker" : "",
                 "id": "",
                 "user": "",
                 "password": "",
