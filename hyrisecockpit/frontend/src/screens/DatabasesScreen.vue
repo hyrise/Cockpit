@@ -65,7 +65,7 @@
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="n_threads"
+                    v-model="number_worker"
                     label="Number of Workers*"
                     required
                   ></v-text-field>
@@ -115,7 +115,7 @@ interface Data {
   openDatabaseScreen: (string) => void;
   createNewDatabase: () => void;
   newDatabaseDialog: boolean;
-  n_threads: Ref<string>;
+  number_worker: Ref<string>;
   id: Ref<string>;
   user: Ref<string>;
   password: Ref<string>;
@@ -128,7 +128,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databaseIds } = useDatabaseFetchService(); // this has to be changed on merge
 
-    const n_threads = ref<string>("");
+    const number_worker = ref<string>("");
     const id = ref<string>("");
     const user = ref<string>("");
     const password = ref<string>("");
@@ -142,7 +142,7 @@ export default createComponent({
 
     function createNewDatabase(): void {
       const databaseData = {
-        n_threads: n_threads.value,
+        number_worker: number_worker.value,
         id: id.value,
         user: user.value,
         password: password.value,
@@ -154,7 +154,6 @@ export default createComponent({
     }
 
     function addDatabase(databaseData: any): void {
-      console.log("test");
       axios
         .post(
           "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database",
@@ -167,9 +166,9 @@ export default createComponent({
           console.log(error);
         });
     }
-
+ 
     return {
-      n_threads,
+      number_worker,
       id,
       user,
       password,
