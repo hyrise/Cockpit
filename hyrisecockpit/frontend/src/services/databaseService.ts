@@ -22,7 +22,8 @@ export function useDatabaseFetchService(): {
   }
 
   function getDatabaseColor(): string {
-    const color = colors[colorsArray[usedColors]].base;
+    console.log(colors);
+    const color: any = colors[colorsArray[usedColors]].base;
     usedColors += 2;
     return color;
   }
