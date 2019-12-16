@@ -25,7 +25,7 @@ def fill_queue(workload_publisher_url, task_queue):
             task_queue.put(task)
 
 
-def execute_querys(worker_id, task_queue, throughput_data_container, connection_pool):
+def execute_queries(worker_id, task_queue, throughput_data_container, connection_pool):
     """Define workers work loop."""
     connection = connection_pool.getconn()
     connection.set_session(autocommit=True)
@@ -83,7 +83,7 @@ class DbObject(object):
         worker_pool = []
         for i in range(self._number_workers):
             p = Process(
-                target=execute_querys,
+                target=execute_queries,
                 args=[
                     i,
                     self._task_queue,
