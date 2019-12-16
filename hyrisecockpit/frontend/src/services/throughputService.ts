@@ -16,7 +16,7 @@ export function useThroughputFetchService(
     throughputQueryReadyState.value = false;
     fetchThroughput().then(result => {
       Object.keys(result).forEach(key => {
-        addThroughputData(key, result[key][1] * 5000);
+        addThroughputData(key, result[key]);
       });
       if (onChange) {
         onChange();
@@ -35,9 +35,10 @@ export function useThroughputFetchService(
   function fetchThroughput(): Promise<ThroughputQueryResult> {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/throughput")
+        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/throughput")
         .then(response => {
-          resolve(response.data.body);
+          console.log(response);
+          resolve(response.data.body.throughput);
         })
         .catch(error => {
           reject(error);
