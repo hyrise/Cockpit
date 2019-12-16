@@ -47,6 +47,14 @@ repos:
       language: system
       entry: flake8
       types: [python]
+    - id: mypy
+      name: Running mypy on python files
+      entry: mypy
+      language: system
+      types: [python]
+      args: ["--ignore-missing-imports", "--scripts-are-modules"]
+      require_serial: true
+      additional_dependencies: []
     - id: pydocstyle
       name: Running pydocstyle on python files
       description: 'pydocstyle is a static analysis tool for checking compliance with Python docstring conventions.'
@@ -60,11 +68,3 @@ repos:
       entry: bandit
       types: [python]
       args: [--exclude, tests]
-    - id: mypy
-      name: Running mypy on python files
-      entry: mypy
-      language: system
-      types: [python]
-      args: ["--ignore-missing-imports", "--scripts-are-modules"]
-      require_serial: true
-      additional_dependencies: []
