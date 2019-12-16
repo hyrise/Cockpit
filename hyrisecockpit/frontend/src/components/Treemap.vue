@@ -57,7 +57,7 @@ export default createComponent({
     ];
     const parents = [
       ...hyriseInstances.map(entry => ""),
-      ...tablesFlat.map((tablesPerInstance,index) => hyriseInstances[index] ),
+      ...tablesFlat.map(tablesPerInstance => hyriseInstances[index] ),
       ...attrFlat.map((attributesPerTable,index) => tablesFlat[index])
     ];
     const sizes = [
