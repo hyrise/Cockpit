@@ -142,7 +142,11 @@ class DbObject(object):
             "buffers": 169537536,
         }
 
-        self._system_data = {"cpu": cpu_data, "memory": memory_data}
+        self._system_data = {
+            "cpu": cpu_data,
+            "memory": memory_data,
+            "database_threads": 8,
+        }
 
     def get_storage_data(self):
         """Get storage data from the database."""

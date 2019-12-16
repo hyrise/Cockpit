@@ -54,7 +54,7 @@ def get_queue_length():
 
 @app.route("/system_data")
 def get_system_data():
-    """Return cpu and memory information for every database from database manager."""
+    """Return cpu and memory information for every database and the number of thread it is using from database manager."""
     return _send_message(
         db_manager_socket, {"header": {"message": "system data"}, "body": {}}
     )
