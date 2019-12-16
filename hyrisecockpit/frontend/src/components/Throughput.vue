@@ -93,7 +93,7 @@ export default createComponent({
             return [
               ...result,
               getDataset(
-                throughputData.value[id] ? throughputData.value[id] : [1, 2, 3],
+                throughputData.value[id] ? throughputData.value[id] : [],
                 id
               )
             ];
@@ -181,7 +181,7 @@ function useThroughputLineChartConfiguration(
   }
 
   function getDataset(
-    throughputData: number[] = [1, 2, 3],
+    throughputData: number[] = [],
     databaseId: string = ""
   ): Object {
     const database: Database | null = getDatabaseById(databaseId);
