@@ -1,9 +1,9 @@
 """Module for managing databases."""
 
 import sys
+from copy import deepcopy
 
 from zmq import REP, Context
-from copy import deepcopy
 
 from hyrisecockpit import settings as s
 
@@ -19,7 +19,7 @@ responses = {
 
 
 def get_response(code):
-    """Return a blueprint of a response."""
+    """Return a blueprint for a response."""
     return responses.get(
         code,
         {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "body": {}},
