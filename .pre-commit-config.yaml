@@ -49,6 +49,7 @@ repos:
       types: [python]
     - id: mypy
       name: Running mypy on python files
+      description: 'Mypy is an optional static type checker for Python. You can add type hints (PEP 484) to your Python programs, and use mypy to type check them statically.'
       entry: mypy
       language: system
       types: [python]
