@@ -4,9 +4,9 @@ Includes the main WorkloadGenerator, which uses multiple WorkloadProducers.
 The WorkloadGenerator manages the WorkloadProducers.
 The WorkloadProducers have IPC connections to a database interface.
 """
-
 import multiprocessing as mp
 import random
+from typing import Dict
 
 from zmq import PUB, REP, Context
 
@@ -132,38 +132,36 @@ class WorkloadGenerator(object):
             p.terminate()
             p.join()
 
-    def _set_producers(self, number):
+    def _set_producers(self, number: int) -> int:
         """Set the number of WorkloadProducers."""
         delta = number - len(self._producers)
         if delta < 0:
             f = self._add_producer
         elif delta > 0:
             f = self._pop_producer
-        else:
-            return
         [f() for _ in range(delta)]
         return self._get_producers()
 
-    def _get_producers(self):
+    def _get_producers(self) -> int:
         """Return the number of WorkloadProducers."""
         return len(self._producers)
 
-    def _call_start(self, body):
+    def _call_start(self, body: Dict) -> Dict:
         """Start generating workloads with n_producers."""
         n_producers = body["n_producers"]
         [self._add_producer() for i in range(n_producers)]
         return responses[200]
 
-    def _call_stop(self, body):
+    def _call_stop(self, body: Dict) -> Dict:
         """Stop generating workloads and kill all WorkloadProducers."""
         [self._pop_producer() for i in range(len(self._producers))]
         return responses[200]
 
-    def _call_shutdown(self, body):
+    def _call_shutdown(self, body: Dict) -> Dict:
         self._shutdown_requested = True
         return responses[200]
 
-    def _call_not_found(self, body):
+    def _call_not_found(self, body: Dict) -> Dict:
         return responses[400]
 
     def run(self):
