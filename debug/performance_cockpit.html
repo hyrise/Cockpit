@@ -7,7 +7,7 @@
         <button id="add_db_HY2">Add default DB 2</button>        
     </p>
     <p>
-        <p><input id="number_worker" type="text" value=""> (Number Threads)<p/>
+        <p><input id="number_workers" type="text" value=""> (Number Threads)<p/>
         <p><input id="db_id" type="text" value=""> (id) <p/> 
         <p><input id="user" type="text" value=""> (User)<p/>
         <p><input id="password" type="text" value=""> (Password) <p/> 
@@ -123,7 +123,7 @@
 
         function get_filed_data(){
             let json = {
-                "number_worker" : document.getElementById('number_worker').value,
+                "number_workers" : document.getElementById('number_workers').value,
                 "id": document.getElementById('db_id').value,
                 "user": document.getElementById('user').value,
                 "password": document.getElementById('password').value,
@@ -204,7 +204,7 @@
 
         document.getElementById("add_db_HY1").addEventListener("click", () => {
             let HY1 = {
-                "number_worker" : "",
+                "number_workers" : "",
                 "id": "",
                 "user": "",
                 "password": "",
@@ -217,7 +217,7 @@
 
         document.getElementById("add_db_HY2").addEventListener("click", () => {
             let HY2 = {
-                "number_worker" : "",
+                "number_workers" : "",
                 "id": "",
                 "user": "",
                 "password": "",
