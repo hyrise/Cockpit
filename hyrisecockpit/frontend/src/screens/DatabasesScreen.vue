@@ -65,7 +65,7 @@
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="number_worker"
+                    v-model="number_workers"
                     label="Number of Workers*"
                     required
                   ></v-text-field>
@@ -115,7 +115,7 @@ interface Data {
   openDatabaseScreen: (string) => void;
   createNewDatabase: () => void;
   newDatabaseDialog: boolean;
-  number_worker: Ref<string>;
+  number_workers: Ref<string>;
   id: Ref<string>;
   user: Ref<string>;
   password: Ref<string>;
@@ -128,7 +128,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databaseIds } = useDatabaseFetchService(); // this has to be changed on merge
 
-    const number_worker = ref<string>("");
+    const number_workers = ref<string>("");
     const id = ref<string>("");
     const user = ref<string>("");
     const password = ref<string>("");
@@ -142,7 +142,7 @@ export default createComponent({
 
     function createNewDatabase(): void {
       const databaseData = {
-        number_worker: number_worker.value,
+        number_workers: number_workers.value,
         id: id.value,
         user: user.value,
         password: password.value,
@@ -168,7 +168,7 @@ export default createComponent({
     }
  
     return {
-      number_worker,
+      number_workers,
       id,
       user,
       password,
