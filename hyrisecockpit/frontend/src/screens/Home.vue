@@ -15,7 +15,8 @@
         class="ma-2 py-12"
         tile
         color="primary"
-        :to="{ name: 'home' }"
+        :to="{ name: 'workload' }"
+        target="_blank"
       >
         <v-icon left>mdi-database-refresh</v-icon> Workload Generation
       </v-btn>
