@@ -1,4 +1,4 @@
-"""The database object represents the instanz of a database."""
+"""The database object represents the instance of a database."""
 
 import secrets
 from multiprocessing import Manager, Process, Queue

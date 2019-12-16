@@ -85,7 +85,7 @@ def get_storage_metadata():
 
 
 @app.route("/database", methods=["GET", "POST", "DELETE"])
-def drivers():
+def database():
     """Add or delete a driver to/from the database manager."""
     request_json = request.get_json()
     if request.method == "GET":
