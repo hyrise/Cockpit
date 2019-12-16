@@ -52,7 +52,7 @@ class Database(object):
 
     def __init__(self, access_data, workload_publisher_url):
         """Initialize database object."""
-        self._number_workers = int(access_data["n_threads"])
+        self._number_workers = int(access_data["number_worker"])
         self._number_additional_connections = 1
         self._driver = Driver(
             access_data, self._number_workers + self._number_additional_connections

@@ -94,7 +94,7 @@ def database():
         message = {
             "header": {"message": "add database"},
             "body": {
-                "n_threads": request_json["n_threads"],
+                "number_worker": request_json["number_worker"],
                 "id": request_json["id"],
                 "user": request_json["user"],
                 "password": request_json["password"],
