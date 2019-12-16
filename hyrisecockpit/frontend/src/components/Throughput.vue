@@ -5,7 +5,7 @@
         <v-col cols="6" class="mx-10">
           <v-select
             v-model="selectedDatabaseIds"
-            :items="databaseIds"
+            :items="databases.map(database => database.id)"
             chips
             label="databases"
             multiple
@@ -51,7 +51,7 @@ import { useDatabaseFetchService } from "../services/databaseService";
 import { ThroughputData } from "../types/throughput";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
-
+import Vue from "vue";
 
 interface Props {}
 
@@ -60,7 +60,7 @@ interface Data {
   resetData: () => void;
   threads: Ref<number>;
   setNumberOfThreads: () => void;
-  databaseIds: Ref<string[]>;
+  databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
 }
 
@@ -73,9 +73,11 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
 
-    const { databaseIds, getDatabaseColor } = useDatabaseFetchService();
+    const databases = Vue.prototype.$databases;
 
-    const { getDataset, getLayout } = useThroughputLineChartConfiguration();
+    const { getDataset, getLayout } = useThroughputLineChartConfiguration(
+      databases.value
+    );
 
     const selectedDatabaseIds = ref<string[]>([]);
 
@@ -83,12 +85,28 @@ export default createComponent({
       Plotly.newPlot("graph", [getDataset()], getLayout());
       setInterval(checkState, 1000);
 
+      // watch for changes in selected databases
+      watch(
+        () => selectedDatabaseIds.value,
+        selectedDatabaseIds => {
+          const newDatasets = selectedDatabaseIds.reduce((result, id): any => {
+            return [
+              ...result,
+              getDataset(
+                throughputData.value[id] ? throughputData.value[id] : [],
+                id
+              )
+            ];
+          }, []);
+          Plotly.purge("graph");
+          Plotly.plot("graph", newDatasets, getLayout());
+        }
+      );
     });
 
     function checkState(): void {
       if (throughputQueryReadyState.value) {
         getThroughput();
-
       }
     }
 
@@ -98,27 +116,7 @@ export default createComponent({
 
     function onTPChange() {
       updateChartDatasets();
-
     }
-
-    // watch for changes in selected databases
-    watch(
-      () => selectedDatabaseIds.value,
-      selectedDatabaseIds => {
-        const newDatasets = selectedDatabaseIds.reduce((result, id): any => {
-          return [
-            ...result,
-            getDataset(
-              throughputData.value[id] ? throughputData.value[id] : [],
-              getDatabaseColor(id),
-              id
-            )
-          ];
-        }, []);
-        Plotly.purge("graph");
-        Plotly.plot("graph", newDatasets, getLayout());
-      }
-    );
 
     function getMaxDatasetLength(): number {
       return selectedDatabaseIds.value.reduce((currentMax, id) => {
@@ -138,8 +136,8 @@ export default createComponent({
         "graph",
         newData,
         getLayout(
-          Math.max(maxSelectedLength, 30),
-          Math.max(maxSelectedLength - 30, 0)
+          Math.max(maxSelectedLength - 30, 0),
+          Math.max(maxSelectedLength, 30)
         )
       );
     }
@@ -148,19 +146,17 @@ export default createComponent({
       throughputData,
       resetData,
       threads,
+      databases,
       setNumberOfThreads,
-      databaseIds,
       selectedDatabaseIds
     };
   }
 });
 
-function useThroughputLineChartConfiguration(): {
-  getDataset: (
-    throughputData?: number[],
-    color?: string,
-    databaseId?: string
-  ) => Object;
+function useThroughputLineChartConfiguration(
+  databases: Database[]
+): {
+  getDataset: (throughputData?: number[], databaseId?: string) => Object;
   getLayout: (xMin?: number, xMax?: number) => Object;
 } {
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
@@ -177,16 +173,20 @@ function useThroughputLineChartConfiguration(): {
     };
   }
 
+  function getDatabaseById(databaseId: string): Database | undefined {
+    return databases.find(element => element.id === databaseId);
+  }
+
   function getDataset(
     throughputData: number[] = [],
-    color: string = "",
     databaseId: string = ""
   ): Object {
+    const database: Database | undefined = getDatabaseById(databaseId);
     return {
       y: throughputData,
       mode: "lines+markers",
-      line: { color: color },
-      name: databaseId
+      line: database ? { color: database.color } : {},
+      name: database ? database.id : {}
     };
   }
   return { getDataset, getLayout };
