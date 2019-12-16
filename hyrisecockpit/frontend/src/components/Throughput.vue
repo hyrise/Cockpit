@@ -136,8 +136,8 @@ export default createComponent({
         "graph",
         newData,
         getLayout(
-          Math.max(maxSelectedLength, 30),
-          Math.max(maxSelectedLength - 30, 0)
+          Math.max(maxSelectedLength - 30, 0),
+          Math.max(maxSelectedLength, 30)
         )
       );
     }
@@ -173,18 +173,15 @@ function useThroughputLineChartConfiguration(
     };
   }
 
-  function getDatabaseById(databaseId: string): Database | null {
-    const relevantDatabases = databases.filter(
-      element => element.id === databaseId
-    );
-    return relevantDatabases.length > 0 ? relevantDatabases[0] : null;
+  function getDatabaseById(databaseId: string): Database | undefined {
+    return databases.find(element => element.id === databaseId);
   }
 
   function getDataset(
     throughputData: number[] = [],
     databaseId: string = ""
   ): Object {
-    const database: Database | null = getDatabaseById(databaseId);
+    const database: Database | undefined = getDatabaseById(databaseId);
     return {
       y: throughputData,
       mode: "lines+markers",
