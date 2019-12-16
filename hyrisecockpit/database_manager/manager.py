@@ -5,6 +5,7 @@ from copy import deepcopy
 
 from zmq import REP, Context
 
+from custom_exceptions import IdNotValidException
 from db_object import DbObject
 from driver import Driver
 from hyrisecockpit import settings as s
@@ -38,24 +39,20 @@ class DatabaseManager(object):
             "tcp://{:s}:{:s}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
         )
 
-    def _validate_connection_data(self, body):
-        """Validate if input data is correct."""
-        valid, error = Driver.validate_connection(body)
-        new_id = body["id"] in self._databases
-        if not valid:
-            return (valid, error)
-        elif new_id:
-            return (False, "Id already exists")
-        else:
-            return (True, None)
-
     def _call_add_database(self, body):
         """Add database and initialize driver for it."""
-        valid, error = self._validate_connection_data(body)
-        if not valid:
+        # validating connection data
+        try:
+            # Will throw an exeption if not valid
+            Driver.validate_connection(body)
+            new_id = body["id"] in self._databases
+            if new_id:
+                raise IdNotValidException("Id not valid")
+        except Exception as e:
             response = deepcopy(responses[400])
-            response["body"] = error
+            response["body"] = str(e)
             return response
+
         db_instance = DbObject(
             body, "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
         )

@@ -2,6 +2,8 @@
 
 from psycopg2 import Error, connect, pool
 
+from custom_exceptions import ConnectionNotValidException
+
 
 class Driver(object):
     """Interface to database."""
@@ -22,9 +24,8 @@ class Driver(object):
                 dbname=access_data["dbname"],
             )
             connection.close()
-            return (True, None)
         except Error:
-            return (False, "Database connection refused")
+            raise ConnectionNotValidException("Database connection refused", Error)
 
     def _create_connection_pool(self, access_data, n_connections):
         """Create thread save connection pool."""
