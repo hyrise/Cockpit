@@ -52,6 +52,14 @@ def get_queue_length():
     )
 
 
+@app.route("/failed_tasks")
+def get_failed_tasks():
+    """Return queue length information from database manager."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
+    )
+
+
 @app.route("/system_data")
 def get_system_data():
     """Return cpu and memory information for every database and the number of thread it is using from database manager."""
