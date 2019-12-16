@@ -29,6 +29,7 @@ class DatabaseManager(object):
             "system data": self._call_system_data,
             "delete database": self._call_delete_database,
             "queue length": self._call_queue_length,
+            "failed tasks": self._call_failed_tasks,
         }
         self._init_server()
 
@@ -99,6 +100,14 @@ class DatabaseManager(object):
         database.exit()
         del database
         return deepcopy(responses["200"])
+
+    def _call_failed_tasks(self, body):
+        failed_tasks = {}
+        for database, database_object in self._databases.items():
+            failed_tasks[database] = database_object.get_failed_tasks()
+        response = deepcopy(responses[200])
+        response["body"]["failed_tasks"] = failed_tasks
+        return response
 
     def _call_not_found(self, body):
         return deepcopy(responses[200])

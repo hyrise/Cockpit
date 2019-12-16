@@ -7,6 +7,7 @@ import pandas as pd
 import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
+from psycopg2 import Error
 
 from driver import Driver
 
@@ -25,7 +26,9 @@ def fill_queue(workload_publisher_url, task_queue):
             task_queue.put(task)
 
 
-def execute_queries(worker_id, task_queue, throughput_data_container, connection_pool):
+def execute_queries(
+    worker_id, task_queue, throughput_data_container, connection_pool, failed_task_queue
+):
     """Define workers work loop."""
     connection = connection_pool.getconn()
     connection.set_session(autocommit=True)
@@ -33,10 +36,15 @@ def execute_queries(worker_id, task_queue, throughput_data_container, connection
     while True:
         # If Queue is emty go to wait status
         query, parameters = task_queue.get(block=True)
-        cur.execute(query, parameters)
-        throughput_data_container[str(worker_id)] = (
-            throughput_data_container[str(worker_id)] + 1
-        )
+        try:
+            cur.execute(query, parameters)
+            throughput_data_container[str(worker_id)] = (
+                throughput_data_container[str(worker_id)] + 1
+            )
+        except Error as e:
+            failed_task_queue.put(
+                {"id": worker_id, "task": (query, parameters), "Error": e}
+            )
 
 
 class Database(object):
@@ -52,6 +60,7 @@ class Database(object):
         self._connection_pool = self._driver.get_connection_pool()
 
         self._task_queue = Queue(0)
+        self._failed_task_queue = Queue(0)
         self._manager = Manager()
 
         self.workload_publisher_url = workload_publisher_url
@@ -89,6 +98,7 @@ class Database(object):
                     self._task_queue,
                     self._throughput_data_container,
                     self._connection_pool,
+                    self._failed_task_queue,
                 ],
             )
             worker_pool.append(p)
@@ -114,6 +124,13 @@ class Database(object):
     def get_queue_length(self):
         """Return queue length."""
         return self._task_queue.qsize()
+
+    def get_failed_tasks(self):
+        """Return faild tasks."""
+        failed_task = []
+        while not self._failed_task_queue.empty():
+            failed_task.append(self._failed_task_queue.get())
+        return failed_task
 
     def update_throughput_data(self):
         """Put meta data from all workers together."""
