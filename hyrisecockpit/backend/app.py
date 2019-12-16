@@ -90,7 +90,7 @@ def database():
     request_json = request.get_json()
     if request.method == "GET":
         message = {"header": {"message": "get databases"}, "body": {}}
-    if request.method == "POST":
+    elif request.method == "POST":
         message = {
             "header": {"message": "add database"},
             "body": {

@@ -33,6 +33,7 @@ class DatabaseManager(object):
             "queue length": self._call_queue_length,
             "chunks data": self._call_chunks_data,
             "failed tasks": self._call_failed_tasks,
+            "get databases": self._call_get_databases,
         }
         self._init_server()
 
@@ -62,6 +63,13 @@ class DatabaseManager(object):
         )
         self._databases[body["id"]] = db_instance
         return deepcopy(responses[200])
+
+    def _call_get_databases(self, body):
+        """Get list of all databases."""
+        databases = list(self._databases.keys())
+        response = deepcopy(responses[200])
+        response["body"]["databases"] = databases
+        return response
 
     def _call_throughput(self, body):
         """Get the throughput of all databases."""
