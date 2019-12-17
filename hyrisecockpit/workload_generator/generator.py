@@ -79,16 +79,9 @@ class WorkloadProducer(mp.Process):
         """Generate workloads and submit it with IPC."""
         while True:
             # TODO add shutdown
-            # request = {"header": {"status": 200, "message": "execute"}}
             request = {"header": {"status": 200, "message": "executelist"}}
-            # query, vars = self._generate_execute()[0]
-            # request["body"] = {"query": query, "vars": vars}
-            queries = list()
-            for _ in range(10):
-                queries.append(("SELECT 1;", None))
+            queries = [("SELECT 1;", None) for _ in range(10)]
             request["body"] = {"querylist": queries}
-            # print(queries)
-            # request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
 
 
