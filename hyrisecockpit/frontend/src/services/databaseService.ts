@@ -34,6 +34,9 @@ export function useDatabaseFetchService(): {
         databaseData
       )
       .then(response => {
+        axios
+          .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/database")
+          .then(result => (databases.value = result.data.body.databases));
         console.log(response);
       })
       .catch(error => {

@@ -86,7 +86,13 @@
             <v-btn color="blue darken-1" text @click="newDatabaseDialog = false"
               >Close</v-btn
             >
-            <v-btn color="blue darken-1" text @click="createNewDatabase()"
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="
+                createNewDatabase();
+                newDatabaseDialog = false;
+              "
               >Save</v-btn
             >
           </v-card-actions>
@@ -136,6 +142,7 @@ export default createComponent({
     const host = ref<string>("");
     const port = ref<string>("");
     const dbname = ref<string>("");
+    let newDatabaseDialog = false;
 
     function openDatabaseScreen(databaseId: string): void {
       context.root.$router.push({
@@ -167,7 +174,7 @@ export default createComponent({
       dbname,
       databases: databases,
       openDatabaseScreen: openDatabaseScreen,
-      newDatabaseDialog: false,
+      newDatabaseDialog,
       createNewDatabase: createNewDatabase
     };
   }
