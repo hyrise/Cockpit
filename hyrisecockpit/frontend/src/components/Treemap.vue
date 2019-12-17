@@ -5,6 +5,8 @@
 </template>
 
 <script lang="ts">
+// TODO: refactor to generic treemap component, getting data via props from storage component
+
 import {
   createComponent,
   SetupContext,
@@ -22,58 +24,35 @@ interface Props {}
 
 export default createComponent({
   setup(props: Props, context: SetupContext) {
-    const treeMap = ref<Object>(null);
     const { storageData, getStorage } = useStorageFetchService();
     const { generateStorageData } = useGeneratingTestData();
-    const testData = generateStorageData();
+    const testData :any = generateStorageData();
 
-    const hyriseInstances = Object.keys(testData.body.storage);
+    const labels: string[] = [];
+    const parents: string[] = [];
+    const sizes: number[] = [];
 
-    const tables = [];
-    const attributes = [];
-    const attributesSize = [];
-    hyriseInstances.forEach(element => {
-      const tablesPerInstance =  Object.keys(testData.body.storage[element]);
-      tables.push(tablesPerInstance);
-      });
-    hyriseInstances.forEach(element => {
-       tables.forEach(tablesPerInstance => {
-         tablesPerInstance.forEach(table => {
-          const attribute = Object.keys(testData.body.storage[element][table].data);
-          attributes.push(attribute);
-          attribute.forEach(attr =>  attributesSize.push(testData.body.storage[element][table].data[attr].size));
-         });
-  
+    Object.keys(testData.body.storage).forEach(instance => {
+      labels.push(instance);
+      parents.push('');
+      sizes.push(0);
+      Object.keys(testData.body.storage[instance]).forEach(table => {
+        labels.push(table);
+        parents.push(instance);
+        sizes.push(0);
+        Object.keys(testData.body.storage[instance][table].data).forEach(attribute => {
+          labels.push(attribute);
+          parents.push(table);
+          sizes.push(testData.body.storage[instance][table].data[attribute].size);
       });
     });
+    });
 
-    const tablesFlat = tables.flat();
-    const attrFlat = attributes.flat();
-
-    const labels = [
-      ...hyriseInstances,
-      ...tables,
-      ...attributes,
-    ];
-    const parents = [
-      ...hyriseInstances.map(entry => ""),
-      ...tablesFlat.map(tablesPerInstance => hyriseInstances[index] ),
-      ...attrFlat.map((attributesPerTable,index) => tablesFlat[index])
-    ];
-    const sizes = [
-      ...hyriseInstances.map(entry => 0),
-      ...tables.map(entry => 0),
-      ...attributesSize,
-    ];
-    
-    console.log(labels.flat(), 'labels');
-    console.log(parents.flat(), 'p');
-    console.log(sizes, 's');
     const data: any = [
       {
         type: "treemap",
-        labels: labels.flat(),
-        parents: parents.flat(),
+        labels: labels,
+        parents: parents,
         values: sizes,
         textinfo: "label+value+percent parent+percent entry",
         outsidetextfont: { size: 20, color: "#377eb8" },

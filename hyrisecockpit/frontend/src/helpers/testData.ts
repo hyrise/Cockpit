@@ -1,6 +1,6 @@
 export function useGeneratingTestData(): {
   generateThroughputData: () => number;
-  generateStorageData: () => Object;
+  generateStorageData: () => any;
 } {
   function generateRandomNumber(min: number, range: number) {
     return Math.floor(Math.random() * range + min);
@@ -9,7 +9,7 @@ export function useGeneratingTestData(): {
   function generateThroughputData(): number {
     return generateRandomNumber(1, 1000);
   }
-  function generateStorageData(): Object {
+  function generateStorageData(): any {
     const json = { "body": 
         { "storage": 
           { "citadelle": //parent
