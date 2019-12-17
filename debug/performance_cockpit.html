@@ -2,6 +2,13 @@
     <h1>Test Cockpit</h1>
     <h4>Add database<h4/>
     <p>
+        <h5>Add Default</h5>
+        <button id="add_db_HY1">Add default DB 1</button>
+        <button id="add_db_HY2">Add default DB 2</button>        
+    </p>
+    <p>
+        <p><input id="number_workers" type="text" value=""> (Number Threads)<p/>
+        <p><input id="db_id" type="text" value=""> (id) <p/> 
         <p><input id="user" type="text" value=""> (User)<p/>
         <p><input id="password" type="text" value=""> (Password) <p/> 
         <p><input id="host" type="text" value=""> (Host) <p/>
@@ -14,8 +21,8 @@
     </p>
     <p>
         <h4>Workloads</h4>
-        <button id="simple_workload">Simple Workload</button>
-        <button id="heavy_workload">heavy Workload</button>
+        <button id="start_workload">Start Workload</button>
+        <button id="stop_workload">Stop Workload</button>
     </p>
     <h4>Throughput</h4> 
     <p id="throughput">
@@ -23,7 +30,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script type="text/javascript">
 
-        let WORKLOAD_GENERATOR_URL = ""
         let MONITOR_URL = ""
 
         function create_labels(){
@@ -96,10 +102,10 @@
             chart.update();
         }
 
-        async function postData(url = '', data = {}) {
+        async function postData(url = '', data = {}, type = 'POST') {
             // Default options are marked with *
             const response = await fetch(url, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: type, // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'same-origin', // include, *same-origin, omit
@@ -115,51 +121,50 @@
             return await response.json(); // parses JSON response into native JavaScript objects
         }
 
-        async function addDatabase() {
-            let host = document.getElementById('host').value
+        function get_filed_data(){
             let json = {
+                "number_workers" : document.getElementById('number_workers').value,
+                "id": document.getElementById('db_id').value,
                 "user": document.getElementById('user').value,
                 "password": document.getElementById('password').value,
-                "host": host,
+                "host": document.getElementById('host').value,
                 "port": document.getElementById('port').value,
-                "dbname": document.getElementById('dbname').value
+                "dbname": document.getElementById('dbname').value,
             }
+            return json
+        }
 
+        async function addDatabase(json) {
+            let db_id = json["id"]
 
-            const response = await postData(MONITOR_URL + 'database', json);
-
+            const response = await postData(MONITOR_URL + '/database', json);
 
             if (response["header"]["status"] != 200) {
-                window.alert("Database Error");
+                window.alert(response["body"]);
                 return 0;  
             }
 
-
             let node = document.createElement("div");
-            node.innerHTML = json.host;
+            node.innerHTML = db_id;
             node.style = "border:1px solid black";
             node.style.width = "200px"
             document.getElementById("databases").appendChild(node);
 
             let graphContainer = document.createElement("p");
-            graphContainer.setAttribute("id", host);
+            graphContainer.setAttribute("id", db_id);
             let canvas = document.createElement("canvas");
-            canvas.setAttribute("id", host + "Canvas");
+            canvas.setAttribute("id", db_id + "Canvas");
 
             graphContainer.appendChild(canvas);
             document.getElementById("throughput").appendChild(graphContainer);
-
-            create_graph(canvas.getContext('2d'), host);
-
-            canvas.style.width  = '800px';
-            canvas.style.height = '400px';
+            create_graph(canvas.getContext('2d'), db_id);
         }
 
 
         async function update_charts(url){
             const response = await fetch(url);
             let data = await response.json()
-            let databases = data["body"]
+            let databases = data["body"]["throughput"]
             for (database_name in databases) {
                 throughput = databases_throughput.get(database_name)
                 throughput.pop()
@@ -171,23 +176,60 @@
             }
         }
 
-        async function execute_workload(url){
-            const response = await fetch(url);
-            let data = await response            
+        async function start_workload(url, numberProducer){
+            json = {"n_producers": numberProducer};
+            const response = await postData(url, json, 'POST');
+            console.log(response)            
         }
+
+        async function stop_workload(url){
+            json = {};
+            const response = await postData(url, json, 'DELETE');
+            console.log(response)            
+        }        
 
         let databases_throughput = new Map()
         let database_charts = new Map()
-        document.getElementById("add_db").addEventListener("click", addDatabase);
-        document.getElementById("simple_workload").addEventListener("click", () => {
-            execute_workload(WORKLOAD_GENERATOR_URL + 'simple_workload')
+        document.getElementById("add_db").addEventListener("click", () => {
+            json = get_filed_data();
+            addDatabase(json);
+        });
+        document.getElementById("start_workload").addEventListener("click", () => {
+            numberProducer = 1;
+            start_workload(MONITOR_URL + "/workload", numberProducer)
         })
-        document.getElementById("heavy_workload").addEventListener("click", () => {
-            execute_workload(WORKLOAD_GENERATOR_URL + 'heavy_workload')
+        document.getElementById("stop_workload").addEventListener("click", () => {
+            stop_workload(MONITOR_URL + "/workload")
+        })
+
+        document.getElementById("add_db_HY1").addEventListener("click", () => {
+            let HY1 = {
+                "number_workers" : "",
+                "id": "",
+                "user": "",
+                "password": "",
+                "host": "",
+                "port": "",
+                "dbname": ""
+            }
+            addDatabase(HY1)       
+        })
+
+        document.getElementById("add_db_HY2").addEventListener("click", () => {
+            let HY2 = {
+                "number_workers" : "",
+                "id": "",
+                "user": "",
+                "password": "",
+                "host": "",
+                "port": "",
+                "dbname": ""
+            }   
+            addDatabase(HY2)       
         })
 
         setInterval(() => {
-            update_charts(MONITOR_URL + 'throughput');
+            update_charts(MONITOR_URL + '/throughput');
         }, 1000)
 
     </script>
