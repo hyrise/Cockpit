@@ -26,50 +26,52 @@ interface Props {
 }
 
 export default createComponent({
-props:  {
+  props: {
     data: {
-        type: Object,
-        default: null,
+      type: Object,
+      default: null
     },
     selectedDatabaseIds: {
-        type: Array,
-        default: null    
+      type: Array,
+      default: null
     },
     graphId: {
-        type: String,
-        default: null,
+      type: String,
+      default: null
     }
-},
+  },
   setup(props: Props, context: SetupContext): void {
     const selectedDatabaseIds = computed(() => props.selectedDatabaseIds);
-    const data = computed (()=> props.data);
+    const data = computed(() => props.data);
     const graphId = props.graphId;
     const { getDataset, getLayout } = useLineChartConfiguration(
-      "CPU", "Time ins s", "Workload"
+      "CPU",
+      "Time ins s",
+      "Workload"
     );
 
     onMounted(() => {
-        Plotly.newPlot(graphId, [getDataset()], getLayout());
+      Plotly.newPlot(graphId, [getDataset()], getLayout());
       watch(selectedDatabaseIds, () => {
-          handleDatabaseChange();
+        handleDatabaseChange();
       });
       watch(data, () => {
-          updateChartDatasets();
+        updateChartDatasets();
       });
     });
 
     function handleDatabaseChange(): void {
-        const newDatasets = selectedDatabaseIds.value.reduce(
-          (result, id): any => {
-            return [
-              ...result,
-              getDataset(data.value[id] ? data.value[id] : [], id)
-            ];
-          },
-          []
-        );
-        Plotly.purge(graphId);
-        Plotly.plot(graphId, newDatasets, getLayout());
+      const newDatasets = selectedDatabaseIds.value.reduce(
+        (result, id): any => {
+          return [
+            ...result,
+            getDataset(data.value[id] ? data.value[id] : [], id)
+          ];
+        },
+        []
+      );
+      Plotly.purge(graphId);
+      Plotly.plot(graphId, newDatasets, getLayout());
     }
 
     function getMaxDatasetLength(): number {
@@ -80,9 +82,7 @@ props:  {
 
     function updateChartDatasets(): void {
       const newData = {
-        y: Object.values(selectedDatabaseIds.value).map(
-          id => data.value[id]
-        )
+        y: Object.values(selectedDatabaseIds.value).map(id => data.value[id])
       };
       const maxSelectedLength = getMaxDatasetLength();
 
@@ -106,8 +106,8 @@ function useLineChartConfiguration(
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (xMin?: number, xMax?: number) => Object;
 } {
-    const databases: Ref<Database[]> = Vue.prototype.$databases;
-    function getLayout(xMin: number = 0, xMax: number = 30): Object {
+  const databases: Ref<Database[]> = Vue.prototype.$databases;
+  function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
       title: mainTitle,
       xaxis: {
@@ -125,10 +125,7 @@ function useLineChartConfiguration(
     return databases.value.find(element => element.id === databaseId);
   }
 
-  function getDataset(
-    data: number[] = [],
-    databaseId: string = ""
-  ): Object {
+  function getDataset(data: number[] = [], databaseId: string = ""): Object {
     const database: Database | undefined = getDatabaseById(databaseId);
     return {
       y: data,

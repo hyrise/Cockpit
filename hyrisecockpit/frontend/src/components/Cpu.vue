@@ -14,7 +14,11 @@
           ></v-select>
         </v-col>
       </v-row>
-      <Linechart :selected-database-ids="selectedDatabaseIds" :data="cpuData" graph-id="graph1" />
+      <Linechart
+        :selected-database-ids="selectedDatabaseIds"
+        :data="data"
+        graph-id="graph1"
+      />
     </div>
   </div>
 </template>
@@ -29,13 +33,10 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import axios from "axios";
-import { useGeneratingTestData } from "../helpers/testData";
+
 import { useThroughputFetchService } from "../services/throughputService";
-import { useThreadConfigurationService } from "../services/threadService";
-import { useDatabaseFetchService } from "../services/databaseService";
-import { useCpuFetchService } from "../services/cpuService";
-import { ThroughputData } from "../types/throughput";
+import { useGenericFetchService } from "../services/genericFetchService";
+import { CPUData } from "../types/cpu";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
@@ -44,7 +45,7 @@ import Linechart from "./charts/Linechart.vue";
 interface Props {}
 
 interface Data {
-  cpuData: Ref<ThroughputData>;
+  data: Ref<CPUData>;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
 }
@@ -53,7 +54,7 @@ export default createComponent({
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
     const databases = Vue.prototype.$databases;
-    const { getCpu, cpuData, cpuQueryReadyState } = useCpuFetchService();
+    const { getData, data, queryReadyState } = useGenericFetchService("cpu");
     const selectedDatabaseIds = ref<string[]>([]);
 
     onMounted(() => {
@@ -61,13 +62,13 @@ export default createComponent({
     });
 
     function checkState(): void {
-      if (cpuQueryReadyState.value) {
-        getCpu();
+      if (queryReadyState.value) {
+        getData();
       }
     }
 
     return {
-      cpuData,
+      data,
       databases,
       selectedDatabaseIds
     };
