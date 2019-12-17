@@ -4,9 +4,9 @@ The Cockpit Backend is a module for communicating with the Hyrise Interface, pro
 
 ## Running locally
 
-If you have a local setup as specified in the projects [README](../README.md), you can run the following commands to run the Cockpit Backend:
+If you have a local setup as specified in the projects [README](../../README.md), you can run the following commands to run the Cockpit Backend:
 
-```
+```bash
 pipenv shell
-python app.py
+cockpit-backend
 ```
