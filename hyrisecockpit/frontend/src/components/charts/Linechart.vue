@@ -23,6 +23,7 @@ interface Props {
   data: QueryData;
   selectedDatabaseIds: string[];
   graphId: string;
+  chartConfiguration: string[];
 }
 
 export default createComponent({
@@ -38,6 +39,10 @@ export default createComponent({
     graphId: {
       type: String,
       default: null
+    },
+    chartConfiguration: {
+        type: Array,
+        default: null
     }
   },
   setup(props: Props, context: SetupContext): void {
@@ -45,9 +50,7 @@ export default createComponent({
     const data = computed(() => props.data);
     const graphId = props.graphId;
     const { getDataset, getLayout } = useLineChartConfiguration(
-      "CPU",
-      "Time ins s",
-      "Workload"
+      props.chartConfiguration
     );
 
     onMounted(() => {
@@ -99,9 +102,7 @@ export default createComponent({
 });
 
 function useLineChartConfiguration(
-  mainTitle: string,
-  xTitle: string,
-  yTitle: string
+  chartConfiguration: string[]
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (xMin?: number, xMax?: number) => Object;
@@ -109,13 +110,13 @@ function useLineChartConfiguration(
   const databases: Ref<Database[]> = Vue.prototype.$databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
-      title: mainTitle,
+      title: chartConfiguration[0],
       xaxis: {
-        title: xTitle,
+        title: chartConfiguration[1],
         range: [xMin, xMax]
       },
       yaxis: {
-        title: yTitle,
+        title: chartConfiguration[2],
         rangemode: "tozero"
       }
     };

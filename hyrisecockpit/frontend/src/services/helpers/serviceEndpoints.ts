@@ -1,5 +1,6 @@
 const throughputEndpoint = "";
 const cpuEndpoint = "";
+const databaseEndpoint = "";
 
 export function getEndpoint(type: string): string {
   if (type === "throughput") {
@@ -7,5 +8,8 @@ export function getEndpoint(type: string): string {
   }
   if (type === "cpu") {
     return cpuEndpoint;
+  }
+  if(type === "database"){
+    return databaseEndpoint;
   }
 }

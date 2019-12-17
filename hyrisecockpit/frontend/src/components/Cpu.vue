@@ -18,6 +18,7 @@
         :selected-database-ids="selectedDatabaseIds"
         :data="data"
         graph-id="graph1"
+        :chart-configuration="chartConfiguration"
       />
     </div>
   </div>
@@ -48,6 +49,7 @@ interface Data {
   data: Ref<CPUData>;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
+  chartConfiguration: string[];
 }
 
 export default createComponent({
@@ -56,6 +58,7 @@ export default createComponent({
     const databases = Vue.prototype.$databases;
     const { getData, data, queryReadyState } = useGenericFetchService("cpu");
     const selectedDatabaseIds = ref<string[]>([]);
+    const chartConfiguration = ["CPU","Time ins s","Workload"];
 
     onMounted(() => {
       setInterval(checkState, 10000);
@@ -70,7 +73,8 @@ export default createComponent({
     return {
       data,
       databases,
-      selectedDatabaseIds
+      selectedDatabaseIds,
+      chartConfiguration
     };
   }
 });
