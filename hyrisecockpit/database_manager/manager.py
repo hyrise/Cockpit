@@ -161,7 +161,3 @@ class DatabaseManager(object):
 def main() -> None:
     """Run a database manager."""
     DatabaseManager().start()
-
-
-if __name__ == "__main__":
-    main()
