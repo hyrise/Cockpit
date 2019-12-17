@@ -5,6 +5,10 @@ setup(
     name="hyrisecockpit",
     packages=find_packages(),
     entry_points={
-        "console_scripts": ["cockpit-manager=hyrisecockpit.database_manager.cli:main"],
+        "console_scripts": [
+            "cockpit-backend=hyrisecockpit.backend.cli:main",
+            "cockpit-manager=hyrisecockpit.database_manager.cli:main",
+            "cockpit-generator=hyrisecockpit.workload_generator.cli:main",
+        ],
     },
 )

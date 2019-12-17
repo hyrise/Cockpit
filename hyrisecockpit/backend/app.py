@@ -130,7 +130,3 @@ def workload() -> Dict:
         }
     response = _send_message(generator_socket, message)
     return response
-
-
-if __name__ == "__main__":
-    app.run(host=s.BACKEND_HOST, port=s.BACKEND_PORT)
