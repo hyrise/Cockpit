@@ -11,11 +11,7 @@ from typing import Dict
 from zmq import PUB, REP, Context
 
 from hyrisecockpit import settings as s
-
-responses = {
-    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
-}
+from hyrisecockpit.response import get_response
 
 
 class WorkloadProducer(mp.Process):
@@ -150,19 +146,19 @@ class WorkloadGenerator(object):
         """Start generating workloads with n_producers."""
         n_producers = body["n_producers"]
         [self._add_producer() for i in range(n_producers)]
-        return responses[200]
+        return get_response(200)
 
     def _call_stop(self, body: Dict) -> Dict:
         """Stop generating workloads and kill all WorkloadProducers."""
         [self._pop_producer() for i in range(len(self._producers))]
-        return responses[200]
+        return get_response(200)
 
     def _call_shutdown(self, body: Dict) -> Dict:
         self._shutdown_requested = True
-        return responses[200]
+        return get_response(200)
 
     def _call_not_found(self, body: Dict) -> Dict:
-        return responses[400]
+        return get_response(400)
 
     def run(self):
         """Run the generator by enabling IPC."""
