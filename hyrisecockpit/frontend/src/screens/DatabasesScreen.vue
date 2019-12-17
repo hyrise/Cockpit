@@ -126,7 +126,7 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databaseIds } = useDatabaseFetchService(); // this has to be changed on merge
+    const { databaseIds, addDatabase } = useDatabaseFetchService(); // this has to be changed on merge
 
     const number_workers = ref<string>("");
     const id = ref<string>("");
@@ -153,20 +153,6 @@ export default createComponent({
       addDatabase(databaseData);
     }
 
-    function addDatabase(databaseData: any): void {
-      axios
-        .post(
-          "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database",
-          databaseData
-        )
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
- 
     return {
       number_workers,
       id,

@@ -10,6 +10,7 @@ export function useDatabaseFetchService(): {
   databases: Ref<Database[]>;
   databaseIds: Ref<string[]>;
   getDatabaseColor: (databaseId: string) => string;
+  addDatabase: (databasedata: any) => void;
 } {
   const databases = ref<Database[]>(getDummyDatabases());
   const databaseIds = ref<string[]>(getDatabaseIds());
@@ -33,6 +34,20 @@ export function useDatabaseFetchService(): {
     return databaseColorMap[databaseId];
   }
 
+  function addDatabase(databaseData: any): void {
+    axios
+      .post(
+        "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database",
+        databaseData
+      )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   function getDummyDatabases(): Database[] {
     return [{ id: "citadelle" }, { id: "york" }];
   }
@@ -46,6 +61,7 @@ export function useDatabaseFetchService(): {
     databases,
     getDummyDatabases,
     databaseIds,
-    getDatabaseColor
+    getDatabaseColor,
+    addDatabase
   };
 }
