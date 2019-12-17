@@ -1,6 +1,7 @@
 """Module for managing databases."""
 
 import sys
+from typing import Callable, Dict
 
 from zmq import REP, Context
 
@@ -15,10 +16,10 @@ from .exception import IdNotValidException
 class DatabaseManager(object):
     """A manager for database drivers."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize a DatabaseManager."""
-        self._databases = dict()
-        self._server_calls = {
+        self._databases: Dict = dict()
+        self._server_calls: Dict[str, Callable] = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
             "storage": self._call_storage,
@@ -31,14 +32,14 @@ class DatabaseManager(object):
         }
         self._init_server()
 
-    def _init_server(self):
+    def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
             "tcp://{:s}:{:s}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
         )
 
-    def _call_add_database(self, body):
+    def _call_add_database(self, body: Dict) -> Dict:
         """Add database and initialize driver for it."""
         # validating connection data
         try:
@@ -58,14 +59,14 @@ class DatabaseManager(object):
         self._databases[body["id"]] = db_instance
         return get_response(200)
 
-    def _call_get_databases(self, body):
+    def _call_get_databases(self, body: Dict) -> Dict:
         """Get list of all databases."""
         databases = list(self._databases.keys())
         response = get_response(200)
         response["body"]["databases"] = databases
         return response
 
-    def _call_throughput(self, body):
+    def _call_throughput(self, body: Dict) -> Dict:
         """Get the throughput of all databases."""
         throughput = {}
         for database, database_object in self._databases.items():
@@ -74,7 +75,7 @@ class DatabaseManager(object):
         response["body"]["throughput"] = throughput
         return response
 
-    def _call_storage(self, body):
+    def _call_storage(self, body: Dict) -> Dict:
         storage = {}
         for database, database_object in self._databases.items():
             storage[database] = database_object.get_storage_data()
@@ -82,7 +83,7 @@ class DatabaseManager(object):
         response["body"]["storage"] = storage
         return response
 
-    def _call_system_data(self, body):
+    def _call_system_data(self, body: Dict) -> Dict:
         system_data = {}
         for database, database_object in self._databases.items():
             system_data[database] = database_object.get_system_data()
@@ -90,7 +91,7 @@ class DatabaseManager(object):
         response["body"]["system_data"] = system_data
         return response
 
-    def _call_queue_length(self, body):
+    def _call_queue_length(self, body: Dict) -> Dict:
         queue_length = {}
         for database, database_object in self._databases.items():
             queue_length[database] = database_object.get_queue_length()
@@ -98,7 +99,7 @@ class DatabaseManager(object):
         response["body"]["queue_length"] = queue_length
         return response
 
-    def _call_chunks_data(self, body):
+    def _call_chunks_data(self, body: Dict) -> Dict:
         """Get chunks data of all databases."""
         chunks_data = {}
         for database, database_object in self._databases.items():
@@ -107,7 +108,7 @@ class DatabaseManager(object):
         response["body"]["chunks_data"] = chunks_data
         return response
 
-    def _call_delete_database(self, body):
+    def _call_delete_database(self, body: Dict) -> Dict:
         database = self._databases.pop(body["id"], None)
         if not database:
             return get_response(400)
@@ -115,7 +116,7 @@ class DatabaseManager(object):
         del database
         return get_response(200)
 
-    def _call_failed_tasks(self, body):
+    def _call_failed_tasks(self, body: Dict) -> Dict:
         failed_tasks = {}
         for database, database_object in self._databases.items():
             failed_tasks[database] = database_object.get_failed_tasks()
@@ -123,15 +124,15 @@ class DatabaseManager(object):
         response["body"]["failed_tasks"] = failed_tasks
         return response
 
-    def _call_not_found(self, body):
+    def _call_not_found(self, body: Dict) -> Dict:
         return get_response(200)
 
-    def _exit(self):
+    def _exit(self) -> None:
         """Perform clean exit on all databases."""
         for database_object in self._databases.values():
             database_object.exit()
 
-    def start(self):
+    def start(self) -> None:
         """Start the manager by enabling IPC."""
         print(
             "Database manager running on {:s}:{:s}. Press CTRL+C to quit.".format(
@@ -157,7 +158,7 @@ class DatabaseManager(object):
                 sys.exit()
 
 
-def main():
+def main() -> None:
     """Run a database manager."""
     DatabaseManager().start()
 

@@ -4,9 +4,11 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+from typing import Dict
+
 from flask import Flask, request
 from flask_cors import CORS
-from zmq import REQ, Context
+from zmq import REQ, Context, Socket
 
 from hyrisecockpit import settings as s
 
@@ -23,7 +25,7 @@ cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
 
 
-def _send_message(socket, message):
+def _send_message(socket: Socket, message: Dict):
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
     response = socket.recv_json()
@@ -31,13 +33,13 @@ def _send_message(socket, message):
 
 
 @app.route("/")
-def home():
+def home() -> str:
     """Display a greeting to a visitor."""
     return "Hey there! You found our Database Cockpit."
 
 
 @app.route("/throughput")
-def get_throughput():
+def get_throughput() -> Dict:
     """Return throughput information from database manager."""
     return _send_message(
         db_manager_socket, {"header": {"message": "throughput"}, "body": {}}
@@ -45,7 +47,7 @@ def get_throughput():
 
 
 @app.route("/queue_length")
-def get_queue_length():
+def get_queue_length() -> Dict:
     """Return queue length information from database manager."""
     return _send_message(
         db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
@@ -53,7 +55,7 @@ def get_queue_length():
 
 
 @app.route("/failed_tasks")
-def get_failed_tasks():
+def get_failed_tasks() -> Dict:
     """Return queue length information from database manager."""
     return _send_message(
         db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
@@ -61,7 +63,7 @@ def get_failed_tasks():
 
 
 @app.route("/system_data")
-def get_system_data():
+def get_system_data() -> Dict:
     """Return cpu and memory information for every database and the number of thread it is using from database manager."""
     return _send_message(
         db_manager_socket, {"header": {"message": "system data"}, "body": {}}
@@ -69,7 +71,7 @@ def get_system_data():
 
 
 @app.route("/chunks_data")
-def get_chunks_data():
+def get_chunks_data() -> Dict:
     """Return chunks data information for every database."""
     return _send_message(
         db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
@@ -77,7 +79,7 @@ def get_chunks_data():
 
 
 @app.route("/storage")
-def get_storage_metadata():
+def get_storage_metadata() -> Dict:
     """Return storage metadata from database manager."""
     return _send_message(
         db_manager_socket, {"header": {"message": "storage"}, "body": {}}
@@ -85,7 +87,7 @@ def get_storage_metadata():
 
 
 @app.route("/database", methods=["GET", "POST", "DELETE"])
-def database():
+def database() -> Dict:
     """Add or delete a driver to/from the database manager."""
     request_json = request.get_json()
     if request.method == "GET":
@@ -113,7 +115,7 @@ def database():
 
 
 @app.route("/workload", methods=["POST", "DELETE"])
-def workload():
+def workload() -> Dict:
     """Start or stop the workload generator."""
     request_json = request.get_json()
     if request.method == "POST":

@@ -1,6 +1,7 @@
 """Predefined responses for IPC."""
 
 from copy import deepcopy
+from typing import Any, Dict
 
 __default = {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "body": {}}
 
@@ -11,6 +12,6 @@ __responses = {
 }
 
 
-def get_response(code):
+def get_response(code: int,) -> Dict[str, Any]:
     """Get a predefined response with a code."""
     return deepcopy(__responses.get(code, __default,))
