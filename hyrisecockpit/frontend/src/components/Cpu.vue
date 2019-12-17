@@ -61,7 +61,7 @@ export default createComponent({
     const chartConfiguration = ["CPU","Time ins s","Workload"];
 
     onMounted(() => {
-      setInterval(checkState, 10000);
+      setInterval(checkState, 1000);
     });
 
     function checkState(): void {

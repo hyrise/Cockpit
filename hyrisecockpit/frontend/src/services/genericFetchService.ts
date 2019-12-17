@@ -16,7 +16,7 @@ export function useGenericFetchService(
 
   function getData(): void {
     queryReadyState.value = false;
-    fetchCpu().then(result => {
+    fetchData().then(result => {
       Object.keys(result).forEach(key => {
         addData(key, result[key][1]);
       });
@@ -31,7 +31,7 @@ export function useGenericFetchService(
     data.value[dataBaseId].push(newData);
   }
 
-  function fetchCpu(): Promise<QueryResult> {
+  function fetchData(): Promise<QueryResult> {
     return new Promise((resolve, reject) => {
       axios
         .get(endpoint)
