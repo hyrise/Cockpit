@@ -6,16 +6,12 @@ The WorkloadProducers have IPC connections to a database interface.
 """
 import multiprocessing as mp
 import random
-from typing import Dict
+from typing import Callable, Dict, List, Optional, Tuple
 
 from zmq import PUB, REP, Context
 
 from hyrisecockpit import settings as s
-
-responses = {
-    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
-}
+from hyrisecockpit.response import get_response
 
 
 class WorkloadProducer(mp.Process):
@@ -25,7 +21,7 @@ class WorkloadProducer(mp.Process):
     Workloads are submitted directly to a database interface with IPC.
     """
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         """Initialize a WorkloadProducer with an IPC connection."""
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(PUB)
@@ -34,7 +30,7 @@ class WorkloadProducer(mp.Process):
         )
         super().__init__(name=name, daemon=True)
 
-    def _generate_random(self):
+    def _generate_random(self) -> Tuple[str, Tuple[int]]:
         """Return a simple query with a random number."""
         return (
             """SELECT *
@@ -43,7 +39,7 @@ class WorkloadProducer(mp.Process):
             (random.randint(0, 24),),  # nosec
         )
 
-    def _generate_execute(self):
+    def _generate_execute(self) -> List[Tuple[str, Optional[Tuple[int]]]]:
         """Return a list of queries forming a workload."""
         return random.choices(
             [
@@ -79,20 +75,13 @@ class WorkloadProducer(mp.Process):
             k=1,
         )
 
-    def start(self):
+    def start(self) -> None:
         """Generate workloads and submit it with IPC."""
         while True:
             # TODO add shutdown
-            # request = {"header": {"status": 200, "message": "execute"}}
             request = {"header": {"status": 200, "message": "executelist"}}
-            # query, vars = self._generate_execute()[0]
-            # request["body"] = {"query": query, "vars": vars}
-            queries = list()
-            for _ in range(10):
-                queries.append("SELECT 1;")
+            queries = [("SELECT 1;", None) for _ in range(10)]
             request["body"] = {"querylist": queries}
-            print(queries)
-            # request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
 
 
@@ -103,29 +92,29 @@ class WorkloadGenerator(object):
     The WorkloadGenerator may be started or stopped.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
-        self._server_calls = {
+        self._server_calls: Dict[str, Callable[[Dict], Dict]] = {
             "start": self._call_start,
             "stop": self._call_stop,
             "shutdown": self._call_shutdown,
         }
-        self._producers = []
-        self._shutdown_requested = False
+        self._producers: List[WorkloadProducer] = []
+        self._shutdown_requested: bool = False
         self._init_server()
 
-    def _init_server(self):
+    def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:s}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
 
-    def _add_producer(self):
+    def _add_producer(self) -> None:
         """Increase the number of WorkloadProducers by one."""
         p = WorkloadProducer(f"WorkloadProducer {len(self._producers)}")
         self._producers.append(p)
         p.start()
 
-    def _pop_producer(self):
+    def _pop_producer(self) -> None:
         """Decrease the number of WorkloadProducers by one."""
         if self._producers:
             p = self._producers.pop()
@@ -149,22 +138,24 @@ class WorkloadGenerator(object):
     def _call_start(self, body: Dict) -> Dict:
         """Start generating workloads with n_producers."""
         n_producers = body["n_producers"]
-        [self._add_producer() for i in range(n_producers)]
-        return responses[200]
+        for _ in range(n_producers):
+            self._add_producer()
+        return get_response(200)
 
     def _call_stop(self, body: Dict) -> Dict:
         """Stop generating workloads and kill all WorkloadProducers."""
-        [self._pop_producer() for i in range(len(self._producers))]
-        return responses[200]
+        for _ in range(len(self._producers)):
+            self._pop_producer()
+        return get_response(200)
 
     def _call_shutdown(self, body: Dict) -> Dict:
         self._shutdown_requested = True
-        return responses[200]
+        return get_response(200)
 
     def _call_not_found(self, body: Dict) -> Dict:
-        return responses[400]
+        return get_response(400)
 
-    def run(self):
+    def run(self) -> None:
         """Run the generator by enabling IPC."""
         print(
             "Workload generator running on {:s}:{:s}. Press CTRL+C to quit.".format(
@@ -185,7 +176,6 @@ class WorkloadGenerator(object):
 
             # Shutdown
             if self._shutdown_requested:
-                self._stop()
                 break
 
 
