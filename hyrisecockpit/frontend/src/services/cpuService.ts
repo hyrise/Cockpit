@@ -2,9 +2,7 @@ import { Ref, ref } from "@vue/composition-api";
 import axios from "axios";
 import { CPUQueryResult, CPUData } from "../types/cpu";
 
-export function useCpuFetchService(
-  onChange: () => void
-): {
+export function useCpuFetchService(): {
   getCpu: () => void;
   cpuData: Ref<CPUData>;
   cpuQueryReadyState: Ref<boolean>;
@@ -18,9 +16,6 @@ export function useCpuFetchService(
       Object.keys(result).forEach(key => {
         //addCpuData(key, result[key][1] * 5000);
       });
-      if (onChange) {
-        onChange();
-      }
       cpuQueryReadyState.value = true;
     });
   }
