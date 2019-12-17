@@ -75,13 +75,13 @@ sudo apt-get install libpq-dev
 
 </details>
 
-Now, install and initialize your virtual environment (this is a slight [workaround](https://github.com/pypa/pipenv/issues/3363#issuecomment-452171564) instead of calling `pipenv install` directly):
+Now, initialize and sync your virtual environment:
 
 ```bash
 python -m pip install pipenv
 exec "$SHELL"
 pipenv --three --python=`which python`
-pipenv install
+pipenv sync
 ```
 
 ### Developer setup
@@ -89,7 +89,7 @@ pipenv install
 Run the following commands to bootstrap your developer environment.
 
 ```bash
-pipenv install --dev
+pipenv sync --dev
 
 # Please make sure you enable the pre-commit hooks:
 pipenv run pre-commit install

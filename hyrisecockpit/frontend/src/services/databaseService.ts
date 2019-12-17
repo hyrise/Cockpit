@@ -1,19 +1,15 @@
 import { Ref, ref } from "@vue/composition-api";
-import { Database, DatabaseColor } from "../types/database";
+import { Database } from "../types/database";
 import axios from "axios";
-
-var randomMC = require("random-material-color");
+import colors from "vuetify/lib/util/colors";
 
 export function useDatabaseFetchService(): {
-  getDatabases: () => void;
-  getDummyDatabases: () => void;
   databases: Ref<Database[]>;
-  databaseIds: Ref<string[]>;
-  getDatabaseColor: (databaseId: string) => string;
   addDatabase: (databasedata: any) => void;
 } {
+  const colorsArray = Object.keys(colors);
+  let usedColors = 0;
   const databases = ref<Database[]>(getDummyDatabases());
-  const databaseIds = ref<string[]>(getDatabaseIds());
 
   function getDatabases(): void {
     axios
@@ -25,13 +21,10 @@ export function useDatabaseFetchService(): {
       });
   }
 
-  let databaseColorMap: DatabaseColor = {};
-
-  function getDatabaseColor(databaseId: string): string {
-    if (!databaseColorMap[databaseId]) {
-      databaseColorMap[databaseId] = randomMC.getColor();
-    }
-    return databaseColorMap[databaseId];
+  function getDatabaseColor(): string {
+    const color: any = colors[colorsArray[usedColors]].base;
+    usedColors += 2;
+    return color;
   }
 
   function addDatabase(databaseData: any): void {
@@ -49,19 +42,14 @@ export function useDatabaseFetchService(): {
   }
 
   function getDummyDatabases(): Database[] {
-    return [{ id: "citadelle" }, { id: "york" }];
-  }
-
-  function getDatabaseIds(): string[] {
-    return databases.value ? databases.value.map(database => database.id) : [];
+    return [
+      { id: "citadelle", color: getDatabaseColor() },
+      { id: "york", color: getDatabaseColor() }
+    ];
   }
 
   return {
-    getDatabases,
     databases,
-    getDummyDatabases,
-    databaseIds,
-    getDatabaseColor,
     addDatabase
   };
 }

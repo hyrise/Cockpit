@@ -52,6 +52,30 @@ def get_queue_length():
     )
 
 
+@app.route("/failed_tasks")
+def get_failed_tasks():
+    """Return queue length information from database manager."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
+    )
+
+
+@app.route("/system_data")
+def get_system_data():
+    """Return cpu and memory information for every database and the number of thread it is using from database manager."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "system data"}, "body": {}}
+    )
+
+
+@app.route("/chunks_data")
+def get_chunks_data():
+    """Return chunks data information for every database."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
+    )
+
+
 @app.route("/storage")
 def get_storage_metadata():
     """Return storage metadata from database manager."""
@@ -60,17 +84,17 @@ def get_storage_metadata():
     )
 
 
-@app.route("/drivers", methods=["GET", "POST", "DELETE"])
-def drivers():
+@app.route("/database", methods=["GET", "POST", "DELETE"])
+def database():
     """Add or delete a driver to/from the database manager."""
     request_json = request.get_json()
     if request.method == "GET":
-        message = {"header": {"message": "get drivers"}, "body": {}}
-    if request.method == "POST":
+        message = {"header": {"message": "get databases"}, "body": {}}
+    elif request.method == "POST":
         message = {
-            "header": {"message": "add driver"},
+            "header": {"message": "add database"},
             "body": {
-                "db_type": request_json["db_type"],
+                "number_workers": request_json["number_workers"],
                 "id": request_json["id"],
                 "user": request_json["user"],
                 "password": request_json["password"],
@@ -81,7 +105,7 @@ def drivers():
         }
     elif request.method == "DELETE":
         message = {
-            "header": {"message": "pop driver"},
+            "header": {"message": "delete database"},
             "body": {"id": request_json["id"]},
         }
     response = _send_message(db_manager_socket, message)

@@ -6,11 +6,11 @@
     <v-divider class="mb-4"></v-divider>
     <v-list>
       <v-list-item
-        v-for="(item, index) in databaseIds"
+        v-for="(item, index) in databases"
         :key="index"
-        @click="openDatabaseScreen(item)"
+        @click="openDatabaseScreen(item.id)"
       >
-        <v-list-item-title>{{ item }}</v-list-item-title>
+        <v-list-item-title>{{ item.id }}</v-list-item-title>
       </v-list-item>
     </v-list>
     <v-row justify="end">
@@ -108,11 +108,12 @@ import {
 } from "@vue/composition-api";
 import { useDatabaseFetchService } from "../services/databaseService";
 import axios from "axios";
+import { Database } from "../types/database";
 
 interface Props {}
 interface Data {
-  databaseIds: Ref<string[]>;
-  openDatabaseScreen: (string) => void;
+  databases: Ref<Database[]>;
+  openDatabaseScreen: (databaseId: string) => void;
   createNewDatabase: () => void;
   newDatabaseDialog: boolean;
   number_workers: Ref<string>;
@@ -126,7 +127,7 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databaseIds, addDatabase } = useDatabaseFetchService(); // this has to be changed on merge
+    const { databases, addDatabase } = useDatabaseFetchService(); // this has to be changed on merge
 
     const number_workers = ref<string>("");
     const id = ref<string>("");
@@ -161,7 +162,7 @@ export default createComponent({
       host,
       port,
       dbname,
-      databaseIds: databaseIds,
+      databases: databases,
       openDatabaseScreen: openDatabaseScreen,
       newDatabaseDialog: false,
       createNewDatabase: createNewDatabase
