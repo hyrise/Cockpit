@@ -2,17 +2,18 @@
 
 import secrets
 from multiprocessing import Manager, Process, Queue
+from typing import Dict, List
 
-import pandas as pd
 import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
-from psycopg2 import Error
+from pandas import DataFrame
+from psycopg2 import Error, pool
 
 from .driver import Driver
 
 
-def fill_queue(workload_publisher_url, task_queue):
+def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     """Fill the queue."""
     context = zmq.Context()
     subscriber = context.socket(zmq.SUB)
@@ -27,8 +28,12 @@ def fill_queue(workload_publisher_url, task_queue):
 
 
 def execute_queries(
-    worker_id, task_queue, throughput_data_container, connection_pool, failed_task_queue
-):
+    worker_id: str,
+    task_queue: Queue,
+    throughput_data_container: Dict,
+    connection_pool: pool,
+    failed_task_queue: Queue,
+) -> None:
     """Define workers work loop."""
     connection = connection_pool.getconn()
     connection.set_session(autocommit=True)
@@ -50,7 +55,9 @@ def execute_queries(
 class Database(object):
     """Represents database."""
 
-    def __init__(self, access_data, workload_publisher_url):
+    def __init__(
+        self, access_data: Dict[str, str], workload_publisher_url: str
+    ) -> None:
         """Initialize database object."""
         self._number_workers = int(access_data["number_workers"])
         self._number_additional_connections = 1
@@ -59,16 +66,16 @@ class Database(object):
         )
         self._connection_pool = self._driver.get_connection_pool()
 
-        self._task_queue = Queue(0)
-        self._failed_task_queue = Queue(0)
+        self._task_queue: Queue = Queue(0)
+        self._failed_task_queue: Queue = Queue(0)
         self._manager = Manager()
 
-        self.workload_publisher_url = workload_publisher_url
-        self._throughput_counter = 0
-        self._system_data = {}
-        self._chunks_data = {}
-        self._throughput_data_container = self._init_throughput_data_container()
-        self._worker_pool = self._init_worler_pool()
+        self.workload_publisher_url: str = workload_publisher_url
+        self._throughput_counter: int = 0
+        self._system_data: Dict = {}
+        self._chunks_data: Dict = {}
+        self._throughput_data_container: Dict = self._init_throughput_data_container()
+        self._worker_pool: pool = self._init_worler_pool()
 
         self._start_workers()
 
@@ -84,63 +91,63 @@ class Database(object):
         )
         self._scheduler.start()
 
-    def _init_throughput_data_container(self):
+    def _init_throughput_data_container(self) -> Dict:
         """Initialize meta data container."""
         throughput_data_container = self._manager.dict()
         for i in range(self._number_workers):
             throughput_data_container[str(i)] = 0
         return throughput_data_container
 
-    def _init_worler_pool(self):
+    def _init_worler_pool(self) -> pool:
         """Initialize a pool of workers."""
         worker_pool = []
         for i in range(self._number_workers):
             p = Process(
                 target=execute_queries,
-                args=[
+                args=(
                     i,
                     self._task_queue,
                     self._throughput_data_container,
                     self._connection_pool,
                     self._failed_task_queue,
-                ],
+                ),
             )
             worker_pool.append(p)
         subscriber_process = Process(
-            target=fill_queue, args=[self.workload_publisher_url, self._task_queue],
+            target=fill_queue, args=(self.workload_publisher_url, self._task_queue),
         )
         worker_pool.append(subscriber_process)
         return worker_pool
 
-    def _start_workers(self):
+    def _start_workers(self) -> None:
         """Start all workers in pool."""
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def get_throughput_counter(self):
+    def get_throughput_counter(self) -> int:
         """Return throughput."""
         return self._throughput_counter
 
-    def get_system_data(self):
+    def get_system_data(self) -> Dict:
         """Return system data."""
         return self._system_data
 
-    def get_chunks_data(self):
+    def get_chunks_data(self) -> Dict:
         """Return chunks data."""
         return self._chunks_data
 
-    def get_queue_length(self):
+    def get_queue_length(self) -> int:
         """Return queue length."""
         return self._task_queue.qsize()
 
-    def get_failed_tasks(self):
+    def get_failed_tasks(self) -> List:
         """Return faild tasks."""
         failed_task = []
         while not self._failed_task_queue.empty():
             failed_task.append(self._failed_task_queue.get())
         return failed_task
 
-    def _update_throughput_data(self):
+    def _update_throughput_data(self) -> None:
         """Put meta data from all workers together."""
         throughput_data = 0
         for i in range(self._number_workers):
@@ -148,7 +155,7 @@ class Database(object):
             self._throughput_data_container[str(i)] = 0
         self._throughput_counter = throughput_data
 
-    def _update_system_data(self):
+    def _update_system_data(self) -> None:
         """Update system data for database instance."""
         # mocking system data
         cpu_data = []
@@ -173,7 +180,7 @@ class Database(object):
             "database_threads": 8,
         }
 
-    def _update_chunks_data(self):
+    def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
 
@@ -185,7 +192,7 @@ class Database(object):
 
         self._connection_pool.putconn(connection)
 
-        chunks_data = {}
+        chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table")
         for column in grouped.groups:
             chunks_data[column] = {}
@@ -197,7 +204,7 @@ class Database(object):
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
 
-    def get_storage_data(self):
+    def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
@@ -208,27 +215,27 @@ class Database(object):
         meta_segments.set_index(
             ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
         )
-        size = pd.DataFrame(
+        size: DataFrame = DataFrame(
             meta_segments["estimated_size_in_bytes"]
             .groupby(level=["table", "column_name"])
             .sum()
         )
 
-        encoding = pd.DataFrame(
+        encoding: DataFrame = DataFrame(
             meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
         )
         encoding["encoding"] = encoding["encoding"].apply(list)
-        datatype = meta_segments.reset_index().set_index(["table", "column_name"])[
-            ["column_data_type"]
-        ]
+        datatype: DataFrame = meta_segments.reset_index().set_index(
+            ["table", "column_name"]
+        )[["column_data_type"]]
 
-        result = size.join(encoding).join(datatype)
+        result: DataFrame = size.join(encoding).join(datatype)
         self._connection_pool.putconn(connection)
         return self._create_storage_data_dictionary(result)
 
-    def _create_storage_data_dictionary(self, result):
+    def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
         """Sort storage data to dictionary."""
-        output = {}
+        output: Dict = {}
         grouped = result.reset_index().groupby("table")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
@@ -244,20 +251,20 @@ class Database(object):
                 }
         return output
 
-    def _close_pool(self):
+    def _close_pool(self) -> None:
         """Close worker pool."""
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
 
-    def _close_connections(self):
+    def _close_connections(self) -> None:
         """Close connections."""
         self._connection_pool.closeall()
 
-    def _close_queue(self):
+    def _close_queue(self) -> None:
         """Close queue."""
         self._task_queue.close()
 
-    def exit(self):
+    def exit(self) -> None:
         """Clean exit."""
         self._close_pool()
         self._close_connections()
