@@ -1,5 +1,7 @@
 """Predefined responses for IPC."""
 
+from copy import copy
+
 __default = {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "body": {}}
 
 __responses = {
@@ -11,4 +13,4 @@ __responses = {
 
 def get_response(code):
     """Get a predefined response with a code."""
-    return __responses.get(code, __default,)
+    return copy(__responses.get(code, __default,))
