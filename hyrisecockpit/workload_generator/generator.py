@@ -4,18 +4,14 @@ Includes the main WorkloadGenerator, which uses multiple WorkloadProducers.
 The WorkloadGenerator manages the WorkloadProducers.
 The WorkloadProducers have IPC connections to a database interface.
 """
-
 import multiprocessing as mp
 import random
+from typing import Dict
 
 from zmq import PUB, REP, Context
 
 from hyrisecockpit import settings as s
-
-responses = {
-    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
-}
+from hyrisecockpit.response import get_response
 
 
 class WorkloadProducer(mp.Process):
@@ -83,16 +79,9 @@ class WorkloadProducer(mp.Process):
         """Generate workloads and submit it with IPC."""
         while True:
             # TODO add shutdown
-            # request = {"header": {"status": 200, "message": "execute"}}
             request = {"header": {"status": 200, "message": "executelist"}}
-            # query, vars = self._generate_execute()[0]
-            # request["body"] = {"query": query, "vars": vars}
-            queries = list()
-            for _ in range(10):
-                queries.append("SELECT 1;")
+            queries = [("SELECT 1;", None) for _ in range(10)]
             request["body"] = {"querylist": queries}
-            print(queries)
-            # request["body"] = {"query": "SELECT 1;", "vars": None}
             self._socket.send_json(request)
 
 
@@ -132,39 +121,37 @@ class WorkloadGenerator(object):
             p.terminate()
             p.join()
 
-    def _set_producers(self, number):
+    def _set_producers(self, number: int) -> int:
         """Set the number of WorkloadProducers."""
         delta = number - len(self._producers)
         if delta < 0:
             f = self._add_producer
         elif delta > 0:
             f = self._pop_producer
-        else:
-            return
         [f() for _ in range(delta)]
         return self._get_producers()
 
-    def _get_producers(self):
+    def _get_producers(self) -> int:
         """Return the number of WorkloadProducers."""
         return len(self._producers)
 
-    def _call_start(self, body):
+    def _call_start(self, body: Dict) -> Dict:
         """Start generating workloads with n_producers."""
         n_producers = body["n_producers"]
         [self._add_producer() for i in range(n_producers)]
-        return responses[200]
+        return get_response(200)
 
-    def _call_stop(self, body):
+    def _call_stop(self, body: Dict) -> Dict:
         """Stop generating workloads and kill all WorkloadProducers."""
         [self._pop_producer() for i in range(len(self._producers))]
-        return responses[200]
+        return get_response(200)
 
-    def _call_shutdown(self, body):
+    def _call_shutdown(self, body: Dict) -> Dict:
         self._shutdown_requested = True
-        return responses[200]
+        return get_response(200)
 
-    def _call_not_found(self, body):
-        return responses[400]
+    def _call_not_found(self, body: Dict) -> Dict:
+        return get_response(400)
 
     def run(self):
         """Run the generator by enabling IPC."""
