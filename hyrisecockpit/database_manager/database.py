@@ -43,7 +43,7 @@ def execute_queries(
             )
         except Error as e:
             failed_task_queue.put(
-                {"id": worker_id, "task": (query, parameters), "Error": str(e)}
+                {"worker_id": worker_id, "task": (query, parameters), "Error": str(e)}
             )
 
 
