@@ -4,6 +4,6 @@ from hyrisecockpit import settings as s
 from .app import app
 
 
-def main():
+def main() -> None:
     """Create and start a backend API."""
     app.run(host=s.BACKEND_HOST, port=s.BACKEND_PORT)

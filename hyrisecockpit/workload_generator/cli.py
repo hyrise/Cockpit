@@ -2,6 +2,6 @@
 from .generator import WorkloadGenerator
 
 
-def main():
+def main() -> None:
     """Create and start a workload generator."""
     WorkloadGenerator().start()

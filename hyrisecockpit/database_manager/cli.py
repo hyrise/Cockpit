@@ -2,6 +2,6 @@
 from .manager import DatabaseManager
 
 
-def main():
+def main() -> None:
     """Create and start a database manager."""
     DatabaseManager().start()
