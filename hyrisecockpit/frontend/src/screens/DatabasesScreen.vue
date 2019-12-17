@@ -138,7 +138,10 @@ export default createComponent({
     const dbname = ref<string>("");
 
     function openDatabaseScreen(databaseId: string): void {
-      console.log(databaseId);
+      context.root.$router.push({
+        name: "database",
+        params: { id: databaseId }
+      });
     }
 
     function createNewDatabase(): void {

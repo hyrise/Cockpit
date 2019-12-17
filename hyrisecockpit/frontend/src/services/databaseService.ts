@@ -13,7 +13,7 @@ export function useDatabaseFetchService(): {
 
   function getDatabases(): void {
     axios
-      .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/drivers")
+      .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/drivers")
       .then(response => {
         return response.data.body.ids.map(database => ({
           id: database
@@ -30,7 +30,7 @@ export function useDatabaseFetchService(): {
   function addDatabase(databaseData: any): void {
     axios
       .post(
-        "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database",
+        "http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/database",
         databaseData
       )
       .then(response => {

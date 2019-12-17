@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { name: "home", path: "/", component: Home },
-  { name: "database", path: "/database", component: DatabaseScreen },
+  { name: "database", path: "/database/:id", component: DatabaseScreen },
   { name: "workload", path: "/workload", component: WorkloadScreen },
   { name: "databases", path: "/databases", component: DatabasesScreen }
 ];

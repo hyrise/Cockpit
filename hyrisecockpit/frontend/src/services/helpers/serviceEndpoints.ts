@@ -9,7 +9,7 @@ export function getEndpoint(type: string): string {
   if (type === "cpu") {
     return cpuEndpoint;
   }
-  if(type === "database"){
+  if (type === "database") {
     return databaseEndpoint;
   }
 }

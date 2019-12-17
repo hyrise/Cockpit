@@ -35,7 +35,7 @@ export function useThroughputFetchService(
   function fetchThroughput(): Promise<ThroughputQueryResult> {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/throughput")
+        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/throughput")
         .then(response => {
           console.log(response);
           resolve(response.data.body.throughput);

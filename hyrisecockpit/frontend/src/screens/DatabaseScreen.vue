@@ -5,12 +5,12 @@
         <b> Throughput Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Throughput />
+      <Throughput :preselectedDatabaseId="$route.params.id" />
       <div class="mt-6 mb-2">
         <b> CPU Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Cpu class="mb-12" />
+      <Cpu :preselectedDatabaseId="$route.params.id" class="mb-12" />
       <Treemap class="mt-10" />
     </div>
   </div>

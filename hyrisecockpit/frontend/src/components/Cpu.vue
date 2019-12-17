@@ -43,7 +43,9 @@ import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
 
-interface Props {}
+interface Props {
+  preselectedDatabaseId: string;
+}
 
 interface Data {
   data: Ref<CPUData>;
@@ -53,12 +55,20 @@ interface Data {
 }
 
 export default createComponent({
+  props: {
+    preselectedDatabaseId: { type: String }
+  },
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
     const databases = Vue.prototype.$databases;
     const { getData, data, queryReadyState } = useGenericFetchService("cpu");
-    const selectedDatabaseIds = ref<string[]>([]);
-    const chartConfiguration = ["CPU","Time ins s","Workload"];
+    const selectedDatabaseIds = ref<string[]>(
+      props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
+    );
+    console.log(selectedDatabaseIds, "selected");
+    console.log(props.preselectedDatabaseId, "props");
+
+    const chartConfiguration = ["CPU", "Time ins s", "Workload"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
