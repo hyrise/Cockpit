@@ -26,7 +26,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext) {
     const { storageData, getStorage } = useStorageFetchService();
     const { generateStorageData } = useGeneratingTestData();
-    const testData :any = generateStorageData();
+    const testData: any = generateStorageData();
 
     const labels: string[] = [];
     const parents: string[] = [];
@@ -34,18 +34,22 @@ export default createComponent({
 
     Object.keys(testData.body.storage).forEach(instance => {
       labels.push(instance);
-      parents.push('');
+      parents.push("");
       sizes.push(0);
       Object.keys(testData.body.storage[instance]).forEach(table => {
         labels.push(table);
         parents.push(instance);
         sizes.push(0);
-        Object.keys(testData.body.storage[instance][table].data).forEach(attribute => {
-          labels.push(attribute);
-          parents.push(table);
-          sizes.push(testData.body.storage[instance][table].data[attribute].size);
+        Object.keys(testData.body.storage[instance][table].data).forEach(
+          attribute => {
+            labels.push(attribute);
+            parents.push(table);
+            sizes.push(
+              testData.body.storage[instance][table].data[attribute].size
+            );
+          }
+        );
       });
-    });
     });
 
     const data: any = [
