@@ -42,6 +42,7 @@ interface Props {
   preselectedDatabaseId: string;
 }
 
+
 interface Data {
   throughputData: Ref<ThroughputData>;
   resetData: () => void;
@@ -73,7 +74,6 @@ export default createComponent({
     onMounted(() => {
       Plotly.newPlot("graph", [getDataset()], getLayout());
       setInterval(checkState, 1000);
-
       // watch for changes in selected databases
       watch(
         () => selectedDatabaseIds.value,
@@ -91,6 +91,7 @@ export default createComponent({
           Plotly.plot("graph", newDatasets, getLayout());
         }
       );
+
     });
 
     function checkState(): void {
