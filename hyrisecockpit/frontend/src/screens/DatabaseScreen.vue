@@ -5,10 +5,14 @@
         <b> Throughput Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Throughput />
-    </div>
-    <div class="treemap mx-12">
-      <Treemap />
+
+      <Throughput :preselectedDatabaseId="$route.params.id" />
+      <div class="mt-6 mb-2">
+        <b> CPU Monitoring </b>
+      </div>
+      <v-divider class="mb-4"></v-divider>
+      <Cpu :preselectedDatabaseId="$route.params.id" class="mb-12" />
+      <Treemap class="mt-10" />
     </div>
   </div>
 </template>
@@ -17,13 +21,15 @@
 import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Throughput from "../components/Throughput.vue";
 import Treemap from "../components/Treemap.vue";
+import Cpu from "../components/Cpu.vue";
 
 export default createComponent({
   name: "DatabaseScreen",
 
   components: {
     Throughput,
-    Treemap
+    Treemap,
+    Cpu
   }
 });
 </script>
@@ -31,11 +37,5 @@ export default createComponent({
 .linechart {
   max-width: 1800px;
   max-height: 1000px;
-}
-.treemap {
-  margin-left: 10px;
-  margin-right: 100px;
-  margin-bottom: 50px;
-  margin-top: 150px;
 }
 </style>
