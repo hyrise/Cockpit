@@ -4,9 +4,12 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0
     hooks:
+    - id: no-commit-to-branch
+      name: Checking if you can commit to this branch directly
+      args: [--branch, master, --branch, dev]
     - id: check-added-large-files
       name: Checking for large files
-      args: ['--maxkb=1000']
+      args: [--maxkb=1000]
     - id: check-merge-conflict
       name: Checking for merge conflicts
     - id: check-ast
@@ -30,29 +33,39 @@ repos:
       name: Running isort on python files
       description: 'isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections.'
       language: system
-      entry: pipenv run isort
+      entry: isort
       types: [python]
     - id: black
       name: Running black on python files
       description: 'Black: The uncompromising Python code formatter'
       language: system
-      entry: pipenv run black
+      entry: black
       types: [python]
     - id: flake8
       name: Running flake8 on python files
       description: 'flake8 is a command-line utility for enforcing style consistency across Python projects.'
       language: system
-      entry: pipenv run flake8
+      entry: flake8
       types: [python]
+    - id: mypy
+      name: Running mypy on python files
+      description: 'Mypy is an optional static type checker for Python. You can add type hints (PEP 484) to your Python programs, and use mypy to type check them statically.'
+      entry: mypy
+      language: system
+      types: [python]
+      args: ["--ignore-missing-imports", "--scripts-are-modules"]
+      require_serial: true
+      additional_dependencies: []
     - id: pydocstyle
       name: Running pydocstyle on python files
       description: 'pydocstyle is a static analysis tool for checking compliance with Python docstring conventions.'
-      entry: pipenv run pydocstyle
+      entry: pydocstyle
       language: system
       types: [python]
     - id: bandit
       name: Running bandit on python files
       description: 'Bandit is a tool for finding common security issues in Python code'
       language: system
-      entry: pipenv run bandit
+      entry: bandit
       types: [python]
+      args: [--exclude, tests]

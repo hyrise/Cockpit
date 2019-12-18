@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+hyrisecockpit = {editable = true,path = "."}
 pre-commit = "*"
 black = "*"
 flake8 = "*"
@@ -13,10 +14,12 @@ rope = "*"
 bandit = "*"
 pydocstyle = "*"
 flake8-bugbear = "*"
+pytest = "*"
+pytest-testdox = "*"
+mypy = "*"
 
 [packages]
 pandas = "*"
-rq = "*"
 psycopg2 = "*"
 pyzmq = "*"
 python-dotenv = "*"
@@ -24,11 +27,10 @@ redis = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
-rq-dashboard = "*"
 websockets = "*"
 
 [requires]
-python_version = "3.6.8"
+python_version = "3.8.0"
 
 [pipenv]
 allow_prereleases = true

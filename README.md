@@ -2,7 +2,7 @@
 
 ## Setup
 
-You may need to install a different python version (`3.6.8`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+You may need to install a different python version (`3.8.0`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
 
 
@@ -48,12 +48,12 @@ exec "$SHELL"
 Subsequently, the required version of Python can be installed and set with:
 
 ```bash
-# Install Python 3.6.8
-pyenv install 3.6.8
+# Install Python 3.8.0
+pyenv install 3.8.0
 
-# Set the local (directory) Python version to 3.6.8
+# Set the local (directory) Python version to 3.8.0
 cd Cockpit
-pyenv local 3.6.8
+pyenv local 3.8.0
 ```
 Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
 
@@ -75,13 +75,13 @@ sudo apt-get install libpq-dev
 
 </details>
 
-Now, install and initialize your virtual environment (this is a slight [workaround](https://github.com/pypa/pipenv/issues/3363#issuecomment-452171564) instead of calling `pipenv install` directly):
+Now, initialize and sync your virtual environment:
 
 ```bash
 python -m pip install pipenv
 exec "$SHELL"
 pipenv --three --python=`which python`
-pipenv install
+pipenv sync
 ```
 
 ### Developer setup
@@ -89,7 +89,7 @@ pipenv install
 Run the following commands to bootstrap your developer environment.
 
 ```bash
-pipenv install --dev
+pipenv sync --dev
 
 # Please make sure you enable the pre-commit hooks:
 pipenv run pre-commit install
