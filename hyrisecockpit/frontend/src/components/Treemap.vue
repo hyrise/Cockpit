@@ -13,9 +13,9 @@ import {
   onMounted,
   watch,
   Ref,
-  ref
+  ref,
+  computed
 } from "@vue/composition-api";
-import { useGeneratingTestData } from "../helpers/testData";
 import { StorageQueryResult } from "../types/storage";
 import { useStorageFetchService } from "../services/storageService";
 import * as Plotly from "plotly.js";
@@ -25,34 +25,43 @@ interface Props {}
 export default createComponent({
   setup(props: Props, context: SetupContext) {
     const { storageData, getStorage } = useStorageFetchService();
-    const { generateStorageData } = useGeneratingTestData();
-    const testData: any = generateStorageData();
-
+    const localStorage = computed(() => storageData.value) ;
+    console.log(localStorage, 'local');
+    let flag = false;
     const labels: string[] = [];
     const parents: string[] = [];
     const sizes: number[] = [];
 
-    Object.keys(testData.body.storage).forEach(instance => {
+    function calculateData(): void {
+  
+
+    Object.keys(localStorage.value.body.storage).forEach(instance => {
       labels.push(instance);
       parents.push("");
       sizes.push(0);
-      Object.keys(testData.body.storage[instance]).forEach(table => {
-        labels.push(table);
+      Object.keys(localStorage.value.body.storage[instance]).forEach(table => {
+        labels.push(instance+'_'+table);
         parents.push(instance);
         sizes.push(0);
-        Object.keys(testData.body.storage[instance][table].data).forEach(
+        Object.keys(localStorage.value.body.storage[instance][table].data).forEach(
           attribute => {
-            labels.push(attribute);
-            parents.push(table);
+            labels.push(instance+'_'+attribute);
+            parents.push(instance+'_'+table);
             sizes.push(
-              testData.body.storage[instance][table].data[attribute].size
+              localStorage.value.body.storage[instance][table].data[attribute].size
             );
           }
         );
       });
     });
 
-    const data: any = [
+    
+    }
+    function getTreemap(){
+      if(localStorage.value && !flag){
+        calculateData();
+        console.log(labels,parents,sizes);
+        const data: any = [
       {
         type: "treemap",
         labels: labels,
@@ -70,9 +79,14 @@ export default createComponent({
       width: 1200,
       height: 900
     };
+     Plotly.newPlot("treemap", data, layout);
+     flag=true;
+      }
+    }
+    
 
     onMounted(() => {
-      Plotly.newPlot("treemap", data, layout);
+     setInterval(getTreemap, 1000)
     });
   }
 });
