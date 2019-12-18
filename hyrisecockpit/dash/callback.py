@@ -16,7 +16,7 @@ from figures import (
     Output("throughput-graph", "figure"), [Input("throughput-interval", "n_intervals")],
 )
 def update_throughput_graph(n_intervals: int) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Update the throughput figure."""
     return draw_throughput_figure(n_intervals)
 
 
@@ -24,7 +24,7 @@ def update_throughput_graph(n_intervals: int) -> Dict:
     Output("storage-graph", "figure"), [Input("storage-interval", "n_intervals")],
 )
 def update_storage_graph(n_intervals: int) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Update the storage figure."""
     return draw_storage_figure(n_intervals)
 
 
@@ -32,7 +32,7 @@ def update_storage_graph(n_intervals: int) -> Dict:
     Output("cpu-graph", "figure"), [Input("throughput-interval", "n_intervals")],
 )
 def update_cpu_graph(n_intervals: int) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Update the CPU figure."""
     return draw_cpu_figure(n_intervals)
 
 
@@ -40,5 +40,5 @@ def update_cpu_graph(n_intervals: int) -> Dict:
     Output("ram-graph", "figure"), [Input("throughput-interval", "n_intervals")],
 )
 def update_ram_graph(n_intervals: int) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Update the RAM figure."""
     return draw_ram_figure(n_intervals)

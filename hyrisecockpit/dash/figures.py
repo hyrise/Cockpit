@@ -50,7 +50,7 @@ DATA3 = get_system_data()  # just for debug
 
 
 def draw_throughput_figure(n_intervals: int = 0) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Draw a throughput figure."""
     df: DataFrame = DATA.iloc[n_intervals : n_intervals + 100]
     trace = Scattergl(x=df.index, y=df["THROUGHPUT"])
     figure = {"data": [trace]}
@@ -58,7 +58,7 @@ def draw_throughput_figure(n_intervals: int = 0) -> Dict:
 
 
 def draw_storage_figure(n_intervals: int = 0) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Draw a storage figure."""
     trace = Treemap(
         labels=DATA2["labels"],
         parents=DATA2["parents"],
@@ -70,7 +70,7 @@ def draw_storage_figure(n_intervals: int = 0) -> Dict:
 
 
 def draw_cpu_figure(n_intervals: int = 0) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Draw a CPU figure."""
     trace = Indicator(
         mode="gauge+number+delta",
         value=DATA3.iloc[n_intervals + 1]["CPU"],
@@ -84,7 +84,7 @@ def draw_cpu_figure(n_intervals: int = 0) -> Dict:
 
 
 def draw_ram_figure(n_intervals: int = 0) -> Dict:
-    """Update the symbol graph showing candlesticks for the selected symbol."""
+    """Draw a RAM figure."""
     trace = Indicator(
         mode="gauge+number+delta",
         value=DATA3.iloc[n_intervals + 1]["RAM"],
