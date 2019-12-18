@@ -155,7 +155,7 @@ class WorkloadGenerator(object):
     def _call_not_found(self, body: Dict) -> Dict:
         return get_response(400)
 
-    def run(self) -> None:
+    def start(self) -> None:
         """Run the generator by enabling IPC."""
         print(
             "Workload generator running on {:s}:{:s}. Press CTRL+C to quit.".format(
@@ -177,12 +177,3 @@ class WorkloadGenerator(object):
             # Shutdown
             if self._shutdown_requested:
                 break
-
-
-def main():
-    """Run a WorkloadGenerator."""
-    WorkloadGenerator().run()
-
-
-if __name__ == "__main__":
-    main()
