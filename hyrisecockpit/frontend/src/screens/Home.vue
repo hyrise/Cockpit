@@ -6,7 +6,7 @@
         class="ma-2 py-12"
         tile
         color="primary"
-        :to="{ name: 'database' }"
+        :to="{ name: 'databases' }"
       >
         <v-icon left>mdi-monitor-cellphone</v-icon> Monitoring
       </v-btn>

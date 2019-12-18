@@ -41,8 +41,8 @@ export default createComponent({
       default: null
     },
     chartConfiguration: {
-        type: Array,
-        default: null
+      type: Array,
+      default: null
     }
   },
   setup(props: Props, context: SetupContext): void {
