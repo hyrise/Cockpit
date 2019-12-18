@@ -6,7 +6,7 @@ The WorkloadProducers have IPC connections to a database interface.
 """
 import multiprocessing as mp
 import random
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from zmq import PUB, REP, Context
 
@@ -94,7 +94,7 @@ class WorkloadGenerator(object):
 
     def __init__(self) -> None:
         """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
-        self._server_calls: Dict[str, Callable[[Dict], Dict]] = {
+        self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "start": self._call_start,
             "stop": self._call_stop,
             "shutdown": self._call_shutdown,

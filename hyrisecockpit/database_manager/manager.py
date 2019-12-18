@@ -1,7 +1,7 @@
 """Module for managing databases."""
 
 import sys
-from typing import Callable, Dict
+from typing import Any, Callable, Dict
 
 from zmq import REP, Context
 
@@ -19,7 +19,7 @@ class DatabaseManager(object):
     def __init__(self) -> None:
         """Initialize a DatabaseManager."""
         self._databases: Dict = dict()
-        self._server_calls: Dict[str, Callable] = {
+        self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
             "storage": self._call_storage,
