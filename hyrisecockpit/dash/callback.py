@@ -3,8 +3,8 @@ from typing import Dict
 
 from dash.dependencies import Input, Output
 
-from app import app
-from figure import (
+from .app import app
+from .figure import (
     draw_cpu_figure,
     draw_ram_figure,
     draw_storage_figure,

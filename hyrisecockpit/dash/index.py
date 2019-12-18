@@ -3,9 +3,9 @@ from dash.dependencies import Input, Output
 from dash_core_components import Location
 from dash_html_components import Div
 
-import callback  # noqa
-from app import app
-from layout import layout
+from .app import app
+from .callback import *  # noqa
+from .layout import layout
 
 app.layout = Div([Location(id="url", refresh=False), Div(id="page-content")])
 
