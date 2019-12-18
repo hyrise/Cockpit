@@ -28,6 +28,8 @@ flask = "*"
 flask-cors = "*"
 apscheduler = "*"
 websockets = "*"
+dash = "*"
+dash-bootstrap-components = "*"
 
 [requires]
 python_version = "3.8.0"
