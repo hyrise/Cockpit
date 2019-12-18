@@ -1,0 +1,23 @@
+"""Callbacks for the app interactivity."""
+from typing import Dict
+
+from dash.dependencies import Input, Output
+
+from app import app
+from figures import draw_storage_figure, draw_throughput_figure
+
+
+@app.callback(
+    Output("throughput-graph", "figure"), [Input("throughput-interval", "n_intervals")],
+)
+def update_throughput_graph(n_intervals: int) -> Dict:
+    """Update the symbol graph showing candlesticks for the selected symbol."""
+    return draw_throughput_figure(n_intervals)
+
+
+@app.callback(
+    Output("storage-graph", "figure"), [Input("storage-interval", "n_intervals")],
+)
+def update_storage_graph(n_intervals: int) -> Dict:
+    """Update the symbol graph showing candlesticks for the selected symbol."""
+    return draw_storage_figure(n_intervals)
