@@ -14,7 +14,3 @@ app.layout = Div([Location(id="url", refresh=False), Div(id="page-content")])
 def display_page(pathname):
     """Render a layout given a path."""
     return layout
-
-
-if __name__ == "__main__":
-    app.run_server(debug=True)

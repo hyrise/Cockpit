@@ -9,6 +9,7 @@ setup(
             "cockpit-backend=hyrisecockpit.backend.cli:main",
             "cockpit-manager=hyrisecockpit.database_manager.cli:main",
             "cockpit-generator=hyrisecockpit.workload_generator.cli:main",
+            "cockpit-frontend=hyrisecockpit.dash.cli:main",
         ],
     },
 )
