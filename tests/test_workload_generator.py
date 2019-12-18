@@ -1,4 +1,7 @@
 """Tests for the workload_generator module."""
+from pytest import fixture
+from zmq import Context, Socket
+
 from hyrisecockpit.settings import (
     GENERATOR_HOST,
     GENERATOR_PORT,
@@ -14,20 +17,46 @@ from hyrisecockpit.workload_generator.generator import (
 class TestWorkloadGenerator:
     """Tests for the WorkloadGenerator class."""
 
-    def test_initializes(self):
-        """A WorkloadGenerator initializes."""
-        workload_generator = WorkloadGenerator(
+    @fixture
+    def workload_generator(self) -> WorkloadGenerator:
+        """Get a new WorkloadGenerator."""
+        with WorkloadGenerator(
             GENERATOR_HOST, GENERATOR_PORT, WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT
-        )
+        ) as workload_generator:
+            return workload_generator
+
+    def test_initializes(self, workload_generator: WorkloadGenerator):
+        """A WorkloadGenerator initializes."""
         assert isinstance(workload_generator, WorkloadGenerator)
+
+    def test_has_a_context(self, workload_generator: WorkloadGenerator):
+        """A WorkloadGenerator has a ZMQ Context."""
+        assert isinstance(workload_generator._context, Context)
+
+    def test_has_a_socket(self, workload_generator: WorkloadGenerator):
+        """A WorkloadGenerator has a ZMQ Socket."""
+        assert isinstance(workload_generator._socket, Socket)
 
 
 class TestWorkloadProducer:
     """Tests for the WorkloadProducer class."""
 
-    def test_initializes(self):
-        """A WorkloadProducer initializes."""
-        workload_producer = WorkloadProducer(
+    @fixture
+    def workload_producer(self) -> WorkloadProducer:
+        """Get a new WorkloadProducer."""
+        with WorkloadProducer(
             "MyWorkloadProducer", WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT
-        )
+        ) as workload_producer:
+            return workload_producer
+
+    def test_initializes(self, workload_producer: WorkloadProducer):
+        """A WorkloadProducer initializes."""
         assert isinstance(workload_producer, WorkloadProducer)
+
+    def test_has_a_context(self, workload_producer: WorkloadProducer):
+        """A WorkloadProducer has a ZMQ Context."""
+        assert isinstance(workload_producer._context, Context)
+
+    def test_has_a_socket(self, workload_producer: WorkloadProducer):
+        """A WorkloadProducer has a ZMQ Socket."""
+        assert isinstance(workload_producer._socket, Socket)
