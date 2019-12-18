@@ -45,6 +45,7 @@ export function useGenericFetchService(
           resolve(response.data.body[base]);
         })
         .catch(error => {
+          queryReadyState.value = true;
           reject(error);
         });
     });

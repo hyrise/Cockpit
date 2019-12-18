@@ -41,6 +41,7 @@ export function useThroughputFetchService(
           resolve(response.data.body.throughput);
         })
         .catch(error => {
+          throughputQueryReadyState.value = true;
           reject(error);
         });
     });
