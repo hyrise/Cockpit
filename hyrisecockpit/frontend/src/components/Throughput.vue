@@ -60,7 +60,7 @@ export default createComponent({
       throughputQueryReadyState
     } = useThroughputFetchService(onTPChange);
 
-    const databases = Vue.prototype.$databases;
+    const { databases } = useDatabaseFetchService();
 
     const { getDataset, getLayout } = useThroughputLineChartConfiguration(
       databases.value

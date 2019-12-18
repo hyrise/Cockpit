@@ -37,6 +37,7 @@ import {
 
 import { useThroughputFetchService } from "../services/throughputService";
 import { useGenericFetchService } from "../services/genericFetchService";
+import { useDatabaseFetchService } from "../services/databaseService";
 import { CPUData } from "../types/cpu";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
@@ -60,7 +61,7 @@ export default createComponent({
   },
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
-    const databases = Vue.prototype.$databases;
+    const { databases } = useDatabaseFetchService();
     const { getData, data, queryReadyState } = useGenericFetchService("cpu");
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
