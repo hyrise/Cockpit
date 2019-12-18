@@ -10,15 +10,20 @@ from flask import Flask, request
 from flask_cors import CORS
 from zmq import REQ, Context, Socket
 
-from hyrisecockpit import settings as s
+from hyrisecockpit.setting import (
+    DB_MANAGER_HOST,
+    DB_MANAGER_PORT,
+    GENERATOR_HOST,
+    GENERATOR_PORT,
+)
 
 context = Context(io_threads=1)
 
 db_manager_socket = context.socket(REQ)
-db_manager_socket.connect(f"tcp://{s.DB_MANAGER_HOST}:{s.DB_MANAGER_PORT}")
+db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
 
 generator_socket = context.socket(REQ)
-generator_socket.connect(f"tcp://{s.GENERATOR_HOST}:{s.GENERATOR_PORT}")
+generator_socket.connect(f"tcp://{GENERATOR_HOST}:{GENERATOR_PORT}")
 
 app = Flask(__name__)
 cors = CORS(app)

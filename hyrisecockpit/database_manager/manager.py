@@ -1,11 +1,10 @@
 """Module for managing databases."""
 
 import sys
-from typing import Callable, Dict
+from typing import Any, Callable, Dict
 
 from zmq import REP, Context
 
-from hyrisecockpit import settings as s
 from hyrisecockpit.response import get_response
 
 from .database import Database
@@ -16,10 +15,20 @@ from .exception import IdNotValidException
 class DatabaseManager(object):
     """A manager for database drivers."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        db_manager_host: str,
+        db_manager_port: str,
+        workload_sub_host: str,
+        workload_pubsub_port: str,
+    ) -> None:
         """Initialize a DatabaseManager."""
+        self._db_manager_host = db_manager_host
+        self._db_manager_port = db_manager_port
+        self._workload_sub_host = workload_sub_host
+        self._workload_pubsub_port = workload_pubsub_port
         self._databases: Dict = dict()
-        self._server_calls: Dict[str, Callable] = {
+        self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
             "storage": self._call_storage,
@@ -32,11 +41,25 @@ class DatabaseManager(object):
         }
         self._init_server()
 
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def close(self) -> None:
+        """Close the socket and context, exit all databases."""
+        self._exit()
+        self._socket.close()
+        self._context.term()
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
+
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
-            "tcp://{:s}:{:s}".format(s.DB_MANAGER_HOST, s.DB_MANAGER_PORT)
+            "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
         )
 
     def _call_add_database(self, body: Dict) -> Dict:
@@ -54,7 +77,10 @@ class DatabaseManager(object):
             return response
 
         db_instance = Database(
-            body, "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT),
+            body,
+            "tcp://{:s}:{:s}".format(
+                self._workload_sub_host, self._workload_pubsub_port
+            ),
         )
         self._databases[body["id"]] = db_instance
         return get_response(200)
@@ -109,7 +135,7 @@ class DatabaseManager(object):
         return response
 
     def _call_delete_database(self, body: Dict) -> Dict:
-        database = self._databases.pop(body["id"], None)
+        database = self._databases.pop(body.get(id), None)
         if not database:
             return get_response(400)
         database.exit()
@@ -136,7 +162,7 @@ class DatabaseManager(object):
         """Start the manager by enabling IPC."""
         print(
             "Database manager running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                s.DB_MANAGER_HOST, s.DB_MANAGER_PORT
+                self._db_manager_host, self._db_manager_port
             )
         )
         while True:
@@ -156,8 +182,3 @@ class DatabaseManager(object):
                 if len(self._databases) > 0:
                     self._exit()
                 sys.exit()
-
-
-def main() -> None:
-    """Run a database manager."""
-    DatabaseManager().start()
