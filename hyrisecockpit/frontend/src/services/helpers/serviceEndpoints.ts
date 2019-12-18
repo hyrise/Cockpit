@@ -1,15 +1,30 @@
-const throughputEndpoint = "";
-const cpuEndpoint = "";
-const databaseEndpoint = "";
+const backendUrl= "http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/";
+
+const cpuBase = "system_data";
+const throughputBase = "throughput";
+const databaseBase = "database";
+const storageBase = "storage";
 
 export function getEndpoint(type: string): string {
   if (type === "throughput") {
-    return throughputEndpoint;
+    return backendUrl + throughputBase;
   }
   if (type === "cpu") {
-    return cpuEndpoint;
+    return backendUrl + cpuBase;
   }
-  if (type === "database") {
-    return databaseEndpoint;
+  if(type === "database"){
+    return backendUrl + databaseBase;
+  }
+  if(type === "storage"){
+    return backendUrl + storageBase;
+  }
+}
+
+export function getBase(type: string): string {
+  if (type === "throughput") {
+    return throughputBase;
+  }
+  if (type === "cpu") {
+    return cpuBase;
   }
 }
