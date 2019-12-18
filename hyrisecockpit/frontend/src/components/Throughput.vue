@@ -88,9 +88,6 @@ export default createComponent({
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
 
-    console.log(selectedDatabaseIds, "selected");
-    console.log(props.preselectedDatabaseId, "props");
-
     onMounted(() => {
       Plotly.newPlot("graph", [getDataset()], getLayout());
       setInterval(checkState, 1000);

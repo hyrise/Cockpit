@@ -14,7 +14,7 @@
       </v-list-item>
     </v-list>
     <v-row justify="end">
-      <v-dialog v-model="newDatabaseDialog" persistent max-width="600px">
+      <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
           <v-btn class="green white--text my-8" v-on="on"
             >add new database</v-btn
@@ -83,7 +83,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="newDatabaseDialog = false"
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="showDatabaseDialog = false"
               >Close</v-btn
             >
             <v-btn
@@ -91,7 +94,7 @@
               text
               @click="
                 createNewDatabase();
-                newDatabaseDialog = false;
+                showDatabaseDialog = false;
               "
               >Save</v-btn
             >
@@ -121,7 +124,7 @@ interface Data {
   databases: Ref<Database[]>;
   openDatabaseScreen: (databaseId: string) => void;
   createNewDatabase: () => void;
-  newDatabaseDialog: boolean;
+  showDatabaseDialog: boolean;
   number_workers: Ref<string>;
   id: Ref<string>;
   user: Ref<string>;
@@ -142,7 +145,7 @@ export default createComponent({
     const host = ref<string>("");
     const port = ref<string>("");
     const dbname = ref<string>("");
-    let newDatabaseDialog = false;
+    let showDatabaseDialog = false;
 
     function openDatabaseScreen(databaseId: string): void {
       context.root.$router.push({
@@ -172,10 +175,10 @@ export default createComponent({
       host,
       port,
       dbname,
-      databases: databases,
-      openDatabaseScreen: openDatabaseScreen,
-      newDatabaseDialog,
-      createNewDatabase: createNewDatabase
+      databases,
+      openDatabaseScreen,
+      showDatabaseDialog,
+      createNewDatabase
     };
   }
 });
