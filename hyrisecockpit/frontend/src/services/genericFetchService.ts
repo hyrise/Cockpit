@@ -1,7 +1,9 @@
 import { Ref, ref } from "@vue/composition-api";
 import axios from "axios";
 import { QueryResult, QueryData } from "../types/genericQueryData";
-import { getEndpoint } from "./helpers/serviceEndpoints";
+import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
+import { useDataTransformation } from "./helpers/dataTransformationService";
+
 
 export function useGenericFetchService(
   dataType: string
@@ -11,14 +13,16 @@ export function useGenericFetchService(
   queryReadyState: Ref<boolean>;
 } {
   const queryReadyState = ref<boolean>(true);
-  const data = ref<QueryData>({ citadelle: [11, 22, 2], york: [11, 0, 9] });
-  const endpoint = getEndpoint(dataType);
+  const data = ref<QueryData>({});
+  const endpoint = getEndpoint(dataType); //refactor 
+  const base = getBase(dataType);
+  const transformData = useDataTransformation(dataType);
 
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
       Object.keys(result).forEach(key => {
-        addData(key, result[key][1]);
+        addData(key,transformData(result, key));
       });
       queryReadyState.value = true;
     });
@@ -28,7 +32,9 @@ export function useGenericFetchService(
     if (!data.value[dataBaseId]) {
       data.value[dataBaseId] = [];
     }
-    data.value[dataBaseId].push(newData);
+    data.value[dataBaseId].concat([newData]);
+    const dataCopy = JSON.parse(JSON.stringify(data.value));
+    data.value=dataCopy;
   }
 
   function fetchData(): Promise<QueryResult> {
@@ -36,7 +42,7 @@ export function useGenericFetchService(
       axios
         .get(endpoint)
         .then(response => {
-          resolve(response.data.body);
+          resolve(response.data.body[base]);
         })
         .catch(error => {
           reject(error);
