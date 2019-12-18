@@ -10,7 +10,6 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from zmq import PUB, REP, Context
 
-from hyrisecockpit import settings as s
 from hyrisecockpit.response import get_response
 
 
@@ -21,12 +20,18 @@ class WorkloadProducer(mp.Process):
     Workloads are submitted directly to a database interface with IPC.
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(
+        self, name: str, workload_sub_host: str, workload_pubsub_port: str
+    ) -> None:
         """Initialize a WorkloadProducer with an IPC connection."""
+        self._workload_sub_host = workload_sub_host
+        self._workload_pubsub_port = workload_pubsub_port
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(PUB)
         self._socket.bind(
-            "tcp://{:s}:{:s}".format(s.WORKLOAD_SUB_HOST, s.WORKLOAD_PUBSUB_PORT)
+            "tcp://{:s}:{:s}".format(
+                self._workload_sub_host, self._workload_pubsub_port
+            )
         )
         super().__init__(name=name, daemon=True)
 
@@ -92,8 +97,18 @@ class WorkloadGenerator(object):
     The WorkloadGenerator may be started or stopped.
     """
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        generator_host: str,
+        generator_port: str,
+        workload_sub_host: str,
+        workload_pubsub_port: str,
+    ) -> None:
         """Initialize a WorkloadGenerator with an empty list of WorkloadProducers."""
+        self._generator_host = generator_host
+        self._generator_port = generator_port
+        self._workload_sub_host = workload_sub_host
+        self._workload_pubsub_port = workload_pubsub_port
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "start": self._call_start,
             "stop": self._call_stop,
@@ -106,11 +121,17 @@ class WorkloadGenerator(object):
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
-        self._socket.bind("tcp://{:s}:{:s}".format(s.GENERATOR_HOST, s.GENERATOR_PORT))
+        self._socket.bind(
+            "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
+        )
 
     def _add_producer(self) -> None:
         """Increase the number of WorkloadProducers by one."""
-        p = WorkloadProducer(f"WorkloadProducer {len(self._producers)}")
+        p = WorkloadProducer(
+            f"WorkloadProducer {len(self._producers)}",
+            self._workload_sub_host,
+            self._workload_pubsub_port,
+        )
         self._producers.append(p)
         p.start()
 
@@ -159,7 +180,7 @@ class WorkloadGenerator(object):
         """Run the generator by enabling IPC."""
         print(
             "Workload generator running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                s.GENERATOR_HOST, s.GENERATOR_PORT
+                self._generator_host, self._generator_port
             )
         )
         while True:
