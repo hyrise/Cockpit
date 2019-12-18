@@ -20,6 +20,7 @@ export function useGenericFetchService(
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
+      console.log(result);
       Object.keys(result).forEach(key => {
         addData(key, transformData(result, key));
       });
@@ -31,7 +32,7 @@ export function useGenericFetchService(
     if (!data.value[dataBaseId]) {
       data.value[dataBaseId] = [];
     }
-    data.value[dataBaseId].concat([newData]);
+    data.value[dataBaseId].push(newData);
     const dataCopy = JSON.parse(JSON.stringify(data.value));
     data.value = dataCopy;
   }

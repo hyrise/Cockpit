@@ -1,4 +1,4 @@
-const backendUrl = "http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/";
+const backendUrl = "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/";
 
 const cpuBase = "system_data";
 const throughputBase = "throughput";
