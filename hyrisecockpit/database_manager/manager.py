@@ -41,6 +41,20 @@ class DatabaseManager(object):
         }
         self._init_server()
 
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def close(self) -> None:
+        """Close the socket and context, exit all databases."""
+        self._exit()
+        self._socket.close()
+        self._context.term()
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
+
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)

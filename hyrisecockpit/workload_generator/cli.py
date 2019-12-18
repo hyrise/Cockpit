@@ -11,6 +11,7 @@ from .generator import WorkloadGenerator
 
 def main() -> None:
     """Create and start a workload generator."""
-    WorkloadGenerator(
+    with WorkloadGenerator(
         GENERATOR_HOST, GENERATOR_PORT, WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT
-    ).start()
+    ) as workload_generator:
+        workload_generator.start()

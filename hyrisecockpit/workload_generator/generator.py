@@ -35,6 +35,19 @@ class WorkloadProducer(mp.Process):
         )
         super().__init__(name=name, daemon=True)
 
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def close(self) -> None:
+        """Close the socket and context."""
+        self._socket.close()
+        self._context.term()
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
+
     def _generate_random(self) -> Tuple[str, Tuple[int]]:
         """Return a simple query with a random number."""
         return (
@@ -124,6 +137,19 @@ class WorkloadGenerator(object):
         self._socket.bind(
             "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
         )
+
+    def close(self) -> None:
+        """Close the socket and context."""
+        self._socket.close()
+        self._context.term()
+
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
 
     def _add_producer(self) -> None:
         """Increase the number of WorkloadProducers by one."""
