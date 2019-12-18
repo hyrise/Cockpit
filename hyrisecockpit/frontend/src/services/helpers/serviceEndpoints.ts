@@ -1,4 +1,4 @@
-const backendUrl= "http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/";
+const backendUrl = "http://vm-aurora.eaalab.hpi.uni-potsdam.de:5000/";
 
 const cpuBase = "system_data";
 const throughputBase = "throughput";
@@ -12,10 +12,10 @@ export function getEndpoint(type: string): string {
   if (type === "cpu") {
     return backendUrl + cpuBase;
   }
-  if(type === "database"){
+  if (type === "database") {
     return backendUrl + databaseBase;
   }
-  if(type === "storage"){
+  if (type === "storage") {
     return backendUrl + storageBase;
   }
 }
