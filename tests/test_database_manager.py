@@ -55,3 +55,32 @@ class TestDatabaseManager:
     def test_has_server_call(self, database_manager: DatabaseManager, call: str):
         """A DatabaseManager has a server call."""
         assert call in database_manager._server_calls.keys()
+
+    @mark.parametrize(
+        "call",
+        [
+            "throughput",
+            "storage",
+            "system data",
+            "queue length",
+            "chunks data",
+            "failed tasks",
+            "get databases",
+        ],
+    )
+    def test_returns_a_successful_response_on_an_empty_call(
+        self, database_manager: DatabaseManager, call
+    ):
+        """Returns a status 200 response on a call."""
+        response = database_manager._server_calls[call]({})
+        assert response["header"]["status"] == 200
+
+    @mark.parametrize(
+        "call", ["add database", "delete database"],
+    )
+    def test_returns_an_failing_response_on_an_empty_call(
+        self, database_manager: DatabaseManager, call
+    ):
+        """Returns a status 400 response on a call."""
+        response = database_manager._server_calls[call]({})
+        assert response["header"]["status"] == 400

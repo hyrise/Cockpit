@@ -135,7 +135,7 @@ class DatabaseManager(object):
         return response
 
     def _call_delete_database(self, body: Dict) -> Dict:
-        database = self._databases.pop(body["id"], None)
+        database = self._databases.pop(body.get(id), None)
         if not database:
             return get_response(400)
         database.exit()
