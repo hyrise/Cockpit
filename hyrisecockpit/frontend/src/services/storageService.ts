@@ -3,22 +3,26 @@ import axios from "axios";
 import { StorageQueryResult } from "../types/storage";
 
 export function useStorageFetchService(): {
-  storageData: Ref<StorageQueryResult[]>;
+  storageData: Ref<Object>;
   getStorage: () => void;
 } {
-  const storageData = ref<StorageQueryResult[]>([]);
+  const storageData = ref<Object>({});
+  console.log(storageData, 'storage data');
+  getStorage()
 
   function getStorage(): void {
     fetchStorageData().then(result => {
-      storageData.value = transformDataFormat(result);
+      console.log(result);
+      storageData.value = result;
     });
   }
 
   function fetchStorageData(): Promise<Object> {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://192.168.30.126:5000/columninfo")
+        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/storage")
         .then(response => {
+          console.log(response, 'response')
           resolve(response.data);
         })
         .catch(error => {
