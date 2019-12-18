@@ -69,7 +69,7 @@ export default createComponent({
     console.log(selectedDatabaseIds, "selected");
     console.log(props.preselectedDatabaseId, "props");
 
-    const chartConfiguration = ["CPU", "Time ins s", "Workload"];
+    const chartConfiguration = ["CPU", "Time ins s", "Workload in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
