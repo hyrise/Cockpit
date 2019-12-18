@@ -15,20 +15,6 @@
         </v-col>
       </v-row>
       <div id="graph"></div>
-      <div class="slider my-12">
-        <v-slider
-          v-model="threads"
-          v-on:click="setNumberOfThreads"
-          thumb-label="always"
-          min="0"
-          max="32"
-          label="Number of Threads"
-        >
-        </v-slider>
-        <v-btn outlined large color="#1E90FF" @click="resetData">
-          Reset
-        </v-btn>
-      </div>
     </div>
   </div>
 </template>
@@ -46,7 +32,6 @@ import {
 import axios from "axios";
 import { useGeneratingTestData } from "../helpers/testData";
 import { useThroughputFetchService } from "../services/throughputService";
-import { useThreadConfigurationService } from "../services/threadService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { ThroughputData } from "../types/throughput";
 import { Database } from "../types/database";
@@ -60,8 +45,6 @@ interface Props {
 interface Data {
   throughputData: Ref<ThroughputData>;
   resetData: () => void;
-  threads: Ref<number>;
-  setNumberOfThreads: () => void;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
 }
@@ -71,7 +54,6 @@ export default createComponent({
     preselectedDatabaseId: { type: String }
   },
   setup(props: Props, context: SetupContext): Data {
-    const { threads, setNumberOfThreads } = useThreadConfigurationService();
     const {
       getThroughput,
       throughputData,
@@ -152,9 +134,7 @@ export default createComponent({
     return {
       throughputData,
       resetData,
-      threads,
       databases,
-      setNumberOfThreads,
       selectedDatabaseIds
     };
   }
