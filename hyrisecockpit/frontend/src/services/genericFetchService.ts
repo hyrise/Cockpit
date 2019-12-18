@@ -4,7 +4,6 @@ import { QueryResult, QueryData } from "../types/genericQueryData";
 import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
 import { useDataTransformation } from "./helpers/dataTransformationService";
 
-
 export function useGenericFetchService(
   dataType: string
 ): {
@@ -14,15 +13,16 @@ export function useGenericFetchService(
 } {
   const queryReadyState = ref<boolean>(true);
   const data = ref<QueryData>({});
-  const endpoint = getEndpoint(dataType); //refactor 
+  const endpoint = getEndpoint(dataType); //refactor
   const base = getBase(dataType);
   const transformData = useDataTransformation(dataType);
 
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
+      console.log(result);
       Object.keys(result).forEach(key => {
-        addData(key,transformData(result, key));
+        addData(key, transformData(result, key));
       });
       queryReadyState.value = true;
     });
@@ -32,9 +32,9 @@ export function useGenericFetchService(
     if (!data.value[dataBaseId]) {
       data.value[dataBaseId] = [];
     }
-    data.value[dataBaseId].concat([newData]);
+    data.value[dataBaseId].push(newData);
     const dataCopy = JSON.parse(JSON.stringify(data.value));
-    data.value=dataCopy;
+    data.value = dataCopy;
   }
 
   function fetchData(): Promise<QueryResult> {

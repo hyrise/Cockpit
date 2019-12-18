@@ -53,7 +53,9 @@ import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 
-interface Props {}
+interface Props {
+  preselectedDatabaseId: string;
+}
 
 interface Data {
   throughputData: Ref<ThroughputData>;
@@ -65,6 +67,9 @@ interface Data {
 }
 
 export default createComponent({
+  props: {
+    preselectedDatabaseId: { type: String }
+  },
   setup(props: Props, context: SetupContext): Data {
     const { threads, setNumberOfThreads } = useThreadConfigurationService();
     const {
@@ -79,7 +84,9 @@ export default createComponent({
       databases.value
     );
 
-    const selectedDatabaseIds = ref<string[]>([]);
+    const selectedDatabaseIds = ref<string[]>(
+      props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
+    );
 
     onMounted(() => {
       Plotly.newPlot("graph", [getDataset()], getLayout());
