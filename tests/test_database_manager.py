@@ -1,5 +1,5 @@
 """Tests for the database_manager module."""
-from pytest import fixture
+from pytest import fixture, mark
 from zmq import Context, Socket
 
 from hyrisecockpit.database_manager.manager import DatabaseManager
@@ -33,3 +33,25 @@ class TestDatabaseManager:
     def test_has_a_socket(self, database_manager: DatabaseManager):
         """A DatabaseManager has a ZMQ Socket."""
         assert isinstance(database_manager._socket, Socket)
+
+    def test_has_no_databases(self, database_manager: DatabaseManager):
+        """A DatabaseManager has no databases."""
+        assert database_manager._databases == {}
+
+    @mark.parametrize(
+        "call",
+        [
+            "add database",
+            "throughput",
+            "storage",
+            "system data",
+            "delete database",
+            "queue length",
+            "chunks data",
+            "failed tasks",
+            "get databases",
+        ],
+    )
+    def test_has_server_call(self, database_manager: DatabaseManager, call: str):
+        """A DatabaseManager has a server call."""
+        assert call in database_manager._server_calls.keys()

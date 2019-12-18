@@ -1,5 +1,5 @@
 """Tests for the workload_generator module."""
-from pytest import fixture
+from pytest import fixture, mark
 from zmq import Context, Socket
 
 from hyrisecockpit.settings import (
@@ -36,6 +36,11 @@ class TestWorkloadGenerator:
     def test_has_a_socket(self, workload_generator: WorkloadGenerator):
         """A WorkloadGenerator has a ZMQ Socket."""
         assert isinstance(workload_generator._socket, Socket)
+
+    @mark.parametrize("call", ["start", "stop", "shutdown"])
+    def test_has_server_call(self, workload_generator: WorkloadGenerator, call: str):
+        """A WorkloadGenerator has a server call."""
+        assert call in workload_generator._server_calls.keys()
 
 
 class TestWorkloadProducer:
