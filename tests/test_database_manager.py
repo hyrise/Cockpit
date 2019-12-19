@@ -34,6 +34,20 @@ class TestDatabaseManager:
         ) as mock_database_class:
             return mock_database_class()
 
+    def convenience_data_call(
+        self,
+        database_manager: DatabaseManager,
+        mock_database: Database,
+        call: Callable,
+        mock_data,
+    ):
+        """Check whether a data call works."""
+        assert call() == dict()
+        database_manager._databases["test_db1"] = mock_database
+        assert call() == {"test_db1": mock_data}
+        database_manager._databases["test_db2"] = mock_database
+        assert call() == {"test_db1": mock_data, "test_db2": mock_data}
+
     def test_initializes(self, database_manager: DatabaseManager):
         """A DatabaseManager initializes."""
         assert isinstance(database_manager, DatabaseManager)
@@ -142,11 +156,51 @@ class TestDatabaseManager:
         self, database_manager: DatabaseManager, mock_database: Database
     ):
         """Returns throughput of previously added databases."""
-        throughput: Callable = lambda: database_manager._call_throughput({})["body"][
+        call: Callable = lambda: database_manager._call_throughput({})["body"][
             "throughput"
         ]
-        mock_database.get_throughput_counter.return_value = 42  # type: ignore
-        database_manager._databases["test_db1"] = mock_database
-        assert throughput() == {"test_db1": 42}
-        database_manager._databases["test_db2"] = mock_database
-        assert throughput() == {"test_db1": 42, "test_db2": 42}
+        mock_data = 42
+        mock_database.get_throughput_counter.return_value = mock_data  # type: ignore
+        self.convenience_data_call(database_manager, mock_database, call, mock_data)
+
+    def test_call_storage_returns_storage(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Returns storage of previously added databases."""
+        call: Callable = lambda: database_manager._call_storage({})["body"]["storage"]
+        mock_data = {"Tables": 21}
+        mock_database.get_storage_data.return_value = mock_data  # type: ignore
+        self.convenience_data_call(database_manager, mock_database, call, mock_data)
+
+    def test_call_chunks_returns_chunks(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Returns chunks data of previously added databases."""
+        call: Callable = lambda: database_manager._call_chunks_data({})["body"][
+            "chunks_data"
+        ]
+        mock_data = {"Chunk": 84}
+        mock_database.get_chunks_data.return_value = mock_data  # type: ignore
+        self.convenience_data_call(database_manager, mock_database, call, mock_data)
+
+    def test_call_queue_length_returns_queue_length(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Returns queue length of previously added databases."""
+        call: Callable = lambda: database_manager._call_queue_length({})["body"][
+            "queue_length"
+        ]
+        mock_data = {"queue length": 21}
+        mock_database.get_queue_length.return_value = mock_data  # type: ignore
+        self.convenience_data_call(database_manager, mock_database, call, mock_data)
+
+    def test_call_system_data_returns_system_data(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Returns system data of previously added databases."""
+        call: Callable = lambda: database_manager._call_system_data({})["body"][
+            "system_data"
+        ]
+        mock_data = {"system data": {"cpu": 84.1, "ram": 23.7}}
+        mock_database.get_system_data.return_value = mock_data  # type: ignore
+        self.convenience_data_call(database_manager, mock_database, call, mock_data)
