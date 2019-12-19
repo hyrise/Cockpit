@@ -1,13 +1,39 @@
 export function useDataTransformation(
   dataType: string
-): (data: any, key: string) => number {
-  function transformCPUData(data: any, key: string): number {
+): (data: any, key?: string) => any {
+  function transformCPUData(data: any, key: string = ""): number {
     return data[key].cpu.reduce(
-      (accumulator, currentValue) => accumulator + currentValue
+      (accumulator: any, currentValue: any) => accumulator + currentValue
     );
   }
-  function transformThroughputData(data: any, key: string): number {
+  function transformThroughputData(data: any, key: string = ""): number {
     return data.throughput[key][1];
+  }
+
+  function transformStorageData(
+    data: any,
+    key: string = ""
+  ): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
+    const newLabels: string[] = [];
+    const newParents: string[] = [];
+    const newSizes: number[] = [];
+
+    Object.keys(data).forEach(instance => {
+      newLabels.push(instance);
+      newParents.push("");
+      newSizes.push(0);
+      Object.keys(data[instance]).forEach(table => {
+        newLabels.push(instance + "_" + table);
+        newParents.push(instance);
+        newSizes.push(0);
+        Object.keys(data[instance][table].data).forEach(attribute => {
+          newLabels.push(instance + "_" + attribute);
+          newParents.push(instance + "_" + table);
+          newSizes.push(data[instance][table].data[attribute].size);
+        });
+      });
+    });
+    return { newLabels, newParents, newSizes };
   }
 
   if (dataType === "cpu") {
@@ -15,6 +41,9 @@ export function useDataTransformation(
   }
   if (dataType === "throughput") {
     return transformThroughputData;
+  }
+  if (dataType === "storage") {
+    return transformStorageData;
   }
   return transformThroughputData;
 }

@@ -1,18 +1,19 @@
 import { Ref, ref } from "@vue/composition-api";
 import axios from "axios";
-import { StorageQueryResult } from "../types/storage";
+
+import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
 
 export function useStorageFetchService(): {
-  storageData: Ref<Object>;
+  storageData: Ref<Object | null>;
   getStorage: () => void;
 } {
-  const storageData = ref<Object>({});
-  console.log(storageData, "storage data");
+  const endpoint = getEndpoint("storage");
+  const base = getBase("storage");
+  const storageData = ref<Object>(null);
   getStorage();
 
   function getStorage(): void {
     fetchStorageData().then(result => {
-      console.log(result);
       storageData.value = result;
     });
   }
@@ -20,33 +21,14 @@ export function useStorageFetchService(): {
   function fetchStorageData(): Promise<Object> {
     return new Promise((resolve, reject) => {
       axios
-        .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/storage")
+        .get(endpoint)
         .then(response => {
-          console.log(response, "response");
-          resolve(response.data);
+          resolve(response.data.body[base]);
         })
         .catch(error => {
           reject(error);
         });
     });
-  }
-
-  function transformDataFormat(data: any): StorageQueryResult[] {
-    const dataArray: StorageQueryResult[] = [];
-    const tableData: StorageQueryResult[] = data["columninfo"];
-    for (let i = 0; i < tableData.length; i++) {
-      const columnData = tableData[i];
-      let entry: StorageQueryResult = {
-        table: columnData["table"],
-        column: columnData["column"],
-        size: columnData["size"],
-        dataType: columnData["dataType"],
-        encoding: columnData["encoding"]
-      };
-
-      dataArray.push(entry);
-    }
-    return dataArray;
   }
 
   return { getStorage, storageData };

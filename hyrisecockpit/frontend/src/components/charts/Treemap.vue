@@ -9,9 +9,7 @@ import {
   onMounted,
   watch,
   Ref,
-  ref,
-  computed,
-  reactive
+  ref
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 
