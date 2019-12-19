@@ -10,7 +10,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from zmq import REQ, Context, Socket
 
-from hyrisecockpit.setting import (
+from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
     GENERATOR_HOST,
