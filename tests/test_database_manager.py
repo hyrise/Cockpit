@@ -1,5 +1,5 @@
 """Tests for the database_manager module."""
-from typing import Dict
+from typing import Callable, Dict
 from unittest.mock import patch
 
 from pytest import fixture, mark
@@ -137,3 +137,16 @@ class TestDatabaseManager:
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"] == dict()
+
+    def test_call_throughput_returns_throughput(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Returns throughput of previously added databases."""
+        throughput: Callable = lambda: database_manager._call_throughput({})["body"][
+            "throughput"
+        ]
+        mock_database.get_throughput_counter.return_value = 42  # type: ignore
+        database_manager._databases["test_db1"] = mock_database
+        assert throughput() == {"test_db1": 42}
+        database_manager._databases["test_db2"] = mock_database
+        assert throughput() == {"test_db1": 42, "test_db2": 42}
