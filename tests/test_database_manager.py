@@ -1,4 +1,5 @@
 """Tests for the database_manager module."""
+from typing import Dict
 from unittest.mock import patch
 
 from pytest import fixture, mark
@@ -129,3 +130,10 @@ class TestDatabaseManager:
         assert database_manager._databases.keys() == set()
         assert call_delete("test_db2") == 400
         assert database_manager._databases.keys() == set()
+
+    def test_call_not_found_returns_400(self, database_manager: DatabaseManager):
+        """Call not found returns a response with status 400."""
+        response: Dict = database_manager._call_not_found({})
+        assert response["header"]["status"] == 400
+        assert response["header"]["message"] == "BAD REQUEST"
+        assert response["body"] == dict()

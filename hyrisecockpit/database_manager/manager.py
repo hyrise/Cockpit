@@ -155,7 +155,7 @@ class DatabaseManager(object):
         return response
 
     def _call_not_found(self, body: Dict) -> Dict:
-        return get_response(200)
+        return get_response(400)
 
     def _exit(self) -> None:
         """Perform clean exit on all databases."""
