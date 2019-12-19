@@ -1,7 +1,7 @@
 """Module for managing databases."""
 
 import sys
-from typing import Any, Callable, Dict
+from typing import Any, Callable, Dict, Optional
 
 from zmq import REP, Context
 
@@ -27,7 +27,7 @@ class DatabaseManager(object):
         self._db_manager_port = db_manager_port
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
-        self._databases: Dict = dict()
+        self._databases: Dict[str, Database] = dict()
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
@@ -135,12 +135,16 @@ class DatabaseManager(object):
         return response
 
     def _call_delete_database(self, body: Dict) -> Dict:
-        database = self._databases.pop(body.get(id), None)
-        if not database:
+        id: Optional[str] = body.get("id")
+        if not id:
             return get_response(400)
-        database.exit()
-        del database
-        return get_response(200)
+        database: Optional[Database] = self._databases.pop(id, None)
+        if database:
+            database.exit()
+            del database
+            return get_response(200)
+        else:
+            return get_response(400)
 
     def _call_failed_tasks(self, body: Dict) -> Dict:
         failed_tasks = {}

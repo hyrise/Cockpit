@@ -1,7 +1,10 @@
 """Tests for the database_manager module."""
+from unittest.mock import patch
+
 from pytest import fixture, mark
 from zmq import Context, Socket
 
+from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -21,6 +24,14 @@ class TestDatabaseManager:
             DB_MANAGER_HOST, DB_MANAGER_PORT, WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT
         ) as database_manager:
             return database_manager
+
+    @fixture
+    def mock_database(self) -> Database:
+        """Get a mock Database."""
+        with patch(
+            "hyrisecockpit.database_manager.database.Database"
+        ) as mock_database_class:
+            return mock_database_class()
 
     def test_initializes(self, database_manager: DatabaseManager):
         """A DatabaseManager initializes."""
@@ -84,3 +95,37 @@ class TestDatabaseManager:
         """Returns a status 400 response on a call."""
         response = database_manager._server_calls[call]({})
         assert response["header"]["status"] == 400
+
+    def test_get_databases_returns_databases(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Returns previously added databases."""
+        assert database_manager._databases == {}
+        database_manager._databases["test_db1"] = mock_database
+        assert database_manager._call_get_databases({})["body"]["databases"] == [
+            "test_db1"
+        ]
+        database_manager._databases["test_db2"] = mock_database
+        assert database_manager._call_get_databases({})["body"]["databases"] == [
+            "test_db1",
+            "test_db2",
+        ]
+
+    def test_delete_database_deletes_databases(
+        self, database_manager: DatabaseManager, mock_database: Database
+    ):
+        """Deletes previously added databases."""
+        assert database_manager._databases == {}
+        database_manager._databases["test_db1"] = mock_database
+        database_manager._databases["test_db2"] = mock_database
+        call_delete = lambda id: database_manager._call_delete_database(  # noqa: E731
+            {"id": id}
+        )["header"]["status"]
+        assert call_delete("test_db1") == 200
+        assert database_manager._databases.keys() == {"test_db2"}
+        assert call_delete("test_db1") == 400
+        assert database_manager._databases.keys() == {"test_db2"}
+        assert call_delete("test_db2") == 200
+        assert database_manager._databases.keys() == set()
+        assert call_delete("test_db2") == 400
+        assert database_manager._databases.keys() == set()
