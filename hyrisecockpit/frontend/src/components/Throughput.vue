@@ -42,7 +42,6 @@ interface Props {
   preselectedDatabaseId: string;
 }
 
-
 interface Data {
   throughputData: Ref<ThroughputData>;
   resetData: () => void;
@@ -91,7 +90,6 @@ export default createComponent({
           Plotly.plot("graph", newDatasets, getLayout());
         }
       );
-
     });
 
     function checkState(): void {

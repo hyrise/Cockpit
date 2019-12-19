@@ -10,7 +10,7 @@
         <b> CPU Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Cpu :preselectedDatabaseId="$route.params.id"/>
+      <Cpu :preselectedDatabaseId="$route.params.id" />
       <div class="mt-6 mb-2">
         <b> Storage Monitoring </b>
       </div>

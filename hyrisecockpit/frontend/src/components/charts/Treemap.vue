@@ -1,9 +1,8 @@
 <template>
-    <div :id="graphId"></div>
+  <div :id="graphId"></div>
 </template>
 
 <script lang="ts">
-
 import {
   createComponent,
   SetupContext,
@@ -48,39 +47,60 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext) {
-    const { getLayout, getDataset } = useTreemapConfiguration(props.chartConfiguration);
+    const { getLayout, getDataset } = useTreemapConfiguration(
+      props.chartConfiguration
+    );
 
-    onMounted(()=> {
-      watch(() =>  {
-        if(props.labels.length>0 && props.parents.length>0 && props.values.length>0){
-          Plotly.newPlot(props.graphId, getDataset(props.labels, props.parents, props.values), getLayout());
+    onMounted(() => {
+      watch(() => {
+        if (
+          props.labels.length > 0 &&
+          props.parents.length > 0 &&
+          props.values.length > 0
+        ) {
+          Plotly.newPlot(
+            props.graphId,
+            getDataset(props.labels, props.parents, props.values),
+            getLayout()
+          );
         }
-      })
-
-    });  
+      });
+    });
   }
 });
-  function useTreemapConfiguration(chartConfiguration: string[]):{
-    getLayout: () => Object;
-    getDataset: (labels: string[], parents: string[], values: number[]) => Object[];
-  }{
-    function getLayout(): Object{
-      return {
-        annotations: [{
-        showarrow: false,
-        text: "Database: <b>"+chartConfiguration[0]+"</b>",
-        x: 0.25,
-        xanchor: "center",
-        y: 1.1,
-        yanchor: "bottom"
-      }],
-        autosize: false,
-        width: 1200,
-        height: 900
-      };
-    }
-    function getDataset(labels: string[], parents: string[], values: number[]):Object[] {
-      return [
+function useTreemapConfiguration(
+  chartConfiguration: string[]
+): {
+  getLayout: () => Object;
+  getDataset: (
+    labels: string[],
+    parents: string[],
+    values: number[]
+  ) => Object[];
+} {
+  function getLayout(): Object {
+    return {
+      annotations: [
+        {
+          showarrow: false,
+          text: "Database: <b>" + chartConfiguration[0] + "</b>",
+          x: 0.25,
+          xanchor: "center",
+          y: 1.1,
+          yanchor: "bottom"
+        }
+      ],
+      autosize: false,
+      width: 1200,
+      height: 900
+    };
+  }
+  function getDataset(
+    labels: string[],
+    parents: string[],
+    values: number[]
+  ): Object[] {
+    return [
       {
         type: "treemap",
         labels: labels,
@@ -92,10 +112,9 @@ export default createComponent({
         pathbar: { visible: false }
       }
     ];
-    }
-    return { getLayout, getDataset }
-    }
-
+  }
+  return { getLayout, getDataset };
+}
 </script>
 <style>
 .treemap {

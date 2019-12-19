@@ -1,6 +1,12 @@
 <template>
   <div class="treemap mx-10 my-10">
-    <Treemap graph-id="treemap" :labels="labels" :parents="parents" :values="sizes" :chart-configuration="chartConfiguration" />
+    <Treemap
+      graph-id="treemap"
+      :labels="labels"
+      :parents="parents"
+      :values="sizes"
+      :chart-configuration="chartConfiguration"
+    />
   </div>
 </template>
 
@@ -19,8 +25,8 @@ import {
 import { StorageQueryResult } from "../types/storage";
 import { useStorageFetchService } from "../services/storageService";
 import * as Plotly from "plotly.js";
-import {useGeneratingTestData} from "../helpers/testData";
-import Treemap from "./charts/Treemap.vue"
+import { useGeneratingTestData } from "../helpers/testData";
+import Treemap from "./charts/Treemap.vue";
 
 interface Props {}
 
@@ -32,36 +38,39 @@ interface Data {
 }
 
 export default createComponent({
-  components:  {
+  components: {
     Treemap
   },
   setup(props: Props, context: SetupContext): Data {
     const { storageData, getStorage } = useStorageFetchService();
-    const {generateStorageData} = useGeneratingTestData();
+    const { generateStorageData } = useGeneratingTestData();
     let localStorage = ref<Object>(null);
-    setInterval(addData, 2000)
+    setInterval(addData, 2000);
 
-    function addData(){
-      console.log('add')
+    function addData() {
+      console.log("add");
       localStorage.value = generateStorageData();
     }
-    
-    const labels= ref<string[]>([]);
-    const parents= ref<string[]>([]);
-    const sizes= ref<number[]>([]);
+
+    const labels = ref<string[]>([]);
+    const parents = ref<string[]>([]);
+    const sizes = ref<number[]>([]);
     const chartConfiguration = ref<string[]>(["citadelle"]);
 
     watch(localStorage, () => {
-      if(localStorage.value){
-      const {newLabels, newParents, newSizes} = calculateData();
-      labels.value= newLabels;
-      parents.value= newParents;
-      sizes.value = newSizes;
+      if (localStorage.value) {
+        const { newLabels, newParents, newSizes } = calculateData();
+        labels.value = newLabels;
+        parents.value = newParents;
+        sizes.value = newSizes;
       }
+    });
 
-    })
-
-    function calculateData(): {newLabels: string[]; newParents: string[]; newSizes: number[]} {
+    function calculateData(): {
+      newLabels: string[];
+      newParents: string[];
+      newSizes: number[];
+    } {
       const newLabels: string[] = [];
       const newParents: string[] = [];
       const newSizes: number[] = [];
@@ -70,25 +79,27 @@ export default createComponent({
         newLabels.push(instance);
         newParents.push("");
         newSizes.push(0);
-        Object.keys(localStorage.value.body.storage[instance]).forEach(table => {
-          newLabels.push(instance+'_'+table);
-          newParents.push(instance);
-          newSizes.push(0);
-          Object.keys(localStorage.value.body.storage[instance][table].data).forEach(
-            attribute => {
-              newLabels.push(instance+'_'+attribute);
-              newParents.push(instance+'_'+table);
+        Object.keys(localStorage.value.body.storage[instance]).forEach(
+          table => {
+            newLabels.push(instance + "_" + table);
+            newParents.push(instance);
+            newSizes.push(0);
+            Object.keys(
+              localStorage.value.body.storage[instance][table].data
+            ).forEach(attribute => {
+              newLabels.push(instance + "_" + attribute);
+              newParents.push(instance + "_" + table);
               newSizes.push(
-                localStorage.value.body.storage[instance][table].data[attribute].size
+                localStorage.value.body.storage[instance][table].data[attribute]
+                  .size
               );
-            }
-          );
-        });
+            });
+          }
+        );
       });
-      return { newLabels, newParents, newSizes }
-    
+      return { newLabels, newParents, newSizes };
     }
-    return { labels, parents, sizes, chartConfiguration }
+    return { labels, parents, sizes, chartConfiguration };
   }
 });
 </script>

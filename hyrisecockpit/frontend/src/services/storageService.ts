@@ -7,8 +7,8 @@ export function useStorageFetchService(): {
   getStorage: () => void;
 } {
   const storageData = ref<Object>({});
-  console.log(storageData, 'storage data');
-  getStorage()
+  console.log(storageData, "storage data");
+  getStorage();
 
   function getStorage(): void {
     fetchStorageData().then(result => {
@@ -22,7 +22,7 @@ export function useStorageFetchService(): {
       axios
         .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/storage")
         .then(response => {
-          console.log(response, 'response')
+          console.log(response, "response");
           resolve(response.data);
         })
         .catch(error => {
