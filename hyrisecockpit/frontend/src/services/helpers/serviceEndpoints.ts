@@ -29,7 +29,7 @@ export function getBase(type: string): string {
     return cpuBase;
   }
   if (type === "database") {
-    return backendUrl + databaseBase;
+    return databaseBase;
   }
   if (type === "storage") {
     return storageBase;
