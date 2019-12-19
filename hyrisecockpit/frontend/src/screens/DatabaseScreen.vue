@@ -15,7 +15,7 @@
         <b> Storage Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Treemap />
+      <Storage />
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Throughput from "../components/Throughput.vue";
-import Treemap from "../components/Treemap.vue";
+import Storage from "../components/Storage.vue";
 import Cpu from "../components/Cpu.vue";
 
 export default createComponent({
@@ -31,7 +31,7 @@ export default createComponent({
 
   components: {
     Throughput,
-    Treemap,
+    Storage,
     Cpu
   }
 });
