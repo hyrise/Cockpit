@@ -54,9 +54,12 @@ class WorkloadGenerator(object):
         return get_response(200)
 
     def _call_workload(self, body: Dict) -> Dict:
-        queries = self._workload_generators.get(body["type"], self._call_not_found)(
+        queries = self._workload_generators.get(body["type"], self._generate_empty)(
             body["factor"]
         )
+
+        if queries == []:
+            return get_response(400)
 
         response = get_response(200)
         response["body"] = {"querylist": queries}
@@ -72,6 +75,9 @@ class WorkloadGenerator(object):
     def _generate_mixed(self, factor: int) -> List:
         queries: List[Any] = []
         return queries
+
+    def _generate_empty(self, factor: int) -> List:
+        return []
 
     def _call_not_found(self, body: Dict) -> Dict:
         return get_response(400)
