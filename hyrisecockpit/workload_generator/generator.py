@@ -3,7 +3,7 @@
 Includes the main WorkloadGenerator, which uses multiple WorkloadProducers.
 The WorkloadGenerator manages the WorkloadProducers.
 """
-from typing import Any, Callable, Dict
+from typing import Any, Callable, Dict, List, Tuple
 
 from zmq import PUB, REP, Context
 
@@ -29,6 +29,10 @@ class WorkloadGenerator(object):
             "workload": self._call_workload,
             "shutdown": self._call_shutdown,
         }
+        self._workload_generators: Dict[str, Callable[[int], List[Tuple[str, Any]]]] = {
+            "no-ops": self._generate_noops,
+            "mixed": self._generate_mixed,
+        }
         self._shutdown_requested: bool = False
         self._init_server()
 
@@ -50,13 +54,24 @@ class WorkloadGenerator(object):
         return get_response(200)
 
     def _call_workload(self, body: Dict) -> Dict:
-        queries = []
-        for _ in range(body["factor"]):
-            queries.append(("SELECT 1;", None))
+        queries = self._workload_generators.get(body["type"], self._call_not_found)(
+            body["factor"]
+        )
+
         response = get_response(200)
         response["body"] = {"querylist": queries}
         self._pub_socket.send_json(response)
-        return response
+        return get_response(200)
+
+    def _generate_noops(self, factor: int) -> List:
+        queries = []
+        for _ in range(factor):
+            queries.append(("SELECT 1;", None))
+        return queries
+
+    def _generate_mixed(self, factor: int) -> List:
+        queries: List[Any] = []
+        return queries
 
     def _call_not_found(self, body: Dict) -> Dict:
         return get_response(400)
