@@ -2,13 +2,15 @@
 
 Includes the main WorkloadGenerator.
 """
-import random
-import secrets
+
 from typing import Any, Callable, Dict, List, Tuple
 
 from zmq import PUB, REP, Context
 
 from hyrisecockpit.response import get_response
+
+from .workloads.mixed import generate_mixed
+from .workloads.noops import generate_noops
 
 
 class WorkloadGenerator(object):
@@ -31,8 +33,8 @@ class WorkloadGenerator(object):
             "shutdown": self._call_shutdown,
         }
         self._workload_generators: Dict[str, Callable[[int], List[Tuple[str, Any]]]] = {
-            "no-ops": self._generate_noops,
-            "mixed": self._generate_mixed,
+            "no-ops": generate_noops,
+            "mixed": generate_mixed,
         }
         self._shutdown_requested: bool = False
         self._init_server()
@@ -66,50 +68,6 @@ class WorkloadGenerator(object):
         response["body"] = {"querylist": queries}
         self._pub_socket.send_json(response)
         return get_response(200)
-
-    def _generate_noops(self, factor: int) -> List:
-        queries = []
-        for _ in range(factor):
-            queries.append(("SELECT 1;", None))
-        return queries
-
-    def _generate_mixed(self, factor: int) -> List:
-        simple_query = """SELECT * FROM nation WHERE n_nationkey = (%s);"""
-        queries = random.choices(
-            [
-                (
-                    """SELECT
-                l_returnflag,
-                l_linestatus,
-                SUM(l_quantity) as sum_qty,
-                SUM(l_extendedprice) as sum_base_price,
-                SUM(l_extendedprice*(1.0-l_discount)) as sum_disc_price,
-                SUM(l_extendedprice*(1.0-l_discount)*(1.0+l_tax)) as sum_charge,
-                AVG(l_quantity) as avg_qty, AVG(l_extendedprice) as avg_price,
-                AVG(l_discount) as avg_disc, COUNT(*) as count_order
-                FROM lineitem
-                WHERE l_shipdate <= '1998-12-01'
-                GROUP BY l_returnflag, l_linestatus
-                ORDER BY l_returnflag, l_linestatus;""",
-                    None,
-                ),
-                (
-                    """SELECT
-                sum(l_extendedprice*l_discount) AS REVENUE
-                FROM lineitem
-                WHERE l_shipdate >= '1994-01-01'
-                    AND l_shipdate < '1995-01-01'
-                    AND l_discount BETWEEN .05
-                    AND .07 AND l_quantity < 24.0;""",
-                    None,
-                ),
-                (simple_query, (secrets.randbelow(24),)),
-            ],
-            weights=[1, 1, 100],
-            k=factor,
-        )
-
-        return queries
 
     def _generate_empty(self, factor: int) -> List:
         return []
