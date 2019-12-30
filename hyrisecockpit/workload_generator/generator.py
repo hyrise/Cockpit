@@ -11,6 +11,7 @@ from hyrisecockpit.response import get_response
 
 from .workloads.mixed import generate_mixed
 from .workloads.noops import generate_noops
+from .workloads.tpch import generate_tpch
 
 
 class WorkloadGenerator(object):
@@ -35,6 +36,7 @@ class WorkloadGenerator(object):
         self._workload_generators: Dict[str, Callable[[int], List[Tuple[str, Any]]]] = {
             "no-ops": generate_noops,
             "mixed": generate_mixed,
+            "tpch": generate_tpch,
         }
         self._shutdown_requested: bool = False
         self._init_server()
