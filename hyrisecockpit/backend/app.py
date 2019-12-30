@@ -119,19 +119,9 @@ def database() -> Dict:
     return response
 
 
-@app.route("/workload", methods=["POST", "DELETE"])
+@app.route("/workload", methods=["POST"])
 def workload() -> Dict:
-    """Start or stop the workload generator."""
-    request_json = request.get_json()
-    if request.method == "POST":
-        message = {
-            "header": {"message": "start"},
-            "body": {"n_producers": request_json["n_producers"]},
-        }
-    elif request.method == "DELETE":
-        message = {
-            "header": {"message": "stop"},
-            "body": {},
-        }
+    """Start the workload generation."""
+    message = request.get_json()
     response = _send_message(generator_socket, message)
     return response
