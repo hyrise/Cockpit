@@ -32,7 +32,8 @@ class TestWorkloadGenerator:
 
     def test_has_a_socket(self, workload_generator: WorkloadGenerator):
         """A WorkloadGenerator has a ZMQ Socket."""
-        assert isinstance(workload_generator._socket, Socket)
+        assert isinstance(workload_generator._rep_socket, Socket)
+        assert isinstance(workload_generator._pub_socket, Socket)
 
     @mark.parametrize("call", ["start", "stop", "shutdown"])
     def test_has_server_call(self, workload_generator: WorkloadGenerator, call: str):
