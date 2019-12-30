@@ -1,7 +1,6 @@
 """Module for generating workloads.
 
-Includes the main WorkloadGenerator, which uses multiple WorkloadProducers.
-The WorkloadGenerator manages the WorkloadProducers.
+Includes the main WorkloadGenerator.
 """
 import random
 import secrets
