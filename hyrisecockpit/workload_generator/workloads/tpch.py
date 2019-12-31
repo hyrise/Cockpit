@@ -9,6 +9,13 @@ def generate_tpch(factor: int) -> List:
     """Generate TPC-H workload."""
     querylist: List[Tuple[str, Any]] = []
 
+    segments = [
+        "AUTOMOBILE",
+        "BUILDING",
+        "FURNITURE",
+        "MACHINERY",
+        "HOUSEHOLD",
+    ]  # pre-defined segment names
     r_name = [
         "AFRICA",
         "AMERICA",
@@ -113,5 +120,42 @@ def generate_tpch(factor: int) -> List:
     )
 
     querylist.append((query2, parameters2))
+
+    # __________TPCH 3________________
+
+    query3 = """
+    SELECT
+        l_orderkey,
+        sum(l_extendedprice*(1-l_discount)) as revenue,
+        o_shippriority
+        o_orderdate,
+    FROM
+        customer,
+        orders,
+        lineitem
+    WHERE
+        c_mktsegment = (%s)
+        and c_custkey = o_custkey
+        and l_orderkey = o_orderkey
+        and o_orderdate < date (%s)
+        and l_shipdate > date (%s)
+    GROUP BY
+        l_orderkey,
+        o_orderdate,
+        o_shippriority
+    ORDER BY
+        revenue desc,
+        o_orderdate;
+    """
+
+    segment = choice(segments)
+    r_date = str(date(1995, 3, randbelow(31) + 1))
+    parameters3 = (
+        segment,
+        r_date,
+        r_date,
+    )
+
+    querylist.append((query3, parameters3))
 
     return querylist
