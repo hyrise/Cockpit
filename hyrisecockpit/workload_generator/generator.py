@@ -70,9 +70,6 @@ class WorkloadGenerator(object):
         self._pub_socket.send_json(response)
         return get_response(200)
 
-    def _generate_empty(self, factor: int) -> List:
-        return []
-
     def _call_not_found(self, body: Dict) -> Dict:
         return get_response(400)
 
