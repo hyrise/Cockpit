@@ -59,12 +59,11 @@ class WorkloadGenerator(object):
         return get_response(200)
 
     def _call_workload(self, body: Dict) -> Dict:
-        queries = self._workload_generators.get(body["type"], self._generate_empty)(
-            body["factor"]
-        )
-
-        if queries == []:
+        generator = self._workload_generators.get(body["type"], None)
+        if not generator:
             return get_response(400)
+
+        queries = generator(body["factor"])
 
         response = get_response(200)
         response["body"] = {"querylist": queries}
