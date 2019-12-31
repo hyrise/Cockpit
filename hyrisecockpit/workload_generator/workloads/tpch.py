@@ -1,13 +1,28 @@
 """Module for generating TPC-H workload."""
 
 from datetime import date, timedelta
-from secrets import randbelow
-from typing import List
+from secrets import choice, randbelow
+from typing import Any, List, Tuple
 
 
 def generate_tpch(factor: int) -> List:
     """Generate TPC-H workload."""
-    querylist = []
+    querylist: List[Tuple[str, Any]] = []
+
+    r_name = [
+        "AFRICA",
+        "AMERICA",
+        "ASIA",
+        "EUROPE",
+        "MIDDLE EAST",
+    ]  # pre-defined region names
+    syllable_3 = [
+        "TIN",
+        "NICKEL",
+        "BRASS",
+        "STEEL",
+        "COPPER",
+    ]  # pre-defined types from Syllable 3
 
     # __________TPCH 1________________
 
@@ -42,56 +57,61 @@ def generate_tpch(factor: int) -> List:
 
     # __________TPCH 2________________
 
-    # query2 = """
-    # SELECT
-    # 	s_acctbal,
-    # 	s_name,
-    # 	n_name,
-    # 	p_partkey,
-    # 	p_mfgr,
-    # 	s_address,
-    # 	s_phone,
-    # 	s_comment
-    # FROM
-    # 	part,
-    # 	supplier,
-    # 	partsupp,
-    # 	nation,
-    # 	region
-    # 	where
-    # 	p_partkey = ps_partkey
-    # 	and s_suppkey = ps_suppkey
-    # 	and p_size = [SIZE]
-    # 	and p_type like '%[TYPE]'
-    # 	and s_nationkey = n_nationkey
-    # 	and n_regionkey = r_regionkey
-    # 	and r_name = '[REGION]'
-    # 	and ps_supplycost = (
-    # 		SELECT
-    # 			min(ps_supplycost)
-    # 		FROM
-    # 			partsupp, supplier,
-    # 			nation, region
-    # 		WHERE
-    # 			p_partkey = ps_partkey
-    # 			and s_suppkey = ps_suppkey
-    # 			and s_nationkey = n_nationkey
-    # 			and n_regionkey = r_regionkey
-    # 			and r_name = '[REGION]'
-    # 	)
-    # ORDER BY
-    # 	s_acctbal desc,
-    # 	n_name,
-    # 	s_name,
-    # 	p_partkey;
-    # """
-    #
-    # SIZE = randbelow(50) + 1
-    # TYPE =
-    # REGION =
-    #
-    # parameters2 = (SIZE, TYPE, REGION, REGION, )
-    #
-    # querylist.append((query2, parameters2))
+    query2 = """
+    SELECT
+        s_acctbal,
+        s_name,
+        n_name,
+        p_partkey,
+        p_mfgr,
+        s_address,
+        s_phone,
+        s_comment
+    FROM
+        part,
+        supplier,
+        partsupp,
+        nation,
+        region
+    WHERE
+        p_partkey = ps_partkey
+        and s_suppkey = ps_suppkey
+        and p_size = (%s)
+        and p_type LIKE (%s)
+        and s_nationkey = n_nationkey
+        and n_regionkey = r_regionkey
+        and r_name = (%s)
+        and ps_supplycost = (
+            SELECT
+                min(ps_supplycost)
+            FROM
+                partsupp, supplier,
+                nation, region
+            WHERE
+                p_partkey = ps_partkey
+                and s_suppkey = ps_suppkey
+                and s_nationkey = n_nationkey
+                and n_regionkey = r_regionkey
+                and r_name = (%s)
+            )
+      ORDER BY
+        s_acctbal desc,
+        n_name,
+        s_name,
+        p_partkey;
+    """
+
+    size = str(randbelow(50) + 1)
+    type = choice(syllable_3)
+    region = choice(r_name)
+
+    parameters2 = (
+        size,
+        type,
+        region,
+        region,
+    )
+
+    querylist.append((query2, parameters2))
 
     return querylist

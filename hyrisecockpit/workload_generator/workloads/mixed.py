@@ -1,14 +1,14 @@
 """Module for generating mixed workload."""
 
-import random
-import secrets
+from random import choices
+from secrets import randbelow
 from typing import List
 
 
 def generate_mixed(factor: int) -> List:
     """Generate mixed workload."""
     simple_query = """SELECT * FROM nation WHERE n_nationkey = (%s);"""
-    queries = random.choices(
+    queries = choices(
         [
             (
                 """SELECT
@@ -36,7 +36,7 @@ def generate_mixed(factor: int) -> List:
                 AND .07 AND l_quantity < 24.0;""",
                 None,
             ),
-            (simple_query, (secrets.randbelow(24),)),
+            (simple_query, (randbelow(24),)),
         ],
         weights=[1, 1, 100],
         k=factor,
