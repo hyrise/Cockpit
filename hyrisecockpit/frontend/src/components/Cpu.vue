@@ -35,7 +35,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useThroughputFetchService } from "../services/throughputService";
 import { useGenericFetchService } from "../services/genericFetchService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { CPUData } from "../types/cpu";
