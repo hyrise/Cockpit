@@ -2,7 +2,7 @@
 
 Includes the main WorkloadGenerator.
 """
-
+import sys
 from typing import Any, Callable, Dict, List, Tuple
 
 from zmq import PUB, REP, Context
@@ -95,17 +95,20 @@ class WorkloadGenerator(object):
             )
         )
         while True:
-            # Get the message
-            request = self._rep_socket.recv_json()
+            try:
+                # Get the message
+                request = self._rep_socket.recv_json()
 
-            # Handle the call
-            response = self._server_calls.get(
-                request["header"]["message"], self._call_not_found
-            )(request["body"])
+                # Handle the call
+                response = self._server_calls.get(
+                    request["header"]["message"], self._call_not_found
+                )(request["body"])
 
-            # Send the reply
-            self._rep_socket.send_json(response)
+                # Send the reply
+                self._rep_socket.send_json(response)
 
-            # Shutdown
-            if self._shutdown_requested:
-                break
+                # Shutdown
+                if self._shutdown_requested:
+                    break
+            except KeyboardInterrupt:
+                sys.exit()
