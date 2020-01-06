@@ -14,7 +14,7 @@ import {
 } from "@vue/composition-api";
 import axios from "axios";
 
-import { QueryData } from "../../types/queryData";
+import { QueryData } from "../../types/genericQueryData";
 import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
