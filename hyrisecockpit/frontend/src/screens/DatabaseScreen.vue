@@ -12,6 +12,11 @@
       <v-divider class="mb-4"></v-divider>
       <Cpu :preselectedDatabaseId="$route.params.id" />
       <div class="mt-6 mb-2">
+        <b> Access frequency Monitoring </b>
+      </div>
+      <v-divider class="mb-4"></v-divider>
+      <Access />
+      <div class="mt-6 mb-2">
         <b> Storage Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
@@ -25,6 +30,7 @@ import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
 import Throughput from "../components/Throughput.vue";
 import Storage from "../components/Storage.vue";
 import Cpu from "../components/Cpu.vue";
+import Access from "../components/Access.vue";
 
 export default createComponent({
   name: "DatabaseScreen",
@@ -32,7 +38,8 @@ export default createComponent({
   components: {
     Throughput,
     Storage,
-    Cpu
+    Cpu,
+    Access
   }
 });
 </script>

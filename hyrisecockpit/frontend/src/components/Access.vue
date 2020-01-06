@@ -1,0 +1,89 @@
+<template>
+  <div>
+    <div class="chart mx-10 my-10">
+      <v-row align="center">
+        <v-col cols="6" class="mx-10">
+          <v-select
+            v-model="selectedTable"
+            :items="tables"
+            chips
+            label="table"
+            outlined
+            prepend-icon="mdi-table"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <Heatmap
+        graph-id="access"
+        :selected-database-ids="selectedDatabaseIds"
+        :data="data"
+        :chart-configuration="chartConfiguration"
+        :selected-table="selectedTable"
+      />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import {
+  createComponent,
+  SetupContext,
+  onMounted,
+  computed,
+  Ref,
+  ref,
+  watch
+} from "@vue/composition-api";
+
+import { useThroughputFetchService } from "../services/throughputService";
+import { useGenericFetchService } from "../services/genericFetchService";
+import { useDatabaseFetchService } from "../services/databaseService";
+import { CPUData } from "../types/cpu";
+import { Database } from "../types/database";
+import * as Plotly from "plotly.js";
+import Vue from "vue";
+import Heatmap from "./charts/Heatmap.vue";
+
+interface Props {
+  preselectedDatabaseId: string;
+}
+
+interface Data {
+  data: Ref<CPUData>;
+  databases: Ref<Database[]>;
+  tables: Ref<string[]>;
+  selectedTable: Ref<string>;
+  selectedDatabaseIds: Ref<string[]>;
+  chartConfiguration: string[];
+}
+
+export default createComponent({
+  name: "Access",
+  components: {
+    Heatmap
+  },
+  setup(props: Props, context: SetupContext): Data {
+    const data = ref<CPUData>({});
+    const databases = ref<Database[]>([]);
+    const selectedDatabaseIds = ref<string[]>([]);
+    const selectedTable = ref<string>("");
+    const chartConfiguration: string[] = [];
+    const { tables } = useDatabaseFetchService();
+
+    return {
+      data,
+      databases,
+      selectedDatabaseIds,
+      chartConfiguration,
+      selectedTable,
+      tables
+    };
+  }
+});
+</script>
+<style scoped>
+.chart {
+  max-width: 1200px;
+  max-height: 900px;
+}
+</style>
