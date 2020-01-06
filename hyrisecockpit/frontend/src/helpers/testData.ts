@@ -2,7 +2,6 @@ export function useGeneratingTestData(): {
   generateThroughputData: () => number;
   generateStorageData: () => any;
   generateCPUData: () => any;
-
 } {
   function generateRandomNumber(min: number, range: number) {
     return Math.floor(Math.random() * range + min);

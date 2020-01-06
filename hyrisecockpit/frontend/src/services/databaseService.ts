@@ -24,8 +24,9 @@ export function useDatabaseFetchService(): {
   getDatabases();
 
   function getDatabaseColor(id: string): string {
-    const database = databases && databases.value.find(database => (database.id === id));
-    if(database) {
+    const database =
+      databases && databases.value.find(database => database.id === id);
+    if (database) {
       return database.color;
     }
     const color: any = colors[colorsArray[usedColors]].base;
@@ -57,7 +58,10 @@ export function useDatabaseFetchService(): {
   }
 
   function getDummyDatabases(): Database[] {
-    return [{ id: "citadelle", color: getDatabaseColor('citadelle') }, { id: "york", color: getDatabaseColor('york') }];
+    return [
+      { id: "citadelle", color: getDatabaseColor("citadelle") },
+      { id: "york", color: getDatabaseColor("york") }
+    ];
   }
 
   return {

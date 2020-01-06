@@ -17,7 +17,7 @@
       <Linechart
         :selected-database-ids="selectedDatabaseIds"
         :data="data"
-        graph-id="graph1"
+        graph-id="cpu"
         :chart-configuration="chartConfiguration"
       />
     </div>
@@ -66,10 +66,8 @@ export default createComponent({
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
-    console.log(selectedDatabaseIds, "selected");
-    console.log(props.preselectedDatabaseId, "props");
 
-    const chartConfiguration = ["CPU", "Time ins s", "Workload in %"];
+    const chartConfiguration = ["CPU", "time in s", "workload in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
