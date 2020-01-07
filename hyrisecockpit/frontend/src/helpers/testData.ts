@@ -76,14 +76,14 @@ export function useGeneratingTestData(): {
         chunks_data: {
           york: {
             customer: {
-              c_acctbal: [0],
-              c_address: [0],
-              c_comment: [0],
-              c_custkey: [0],
-              c_mktsegment: [0],
-              c_name: [0],
-              c_nationkey: [31],
-              c_phone: [0]
+              c_acctbal: [0, 0],
+              c_address: [0, 0],
+              c_comment: [0, 0],
+              c_custkey: [0, 0],
+              c_mktsegment: [0, 1],
+              c_name: [0, 0],
+              c_nationkey: [31, 54],
+              c_phone: [0, 0]
             },
             lineitem: {
               l_comment: [

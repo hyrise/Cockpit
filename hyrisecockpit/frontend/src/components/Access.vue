@@ -15,7 +15,7 @@
       </v-row>
       <Heatmap
         graph-id="access"
-        :selected-database-ids="selectedDatabaseIds"
+        :selected-database-id="$route.params.id"
         :data="data"
         :chart-configuration="chartConfiguration"
         :selected-table="selectedTable"

@@ -69,7 +69,16 @@ export function useDatabaseFetchService(): {
       });
   }
   function getDummyTables(): void {
-    tables.value = ["customer"];
+    tables.value = [
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    ];
   }
 
   function getDummyDatabases(): Database[] {
