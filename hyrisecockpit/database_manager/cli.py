@@ -11,6 +11,7 @@ from .manager import DatabaseManager
 
 def main() -> None:
     """Create and start a database manager."""
-    DatabaseManager(
+    with DatabaseManager(
         DB_MANAGER_HOST, DB_MANAGER_PORT, WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT
-    ).start()
+    ) as database_manager:
+        database_manager.start()
