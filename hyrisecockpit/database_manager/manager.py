@@ -41,20 +41,6 @@ class DatabaseManager(object):
         }
         self._init_server()
 
-    def __enter__(self):
-        """Return self for a context manager."""
-        return self
-
-    def close(self) -> None:
-        """Close the socket and context, exit all databases."""
-        self._exit()
-        self._socket.close()
-        self._context.term()
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Call close with a context manager."""
-        self.close()
-
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -157,10 +143,16 @@ class DatabaseManager(object):
     def _call_not_found(self, body: Dict) -> Dict:
         return get_response(400)
 
-    def _exit(self) -> None:
+    def _close_databases(self) -> None:
         """Perform clean exit on all databases."""
         for database_object in self._databases.values():
             database_object.exit()
+
+    def _close(self) -> None:
+        self._close_databases()
+        self._socket.close()
+        self._context.term()
+        sys.exit()
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
@@ -183,6 +175,4 @@ class DatabaseManager(object):
                 self._socket.send_json(response)
 
             except KeyboardInterrupt:
-                if len(self._databases) > 0:
-                    self._exit()
-                sys.exit()
+                self._close()
