@@ -31,14 +31,12 @@ class WorkloadGenerator(object):
         self._workload_pubsub_port = workload_pubsub_port
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
-            "shutdown": self._call_shutdown,
         }
         self._workload_generators: Dict[str, Callable[[int], List[Tuple[str, Any]]]] = {
             "no-ops": generate_noops,
             "mixed": generate_mixed,
             "tpch": generate_tpch,
         }
-        self._shutdown_requested: bool = False
         self._init_server()
 
     def _init_server(self) -> None:
@@ -53,10 +51,6 @@ class WorkloadGenerator(object):
                 self._workload_sub_host, self._workload_pubsub_port
             )
         )
-
-    def _call_shutdown(self, body: Dict) -> Dict:
-        self._shutdown_requested = True
-        return get_response(200)
 
     def _call_workload(self, body: Dict) -> Dict:
         generator = self._workload_generators.get(body["type"], None)
@@ -78,6 +72,7 @@ class WorkloadGenerator(object):
         self._rep_socket.close()
         self._pub_socket.close()
         self._context.term()
+        sys.exit()
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -107,8 +102,5 @@ class WorkloadGenerator(object):
                 # Send the reply
                 self._rep_socket.send_json(response)
 
-                # Shutdown
-                if self._shutdown_requested:
-                    break
             except KeyboardInterrupt:
-                sys.exit()
+                self.close()

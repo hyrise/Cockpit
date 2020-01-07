@@ -35,7 +35,7 @@ class TestWorkloadGenerator:
         assert isinstance(workload_generator._rep_socket, Socket)
         assert isinstance(workload_generator._pub_socket, Socket)
 
-    @mark.parametrize("call", ["workload", "shutdown"])
+    @mark.parametrize("call", ["workload"])
     def test_has_server_call(self, workload_generator: WorkloadGenerator, call: str):
         """A WorkloadGenerator has a server call."""
         assert call in workload_generator._server_calls.keys()
