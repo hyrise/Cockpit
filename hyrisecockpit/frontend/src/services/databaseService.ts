@@ -50,7 +50,6 @@ export function useDatabaseFetchService(): {
                 color: getDatabaseColor(database)
               })))
           );
-        console.log(response);
       })
       .catch(error => {
         console.log(error);

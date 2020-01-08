@@ -20,7 +20,6 @@ export function useGenericFetchService(
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
-      console.log(result, dataType);
       Object.keys(result).forEach(key => {
         addData(key, transformData(result, key));
       });
