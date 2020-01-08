@@ -2,6 +2,7 @@
 
 Includes the main WorkloadGenerator.
 """
+
 import sys
 from typing import Any, Callable, Dict, List, Tuple
 
@@ -84,8 +85,9 @@ class WorkloadGenerator(object):
 
     def _handle_request(self, request):
         try:
-            handler = self._workload_generators.get(request["header"]["message"], None)
+            handler = self._server_calls.get(request["header"]["message"], None)
             if not handler:
+                print(request)
                 return get_response(400)
             response = handler(request["body"])
             return response
