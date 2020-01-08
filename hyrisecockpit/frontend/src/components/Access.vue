@@ -37,9 +37,6 @@ import {
 
 import { useGenericDataService } from "../services/genericDataService";
 import { useDatabaseFetchService } from "../services/databaseService";
-import { Database } from "../types/database";
-import * as Plotly from "plotly.js";
-import Vue from "vue";
 import Heatmap from "./charts/Heatmap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
 
@@ -67,13 +64,14 @@ export default createComponent({
     const { tables } = useDatabaseFetchService();
     const { data, getData } = useGenericDataService("access");
     const table = computed(() => selectedTable.value);
+
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
     const chunks = ref<string[]>([]);
     const transformData = useDataTransformation("access");
 
     watch([data, table], () => {
-      if (data.value) {
+      if (data.value != null) {
         const { localColumns, localChunks, dataByChunks } = transformData(
           data.value,
           context.root.$route.params.id,
