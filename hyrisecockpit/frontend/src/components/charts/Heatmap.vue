@@ -62,29 +62,16 @@ export default createComponent({
     const instance = computed(() => props.selectedDatabaseId);
     const dataSet = computed((): any=> props.data);
 
+    const { getDataset, getLayout }= useHeatMapConfiguration(props.chartConfiguration);
+
     onMounted(() => {
       // when selecting different table page gets smaller because of purge
       // check if data is not empty
-      Plotly.newPlot(props.graphId, [
-        {
-            z: mapData.value,
-            x: columns.value,
-            y: chunks.value,
-            type: "heatmap"
-          }
-      ]); // refactor to getLayout function (use lable for axis)
+      Plotly.newPlot(props.graphId, [getDataset()], getLayout()); 
       watch([table, instance, dataSet], () => {
         updateHeatMapDataset();
-        console.log(chunks.value);
         Plotly.purge(props.graphId);
-        Plotly.newPlot(props.graphId, [
-          {
-            z: mapData.value,
-            x: columns.value,
-            y: chunks.value,
-            type: "heatmap"
-          }
-        ]);
+        Plotly.newPlot(props.graphId, [getDataset(mapData.value,columns.value, chunks.value)], getLayout());
       });
     });
 
@@ -121,4 +108,26 @@ export default createComponent({
     }
   }
 });
+function useHeatMapConfiguration(
+  chartConfiguration: string[]
+): {
+  getDataset: (data?: number[][], columns?:string[], chunks?:string[]) => Object;
+  getLayout: () => Object;
+} {
+  function getLayout(): Object {
+    return {
+      title: chartConfiguration[0],
+    };
+  }
+
+  function getDataset(data: number[][] = [],columns:string[] = [], chunks:string[]=[]): Object {
+    return {
+            z: data,
+            x: columns,
+            y: chunks,
+            type: "heatmap"
+          }
+  }
+  return { getDataset, getLayout };
+}
 </script>

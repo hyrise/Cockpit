@@ -66,7 +66,7 @@ export default createComponent({
     const databases = ref<Database[]>([]);
     const selectedDatabaseIds = ref<string[]>([]);
     const selectedTable = ref<string>("");
-    const chartConfiguration: string[] = [];
+    const chartConfiguration: string[] = ["Access frequency"];
     const { tables } = useDatabaseFetchService();
     const { data, getData } = useGenericDataService("access");
 
