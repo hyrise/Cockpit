@@ -7,7 +7,7 @@ export function useDataTransformation(
     );
   }
   function transformThroughputData(data: any, key: string = ""): number {
-    return data.throughput[key][1];
+    return data[key];
   }
 
   function transformStorageData(
