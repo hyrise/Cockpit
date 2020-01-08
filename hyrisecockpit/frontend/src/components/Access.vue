@@ -40,10 +40,6 @@ import { useDatabaseFetchService } from "../services/databaseService";
 import Heatmap from "./charts/Heatmap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
 
-interface Props {
-  preselectedDatabaseId: string;
-}
-
 interface Data {
   tables: Ref<string[]>;
   mapData: Ref<number[][]>;
@@ -58,27 +54,28 @@ export default createComponent({
   components: {
     Heatmap
   },
-  setup(props: Props, context: SetupContext): Data {
+  setup(props: {}, context: SetupContext): Data {
     const selectedTable = ref<string>("");
-    const chartConfiguration: string[] = ["Access frequency"];
     const { tables } = useDatabaseFetchService();
     const { data, getData } = useGenericDataService("access");
+    const transformData = useDataTransformation("access");
+
     const table = computed(() => selectedTable.value);
 
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
     const chunks = ref<string[]>([]);
-    const transformData = useDataTransformation("access");
+    const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, table], () => {
       if (data.value != null) {
-        const { localColumns, localChunks, dataByChunks } = transformData(
+        const { newColumns, newChunks, dataByChunks } = transformData(
           data.value,
           context.root.$route.params.id,
           table.value
         );
-        chunks.value = localChunks;
-        columns.value = localColumns;
+        chunks.value = newChunks;
+        columns.value = newColumns;
         mapData.value = dataByChunks;
       }
     });

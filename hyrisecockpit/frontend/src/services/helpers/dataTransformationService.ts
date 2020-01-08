@@ -52,18 +52,18 @@ export function useDataTransformation(
   ) {
     const dataByColumns: number[][] = [];
     const dataByChunks: number[][] = [];
-    const localChunks: string[] = [];
-    const localColumns: string[] = [];
+    const newChunks: string[] = [];
+    const newColumns: string[] = [];
 
     Object.keys(data[primaryKey][secondaryKey]).forEach(column => {
       dataByColumns.push(data[primaryKey][secondaryKey][column]);
-      localColumns.push(column);
+      newColumns.push(column);
     });
 
     const numberOfChunks = dataByColumns[0].length;
 
     for (let i = 0; i < numberOfChunks; i++) {
-      localChunks.push("chunk_" + i);
+      newChunks.push("chunk_" + i);
 
       let chunk: number[] = [];
       dataByColumns.forEach(column => {
@@ -71,7 +71,7 @@ export function useDataTransformation(
       });
       dataByChunks.push(chunk);
     }
-    return { localChunks, localColumns, dataByChunks };
+    return { newChunks, newColumns, dataByChunks };
   }
 
   if (dataType === "cpu") {
