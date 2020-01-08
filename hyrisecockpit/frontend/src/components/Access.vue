@@ -35,10 +35,9 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useThroughputFetchService } from "../services/throughputService";
-import { useGenericFetchService } from "../services/genericFetchService";
+
+import { useAccessFetchService } from "../services/accessService";
 import { useDatabaseFetchService } from "../services/databaseService";
-import { CPUData } from "../types/cpu";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
@@ -49,7 +48,7 @@ interface Props {
 }
 
 interface Data {
-  data: Ref<CPUData>;
+  data: Ref<Object| null>;
   databases: Ref<Database[]>;
   tables: Ref<string[]>;
   selectedTable: Ref<string>;
@@ -63,12 +62,17 @@ export default createComponent({
     Heatmap
   },
   setup(props: Props, context: SetupContext): Data {
-    const data = ref<CPUData>({});
+  
     const databases = ref<Database[]>([]);
     const selectedDatabaseIds = ref<string[]>([]);
     const selectedTable = ref<string>("");
     const chartConfiguration: string[] = [];
     const { tables } = useDatabaseFetchService();
+    const { data, getAccess } = useAccessFetchService();
+
+    onMounted(()=> {
+      setInterval(getAccess, 5000);
+    })
 
     return {
       data,

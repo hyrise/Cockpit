@@ -21,7 +21,7 @@ import Vue from "vue";
 import { useGeneratingTestData } from "../../helpers/testData";
 
 interface Props {
-  data: QueryData;
+  data: Object;
   selectedDatabaseId: string;
   selectedTable: string;
   graphId: string;
@@ -55,25 +55,33 @@ export default createComponent({
   setup(props: Props, context: SetupContext): void {
     const { generateAccessData } = useGeneratingTestData();
 
-    const testData = generateAccessData();
     const mapData = ref<number[][]>([]);
     const table = computed(() => props.selectedTable);
+    const columns = ref<string[]>([]);
+    const chunks = ref<string[]>([]);
     const instance = computed(() => props.selectedDatabaseId);
+    const dataSet = computed((): any=> props.data);
 
     onMounted(() => {
       // when selecting different table page gets smaller because of purge
+      // check if data is not empty
       Plotly.newPlot(props.graphId, [
         {
-          z: mapData.value,
-          type: "heatmap"
-        }
+            z: mapData.value,
+            x: columns.value,
+            y: chunks.value,
+            type: "heatmap"
+          }
       ]); // refactor to getLayout function (use lable for axis)
-      watch([table, instance], () => {
+      watch([table, instance, dataSet], () => {
         updateHeatMapDataset();
+        console.log(chunks.value);
         Plotly.purge(props.graphId);
         Plotly.newPlot(props.graphId, [
           {
             z: mapData.value,
+            x: columns.value,
+            y: chunks.value,
             type: "heatmap"
           }
         ]);
@@ -84,24 +92,31 @@ export default createComponent({
       // out source to access component to keep generic functionality (maybe pass function by prop)
       const dataByColumns: number[][] = [];
       const dataByChunks: number[][] = [];
+      const localChunks: string[]=[];
+      const localColumns: string[]=[];
 
       Object.keys(
-        testData.body.chunks_data[instance.value][table.value]
+        dataSet.value[instance.value][table.value]
       ).forEach(column => {
         dataByColumns.push(
-          testData.body.chunks_data[instance.value][table.value][column]
+          dataSet.value[instance.value][table.value][column]
         );
+        localColumns.push(column);
       });
 
       const numberOfChunks = dataByColumns[0].length;
 
       for (let i = 0; i < numberOfChunks; i++) {
+        localChunks.push('chunk_'+i);
         let chunk: number[] = [];
         dataByColumns.forEach(column => {
           chunk.push(column[i]);
         });
         dataByChunks.push(chunk);
       }
+
+      chunks.value= localChunks;
+      columns.value=localColumns;
       mapData.value = dataByChunks;
     }
   }
