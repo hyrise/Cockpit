@@ -107,7 +107,7 @@ export default createComponent({
       const numberOfChunks = dataByColumns[0].length;
 
       for (let i = 0; i < numberOfChunks; i++) {
-        localChunks.push('chunk_'+i);
+        localChunks.push('chunk_'+ i);
         let chunk: number[] = [];
         dataByColumns.forEach(column => {
           chunk.push(column[i]);

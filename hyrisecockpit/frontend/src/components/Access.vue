@@ -36,7 +36,7 @@ import {
 } from "@vue/composition-api";
 
 
-import { useAccessFetchService } from "../services/accessService";
+import { useGenericDataService } from "../services/genericDataService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
@@ -68,10 +68,10 @@ export default createComponent({
     const selectedTable = ref<string>("");
     const chartConfiguration: string[] = [];
     const { tables } = useDatabaseFetchService();
-    const { data, getAccess } = useAccessFetchService();
+    const { data, getData } = useGenericDataService("access");
 
     onMounted(()=> {
-      setInterval(getAccess, 5000);
+      setInterval(getData, 5000);
     })
 
     return {

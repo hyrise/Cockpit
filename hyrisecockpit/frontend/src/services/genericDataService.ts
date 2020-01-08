@@ -3,22 +3,22 @@ import axios from "axios";
 
 import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
 
-export function useAccessFetchService(): {
+export function useGenericDataService(dataType: string): {
   data: Ref<Object | null>;
-  getAccess: () => void;
+  getData: () => void;
 } {
-  const endpoint = getEndpoint("access");
-  const base = getBase("access");
+  const endpoint = getEndpoint(dataType);
+  const base = getBase(dataType);
   const data = ref<Object>(null);
-  getAccess();
+  getData();
 
-  function getAccess(): void {
-    fetchAccessData().then(result => {
+  function getData(): void {
+    fetchData().then(result => {
       data.value = result;
     });
   }
 
-  function fetchAccessData(): Promise<Object> {
+  function fetchData(): Promise<Object> {
     return new Promise((resolve, reject) => {
       axios
         .get(endpoint)
@@ -31,5 +31,5 @@ export function useAccessFetchService(): {
     });
   }
 
-  return { getAccess,data };
+  return { getData, data };
 }

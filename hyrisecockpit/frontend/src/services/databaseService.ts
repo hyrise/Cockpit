@@ -33,7 +33,7 @@ export function useDatabaseFetchService(): {
   }
 
   getDatabases();
-  getDummyTables();
+  getTables();
 
   function getDatabaseColor(id: string): string {
     const database =
