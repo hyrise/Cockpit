@@ -14,16 +14,13 @@ import {
 } from "@vue/composition-api";
 import axios from "axios";
 
-import { QueryData } from "../../types/genericQueryData";
-import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
-import { useGeneratingTestData } from "../../helpers/testData";
 
 interface Props {
-  data: Object;
-  selectedDatabaseId: string;
-  selectedTable: string;
+  data: number[][];
+  xValues: string[];
+  yValues: string[];
   graphId: string;
   chartConfiguration: string[];
 }
@@ -32,15 +29,15 @@ export default createComponent({
   name: "Heatmap",
   props: {
     data: {
-      type: Object,
+      type: Array,
       default: null
     },
-    selectedDatabaseId: {
-      type: String,
+    xValues: {
+      type: Array,
       default: null
     },
-    selectedTable: {
-      type: String,
+    yValues: {
+      type: Array,
       default: null
     },
     graphId: {
@@ -53,80 +50,54 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const { generateAccessData } = useGeneratingTestData();
+    const mapData = computed(() => props.data);
+    const xData = computed(() => props.xValues);
+    const yData = computed(() => props.yValues);
 
-    const mapData = ref<number[][]>([]);
-    const table = computed(() => props.selectedTable);
-    const columns = ref<string[]>([]);
-    const chunks = ref<string[]>([]);
-    const instance = computed(() => props.selectedDatabaseId);
-    const dataSet = computed((): any=> props.data);
-
-    const { getDataset, getLayout }= useHeatMapConfiguration(props.chartConfiguration);
+    const { getDataset, getLayout } = useHeatMapConfiguration(
+      props.chartConfiguration
+    );
 
     onMounted(() => {
-      // when selecting different table page gets smaller because of purge
-      // check if data is not empty
-      Plotly.newPlot(props.graphId, [getDataset()], getLayout()); 
-      watch([table, instance, dataSet], () => {
-        updateHeatMapDataset();
+      Plotly.newPlot(props.graphId, [getDataset()], getLayout());
+      watch([mapData, xData, yData], () => {
         Plotly.purge(props.graphId);
-        Plotly.newPlot(props.graphId, [getDataset(mapData.value,columns.value, chunks.value)], getLayout());
+        Plotly.newPlot(
+          props.graphId,
+          [getDataset(mapData.value, xData.value, yData.value)],
+          getLayout()
+        );
       });
     });
-
-    function updateHeatMapDataset() {
-      // out source to access component to keep generic functionality (maybe pass function by prop)
-      const dataByColumns: number[][] = [];
-      const dataByChunks: number[][] = [];
-      const localChunks: string[]=[];
-      const localColumns: string[]=[];
-
-      Object.keys(
-        dataSet.value[instance.value][table.value]
-      ).forEach(column => {
-        dataByColumns.push(
-          dataSet.value[instance.value][table.value][column]
-        );
-        localColumns.push(column);
-      });
-
-      const numberOfChunks = dataByColumns[0].length;
-
-      for (let i = 0; i < numberOfChunks; i++) {
-        localChunks.push('chunk_'+ i);
-        let chunk: number[] = [];
-        dataByColumns.forEach(column => {
-          chunk.push(column[i]);
-        });
-        dataByChunks.push(chunk);
-      }
-
-      chunks.value= localChunks;
-      columns.value=localColumns;
-      mapData.value = dataByChunks;
-    }
   }
 });
 function useHeatMapConfiguration(
   chartConfiguration: string[]
 ): {
-  getDataset: (data?: number[][], columns?:string[], chunks?:string[]) => Object;
+  getDataset: (
+    data?: number[][],
+    columns?: string[],
+    chunks?: string[]
+  ) => Object;
   getLayout: () => Object;
 } {
   function getLayout(): Object {
     return {
-      title: chartConfiguration[0],
+      title: chartConfiguration[0]
     };
   }
 
-  function getDataset(data: number[][] = [],columns:string[] = [], chunks:string[]=[]): Object {
+  function getDataset(
+    data: number[][] = [],
+    columns: string[] = [],
+    chunks: string[] = []
+  ): Object {
     return {
-            z: data,
-            x: columns,
-            y: chunks,
-            type: "heatmap"
-          }
+      z: data,
+      x: columns,
+      y: chunks,
+      type: "heatmap"
+    };
   }
   return { getDataset, getLayout };
 }

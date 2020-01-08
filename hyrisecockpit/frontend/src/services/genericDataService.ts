@@ -3,8 +3,10 @@ import axios from "axios";
 
 import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
 
-export function useGenericDataService(dataType: string): {
-  data: Ref<Object | null>;
+export function useGenericDataService(
+  dataType: string
+): {
+  data: Ref<any>;
   getData: () => void;
 } {
   const endpoint = getEndpoint(dataType);

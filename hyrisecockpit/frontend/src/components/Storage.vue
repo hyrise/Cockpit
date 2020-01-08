@@ -47,9 +47,7 @@ export default createComponent({
 
     watch(data, () => {
       if (data.value) {
-        const { newLabels, newParents, newSizes } = transformData(
-          data.value
-        );
+        const { newLabels, newParents, newSizes } = transformData(data.value);
         labels.value = newLabels;
         parents.value = newParents;
         sizes.value = newSizes;

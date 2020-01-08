@@ -15,10 +15,10 @@
       </v-row>
       <Heatmap
         graph-id="access"
-        :selected-database-id="$route.params.id"
-        :data="data"
+        :data="mapData"
+        :x-values="columns"
+        :y-values="chunks"
         :chart-configuration="chartConfiguration"
-        :selected-table="selectedTable"
       />
     </div>
   </div>
@@ -35,25 +35,25 @@ import {
   watch
 } from "@vue/composition-api";
 
-
 import { useGenericDataService } from "../services/genericDataService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Heatmap from "./charts/Heatmap.vue";
+import { useDataTransformation } from "../services/helpers/dataTransformationService";
 
 interface Props {
   preselectedDatabaseId: string;
 }
 
 interface Data {
-  data: Ref<Object| null>;
-  databases: Ref<Database[]>;
   tables: Ref<string[]>;
-  selectedTable: Ref<string>;
-  selectedDatabaseIds: Ref<string[]>;
+  mapData: Ref<number[][]>;
+  columns: Ref<string[]>;
+  chunks: Ref<string[]>;
   chartConfiguration: string[];
+  selectedTable: Ref<string>;
 }
 
 export default createComponent({
@@ -62,25 +62,40 @@ export default createComponent({
     Heatmap
   },
   setup(props: Props, context: SetupContext): Data {
-  
-    const databases = ref<Database[]>([]);
-    const selectedDatabaseIds = ref<string[]>([]);
     const selectedTable = ref<string>("");
     const chartConfiguration: string[] = ["Access frequency"];
     const { tables } = useDatabaseFetchService();
     const { data, getData } = useGenericDataService("access");
+    const table = computed(() => selectedTable.value);
+    const mapData = ref<number[][]>([]);
+    const columns = ref<string[]>([]);
+    const chunks = ref<string[]>([]);
+    const transformData = useDataTransformation("access");
 
-    onMounted(()=> {
+    watch([data, table], () => {
+      if (data.value) {
+        const { localColumns, localChunks, dataByChunks } = transformData(
+          data.value,
+          context.root.$route.params.id,
+          table.value
+        );
+        chunks.value = localChunks;
+        columns.value = localColumns;
+        mapData.value = dataByChunks;
+      }
+    });
+
+    onMounted(() => {
       setInterval(getData, 5000);
-    })
+    });
 
     return {
-      data,
-      databases,
-      selectedDatabaseIds,
       chartConfiguration,
-      selectedTable,
-      tables
+      tables,
+      mapData,
+      columns,
+      chunks,
+      selectedTable
     };
   }
 });
