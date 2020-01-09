@@ -8,6 +8,7 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
+
 from psycopg2 import Error, pool
 
 from .driver import Driver
@@ -75,7 +76,7 @@ class Database(object):
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._throughput_data_container: Dict = self._init_throughput_data_container()
-        self._worker_pool: pool = self._init_worler_pool()
+        self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
 
@@ -98,7 +99,7 @@ class Database(object):
             throughput_data_container[str(i)] = 0
         return throughput_data_container
 
-    def _init_worler_pool(self) -> pool:
+    def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
         worker_pool = []
         for i in range(self._number_workers):
@@ -123,6 +124,28 @@ class Database(object):
         """Start all workers in pool."""
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
+
+    def load_data(self, datatype: str) -> None:
+        """Load pregenerated tables."""
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+        cur = connection.cursor()
+
+        table_names = [
+            "customer",
+            "lineitem",
+            "nation",
+            "orders",
+            "part",
+            "partsupp",
+            "region",
+            "supplier",
+        ]
+
+        for name in table_names:
+            cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin'")
+
+        self._connection_pool.putconn(connection)
 
     def get_throughput_counter(self) -> int:
         """Return throughput."""
