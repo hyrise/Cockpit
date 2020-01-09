@@ -2,16 +2,10 @@
 
 from random import choices
 from secrets import randbelow
-from typing import List
+from typing import Any, List, Tuple
 
-
-def generate_mixed(factor: int) -> List:
-    """Generate mixed workload."""
-    simple_query = """SELECT * FROM nation WHERE n_nationkey = (%s);"""
-    queries = choices(
-        [
-            (
-                """SELECT
+__simple_query = """SELECT * FROM nation WHERE n_nationkey = (%s);"""
+__difficult_query_1 = """SELECT
             l_returnflag,
             l_linestatus,
             SUM(l_quantity) as sum_qty,
@@ -23,22 +17,27 @@ def generate_mixed(factor: int) -> List:
             FROM lineitem
             WHERE l_shipdate <= '1998-12-01'
             GROUP BY l_returnflag, l_linestatus
-            ORDER BY l_returnflag, l_linestatus;""",
-                None,
-            ),
-            (
-                """SELECT
+            ORDER BY l_returnflag, l_linestatus;"""
+__difficult_query_2 = """SELECT
             sum(l_extendedprice*l_discount) AS REVENUE
             FROM lineitem
             WHERE l_shipdate >= '1994-01-01'
                 AND l_shipdate < '1995-01-01'
                 AND l_discount BETWEEN .05
-                AND .07 AND l_quantity < 24.0;""",
-                None,
-            ),
-            (simple_query, (randbelow(24),)),
+                AND .07 AND l_quantity < 24.0;"""
+
+
+def generate_mixed(
+    factor: int, weights: Tuple[int, int, int] = (1, 1, 100)
+) -> List[Tuple[str, Any]]:
+    """Generate a mixed workload of three different queries."""
+    queries = choices(
+        [
+            (__difficult_query_1, None,),
+            (__difficult_query_2, None,),
+            (__simple_query, (randbelow(24),)),
         ],
-        weights=[1, 1, 100],
+        weights=weights,
         k=factor,
     )
 

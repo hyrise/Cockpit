@@ -1,11 +1,9 @@
 """Module for generating no operational workload."""
 
-from typing import List
+from typing import Any, List, Tuple
 
 
-def generate_noops(factor: int) -> List:
+def generate_noops(factor: int) -> List[Tuple[str, Any]]:
     """Generate no operational workload."""
-    queries = []
-    for _ in range(factor):
-        queries.append(("SELECT 1;", None))
+    queries = [("SELECT 1;", None) for _ in range(factor)]
     return queries
