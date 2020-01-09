@@ -18,6 +18,7 @@ export function getEndpoint(type: string): string {
   if (type === "storage") {
     return backendUrl + storageBase;
   }
+  return "";
 }
 
 export function getBase(type: string): string {
@@ -27,4 +28,11 @@ export function getBase(type: string): string {
   if (type === "cpu") {
     return cpuBase;
   }
+  if (type === "database") {
+    return databaseBase;
+  }
+  if (type === "storage") {
+    return storageBase;
+  }
+  return "";
 }
