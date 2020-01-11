@@ -4,15 +4,15 @@ Includes the main WorkloadGenerator.
 """
 
 import sys
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict
 
 from zmq import PUB, REP, Context
 
 from hyrisecockpit.response import get_error_response, get_response
+from hyrisecockpit.workload_generator.workloads.workload import Workload
 
-from .workloads.mixed import generate_mixed
-from .workloads.noops import generate_noops
-from .workloads.tpch import generate_tpch
+from .workloads.mixed import MixedWorkload
+from .workloads.noops import NoopsWorkload
 
 
 class WorkloadGenerator(object):
@@ -33,10 +33,27 @@ class WorkloadGenerator(object):
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
         }
-        self._workload_generators: Dict[str, Callable[[int], List[Tuple[str, Any]]]] = {
-            "no-ops": generate_noops,
-            "mixed": generate_mixed,
-            "tpch": generate_tpch,
+        self._workloads: Dict[str, Any] = {
+            "no-ops": NoopsWorkload(500_000),
+            "mixed": MixedWorkload(30_000),
+            "tpch_0.1": Workload(
+                "TPCH",
+                "hyrisecockpit/workload_generator/workloads/workload_queries/TPCH_0.1",
+                ";",
+                "sql",
+            ),
+            "tpch_1.0": Workload(
+                "TPCH",
+                "hyrisecockpit/workload_generator/workloads/workload_queries/TPCH_1.0",
+                ";",
+                "sql",
+            ),
+            "join_order_benchmark": Workload(
+                "join_order_benchmark",
+                "hyrisecockpit/workload_generator/workloads/workload_queries/join_order_benchmark",
+                ";",
+                "sql",
+            ),
         }
         self._init_server()
 
@@ -52,11 +69,11 @@ class WorkloadGenerator(object):
         )
 
     def _call_workload(self, body: Dict) -> Dict:
-        generator = self._workload_generators.get(body["type"], None)
-        if not generator:
+        workload = self._workloads.get(body["type"], None)
+        if not workload:
             return get_error_response(400, "Workload type not found")
         try:
-            queries = generator(body["factor"])
+            queries = workload.generate_workload()
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
