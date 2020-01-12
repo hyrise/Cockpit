@@ -20,6 +20,7 @@ class WorkloadReader(object):
             if filename.endswith(f".{type}"):
                 with open(f"{location}/{filename}", "r") as f:
                     sub_queries = f.read().split(delimiter)
+                    del sub_queries[-1]
                     self.append_delimiter(sub_queries, delimiter)
                     queries[os.path.splitext(filename)[0]] = sub_queries
 
