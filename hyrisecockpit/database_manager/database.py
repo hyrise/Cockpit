@@ -8,7 +8,8 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from psycopg2 import Error, pool
+from psycopg2 import Error as Psycopg2Error
+from psycopg2 import pool
 
 from .driver import Driver
 
@@ -40,15 +41,20 @@ def execute_queries(
     cur = connection.cursor()
     while True:
         # If Queue is emty go to wait status
-        query, parameters = task_queue.get(block=True)
         try:
+            task = task_queue.get(block=True)
+            query, parameters = task
             cur.execute(query, parameters)
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
-        except Error as e:
+        except ValueError as e:
             failed_task_queue.put(
-                {"worker_id": worker_id, "task": (query, parameters), "Error": str(e)}
+                {"worker_id": worker_id, "task": task, "Error": str(e)}
+            )
+        except Psycopg2Error as e:
+            failed_task_queue.put(
+                {"worker_id": worker_id, "task": task, "Error": str(e)}
             )
 
 
