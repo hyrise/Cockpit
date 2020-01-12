@@ -53,7 +53,7 @@ class WorkloadGenerator(object):
     def _get_default_workload_location(self):
         return "workloads/workload_queries/"
 
-    def _get_worklaod(self, workload_type):
+    def _get_workload(self, workload_type):
         workload = self._workloads.get(workload_type, None)
         if not workload:
             workload = Workload(workload_type, self._get_default_workload_location())
@@ -62,7 +62,7 @@ class WorkloadGenerator(object):
 
     def _call_workload(self, body: Dict) -> Dict:
         try:
-            workload = self._get_worklaod(body["type"])
+            workload = self._get_workload(body["type"])
             queries = workload.generate_workload()
             response = get_response(200)
             response["body"] = {"querylist": queries}
