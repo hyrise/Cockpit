@@ -67,23 +67,27 @@ class TestWorkloadGenerator:
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
 
-    @mark.parametrize("workload", ["no-ops", "mixed", "tpch"])
+    @mark.parametrize(
+        "workload", ["no-ops", "mixed", "tpch_0.1", "tpch_1.0", "join_order_benchmark"]
+    )
     def test_initialization_of_workloads(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure pre-defined workload calls are implemented."""
-        assert workload in isolated_generator._workload_generators.keys()
+        assert workload in isolated_generator._workloads.keys()
 
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_publish,
     )
-    @mark.parametrize("workload", ["no-ops", "mixed", "tpch"])
+    @mark.parametrize(
+        "workload", ["no-ops", "mixed", "tpch_0.1", "tpch_1.0", "join_order_benchmark"]
+    )
     def test_response_existing_workloads(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure existing workload calls return 200."""
-        body = {"type": workload, "factor": 5000}
+        body = {"type": workload}
 
         response = isolated_generator._call_workload(body)
         assert response["header"]["status"] == 200
