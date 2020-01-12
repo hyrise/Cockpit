@@ -8,8 +8,8 @@ class WorkloadReader(object):
 
     def append_delimiter(self, queries, delimiter):
         """Append delimiter back on query."""
-        for query in queries:
-            query = query + delimiter
+        for i in range(len(queries)):
+            queries[i] = queries[i] + delimiter
 
     def read_from_folder(self, location, delimiter, type) -> Dict[str, List[str]]:
         """Read sql queries from files in folder."""
