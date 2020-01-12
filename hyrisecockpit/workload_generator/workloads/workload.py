@@ -1,6 +1,6 @@
 """This module represents a workload."""
 import secrets
-from typing import Dict, List
+from typing import Any, Dict, List, Tuple
 
 from hyrisecockpit.workload_generator.workloads.workload_reader import WorkloadReader
 
@@ -23,9 +23,9 @@ class Workload(object):
             self._queries_location, self._delimiter, self._file_type
         )
 
-    def generate_workload(self) -> List[str]:
+    def generate_workload(self) -> List[Tuple[str, Any]]:
         """Chose random one query from every type."""
-        workload_queries: List[str] = []
+        workload_queries: List[Tuple[str, Any]] = []
         for queries_type in self._queries.values():
-            workload_queries.append(secrets.choice(queries_type))
+            workload_queries.append((secrets.choice(queries_type), None))
         return workload_queries
