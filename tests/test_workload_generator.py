@@ -67,9 +67,7 @@ class TestWorkloadGenerator:
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
 
-    @mark.parametrize(
-        "workload", ["no-ops", "mixed", "tpch_0.1", "tpch_1.0", "join_order_benchmark"]
-    )
+    @mark.parametrize("workload", ["no-ops", "mixed"])
     def test_initialization_of_workloads(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
@@ -80,9 +78,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_publish,
     )
-    @mark.parametrize(
-        "workload", ["no-ops", "mixed", "tpch_0.1", "tpch_1.0", "join_order_benchmark"]
-    )
+    @mark.parametrize("workload", ["no-ops", "mixed"])
     def test_response_existing_workloads(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
@@ -97,6 +93,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_publish,
     )
+    @mark.skip("Depent on workload reader")
     def test_response_not_existing_workloads(
         self, isolated_generator: WorkloadGenerator
     ):
