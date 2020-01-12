@@ -36,18 +36,6 @@ class WorkloadGenerator(object):
         self._workloads: Dict[str, Any] = {
             "no-ops": NoopsWorkload(500_000),
             "mixed": MixedWorkload(30_000),
-            "tpch_0.1": Workload(
-                "TPCH", "workloads/workload_queries/TPCH_0.1", ";", "sql",
-            ),
-            "tpch_1.0": Workload(
-                "TPCH", "workloads/workload_queries/TPCH_1.0", ";", "sql",
-            ),
-            "join_order_benchmark": Workload(
-                "join_order_benchmark",
-                "workloads/workload_queries/join_order_benchmark",
-                ";",
-                "sql",
-            ),
         }
         self._init_server()
 
@@ -62,11 +50,19 @@ class WorkloadGenerator(object):
             "tcp://{:s}:{:s}".format(self._workload_pub_host, self._workload_pub_port)
         )
 
-    def _call_workload(self, body: Dict) -> Dict:
-        workload = self._workloads.get(body["type"], None)
+    def _get_default_workload_location(self):
+        return "workloads/workload_queries/"
+
+    def _get_worklaod(self, workload_type):
+        workload = self._workloads.get(workload_type, None)
         if not workload:
-            return get_error_response(400, "Workload type not found")
+            workload = Workload(workload_type, self._get_default_workload_location())
+            self._workloads[workload_type] = workload
+        return workload
+
+    def _call_workload(self, body: Dict) -> Dict:
         try:
+            workload = self._get_worklaod(body["type"])
             queries = workload.generate_workload()
             response = get_response(200)
             response["body"] = {"querylist": queries}

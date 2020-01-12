@@ -8,10 +8,10 @@ from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
 class Workload(object):
     """Generates workload."""
 
-    def __init__(self, workload_type, queries_location, delimiter, file_type):
+    def __init__(self, workload_type, queries_location, delimiter=";", file_type="sql"):
         """Initialize a Workload."""
         self.workload_type = workload_type
-        self._queries_location = queries_location
+        self._queries_location = f"{queries_location}/{workload_type}"
         self._delimiter = delimiter
         self._file_type = file_type
         self._queries: Dict[str, List[str]] = {}
@@ -20,7 +20,7 @@ class Workload(object):
 
     def _initialise(self):
         self._queries = self._workload_reader.read_from_folder(
-            self._queries_location, self._delimiter, self._file_type
+            self._queries_location, self._delimiter, self._file_type, self.workload_type
         )
 
     def generate_workload(self) -> List[Tuple[str, Any]]:

@@ -12,7 +12,7 @@ class WorkloadReader(object):
             queries[i] = queries[i] + delimiter
 
     def read_from_folder(
-        self, relative_workload_location, delimiter, type
+        self, relative_workload_location, delimiter, file_type, workload_type
     ) -> Dict[str, List[str]]:
         """Read sql queries from files in folder."""
         queries: Dict[str, List[str]] = {}
@@ -20,11 +20,19 @@ class WorkloadReader(object):
         absolute_workload_location = (
             f"{absolute_workload_reader_location}/{relative_workload_location}"
         )
+        if not os.path.exists(absolute_workload_location):
+            raise Exception(
+                f"Workload {workload_type} not found: directory doesn't exists"
+            )
 
         directory = os.fsencode(absolute_workload_location)
+
+        if len(os.listdir(directory)) == 0:
+            raise Exception(f"Workload {workload_type} directory is empty")
+
         for file in os.listdir(directory):
             filename = os.fsdecode(file)
-            if filename.endswith(f".{type}"):
+            if filename.endswith(f".{file_type}"):
                 with open(f"{absolute_workload_location}/{filename}", "r") as f:
                     sub_queries = f.read().split(delimiter)
                     del sub_queries[-1]
