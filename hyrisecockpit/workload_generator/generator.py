@@ -37,20 +37,14 @@ class WorkloadGenerator(object):
             "no-ops": NoopsWorkload(500_000),
             "mixed": MixedWorkload(30_000),
             "tpch_0.1": Workload(
-                "TPCH",
-                "hyrisecockpit/workload_generator/workloads/workload_queries/TPCH_0.1",
-                ";",
-                "sql",
+                "TPCH", "workloads/workload_queries/TPCH_0.1", ";", "sql",
             ),
             "tpch_1.0": Workload(
-                "TPCH",
-                "hyrisecockpit/workload_generator/workloads/workload_queries/TPCH_1.0",
-                ";",
-                "sql",
+                "TPCH", "workloads/workload_queries/TPCH_1.0", ";", "sql",
             ),
             "join_order_benchmark": Workload(
                 "join_order_benchmark",
-                "hyrisecockpit/workload_generator/workloads/workload_queries/join_order_benchmark",
+                "workloads/workload_queries/join_order_benchmark",
                 ";",
                 "sql",
             ),

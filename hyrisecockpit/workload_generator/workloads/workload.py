@@ -2,7 +2,7 @@
 import secrets
 from typing import Any, Dict, List, Tuple
 
-from hyrisecockpit.workload_generator.workloads.workload_reader import WorkloadReader
+from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
 
 
 class Workload(object):
