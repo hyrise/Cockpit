@@ -90,7 +90,7 @@ class TestWorkloadGenerator:
         assert response["header"]["message"] == "BAD REQUEST"
 
     @mark.parametrize("workload", ["no-ops", "mixed"])
-    def test_initialization_of_workloads(
+    def test_initialization_pre_defined_workloads(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure pre-defined workload calls are implemented."""
@@ -100,14 +100,17 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_publish,
     )
-    @mark.parametrize("workload", ["no-ops", "mixed"])
+    @mock.patch(
+        "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
+    )
+    @mark.parametrize("workload", ["no-ops", "mixed", "TPCH_0.1", "TPCH_1.0", "JOB"])
     def test_response_existing_workloads(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure existing workload calls return 200."""
         body = {"type": workload}
-
         response = isolated_generator._call_workload(body)
+
         assert response["header"]["status"] == 200
         assert response["header"]["message"] == "OK"
 
@@ -125,10 +128,9 @@ class TestWorkloadGenerator:
         """Ensure not existing workload calls return 400."""
         body = {
             "type": "Das U-Boot ist untergegangen. Es war Tag der offenen Tuer.",
-            "factor": 5000,
         }
-
         response = isolated_generator._call_workload(body)
+
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"]["error"] == "Error message"
@@ -141,9 +143,9 @@ class TestWorkloadGenerator:
         self, isolated_generator: WorkloadGenerator
     ):
         """Ensure exception when publishing returns 400."""
-        body = {"type": "no-ops", "factor": 5000}
-
+        body = {"type": "no-ops"}
         response = isolated_generator._call_workload(body)
+
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"]["error"] == "Error message"
