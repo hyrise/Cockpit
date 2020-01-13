@@ -5,11 +5,22 @@ import colors from "vuetify/lib/util/colors";
 
 export function useDatabaseFetchService(): {
   databases: Ref<Database[]>;
+  tables: Ref<string[]>;
   addDatabase: (databasedata: any) => void;
 } {
   const colorsArray = Object.keys(colors);
   let usedColors = 0;
   const databases = ref<Database[]>(getDummyDatabases());
+  const tables = ref<string[]>([]);
+
+  function getTables(): void {
+    axios
+      .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/storage")
+      .then(result => {
+        const instance = Object.keys(result.data.body.storage)[0];
+        tables.value = Object.keys(result.data.body.storage[instance]);
+      });
+  }
 
   function getDatabases(): void {
     axios.get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database").then(
@@ -22,6 +33,7 @@ export function useDatabaseFetchService(): {
   }
 
   getDatabases();
+  getTables();
 
   function getDatabaseColor(id: string): string {
     const database =
@@ -56,6 +68,18 @@ export function useDatabaseFetchService(): {
         console.log(error);
       });
   }
+  function getDummyTables(): void {
+    tables.value = [
+      "customer",
+      "lineitem",
+      "nation",
+      "orders",
+      "part",
+      "partsupp",
+      "region",
+      "supplier"
+    ];
+  }
 
   function getDummyDatabases(): Database[] {
     return [
@@ -66,6 +90,7 @@ export function useDatabaseFetchService(): {
 
   return {
     databases,
-    addDatabase
+    addDatabase,
+    tables
   };
 }

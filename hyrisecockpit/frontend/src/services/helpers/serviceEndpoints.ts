@@ -4,6 +4,7 @@ const cpuBase = "system_data";
 const throughputBase = "throughput";
 const databaseBase = "database";
 const storageBase = "storage";
+const accessBase = "chunks_data";
 
 export function getEndpoint(type: string): string {
   if (type === "throughput") {
@@ -17,6 +18,9 @@ export function getEndpoint(type: string): string {
   }
   if (type === "storage") {
     return backendUrl + storageBase;
+  }
+  if (type === "access") {
+    return backendUrl + accessBase;
   }
   return "";
 }
@@ -33,6 +37,9 @@ export function getBase(type: string): string {
   }
   if (type === "storage") {
     return storageBase;
+  }
+  if (type === "access") {
+    return accessBase;
   }
   return "";
 }

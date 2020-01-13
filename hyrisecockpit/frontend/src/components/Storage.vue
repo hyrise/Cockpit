@@ -18,7 +18,7 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import { useStorageFetchService } from "../services/storageService";
+import { useGenericFetchService } from "../services/genericFetchService";
 import * as Plotly from "plotly.js";
 import Treemap from "./charts/Treemap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
@@ -37,7 +37,7 @@ export default createComponent({
     Treemap
   },
   setup(props: Props, context: SetupContext): Data {
-    const { storageData, getStorage } = useStorageFetchService();
+    const { data, getData } = useGenericFetchService("storage");
     const transformData = useDataTransformation("storage");
 
     const labels = ref<string[]>([]);
@@ -45,11 +45,9 @@ export default createComponent({
     const sizes = ref<number[]>([]);
     const chartConfiguration = ref<string[]>(["citadelle"]);
 
-    watch(storageData, () => {
-      if (storageData.value) {
-        const { newLabels, newParents, newSizes } = transformData(
-          storageData.value
-        );
+    watch(data, () => {
+      if (data.value != {}) {
+        const { newLabels, newParents, newSizes } = transformData(data.value);
         labels.value = newLabels;
         parents.value = newParents;
         sizes.value = newSizes;
