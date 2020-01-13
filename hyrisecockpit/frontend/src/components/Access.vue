@@ -57,7 +57,7 @@ export default createComponent({
   setup(props: {}, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = useDatabaseFetchService();
-    const { data, getData } = useGenericFetchService("access", "read");
+    const { data, getData } = useGenericFetchService("access");
     const transformData = useDataTransformation("access");
 
     const table = computed(() => selectedTable.value);

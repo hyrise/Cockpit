@@ -37,7 +37,7 @@ export default createComponent({
     Treemap
   },
   setup(props: Props, context: SetupContext): Data {
-    const { data, getData } = useGenericFetchService("storage", "read");
+    const { data, getData } = useGenericFetchService("storage");
     const transformData = useDataTransformation("storage");
 
     const labels = ref<string[]>([]);

@@ -4,9 +4,15 @@ import { QueryResult, QueryData } from "../types/genericQueryData";
 import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
 import { useDataTransformation } from "./helpers/dataTransformationService";
 
+const fetchingTypeMap = {
+  access: "read",
+  storage: "read",
+  cpu: "modify",
+  throughput: "modify"
+};
+
 export function useGenericFetchService(
-  dataType: string,
-  fetchingType: string
+  dataType: string
 ): {
   getData: () => void;
   data: Ref<QueryData>;
@@ -17,6 +23,9 @@ export function useGenericFetchService(
   const endpoint = getEndpoint(dataType);
   const base = getBase(dataType);
   const transformData = useDataTransformation(dataType);
+  const fetchingType = (fetchingTypeMap as any)[dataType];
+
+  console.log(fetchingType);
 
   function getData(): void {
     queryReadyState.value = false;
