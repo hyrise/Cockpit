@@ -18,13 +18,25 @@ class TestWorkloadGenerator:
         """Idle function."""
         return None
 
-    def idle_publish(self, data):
+    def idle_publish(self, *argv):
         """Idle publishing."""
         return None
 
-    def publish_raises_exception(self, data):
+    def publish_raises_exception(self, *argv):
         """Publish with exception."""
         raise Exception("Error message")
+
+    def get_fake_workload(self, *argv):
+        """Get fake workload."""
+        workload = mock.MagicMock()
+        workload.generate_workload.return_value = [("dummy_query", None)]
+        return workload
+
+    def get_workload_with_exception(self, *argv):
+        """Get fake workload."""
+        workload = mock.MagicMock()
+        workload.generate_workload.side_effect = Exception("Error message")
+        return workload
 
     @fixture
     @mock.patch(
@@ -32,21 +44,31 @@ class TestWorkloadGenerator:
         idle_function,
     )
     def isolated_generator(self):
-        """Instance of WOrkloadGenerator without binding of sockets."""
+        """Instance of WorkloadGenerator without binding of sockets."""
         return WorkloadGenerator(
             generator_host, generator_port, workload_pub_host, workload_pub_port
         )
 
+    @mock.patch(
+        "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
+    )
     def test_initialization_of_socket_attributes(
         self, isolated_generator: WorkloadGenerator
     ):
         """Test initialization of soscket hosts and ports."""
+        # mock_workload.return_value = self.get_fake_workload()
+        # import pdb;pdb.set_trace()
         assert isolated_generator._generator_host == generator_host
         assert isolated_generator._generator_port == generator_port
         assert isolated_generator._workload_pub_host == workload_pub_host
         assert isolated_generator._workload_pub_port == workload_pub_port
+        # assert isolated_generator._get_workload('tpch').generate_workload()[0] == ('dummy_query', None)
+        # mock_workload.assert_called_with("tpch",  "workloads/workload_queries/")
 
     @mark.parametrize("call", ["workload"])
+    @mock.patch(
+        "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
+    )
     def test_initialization_of_server_calls(
         self, isolated_generator: WorkloadGenerator, call: str
     ):
@@ -93,7 +115,10 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_publish,
     )
-    @mark.skip("Depent on workload reader")
+    @mock.patch(
+        "hyrisecockpit.workload_generator.generator.Workload",
+        get_workload_with_exception,
+    )
     def test_response_not_existing_workloads(
         self, isolated_generator: WorkloadGenerator
     ):
@@ -106,7 +131,7 @@ class TestWorkloadGenerator:
         response = isolated_generator._call_workload(body)
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"]["error"] == "Workload type not found"
+        assert response["body"]["error"] == "Error message"
 
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
