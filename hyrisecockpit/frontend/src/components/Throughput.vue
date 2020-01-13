@@ -60,7 +60,7 @@ export default createComponent({
   },
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
-    const { databases } = useDatabaseFetchService();
+    const { databases } = context.root.$databaseData;
     const { getData, data, queryReadyState } = useGenericFetchService(
       "throughput"
     );
