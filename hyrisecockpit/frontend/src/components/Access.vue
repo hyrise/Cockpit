@@ -35,7 +35,7 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericDataService } from "../services/genericDataService";
+import { useGenericFetchService } from "../services/genericFetchService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import Heatmap from "./charts/Heatmap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
@@ -57,7 +57,7 @@ export default createComponent({
   setup(props: {}, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = useDatabaseFetchService();
-    const { data, getData } = useGenericDataService("access");
+    const { data, getData } = useGenericFetchService("access", "read");
     const transformData = useDataTransformation("access");
 
     const table = computed(() => selectedTable.value);
@@ -68,7 +68,7 @@ export default createComponent({
     const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, table], () => {
-      if (data.value != null) {
+      if (data.value != {}) {
         const { newColumns, newChunks, dataByChunks } = transformData(
           data.value,
           context.root.$route.params.id,

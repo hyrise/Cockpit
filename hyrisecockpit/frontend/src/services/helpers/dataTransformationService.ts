@@ -1,27 +1,17 @@
 export function useDataTransformation(
   dataType: string
 ): (data: any, primaryKey?: string, secondaryKey?: string) => any {
-  function transformCPUData(
-    data: any,
-    primaryKey: string = "",
-    secondaryKey: string = ""
-  ): number {
+  function transformCPUData(data: any, primaryKey: string = ""): number {
     return data[primaryKey].cpu.reduce(
       (accumulator: any, currentValue: any) => accumulator + currentValue
     );
   }
-  function transformThroughputData(
-    data: any,
-    primaryKey: string = "",
-    secondaryKey: string = ""
-  ): number {
-    return data.throughput[primaryKey][1];
+  function transformThroughputData(data: any, primaryKey: string = ""): number {
+    return data[primaryKey];
   }
 
   function transformStorageData(
-    data: any,
-    primaryKey: string = "",
-    secondaryKey: string = ""
+    data: any
   ): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
     const newLabels: string[] = [];
     const newParents: string[] = [];
