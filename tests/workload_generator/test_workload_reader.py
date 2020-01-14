@@ -1,4 +1,5 @@
 """Tests for WorkloadReader."""
+from typing import Any
 from unittest import mock
 
 from pytest import raises
@@ -9,7 +10,7 @@ from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
 class TestWorkloadReader:
     """Tests for the WorkloadReader class."""
 
-    def false_function(self, *argv):
+    def false_function(self, *argv) -> Any:
         """Return False."""
         return False
 

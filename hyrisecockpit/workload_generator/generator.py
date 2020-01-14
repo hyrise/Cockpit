@@ -53,7 +53,7 @@ class WorkloadGenerator(object):
     def _get_default_workload_location(self):
         return "workloads/workload_queries/"
 
-    def _get_workload(self, workload_type):
+    def _get_workload(self, workload_type: str):
         workload = self._workloads.get(workload_type, None)
         if not workload:
             workload = Workload(workload_type, self._get_default_workload_location())

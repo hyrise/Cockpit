@@ -1,28 +1,29 @@
 """Tests for the workload_generator module's workload."""
 
+from typing import Any
 from unittest import mock
 
 from pytest import fixture
 
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
-workload_type = "TPCH"
-queries_location = "/foo"
-delimiter = ";"
-file_type = "sql"
+workload_type: str = "TPCH"
+queries_location: str = "/foo"
+delimiter: str = ";"
+file_type: str = "sql"
 
 
-def get_fake_workload_reader():
+def get_fake_workload_reader() -> Any:
     """Get fake workload."""
     workload_reader = mock.MagicMock()
-    workload_reader.read_from_folder.return_value = ["dummy_query"]
+    workload_reader.read_workload.return_value = ["dummy_query"]
     return workload_reader
 
 
 class TestWorkload:
     """Test for workload class."""
 
-    def idle_function(self):
+    def idle_function(self) -> None:
         """Idle function."""
         return None
 
@@ -35,7 +36,7 @@ class TestWorkload:
         "hyrisecockpit.workload_generator.workloads.workload.WorkloadReader",
         get_fake_workload_reader,
     )
-    def fake_workload(self):
+    def fake_workload(self) -> Any:
         """Instance of WorkloadGenerator without Workloadreader."""
         return Workload(workload_type, queries_location, delimiter, file_type)
 

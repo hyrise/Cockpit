@@ -8,18 +8,25 @@ from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
 class Workload(object):
     """Generates workload."""
 
-    def __init__(self, workload_type, queries_location, delimiter=";", file_type="sql"):
+    def __init__(
+        self,
+        workload_type: str,
+        queries_location: str,
+        delimiter: str = ";",
+        file_type: str = "sql",
+    ) -> None:
         """Initialize a Workload."""
-        self.workload_type = workload_type
-        self._queries_location = f"{queries_location}/{workload_type}"
-        self._delimiter = delimiter
-        self._file_type = file_type
+        self.workload_type: str = workload_type
+        self._queries_location: str = f"{queries_location}/{workload_type}"
+        self._delimiter: str = delimiter
+        self._file_type: str = file_type
         self._queries: Dict[str, List[str]] = {}
         self._workload_reader = WorkloadReader()
         self._initialise()
 
-    def _initialise(self):
-        self._queries = self._workload_reader.read_from_folder(
+    def _initialise(self) -> None:
+        """Read workload from folder."""
+        self._queries = self._workload_reader.read_workload(
             self._queries_location, self._delimiter, self._file_type, self.workload_type
         )
 

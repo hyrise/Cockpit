@@ -1,4 +1,5 @@
 """Tests for the workload_generator module's generator."""
+from typing import Any
 from unittest import mock
 
 from pytest import fixture, mark
@@ -14,11 +15,11 @@ workload_pub_port = "20000"
 class TestWorkloadGenerator:
     """Tests for the WorkloadGenerator class."""
 
-    def idle_function(self):
+    def idle_function(self) -> None:
         """Idle function."""
         return None
 
-    def idle_publish(self, *argv):
+    def idle_publish(self, *argv) -> None:
         """Idle publishing."""
         return None
 
@@ -26,13 +27,13 @@ class TestWorkloadGenerator:
         """Publish with exception."""
         raise Exception("Error message")
 
-    def get_fake_workload(self, *argv):
+    def get_fake_workload(self, *argv) -> Any:
         """Get fake workload."""
         workload = mock.MagicMock()
         workload.generate_workload.return_value = [("dummy_query", None)]
         return workload
 
-    def get_workload_with_exception(self, *argv):
+    def get_workload_with_exception(self, *argv) -> Any:
         """Get fake workload."""
         workload = mock.MagicMock()
         workload.generate_workload.side_effect = Exception("Error message")
@@ -43,7 +44,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._init_server",
         idle_function,
     )
-    def isolated_generator(self):
+    def isolated_generator(self) -> Any:
         """Instance of WorkloadGenerator without binding of sockets."""
         return WorkloadGenerator(
             generator_host, generator_port, workload_pub_host, workload_pub_port
