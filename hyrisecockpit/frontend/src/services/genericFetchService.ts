@@ -14,9 +14,9 @@ const fetchingTypeMap = {
 export function useGenericFetchService(
   dataType: string
 ): {
-  getData: () => void;
-  data: Ref<QueryData>;
+  data: Ref<QueryData>; // refactor type
   queryReadyState: Ref<boolean>;
+  checkState: () => void;
 } {
   const queryReadyState = ref<boolean>(true);
   const data = ref<QueryData>({});
@@ -24,8 +24,6 @@ export function useGenericFetchService(
   const base = getBase(dataType);
   const transformData = useDataTransformation(dataType);
   const fetchingType = (fetchingTypeMap as any)[dataType];
-
-  console.log(fetchingType);
 
   function getData(): void {
     queryReadyState.value = false;
@@ -63,5 +61,12 @@ export function useGenericFetchService(
         });
     });
   }
-  return { getData, queryReadyState, data };
+
+  function checkState(): void {
+    if (queryReadyState.value) {
+      getData();
+    }
+  }
+
+  return { queryReadyState, data, checkState };
 }

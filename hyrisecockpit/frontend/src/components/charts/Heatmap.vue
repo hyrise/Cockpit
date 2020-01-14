@@ -61,11 +61,10 @@ export default createComponent({
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout());
       watch([mapData, xData, yData], () => {
-        Plotly.purge(props.graphId);
-        Plotly.newPlot(
+        Plotly.deleteTraces(props.graphId, 0);
+        Plotly.addTraces(
           props.graphId,
-          [getDataset(mapData.value, xData.value, yData.value)],
-          getLayout()
+          getDataset(mapData.value, xData.value, yData.value)
         );
       });
     });
