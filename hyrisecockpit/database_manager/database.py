@@ -8,10 +8,24 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-
-from psycopg2 import Error, pool
+from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
+
+__table_names: Dict[str, List[str]] = {
+    "tpch": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp",
+        "region",
+        "supplier",
+    ],
+    "tpcds": [],
+    "job": [],
+}
 
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
@@ -125,27 +139,23 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def load_data(self, datatype: str) -> None:
+    def load_data(self, datatype: str) -> bool:
         """Load pregenerated tables."""
+        table_names = __table_names.get(datatype)
+        if not table_names:
+            return False
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
         cur = connection.cursor()
-
-        table_names = [
-            "customer",
-            "lineitem",
-            "nation",
-            "orders",
-            "part",
-            "partsupp",
-            "region",
-            "supplier",
-        ]
-
-        for name in table_names:
-            cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin'")
+        success: bool = True
+        try:
+            for name in table_names:
+                cur.execute(f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';")
+        except DatabaseError:
+            success = False
 
         self._connection_pool.putconn(connection)
+        return success
 
     def get_throughput_counter(self) -> int:
         """Return throughput."""
