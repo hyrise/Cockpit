@@ -61,7 +61,7 @@ export default createComponent({
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { getData, data, queryReadyState } = useGenericFetchService(
+    const { checkState, data, queryReadyState } = useGenericFetchService(
       "throughput"
     );
     const selectedDatabaseIds = ref<string[]>(
@@ -77,12 +77,6 @@ export default createComponent({
     onMounted(() => {
       setInterval(checkState, 1000);
     });
-
-    function checkState(): void {
-      if (queryReadyState.value) {
-        getData();
-      }
-    }
 
     return {
       data,

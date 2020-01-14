@@ -57,7 +57,7 @@ export default createComponent({
   setup(props: {}, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = useDatabaseFetchService();
-    const { data, getData } = useGenericFetchService("access");
+    const { data, checkState } = useGenericFetchService("access");
     const transformData = useDataTransformation("access");
 
     const table = computed(() => selectedTable.value);
@@ -68,7 +68,7 @@ export default createComponent({
     const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, table], () => {
-      if (data.value != {}) {
+      if (data.value != {} && table.value != "") {
         const { newColumns, newChunks, dataByChunks } = transformData(
           data.value,
           context.root.$route.params.id,
@@ -80,8 +80,9 @@ export default createComponent({
       }
     });
 
+    checkState();
     onMounted(() => {
-      setInterval(getData, 5000);
+      setInterval(checkState, 5000);
     });
 
     return {

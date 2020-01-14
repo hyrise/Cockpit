@@ -1,16 +1,11 @@
 import { Ref, ref } from "@vue/composition-api";
-import { Database } from "../types/database";
+import { Database, DatabaseData } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
 
-export function useDatabaseFetchService(): {
-  databases: Ref<Database[]>;
-  tables: Ref<string[]>;
-  addDatabase: (databasedata: any) => void;
-  isReady: Ref<boolean>;
-} {
-  const colorsArray = Object.keys(colors);
-  let usedColors = 0;
+export function useDatabaseFetchService(): DatabaseData {
+  const colorsArray: any = Object.keys(colors);
+  let usedColors: any = 0;
   const databases = ref<Database[]>([]);
   const isReady = ref<boolean>(false);
   const tables = ref<string[]>([]);
@@ -28,7 +23,7 @@ export function useDatabaseFetchService(): {
     axios
       .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database")
       .then(response => {
-        databases.value = response.data.body.databases.map(database => ({
+        databases.value = response.data.body.databases.map((database: any) => ({
           id: database,
           color: getDatabaseColor(database)
         }));
@@ -61,10 +56,12 @@ export function useDatabaseFetchService(): {
           .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database")
           .then(
             result =>
-              (databases.value = result.data.body.databases.map(database => ({
-                id: database,
-                color: getDatabaseColor(database)
-              })))
+              (databases.value = result.data.body.databases.map(
+                (database: any) => ({
+                  id: database,
+                  color: getDatabaseColor(database)
+                })
+              ))
           );
       })
       .catch(error => {
