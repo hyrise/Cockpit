@@ -40,6 +40,9 @@ import { useDatabaseFetchService } from "../services/databaseService";
 import Heatmap from "./charts/Heatmap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
 
+interface Props {
+  preselectedDatabaseId: string;
+}
 interface Data {
   tables: Ref<string[]>;
   mapData: Ref<number[][]>;
@@ -54,7 +57,13 @@ export default createComponent({
   components: {
     Heatmap
   },
-  setup(props: {}, context: SetupContext): Data {
+  props: {
+    preselectedDatabaseId: {
+      type: String,
+      default: null
+    }
+  },
+  setup(props: Props, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = useDatabaseFetchService();
     const { data, checkState } = useGenericFetchService("access");
@@ -71,7 +80,7 @@ export default createComponent({
       if (data.value != {} && table.value != "") {
         const { newColumns, newChunks, dataByChunks } = transformData(
           data.value,
-          context.root.$route.params.id,
+          props.preselectedDatabaseId,
           table.value
         );
         chunks.value = newChunks;

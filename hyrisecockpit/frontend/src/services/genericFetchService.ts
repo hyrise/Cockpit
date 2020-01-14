@@ -14,7 +14,7 @@ const fetchingTypeMap = {
 export function useGenericFetchService(
   dataType: string
 ): {
-  data: Ref<QueryData>;
+  data: Ref<QueryData>; // refactor type
   queryReadyState: Ref<boolean>;
   checkState: () => void;
 } {

@@ -15,7 +15,7 @@
         <b> Access frequency Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Access />
+      <Access :preselectedDatabaseId="$route.params.id" />
       <div class="mt-6 mb-2">
         <b> Storage Monitoring </b>
       </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+// add generic component to add props type (preselected is used in every component)
 import {
   createComponent,
   SetupContext,
@@ -38,8 +39,6 @@ import Storage from "../components/Storage.vue";
 import Cpu from "../components/Cpu.vue";
 import Access from "../components/Access.vue";
 import { useDatabaseFetchService } from "../services/databaseService";
-
-interface Props {}
 
 export default createComponent({
   name: "DatabaseScreen",

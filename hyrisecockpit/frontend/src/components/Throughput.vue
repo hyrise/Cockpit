@@ -61,15 +61,13 @@ export default createComponent({
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { checkState, data, queryReadyState } = useGenericFetchService(
-      "throughput"
-    );
+    const { checkState, data } = useGenericFetchService("throughput");
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
 
     const chartConfiguration = [
-      "throughput",
+      "Throughput",
       "time in s",
       "queries per second"
     ];

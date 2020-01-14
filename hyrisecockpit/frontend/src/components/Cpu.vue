@@ -61,7 +61,7 @@ export default createComponent({
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { checkState, data, queryReadyState } = useGenericFetchService("cpu");
+    const { checkState, data } = useGenericFetchService("cpu");
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );

@@ -40,7 +40,7 @@ export function useDatabaseFetchService(): DatabaseData {
     if (database) {
       return database.color;
     }
-    const color: any = colors[colorsArray[usedColors]].base;
+    const color: any = (colors as any)[colorsArray[usedColors]].base;
     usedColors += 2;
     return color;
   }

@@ -71,7 +71,7 @@ export default createComponent({
         }
       });
       watch(data, () => {
-        if (isReady.value) {
+        if (isReady.value && Object.keys(data.value).length) {
           updateChartDatasets();
         }
       });

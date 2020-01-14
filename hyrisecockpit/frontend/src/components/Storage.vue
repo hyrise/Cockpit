@@ -46,9 +46,7 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    const { data, queryReadyState, checkState } = useGenericFetchService(
-      "storage"
-    );
+    const { data, checkState } = useGenericFetchService("storage");
     const transformData = useDataTransformation("storage");
 
     const labels = ref<string[]>([]);
@@ -62,9 +60,7 @@ export default createComponent({
     });
 
     watch(data, () => {
-      console.log(data.value);
-      if (data.value != {}) {
-        console.log("test");
+      if (Object.keys(data.value).length) {
         const { newLabels, newParents, newSizes } = transformData(
           data.value,
           props.preselectedDatabaseId
