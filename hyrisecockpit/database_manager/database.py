@@ -12,6 +12,21 @@ from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
 
+__table_names: Dict[str, List[str]] = {
+    "tpch": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp",
+        "region",
+        "supplier",
+    ],
+    "tpcds": [],
+    "job": [],
+}
+
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     """Fill the queue."""
@@ -126,25 +141,16 @@ class Database(object):
 
     def load_data(self, datatype: str) -> bool:
         """Load pregenerated tables."""
+        table_names = __table_names.get(datatype)
+        if not table_names:
+            return False
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
         cur = connection.cursor()
-
-        table_names = [
-            "customer",
-            "lineitem",
-            "nation",
-            "orders",
-            "part",
-            "partsupp",
-            "region",
-            "supplier",
-        ]
-
         success: bool = True
         try:
             for name in table_names:
-                cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin';")
+                cur.execute(f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';")
         except DatabaseError:
             success = False
 
