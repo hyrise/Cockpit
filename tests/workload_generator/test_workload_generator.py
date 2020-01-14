@@ -84,10 +84,16 @@ class TestWorkloadGenerator:
 
     def test_bad_request(self, isolated_generator: WorkloadGenerator):
         """Ensure bad request returns 400."""
-        request = {"Mein Wissen": {"Math": None, "Physics": None, "Python": None}}
+        m = mock.Mock()
+        m.side_effect = Exception("Error message")
+
+        request = {"header": {"message": "DISCO!"}, "body": {"DISCO!"}}
+        isolated_generator._server_calls["DISCO!"] = m
+
         response = isolated_generator._handle_request(request)
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
+        assert response["body"]["error"] == "Error message"
 
     @mark.parametrize("workload", ["no-ops", "mixed"])
     def test_initialization_pre_defined_workloads(
