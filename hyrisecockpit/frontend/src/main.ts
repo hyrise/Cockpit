@@ -6,10 +6,9 @@ import App from "./App.vue";
 import { useDatabaseFetchService } from "./services/databaseService";
 
 Vue.use(VueCompositionApi);
-const { databases } = useDatabaseFetchService();
 
 Vue.config.productionTip = false;
-Vue.prototype.$databases = databases;
+Vue.prototype.$databaseData = useDatabaseFetchService();
 
 new Vue({
   vuetify,

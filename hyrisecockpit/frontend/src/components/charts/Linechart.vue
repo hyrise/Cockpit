@@ -50,16 +50,30 @@ export default createComponent({
     const data = computed(() => props.data);
     const graphId = props.graphId;
     const { getDataset, getLayout } = useLineChartConfiguration(
+      context,
       props.chartConfiguration
     );
+    const { isReady } = (context.root as any).$databaseData;
 
     onMounted(() => {
-      Plotly.newPlot(graphId, [getDataset()], getLayout());
+      watch(isReady, () => {
+        if (isReady.value) {
+          Plotly.newPlot(
+            graphId,
+            [getDataset([], context.root.$route.params.id)],
+            getLayout()
+          );
+        }
+      });
       watch(selectedDatabaseIds, () => {
-        handleDatabaseChange();
+        if (isReady.value) {
+          handleDatabaseChange();
+        }
       });
       watch(data, () => {
-        updateChartDatasets();
+        if (isReady.value) {
+          updateChartDatasets();
+        }
       });
     });
 
@@ -102,12 +116,13 @@ export default createComponent({
 });
 
 function useLineChartConfiguration(
+  context: SetupContext,
   chartConfiguration: string[]
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (xMin?: number, xMax?: number) => Object;
 } {
-  const databases: Ref<Database[]> = Vue.prototype.$databases;
+  const databases: Ref<Database[]> = context.root.$databaseData.databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
       title: chartConfiguration[0],
