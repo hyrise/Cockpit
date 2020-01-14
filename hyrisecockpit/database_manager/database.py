@@ -8,7 +8,6 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-
 from psycopg2 import Error, pool
 
 from .driver import Driver
@@ -143,7 +142,7 @@ class Database(object):
         ]
 
         for name in table_names:
-            cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin'")
+            cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin';")
 
         self._connection_pool.putconn(connection)
 
