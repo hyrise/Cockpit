@@ -161,12 +161,11 @@ class DatabaseManager(object):
     def _call_load_data(self, body: Dict) -> Dict:
         datatype = body.get("datatype")
         if not datatype:
-            response = get_response(400)
-            return response
+            return get_response(400)
         for _, database_object in self._databases.items():
-            database_object.load_data(datatype)
-        response = get_response(200)
-        return response
+            if not database_object.load_data(datatype):
+                return get_response(400)
+        return get_response(200)
 
     def _exit(self) -> None:
         """Perform clean exit on all databases."""

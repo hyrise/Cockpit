@@ -8,7 +8,7 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from psycopg2 import Error, pool
+from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
 
@@ -124,7 +124,7 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def load_data(self, datatype: str) -> None:
+    def load_data(self, datatype: str) -> bool:
         """Load pregenerated tables."""
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
@@ -141,10 +141,15 @@ class Database(object):
             "supplier",
         ]
 
-        for name in table_names:
-            cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin';")
+        success: bool = True
+        try:
+            for name in table_names:
+                cur.execute(f"COPY {name} FROM 'tpch_cached_tables/{name}.bin';")
+        except DatabaseError:
+            success = False
 
         self._connection_pool.putconn(connection)
+        return success
 
     def get_throughput_counter(self) -> int:
         """Return throughput."""
