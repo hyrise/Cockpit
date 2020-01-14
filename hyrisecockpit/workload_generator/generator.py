@@ -91,10 +91,10 @@ class WorkloadGenerator(object):
         self.close()
 
     def _handle_request(self, request):
+        # import pdb; pdb.set_trace()
         try:
             handler = self._server_calls.get(request["header"]["message"], None)
             if not handler:
-                print(request)
                 return get_response(400)
             response = handler(request["body"])
             return response
