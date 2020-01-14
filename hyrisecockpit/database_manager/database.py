@@ -1,6 +1,7 @@
 """The database object represents the instance of a database."""
 
 import secrets
+import time
 from multiprocessing import Manager, Process, Queue
 from typing import Dict, List
 
@@ -31,6 +32,7 @@ def execute_queries(
     worker_id: str,
     task_queue: Queue,
     throughput_data_container: Dict,
+    query_list: List,
     connection_pool: pool,
     failed_task_queue: Queue,
 ) -> None:
@@ -38,11 +40,15 @@ def execute_queries(
     connection = connection_pool.getconn()
     connection.set_session(autocommit=True)
     cur = connection.cursor()
+
     while True:
         # If Queue is emty go to wait status
         query, parameters = task_queue.get(block=True)
         try:
+            startts = time.time()
             cur.execute(query, parameters)
+            endts = time.time()
+            query_list.append((startts, endts, "none"))
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
@@ -75,7 +81,8 @@ class Database(object):
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._throughput_data_container: Dict = self._init_throughput_data_container()
-        self._worker_pool: pool = self._init_worler_pool()
+        self._query_list: List = self._manager.list()
+        self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
 
@@ -98,7 +105,7 @@ class Database(object):
             throughput_data_container[str(i)] = 0
         return throughput_data_container
 
-    def _init_worler_pool(self) -> pool:
+    def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
         worker_pool = []
         for i in range(self._number_workers):
@@ -108,6 +115,7 @@ class Database(object):
                     i,
                     self._task_queue,
                     self._throughput_data_container,
+                    self._query_list,
                     self._connection_pool,
                     self._failed_task_queue,
                 ),
