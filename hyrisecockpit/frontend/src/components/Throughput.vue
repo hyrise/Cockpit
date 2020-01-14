@@ -14,7 +14,12 @@
           ></v-select>
         </v-col>
       </v-row>
-      <div id="graph"></div>
+      <Linechart
+        :selected-database-ids="selectedDatabaseIds"
+        :data="data"
+        graph-id="throughput"
+        :chart-configuration="chartConfiguration"
+      />
     </div>
   </div>
 </template>
@@ -29,154 +34,64 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import axios from "axios";
-import { useGeneratingTestData } from "../helpers/testData";
-import { useThroughputFetchService } from "../services/throughputService";
+
+import { useGenericFetchService } from "../services/genericFetchService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { ThroughputData } from "../types/throughput";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
+import Linechart from "./charts/Linechart.vue";
 
 interface Props {
   preselectedDatabaseId: string;
 }
 
 interface Data {
-  throughputData: Ref<ThroughputData>;
-  resetData: () => void;
+  data: Ref<ThroughputData>;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
+  chartConfiguration: string[];
 }
 
 export default createComponent({
   props: {
     preselectedDatabaseId: { type: String }
   },
+  components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
-    const {
-      getThroughput,
-      throughputData,
-      throughputQueryReadyState
-    } = useThroughputFetchService(onTPChange);
-
-    const { databases } = useDatabaseFetchService();
-
-    const { getDataset, getLayout } = useThroughputLineChartConfiguration(
-      databases.value
+    const { databases } = context.root.$databaseData;
+    const { getData, data, queryReadyState } = useGenericFetchService(
+      "throughput"
     );
-
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
 
+    const chartConfiguration = [
+      "throughput",
+      "time in s",
+      "queries per second"
+    ];
+
     onMounted(() => {
-      Plotly.newPlot("graph", [getDataset()], getLayout());
       setInterval(checkState, 1000);
-      // watch for changes in selected databases
-      watch(
-        () => selectedDatabaseIds.value,
-        selectedDatabaseIds => {
-          const newDatasets = selectedDatabaseIds.reduce((result, id): any => {
-            return [
-              ...result,
-              getDataset(
-                throughputData.value[id] ? throughputData.value[id] : [],
-                id
-              )
-            ];
-          }, []);
-          Plotly.purge("graph");
-          Plotly.plot("graph", newDatasets, getLayout());
-        }
-      );
     });
 
     function checkState(): void {
-      if (throughputQueryReadyState.value) {
-        getThroughput();
+      if (queryReadyState.value) {
+        getData();
       }
     }
 
-    function resetData(): void {
-      throughputData.value = {};
-    }
-
-    function onTPChange() {
-      updateChartDatasets();
-    }
-
-    function getMaxDatasetLength(): number {
-      return selectedDatabaseIds.value.reduce((currentMax, id) => {
-        return Math.max(throughputData.value[id].length, currentMax);
-      }, 0);
-    }
-
-    function updateChartDatasets(): void {
-      const newData = {
-        y: Object.values(selectedDatabaseIds.value).map(
-          id => throughputData.value[id]
-        )
-      };
-      const maxSelectedLength = getMaxDatasetLength();
-
-      Plotly.update(
-        "graph",
-        newData,
-        getLayout(
-          Math.max(maxSelectedLength - 30, 0),
-          Math.max(maxSelectedLength, 30)
-        )
-      );
-    }
-
     return {
-      throughputData,
-      resetData,
+      data,
       databases,
+      chartConfiguration,
       selectedDatabaseIds
     };
   }
 });
-
-function useThroughputLineChartConfiguration(
-  databases: Database[]
-): {
-  getDataset: (throughputData?: number[], databaseId?: string) => Object;
-  getLayout: (xMin?: number, xMax?: number) => Object;
-} {
-  function getLayout(xMin: number = 0, xMax: number = 30): Object {
-    return {
-      title: "Throughput",
-      xaxis: {
-        title: "time in s",
-        range: [xMin, xMax]
-      },
-      yaxis: {
-        title: "Queries per second",
-        rangemode: "tozero"
-      }
-    };
-  }
-
-  function getDatabaseById(databaseId: string): Database | undefined {
-    return databases.find(element => element.id === databaseId);
-  }
-
-  function getDataset(
-    throughputData: number[] = [],
-    databaseId: string = ""
-  ): Object {
-    const database: Database | undefined = getDatabaseById(databaseId);
-    return {
-      y: throughputData,
-      mode: "lines+markers",
-      line: database ? { color: database.color } : {},
-      name: database ? database.id : {}
-    };
-  }
-  return { getDataset, getLayout };
-}
 </script>
 <style scoped>
 .chart {
