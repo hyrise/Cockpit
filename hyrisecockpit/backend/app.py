@@ -137,7 +137,7 @@ def workload() -> Dict:
     return response
 
 
-@app.route("/data/<datatype>", methods=["GET"])
+@app.route("/load_data/<datatype>", methods=["GET"])
 def load_data(datatype: str) -> Dict:
     """Load pregenerated tables."""
     return _send_message(
