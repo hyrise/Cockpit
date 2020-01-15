@@ -8,9 +8,71 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from psycopg2 import Error, pool
+from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
+
+__table_names: Dict[str, List[str]] = {
+    "tpch": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp",
+        "region",
+        "supplier",
+    ],
+    "tpcds": [
+        "call_center",
+        "catalog_sales",
+        "customer_demographics",
+        "income_band",
+        "promotion",
+        "store",
+        "time_dim",
+        "web_returns",
+        "catalog_page",
+        "customer_address",
+        "date_dim",
+        "inventory",
+        "reason",
+        "store_returns",
+        "warehouse",
+        "web_sales",
+        "catalog_returns",
+        "customer",
+        "household_demographics",
+        "item",
+        "ship_mode",
+        "store_sales",
+        "web_page",
+        "web_site",
+    ],
+    "job": [
+        "aka_name",
+        "char_name",
+        "comp_cast_type",
+        "keyword.bin",
+        "movie_companies",
+        "movie_keyword",
+        "person_info",
+        "aka_title",
+        "company_name",
+        "complete_cast",
+        "kind_type",
+        "movie_info",
+        "movie_link",
+        "role_type",
+        "cast_info",
+        "company_type",
+        "info_type",
+        "link_type",
+        "movie_info_idx",
+        "name",
+        "title",
+    ],
+}
 
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
@@ -75,7 +137,7 @@ class Database(object):
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._throughput_data_container: Dict = self._init_throughput_data_container()
-        self._worker_pool: pool = self._init_worler_pool()
+        self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
 
@@ -98,7 +160,7 @@ class Database(object):
             throughput_data_container[str(i)] = 0
         return throughput_data_container
 
-    def _init_worler_pool(self) -> pool:
+    def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
         worker_pool = []
         for i in range(self._number_workers):
@@ -123,6 +185,24 @@ class Database(object):
         """Start all workers in pool."""
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
+
+    def load_data(self, datatype: str) -> bool:
+        """Load pregenerated tables."""
+        table_names = __table_names.get(datatype)
+        if not table_names:
+            return False
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+        cur = connection.cursor()
+        success: bool = True
+        try:
+            for name in table_names:
+                cur.execute(f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';")
+        except DatabaseError:
+            success = False
+
+        self._connection_pool.putconn(connection)
+        return success
 
     def get_throughput_counter(self) -> int:
         """Return throughput."""

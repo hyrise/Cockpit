@@ -38,6 +38,7 @@ class DatabaseManager(object):
             "chunks data": self._call_chunks_data,
             "failed tasks": self._call_failed_tasks,
             "get databases": self._call_get_databases,
+            "load_data": self._call_load_data,
         }
         self._init_server()
 
@@ -156,6 +157,15 @@ class DatabaseManager(object):
 
     def _call_not_found(self, body: Dict) -> Dict:
         return get_response(400)
+
+    def _call_load_data(self, body: Dict) -> Dict:
+        datatype = body.get("datatype")
+        if not datatype:
+            return get_response(400)
+        for _, database_object in self._databases.items():
+            if not database_object.load_data(datatype):
+                return get_response(400)
+        return get_response(200)
 
     def _exit(self) -> None:
         """Perform clean exit on all databases."""
