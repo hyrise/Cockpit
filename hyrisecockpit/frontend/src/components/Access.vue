@@ -40,6 +40,9 @@ import { useDatabaseFetchService } from "../services/databaseService";
 import Heatmap from "./charts/Heatmap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
 
+interface Props {
+  preselectedDatabaseId: string;
+}
 interface Data {
   tables: Ref<string[]>;
   mapData: Ref<number[][]>;
@@ -54,10 +57,16 @@ export default createComponent({
   components: {
     Heatmap
   },
-  setup(props: {}, context: SetupContext): Data {
+  props: {
+    preselectedDatabaseId: {
+      type: String,
+      default: null
+    }
+  },
+  setup(props: Props, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = useDatabaseFetchService();
-    const { data, getData } = useGenericFetchService("access");
+    const { data, checkState } = useGenericFetchService("access");
     const transformData = useDataTransformation("access");
 
     const table = computed(() => selectedTable.value);
@@ -68,10 +77,10 @@ export default createComponent({
     const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, table], () => {
-      if (data.value != {}) {
+      if (data.value != {} && table.value != "") {
         const { newColumns, newChunks, dataByChunks } = transformData(
           data.value,
-          context.root.$route.params.id,
+          props.preselectedDatabaseId,
           table.value
         );
         chunks.value = newChunks;
@@ -80,8 +89,9 @@ export default createComponent({
       }
     });
 
+    checkState();
     onMounted(() => {
-      setInterval(getData, 5000);
+      setInterval(checkState, 5000);
     });
 
     return {

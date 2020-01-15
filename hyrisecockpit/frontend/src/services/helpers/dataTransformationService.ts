@@ -1,6 +1,13 @@
 export function useDataTransformation(
   dataType: string
 ): (data: any, primaryKey?: string, secondaryKey?: string) => any {
+  const transformationMap = {
+    access: transformAccessData,
+    storage: transformStorageData,
+    cpu: transformCPUData,
+    throughput: transformThroughputData
+  };
+
   function transformCPUData(data: any, primaryKey: string = ""): number {
     return data[primaryKey].cpu.reduce(
       (accumulator: any, currentValue: any) => accumulator + currentValue
@@ -11,27 +18,24 @@ export function useDataTransformation(
   }
 
   function transformStorageData(
-    data: any
+    data: any,
+    primaryKey: string = ""
   ): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
     const newLabels: string[] = [];
     const newParents: string[] = [];
     const newSizes: number[] = [];
 
-    Object.keys(data).forEach(instance => {
-      newLabels.push(instance);
+    Object.keys(data[primaryKey]).forEach(table => {
+      newLabels.push(table);
       newParents.push("");
       newSizes.push(0);
-      Object.keys(data[instance]).forEach(table => {
-        newLabels.push(instance + "_" + table);
-        newParents.push(instance);
-        newSizes.push(0);
-        Object.keys(data[instance][table].data).forEach(attribute => {
-          newLabels.push(instance + "_" + attribute);
-          newParents.push(instance + "_" + table);
-          newSizes.push(data[instance][table].data[attribute].size);
-        });
+      Object.keys(data[primaryKey][table].data).forEach(attribute => {
+        newLabels.push(attribute);
+        newParents.push(table);
+        newSizes.push(data[primaryKey][table].data[attribute].size);
       });
     });
+
     return { newLabels, newParents, newSizes };
   }
 
@@ -64,17 +68,5 @@ export function useDataTransformation(
     return { newChunks, newColumns, dataByChunks };
   }
 
-  if (dataType === "cpu") {
-    return transformCPUData;
-  }
-  if (dataType === "throughput") {
-    return transformThroughputData;
-  }
-  if (dataType === "storage") {
-    return transformStorageData;
-  }
-  if (dataType === "access") {
-    return transformAccessData;
-  }
-  return transformThroughputData;
+  return (transformationMap as any)[dataType];
 }

@@ -1,16 +1,13 @@
 import { Ref, ref } from "@vue/composition-api";
-import { Database } from "../types/database";
+import { Database, DatabaseData } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
 
-export function useDatabaseFetchService(): {
-  databases: Ref<Database[]>;
-  tables: Ref<string[]>;
-  addDatabase: (databasedata: any) => void;
-} {
-  const colorsArray = Object.keys(colors);
-  let usedColors = 0;
-  const databases = ref<Database[]>(getDummyDatabases());
+export function useDatabaseFetchService(): DatabaseData {
+  const colorsArray: any = Object.keys(colors);
+  let usedColors: any = 0;
+  const databases = ref<Database[]>([]);
+  const isReady = ref<boolean>(false);
   const tables = ref<string[]>([]);
 
   function getTables(): void {
@@ -23,13 +20,15 @@ export function useDatabaseFetchService(): {
   }
 
   function getDatabases(): void {
-    axios.get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database").then(
-      response =>
-        (databases.value = response.data.body.databases.map(database => ({
+    axios
+      .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database")
+      .then(response => {
+        databases.value = response.data.body.databases.map((database: any) => ({
           id: database,
           color: getDatabaseColor(database)
-        })))
-    );
+        }));
+        isReady.value = true;
+      });
   }
 
   getDatabases();
@@ -41,7 +40,7 @@ export function useDatabaseFetchService(): {
     if (database) {
       return database.color;
     }
-    const color: any = colors[colorsArray[usedColors]].base;
+    const color: any = (colors as any)[colorsArray[usedColors]].base;
     usedColors += 2;
     return color;
   }
@@ -57,40 +56,23 @@ export function useDatabaseFetchService(): {
           .get("http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/database")
           .then(
             result =>
-              (databases.value = result.data.body.databases.map(database => ({
-                id: database,
-                color: getDatabaseColor(database)
-              })))
+              (databases.value = result.data.body.databases.map(
+                (database: any) => ({
+                  id: database,
+                  color: getDatabaseColor(database)
+                })
+              ))
           );
-        console.log(response);
       })
       .catch(error => {
         console.log(error);
       });
   }
-  function getDummyTables(): void {
-    tables.value = [
-      "customer",
-      "lineitem",
-      "nation",
-      "orders",
-      "part",
-      "partsupp",
-      "region",
-      "supplier"
-    ];
-  }
-
-  function getDummyDatabases(): Database[] {
-    return [
-      { id: "citadelle", color: getDatabaseColor("citadelle") },
-      { id: "york", color: getDatabaseColor("york") }
-    ];
-  }
 
   return {
     databases,
     addDatabase,
+    isReady,
     tables
   };
 }
