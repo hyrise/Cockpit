@@ -41,7 +41,7 @@ import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
-import { componentMap } from "../types/components";
+import { componentMap } from "./components";
 
 interface Props {
   preselectedDatabaseId: string;

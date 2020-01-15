@@ -39,7 +39,7 @@ import { useGenericFetchService } from "../services/genericFetchService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import Heatmap from "./charts/Heatmap.vue";
 import { useDataTransformation } from "../services/transformationService";
-import { componentMap } from "../types/components";
+import { componentMap } from "./components";
 
 interface Props {
   preselectedDatabaseId: string;

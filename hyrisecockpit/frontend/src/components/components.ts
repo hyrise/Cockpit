@@ -1,13 +1,12 @@
-import { TransformationService } from "./services";
+import {
+  TransformationService,
+  Base,
+  FetchType,
+  backendUrl
+} from "../types/services";
 import { useDataTransformation } from "../services/transformationService";
 
-const backendUrl = "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/";
-
 export type ComponentId = "access" | "cpu" | "storage" | "throughput";
-
-export type FetchType = "read" | "modify";
-
-export type Base = "system_data" | "throughput" | "storage" | "chunks_data";
 
 export interface Component {
   fetchType: FetchType;

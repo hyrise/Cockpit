@@ -23,7 +23,7 @@ import { useGenericFetchService } from "../services/genericFetchService";
 import * as Plotly from "plotly.js";
 import Treemap from "./charts/Treemap.vue";
 import { useDataTransformation } from "../services/transformationService";
-import { componentMap } from "../types/components";
+import { componentMap } from "./components";
 
 interface Props {
   preselectedDatabaseId: string;
