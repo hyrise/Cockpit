@@ -48,11 +48,7 @@ def execute_queries(
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
-        except ValueError as e:
-            failed_task_queue.put(
-                {"worker_id": worker_id, "task": task, "Error": str(e)}
-            )
-        except Psycopg2Error as e:
+        except (ValueError, Psycopg2Error) as e:
             failed_task_queue.put(
                 {"worker_id": worker_id, "task": task, "Error": str(e)}
             )
