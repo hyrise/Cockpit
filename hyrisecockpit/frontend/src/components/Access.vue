@@ -57,7 +57,7 @@ export default createComponent({
   setup(props: ComponentProps, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = context.root.$databaseData;
-    const { data, checkState } = useGenericFetchService(props.component);
+    const { data, checkState } = useGenericFetchService(props.componentMeta);
 
     const table = computed(() => selectedTable.value);
 
@@ -72,7 +72,7 @@ export default createComponent({
           newColumns,
           newChunks,
           dataByChunks
-        } = props.component.transformationService(
+        } = props.componentMeta.transformationService(
           data.value,
           props.preselectedDatabaseId,
           table.value

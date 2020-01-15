@@ -37,7 +37,7 @@ export default createComponent({
   },
   props: ComponentPropsValidation,
   setup(props: ComponentProps, context: SetupContext): Data {
-    const { data, checkState } = useGenericFetchService(props.component);
+    const { data, checkState } = useGenericFetchService(props.componentMeta);
 
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
@@ -55,7 +55,7 @@ export default createComponent({
           newLabels,
           newParents,
           newSizes
-        } = props.component.transformationService(
+        } = props.componentMeta.transformationService(
           data.value,
           props.preselectedDatabaseId
         );

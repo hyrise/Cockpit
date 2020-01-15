@@ -7,7 +7,7 @@
       <v-divider class="mb-4"></v-divider>
       <Throughput
         :preselectedDatabaseId="$route.params.id"
-        :component="getComponent('throughput')"
+        :component-meta="getComponentMeta('throughput')"
       />
       <div class="mt-6 mb-2">
         <b> CPU Monitoring </b>
@@ -15,7 +15,7 @@
       <v-divider class="mb-4"></v-divider>
       <Cpu
         :preselectedDatabaseId="$route.params.id"
-        :component="getComponent('cpu')"
+        :component-meta="getComponentMeta('cpu')"
       />
       <div class="mt-6 mb-2">
         <b> Access frequency Monitoring </b>
@@ -23,7 +23,7 @@
       <v-divider class="mb-4"></v-divider>
       <Access
         :preselectedDatabaseId="$route.params.id"
-        :component="getComponent('access')"
+        :component-meta="getComponentMeta('access')"
       />
       <div class="mt-6 mb-2">
         <b> Storage Monitoring </b>
@@ -31,7 +31,7 @@
       <v-divider class="mb-4"></v-divider>
       <Storage
         :preselectedDatabaseId="$route.params.id"
-        :component="getComponent('storage')"
+        :component-meta="getComponentMeta('storage')"
       />
     </div>
   </div>
@@ -43,12 +43,11 @@ import Throughput from "../components/Throughput.vue";
 import Storage from "../components/Storage.vue";
 import Cpu from "../components/Cpu.vue";
 import Access from "../components/Access.vue";
-import { useDatabaseFetchService } from "../services/databaseService";
-import { componentMap } from "../components/components";
-import { ComponentId, Component } from "../types/components";
+import { componentMetaMap } from "../components/componentMeta";
+import { ComponentId, ComponentMeta } from "../types/components";
 
 interface Data {
-  getComponent: (component: ComponentId) => Component;
+  getComponentMeta: (component: ComponentId) => ComponentMeta;
 }
 
 export default createComponent({
@@ -60,11 +59,11 @@ export default createComponent({
     Access
   },
   setup(props: {}, context: SetupContext): Data {
-    function getComponent(component: ComponentId): Component {
-      return componentMap[component];
+    function getComponentMeta(component: ComponentId): ComponentMeta {
+      return componentMetaMap[component];
     }
     return {
-      getComponent
+      getComponentMeta
     };
   }
 });

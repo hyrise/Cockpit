@@ -1,9 +1,9 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
-import { Component } from "@/types/components";
+import { ComponentMeta } from "@/types/components";
 import { FetchService } from "@/types/services";
 
-export function useGenericFetchService(component: Component): FetchService {
+export function useGenericFetchService(component: ComponentMeta): FetchService {
   const queryReadyState = ref<boolean>(true);
   const data = ref<any>({});
 

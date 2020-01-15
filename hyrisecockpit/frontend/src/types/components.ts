@@ -2,7 +2,7 @@ import { TransformationService, Base, FetchType } from "./services";
 
 export type ComponentId = "access" | "cpu" | "storage" | "throughput";
 
-export interface Component {
+export interface ComponentMeta {
   fetchType: FetchType;
   transformationService: TransformationService;
   base: Base;
@@ -10,12 +10,12 @@ export interface Component {
 }
 
 export interface ComponentProps {
-  component: Component;
+  componentMeta: ComponentMeta;
   preselectedDatabaseId: string;
 }
 
 export const ComponentPropsValidation = {
-  component: {
+  componentMeta: {
     type: Object,
     default: null
   },
