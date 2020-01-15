@@ -15,4 +15,5 @@ export type FetchType = "read" | "modify";
 
 export type Base = "system_data" | "throughput" | "storage" | "chunks_data";
 
-export const backendUrl = "http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/";
+const backendPort = 5000;
+export const backendUrl = `http://vm-aurora.eaalab.hpi.uni-potsdam.de:${backendPort}/`;
