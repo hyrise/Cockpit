@@ -50,16 +50,17 @@ export default createComponent({
     );
 
     onMounted(() => {
+      Plotly.newPlot(props.graphId, getDataset(), getLayout());
       watch(() => {
         if (
           props.labels.length > 0 &&
           props.parents.length > 0 &&
           props.values.length > 0
         ) {
-          Plotly.newPlot(
+          Plotly.deleteTraces(props.graphId, 0);
+          Plotly.addTraces(
             props.graphId,
-            getDataset(props.labels, props.parents, props.values),
-            getLayout()
+            getDataset(props.labels, props.parents, props.values)
           );
         }
       });
@@ -71,9 +72,9 @@ function useTreemapConfiguration(
 ): {
   getLayout: () => Object;
   getDataset: (
-    labels: string[],
-    parents: string[],
-    values: number[]
+    labels?: string[],
+    parents?: string[],
+    values?: number[]
   ) => Object[];
 } {
   function getLayout(): Object {
@@ -94,9 +95,9 @@ function useTreemapConfiguration(
     };
   }
   function getDataset(
-    labels: string[],
-    parents: string[],
-    values: number[]
+    labels: string[] = [],
+    parents: string[] = [],
+    values: number[] = []
   ): Object[] {
     return [
       {

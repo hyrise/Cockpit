@@ -4,26 +4,37 @@ import { QueryResult, QueryData } from "../types/genericQueryData";
 import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
 import { useDataTransformation } from "./helpers/dataTransformationService";
 
+const fetchingTypeMap = {
+  access: "read",
+  storage: "read",
+  cpu: "modify",
+  throughput: "modify"
+};
+
 export function useGenericFetchService(
   dataType: string
 ): {
-  getData: () => void;
-  data: Ref<QueryData>;
+  data: Ref<QueryData>; // refactor type
   queryReadyState: Ref<boolean>;
+  checkState: () => void;
 } {
   const queryReadyState = ref<boolean>(true);
   const data = ref<QueryData>({});
-  const endpoint = getEndpoint(dataType); //refactor
+  const endpoint = getEndpoint(dataType);
   const base = getBase(dataType);
   const transformData = useDataTransformation(dataType);
+  const fetchingType = (fetchingTypeMap as any)[dataType];
 
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
-      console.log(result);
-      Object.keys(result).forEach(key => {
-        addData(key, transformData(result, key));
-      });
+      if (fetchingType === "modify") {
+        Object.keys(result).forEach(key => {
+          addData(key, transformData(result, key));
+        });
+      } else if (fetchingType === "read") {
+        data.value = result;
+      }
       queryReadyState.value = true;
     });
   }
@@ -50,5 +61,12 @@ export function useGenericFetchService(
         });
     });
   }
-  return { getData, queryReadyState, data };
+
+  function checkState(): void {
+    if (queryReadyState.value) {
+      getData();
+    }
+  }
+
+  return { queryReadyState, data, checkState };
 }
