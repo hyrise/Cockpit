@@ -36,19 +36,18 @@ import {
 } from "@vue/composition-api";
 
 import { useGenericFetchService } from "../services/genericFetchService";
-import { useDatabaseFetchService } from "../services/databaseService";
-import { CPUData } from "../types/cpu";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
+import { componentMap } from "../types/components";
 
 interface Props {
   preselectedDatabaseId: string;
 }
 
 interface Data {
-  data: Ref<CPUData>;
+  data: Ref<any>;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
   chartConfiguration: string[];
@@ -60,8 +59,10 @@ export default createComponent({
   },
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
+    const component = componentMap["cpu"];
     const { databases } = context.root.$databaseData;
-    const { checkState, data } = useGenericFetchService("cpu");
+    const { checkState, data } = useGenericFetchService(component);
+
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );

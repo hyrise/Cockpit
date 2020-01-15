@@ -37,18 +37,18 @@ import {
 
 import { useGenericFetchService } from "../services/genericFetchService";
 import { useDatabaseFetchService } from "../services/databaseService";
-import { ThroughputData } from "../types/throughput";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
+import { componentMap } from "../types/components";
 
 interface Props {
   preselectedDatabaseId: string;
 }
 
 interface Data {
-  data: Ref<ThroughputData>;
+  data: Ref<any>;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
   chartConfiguration: string[];
@@ -60,8 +60,9 @@ export default createComponent({
   },
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
+    const component = componentMap["throughput"];
     const { databases } = context.root.$databaseData;
-    const { checkState, data } = useGenericFetchService("throughput");
+    const { checkState, data } = useGenericFetchService(component);
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
