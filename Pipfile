@@ -24,11 +24,9 @@ pandas = "*"
 psycopg2 = "*"
 pyzmq = "*"
 python-dotenv = "*"
-redis = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
-websockets = "*"
 
 [requires]
 python_version = "3.8.0"
