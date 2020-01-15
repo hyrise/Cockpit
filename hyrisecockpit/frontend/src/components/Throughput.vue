@@ -40,7 +40,6 @@ import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
-import { componentMap } from "./components";
 import { ComponentProps, ComponentPropsValidation } from "../types/components";
 
 interface Data {
@@ -54,9 +53,8 @@ export default createComponent({
   props: ComponentPropsValidation,
   components: { Linechart },
   setup(props: ComponentProps, context: SetupContext): Data {
-    const component = componentMap["throughput"];
     const { databases } = context.root.$databaseData;
-    const { checkState, data } = useGenericFetchService(component);
+    const { checkState, data } = useGenericFetchService(props.component);
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );

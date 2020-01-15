@@ -10,10 +10,15 @@ export interface Component {
 }
 
 export interface ComponentProps {
+  component: Component;
   preselectedDatabaseId: string;
 }
 
 export const ComponentPropsValidation = {
+  component: {
+    type: Object,
+    default: null
+  },
   preselectedDatabaseId: {
     type: String,
     default: null
