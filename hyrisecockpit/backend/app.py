@@ -135,3 +135,12 @@ def workload() -> Dict:
         }
     response = _send_message(generator_socket, message)
     return response
+
+
+@app.route("/load_data/<datatype>", methods=["GET"])
+def load_data(datatype: str) -> Dict:
+    """Load pregenerated tables."""
+    return _send_message(
+        db_manager_socket,
+        {"header": {"message": "load_data"}, "body": {"datatype": datatype}},
+    )
