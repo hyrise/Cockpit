@@ -136,7 +136,7 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databases, addDatabase } = context.root.$databaseData; // this has to be changed on merge
+    const { databases, addDatabase } = context.root.$databaseData;
 
     const number_workers = ref<string>("8");
     const id = ref<string>("");
