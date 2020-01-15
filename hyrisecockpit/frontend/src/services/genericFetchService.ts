@@ -1,6 +1,6 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
-import { Component } from "@/components/components";
+import { Component } from "@/types/components";
 import { FetchService } from "@/types/services";
 
 export function useGenericFetchService(component: Component): FetchService {

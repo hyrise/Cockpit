@@ -1,4 +1,4 @@
-import { ComponentId } from "../components/components";
+import { ComponentId } from "../types/components";
 import { TransformationService } from "@/types/services";
 
 export function useDataTransformation(

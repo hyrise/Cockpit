@@ -36,14 +36,10 @@ import {
 } from "@vue/composition-api";
 
 import { useGenericFetchService } from "../services/genericFetchService";
-import { useDatabaseFetchService } from "../services/databaseService";
 import Heatmap from "./charts/Heatmap.vue";
-import { useDataTransformation } from "../services/transformationService";
 import { componentMap } from "./components";
+import { ComponentProps, ComponentPropsValidation } from "../types/components";
 
-interface Props {
-  preselectedDatabaseId: string;
-}
 interface Data {
   tables: Ref<string[]>;
   mapData: Ref<number[][]>;
@@ -58,16 +54,11 @@ export default createComponent({
   components: {
     Heatmap
   },
-  props: {
-    preselectedDatabaseId: {
-      type: String,
-      default: null
-    }
-  },
-  setup(props: Props, context: SetupContext): Data {
+  props: ComponentPropsValidation,
+  setup(props: ComponentProps, context: SetupContext): Data {
     const component = componentMap["access"];
     const selectedTable = ref<string>("");
-    const { tables } = useDatabaseFetchService();
+    const { tables } = context.root.$databaseData;
     const { data, checkState } = useGenericFetchService(component);
 
     const table = computed(() => selectedTable.value);

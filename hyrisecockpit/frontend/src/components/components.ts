@@ -1,19 +1,6 @@
-import {
-  TransformationService,
-  Base,
-  FetchType,
-  backendUrl
-} from "../types/services";
+import { backendUrl } from "../types/services";
+import { ComponentId, Component } from "../types/components";
 import { useDataTransformation } from "../services/transformationService";
-
-export type ComponentId = "access" | "cpu" | "storage" | "throughput";
-
-export interface Component {
-  fetchType: FetchType;
-  transformationService: TransformationService;
-  base: Base;
-  endpoint: string;
-}
 
 export const componentMap: Record<ComponentId, Component> = {
   access: {

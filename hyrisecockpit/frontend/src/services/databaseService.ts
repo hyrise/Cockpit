@@ -1,4 +1,4 @@
-import { Ref, ref } from "@vue/composition-api";
+import { ref } from "@vue/composition-api";
 import { Database, DatabaseData } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";

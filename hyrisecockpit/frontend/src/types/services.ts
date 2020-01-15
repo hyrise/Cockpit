@@ -1,7 +1,7 @@
 import { Ref } from "@vue/composition-api";
 
 export interface FetchService {
-  data: Ref<any>; // refactor type
+  data: Ref<any>;
   checkState: () => void;
 }
 

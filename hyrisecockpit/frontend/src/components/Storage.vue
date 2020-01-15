@@ -22,12 +22,8 @@ import {
 import { useGenericFetchService } from "../services/genericFetchService";
 import * as Plotly from "plotly.js";
 import Treemap from "./charts/Treemap.vue";
-import { useDataTransformation } from "../services/transformationService";
 import { componentMap } from "./components";
-
-interface Props {
-  preselectedDatabaseId: string;
-}
+import { ComponentProps, ComponentPropsValidation } from "../types/components";
 
 interface Data {
   labels: Ref<string[]>;
@@ -40,13 +36,8 @@ export default createComponent({
   components: {
     Treemap
   },
-  props: {
-    preselectedDatabaseId: {
-      type: String,
-      default: null
-    }
-  },
-  setup(props: Props, context: SetupContext): Data {
+  props: ComponentPropsValidation,
+  setup(props: ComponentProps, context: SetupContext): Data {
     const component = componentMap["storage"];
     const { data, checkState } = useGenericFetchService(component);
 

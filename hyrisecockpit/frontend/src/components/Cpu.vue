@@ -41,6 +41,7 @@ import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
 import { componentMap } from "./components";
+import { ComponentProps, ComponentPropsValidation } from "../types/components";
 
 interface Props {
   preselectedDatabaseId: string;
@@ -54,11 +55,9 @@ interface Data {
 }
 
 export default createComponent({
-  props: {
-    preselectedDatabaseId: { type: String }
-  },
+  props: ComponentPropsValidation,
   components: { Linechart },
-  setup(props: Props, context: SetupContext): Data {
+  setup(props: ComponentProps, context: SetupContext): Data {
     const component = componentMap["cpu"];
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(component);
