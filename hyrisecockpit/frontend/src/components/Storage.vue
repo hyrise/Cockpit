@@ -16,14 +16,17 @@ import {
   SetupContext,
   watch,
   Ref,
-  ref
+  ref,
+  onMounted
 } from "@vue/composition-api";
-import { useStorageFetchService } from "../services/storageService";
+import { useGenericFetchService } from "../services/genericFetchService";
 import * as Plotly from "plotly.js";
 import Treemap from "./charts/Treemap.vue";
 import { useDataTransformation } from "../services/helpers/dataTransformationService";
 
-interface Props {}
+interface Props {
+  preselectedDatabaseId: string;
+}
 
 interface Data {
   labels: Ref<string[]>;
@@ -36,25 +39,38 @@ export default createComponent({
   components: {
     Treemap
   },
+  props: {
+    preselectedDatabaseId: {
+      type: String,
+      default: null
+    }
+  },
   setup(props: Props, context: SetupContext): Data {
-    const { storageData, getStorage } = useStorageFetchService();
+    const { data, checkState } = useGenericFetchService("storage");
     const transformData = useDataTransformation("storage");
 
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
-    const chartConfiguration = ref<string[]>(["citadelle"]);
+    const chartConfiguration = ref<string[]>([props.preselectedDatabaseId]);
 
-    watch(storageData, () => {
-      if (storageData.value) {
+    checkState();
+    onMounted(() => {
+      setInterval(checkState, 5000);
+    });
+
+    watch(data, () => {
+      if (Object.keys(data.value).length) {
         const { newLabels, newParents, newSizes } = transformData(
-          storageData.value
+          data.value,
+          props.preselectedDatabaseId
         );
         labels.value = newLabels;
         parents.value = newParents;
         sizes.value = newSizes;
       }
     });
+
     return { labels, parents, sizes, chartConfiguration };
   }
 });

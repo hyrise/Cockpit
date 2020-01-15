@@ -35,7 +35,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useThroughputFetchService } from "../services/throughputService";
 import { useGenericFetchService } from "../services/genericFetchService";
 import { useDatabaseFetchService } from "../services/databaseService";
 import { CPUData } from "../types/cpu";
@@ -61,8 +60,8 @@ export default createComponent({
   },
   components: { Linechart },
   setup(props: Props, context: SetupContext): Data {
-    const { databases } = useDatabaseFetchService();
-    const { getData, data, queryReadyState } = useGenericFetchService("cpu");
+    const { databases } = context.root.$databaseData;
+    const { checkState, data } = useGenericFetchService("cpu");
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
@@ -72,12 +71,6 @@ export default createComponent({
     onMounted(() => {
       setInterval(checkState, 1000);
     });
-
-    function checkState(): void {
-      if (queryReadyState.value) {
-        getData();
-      }
-    }
 
     return {
       data,

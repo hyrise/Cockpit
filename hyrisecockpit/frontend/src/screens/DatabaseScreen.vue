@@ -12,19 +12,33 @@
       <v-divider class="mb-4"></v-divider>
       <Cpu :preselectedDatabaseId="$route.params.id" />
       <div class="mt-6 mb-2">
+        <b> Access frequency Monitoring </b>
+      </div>
+      <v-divider class="mb-4"></v-divider>
+      <Access :preselectedDatabaseId="$route.params.id" />
+      <div class="mt-6 mb-2">
         <b> Storage Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Storage />
+      <Storage :preselectedDatabaseId="$route.params.id" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, onMounted } from "@vue/composition-api";
+// add generic component to add props type (preselected is used in every component)
+import {
+  createComponent,
+  SetupContext,
+  onMounted,
+  Ref,
+  ref
+} from "@vue/composition-api";
 import Throughput from "../components/Throughput.vue";
 import Storage from "../components/Storage.vue";
 import Cpu from "../components/Cpu.vue";
+import Access from "../components/Access.vue";
+import { useDatabaseFetchService } from "../services/databaseService";
 
 export default createComponent({
   name: "DatabaseScreen",
@@ -32,7 +46,8 @@ export default createComponent({
   components: {
     Throughput,
     Storage,
-    Cpu
+    Cpu,
+    Access
   }
 });
 </script>

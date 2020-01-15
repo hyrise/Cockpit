@@ -1,0 +1,15 @@
+# Where component owners are known, add them here.
+
+* @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @kathwill @MaxSchneider1337 @monasobh @PeterTsayun @schTi
+
+/.github/ @cH3n7i @fabianhe
+
+/tests/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+
+/hyrisecockpit/backend/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+
+/hyrisecockpit/database_manager/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+
+/hyrisecockpit/workload_generator/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+
+/hyrisecockpit/frontend/ @kathwill @MaxSchneider1337 @monasobh @schTi
