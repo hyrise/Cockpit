@@ -47,7 +47,11 @@ class TestWorkloadGenerator:
     def isolated_generator(self) -> Any:
         """Instance of WorkloadGenerator without binding of sockets."""
         return WorkloadGenerator(
-            generator_host, generator_port, workload_pub_host, workload_pub_port
+            generator_host,
+            generator_port,
+            workload_pub_host,
+            workload_pub_port,
+            "default_workload_location",
         )
 
     @mock.patch(
