@@ -15,12 +15,8 @@ workload_pub_port = "20000"
 class TestWorkloadGenerator:
     """Tests for the WorkloadGenerator class."""
 
-    def idle_function(self) -> None:
+    def idle_function(self, *argv) -> None:
         """Idle function."""
-        return None
-
-    def idle_publish(self, *argv) -> None:
-        """Idle publishing."""
         return None
 
     def publish_raises_exception(self, *argv):
@@ -61,14 +57,10 @@ class TestWorkloadGenerator:
         self, isolated_generator: WorkloadGenerator
     ):
         """Test initialization of soscket hosts and ports."""
-        # mock_workload.return_value = self.get_fake_workload()
-        # import pdb;pdb.set_trace()
         assert isolated_generator._generator_host == generator_host
         assert isolated_generator._generator_port == generator_port
         assert isolated_generator._workload_pub_host == workload_pub_host
         assert isolated_generator._workload_pub_port == workload_pub_port
-        # assert isolated_generator._get_workload('tpch').generate_workload()[0] == ('dummy_query', None)
-        # mock_workload.assert_called_with("tpch",  "workloads/workload_queries/")
 
     @mark.parametrize("call", ["workload"])
     @mock.patch(
@@ -109,7 +101,7 @@ class TestWorkloadGenerator:
 
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
-        idle_publish,
+        idle_function,
     )
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
@@ -127,7 +119,7 @@ class TestWorkloadGenerator:
 
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
-        idle_publish,
+        idle_function,
     )
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.Workload",
