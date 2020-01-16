@@ -3,7 +3,6 @@
 Includes the main WorkloadGenerator.
 """
 
-import sys
 from typing import Any, Callable, Dict
 
 from zmq import PUB, REP, Context
@@ -82,7 +81,6 @@ class WorkloadGenerator(object):
         self._rep_socket.close()
         self._pub_socket.close()
         self._context.term()
-        sys.exit()
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -111,15 +109,11 @@ class WorkloadGenerator(object):
             )
         )
         while True:
-            try:
-                # Get the message
-                request = self._rep_socket.recv_json()
+            # Get the message
+            request = self._rep_socket.recv_json()
 
-                # Handle the call
-                response = self._handle_request(request)
+            # Handle the call
+            response = self._handle_request(request)
 
-                # Send the reply
-                self._rep_socket.send_json(response)
-
-            except KeyboardInterrupt:
-                self.close()
+            # Send the reply
+            self._rep_socket.send_json(response)
