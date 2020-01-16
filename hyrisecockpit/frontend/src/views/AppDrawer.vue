@@ -1,47 +1,38 @@
 <template>
   <v-navigation-drawer v-model="open" app class="elevation-2" fixed width="300">
     <v-toolbar color="primary darken-1"> </v-toolbar>
-    <v-list class="mt-2">
-      <v-subheader>SCREENS</v-subheader>
-      <v-list-item-group>
-        <v-list-item :to="{ name: 'home' }">
-          <v-list-item-action>
-            <v-icon>
-              mdi-home-outline
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              Home
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'databases' }">
-          <v-list-item-action>
-            <v-icon>
-              mdi-database
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              Databases Overview
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="{ name: 'workload' }" target="_blank">
-          <v-list-item-action>
-            <v-icon>
-              mdi-database-refresh
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              Workload Generation
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+    <v-card class=text-center :to="{ name: 'database' }">
+      <v-icon size="150">
+        mdi-database-search
+      </v-icon>
+      <v-card-title class="justify-center">
+        Instanz
+      </v-card-title>
+    </v-card>
+    <v-card class=text-center :to="{ name: 'databases' }">
+      <v-icon size="150">
+        mdi-speedometer
+      </v-icon>
+      <v-card-title class="justify-center">
+        Vergleich
+      </v-card-title>
+    </v-card>
+    <v-card class=text-center :to="{ name: 'workload' }">
+      <v-icon size="150">
+        mdi-worker
+      </v-icon>
+      <v-card-title class="justify-center">
+        Workload
+      </v-card-title>
+    </v-card>
+    <v-card class=text-center :to="{ name: 'home' }">
+      <v-icon size="150">
+        mdi-settings
+      </v-icon>
+      <v-card-title class="justify-center">
+        Plugins
+      </v-card-title>
+    </v-card>    
   </v-navigation-drawer>
 </template>
 
