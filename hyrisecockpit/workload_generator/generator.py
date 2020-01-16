@@ -10,9 +10,6 @@ from zmq import PUB, REP, Context
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
-from .workloads.mixed import MixedWorkload
-from .workloads.noops import NoopsWorkload
-
 
 class WorkloadGenerator(object):
     """Object responsible for generating workload."""
@@ -34,10 +31,7 @@ class WorkloadGenerator(object):
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
         }
-        self._workloads: Dict[str, Any] = {
-            "no-ops": NoopsWorkload(500_000),
-            "mixed": MixedWorkload(30_000),
-        }
+        self._workloads: Dict[str, Any] = {}
         self._init_server()
 
     def _init_server(self) -> None:
