@@ -24,12 +24,14 @@ class WorkloadGenerator(object):
         generator_port: str,
         workload_pub_host: str,
         workload_pub_port: str,
+        default_workload_location: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
         self._generator_host = generator_host
         self._generator_port = generator_port
         self._workload_pub_host = workload_pub_host
         self._workload_pub_port = workload_pub_port
+        self._default_workload_location = default_workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
         }
@@ -51,7 +53,7 @@ class WorkloadGenerator(object):
         )
 
     def _get_default_workload_location(self):
-        return "workloads/workload_queries/"
+        return self.default_workload_location
 
     def _get_workload(self, workload_type: str):
         workload = self._workloads.get(workload_type, None)
