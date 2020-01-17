@@ -1,29 +1,22 @@
-import { Ref, ref } from "@vue/composition-api";
+import { ref } from "@vue/composition-api";
 import axios from "axios";
-import { QueryResult, QueryData } from "../types/genericQueryData";
-import { getEndpoint, getBase } from "./helpers/serviceEndpoints";
-import { useDataTransformation } from "./helpers/dataTransformationService";
+import { ComponentMeta } from "@/types/components";
+import { FetchService } from "@/types/services";
 
-export function useGenericFetchService(
-  dataType: string
-): {
-  getData: () => void;
-  data: Ref<QueryData>;
-  queryReadyState: Ref<boolean>;
-} {
+export function useGenericFetchService(component: ComponentMeta): FetchService {
   const queryReadyState = ref<boolean>(true);
-  const data = ref<QueryData>({});
-  const endpoint = getEndpoint(dataType); //refactor
-  const base = getBase(dataType);
-  const transformData = useDataTransformation(dataType);
+  const data = ref<any>({});
 
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
-      console.log(result);
-      Object.keys(result).forEach(key => {
-        addData(key, transformData(result, key));
-      });
+      if (component.fetchType === "modify") {
+        Object.keys(result).forEach(key => {
+          addData(key, component.transformationService(result, key));
+        });
+      } else if (component.fetchType === "read") {
+        data.value = result;
+      }
       queryReadyState.value = true;
     });
   }
@@ -37,12 +30,12 @@ export function useGenericFetchService(
     data.value = dataCopy;
   }
 
-  function fetchData(): Promise<QueryResult> {
+  function fetchData(): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
-        .get(endpoint)
+        .get(component.endpoint)
         .then(response => {
-          resolve(response.data.body[base]);
+          resolve(response.data.body[component.base]);
         })
         .catch(error => {
           queryReadyState.value = true;
@@ -50,5 +43,12 @@ export function useGenericFetchService(
         });
     });
   }
-  return { getData, queryReadyState, data };
+
+  function checkState(): void {
+    if (queryReadyState.value) {
+      getData();
+    }
+  }
+
+  return { data, checkState };
 }
