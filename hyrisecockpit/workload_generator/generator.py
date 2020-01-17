@@ -7,6 +7,10 @@ from typing import Any, Callable, Dict
 
 from zmq import PUB, REP, Context
 
+from hyrisecockpit.exception import (
+    EmptyWorkloadFolderException,
+    NotExistingWorkloadFolderException,
+)
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
@@ -62,7 +66,7 @@ class WorkloadGenerator(object):
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
-        except Exception as e:
+        except (NotExistingWorkloadFolderException, EmptyWorkloadFolderException) as e:
             return get_error_response(400, str(e))
 
         return get_response(200)

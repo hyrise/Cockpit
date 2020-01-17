@@ -2,6 +2,11 @@
 import os
 from typing import Any, Dict, List
 
+from hyrisecockpit.exception import (
+    EmptyWorkloadFolderException,
+    NotExistingWorkloadFolderException,
+)
+
 
 class WorkloadReader(object):
     """Generic workload reader."""
@@ -24,12 +29,14 @@ class WorkloadReader(object):
     ) -> Any:
         """Check if folder exists or is emty and returns it."""
         if not os.path.exists(absolute_workload_path):
-            raise Exception(
+            raise NotExistingWorkloadFolderException(
                 f"Workload {workload_type} not found: directory doesn't exist"
             )
         directory = os.fsencode(absolute_workload_path)
         if len(os.listdir(directory)) == 0:
-            raise Exception(f"Workload {workload_type} directory is empty")
+            raise EmptyWorkloadFolderException(
+                f"Workload {workload_type} directory is empty"
+            )
         return os.listdir(directory)
 
     def _read_content_of_workload_folder(
