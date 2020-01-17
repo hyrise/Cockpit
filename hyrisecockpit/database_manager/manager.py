@@ -1,15 +1,14 @@
 """Module for managing databases."""
 
-import sys
 from typing import Any, Callable, Dict, Optional
 
 from zmq import REP, Context
 
+from hyrisecockpit.exception import IdNotValidException
 from hyrisecockpit.response import get_response
 
 from .database import Database
 from .driver import Driver
-from .exception import IdNotValidException
 
 
 class DatabaseManager(object):
@@ -67,12 +66,12 @@ class DatabaseManager(object):
         """Add database and initialize driver for it."""
         # validating connection data
         try:
-            # Will throw an exeption if not valid
+            # Will throw an exception if not valid
             Driver.validate_connection(body)
             new_id = body["id"] in self._databases
             if new_id:
                 raise IdNotValidException("Id not valid")
-        except Exception as e:
+        except Exception as e:  # TODO specify the exact exception
             response = get_response(400)
             response["body"] = str(e)
             return response
@@ -180,19 +179,13 @@ class DatabaseManager(object):
             )
         )
         while True:
-            try:
-                # Get the message
-                request = self._socket.recv_json()
+            # Get the message
+            request = self._socket.recv_json()
 
-                # Handle the call
-                response = self._server_calls.get(
-                    request["header"]["message"], self._call_not_found
-                )(request["body"])
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
-                # Send the reply
-                self._socket.send_json(response)
-
-            except KeyboardInterrupt:
-                if len(self._databases) > 0:
-                    self._exit()
-                sys.exit()
+            # Send the reply
+            self._socket.send_json(response)

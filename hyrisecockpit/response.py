@@ -15,3 +15,10 @@ __responses = {
 def get_response(code: int,) -> Dict[str, Any]:
     """Get a predefined response with a code."""
     return deepcopy(__responses.get(code, __default,))
+
+
+def get_error_response(code: int, message: str) -> Dict[str, Any]:
+    """Get a predefined response with a code and error message."""
+    response: Dict = get_response(code)
+    response["body"]["error"] = message
+    return response
