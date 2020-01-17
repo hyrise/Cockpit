@@ -12,6 +12,31 @@ from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
 
+
+class PoolCursor:
+    """Context manager for connections from a pool."""
+
+    def __init__(self, pool):
+        """Initialize a PoolCursor."""
+        self.pool = pool
+        self.connection = self.pool.getconn()
+        self.connection.set_session(autocommit=True)
+        self.cur = self.connection.cursor()
+
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Close the cursor and connection."""
+        self.cur.close()
+        self.pool.putconn(self.connection)
+
+    def execute(self, query, parameters):
+        """Execute a query."""
+        return self.cur.execute(query, parameters)
+
+
 _table_names: Dict[str, List[str]] = {
     "tpch": [
         "customer",
@@ -97,22 +122,20 @@ def execute_queries(
     failed_task_queue: Queue,
 ) -> None:
     """Define workers work loop."""
-    connection = connection_pool.getconn()
-    connection.set_session(autocommit=True)
-    cur = connection.cursor()
-    while True:
-        # If Queue is emty go to wait status
-        try:
-            task = task_queue.get(block=True)
-            query, parameters = task
-            cur.execute(query, parameters)
-            throughput_data_container[str(worker_id)] = (
-                throughput_data_container[str(worker_id)] + 1
-            )
-        except (ValueError, Error) as e:
-            failed_task_queue.put(
-                {"worker_id": worker_id, "task": task, "Error": str(e)}
-            )
+    with PoolCursor(connection_pool) as cur:
+        while True:
+            # If Queue is emty go to wait status
+            try:
+                task = task_queue.get(block=True)
+                query, parameters = task
+                cur.execute(query, parameters)
+                throughput_data_container[str(worker_id)] = (
+                    throughput_data_container[str(worker_id)] + 1
+                )
+            except (ValueError, Error) as e:
+                failed_task_queue.put(
+                    {"worker_id": worker_id, "task": task, "Error": str(e)}
+                )
 
 
 class Database(object):
@@ -192,17 +215,15 @@ class Database(object):
         table_names = _table_names.get(datatype)
         if not table_names:
             return False
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-        cur = connection.cursor()
-        success: bool = True
-        try:
-            for name in table_names:
-                cur.execute(f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';")
-        except DatabaseError:
-            success = False
-
-        self._connection_pool.putconn(connection)
+        with PoolCursor(self._connection_pool) as cur:
+            success: bool = True
+            try:
+                for name in table_names:
+                    cur.execute(
+                        f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';"
+                    )
+            except DatabaseError:
+                success = False
         return success
 
     def delete_data(self, datatype: str) -> bool:
@@ -210,17 +231,13 @@ class Database(object):
         table_names = _table_names.get(datatype)
         if not table_names:
             return False
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-        cur = connection.cursor()
-        success: bool = True
-        try:
-            for name in table_names:
-                cur.execute(f"DROP TABLE {name}';")
-        except DatabaseError:
-            success = False
-
-        self._connection_pool.putconn(connection)
+        with PoolCursor(self._connection_pool) as cur:
+            success: bool = True
+            try:
+                for name in table_names:
+                    cur.execute(f"DROP TABLE {name}';")
+            except DatabaseError:
+                success = False
         return success
 
     def get_throughput_counter(self) -> int:
