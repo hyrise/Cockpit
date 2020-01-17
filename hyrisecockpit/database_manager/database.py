@@ -13,7 +13,7 @@ from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
 
-__table_names: Dict[str, List[str]] = {
+_table_names: Dict[str, List[str]] = {
     "tpch": [
         "customer",
         "lineitem",
@@ -196,7 +196,7 @@ class Database(object):
 
     def load_data(self, datatype: str) -> bool:
         """Load pregenerated tables."""
-        table_names = __table_names.get(datatype)
+        table_names = _table_names.get(datatype)
         if not table_names:
             return False
         connection = self._connection_pool.getconn()
