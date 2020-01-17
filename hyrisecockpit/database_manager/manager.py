@@ -5,11 +5,11 @@ from typing import Any, Callable, Dict, Optional
 
 from zmq import REP, Context
 
+from hyrisecockpit.exception import IdNotValidException
 from hyrisecockpit.response import get_response
 
 from .database import Database
 from .driver import Driver
-from .exception import IdNotValidException
 
 
 class DatabaseManager(object):
