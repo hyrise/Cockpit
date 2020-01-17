@@ -351,11 +351,10 @@ class Database(object):
 
     def exit(self) -> None:
         """Clean exit."""
-        self._close_pool()
-        self._close_connections()
-        self._close_queue()
         self._update_throughput_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._scheduler.shutdown()
-        # super().__exit__()
+        self._close_pool()
+        self._close_connections()
+        self._close_queue()
