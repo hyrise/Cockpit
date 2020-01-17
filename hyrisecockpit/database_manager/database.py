@@ -205,6 +205,24 @@ class Database(object):
         self._connection_pool.putconn(connection)
         return success
 
+    def delete_data(self, datatype: str) -> bool:
+        """Delete tables."""
+        table_names = _table_names.get(datatype)
+        if not table_names:
+            return False
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+        cur = connection.cursor()
+        success: bool = True
+        try:
+            for name in table_names:
+                cur.execute(f"DROP TABLE {name}';")
+        except DatabaseError:
+            success = False
+
+        self._connection_pool.putconn(connection)
+        return success
+
     def get_throughput_counter(self) -> int:
         """Return throughput."""
         return self._throughput_counter
