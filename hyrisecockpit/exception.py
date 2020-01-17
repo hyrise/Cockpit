@@ -1,4 +1,4 @@
-"""The exeption module defines exeptions for database interactions."""
+"""The exception module defines exceptions for database interactions."""
 
 from typing import List
 
@@ -6,7 +6,7 @@ from psycopg2 import Error
 
 
 class ConnectionNotValidException(Exception):
-    """Exeption raised for invalid connection data."""
+    """Exception raised for invalid connection data."""
 
     def __init__(self, message: str, errors: List[Error]):
         """Initialize a ConnectionNotValidException."""
@@ -15,7 +15,7 @@ class ConnectionNotValidException(Exception):
 
 
 class IdNotValidException(Exception):
-    """Exeption raised for invalid id."""
+    """Exception raised for invalid id."""
 
     def __init__(self, message: str):
         """Initialize a IdNotValidException."""
@@ -23,7 +23,7 @@ class IdNotValidException(Exception):
 
 
 class EmptyWorkloadFolderException(Exception):
-    """Exeption raised for empty workload folder."""
+    """Exception raised for empty workload folder."""
 
     def __init__(self, message: str):
         """Initialize a IdNotValidException."""
@@ -31,7 +31,7 @@ class EmptyWorkloadFolderException(Exception):
 
 
 class NotExistingWorkloadFolderException(Exception):
-    """Exeption raised for empty workload folder."""
+    """Exception raised for empty workload folder."""
 
     def __init__(self, message: str):
         """Initialize a IdNotValidException."""

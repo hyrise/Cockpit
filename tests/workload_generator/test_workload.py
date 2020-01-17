@@ -29,7 +29,7 @@ class TestWorkload:
 
     @fixture
     @mock.patch(
-        "hyrisecockpit.workload_generator.workloads.workload.Workload._initialise",
+        "hyrisecockpit.workload_generator.workloads.workload.Workload._initialize",
         idle_function,
     )
     @mock.patch(
@@ -40,7 +40,7 @@ class TestWorkload:
         """Instance of WorkloadGenerator without Workloadreader."""
         return Workload(workload_type, queries_location, delimiter, file_type)
 
-    def test_checks_initialisation_of_workload_attributes(self, fake_workload):
+    def test_checks_initialization_of_workload_attributes(self, fake_workload):
         """Test if initial attributes are correct."""
         assert fake_workload.workload_type == workload_type
         assert fake_workload._queries_location == f"{queries_location}/TPCH"
@@ -50,7 +50,7 @@ class TestWorkload:
 
     def test_initializes_queries(self, fake_workload):
         """Test initially read queries."""
-        fake_workload._initialise()
+        fake_workload._initialize()
         expected_queries = ["dummy_query"]
 
         assert fake_workload._queries[:] == expected_queries[:]

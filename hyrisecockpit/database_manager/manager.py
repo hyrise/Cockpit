@@ -65,12 +65,12 @@ class DatabaseManager(object):
         """Add database and initialize driver for it."""
         # validating connection data
         try:
-            # Will throw an exeption if not valid
+            # Will throw an exception if not valid
             Driver.validate_connection(body)
             new_id = body["id"] in self._databases
             if new_id:
                 raise IdNotValidException("Id not valid")
-        except Exception as e:
+        except Exception as e:  # TODO specify the exact exception
             response = get_response(400)
             response["body"] = str(e)
             return response
