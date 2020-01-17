@@ -237,13 +237,12 @@ class Database(object):
         if not table_names:
             return False
         with PoolCursor(self._connection_pool) as cur:
-            success: bool = True
-            try:
-                for name in table_names:
+            for name in table_names:
+                try:
                     cur.execute(f"DROP TABLE {name}';")
-            except DatabaseError:
-                success = False
-        return success
+                except DatabaseError:
+                    continue
+        return True
 
     def get_throughput_counter(self) -> int:
         """Return throughput."""
