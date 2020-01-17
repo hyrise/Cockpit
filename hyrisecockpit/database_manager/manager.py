@@ -1,6 +1,5 @@
 """Module for managing databases."""
 
-import sys
 from typing import Any, Callable, Dict, Optional
 
 from zmq import REP, Context
@@ -170,19 +169,13 @@ class DatabaseManager(object):
             )
         )
         while True:
-            try:
-                # Get the message
-                request = self._socket.recv_json()
+            # Get the message
+            request = self._socket.recv_json()
 
-                # Handle the call
-                response = self._server_calls.get(
-                    request["header"]["message"], self._call_not_found
-                )(request["body"])
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
-                # Send the reply
-                self._socket.send_json(response)
-
-            except KeyboardInterrupt:
-                if len(self._databases) > 0:
-                    self._exit()
-                sys.exit()
+            # Send the reply
+            self._socket.send_json(response)
