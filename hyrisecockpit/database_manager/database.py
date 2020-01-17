@@ -12,7 +12,7 @@ from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
 
-__table_names: Dict[str, List[str]] = {
+_table_names: Dict[str, List[str]] = {
     "tpch": [
         "customer",
         "lineitem",
@@ -102,15 +102,16 @@ def execute_queries(
     cur = connection.cursor()
     while True:
         # If Queue is emty go to wait status
-        query, parameters = task_queue.get(block=True)
         try:
+            task = task_queue.get(block=True)
+            query, parameters = task
             cur.execute(query, parameters)
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
-        except Error as e:
+        except (ValueError, Error) as e:
             failed_task_queue.put(
-                {"worker_id": worker_id, "task": (query, parameters), "Error": str(e)}
+                {"worker_id": worker_id, "task": task, "Error": str(e)}
             )
 
 
@@ -188,7 +189,7 @@ class Database(object):
 
     def load_data(self, datatype: str) -> bool:
         """Load pregenerated tables."""
-        table_names = __table_names.get(datatype)
+        table_names = _table_names.get(datatype)
         if not table_names:
             return False
         connection = self._connection_pool.getconn()
@@ -267,13 +268,13 @@ class Database(object):
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
 
-        sql = """SELECT "table", column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY "table", column_name;"""
+        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
         meta_segments = sqlio.read_sql_query(sql, connection)
 
         self._connection_pool.putconn(connection)
 
         chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table")
+        grouped = meta_segments.reset_index().groupby("table_name")
         for column in grouped.groups:
             chunks_data[column] = {}
             for _, row in grouped.get_group(column).iterrows():
@@ -293,20 +294,24 @@ class Database(object):
         meta_segments = sqlio.read_sql_query(sql, connection)
 
         meta_segments.set_index(
-            ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
+            ["table_name", "column_name", "chunk_id"],
+            inplace=True,
+            verify_integrity=True,
         )
         size: DataFrame = DataFrame(
             meta_segments["estimated_size_in_bytes"]
-            .groupby(level=["table", "column_name"])
+            .groupby(level=["table_name", "column_name"])
             .sum()
         )
 
         encoding: DataFrame = DataFrame(
-            meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
+            meta_segments["encoding_type"]
+            .groupby(level=["table_name", "column_name"])
+            .apply(set)
         )
-        encoding["encoding"] = encoding["encoding"].apply(list)
+        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
         datatype: DataFrame = meta_segments.reset_index().set_index(
-            ["table", "column_name"]
+            ["table_name", "column_name"]
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
@@ -316,7 +321,7 @@ class Database(object):
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
         """Sort storage data to dictionary."""
         output: Dict = {}
-        grouped = result.reset_index().groupby("table")
+        grouped = result.reset_index().groupby("table_name")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
             for _, row in grouped.get_group(column).iterrows():
@@ -327,7 +332,7 @@ class Database(object):
                 output[column]["data"][row["column_name"]] = {
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
-                    "encoding": row["encoding"],
+                    "encoding": row["encoding_type"],
                 }
         return output
 

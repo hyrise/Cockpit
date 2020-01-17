@@ -27,3 +27,5 @@ GENERATOR_PORT: str = getenv("GENERATOR_PORT", "6001")
 
 WORKLOAD_SUB_HOST: str = getenv("WORKLOAD_SUB_HOST", "127.0.0.1")
 WORKLOAD_PUBSUB_PORT: str = getenv("WORKLOAD_PUBSUB_PORT", "6556")
+
+WORKLOAD_LOCATION: str = getenv("WORKLOAD_LOCATION", "workloads/workload_queries/")

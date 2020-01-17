@@ -4,7 +4,7 @@ from typing import Dict
 
 from psycopg2 import Error, connect, pool
 
-from .exception import ConnectionNotValidException
+from hyrisecockpit.exception import ConnectionNotValidException
 
 
 class Driver(object):
