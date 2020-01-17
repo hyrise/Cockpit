@@ -164,7 +164,7 @@ class DatabaseManager(object):
             return get_response(400)
         for database_object in list(self._databases.values()):
             if not database_object.load_data(datatype):
-                return get_response(400)
+                return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
     def _call_delete_data(self, body: Dict) -> Dict:

@@ -5,7 +5,7 @@ Includes the main WorkloadGenerator.
 
 from typing import Any, Callable, Dict
 
-from zmq import PUB, REP, Context
+from zmq import PUB, REP, REQ, Context
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
@@ -25,12 +25,16 @@ class WorkloadGenerator(object):
         workload_pub_host: str,
         workload_pub_port: str,
         default_workload_location: str,
+        db_manager_host: str,
+        db_manager_port: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
         self._generator_host = generator_host
         self._generator_port = generator_port
         self._workload_pub_host = workload_pub_host
         self._workload_pub_port = workload_pub_port
+        self._db_manager_host = db_manager_host
+        self._db_manager_port = db_manager_port
         self._default_workload_location = default_workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
@@ -48,6 +52,10 @@ class WorkloadGenerator(object):
         self._pub_socket.bind(
             "tcp://{:s}:{:s}".format(self._workload_pub_host, self._workload_pub_port)
         )
+        self._db_manager_socket = self._context.socket(REQ)
+        self._db_manager_socket.connect(
+            f"tcp://{self._db_manager_host}:{self._db_manager_port}"
+        )
 
     def _get_default_workload_location(self):
         return self._default_workload_location
@@ -59,7 +67,20 @@ class WorkloadGenerator(object):
             self._workloads[workload_type] = workload
         return workload
 
+    def _load_data(self, datatype) -> bool:
+        message = {
+            "header": {"message": "load data"},
+            "body": {"datatype": datatype},
+        }
+        self._db_manager_socket.send_json(message)
+        response = self._db_manager_socket.recv_json()
+        if response["header"]["status"] != 200:
+            return False
+        return True
+
     def _call_workload(self, body: Dict) -> Dict:
+        if not self._load_data(body["type"]):
+            return get_response(400)
         try:
             workload = self._get_workload(body["type"])
             queries = workload.generate_workload()

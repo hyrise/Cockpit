@@ -219,13 +219,16 @@ class Database(object):
             return False
         with PoolCursor(self._connection_pool) as cur:
             success: bool = True
-            try:
-                for name in table_names:
-                    cur.execute(
-                        f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';"
-                    )
-            except DatabaseError:
-                success = False
+            for name in table_names:
+                try:
+                    cur.execute(f"SELECT * FROM {name};")
+                except DatabaseError:
+                    try:
+                        cur.execute(
+                            f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';"
+                        )
+                    except DatabaseError:
+                        success = False  # TODO return tables that could not be imported
         return success
 
     def delete_data(self, datatype: str) -> bool:
