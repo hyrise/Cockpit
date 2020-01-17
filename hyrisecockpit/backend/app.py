@@ -125,8 +125,8 @@ def workload() -> Dict:
     request_json = request.get_json()
     if request.method == "POST":
         message = {
-            "header": {"message": "start"},
-            "body": {"n_producers": request_json["n_producers"]},
+            "header": {"message": "workload"},
+            "body": {"type": request_json["body"]["type"]},  # TODO remove body
         }
     elif request.method == "DELETE":
         message = {
