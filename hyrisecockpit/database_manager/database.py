@@ -111,7 +111,7 @@ def execute_queries(
             query, parameters = task
             cur.execute(query, parameters)
             endts = time.time()
-            query_list.append((startts, endts, "none"))
+            query_list.append((startts, endts, "none", 0))
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
@@ -235,6 +235,12 @@ class Database(object):
         while not self._failed_task_queue.empty():
             failed_task.append(self._failed_task_queue.get())
         return failed_task
+
+    def move_query_log(self) -> List:
+        """Return all logged queries, clear the log."""
+        queries = self._query_list
+        self._query_list.clear()
+        return queries
 
     def _update_throughput_data(self) -> None:
         """Put meta data from all workers together."""
