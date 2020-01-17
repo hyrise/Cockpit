@@ -137,10 +137,18 @@ def workload() -> Dict:
     return response
 
 
-@app.route("/load_data/<datatype>", methods=["GET"])
-def load_data(datatype: str) -> Dict:
-    """Load pregenerated tables."""
-    return _send_message(
-        db_manager_socket,
-        {"header": {"message": "load_data"}, "body": {"datatype": datatype}},
-    )
+@app.route("/data/<datatype>", methods=["POST", "DELETE"])
+def data(datatype: str) -> Dict:
+    """Load or delete pregenerated tables from all databases."""
+    if request.method == "POST":
+        message = {
+            "header": {"message": "load data"},
+            "body": {"datatype": datatype},
+        }
+    elif request.method == "DELETE":
+        message = {
+            "header": {"message": "delete data"},
+            "body": {"datatype": datatype},
+        }
+    response = _send_message(db_manager_socket, message)
+    return response

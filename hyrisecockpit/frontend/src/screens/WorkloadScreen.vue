@@ -52,7 +52,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     function generateData(benchmarkType: string): void {
       axios.get(
-        `http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/load_data/${benchmarkType}`
+        `http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/data/${benchmarkType}`
       );
     }
 

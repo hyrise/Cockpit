@@ -37,7 +37,7 @@ class DatabaseManager(object):
             "chunks data": self._call_chunks_data,
             "failed tasks": self._call_failed_tasks,
             "get databases": self._call_get_databases,
-            "load_data": self._call_load_data,
+            "load data": self._call_load_data,
         }
         self._init_server()
 
