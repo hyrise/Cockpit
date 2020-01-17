@@ -360,10 +360,15 @@ class Database(object):
         # Close queue
         self._task_queue.close()
 
-        # Remove jobs
+
+    def exit(self) -> None:
+        """Clean exit."""
         self._update_throughput_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
-
         # Close the scheduler
         self._scheduler.shutdown()
+        self._close_pool()
+        self._close_connections()
+        self._close_queue()
+
