@@ -20,3 +20,19 @@ class IdNotValidException(Exception):
     def __init__(self, message: str):
         """Initialize a IdNotValidException."""
         super().__init__(message)
+
+
+class EmptyWorkloadFolderException(Exception):
+    """Exeption raised for empty workload folder."""
+
+    def __init__(self, message: str):
+        """Initialize a IdNotValidException."""
+        super().__init__(message)
+
+
+class NotExistingWorkloadFolderException(Exception):
+    """Exeption raised for empty workload folder."""
+
+    def __init__(self, message: str):
+        """Initialize a IdNotValidException."""
+        super().__init__(message)
