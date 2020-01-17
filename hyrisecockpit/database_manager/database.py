@@ -165,6 +165,8 @@ class Database(object):
 
         self._start_workers()
 
+        self.load_data("tpch")
+
         self._scheduler = BackgroundScheduler()
         self._update_throughput_job = self._scheduler.add_job(
             func=self._update_throughput_data, trigger="interval", seconds=1,
