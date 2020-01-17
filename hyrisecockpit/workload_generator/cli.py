@@ -22,4 +22,4 @@ def main() -> None:
         ) as workload_generator:
             workload_generator.start()
     except KeyboardInterrupt:
-        print("closed generator ....")
+        print("Workload Generator closed.")
