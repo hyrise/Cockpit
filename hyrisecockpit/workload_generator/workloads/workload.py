@@ -22,9 +22,9 @@ class Workload(object):
         self._file_type: str = file_type
         self._queries: Dict[str, List[str]] = {}
         self._workload_reader = WorkloadReader()
-        self._initialise()
+        self._initialize()
 
-    def _initialise(self) -> None:
+    def _initialize(self) -> None:
         """Read workload from folder."""
         self._queries = self._workload_reader.read_workload(
             self._queries_location, self._delimiter, self._file_type, self.workload_type

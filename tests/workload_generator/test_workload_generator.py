@@ -93,7 +93,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
-    def test_catches_not_existing_workload_folder_exeption(
+    def test_catches_not_existing_workload_folder_exception(
         self, isolated_generator: WorkloadGenerator
     ):
         """Ensure not existing workload calls return 400."""
@@ -114,7 +114,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
-    def test_catches_empty_workload_folder_exeption(
+    def test_catches_empty_workload_folder_exception(
         self, isolated_generator: WorkloadGenerator
     ):
         """Ensure not existing workload calls return 400."""

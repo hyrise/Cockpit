@@ -17,4 +17,4 @@ def main() -> None:
         ) as database_manager:
             database_manager.start()
     except KeyboardInterrupt:
-        print("Database manager closed.")
+        print("Database Manager closed.")
