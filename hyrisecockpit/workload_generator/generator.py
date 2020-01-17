@@ -85,15 +85,11 @@ class WorkloadGenerator(object):
         self.close()
 
     def _handle_request(self, request):
-        # import pdb; pdb.set_trace()
-        try:
-            handler = self._server_calls.get(request["header"]["message"], None)
-            if not handler:
-                return get_response(400)
-            response = handler(request["body"])
-            return response
-        except Exception as e:
-            return get_error_response(400, str(e))
+        handler = self._server_calls.get(request["header"]["message"], None)
+        if not handler:
+            return get_response(400)
+        response = handler(request["body"])
+        return response
 
     def start(self) -> None:
         """Run the generator by enabling IPC."""
