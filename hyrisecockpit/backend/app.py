@@ -124,7 +124,10 @@ def workload() -> Dict:
     """Start or stop the workload generator."""
     request_json = request.get_json()
     if request.method == "POST":
-        message = request_json
+        message = {
+            "header": {"message": "workload"},
+            "body": {"type": request_json["body"]["type"]},
+        }
     elif request.method == "DELETE":
         message = {
             "header": {"message": "stop"},
