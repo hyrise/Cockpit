@@ -47,9 +47,7 @@ class TestWorkloadGenerator:
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
     )
-    def test_initialization_of_socket_attributes(
-        self, isolated_generator: WorkloadGenerator
-    ):
+    def test_initializes_socket_attributes(self, isolated_generator: WorkloadGenerator):
         """Test initialization of soscket hosts and ports."""
         assert isolated_generator._generator_host == generator_host
         assert isolated_generator._generator_port == generator_port
@@ -60,13 +58,13 @@ class TestWorkloadGenerator:
     @mock.patch(
         "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
     )
-    def test_initialization_of_server_calls(
+    def test_initializes_server_calls(
         self, isolated_generator: WorkloadGenerator, call: str
     ):
         """Ensure pre-defined calls are implemented."""
         assert call in isolated_generator._server_calls.keys()
 
-    def test_call_not_found(self, isolated_generator: WorkloadGenerator):
+    def test_asks_for_not_existing_call(self, isolated_generator: WorkloadGenerator):
         """Ensure not-existing call returns 400."""
         request = {"header": {"message": "Ich fuehle mich DISCO!"}}
         response = isolated_generator._handle_request(request)
@@ -81,7 +79,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
     )
     @mark.parametrize("workload", ["no-ops", "mixed", "TPCH_0.1", "TPCH_1.0", "JOB"])
-    def test_response_existing_workloads(
+    def test_asks_for_existing_workload(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure existing workload calls return 200."""
@@ -95,7 +93,7 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
-    def test_response_not_existing_workloads(
+    def test_catches_not_existing_workload_folder_exeption(
         self, isolated_generator: WorkloadGenerator
     ):
         """Ensure not existing workload calls return 400."""
@@ -116,7 +114,9 @@ class TestWorkloadGenerator:
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
-    def test_response_empty_workloads(self, isolated_generator: WorkloadGenerator):
+    def test_catches_empty_workload_folder_exeption(
+        self, isolated_generator: WorkloadGenerator
+    ):
         """Ensure not existing workload calls return 400."""
         workload = mock.MagicMock()
         workload.generate_workload.side_effect = EmptyWorkloadFolderException(

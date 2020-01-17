@@ -40,7 +40,7 @@ class TestWorkload:
         """Instance of WorkloadGenerator without Workloadreader."""
         return Workload(workload_type, queries_location, delimiter, file_type)
 
-    def test_initialisation_of_workload_attributes(self, fake_workload):
+    def test_checks_initialisation_of_workload_attributes(self, fake_workload):
         """Test if initial attributes are correct."""
         assert fake_workload.workload_type == workload_type
         assert fake_workload._queries_location == f"{queries_location}/TPCH"
@@ -48,14 +48,14 @@ class TestWorkload:
         assert fake_workload._file_type == file_type
         assert fake_workload._queries == {}
 
-    def test_initialisation_of_queries(self, fake_workload):
+    def test_initializes_queries(self, fake_workload):
         """Test initially read queries."""
         fake_workload._initialise()
         expected_queries = ["dummy_query"]
 
         assert fake_workload._queries[:] == expected_queries[:]
 
-    def test_generate_workload(self, fake_workload):
+    def test_generates_workload(self, fake_workload):
         """Test cration of workload."""
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
         expected_workload = [("foo", None), ("foo2", None)]
