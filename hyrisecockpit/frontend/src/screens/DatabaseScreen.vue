@@ -5,58 +5,66 @@
         <b> Throughput Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Throughput :preselectedDatabaseId="$route.params.id" />
+      <Throughput
+        :preselectedDatabaseId="$route.params.id"
+        :component-meta="getComponentMeta('throughput')"
+      />
       <div class="mt-6 mb-2">
         <b> CPU Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Cpu :preselectedDatabaseId="$route.params.id" />
+      <Cpu
+        :preselectedDatabaseId="$route.params.id"
+        :component-meta="getComponentMeta('cpu')"
+      />
       <div class="mt-6 mb-2">
         <b> Access frequency Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Access />
+      <Access
+        :preselectedDatabaseId="$route.params.id"
+        :component-meta="getComponentMeta('access')"
+      />
       <div class="mt-6 mb-2">
         <b> Storage Monitoring </b>
       </div>
       <v-divider class="mb-4"></v-divider>
-      <Storage />
+      <Storage
+        :preselectedDatabaseId="$route.params.id"
+        :component-meta="getComponentMeta('storage')"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  createComponent,
-  SetupContext,
-  onMounted,
-  Ref,
-  ref
-} from "@vue/composition-api";
+import { createComponent, SetupContext } from "@vue/composition-api";
 import Throughput from "../components/Throughput.vue";
 import Storage from "../components/Storage.vue";
 import Cpu from "../components/Cpu.vue";
 import Access from "../components/Access.vue";
-import { useDatabaseFetchService } from "../services/databaseService";
+import { componentMetaMap } from "../components/componentMeta";
+import { ComponentId, ComponentMeta } from "../types/components";
 
-interface Props {}
 interface Data {
-  isReady: Ref<boolean>;
+  getComponentMeta: (component: ComponentId) => ComponentMeta;
 }
 
 export default createComponent({
   name: "DatabaseScreen",
-
   components: {
     Throughput,
     Storage,
     Cpu,
     Access
   },
-
-  setup(props: Props, context: SetupContext): Data {
-    const { isReady } = context.root.$databaseData.isReady;
-    return { isReady };
+  setup(props: {}, context: SetupContext): Data {
+    function getComponentMeta(component: ComponentId): ComponentMeta {
+      return componentMetaMap[component];
+    }
+    return {
+      getComponentMeta
+    };
   }
 });
 </script>

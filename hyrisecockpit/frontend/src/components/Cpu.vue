@@ -36,32 +36,30 @@ import {
 } from "@vue/composition-api";
 
 import { useGenericFetchService } from "../services/genericFetchService";
-import { useDatabaseFetchService } from "../services/databaseService";
-import { CPUData } from "../types/cpu";
 import { Database } from "../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "./charts/Linechart.vue";
+import { ComponentProps, ComponentPropsValidation } from "../types/components";
 
 interface Props {
   preselectedDatabaseId: string;
 }
 
 interface Data {
-  data: Ref<CPUData>;
+  data: Ref<any>;
   databases: Ref<Database[]>;
   selectedDatabaseIds: Ref<string[]>;
   chartConfiguration: string[];
 }
 
 export default createComponent({
-  props: {
-    preselectedDatabaseId: { type: String }
-  },
+  props: ComponentPropsValidation,
   components: { Linechart },
-  setup(props: Props, context: SetupContext): Data {
+  setup(props: ComponentProps, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { getData, data, queryReadyState } = useGenericFetchService("cpu");
+    const { checkState, data } = useGenericFetchService(props.componentMeta);
+
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );
@@ -71,12 +69,6 @@ export default createComponent({
     onMounted(() => {
       setInterval(checkState, 1000);
     });
-
-    function checkState(): void {
-      if (queryReadyState.value) {
-        getData();
-      }
-    }
 
     return {
       data,
