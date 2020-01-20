@@ -10,6 +10,7 @@ from hyrisecockpit.database_manager.manager import DatabaseManager
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
+    DEFAULT_TABLES,
     WORKLOAD_PUBSUB_PORT,
     WORKLOAD_SUB_HOST,
 )
@@ -22,7 +23,11 @@ class TestDatabaseManager:
     def database_manager(self) -> DatabaseManager:
         """Get a new DatabaseManager."""
         with DatabaseManager(
-            DB_MANAGER_HOST, DB_MANAGER_PORT, WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT
+            DB_MANAGER_HOST,
+            DB_MANAGER_PORT,
+            WORKLOAD_SUB_HOST,
+            WORKLOAD_PUBSUB_PORT,
+            DEFAULT_TABLES,
         ) as database_manager:
             return database_manager
 
