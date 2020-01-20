@@ -40,10 +40,6 @@ import Vue from "vue";
 import Linechart from "../charts/Linechart.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
 
-interface Props {
-  preselectedDatabaseId: string;
-}
-
 interface Data {
   data: Ref<any>;
   databases: Ref<Database[]>;

@@ -52,7 +52,7 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): Data {
-    console.log(props);
+    console.log(props.preselectedDatabaseId);
 
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(props.metricMeta);

@@ -51,7 +51,8 @@ export default createComponent({
       context,
       props.chartConfiguration
     );
-    const { isReady } = (context.root as any).$databaseData;
+    const { isReady } = context.root.$databaseData;
+    console.log(selectedDatabaseIds);
 
     onMounted(() => {
       watch(isReady, () => {
