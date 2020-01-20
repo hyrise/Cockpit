@@ -60,6 +60,6 @@ class TestWorkload:
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
         expected_workload = [("foo", None), ("foo2", None)]
         fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload()
+        received_queries = fake_workload.generate_workload(1, False)
 
         assert received_queries[:] == expected_workload[:]
