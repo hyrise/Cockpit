@@ -3,6 +3,7 @@ import secrets
 from random import shuffle
 from typing import Any, Dict, List, Tuple
 
+from hyrisecockpit.exception import QueryTypeNotFoundException
 from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
 
 
@@ -48,6 +49,9 @@ class Workload(object):
 
     def generate_specific(self, query_type: str, factor: int) -> List[Tuple[str, Any]]:
         """Chose random one query from every type."""
+        if query_type not in self._queries.keys():
+            raise QueryTypeNotFoundException(f"Query file {query_type} was not found")
+
         workload_queries: List[Tuple[str, Any]] = []
         for _ in range(factor):
             workload_queries.append((secrets.choice(self._queries[query_type]), None))
