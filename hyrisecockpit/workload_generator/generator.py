@@ -3,7 +3,8 @@
 Includes the main WorkloadGenerator.
 """
 
-from typing import Any, Callable, Dict
+from random import shuffle
+from typing import Any, Callable, Dict, List, Tuple
 
 from zmq import PUB, REP, Context
 
@@ -62,6 +63,11 @@ class WorkloadGenerator(object):
     def _call_workload(self, body: Dict) -> Dict:
         try:
             workload = self._get_workload(body["type"])
+            if workload == "custom":
+                return self._generate_custom_workload(
+                    body["queries"], int(body["factor"]), body["shuffle"]
+                )
+
             queries = workload.generate_workload()
             response = get_response(200)
             response["body"] = {"querylist": queries}
@@ -70,6 +76,22 @@ class WorkloadGenerator(object):
             return get_error_response(400, str(e))
 
         return get_response(200)
+
+    def _generate_custom_workload(
+        self, data_sheet: Dict, factor: int, shuffle_flag: bool
+    ):
+        workload_queries: List[Tuple[str, Any]] = []
+        for data in data_sheet.keys():
+            workload_type = data.split("/")[0]
+            query = data.split("/")[1]
+            factor = data_sheet[data]
+            workload = self._get_workload(workload_type)
+            workload_queries.extend(workload.generate_specific(query, factor))
+
+        if shuffle_flag:
+            return shuffle(workload_queries)
+
+        return workload_queries
 
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
