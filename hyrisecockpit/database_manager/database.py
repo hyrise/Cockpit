@@ -119,13 +119,25 @@ class Database(object):
     """Represents database."""
 
     def __init__(
-        self, access_data: Dict[str, str], workload_publisher_url: str
+        self,
+        user: str,
+        password: str,
+        host: str,
+        port: str,
+        dbname: str,
+        number_workers: str,
+        workload_publisher_url: str,
     ) -> None:
         """Initialize database object."""
-        self._number_workers = int(access_data["number_workers"])
+        self._number_workers = int(number_workers)
         self._number_additional_connections = 1
         self._driver = Driver(
-            access_data, self._number_workers + self._number_additional_connections
+            user,
+            password,
+            host,
+            port,
+            dbname,
+            self._number_workers + self._number_additional_connections,
         )
         self._connection_pool = self._driver.get_connection_pool()
 

@@ -4,7 +4,6 @@ from typing import Any, Callable, Dict, Optional
 
 from zmq import REP, Context
 
-from hyrisecockpit.exception import IdNotValidException
 from hyrisecockpit.response import get_response
 
 from .database import Database
@@ -65,19 +64,26 @@ class DatabaseManager(object):
     def _call_add_database(self, body: Dict) -> Dict:
         """Add database and initialize driver for it."""
         # validating connection data
-        try:
-            # Will throw an exception if not valid
-            Driver.validate_connection(body)
-            new_id = body["id"] in self._databases
-            if new_id:
-                raise IdNotValidException("Id not valid")
-        except Exception as e:  # TODO specify the exact exception
-            response = get_response(400)
-            response["body"] = str(e)
-            return response
+        user = body.get("user")
+        password = body.get("password")
+        host = body.get("host")
+        port = body.get("port")
+        dbname = body.get("dbname")
+        number_workers = body.get("number_workers")
+        if not (user and password and host and port and dbname and number_workers):
+            return get_response(400)
+        if not Driver.validate_connection(user, password, host, port, dbname):
+            return get_response(400)
+        if body["id"] in self._databases:
+            return get_response(400)
 
         db_instance = Database(
-            body,
+            user,
+            password,
+            host,
+            port,
+            dbname,
+            number_workers,
             "tcp://{:s}:{:s}".format(
                 self._workload_sub_host, self._workload_pubsub_port
             ),
@@ -95,32 +101,32 @@ class DatabaseManager(object):
     def _call_throughput(self, body: Dict) -> Dict:
         """Get the throughput of all databases."""
         throughput = {}
-        for database, database_object in self._databases.items():
-            throughput[database] = database_object.get_throughput_counter()
+        for id, database in self._databases.items():
+            throughput[id] = database.get_throughput_counter()
         response = get_response(200)
         response["body"]["throughput"] = throughput
         return response
 
     def _call_storage(self, body: Dict) -> Dict:
         storage = {}
-        for database, database_object in self._databases.items():
-            storage[database] = database_object.get_storage_data()
+        for id, database in self._databases.items():
+            storage[id] = database.get_storage_data()
         response = get_response(200)
         response["body"]["storage"] = storage
         return response
 
     def _call_system_data(self, body: Dict) -> Dict:
         system_data = {}
-        for database, database_object in self._databases.items():
-            system_data[database] = database_object.get_system_data()
+        for id, database in self._databases.items():
+            system_data[id] = database.get_system_data()
         response = get_response(200)
         response["body"]["system_data"] = system_data
         return response
 
     def _call_queue_length(self, body: Dict) -> Dict:
         queue_length = {}
-        for database, database_object in self._databases.items():
-            queue_length[database] = database_object.get_queue_length()
+        for id, database in self._databases.items():
+            queue_length[id] = database.get_queue_length()
         response = get_response(200)
         response["body"]["queue_length"] = queue_length
         return response
@@ -128,8 +134,8 @@ class DatabaseManager(object):
     def _call_chunks_data(self, body: Dict) -> Dict:
         """Get chunks data of all databases."""
         chunks_data = {}
-        for database, database_object in self._databases.items():
-            chunks_data[database] = database_object.get_chunks_data()
+        for id, database in self._databases.items():
+            chunks_data[id] = database.get_chunks_data()
         response = get_response(200)
         response["body"]["chunks_data"] = chunks_data
         return response
@@ -148,8 +154,8 @@ class DatabaseManager(object):
 
     def _call_failed_tasks(self, body: Dict) -> Dict:
         failed_tasks = {}
-        for database, database_object in self._databases.items():
-            failed_tasks[database] = database_object.get_failed_tasks()
+        for id, database in self._databases.items():
+            failed_tasks[id] = database.get_failed_tasks()
         response = get_response(200)
         response["body"]["failed_tasks"] = failed_tasks
         return response
@@ -161,15 +167,15 @@ class DatabaseManager(object):
         datatype = body.get("datatype")
         if not datatype:
             return get_response(400)
-        for _, database_object in self._databases.items():
-            if not database_object.load_data(datatype):
+        for database in self._databases.values():
+            if not database.load_data(datatype):
                 return get_response(400)
         return get_response(200)
 
     def _exit(self) -> None:
         """Perform clean exit on all databases."""
-        for database_object in self._databases.values():
-            database_object.exit()
+        for database in self._databases.values():
+            database.exit()
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""

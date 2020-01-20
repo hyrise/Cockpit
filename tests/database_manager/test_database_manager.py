@@ -104,7 +104,7 @@ class TestDatabaseManager:
     @mark.parametrize(
         "call", ["add database", "delete database"],
     )
-    def test_returns_an_failing_response_on_an_empty_call(
+    def test_returns_a_failing_response_on_an_empty_call(
         self, database_manager: DatabaseManager, call
     ):
         """Returns a status 400 response on a call."""
