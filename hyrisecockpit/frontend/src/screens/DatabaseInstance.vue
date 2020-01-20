@@ -2,28 +2,15 @@
   <div>
     <div class="chart mx-12">
       <div class="metrics">
-        <v-card class="metric-chart">
-          <Throughput
+        <v-card class="metric-chart" v-for="metric in metrics" :key="metric">
+          <v-card-title class="metric-title">
+            {{ metric }}
+          </v-card-title>
+          <component
+            :is="metric"
+            :enable-comparison="false"
             :preselected-database-id="$route.params.id"
-            :metric-meta="getMetadata('throughput')"
-          />
-        </v-card>
-        <v-card class="metric-chart">
-          <Latency
-            :preselected-database-id="$route.params.id"
-            :metric-meta="getMetadata('throughput')"
-          />
-        </v-card>
-        <v-card class="metric-chart">
-          <Ram
-            :preselected-database-id="$route.params.id"
-            :metric-meta="getMetadata('throughput')"
-          />
-        </v-card>
-        <v-card class="metric-chart">
-          <Cpu
-            :preselected-database-id="$route.params.id"
-            :metric-meta="getMetadata('cpu')"
+            :metric-meta="getMetadata(metric.toLowerCase())"
           />
         </v-card>
       </div>
@@ -60,10 +47,10 @@ import { Metric, MetricMetadata } from "../types/metrics";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
+  metrics: string[];
 }
 
 export default createComponent({
-  name: "DatabaseScreen",
   components: {
     Throughput,
     Storage,
@@ -73,11 +60,13 @@ export default createComponent({
     Ram
   },
   setup(props: {}, context: SetupContext): Data {
+    const metrics = ["Throughput", "Cpu", "Latency", "Ram"];
     function getMetadata(metric: Metric): MetricMetadata {
       return metricsMetadata[metric];
     }
     return {
-      getMetadata
+      getMetadata,
+      metrics
     };
   }
 });
@@ -90,8 +79,14 @@ export default createComponent({
   flex-wrap: wrap;
 }
 .metric-chart {
-  flex: 0 0 33%;
+  flex: 0 0 32.5%;
   margin: 0px 3px 6px 3px;
   padding: 0px;
+}
+.metric-title {
+  z-index: 2;
+  position: relative;
+  margin-bottom: -60px;
+  justify-content: center;
 }
 </style>

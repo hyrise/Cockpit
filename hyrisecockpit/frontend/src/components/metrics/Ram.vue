@@ -1,26 +1,24 @@
 <template>
   <div>
-    <div class="chart mx-10 my-10">
-      <v-row align="center">
-        <v-col cols="6" class="mx-10">
-          <v-select
-            v-model="selectedDatabaseIds"
-            :items="databases.map(database => database.id)"
-            chips
-            label="databases"
-            multiple
-            outlined
-            prepend-icon="mdi-database"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <Linechart
-        :selected-database-ids="selectedDatabaseIds"
-        :data="data"
-        graph-id="ram"
-        :chart-configuration="chartConfiguration"
-      />
-    </div>
+    <v-row v-if="enableComparison" align="center">
+      <v-col cols="6" class="mx-10">
+        <v-select
+          v-model="selectedDatabaseIds"
+          :items="databases.map(database => database.id)"
+          chips
+          label="databases"
+          multiple
+          outlined
+          prepend-icon="mdi-database"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <Linechart
+      :selected-database-ids="selectedDatabaseIds"
+      :data="data"
+      graph-id="ram"
+      :chart-configuration="chartConfiguration"
+    />
   </div>
 </template>
 
@@ -50,6 +48,7 @@ interface Data {
 }
 
 export default createComponent({
+  name: "Ram",
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): Data {
@@ -78,9 +77,3 @@ export default createComponent({
   }
 });
 </script>
-<style scoped>
-.chart {
-  max-width: 1200px;
-  max-height: 900px;
-}
-</style>

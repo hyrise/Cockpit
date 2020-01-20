@@ -59,7 +59,8 @@ export default createComponent({
           Plotly.newPlot(
             graphId,
             [getDataset([], context.root.$route.params.id)],
-            getLayout()
+            getLayout(),
+            { displayModeBar: false }
           );
         }
       });
@@ -86,7 +87,7 @@ export default createComponent({
         []
       );
       Plotly.purge(graphId);
-      Plotly.plot(graphId, newDatasets, getLayout());
+      Plotly.plot(graphId, newDatasets, getLayout(), { displayModeBar: false });
     }
 
     function getMaxDatasetLength(): number {
@@ -123,7 +124,6 @@ function useLineChartConfiguration(
   const databases: Ref<Database[]> = context.root.$databaseData.databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
-      title: chartConfiguration[0],
       xaxis: {
         title: chartConfiguration[1],
         range: [xMin, xMax]
@@ -151,3 +151,4 @@ function useLineChartConfiguration(
   return { getDataset, getLayout };
 }
 </script>
+<style scoped></style>

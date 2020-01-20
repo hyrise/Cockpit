@@ -12,6 +12,7 @@ export interface MetricMetadata {
 export interface MetricProps {
   metricMeta: MetricMetadata;
   preselectedDatabaseId: string;
+  enableComparison: boolean;
 }
 
 export const MetricPropsValidation = {
@@ -21,6 +22,10 @@ export const MetricPropsValidation = {
   },
   preselectedDatabaseId: {
     type: String,
+    default: null
+  },
+  enableComparison: {
+    type: Boolean,
     default: null
   }
 };
