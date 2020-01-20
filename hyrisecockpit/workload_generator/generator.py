@@ -65,10 +65,10 @@ class WorkloadGenerator(object):
             workload = self._get_workload(body["type"])
             if workload == "custom":
                 return self._generate_custom_workload(
-                    body["queries"], int(body["factor"]), body["shuffle"]
+                    body["queries"], body["factor"], body["shuffle"]
                 )
 
-            queries = workload.generate_workload()
+            queries = workload.generate_workload(body["factor"], body["shuffle"])
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
@@ -89,7 +89,7 @@ class WorkloadGenerator(object):
             workload_queries.extend(workload.generate_specific(query, factor))
 
         if shuffle_flag:
-            return shuffle(workload_queries)
+            shuffle(workload_queries)
 
         return workload_queries
 
