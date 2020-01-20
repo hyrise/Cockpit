@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="open" app class="elevation-2" fixed width="300">
     <v-toolbar color="primary darken-1"> </v-toolbar>
-    <v-card class=text-center :to="{ name: 'database' }">
+    <v-card class="text-center" :to="{ name: 'database' }">
       <v-icon size="150">
         mdi-database-search
       </v-icon>
@@ -9,7 +9,7 @@
         Instanz
       </v-card-title>
     </v-card>
-    <v-card class=text-center :to="{ name: 'databases' }">
+    <v-card class="text-center" :to="{ name: 'databases' }">
       <v-icon size="150">
         mdi-speedometer
       </v-icon>
@@ -17,7 +17,7 @@
         Vergleich
       </v-card-title>
     </v-card>
-    <v-card class=text-center :to="{ name: 'workload' }">
+    <v-card class="text-center" :to="{ name: 'workload' }">
       <v-icon size="150">
         mdi-worker
       </v-icon>
@@ -25,14 +25,14 @@
         Workload
       </v-card-title>
     </v-card>
-    <v-card class=text-center :to="{ name: 'home' }">
+    <v-card class="text-center" :to="{ name: 'home' }">
       <v-icon size="150">
         mdi-settings
       </v-icon>
       <v-card-title class="justify-center">
         Plugins
       </v-card-title>
-    </v-card>    
+    </v-card>
   </v-navigation-drawer>
 </template>
 
