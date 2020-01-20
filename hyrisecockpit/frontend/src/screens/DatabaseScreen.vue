@@ -1,22 +1,32 @@
 <template>
   <div>
     <div class="chart mx-12">
-      <div class="mt-6 mb-2">
-        <b> Throughput Monitoring </b>
+      <div class="metrics">
+        <div class="metric-chart">
+          <Throughput
+            :preselected-database-id="$route.params.id"
+            :metric-meta="getMetadata('throughput')"
+          />
+        </div>
+        <div class="metric-chart">
+          <Latency
+            :preselected-database-id="$route.params.id"
+            :metric-meta="getMetadata('throughput')"
+          />
+        </div>
+        <div class="metric-chart">
+          <Ram
+            :preselected-database-id="$route.params.id"
+            :metric-meta="getMetadata('throughput')"
+          />
+        </div>
+        <div class="metric-chart">
+          <Cpu
+            :preselected-database-id="$route.params.id"
+            :metric-meta="getMetadata('cpu')"
+          />
+        </div>
       </div>
-      <v-divider class="mb-4"></v-divider>
-      <Throughput
-        :preselected-database-id="$route.params.id"
-        :metric-meta="getMetadata('throughput')"
-      />
-      <div class="mt-6 mb-2">
-        <b> CPU Monitoring </b>
-      </div>
-      <v-divider class="mb-4"></v-divider>
-      <Cpu
-        :preselected-database-id="$route.params.id"
-        :metric-meta="getMetadata('cpu')"
-      />
       <div class="mt-6 mb-2">
         <b> Access frequency Monitoring </b>
       </div>
@@ -43,6 +53,8 @@ import Throughput from "../components/metrics/Throughput.vue";
 import Storage from "../components/metrics/Storage.vue";
 import Cpu from "../components/metrics/Cpu.vue";
 import Access from "../components/metrics/Access.vue";
+import Latency from "../components/metrics/Latency.vue";
+import Ram from "../components/metrics/Ram.vue";
 import { metricsMetadata } from "../components/meta/metrics";
 import { Metric, MetricMetadata } from "../types/metrics";
 
@@ -56,7 +68,9 @@ export default createComponent({
     Throughput,
     Storage,
     Cpu,
-    Access
+    Access,
+    Latency,
+    Ram
   },
   setup(props: {}, context: SetupContext): Data {
     function getMetadata(metric: Metric): MetricMetadata {
@@ -69,8 +83,12 @@ export default createComponent({
 });
 </script>
 <style scoped>
-.chart {
-  max-width: 1800px;
-  max-height: 1000px;
+.metrics {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.metric-chart {
+  flex: 1 0 33.33%;
 }
 </style>

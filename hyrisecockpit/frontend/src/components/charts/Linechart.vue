@@ -151,9 +151,3 @@ function useLineChartConfiguration(
   return { getDataset, getLayout };
 }
 </script>
-<style scoped>
-.chart {
-  max-width: 1200px;
-  max-height: 900px;
-}
-</style>
