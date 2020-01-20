@@ -258,7 +258,15 @@ class Database(object):
         connection.set_session(autocommit=True)
 
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
+<<<<<<< HEAD
         meta_segments = read_sql_query(sql, connection)
+=======
+        try:
+            meta_segments = sqlio.read_sql_query(sql, connection)
+        except DatabaseError:
+            self._chunks_data = {}
+            return None
+>>>>>>> Add error handling
 
         self._connection_pool.putconn(connection)
 
@@ -280,7 +288,10 @@ class Database(object):
         connection.set_session(autocommit=True)
         sql = "SELECT * FROM meta_segments;"
 
-        meta_segments = read_sql_query(sql, connection)
+        try:
+            meta_segments = sqlio.read_sql_query(sql, connection)
+        except DatabaseError:
+            return {}
 
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
