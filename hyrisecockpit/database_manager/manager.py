@@ -38,29 +38,19 @@ class DatabaseManager(object):
             "get databases": self._call_get_databases,
             "load_data": self._call_load_data,
         }
-        self._init_server()
-
-    def __enter__(self):
-        """Return self for a context manager."""
-        return self
-
-    def close(self) -> None:
-        """Close the socket and context, exit all databases."""
-        for database in self._databases.values():
-            database.close()
-        self._socket.close()
-        self._context.term()
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Call close with a context manager."""
-        self.close()
-
-    def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
             "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
         )
+
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
 
     def _call_add_database(self, body: Dict) -> Dict:
         """Add database and initialize driver for it."""
@@ -191,3 +181,10 @@ class DatabaseManager(object):
 
             # Send the reply
             self._socket.send_json(response)
+
+    def close(self) -> None:
+        """Close the socket and context, exit all databases."""
+        for database in self._databases.values():
+            database.close()
+        self._socket.close()
+        self._context.term()

@@ -217,29 +217,6 @@ class Database(object):
         self._connection_pool.putconn(connection)
         return success
 
-    def get_throughput_counter(self) -> int:
-        """Return throughput."""
-        return self._throughput_counter
-
-    def get_system_data(self) -> Dict:
-        """Return system data."""
-        return self._system_data
-
-    def get_chunks_data(self) -> Dict:
-        """Return chunks data."""
-        return self._chunks_data
-
-    def get_queue_length(self) -> int:
-        """Return queue length."""
-        return self._task_queue.qsize()
-
-    def get_failed_tasks(self) -> List:
-        """Return faild tasks."""
-        failed_task = []
-        while not self._failed_task_queue.empty():
-            failed_task.append(self._failed_task_queue.get())
-        return failed_task
-
     def _update_throughput_data(self) -> None:
         """Put meta data from all workers together."""
         throughput_data = 0
@@ -347,6 +324,29 @@ class Database(object):
                     "encoding": row["encoding_type"],
                 }
         return output
+
+    def get_throughput_counter(self) -> int:
+        """Return throughput."""
+        return self._throughput_counter
+
+    def get_system_data(self) -> Dict:
+        """Return system data."""
+        return self._system_data
+
+    def get_chunks_data(self) -> Dict:
+        """Return chunks data."""
+        return self._chunks_data
+
+    def get_queue_length(self) -> int:
+        """Return queue length."""
+        return self._task_queue.qsize()
+
+    def get_failed_tasks(self) -> List:
+        """Return faild tasks."""
+        failed_task = []
+        while not self._failed_task_queue.empty():
+            failed_task.append(self._failed_task_queue.get())
+        return failed_task
 
     def close(self) -> None:
         """Close the database."""
