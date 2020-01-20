@@ -160,7 +160,7 @@ class TestDatabaseManager:
             "throughput"
         ]
         mock_data = 42
-        mock_database.get_throughput_counter.return_value = mock_data  # type: ignore
+        mock_database.get_throughput.return_value = mock_data  # type: ignore
         self.convenience_data_call(database_manager, mock_database, call, mock_data)
 
     def test_call_storage_returns_storage(

@@ -93,7 +93,7 @@ class DatabaseManager(object):
         """Get the throughput of all databases."""
         throughput = {}
         for id, database in self._databases.items():
-            throughput[id] = database.get_throughput_counter()
+            throughput[id] = database.get_throughput()
         response = get_response(200)
         response["body"]["throughput"] = throughput
         return response

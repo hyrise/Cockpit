@@ -146,7 +146,7 @@ class Database(object):
         self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._throughput_counter: int = 0
+        self._throughput: int = 0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._throughput_data_container: Dict = self._init_throughput_data_container()
@@ -223,7 +223,7 @@ class Database(object):
         for i in range(self._number_workers):
             throughput_data = throughput_data + self._throughput_data_container[str(i)]
             self._throughput_data_container[str(i)] = 0
-        self._throughput_counter = throughput_data
+        self._throughput = throughput_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
@@ -325,9 +325,9 @@ class Database(object):
                 }
         return output
 
-    def get_throughput_counter(self) -> int:
+    def get_throughput(self) -> int:
         """Return throughput."""
-        return self._throughput_counter
+        return self._throughput
 
     def get_system_data(self) -> Dict:
         """Return system data."""
