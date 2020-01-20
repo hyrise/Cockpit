@@ -221,11 +221,14 @@ class Database(object):
             success: bool = True
             for name in table_names:
                 try:
-                    cur.execute(f"SELECT * FROM {name};")
+                    cur.execute("SELECT * FROM %s;", name)
                 except DatabaseError:
                     try:
                         cur.execute(
-                            f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';"
+                            "COPY %s FROM '%s_cached_tables/%s.bin';",
+                            name,
+                            datatype,
+                            name,
                         )
                     except DatabaseError:
                         success = False  # TODO return tables that could not be imported
@@ -239,7 +242,7 @@ class Database(object):
         with PoolCursor(self._connection_pool) as cur:
             for name in table_names:
                 try:
-                    cur.execute(f"DROP TABLE {name}';")
+                    cur.execute("DROP TABLE %s;", name)
                 except DatabaseError:
                     continue
         return True
