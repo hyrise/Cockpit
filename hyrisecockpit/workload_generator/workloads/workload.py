@@ -36,3 +36,10 @@ class Workload(object):
         for queries_type in self._queries.values():
             workload_queries.append((secrets.choice(queries_type), None))
         return workload_queries
+
+    def generate_specific(self, query_type: str, factor: int) -> List[Tuple[str, Any]]:
+        """Chose random one query from every type."""
+        workload_queries: List[Tuple[str, Any]] = []
+        for _ in range(factor):
+            workload_queries.append((secrets.choice(self._queries[query_type]), None))
+        return workload_queries
