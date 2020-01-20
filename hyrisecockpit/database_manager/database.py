@@ -293,6 +293,9 @@ class Database(object):
         except DatabaseError:
             return {}
 
+        if len(meta_segments.index) == 0:
+            return {}
+
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
             inplace=True,
