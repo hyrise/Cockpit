@@ -1,8 +1,8 @@
-import { backendUrl } from "../types/services";
-import { ComponentId, ComponentMeta } from "../types/components";
-import { useDataTransformation } from "../services/transformationService";
+import { backendUrl } from "../../types/services";
+import { Metric, MetricMetadata } from "../../types/metrics";
+import { useDataTransformation } from "../../services/transformationService";
 
-export const componentMetaMap: Record<ComponentId, ComponentMeta> = {
+export const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
     transformationService: useDataTransformation("access"),

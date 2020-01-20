@@ -1,21 +1,21 @@
 import { TransformationService, Base, FetchType } from "./services";
 
-export type ComponentId = "access" | "cpu" | "storage" | "throughput";
+export type Metric = "access" | "cpu" | "storage" | "throughput";
 
-export interface ComponentMeta {
+export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
 }
 
-export interface ComponentProps {
-  componentMeta: ComponentMeta;
+export interface MetricProps {
+  metricMeta: MetricMetadata;
   preselectedDatabaseId: string;
 }
 
-export const ComponentPropsValidation = {
-  componentMeta: {
+export const MetricPropsValidation = {
+  metricMeta: {
     type: Object,
     default: null
   },
