@@ -123,10 +123,11 @@ def database() -> Dict:
 def workload() -> Dict:
     """Start or stop the workload generator."""
     request_json = request.get_json()
+
     if request.method == "POST":
         message = {
             "header": {"message": "workload"},
-            "body": {"type": request_json["body"]["type"]},  # TODO remove body
+            "body": request_json,
         }
     elif request.method == "DELETE":
         message = {
@@ -134,6 +135,7 @@ def workload() -> Dict:
             "body": {},
         }
     response = _send_message(generator_socket, message)
+
     return response
 
 

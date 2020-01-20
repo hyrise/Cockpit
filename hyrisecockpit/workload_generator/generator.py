@@ -63,13 +63,13 @@ class WorkloadGenerator(object):
 
     def _call_workload(self, body: Dict) -> Dict:
         try:
-            workload = self._get_workload(body["type"])
-            if workload == "custom":
-                return self._generate_custom_workload(
+            if body["type"] == "custom":
+                queries = self._generate_custom_workload(
                     body["queries"], body["factor"], body["shuffle"]
                 )
-
-            queries = workload.generate_workload(body["factor"], body["shuffle"])
+            else:
+                workload = self._get_workload(body["type"])
+                queries = workload.generate_workload(body["factor"], body["shuffle"])
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
@@ -86,12 +86,13 @@ class WorkloadGenerator(object):
         self, data_sheet: Dict, factor: int, shuffle_flag: bool
     ):
         workload_queries: List[Tuple[str, Any]] = []
-        for data in data_sheet.keys():
-            workload_type = data.split("/")[0]
-            query = data.split("/")[1]
-            factor = data_sheet[data]
-            workload = self._get_workload(workload_type)
-            workload_queries.extend(workload.generate_specific(query, factor))
+        for _ in range(factor):
+            for data in data_sheet.keys():
+                workload_type = data.split("/")[0]
+                query = data.split("/")[1]
+                factor = data_sheet[data]
+                workload = self._get_workload(workload_type)
+                workload_queries.extend(workload.generate_specific(query, factor))
 
         if shuffle_flag:
             shuffle(workload_queries)
