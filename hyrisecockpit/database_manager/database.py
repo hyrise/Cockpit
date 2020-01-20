@@ -142,9 +142,13 @@ class Database(object):
     """Represents database."""
 
     def __init__(
-        self, access_data: Dict[str, str], workload_publisher_url: str
+        self,
+        access_data: Dict[str, str],
+        workload_publisher_url: str,
+        default_tables: str,
     ) -> None:
         """Initialize database object."""
+        self._default_tables = default_tables
         self._number_workers = int(access_data["number_workers"])
         self._number_additional_connections = 1
         self._driver = Driver(
@@ -165,7 +169,7 @@ class Database(object):
 
         self._start_workers()
 
-        self.load_data("tpch")
+        self.load_data(self._default_tables)
 
         self._scheduler = BackgroundScheduler()
         self._update_throughput_job = self._scheduler.add_job(
