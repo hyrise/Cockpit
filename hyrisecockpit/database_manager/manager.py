@@ -46,7 +46,8 @@ class DatabaseManager(object):
 
     def close(self) -> None:
         """Close the socket and context, exit all databases."""
-        self._exit()
+        for database in self._databases.values():
+            database.close()
         self._socket.close()
         self._context.term()
 
@@ -146,7 +147,7 @@ class DatabaseManager(object):
             return get_response(400)
         database: Optional[Database] = self._databases.pop(id, None)
         if database:
-            database.exit()
+            database.close()
             del database
             return get_response(200)
         else:
@@ -171,11 +172,6 @@ class DatabaseManager(object):
             if not database.load_data(datatype):
                 return get_response(400)
         return get_response(200)
-
-    def _exit(self) -> None:
-        """Perform clean exit on all databases."""
-        for database in self._databases.values():
-            database.exit()
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""

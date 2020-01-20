@@ -348,26 +348,22 @@ class Database(object):
                 }
         return output
 
-    def _close_pool(self) -> None:
-        """Close worker pool."""
+    def close(self) -> None:
+        """Close the database."""
+        # Close worker pool
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
 
-    def _close_connections(self) -> None:
-        """Close connections."""
+        # Close connections
         self._connection_pool.closeall()
 
-    def _close_queue(self) -> None:
-        """Close queue."""
+        # Close queue
         self._task_queue.close()
 
-    def exit(self) -> None:
-        """Clean exit."""
-        self._close_pool()
-        self._close_connections()
-        self._close_queue()
+        # Remove jobs
         self._update_throughput_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
+
+        # Close the scheduler
         self._scheduler.shutdown()
-        # super().__exit__()
