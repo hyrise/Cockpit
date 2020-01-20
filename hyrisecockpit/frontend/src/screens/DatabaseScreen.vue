@@ -2,30 +2,30 @@
   <div>
     <div class="chart mx-12">
       <div class="metrics">
-        <div class="metric-chart">
+        <v-card class="metric-chart">
           <Throughput
             :preselected-database-id="$route.params.id"
             :metric-meta="getMetadata('throughput')"
           />
-        </div>
-        <div class="metric-chart">
+        </v-card>
+        <v-card class="metric-chart">
           <Latency
             :preselected-database-id="$route.params.id"
             :metric-meta="getMetadata('throughput')"
           />
-        </div>
-        <div class="metric-chart">
+        </v-card>
+        <v-card class="metric-chart">
           <Ram
             :preselected-database-id="$route.params.id"
             :metric-meta="getMetadata('throughput')"
           />
-        </div>
-        <div class="metric-chart">
+        </v-card>
+        <v-card class="metric-chart">
           <Cpu
             :preselected-database-id="$route.params.id"
             :metric-meta="getMetadata('cpu')"
           />
-        </div>
+        </v-card>
       </div>
       <div class="mt-6 mb-2">
         <b> Access frequency Monitoring </b>
@@ -84,11 +84,14 @@ export default createComponent({
 </script>
 <style scoped>
 .metrics {
+  margin-top: 6px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 .metric-chart {
-  flex: 1 0 33.33%;
+  flex: 0 0 33%;
+  margin: 0px 3px 6px 3px;
+  padding: 0px;
 }
 </style>
