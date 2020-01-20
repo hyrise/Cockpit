@@ -105,18 +105,19 @@ def execute_queries(
 
     while True:
         # If Queue is emty go to wait status
-        query, parameters = task_queue.get(block=True)
         try:
             startts = time.time()
+            task = task_queue.get(block=True)
+            query, parameters = task
             cur.execute(query, parameters)
             endts = time.time()
-            query_list.append((startts, endts, "none"))
+            query_list.append((startts, endts, "none", 0))
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
-        except Error as e:
+        except (ValueError, Error) as e:
             failed_task_queue.put(
-                {"worker_id": worker_id, "task": (query, parameters), "Error": str(e)}
+                {"worker_id": worker_id, "task": task, "Error": str(e)}
             )
 
 
@@ -235,6 +236,12 @@ class Database(object):
             failed_task.append(self._failed_task_queue.get())
         return failed_task
 
+    def move_query_log(self) -> List:
+        """Return all logged queries, clear the log."""
+        queries = self._query_list
+        self._query_list.clear()
+        return queries
+
     def _update_throughput_data(self) -> None:
         """Put meta data from all workers together."""
         throughput_data = 0
@@ -275,13 +282,13 @@ class Database(object):
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
 
-        sql = """SELECT "table", column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY "table", column_name;"""
+        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
         meta_segments = sqlio.read_sql_query(sql, connection)
 
         self._connection_pool.putconn(connection)
 
         chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table")
+        grouped = meta_segments.reset_index().groupby("table_name")
         for column in grouped.groups:
             chunks_data[column] = {}
             for _, row in grouped.get_group(column).iterrows():
@@ -301,20 +308,24 @@ class Database(object):
         meta_segments = sqlio.read_sql_query(sql, connection)
 
         meta_segments.set_index(
-            ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
+            ["table_name", "column_name", "chunk_id"],
+            inplace=True,
+            verify_integrity=True,
         )
         size: DataFrame = DataFrame(
             meta_segments["estimated_size_in_bytes"]
-            .groupby(level=["table", "column_name"])
+            .groupby(level=["table_name", "column_name"])
             .sum()
         )
 
         encoding: DataFrame = DataFrame(
-            meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
+            meta_segments["encoding_type"]
+            .groupby(level=["table_name", "column_name"])
+            .apply(set)
         )
-        encoding["encoding"] = encoding["encoding"].apply(list)
+        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
         datatype: DataFrame = meta_segments.reset_index().set_index(
-            ["table", "column_name"]
+            ["table_name", "column_name"]
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
@@ -324,7 +335,7 @@ class Database(object):
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
         """Sort storage data to dictionary."""
         output: Dict = {}
-        grouped = result.reset_index().groupby("table")
+        grouped = result.reset_index().groupby("table_name")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
             for _, row in grouped.get_group(column).iterrows():
@@ -335,7 +346,7 @@ class Database(object):
                 output[column]["data"][row["column_name"]] = {
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
-                    "encoding": row["encoding"],
+                    "encoding": row["encoding_type"],
                 }
         return output
 

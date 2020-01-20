@@ -1,15 +1,15 @@
 """Module for managing databases."""
 
-import sys
 from typing import Any, Callable, Dict, Optional
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import REP, Context
 
+from hyrisecockpit.exception import IdNotValidException
 from hyrisecockpit.response import get_response
 
 from .database import Database
 from .driver import Driver
-from .exception import IdNotValidException
 
 
 class DatabaseManager(object):
@@ -28,6 +28,10 @@ class DatabaseManager(object):
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._databases: Dict[str, Database] = dict()
+        self._scheduler = BackgroundScheduler()
+        self._update_log_job = self._scheduler.add_job(
+            func=self._update_log, trigger="interval", seconds=1,
+        )
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
@@ -41,6 +45,15 @@ class DatabaseManager(object):
             "load_data": self._call_load_data,
         }
         self._init_server()
+
+    def _update_log(self):
+        log = dict()
+        for id, database in self._databases.items():
+            log[id] = database.move_query_log()
+        for id in log.keys():
+            with open(f"log-{id}.csv", "a") as f:
+                for query in log[id]:
+                    print(query, sep=",", file=f)
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -67,12 +80,12 @@ class DatabaseManager(object):
         """Add database and initialize driver for it."""
         # validating connection data
         try:
-            # Will throw an exeption if not valid
+            # Will throw an exception if not valid
             Driver.validate_connection(body)
             new_id = body["id"] in self._databases
             if new_id:
                 raise IdNotValidException("Id not valid")
-        except Exception as e:
+        except Exception as e:  # TODO specify the exact exception
             response = get_response(400)
             response["body"] = str(e)
             return response
@@ -180,19 +193,13 @@ class DatabaseManager(object):
             )
         )
         while True:
-            try:
-                # Get the message
-                request = self._socket.recv_json()
+            # Get the message
+            request = self._socket.recv_json()
 
-                # Handle the call
-                response = self._server_calls.get(
-                    request["header"]["message"], self._call_not_found
-                )(request["body"])
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
-                # Send the reply
-                self._socket.send_json(response)
-
-            except KeyboardInterrupt:
-                if len(self._databases) > 0:
-                    self._exit()
-                sys.exit()
+            # Send the reply
+            self._socket.send_json(response)
