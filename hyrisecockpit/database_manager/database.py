@@ -107,7 +107,7 @@ class Database(object):
 
         self._start_workers()
 
-        self.load_data(self._default_tables)
+        self.load_data(self._default_tables, sf="0.100000")
 
         self._scheduler = BackgroundScheduler()
         self._update_throughput_job = self._scheduler.add_job(
@@ -154,7 +154,7 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def load_data(self, datatype: str) -> bool:
+    def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
         table_names = _table_names.get(datatype)
         if not table_names:
@@ -167,9 +167,10 @@ class Database(object):
                 except DatabaseError:
                     try:
                         cur.execute(
-                            "COPY %s FROM '%s_cached_tables/%s.bin';",
+                            "COPY %s FROM '%s_cached_tables/sf-%s/%s.bin';",
                             name,
                             datatype,
+                            sf,
                             name,
                         )
                     except DatabaseError:

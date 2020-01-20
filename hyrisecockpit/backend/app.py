@@ -140,10 +140,11 @@ def workload() -> Dict:
 @app.route("/data/<datatype>", methods=["POST", "DELETE"])
 def data(datatype: str) -> Dict:
     """Load or delete pregenerated tables from all databases."""
+    request_json = request.get_json()
     if request.method == "POST":
         message = {
             "header": {"message": "load data"},
-            "body": {"datatype": datatype},
+            "body": {"datatype": datatype, "sf": request_json["body"]["sf"]},
         }
     elif request.method == "DELETE":
         message = {

@@ -163,10 +163,11 @@ class DatabaseManager(object):
 
     def _call_load_data(self, body: Dict) -> Dict:
         datatype = body.get("datatype")
+        sf = body.get("sf", "1.000000")
         if not datatype:
             return get_response(400)
         for database_object in list(self._databases.values()):
-            if not database_object.load_data(datatype):
+            if not database_object.load_data(datatype, sf):
                 return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
