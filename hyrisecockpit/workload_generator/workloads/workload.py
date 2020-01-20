@@ -33,7 +33,7 @@ class Workload(object):
         )
 
     def generate_workload(
-        self, factor: int, shuffle_flag: bool
+        self, factor: int = 1, shuffle_flag: bool = False
     ) -> List[Tuple[str, Any]]:
         """Chose random one query from every type."""
         workload_queries: List[Tuple[str, Any]] = []
@@ -47,7 +47,9 @@ class Workload(object):
 
         return workload_queries
 
-    def generate_specific(self, query_type: str, factor: int) -> List[Tuple[str, Any]]:
+    def generate_specific(
+        self, query_type: str, factor: int = 1
+    ) -> List[Tuple[str, Any]]:
         """Chose random one query from every type."""
         if query_type not in self._queries.keys():
             raise QueryTypeNotFoundException(f"Query file {query_type} was not found")
