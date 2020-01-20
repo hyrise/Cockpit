@@ -83,7 +83,7 @@ class TestWorkloadGenerator:
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure existing workload calls return 200."""
-        body = {"type": workload}
+        body = {"type": workload, "factor": 1, "shuffle": False}
         response = isolated_generator._call_workload(body)
 
         assert response["header"]["status"] == 200
@@ -102,7 +102,7 @@ class TestWorkloadGenerator:
             "Error message"
         )
         isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload"}
+        body = {"type": "dummy workload", "factor": 1, "shuffle": False}
 
         response = isolated_generator._call_workload(body)
 
@@ -123,7 +123,7 @@ class TestWorkloadGenerator:
             "Error message"
         )
         isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload"}
+        body = {"type": "dummy workload", "factor": 1, "shuffle": False}
 
         response = isolated_generator._call_workload(body)
 
