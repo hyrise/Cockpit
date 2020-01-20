@@ -1,20 +1,20 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
-import { ComponentMeta } from "@/types/components";
+import { MetricMetadata } from "@/types/metrics";
 import { FetchService } from "@/types/services";
 
-export function useGenericFetchService(component: ComponentMeta): FetchService {
+export function useGenericFetchService(metric: MetricMetadata): FetchService {
   const queryReadyState = ref<boolean>(true);
   const data = ref<any>({});
 
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
-      if (component.fetchType === "modify") {
+      if (metric.fetchType === "modify") {
         Object.keys(result).forEach(key => {
-          addData(key, component.transformationService(result, key));
+          addData(key, metric.transformationService(result, key));
         });
-      } else if (component.fetchType === "read") {
+      } else if (metric.fetchType === "read") {
         data.value = result;
       }
       queryReadyState.value = true;
@@ -33,9 +33,9 @@ export function useGenericFetchService(component: ComponentMeta): FetchService {
   function fetchData(): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
-        .get(component.endpoint)
+        .get(metric.endpoint)
         .then(response => {
-          resolve(response.data.body[component.base]);
+          resolve(response.data.body[metric.base]);
         })
         .catch(error => {
           queryReadyState.value = true;

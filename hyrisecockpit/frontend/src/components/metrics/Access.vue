@@ -35,9 +35,9 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../services/genericFetchService";
-import Heatmap from "./charts/Heatmap.vue";
-import { ComponentProps, ComponentPropsValidation } from "../types/components";
+import { useGenericFetchService } from "../../services/genericFetchService";
+import Heatmap from "../charts/Heatmap.vue";
+import { MetricProps, MetricPropsValidation } from "../../types/metrics";
 
 interface Data {
   tables: Ref<string[]>;
@@ -53,11 +53,11 @@ export default createComponent({
   components: {
     Heatmap
   },
-  props: ComponentPropsValidation,
-  setup(props: ComponentProps, context: SetupContext): Data {
+  props: MetricPropsValidation,
+  setup(props: MetricProps, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const { tables } = context.root.$databaseData;
-    const { data, checkState } = useGenericFetchService(props.componentMeta);
+    const { data, checkState } = useGenericFetchService(props.metricMeta);
 
     const table = computed(() => selectedTable.value);
 
@@ -72,7 +72,7 @@ export default createComponent({
           newColumns,
           newChunks,
           dataByChunks
-        } = props.componentMeta.transformationService(
+        } = props.metricMeta.transformationService(
           data.value,
           props.preselectedDatabaseId,
           table.value
