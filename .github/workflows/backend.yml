@@ -1,9 +1,9 @@
-name: Python application
+name: Backend Lint and Test
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
