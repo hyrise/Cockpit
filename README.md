@@ -2,7 +2,7 @@
 
 ## Setup
 
-You may need to install a different python version (`3.8.0`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+You may need to install a different python version (`3.8.1`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
 
 
@@ -48,12 +48,12 @@ exec "$SHELL"
 Subsequently, the required version of Python can be installed and set with:
 
 ```bash
-# Install Python 3.8.0
-pyenv install 3.8.0
+# Install Python 3.8.1
+pyenv install 3.8.1
 
-# Set the local (directory) Python version to 3.8.0
+# Set the local (directory) Python version to 3.8.1
 cd Cockpit
-pyenv local 3.8.0
+pyenv local 3.8.1
 ```
 Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
 
