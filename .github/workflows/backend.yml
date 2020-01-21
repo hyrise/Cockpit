@@ -1,16 +1,16 @@
-name: Python application
+name: Backend Lint and Test
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python 3.8.0
+    - name: Set up Python 3.8.1
       uses: actions/setup-python@v1
       with:
-        python-version: 3.8.0
+        python-version: 3.8.1
     - name: Install libpq PostgreSQL client
       run: sudo apt-get -yqq install libpq-dev
     - name: Install pipenv
