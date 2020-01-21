@@ -56,6 +56,7 @@ export default createComponent({
 
     onMounted(() => {
       watch(isReady, () => {
+        console.log(selectedDatabaseIds.value, "prop dbs");
         if (isReady.value) {
           Plotly.newPlot(graphId, getDatasets(), getLayout(), getOptions());
         }
@@ -122,13 +123,50 @@ function useLineChartConfiguration(
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
       xaxis: {
-        title: chartConfiguration[1],
+        title: {
+          text: chartConfiguration[1],
+          font: {
+            //size: 16
+            //color: "#FAFAFA"
+          }
+        },
         range: [xMin, xMax]
+        // linecolor: "#616161",
+        // gridcolor: "#616161",
+        // tickcolor: "#616161",
+        // tickfont: {
+        //   size: 12,
+        //   color: "#FAFAFA"
+        // },
+        //linewidth: 2
       },
       yaxis: {
-        title: chartConfiguration[2],
+        title: {
+          text: chartConfiguration[2],
+          font: {
+            // size: 16
+            //color: "#FAFAFA"
+          }
+        },
         rangemode: "tozero"
+        // linecolor: "#616161",
+        // gridcolor: "#616161",
+        // tickcolor: "#616161",
+        // tickfont: {
+        //   size: 12,
+        //   color: "#FAFAFA"
+        // },
+        //linewidth: 2
       }
+      // plot_bgcolor: "#424242",
+      // paper_bgcolor: "#424242",
+      // legend: {
+      //   font: {
+      //     family: "sans-serif",
+      //     size: 12,
+      //     color: "#FAFAFA"
+      //   }
+      // }
     };
   }
 

@@ -14,7 +14,7 @@
       </v-col>
     </v-row>
     <Linechart
-      :selected-database-ids="selectedDatabaseIds"
+      :selected-databases="selectedDatabases"
       :data="data"
       graph-id="ram"
       :chart-configuration="chartConfiguration"

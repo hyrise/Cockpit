@@ -5,11 +5,18 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext } from "@vue/composition-api";
+import {
+  createComponent,
+  SetupContext,
+  watch,
+  computed,
+  Ref,
+  ref
+} from "@vue/composition-api";
 import MetricsTileList from "../components/MetricsTileList.vue";
 
 interface Data {
-  watchedInstances: string[];
+  watchedInstances: Ref<string[]>;
 }
 
 export default createComponent({
@@ -17,9 +24,15 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = context.root.$databaseData.databases.value.map(
-      database => database.id
-    );
+    const watchedInstances = ref<string[]>([]);
+    const { isReady } = context.root.$databaseData;
+    watch(isReady, () => {
+      if (isReady.value) {
+        watchedInstances.value = context.root.$databaseData.databases.value.map(
+          database => database.id
+        );
+      }
+    });
     return { watchedInstances };
   }
 });

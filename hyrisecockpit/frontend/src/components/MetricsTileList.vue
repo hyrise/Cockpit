@@ -69,6 +69,13 @@ export default createComponent({
   margin: 0px 3px 6px 3px;
   padding: 0px;
 }
+@media (min-width: 2000px) {
+  .metric-chart {
+    flex: 0 0 24.9%;
+    margin: 0px 3px 6px 3px;
+    padding: 0px;
+  }
+}
 .metric-title {
   z-index: 2;
   position: relative;
