@@ -172,21 +172,22 @@ class Database(object):
         with PoolCursor(self._connection_pool) as cur:
             success: bool = True
             for name in table_names:
+                cur.execute(
+                    "SELECT table_name FROM meta_tables WHERE table_name='%s';", name
+                )
+                if cur.fetchone():
+                    continue
                 try:
                     cur.execute(
-                        "SELECT * from meta_tables WHERE table_name='%s';", name
+                        "COPY %s FROM '%s_cached_tables/sf-%s/%s.bin';",
+                        name,
+                        datatype,
+                        sf,
+                        name,
                     )
                 except DatabaseError:
-                    try:
-                        cur.execute(
-                            "COPY %s FROM '%s_cached_tables/sf-%s/%s.bin';",
-                            name,
-                            datatype,
-                            sf,
-                            name,
-                        )
-                    except DatabaseError:
-                        success = False  # TODO return tables that could not be imported
+                    success = False  # TODO return tables that could not be imported
+
         return success
 
     def delete_data(self, datatype: str) -> bool:
