@@ -35,12 +35,12 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../services/genericFetchService";
-import { Database } from "../types/database";
+import { useGenericFetchService } from "../../services/genericFetchService";
+import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
-import Linechart from "./charts/Linechart.vue";
-import { ComponentProps, ComponentPropsValidation } from "../types/components";
+import Linechart from "../charts/Linechart.vue";
+import { MetricProps, MetricPropsValidation } from "../../types/metrics";
 
 interface Data {
   data: Ref<any>;
@@ -50,11 +50,11 @@ interface Data {
 }
 
 export default createComponent({
-  props: ComponentPropsValidation,
+  props: MetricPropsValidation,
   components: { Linechart },
-  setup(props: ComponentProps, context: SetupContext): Data {
+  setup(props: MetricProps, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { checkState, data } = useGenericFetchService(props.componentMeta);
+    const { checkState, data } = useGenericFetchService(props.metricMeta);
     const selectedDatabaseIds = ref<string[]>(
       props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
     );

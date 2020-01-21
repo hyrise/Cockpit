@@ -29,7 +29,7 @@ flask-cors = "*"
 apscheduler = "*"
 
 [requires]
-python_version = "3.8.0"
+python_version = "3.8.1"
 
 [pipenv]
 allow_prereleases = true

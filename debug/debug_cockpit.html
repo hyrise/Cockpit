@@ -1,0 +1,250 @@
+<body>
+    <h1>Debug Cockpit</h1>
+    <h4>Add database<h4/>
+    <p>
+        <h5>Add Default</h5>
+        <button id="add_db_citadelle">Add default citadelle</button>
+        <button id="add_db_york">Add default york</button>
+        <button id="add_db_aurora">Add default aurora</button>            
+    </p>
+    <p>
+        <p><input id="number_workers" type="text" value=""> (Number Workers)<p/>
+        <p><input id="db_id" type="text" value=""> (id) <p/> 
+        <p><input id="user" type="text" value=""> (User)<p/>
+        <p><input id="password" type="text" value=""> (Password) <p/> 
+        <p><input id="host" type="text" value=""> (Host) <p/>
+        <p><input id="port" type="text" value=""> (Port) <p/>          
+        <p><input id="dbname" type="text" value=""> (Database name) <p/>   
+        <button id="add_db_button">Add database</button>
+    <p/>
+
+    <h4>Start Workload</h4>
+    (mixed, no-ops, TPCH_0.1, TPCH_1.0)
+    <p>
+        <p><input type="text" id="workload_type" value=""> (Workload Type)</p>
+<!--         <p><input type="text" id="workload_factor" value=""> (Workload Factor)</p> -->   
+        <button id="execute_workload_button">Execute Workload</button>             
+    </p>
+
+    <h4>Databases</h4>
+    <p id="databases"></p>
+    <script type="text/javascript">
+
+        let MONITOR_URL = ""
+        let active_databases = new Map();
+
+        //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        async function postData(url = '', data = {}, type = 'POST') {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: type, // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                  'Content-Type': 'application/json'
+
+                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return await response.json(); // parses JSON response into native JavaScript objects
+        }
+
+        function createDatabaseDomElement(database_id){
+            let database_elem = document.createElement("div");
+            database_elem.setAttribute("id", database_id);
+            database_elem.style = "border:1px solid black";
+            database_elem.style.width = "200px";
+            
+            database_name = document.createElement("div");
+            database_name.innerHTML = database_id;
+
+            database_throughput = document.createElement("div");
+            database_throughput.innerHTML = "Throughput: " 
+                                            + active_databases.get(database_id)["throughput"];
+            database_throughput.setAttribute("id", database_id + "_throughput");
+
+            remove_button = document.createElement("BUTTON");
+            remove_button.innerHTML = "Remove Database";
+
+            remove_button.addEventListener("click", () => {
+                deregisterDatabase({"id": database_id});                
+            })
+
+            database_elem.appendChild(database_name);
+            database_elem.appendChild(database_throughput);
+            database_elem.appendChild(remove_button);
+
+            let parent = document.getElementById("databases");
+            parent.appendChild(database_elem);            
+        }
+
+        function addNewDatabases(database_id){
+            active_databases.set(database_id, {"throughput": 0});
+            createDatabaseDomElement(database_id);
+        }
+
+        function deleteDatabase(database_id){
+            document.getElementById(database_id).remove();
+            active_databases.delete(database_id);
+        }
+
+        function checkForNewDatabases(database_ids){
+            let active_datases = Array.from(active_databases.keys());
+            for (let i = 0; i < database_ids.length; i++){
+                if(!(active_datases.includes(database_ids[i]))){
+                    addNewDatabases(database_ids[i]);
+                } 
+            }                    
+        }
+
+        function removeSingleDatabase(database_id){
+            let parent = document.getElementById("databases");
+            let database_elem = document.getElementById(database_id);
+            parent.removeChild(database_elem);
+            active_databases.delete(database_id);           
+        }   
+
+        function removeOldDatabases(database_ids){
+            for (database_id in active_databases.keys()){
+                if(!(database_ids.includes(database_id))){
+                    removeSingleDatabase(database_id);
+                }                    
+            }   
+        }     
+
+        async function updateDatabases(url){
+            const response = await fetch(url);
+            let data = await response.json();
+            let database_ids = data["body"]["databases"];
+            checkForNewDatabases(database_ids);
+            removeOldDatabases(database_ids);
+        }
+
+        async function registerNewDatabase(json) {
+            const response = await postData(MONITOR_URL + '/database', json);
+
+            if (response["header"]["status"] != 200) {
+                window.alert(response["body"]);
+                return 0;  
+            }
+            addNewDatabases(json["id"]);
+        }
+
+        async function deregisterDatabase(json){
+            const response = await postData(MONITOR_URL + '/database', json, 'DELETE');
+
+            if (response["header"]["status"] != 200) {
+                window.alert(response["header"]["message"]);
+                return 0;  
+            }
+            deleteDatabase(json["id"]);
+        } 
+
+        async function updateThroughput(url){
+            //ToDo itterate over throughput and update 
+            const response = await fetch(url);
+            let data = await response.json()
+            let databases = data["body"]["throughput"]
+            let active_datases = Array.from(active_databases.keys());
+            for (let database_id in databases){
+                if(active_datases.includes(database_id)){
+                    let value = databases[database_id];
+                    active_databases.get(database_id)["throughput"] = value;
+                    document.getElementById(database_id+"_throughput").innerHTML = ("Throughput: " + value);
+                }
+            }
+
+        }  
+
+        async function execute_workload(json){
+            const response = await postData(MONITOR_URL + '/workload', json, 'POST');
+            if (response["header"]["status"] != 200) {
+                window.alert(response["body"]["error"]);
+                return 0;  
+            }
+        }
+
+        function getFormValuesWorkload(){
+            let json = {
+                "header": {
+                    "message": "workload"
+                },
+                "body": {
+                    "type": document.getElementById('workload_type').value,
+                    // "factor": Number(document.getElementById('workload_factor').value)
+                }
+            }
+            return json;
+        }
+
+        function getFormValuesDatabase(){
+            let json = {
+                "number_workers" : document.getElementById('number_workers').value,
+                "id": document.getElementById('db_id').value,
+                "user": document.getElementById('user').value,
+                "password": document.getElementById('password').value,
+                "host": document.getElementById('host').value,
+                "port": document.getElementById('port').value,
+                "dbname": document.getElementById('dbname').value,
+            }
+            return json;
+        }                     
+
+        document.getElementById("add_db_citadelle").addEventListener("click", () => {
+            let citadelle = {
+                "number_workers" : "8",
+                "id": "citadelle",
+                "user": "",
+                "password": "",
+                "host": "",
+                "port": "",
+                "dbname": "postgres"
+            }
+            registerNewDatabase(citadelle)       
+        });
+
+        document.getElementById("add_db_york").addEventListener("click", () => {
+            let york = {
+                "number_workers" : "8",
+                "id": "york",
+                "user": "",
+                "password": "",
+                "host": "",
+                "port": "",
+                "dbname": "postgres"
+            }   
+            registerNewDatabase(york);       
+        });
+
+        document.getElementById("add_db_aurora").addEventListener("click", () => {
+            let aurora = {
+                "number_workers" : "8",
+                "id": "aurora",
+                "user": "",
+                "password": "",
+                "host": "",
+                "port": "",
+                "dbname": "postgres"
+            }   
+            registerNewDatabase(aurora);       
+        });    
+
+        document.getElementById("add_db_button").addEventListener("click", () => {
+            registerNewDatabase(getFormValuesDatabase());
+        })
+
+        document.getElementById("execute_workload_button").addEventListener("click", () => {
+            execute_workload(getFormValuesWorkload());
+        })
+
+        setInterval(() => {
+            updateDatabases(MONITOR_URL + "/database");
+            updateThroughput(MONITOR_URL + "/throughput");
+        }, 500);
+
+    </script>    
+</body>

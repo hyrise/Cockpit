@@ -144,7 +144,7 @@ def load_data(datatype: str) -> Dict:
     """Load pregenerated tables."""
     return _send_message(
         db_manager_socket,
-        {"header": {"message": "load_data"}, "body": {"datatype": datatype}},
+        {"header": {"message": "load data"}, "body": {"datatype": datatype}},
     )
 
 
