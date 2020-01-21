@@ -8,6 +8,7 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
+
 from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
@@ -163,7 +164,9 @@ class Database(object):
             success: bool = True
             for name in table_names:
                 try:
-                    cur.execute("SELECT * FROM %s;", name)
+                    cur.execute(
+                        "SELECT * from meta_tables WHERE table_name='%s';", name
+                    )
                 except DatabaseError:
                     try:
                         cur.execute(
