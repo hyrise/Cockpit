@@ -34,6 +34,7 @@ class DatabaseManager(object):
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
             "throughput": self._call_throughput,
+            "latency": self._call_latency,
             "storage": self._call_storage,
             "system data": self._call_system_data,
             "delete database": self._call_delete_database,
@@ -110,6 +111,15 @@ class DatabaseManager(object):
             throughput[id] = database.get_throughput()
         response = get_response(200)
         response["body"]["throughput"] = throughput
+        return response
+
+    def _call_latency(self, body: Dict) -> Dict:
+        """Get the latency of all databases."""
+        latency = {}
+        for id, database in self._databases.items():
+            latency[id] = database.get_latency()
+        response = get_response(200)
+        response["body"]["latency"] = latency
         return response
 
     def _call_storage(self, body: Dict) -> Dict:

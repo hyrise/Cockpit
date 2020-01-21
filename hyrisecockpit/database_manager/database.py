@@ -153,6 +153,7 @@ class Database(object):
 
         self.workload_publisher_url: str = workload_publisher_url
         self._throughput: int = 0
+        self._latency: float = 0.0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._throughput_data_container: Dict = self._init_throughput_data_container()
@@ -162,8 +163,8 @@ class Database(object):
         self._start_workers()
 
         self._scheduler = BackgroundScheduler()
-        self._update_throughput_job = self._scheduler.add_job(
-            func=self._update_throughput_data, trigger="interval", seconds=1,
+        self._update_query_job = self._scheduler.add_job(
+            func=self._update_query_data, trigger="interval", seconds=1,
         )
         self._update_system_data_job = self._scheduler.add_job(
             func=self._update_system_data, trigger="interval", seconds=1,
@@ -225,13 +226,14 @@ class Database(object):
         self._connection_pool.putconn(connection)
         return success
 
-    def _update_throughput_data(self) -> None:
-        """Put meta data from all workers together."""
-        throughput_data = 0
-        for i in range(self._number_workers):
-            throughput_data = throughput_data + self._throughput_data_container[str(i)]
-            self._throughput_data_container[str(i)] = 0
-        self._throughput = throughput_data
+    def _update_query_data(self) -> None:
+        """Update data calculated from queries."""
+        queries = self._query_list
+        self._query_list.clear()
+        self._throughput = len(queries)
+        self._latency = sum(
+            [endtts - startts for startts, endtts, _, _ in queries]
+        ) / len(queries)
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
@@ -337,6 +339,10 @@ class Database(object):
         """Return throughput."""
         return self._throughput
 
+    def get_latency(self) -> float:
+        """Return latency."""
+        return self._latency
+
     def get_system_data(self) -> Dict:
         """Return system data."""
         return self._system_data
@@ -369,7 +375,7 @@ class Database(object):
         self._task_queue.close()
 
         # Remove jobs
-        self._update_throughput_job.remove()
+        self._update_query_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
 

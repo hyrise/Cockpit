@@ -51,6 +51,14 @@ def get_throughput() -> Dict:
     )
 
 
+@app.route("/latency")
+def get_latency() -> Dict:
+    """Return latency information from database manager."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "latency"}, "body": {}}
+    )
+
+
 @app.route("/queue_length")
 def get_queue_length() -> Dict:
     """Return queue length information from database manager."""
