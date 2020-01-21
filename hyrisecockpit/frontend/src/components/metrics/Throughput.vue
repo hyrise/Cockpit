@@ -14,7 +14,7 @@
       </v-col>
     </v-row>
     <Linechart
-      :selected-database-ids="selectedDatabaseIds"
+      :selected-databases="selectedDatabases"
       :data="data"
       graph-id="throughput"
       :chart-configuration="chartConfiguration"
@@ -52,13 +52,11 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): Data {
-    console.log(props.preselectedDatabaseId);
+    console.log(props.selectedDatabases);
 
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-    const selectedDatabaseIds = ref<string[]>(
-      props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
-    );
+    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases); // can be removed when select is away
 
     const chartConfiguration = [
       "Throughput",

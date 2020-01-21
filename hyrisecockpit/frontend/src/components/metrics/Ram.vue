@@ -54,9 +54,7 @@ export default createComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-    const selectedDatabaseIds = ref<string[]>(
-      props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
-    );
+    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
     const chartConfiguration = [
       "Throughput",

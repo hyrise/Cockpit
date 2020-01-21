@@ -1,13 +1,17 @@
 <template>
   <div class="metrics">
-    <v-card class="metric-chart" v-for="metric in metrics" :key="metric">
+    <v-card
+      class="metric-chart"
+      v-for="metric in comparisonMetrics"
+      :key="metric"
+    >
       <v-card-title class="metric-title">
         {{ metric }}
       </v-card-title>
       <component
         class="metric"
         :is="metric"
-        :preselected-database-id="selectedDatabases"
+        :selected-databases="selectedDatabases"
         :metric-meta="getMetadata(metric.toLowerCase())"
       />
     </v-card>
@@ -23,15 +27,15 @@ import Access from "./metrics/Access.vue";
 import Latency from "./metrics/Latency.vue";
 import Ram from "./metrics/Ram.vue";
 import { metricsMetadata } from "./meta/metrics";
-import { Metric, MetricMetadata } from "../types/metrics";
+import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata;
-  metrics: string[];
+  getMetadata: (metric: Metric) => MetricMetadata; // outsource
+  comparisonMetrics: string[];
 }
 
 interface Props {
-  selectedDatabases: string;
+  selectedDatabases: string[];
 }
 
 export default createComponent({
@@ -45,18 +49,17 @@ export default createComponent({
   },
   props: {
     selectedDatabases: {
-      type: String,
+      type: Array,
       default: null
     }
   },
   setup(props: {}, context: SetupContext): Data {
-    const metrics = ["Throughput", "Cpu", "Latency", "Ram"];
     function getMetadata(metric: Metric): MetricMetadata {
       return metricsMetadata[metric];
     }
     return {
       getMetadata,
-      metrics
+      comparisonMetrics
     };
   }
 });

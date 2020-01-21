@@ -19,7 +19,7 @@ import Vue from "vue";
 
 interface Props {
   data: any;
-  selectedDatabaseIds: string[];
+  selectedDatabases: string[];
   graphId: string;
   chartConfiguration: string[];
 }
@@ -30,7 +30,7 @@ export default createComponent({
       type: Object,
       default: null
     },
-    selectedDatabaseIds: {
+    selectedDatabases: {
       type: Array,
       default: null
     },
@@ -44,25 +44,20 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const selectedDatabaseIds = computed(() => props.selectedDatabaseIds);
+    const selectedDatabaseIds = computed(() => props.selectedDatabases);
     const data = computed(() => props.data);
     const graphId = props.graphId;
-    const { getDataset, getLayout } = useLineChartConfiguration(
+    const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
       props.chartConfiguration
     );
     const { isReady } = context.root.$databaseData;
-    console.log(selectedDatabaseIds);
+    console.log(selectedDatabaseIds.value);
 
     onMounted(() => {
       watch(isReady, () => {
         if (isReady.value) {
-          Plotly.newPlot(
-            graphId,
-            [getDataset([], context.root.$route.params.id)],
-            getLayout(),
-            { displayModeBar: false }
-          );
+          Plotly.newPlot(graphId, getDatasets(), getLayout(), getOptions());
         }
       });
       watch(selectedDatabaseIds, () => {
@@ -77,18 +72,18 @@ export default createComponent({
       });
     });
 
+    function getDatasets(): any[] {
+      return selectedDatabaseIds.value.reduce((result, id): any => {
+        return [
+          ...result,
+          getDataset(data.value[id] ? data.value[id] : [], id)
+        ];
+      }, []);
+    }
+
     function handleDatabaseChange(): void {
-      const newDatasets = selectedDatabaseIds.value.reduce(
-        (result, id): any => {
-          return [
-            ...result,
-            getDataset(data.value[id] ? data.value[id] : [], id)
-          ];
-        },
-        []
-      );
       Plotly.purge(graphId);
-      Plotly.plot(graphId, newDatasets, getLayout(), { displayModeBar: false });
+      Plotly.plot(graphId, getDatasets(), getLayout(), getOptions());
     }
 
     function getMaxDatasetLength(): number {
@@ -121,6 +116,7 @@ function useLineChartConfiguration(
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (xMin?: number, xMax?: number) => Object;
+  getOptions: () => Object;
 } {
   const databases: Ref<Database[]> = context.root.$databaseData.databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
@@ -149,7 +145,11 @@ function useLineChartConfiguration(
       name: database ? database.id : {}
     };
   }
-  return { getDataset, getLayout };
+
+  function getOptions(): Object {
+    return { displayModeBar: false };
+  }
+  return { getDataset, getLayout, getOptions };
 }
 </script>
 <style scoped></style>

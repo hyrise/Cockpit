@@ -1,22 +1,15 @@
 <template>
   <div class="ml-6">
-    <MetricsTileList :selected-databases="$route.params.id" />
+    <MetricsTileList :selected-databases="watchedInstances" />
     <div class="mt-6 mb-2">
-      <b> Access frequency Monitoring </b>
+      <component
+        v-for="metric in instanceMetrics"
+        :key="metric"
+        :is="metric"
+        :selected-databases="watchedInstances"
+        :metric-meta="getMetadata(metric.toLowerCase())"
+      />
     </div>
-    <v-divider class="mb-4"></v-divider>
-    <Access
-      :preselected-database-id="$route.params.id"
-      :metric-meta="getMetadata('access')"
-    />
-    <div class="mt-6 mb-2">
-      <b> Storage Monitoring </b>
-    </div>
-    <v-divider class="mb-4"></v-divider>
-    <Storage
-      :preselected-database-id="$route.params.id"
-      :metric-meta="getMetadata('storage')"
-    />
   </div>
 </template>
 
@@ -24,12 +17,14 @@
 import { createComponent, SetupContext } from "@vue/composition-api";
 import MetricsTileList from "../components/MetricsTileList.vue";
 import { metricsMetadata } from "../components/meta/metrics";
-import { Metric, MetricMetadata } from "../types/metrics";
+import { Metric, MetricMetadata, instanceMetrics } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
+  watchedInstances: string[];
+  instanceMetrics: string[];
 }
 
 export default createComponent({
@@ -39,12 +34,16 @@ export default createComponent({
     Access
   },
   setup(props: {}, context: SetupContext): Data {
+    const watchedInstances = [context.root.$route.params.id];
+    console.log(instanceMetrics);
     function getMetadata(metric: Metric): MetricMetadata {
       return metricsMetadata[metric];
     }
 
     return {
-      getMetadata
+      getMetadata,
+      watchedInstances,
+      instanceMetrics
     };
   }
 });

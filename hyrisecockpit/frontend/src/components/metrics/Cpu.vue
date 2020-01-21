@@ -14,7 +14,7 @@
       </v-col>
     </v-row>
     <Linechart
-      :selected-database-ids="selectedDatabaseIds"
+      :selected-databases="selectedDatabases"
       :data="data"
       graph-id="cpu"
       :chart-configuration="chartConfiguration"
@@ -55,9 +55,7 @@ export default createComponent({
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(props.metricMeta);
 
-    const selectedDatabaseIds = ref<string[]>(
-      props.preselectedDatabaseId ? [props.preselectedDatabaseId] : []
-    );
+    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
     const chartConfiguration = ["CPU", "time in s", "workload in %"];
 
