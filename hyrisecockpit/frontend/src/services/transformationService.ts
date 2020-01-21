@@ -1,5 +1,7 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
+import Vue from "vue";
+import { notEquals } from "../helpers/methods";
 
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
@@ -28,6 +30,15 @@ function transformStorageData(
   const newLabels: string[] = [];
   const newParents: string[] = [];
   const newSizes: number[] = [];
+
+  if (
+    notEquals(
+      Vue.prototype.$databaseData.tables.value,
+      Object.keys(data[primaryKey])
+    )
+  ) {
+    Vue.prototype.$databaseData.tables.value = Object.keys(data[primaryKey]);
+  }
 
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);

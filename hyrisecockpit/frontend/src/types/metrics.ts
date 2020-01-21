@@ -2,6 +2,9 @@ import { TransformationService, Base, FetchType } from "./services";
 
 export type Metric = "access" | "cpu" | "storage" | "throughput";
 
+export const instanceMetrics = ["Storage", "Access"];
+export const comparisonMetrics = ["Throughput", "Cpu", "Latency", "Ram"];
+
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
@@ -11,7 +14,8 @@ export interface MetricMetadata {
 
 export interface MetricProps {
   metricMeta: MetricMetadata;
-  preselectedDatabaseId: string;
+  selectedDatabases: string[];
+  enableComparison: boolean; // can be removed when clear if we only use one select box on comparison screen
 }
 
 export const MetricPropsValidation = {
@@ -19,8 +23,12 @@ export const MetricPropsValidation = {
     type: Object,
     default: null
   },
-  preselectedDatabaseId: {
-    type: String,
+  selectedDatabases: {
+    type: Array,
+    default: null
+  },
+  enableComparison: {
+    type: Boolean,
     default: null
   }
 };
