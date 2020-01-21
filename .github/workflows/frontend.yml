@@ -11,6 +11,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '10.x'
-    - run: cd hyrisecockpit/frontend
     - run: npm install
+      working-directory: ./hyrisecockpit/frontend
     - run: npm run lint
+      working-directory: ./hyrisecockpit/frontend
