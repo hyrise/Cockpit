@@ -74,7 +74,7 @@ export default createComponent({
           dataByChunks
         } = props.metricMeta.transformationService(
           data.value,
-          props.preselectedDatabaseId,
+          props.selectedDatabases[0],
           table.value
         );
         chunks.value = newChunks;
