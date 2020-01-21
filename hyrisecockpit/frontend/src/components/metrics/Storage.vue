@@ -32,6 +32,7 @@ interface Data {
 }
 
 export default createComponent({
+  name: "Storage",
   components: {
     Treemap
   },
@@ -42,7 +43,7 @@ export default createComponent({
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
-    const chartConfiguration = ref<string[]>([props.preselectedDatabaseId]);
+    const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
 
     checkState();
     onMounted(() => {
@@ -57,7 +58,7 @@ export default createComponent({
           newSizes
         } = props.metricMeta.transformationService(
           data.value,
-          props.preselectedDatabaseId
+          props.selectedDatabases[0] // not really good style
         );
         labels.value = newLabels;
         parents.value = newParents;
