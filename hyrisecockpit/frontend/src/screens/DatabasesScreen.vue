@@ -112,7 +112,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import { useDatabaseFetchService } from "../services/databaseService";
 import axios from "axios";
 import { Database } from "../types/database";
 
