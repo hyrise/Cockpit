@@ -1,17 +1,15 @@
-import { ComponentId } from "../types/components";
+import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 
-export function useDataTransformation(
-  dataType: ComponentId
-): TransformationService {
-  const transformationMap: Record<ComponentId, TransformationService> = {
+export function useDataTransformation(metric: Metric): TransformationService {
+  const transformationMap: Record<Metric, TransformationService> = {
     access: transformAccessData,
     storage: transformStorageData,
     cpu: transformCPUData,
     throughput: transformThroughputData
   };
 
-  return transformationMap[dataType];
+  return transformationMap[metric];
 }
 
 function transformCPUData(data: any, primaryKey: string = ""): number {

@@ -36,6 +36,7 @@ import {
 } from "@vue/composition-api";
 import Workload from "../components/Workload.vue";
 import axios from "axios";
+import { backendUrl } from "../types/services";
 
 interface Props {}
 interface Data {
@@ -51,9 +52,7 @@ export default createComponent({
 
   setup(props: Props, context: SetupContext): Data {
     function generateData(benchmarkType: string): void {
-      axios.get(
-        `http://vm-aurora.eaalab.hpi.uni-potsdam.de:8000/data/${benchmarkType}`
-      );
+      axios.get(`${backendUrl}data/${benchmarkType}`);
     }
 
     return {
