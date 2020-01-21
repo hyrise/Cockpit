@@ -1,4 +1,3 @@
-import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { Workload } from "@/types/workloads";
 import { backendUrl, WorkloadService } from "../types/services";
