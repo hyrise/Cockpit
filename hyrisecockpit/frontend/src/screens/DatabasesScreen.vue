@@ -16,7 +16,7 @@
     <v-row justify="end">
       <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-          <v-btn class="green white--text my-8" v-on="on"
+          <v-btn class="primary white--text my-8" v-on="on"
             >add new database</v-btn
           >
         </template>
@@ -83,14 +83,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="showDatabaseDialog = false"
+            <v-btn color="primary" text @click="showDatabaseDialog = false"
               >Close</v-btn
             >
             <v-btn
-              color="blue darken-1"
+              color="primary"
               text
               @click="
                 createNewDatabase();
@@ -115,7 +112,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import { useDatabaseFetchService } from "../services/databaseService";
 import axios from "axios";
 import { Database } from "../types/database";
 
@@ -136,7 +132,7 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databases, addDatabase } = context.root.$databaseData; // this has to be changed on merge
+    const { databases, addDatabase } = context.root.$databaseData;
 
     const number_workers = ref<string>("8");
     const id = ref<string>("");

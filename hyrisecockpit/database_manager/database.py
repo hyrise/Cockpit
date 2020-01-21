@@ -12,7 +12,7 @@ from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
 
-__table_names: Dict[str, List[str]] = {
+_table_names: Dict[str, List[str]] = {
     "tpch": [
         "customer",
         "lineitem",
@@ -102,15 +102,16 @@ def execute_queries(
     cur = connection.cursor()
     while True:
         # If Queue is emty go to wait status
-        query, parameters = task_queue.get(block=True)
         try:
+            task = task_queue.get(block=True)
+            query, parameters = task
             cur.execute(query, parameters)
             throughput_data_container[str(worker_id)] = (
                 throughput_data_container[str(worker_id)] + 1
             )
-        except Error as e:
+        except (ValueError, Error) as e:
             failed_task_queue.put(
-                {"worker_id": worker_id, "task": (query, parameters), "Error": str(e)}
+                {"worker_id": worker_id, "task": task, "Error": str(e)}
             )
 
 
@@ -118,13 +119,25 @@ class Database(object):
     """Represents database."""
 
     def __init__(
-        self, access_data: Dict[str, str], workload_publisher_url: str
+        self,
+        user: str,
+        password: str,
+        host: str,
+        port: str,
+        dbname: str,
+        number_workers: str,
+        workload_publisher_url: str,
     ) -> None:
         """Initialize database object."""
-        self._number_workers = int(access_data["number_workers"])
+        self._number_workers = int(number_workers)
         self._number_additional_connections = 1
         self._driver = Driver(
-            access_data, self._number_workers + self._number_additional_connections
+            user,
+            password,
+            host,
+            port,
+            dbname,
+            self._number_workers + self._number_additional_connections,
         )
         self._connection_pool = self._driver.get_connection_pool()
 
@@ -133,7 +146,7 @@ class Database(object):
         self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._throughput_counter: int = 0
+        self._throughput: int = 0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._throughput_data_container: Dict = self._init_throughput_data_container()
@@ -188,7 +201,7 @@ class Database(object):
 
     def load_data(self, datatype: str) -> bool:
         """Load pregenerated tables."""
-        table_names = __table_names.get(datatype)
+        table_names = _table_names.get(datatype)
         if not table_names:
             return False
         connection = self._connection_pool.getconn()
@@ -204,36 +217,13 @@ class Database(object):
         self._connection_pool.putconn(connection)
         return success
 
-    def get_throughput_counter(self) -> int:
-        """Return throughput."""
-        return self._throughput_counter
-
-    def get_system_data(self) -> Dict:
-        """Return system data."""
-        return self._system_data
-
-    def get_chunks_data(self) -> Dict:
-        """Return chunks data."""
-        return self._chunks_data
-
-    def get_queue_length(self) -> int:
-        """Return queue length."""
-        return self._task_queue.qsize()
-
-    def get_failed_tasks(self) -> List:
-        """Return faild tasks."""
-        failed_task = []
-        while not self._failed_task_queue.empty():
-            failed_task.append(self._failed_task_queue.get())
-        return failed_task
-
     def _update_throughput_data(self) -> None:
         """Put meta data from all workers together."""
         throughput_data = 0
         for i in range(self._number_workers):
             throughput_data = throughput_data + self._throughput_data_container[str(i)]
             self._throughput_data_container[str(i)] = 0
-        self._throughput_counter = throughput_data
+        self._throughput = throughput_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
@@ -267,13 +257,13 @@ class Database(object):
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
 
-        sql = """SELECT "table", column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY "table", column_name;"""
+        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
         meta_segments = sqlio.read_sql_query(sql, connection)
 
         self._connection_pool.putconn(connection)
 
         chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table")
+        grouped = meta_segments.reset_index().groupby("table_name")
         for column in grouped.groups:
             chunks_data[column] = {}
             for _, row in grouped.get_group(column).iterrows():
@@ -293,20 +283,24 @@ class Database(object):
         meta_segments = sqlio.read_sql_query(sql, connection)
 
         meta_segments.set_index(
-            ["table", "column_name", "chunk_id"], inplace=True, verify_integrity=True
+            ["table_name", "column_name", "chunk_id"],
+            inplace=True,
+            verify_integrity=True,
         )
         size: DataFrame = DataFrame(
             meta_segments["estimated_size_in_bytes"]
-            .groupby(level=["table", "column_name"])
+            .groupby(level=["table_name", "column_name"])
             .sum()
         )
 
         encoding: DataFrame = DataFrame(
-            meta_segments["encoding"].groupby(level=["table", "column_name"]).apply(set)
+            meta_segments["encoding_type"]
+            .groupby(level=["table_name", "column_name"])
+            .apply(set)
         )
-        encoding["encoding"] = encoding["encoding"].apply(list)
+        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
         datatype: DataFrame = meta_segments.reset_index().set_index(
-            ["table", "column_name"]
+            ["table_name", "column_name"]
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
@@ -316,7 +310,7 @@ class Database(object):
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
         """Sort storage data to dictionary."""
         output: Dict = {}
-        grouped = result.reset_index().groupby("table")
+        grouped = result.reset_index().groupby("table_name")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
             for _, row in grouped.get_group(column).iterrows():
@@ -327,30 +321,49 @@ class Database(object):
                 output[column]["data"][row["column_name"]] = {
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
-                    "encoding": row["encoding"],
+                    "encoding": row["encoding_type"],
                 }
         return output
 
-    def _close_pool(self) -> None:
-        """Close worker pool."""
+    def get_throughput(self) -> int:
+        """Return throughput."""
+        return self._throughput
+
+    def get_system_data(self) -> Dict:
+        """Return system data."""
+        return self._system_data
+
+    def get_chunks_data(self) -> Dict:
+        """Return chunks data."""
+        return self._chunks_data
+
+    def get_queue_length(self) -> int:
+        """Return queue length."""
+        return self._task_queue.qsize()
+
+    def get_failed_tasks(self) -> List:
+        """Return faild tasks."""
+        failed_task = []
+        while not self._failed_task_queue.empty():
+            failed_task.append(self._failed_task_queue.get())
+        return failed_task
+
+    def close(self) -> None:
+        """Close the database."""
+        # Close worker pool
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
 
-    def _close_connections(self) -> None:
-        """Close connections."""
+        # Close connections
         self._connection_pool.closeall()
 
-    def _close_queue(self) -> None:
-        """Close queue."""
+        # Close queue
         self._task_queue.close()
 
-    def exit(self) -> None:
-        """Clean exit."""
-        self._close_pool()
-        self._close_connections()
-        self._close_queue()
+        # Remove jobs
         self._update_throughput_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
+
+        # Close the scheduler
         self._scheduler.shutdown()
-        # super().__exit__()

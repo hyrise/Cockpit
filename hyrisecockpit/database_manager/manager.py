@@ -1,6 +1,5 @@
 """Module for managing databases."""
 
-import sys
 from typing import Any, Callable, Dict, Optional
 
 from zmq import REP, Context
@@ -9,7 +8,6 @@ from hyrisecockpit.response import get_response
 
 from .database import Database
 from .driver import Driver
-from .exception import IdNotValidException
 
 
 class DatabaseManager(object):
@@ -38,47 +36,45 @@ class DatabaseManager(object):
             "chunks data": self._call_chunks_data,
             "failed tasks": self._call_failed_tasks,
             "get databases": self._call_get_databases,
-            "load_data": self._call_load_data,
+            "load data": self._call_load_data,
         }
-        self._init_server()
-
-    def __enter__(self):
-        """Return self for a context manager."""
-        return self
-
-    def close(self) -> None:
-        """Close the socket and context, exit all databases."""
-        self._exit()
-        self._socket.close()
-        self._context.term()
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Call close with a context manager."""
-        self.close()
-
-    def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
             "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
         )
 
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
+
     def _call_add_database(self, body: Dict) -> Dict:
         """Add database and initialize driver for it."""
         # validating connection data
-        try:
-            # Will throw an exeption if not valid
-            Driver.validate_connection(body)
-            new_id = body["id"] in self._databases
-            if new_id:
-                raise IdNotValidException("Id not valid")
-        except Exception as e:
-            response = get_response(400)
-            response["body"] = str(e)
-            return response
+        user = body.get("user")
+        password = body.get("password")
+        host = body.get("host")
+        port = body.get("port")
+        dbname = body.get("dbname")
+        number_workers = body.get("number_workers")
+        if not (user and password and host and port and dbname and number_workers):
+            return get_response(400)
+        if not Driver.validate_connection(user, password, host, port, dbname):
+            return get_response(400)
+        if body["id"] in self._databases:
+            return get_response(400)
 
         db_instance = Database(
-            body,
+            user,
+            password,
+            host,
+            port,
+            dbname,
+            number_workers,
             "tcp://{:s}:{:s}".format(
                 self._workload_sub_host, self._workload_pubsub_port
             ),
@@ -96,32 +92,32 @@ class DatabaseManager(object):
     def _call_throughput(self, body: Dict) -> Dict:
         """Get the throughput of all databases."""
         throughput = {}
-        for database, database_object in self._databases.items():
-            throughput[database] = database_object.get_throughput_counter()
+        for id, database in self._databases.items():
+            throughput[id] = database.get_throughput()
         response = get_response(200)
         response["body"]["throughput"] = throughput
         return response
 
     def _call_storage(self, body: Dict) -> Dict:
         storage = {}
-        for database, database_object in self._databases.items():
-            storage[database] = database_object.get_storage_data()
+        for id, database in self._databases.items():
+            storage[id] = database.get_storage_data()
         response = get_response(200)
         response["body"]["storage"] = storage
         return response
 
     def _call_system_data(self, body: Dict) -> Dict:
         system_data = {}
-        for database, database_object in self._databases.items():
-            system_data[database] = database_object.get_system_data()
+        for id, database in self._databases.items():
+            system_data[id] = database.get_system_data()
         response = get_response(200)
         response["body"]["system_data"] = system_data
         return response
 
     def _call_queue_length(self, body: Dict) -> Dict:
         queue_length = {}
-        for database, database_object in self._databases.items():
-            queue_length[database] = database_object.get_queue_length()
+        for id, database in self._databases.items():
+            queue_length[id] = database.get_queue_length()
         response = get_response(200)
         response["body"]["queue_length"] = queue_length
         return response
@@ -129,8 +125,8 @@ class DatabaseManager(object):
     def _call_chunks_data(self, body: Dict) -> Dict:
         """Get chunks data of all databases."""
         chunks_data = {}
-        for database, database_object in self._databases.items():
-            chunks_data[database] = database_object.get_chunks_data()
+        for id, database in self._databases.items():
+            chunks_data[id] = database.get_chunks_data()
         response = get_response(200)
         response["body"]["chunks_data"] = chunks_data
         return response
@@ -141,7 +137,7 @@ class DatabaseManager(object):
             return get_response(400)
         database: Optional[Database] = self._databases.pop(id, None)
         if database:
-            database.exit()
+            database.close()
             del database
             return get_response(200)
         else:
@@ -149,8 +145,8 @@ class DatabaseManager(object):
 
     def _call_failed_tasks(self, body: Dict) -> Dict:
         failed_tasks = {}
-        for database, database_object in self._databases.items():
-            failed_tasks[database] = database_object.get_failed_tasks()
+        for id, database in self._databases.items():
+            failed_tasks[id] = database.get_failed_tasks()
         response = get_response(200)
         response["body"]["failed_tasks"] = failed_tasks
         return response
@@ -162,15 +158,10 @@ class DatabaseManager(object):
         datatype = body.get("datatype")
         if not datatype:
             return get_response(400)
-        for _, database_object in self._databases.items():
-            if not database_object.load_data(datatype):
+        for database in self._databases.values():
+            if not database.load_data(datatype):
                 return get_response(400)
         return get_response(200)
-
-    def _exit(self) -> None:
-        """Perform clean exit on all databases."""
-        for database_object in self._databases.values():
-            database_object.exit()
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
@@ -180,19 +171,20 @@ class DatabaseManager(object):
             )
         )
         while True:
-            try:
-                # Get the message
-                request = self._socket.recv_json()
+            # Get the message
+            request = self._socket.recv_json()
 
-                # Handle the call
-                response = self._server_calls.get(
-                    request["header"]["message"], self._call_not_found
-                )(request["body"])
+            # Handle the call
+            response = self._server_calls.get(
+                request["header"]["message"], self._call_not_found
+            )(request["body"])
 
-                # Send the reply
-                self._socket.send_json(response)
+            # Send the reply
+            self._socket.send_json(response)
 
-            except KeyboardInterrupt:
-                if len(self._databases) > 0:
-                    self._exit()
-                sys.exit()
+    def close(self) -> None:
+        """Close the socket and context, exit all databases."""
+        for database in self._databases.values():
+            database.close()
+        self._socket.close()
+        self._context.term()
