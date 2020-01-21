@@ -8,7 +8,6 @@ import pandas.io.sql as sqlio
 import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-
 from psycopg2 import DatabaseError, Error, pool
 
 from .driver import Driver
