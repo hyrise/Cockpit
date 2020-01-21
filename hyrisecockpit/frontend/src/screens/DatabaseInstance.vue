@@ -16,7 +16,7 @@
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
 import MetricsTileList from "../components/MetricsTileList.vue";
-import { metricsMetadata } from "../components/meta/metrics";
+import { getMetadata } from "../components/meta/metrics";
 import { Metric, MetricMetadata, instanceMetrics } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
@@ -35,10 +35,6 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = [context.root.$route.params.id];
-    console.log(instanceMetrics);
-    function getMetadata(metric: Metric): MetricMetadata {
-      return metricsMetadata[metric];
-    }
 
     return {
       getMetadata,

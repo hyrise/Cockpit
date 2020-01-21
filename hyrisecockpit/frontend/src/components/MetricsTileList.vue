@@ -21,16 +21,14 @@
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
 import Throughput from "./metrics/Throughput.vue";
-import Storage from "./metrics/Storage.vue";
 import Cpu from "./metrics/Cpu.vue";
-import Access from "./metrics/Access.vue";
 import Latency from "./metrics/Latency.vue";
 import Ram from "./metrics/Ram.vue";
-import { metricsMetadata } from "./meta/metrics";
+import { getMetadata } from "./meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata; // outsource
+  getMetadata: (metric: Metric) => MetricMetadata;
   comparisonMetrics: string[];
 }
 
@@ -41,9 +39,7 @@ interface Props {
 export default createComponent({
   components: {
     Throughput,
-    Storage,
     Cpu,
-    Access,
     Latency,
     Ram
   },
@@ -54,9 +50,6 @@ export default createComponent({
     }
   },
   setup(props: {}, context: SetupContext): Data {
-    function getMetadata(metric: Metric): MetricMetadata {
-      return metricsMetadata[metric];
-    }
     return {
       getMetadata,
       comparisonMetrics
