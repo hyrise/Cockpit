@@ -52,8 +52,6 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): Data {
-    console.log(props.selectedDatabases);
-
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const selectedDatabaseIds = ref<string[]>(props.selectedDatabases); // can be removed when select is away

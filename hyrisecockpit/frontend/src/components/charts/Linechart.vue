@@ -52,11 +52,9 @@ export default createComponent({
       props.chartConfiguration
     );
     const { isReady } = context.root.$databaseData;
-    console.log(selectedDatabaseIds.value);
 
     onMounted(() => {
       watch(isReady, () => {
-        console.log(selectedDatabaseIds.value, "prop dbs");
         if (isReady.value) {
           Plotly.newPlot(graphId, getDatasets(), getLayout(), getOptions());
         }
