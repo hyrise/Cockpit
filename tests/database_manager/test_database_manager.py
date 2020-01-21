@@ -104,7 +104,7 @@ class TestDatabaseManager:
     @mark.parametrize(
         "call", ["add database", "delete database"],
     )
-    def test_returns_an_failing_response_on_an_empty_call(
+    def test_returns_a_failing_response_on_an_empty_call(
         self, database_manager: DatabaseManager, call
     ):
         """Returns a status 400 response on a call."""
@@ -160,7 +160,7 @@ class TestDatabaseManager:
             "throughput"
         ]
         mock_data = 42
-        mock_database.get_throughput_counter.return_value = mock_data  # type: ignore
+        mock_database.get_throughput.return_value = mock_data  # type: ignore
         self.convenience_data_call(database_manager, mock_database, call, mock_data)
 
     def test_call_storage_returns_storage(
