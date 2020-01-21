@@ -16,7 +16,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="cpu"
+      graph-id="ram"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -48,16 +48,19 @@ interface Data {
 }
 
 export default createComponent({
-  name: "Cpu",
+  name: "Ram",
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-
     const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
-    const chartConfiguration = ["CPU", "time in s", "workload in %"];
+    const chartConfiguration = [
+      "Throughput",
+      "time in s",
+      "queries per second"
+    ];
 
     onMounted(() => {
       setInterval(checkState, 1000);
@@ -66,8 +69,8 @@ export default createComponent({
     return {
       data,
       databases,
-      selectedDatabaseIds,
-      chartConfiguration
+      chartConfiguration,
+      selectedDatabaseIds
     };
   }
 });
