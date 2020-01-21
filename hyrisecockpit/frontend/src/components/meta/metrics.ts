@@ -2,7 +2,7 @@ import { backendUrl } from "../../types/services";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { useDataTransformation } from "../../services/transformationService";
 
-export const metricsMetadata: Record<Metric, MetricMetadata> = {
+const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
     transformationService: useDataTransformation("access"),
@@ -28,3 +28,7 @@ export const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: backendUrl + "throughput"
   }
 };
+
+export function getMetadata(metric: Metric): MetricMetadata {
+  return metricsMetadata[metric];
+}
