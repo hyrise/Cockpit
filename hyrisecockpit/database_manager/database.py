@@ -93,7 +93,6 @@ def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
 def execute_queries(
     worker_id: str,
     task_queue: Queue,
-    throughput_data_container: Dict,
     query_list: List,
     connection_pool: pool,
     failed_task_queue: Queue,
@@ -112,9 +111,6 @@ def execute_queries(
             cur.execute(query, parameters)
             endts = time.time()
             query_list.append((startts, endts, "none", 0))
-            throughput_data_container[str(worker_id)] = (
-                throughput_data_container[str(worker_id)] + 1
-            )
         except (ValueError, Error) as e:
             failed_task_queue.put(
                 {"worker_id": worker_id, "task": task, "Error": str(e)}
@@ -156,7 +152,6 @@ class Database(object):
         self._latency: float = 0.0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
-        self._throughput_data_container: Dict = self._init_throughput_data_container()
         self._query_list: List = self._manager.list()
         self._worker_pool: pool = self._init_worker_pool()
 
@@ -174,13 +169,6 @@ class Database(object):
         )
         self._scheduler.start()
 
-    def _init_throughput_data_container(self) -> Dict:
-        """Initialize meta data container."""
-        throughput_data_container = self._manager.dict()
-        for i in range(self._number_workers):
-            throughput_data_container[str(i)] = 0
-        return throughput_data_container
-
     def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
         worker_pool = []
@@ -190,7 +178,6 @@ class Database(object):
                 args=(
                     i,
                     self._task_queue,
-                    self._throughput_data_container,
                     self._query_list,
                     self._connection_pool,
                     self._failed_task_queue,
