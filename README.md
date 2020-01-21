@@ -2,7 +2,7 @@
 
 ## Setup
 
-You may need to install a different python version (`3.8.0`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+You may need to install a different python version (`3.8.1`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
 
 
