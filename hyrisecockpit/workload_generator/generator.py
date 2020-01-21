@@ -42,6 +42,14 @@ class WorkloadGenerator(object):
         self._workloads: Dict[str, Any] = {}
         self._init_server()
 
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Call close with a context manager."""
+        self.close()
+
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
         self._rep_socket = self._context.socket(REP)
@@ -95,20 +103,6 @@ class WorkloadGenerator(object):
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
 
-    def close(self) -> None:
-        """Close the socket and context."""
-        self._rep_socket.close()
-        self._pub_socket.close()
-        self._context.term()
-
-    def __enter__(self):
-        """Return self for a context manager."""
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Call close with a context manager."""
-        self.close()
-
     def _handle_request(self, request):
         handler = self._server_calls.get(request["header"]["message"], None)
         if not handler:
@@ -132,3 +126,9 @@ class WorkloadGenerator(object):
 
             # Send the reply
             self._rep_socket.send_json(response)
+
+    def close(self) -> None:
+        """Close the socket and context."""
+        self._rep_socket.close()
+        self._pub_socket.close()
+        self._context.term()
