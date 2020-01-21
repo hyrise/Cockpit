@@ -106,9 +106,9 @@ def execute_queries(
     while True:
         # If Queue is emty go to wait status
         try:
-            startts = time.time()
             task = task_queue.get(block=True)
             query, parameters = task
+            startts = time.time()
             cur.execute(query, parameters)
             endts = time.time()
             query_list.append((startts, endts, "none", 0))
