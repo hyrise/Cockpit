@@ -10,7 +10,7 @@
         :metric-meta="getMetadata(metric.toLowerCase())"
       />
     </div>
-  </div>
+    </div>
 </template>
 
 <script lang="ts">
