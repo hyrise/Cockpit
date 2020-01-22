@@ -1,6 +1,6 @@
 """Tests for the workload_generator module's generator."""
 from typing import Any
-from unittest import mock
+from unittest.mock import MagicMock, patch
 
 from pytest import fixture, mark
 
@@ -25,12 +25,12 @@ class TestWorkloadGenerator:
 
     def get_fake_workload(self, *argv) -> Any:
         """Get fake workload."""
-        workload = mock.MagicMock()
+        workload = MagicMock()
         workload.generate_workload.return_value = [("dummy_query", None)]
         return workload
 
     @fixture
-    @mock.patch(
+    @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._init_server",
         idle_function,
     )
@@ -44,9 +44,7 @@ class TestWorkloadGenerator:
             "default_workload_location",
         )
 
-    @mock.patch(
-        "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
-    )
+    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
     def test_initializes_socket_attributes(self, isolated_generator: WorkloadGenerator):
         """Test initialization of soscket hosts and ports."""
         assert isolated_generator._generator_host == generator_host
@@ -55,9 +53,7 @@ class TestWorkloadGenerator:
         assert isolated_generator._workload_pub_port == workload_pub_port
 
     @mark.parametrize("call", ["workload"])
-    @mock.patch(
-        "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
-    )
+    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
     def test_initializes_server_calls(
         self, isolated_generator: WorkloadGenerator, call: str
     ):
@@ -71,13 +67,11 @@ class TestWorkloadGenerator:
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
 
-    @mock.patch(
+    @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
-    @mock.patch(
-        "hyrisecockpit.workload_generator.generator.Workload", get_fake_workload
-    )
+    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
     @mark.parametrize("workload", ["no-ops", "mixed", "TPCH_0.1", "TPCH_1.0", "JOB"])
     def test_asks_for_existing_workload(
         self, isolated_generator: WorkloadGenerator, workload: str
@@ -89,7 +83,7 @@ class TestWorkloadGenerator:
         assert response["header"]["status"] == 200
         assert response["header"]["message"] == "OK"
 
-    @mock.patch(
+    @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
@@ -97,7 +91,7 @@ class TestWorkloadGenerator:
         self, isolated_generator: WorkloadGenerator
     ):
         """Ensure not existing workload calls return 400."""
-        workload = mock.MagicMock()
+        workload = MagicMock()
         workload.generate_workload.side_effect = NotExistingWorkloadFolderException(
             "Error message"
         )
@@ -110,7 +104,7 @@ class TestWorkloadGenerator:
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"]["error"] == "Error message"
 
-    @mock.patch(
+    @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
@@ -118,7 +112,7 @@ class TestWorkloadGenerator:
         self, isolated_generator: WorkloadGenerator
     ):
         """Ensure not existing workload calls return 400."""
-        workload = mock.MagicMock()
+        workload = MagicMock()
         workload.generate_workload.side_effect = EmptyWorkloadFolderException(
             "Error message"
         )
