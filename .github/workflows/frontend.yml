@@ -19,8 +19,8 @@ jobs:
       id:    counter
       shell: bash 
       working-directory: ./hyrisecockpit/frontend
-    - run: echo "Checking for lint errors"
-      if:  steps.counter.outputs.errors != '0'
+    - run: exit 1
+      if:  steps.counter.outputs.errors == '0'
       working-directory: ./hyrisecockpit/frontend
 
 
