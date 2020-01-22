@@ -15,8 +15,9 @@ jobs:
       working-directory: ./hyrisecockpit/frontend
     - run: npm run lint > lint-output.txt
       working-directory: ./hyrisecockpit/frontend
-    - if: (grep -q "No lint errors found!" "lint-output.txt"; echo $?) == 1
-    - run: exit 1
+    - name: Check for Errors
+      if: (grep -q "No lint errors found!" "lint-output.txt"; echo $?) == 1
+      run: exit 1
       working-directory: ./hyrisecockpit/frontend
 
 
