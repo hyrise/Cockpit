@@ -173,6 +173,7 @@ class Database(object):
         with PoolCursor(self._connection_pool) as cur:
             success: bool = True
             for name in table_names:
+                # import pdb; pdb.set_trace()
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )
@@ -181,7 +182,7 @@ class Database(object):
                 try:
                     cur.execute(
                         "COPY %s FROM '%s_cached_tables/sf-%s/%s.bin';",
-                        (name, datatype, sf, name,),
+                        (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
                     )
                 except DatabaseError:
                     success = False  # TODO return tables that could not be imported
