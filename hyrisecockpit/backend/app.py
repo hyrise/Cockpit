@@ -128,7 +128,7 @@ def workload() -> Dict:
             "header": {"message": "workload"},
             "body": {
                 "type": request_json.get("type"),
-                "queries": request_json.get("queries", None),
+                "queries": request_json.get("queries"),
                 "factor": request_json.get("factor", 1),
                 "shuffle": request_json.get("shuffle", False),
             },
