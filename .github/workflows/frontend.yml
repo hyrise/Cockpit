@@ -13,5 +13,14 @@ jobs:
         node-version: '10.x'
     - run: npm install
       working-directory: ./hyrisecockpit/frontend
-    - uses: eslint/github-action@v0
+    - run: npm run lint > lint-output.txt
       working-directory: ./hyrisecockpit/frontend
+    - run:   echo ::set-output name=success::$(grep "No lint errors found!" lint-output.txt | wc -l)
+      id:    counter
+      shell: bash 
+      working-directory: ./hyrisecockpit/frontend
+    - run: exit 1
+      if:  steps.counter.outputs.success == '0'
+      working-directory: ./hyrisecockpit/frontend
+
+
