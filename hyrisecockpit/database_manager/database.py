@@ -118,7 +118,7 @@ class Database(object):
 
         self._start_workers()
 
-        self.load_data(self._default_tables, sf="0.100000")
+        self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
         self._update_throughput_job = self._scheduler.add_job(
@@ -180,8 +180,9 @@ class Database(object):
                 if cur.cur.fetchone():
                     continue
                 try:
+                    # TODO change absolute to relative path
                     cur.execute(
-                        "COPY %s FROM '%s_cached_tables/sf-%s/%s.bin';",
+                        "COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';",
                         (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
                     )
                 except DatabaseError:
