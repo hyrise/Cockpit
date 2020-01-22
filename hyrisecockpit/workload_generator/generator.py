@@ -12,6 +12,7 @@ from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
     NotExistingWorkloadFolderException,
     QueryTypeNotFoundException,
+    QueryTypesNotSpecifiedException,
 )
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
@@ -72,6 +73,10 @@ class WorkloadGenerator(object):
     def _call_workload(self, body: Dict) -> Dict:
         try:
             if body["type"] == "custom":
+                if body.get("queries") is None:
+                    raise QueryTypesNotSpecifiedException(
+                        "Missing query types for custom workload"
+                    )
                 queries = self._generate_custom_workload(
                     body["queries"], body.get("factor", 1), body.get("shuffle", False)
                 )
@@ -87,6 +92,7 @@ class WorkloadGenerator(object):
             NotExistingWorkloadFolderException,
             EmptyWorkloadFolderException,
             QueryTypeNotFoundException,
+            QueryTypesNotSpecifiedException,
         ) as e:
             return get_error_response(400, str(e))
 
