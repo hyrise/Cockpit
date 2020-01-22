@@ -177,7 +177,7 @@ class Database(object):
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )
-                if cur.cur.fetchone():
+                if cur.fetchone():
                     continue
                 try:
                     # TODO change absolute to relative path
