@@ -8,9 +8,10 @@ from typing import Dict, List
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
+from zmq import SUB, SUBSCRIBE, Context
+
 from psycopg2 import DatabaseError, Error, pool
 from psycopg2.extensions import AsIs
-from zmq import SUB, SUBSCRIBE, Context
 
 from .driver import Driver
 from .table_names import table_names as _table_names
@@ -62,21 +63,21 @@ def execute_queries(
     failed_task_queue: Queue,
 ) -> None:
     """Define workers work loop."""
-    
     with PoolCursor(connection_pool) as cur:
-      while True:
-          # If Queue is emty go to wait status
-         try:
-              task = task_queue.get(block=True)
-             query, parameters = task
-             startts = time()
-             cur.execute(query, parameters)
-             endts = time()
-              query_list.append((startts, endts, "none", 0))
-          except (ValueError, Error) as e:
-              failed_task_queue.put(
-                  {"worker_id": worker_id, "task": task, "Error": str(e)}
-              )
+        while True:
+            # If Queue is emty go to wait status
+            try:
+                task = task_queue.get(block=True)
+                query, parameters = task
+                startts = time()
+                cur.execute(query, parameters)
+                endts = time()
+                query_list.append((startts, endts, "none", 0))
+            except (ValueError, Error) as e:
+                failed_task_queue.put(
+                    {"worker_id": worker_id, "task": task, "Error": str(e)}
+                )
+
 
 class Database(object):
     """Represents database."""
@@ -172,7 +173,7 @@ class Database(object):
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )
-                if cur.fetchone():
+                if cur.cur.fetchone():
                     continue
                 try:
                     # TODO change absolute to relative path
@@ -206,14 +207,6 @@ class Database(object):
                 except DatabaseError:
                     continue
         return True
-
-    def _update_throughput_data(self) -> None:
-        """Put meta data from all workers together."""
-        throughput_data = 0
-        for i in range(self._number_workers):
-            throughput_data = throughput_data + self._throughput_data_container[str(i)]
-            self._throughput_data_container[str(i)] = 0
-        self._throughput = throughput_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
