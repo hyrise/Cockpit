@@ -93,14 +93,14 @@ class WorkloadGenerator(object):
         return get_response(200)
 
     def _generate_custom_workload(
-        self, data_sheet: Dict, factor: int, shuffle_flag: bool
+        self, query_types: Dict, factor: int, shuffle_flag: bool
     ):
         workload_queries: List[Tuple[str, Any]] = []
         for _ in range(factor):
-            for data in data_sheet.keys():
-                workload_type = data.split("/")[0]
-                query = data.split("/")[1]
-                factor = data_sheet[data]
+            for query_type in query_types.keys():
+                workload_type = query_type.split("/")[0]
+                query = query_type.split("/")[1]
+                factor = query_types[query_type]
                 workload = self._get_workload(workload_type)
                 workload_queries.extend(workload.generate_specific(query, factor))
 
