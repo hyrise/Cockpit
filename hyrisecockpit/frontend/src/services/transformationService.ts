@@ -6,10 +6,11 @@ import { notEquals } from "../helpers/methods";
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
     access: transformAccessData,
-    storage: transformStorageData,
     cpu: transformCPUData,
-    throughput: getReadOnlyData,
-    latency: getReadOnlyData
+    latency: getReadOnlyData,
+    ram: getReadOnlyData,
+    storage: transformStorageData,
+    throughput: getReadOnlyData
   };
 
   return transformationMap[metric];

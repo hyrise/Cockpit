@@ -1,7 +1,13 @@
 import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
 
-export type Metric = "access" | "cpu" | "storage" | "throughput" | "latency";
+export type Metric =
+  | "access"
+  | "cpu"
+  | "storage"
+  | "throughput"
+  | "latency"
+  | "ram";
 
 export const instanceMetrics = ["Storage", "Access"];
 export const comparisonMetrics = ["Throughput", "Cpu", "Latency", "Ram"];
