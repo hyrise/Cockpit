@@ -8,10 +8,9 @@ from typing import Dict, List
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from zmq import SUB, SUBSCRIBE, Context
-
 from psycopg2 import DatabaseError, Error, pool
 from psycopg2.extensions import AsIs
+from zmq import SUB, SUBSCRIBE, Context
 
 from .driver import Driver
 from .table_names import table_names as _table_names
