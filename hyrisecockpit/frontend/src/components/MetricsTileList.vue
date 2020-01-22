@@ -21,9 +21,9 @@
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
 import Throughput from "./metrics/Throughput.vue";
-import Cpu from "./metrics/Cpu.vue";
+import CPU from "./metrics/CPU.vue";
 import Latency from "./metrics/Latency.vue";
-import Ram from "./metrics/Ram.vue";
+import RAM from "./metrics/RAM.vue";
 import { getMetadata } from "./meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
 
@@ -39,9 +39,9 @@ interface Props {
 export default createComponent({
   components: {
     Throughput,
-    Cpu,
+    CPU,
     Latency,
-    Ram
+    RAM
   },
   props: {
     selectedDatabases: {
