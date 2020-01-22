@@ -258,13 +258,13 @@ class Database(object):
         connection.set_session(autocommit=True)
 
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-        try:
-            meta_segments = sqlio.read_sql_query(sql, connection)
-        except DatabaseError:
+
+        meta_segments = sqlio.read_sql_query(sql, connection)
+        self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
             self._chunks_data = {}
             return None
-
-        self._connection_pool.putconn(connection)
 
         chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table_name")
@@ -283,13 +283,10 @@ class Database(object):
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
         sql = "SELECT * FROM meta_segments;"
+        meta_segments = sqlio.read_sql_query(sql, connection)
+        self._connection_pool.putconn(connection)
 
-        try:
-            meta_segments = sqlio.read_sql_query(sql, connection)
-        except DatabaseError:
-            return {}
-
-        if len(meta_segments.index) == 0:
+        if meta_segments.empty:
             return {}
 
         meta_segments.set_index(
@@ -314,7 +311,6 @@ class Database(object):
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
-        self._connection_pool.putconn(connection)
         return self._create_storage_data_dictionary(result)
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
