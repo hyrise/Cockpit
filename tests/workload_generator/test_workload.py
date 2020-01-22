@@ -1,7 +1,7 @@
 """Tests for the workload_generator module's workload."""
 
 from typing import Any
-from unittest import mock
+from unittest.mock import MagicMock, patch
 
 from pytest import fixture
 
@@ -15,7 +15,7 @@ file_type: str = "sql"
 
 def get_fake_workload_reader() -> Any:
     """Get fake workload."""
-    workload_reader = mock.MagicMock()
+    workload_reader = MagicMock()
     workload_reader.read_workload.return_value = ["dummy_query"]
     return workload_reader
 
@@ -28,11 +28,11 @@ class TestWorkload:
         return None
 
     @fixture
-    @mock.patch(
+    @patch(
         "hyrisecockpit.workload_generator.workloads.workload.Workload._initialize",
         idle_function,
     )
-    @mock.patch(
+    @patch(
         "hyrisecockpit.workload_generator.workloads.workload.WorkloadReader",
         get_fake_workload_reader,
     )
