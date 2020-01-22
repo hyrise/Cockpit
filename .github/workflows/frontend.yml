@@ -12,7 +12,7 @@ jobs:
       with:
         node-version: '10.x'
     - run: npm install
-    - uses: eslint/github-action@v0
-      with: 
-        entrypoint: ./hyrisecockpit/frontend
+      working-directory: ./hyrisecockpit/frontend
+    - run: npm test
+      working-directory: ./hyrisecockpit/frontend
 
