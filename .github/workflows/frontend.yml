@@ -13,5 +13,5 @@ jobs:
         node-version: '10.x'
     - run: npm install
       working-directory: ./hyrisecockpit/frontend
-    - run: npm run lint
+    - uses: eslint/github-action@v0
       working-directory: ./hyrisecockpit/frontend
