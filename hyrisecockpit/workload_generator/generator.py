@@ -72,19 +72,19 @@ class WorkloadGenerator(object):
 
     def _call_workload(self, body: Dict) -> Dict:
         try:
+            factor = body.get("factor", 1)
+            shuffle_flag = body.get("shuffle", False)
             if body["type"] == "custom":
                 if not body.get("queries"):
                     raise QueryTypesNotSpecifiedException(
                         "Missing query types for custom workload"
                     )
                 queries = self._generate_custom_workload(
-                    body["queries"], body.get("factor", 1), body.get("shuffle", False)
+                    body["queries"], factor, shuffle_flag
                 )
             else:
                 workload = self._get_workload(body["type"])
-                queries = workload.generate_workload(
-                    body.get("factor", 1), body.get("shuffle", False)
-                )
+                queries = workload.generate_workload(factor, shuffle_flag)
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
