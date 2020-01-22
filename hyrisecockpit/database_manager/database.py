@@ -9,71 +9,35 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 from psycopg2 import DatabaseError, Error, pool
+from psycopg2.extensions import AsIs
 from zmq import SUB, SUBSCRIBE, Context
 
 from .driver import Driver
+from .table_names import table_names as _table_names
 
-_table_names: Dict[str, List[str]] = {
-    "tpch": [
-        "customer",
-        "lineitem",
-        "nation",
-        "orders",
-        "part",
-        "partsupp",
-        "region",
-        "supplier",
-    ],
-    "tpcds": [
-        "call_center",
-        "catalog_sales",
-        "customer_demographics",
-        "income_band",
-        "promotion",
-        "store",
-        "time_dim",
-        "web_returns",
-        "catalog_page",
-        "customer_address",
-        "date_dim",
-        "inventory",
-        "reason",
-        "store_returns",
-        "warehouse",
-        "web_sales",
-        "catalog_returns",
-        "customer",
-        "household_demographics",
-        "item",
-        "ship_mode",
-        "store_sales",
-        "web_page",
-        "web_site",
-    ],
-    "job": [
-        "aka_name",
-        "char_name",
-        "comp_cast_type",
-        "keyword.bin",
-        "movie_companies",
-        "movie_keyword",
-        "person_info",
-        "aka_title",
-        "company_name",
-        "complete_cast",
-        "kind_type",
-        "movie_info",
-        "movie_link",
-        "role_type",
-        "cast_info",
-        "company_type",
-        "info_type",
-        "link_type",
-        "movie_info_idx",
-        "name",
-        "title",
-    ],
-}
+
+class PoolCursor:
+    """Context manager for connections from a pool."""
+
+    def __init__(self, pool):
+        """Initialize a PoolCursor."""
+        self.pool = pool
+        self.connection = self.pool.getconn()
+        self.connection.set_session(autocommit=True)
+        self.cur = self.connection.cursor()
+
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Close the cursor and connection."""
+        self.cur.close()
+        self.pool.putconn(self.connection)
+
+    def execute(self, query, parameters):
+        """Execute a query."""
+        return self.cur.execute(query, parameters)
 
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
@@ -98,24 +62,21 @@ def execute_queries(
     failed_task_queue: Queue,
 ) -> None:
     """Define workers work loop."""
-    connection = connection_pool.getconn()
-    connection.set_session(autocommit=True)
-    cur = connection.cursor()
-
-    while True:
-        # If Queue is emty go to wait status
-        try:
-            task = task_queue.get(block=True)
-            query, parameters = task
-            startts = time()
-            cur.execute(query, parameters)
-            endts = time()
-            query_list.append((startts, endts, "none", 0))
-        except (ValueError, Error) as e:
-            failed_task_queue.put(
-                {"worker_id": worker_id, "task": task, "Error": str(e)}
-            )
-
+    
+    with PoolCursor(connection_pool) as cur:
+      while True:
+          # If Queue is emty go to wait status
+         try:
+              task = task_queue.get(block=True)
+             query, parameters = task
+             startts = time()
+             cur.execute(query, parameters)
+             endts = time()
+              query_list.append((startts, endts, "none", 0))
+          except (ValueError, Error) as e:
+              failed_task_queue.put(
+                  {"worker_id": worker_id, "task": task, "Error": str(e)}
+              )
 
 class Database(object):
     """Represents database."""
@@ -129,8 +90,10 @@ class Database(object):
         dbname: str,
         number_workers: str,
         workload_publisher_url: str,
+        default_tables: str,
     ) -> None:
         """Initialize database object."""
+        self._default_tables = default_tables
         self._number_workers = int(number_workers)
         self._number_additional_connections = 1
         self._driver = Driver(
@@ -156,6 +119,8 @@ class Database(object):
         self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
+
+        self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
         self._update_query_job = self._scheduler.add_job(
@@ -195,22 +160,29 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def load_data(self, datatype: str) -> bool:
+    def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
         table_names = _table_names.get(datatype)
         if not table_names:
             return False
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-        cur = connection.cursor()
-        success: bool = True
-        try:
+        with PoolCursor(self._connection_pool) as cur:
+            success: bool = True
             for name in table_names:
-                cur.execute(f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';")
-        except DatabaseError:
-            success = False
+                # import pdb; pdb.set_trace()
+                cur.execute(
+                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
+                )
+                if cur.fetchone():
+                    continue
+                try:
+                    # TODO change absolute to relative path
+                    cur.execute(
+                        "COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';",
+                        (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
+                    )
+                except DatabaseError:
+                    success = False  # TODO return tables that could not be imported
 
-        self._connection_pool.putconn(connection)
         return success
 
     def _update_query_data(self) -> None:
@@ -221,6 +193,27 @@ class Database(object):
         self._latency = sum(
             [endtts - startts for startts, endtts, _, _ in queries]
         ) / len(queries)
+
+    def delete_data(self, datatype: str) -> bool:
+        """Delete tables."""
+        table_names = _table_names.get(datatype)
+        if not table_names:
+            return False
+        with PoolCursor(self._connection_pool) as cur:
+            for name in table_names:
+                try:
+                    cur.execute("DROP TABLE %s;", (AsIs(name),))
+                except DatabaseError:
+                    continue
+        return True
+
+    def _update_throughput_data(self) -> None:
+        """Put meta data from all workers together."""
+        throughput_data = 0
+        for i in range(self._number_workers):
+            throughput_data = throughput_data + self._throughput_data_container[str(i)]
+            self._throughput_data_container[str(i)] = 0
+        self._throughput = throughput_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""

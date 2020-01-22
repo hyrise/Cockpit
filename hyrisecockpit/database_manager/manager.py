@@ -20,12 +20,14 @@ class DatabaseManager(object):
         db_manager_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
+        default_tables: str,
     ) -> None:
         """Initialize a DatabaseManager."""
         self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
+        self._default_tables = default_tables
         self._databases: Dict[str, Database] = dict()
         self._scheduler = BackgroundScheduler()
         self._update_log_job = self._scheduler.add_job(
@@ -43,6 +45,7 @@ class DatabaseManager(object):
             "failed tasks": self._call_failed_tasks,
             "get databases": self._call_get_databases,
             "load data": self._call_load_data,
+            "delete data": self._call_delete_data,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -91,8 +94,9 @@ class DatabaseManager(object):
             dbname,
             number_workers,
             "tcp://{:s}:{:s}".format(
-                self._workload_sub_host, self._workload_pubsub_port
+                self._workload_sub_host, self._workload_pubsub_port,
             ),
+            self._default_tables,
         )
         self._databases[body["id"]] = db_instance
         return get_response(200)
@@ -180,10 +184,20 @@ class DatabaseManager(object):
 
     def _call_load_data(self, body: Dict) -> Dict:
         datatype = body.get("datatype")
+        sf = body.get("sf", "1.000000")
         if not datatype:
             return get_response(400)
-        for database in self._databases.values():
-            if not database.load_data(datatype):
+        for database in list(self._databases.values()):
+            if not database.load_data(datatype, sf):
+                return get_response(400)  # TODO return which DB couldn't import
+        return get_response(200)
+
+    def _call_delete_data(self, body: Dict) -> Dict:
+        datatype = body.get("datatype")
+        if not datatype:
+            return get_response(400)
+        for database in list(self._databases.values()):
+            if not database.delete_data(datatype):
                 return get_response(400)
         return get_response(200)
 
