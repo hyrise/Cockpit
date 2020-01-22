@@ -8,7 +8,8 @@ export function useDataTransformation(metric: Metric): TransformationService {
     access: transformAccessData,
     storage: transformStorageData,
     cpu: transformCPUData,
-    throughput: transformThroughputData
+    throughput: getReadOnlyData,
+    latency: getReadOnlyData
   };
 
   return transformationMap[metric];
@@ -19,7 +20,8 @@ function transformCPUData(data: any, primaryKey: string = ""): number {
     (accumulator: any, currentValue: any) => accumulator + currentValue
   );
 }
-function transformThroughputData(data: any, primaryKey: string = ""): number {
+
+function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
