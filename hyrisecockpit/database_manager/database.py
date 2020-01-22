@@ -173,17 +173,14 @@ class Database(object):
             success: bool = True
             for name in table_names:
                 cur.execute(
-                    "SELECT table_name FROM meta_tables WHERE table_name='%s';", name
+                    "SELECT table_name FROM meta_tables WHERE table_name='%s';", (name,)
                 )
                 if cur.fetchone():
                     continue
                 try:
                     cur.execute(
                         "COPY %s FROM '%s_cached_tables/sf-%s/%s.bin';",
-                        name,
-                        datatype,
-                        sf,
-                        name,
+                        (name, datatype, sf, name,),
                     )
                 except DatabaseError:
                     success = False  # TODO return tables that could not be imported
@@ -198,7 +195,7 @@ class Database(object):
         with PoolCursor(self._connection_pool) as cur:
             for name in table_names:
                 try:
-                    cur.execute("DROP TABLE %s;", name)
+                    cur.execute("DROP TABLE %s;", (name,))
                 except DatabaseError:
                     continue
         return True
