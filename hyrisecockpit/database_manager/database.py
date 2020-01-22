@@ -240,9 +240,13 @@ class Database(object):
         connection.set_session(autocommit=True)
 
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-        meta_segments = read_sql_query(sql, connection)
 
+        meta_segments = read_sql_query(sql, connection)
         self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            self._chunks_data = {}
+            return None
 
         chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table_name")
@@ -263,6 +267,10 @@ class Database(object):
         sql = "SELECT * FROM meta_segments;"
 
         meta_segments = read_sql_query(sql, connection)
+        self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            return {}
 
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
@@ -286,7 +294,6 @@ class Database(object):
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
-        self._connection_pool.putconn(connection)
         return self._create_storage_data_dictionary(result)
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
@@ -336,6 +343,13 @@ class Database(object):
 
     def close(self) -> None:
         """Close the database."""
+        # Remove jobs
+        self._update_throughput_job.remove()
+        self._update_system_data_job.remove()
+        self._update_chunks_data_job.remove()
+
+        # Close the scheduler
+        self._scheduler.shutdown()
         # Close worker pool
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
@@ -345,11 +359,3 @@ class Database(object):
 
         # Close queue
         self._task_queue.close()
-
-        # Remove jobs
-        self._update_query_job.remove()
-        self._update_system_data_job.remove()
-        self._update_chunks_data_job.remove()
-
-        # Close the scheduler
-        self._scheduler.shutdown()
