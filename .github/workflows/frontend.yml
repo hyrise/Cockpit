@@ -20,7 +20,7 @@ jobs:
       shell: bash 
       working-directory: ./hyrisecockpit/frontend
     - run: echo "Checking for lint errors"
-      if:  steps.counter.outputs.errors == '0'
+      if:  steps.counter.outputs.errors != '0'
       working-directory: ./hyrisecockpit/frontend
 
 
