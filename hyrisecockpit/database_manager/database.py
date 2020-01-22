@@ -2,6 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
+from time import time
 from typing import Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -56,7 +57,7 @@ def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
 def execute_queries(
     worker_id: str,
     task_queue: Queue,
-    throughput_data_container: Dict,
+    query_list: List,
     connection_pool: pool,
     failed_task_queue: Queue,
 ) -> None:
@@ -67,10 +68,10 @@ def execute_queries(
             try:
                 task = task_queue.get(block=True)
                 query, parameters = task
+                startts = time()
                 cur.execute(query, parameters)
-                throughput_data_container[str(worker_id)] = (
-                    throughput_data_container[str(worker_id)] + 1
-                )
+                endts = time()
+                query_list.append((startts, endts, "none", 0))
             except (ValueError, Error) as e:
                 failed_task_queue.put(
                     {"worker_id": worker_id, "task": task, "Error": str(e)}
@@ -111,9 +112,10 @@ class Database(object):
 
         self.workload_publisher_url: str = workload_publisher_url
         self._throughput: int = 0
+        self._latency: float = 0.0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
-        self._throughput_data_container: Dict = self._init_throughput_data_container()
+        self._query_list: List = self._manager.list()
         self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
@@ -121,8 +123,8 @@ class Database(object):
         self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
-        self._update_throughput_job = self._scheduler.add_job(
-            func=self._update_throughput_data, trigger="interval", seconds=1,
+        self._update_query_job = self._scheduler.add_job(
+            func=self._update_query_data, trigger="interval", seconds=1,
         )
         self._update_system_data_job = self._scheduler.add_job(
             func=self._update_system_data, trigger="interval", seconds=1,
@@ -131,13 +133,6 @@ class Database(object):
             func=self._update_chunks_data, trigger="interval", seconds=5,
         )
         self._scheduler.start()
-
-    def _init_throughput_data_container(self) -> Dict:
-        """Initialize meta data container."""
-        throughput_data_container = self._manager.dict()
-        for i in range(self._number_workers):
-            throughput_data_container[str(i)] = 0
-        return throughput_data_container
 
     def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
@@ -148,7 +143,7 @@ class Database(object):
                 args=(
                     i,
                     self._task_queue,
-                    self._throughput_data_container,
+                    self._query_list,
                     self._connection_pool,
                     self._failed_task_queue,
                 ),
@@ -190,6 +185,15 @@ class Database(object):
 
         return success
 
+    def _update_query_data(self) -> None:
+        """Update data calculated from queries."""
+        queries = self._query_list
+        self._query_list.clear()
+        self._throughput = len(queries)
+        self._latency = sum(
+            [endtts - startts for startts, endtts, _, _ in queries]
+        ) / len(queries)
+
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
         table_names = _table_names.get(datatype)
@@ -202,14 +206,6 @@ class Database(object):
                 except DatabaseError:
                     continue
         return True
-
-    def _update_throughput_data(self) -> None:
-        """Put meta data from all workers together."""
-        throughput_data = 0
-        for i in range(self._number_workers):
-            throughput_data = throughput_data + self._throughput_data_container[str(i)]
-            self._throughput_data_container[str(i)] = 0
-        self._throughput = throughput_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
@@ -322,6 +318,10 @@ class Database(object):
         """Return throughput."""
         return self._throughput
 
+    def get_latency(self) -> float:
+        """Return latency."""
+        return self._latency
+
     def get_system_data(self) -> Dict:
         """Return system data."""
         return self._system_data
@@ -344,7 +344,7 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._update_throughput_job.remove()
+        self._update_query_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
 
