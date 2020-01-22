@@ -54,7 +54,8 @@ class Workload(object):
         if query_type not in self._queries.keys():
             raise QueryTypeNotFoundException(f"Query file {query_type} was not found")
 
-        workload_queries: List[Tuple[str, Any]] = []
-        for _ in range(factor):
-            workload_queries.append((secrets.choice(self._queries[query_type]), None))
+        workload_queries: List[Tuple[str, Any]] = [
+            (secrets.choice(self._queries[query_type]), None) for _ in range(factor)
+        ]
+
         return workload_queries
