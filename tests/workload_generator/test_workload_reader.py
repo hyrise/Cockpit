@@ -1,6 +1,6 @@
 """Tests for WorkloadReader."""
 from typing import Any
-from unittest import mock
+from unittest.mock import patch
 
 from pytest import raises
 
@@ -18,7 +18,7 @@ class TestWorkloadReader:
         """Return False."""
         return False
 
-    @mock.patch("os.path.exists",)
+    @patch("hyrisecockpit.workload_generator.workload_reader.exists")
     def test_catches_not_existing_workload_folder_exception(self, mock_path_function):
         """Ensure not existing workload causes exception."""
         mock_path_function.return_value = False
@@ -27,8 +27,8 @@ class TestWorkloadReader:
             reader._get_workload_folder("absolute_path", "tpch")
         assert str(e.value) == """Workload tpch not found: directory doesn't exist"""
 
-    @mock.patch("os.path.exists",)
-    @mock.patch("os.listdir",)
+    @patch("hyrisecockpit.workload_generator.workload_reader.exists",)
+    @patch("hyrisecockpit.workload_generator.workload_reader.listdir",)
     def test_catches_empty_workload_folder_exception(
         self, mock_list_function, mock_path_function
     ):
@@ -40,8 +40,8 @@ class TestWorkloadReader:
             reader._get_workload_folder("absolute_path", "tpch")
         assert str(e.value) == """Workload tpch directory is empty"""
 
-    @mock.patch("os.path.exists",)
-    @mock.patch("os.listdir",)
+    @patch("hyrisecockpit.workload_generator.workload_reader.exists",)
+    @patch("hyrisecockpit.workload_generator.workload_reader.listdir",)
     def test_gets_workload_folder_from_existing_directory(
         self, mock_list_function, mock_path_function
     ):
