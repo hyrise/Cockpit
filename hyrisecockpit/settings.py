@@ -16,7 +16,7 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-BACKEND_HOST: str = getenv("BACKEND_HOST", "127.0.0.1")
+BACKEND_HOST: str = getenv("BACKEND_HOST", "0.0.0.0")
 BACKEND_PORT: str = getenv("BACKEND_PORT", "6000")
 
 DB_MANAGER_HOST: str = getenv("DB_MANAGER_HOST", "127.0.0.1")
@@ -29,3 +29,5 @@ WORKLOAD_SUB_HOST: str = getenv("WORKLOAD_SUB_HOST", "127.0.0.1")
 WORKLOAD_PUBSUB_PORT: str = getenv("WORKLOAD_PUBSUB_PORT", "6556")
 
 WORKLOAD_LOCATION: str = getenv("WORKLOAD_LOCATION", "workloads/workload_queries/")
+
+DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch")

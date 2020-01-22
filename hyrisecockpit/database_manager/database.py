@@ -1,86 +1,50 @@
 """The database object represents the instance of a database."""
 
-import secrets
 from multiprocessing import Manager, Process, Queue
+from secrets import randbelow
 from typing import Dict, List
 
-import pandas.io.sql as sqlio
-import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
+from pandas.io.sql import read_sql_query
 from psycopg2 import DatabaseError, Error, pool
+from psycopg2.extensions import AsIs
+from zmq import SUB, SUBSCRIBE, Context
 
 from .driver import Driver
+from .table_names import table_names as _table_names
 
-_table_names: Dict[str, List[str]] = {
-    "tpch": [
-        "customer",
-        "lineitem",
-        "nation",
-        "orders",
-        "part",
-        "partsupp",
-        "region",
-        "supplier",
-    ],
-    "tpcds": [
-        "call_center",
-        "catalog_sales",
-        "customer_demographics",
-        "income_band",
-        "promotion",
-        "store",
-        "time_dim",
-        "web_returns",
-        "catalog_page",
-        "customer_address",
-        "date_dim",
-        "inventory",
-        "reason",
-        "store_returns",
-        "warehouse",
-        "web_sales",
-        "catalog_returns",
-        "customer",
-        "household_demographics",
-        "item",
-        "ship_mode",
-        "store_sales",
-        "web_page",
-        "web_site",
-    ],
-    "job": [
-        "aka_name",
-        "char_name",
-        "comp_cast_type",
-        "keyword.bin",
-        "movie_companies",
-        "movie_keyword",
-        "person_info",
-        "aka_title",
-        "company_name",
-        "complete_cast",
-        "kind_type",
-        "movie_info",
-        "movie_link",
-        "role_type",
-        "cast_info",
-        "company_type",
-        "info_type",
-        "link_type",
-        "movie_info_idx",
-        "name",
-        "title",
-    ],
-}
+
+class PoolCursor:
+    """Context manager for connections from a pool."""
+
+    def __init__(self, pool):
+        """Initialize a PoolCursor."""
+        self.pool = pool
+        self.connection = self.pool.getconn()
+        self.connection.set_session(autocommit=True)
+        self.cur = self.connection.cursor()
+
+    def __enter__(self):
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Close the cursor and connection."""
+        self.cur.close()
+        self.pool.putconn(self.connection)
+
+    def execute(self, query, parameters):
+        """Execute a query."""
+        return self.cur.execute(query, parameters)
 
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     """Fill the queue."""
-    context = zmq.Context()
-    subscriber = context.socket(zmq.SUB)
+    context = Context()
+    subscriber = context.socket(SUB)
     subscriber.connect(workload_publisher_url)
-    subscriber.setsockopt_string(zmq.SUBSCRIBE, "")
+    subscriber.setsockopt_string(SUBSCRIBE, "")
 
     while True:
         content = subscriber.recv_json()
@@ -97,22 +61,20 @@ def execute_queries(
     failed_task_queue: Queue,
 ) -> None:
     """Define workers work loop."""
-    connection = connection_pool.getconn()
-    connection.set_session(autocommit=True)
-    cur = connection.cursor()
-    while True:
-        # If Queue is emty go to wait status
-        try:
-            task = task_queue.get(block=True)
-            query, parameters = task
-            cur.execute(query, parameters)
-            throughput_data_container[str(worker_id)] = (
-                throughput_data_container[str(worker_id)] + 1
-            )
-        except (ValueError, Error) as e:
-            failed_task_queue.put(
-                {"worker_id": worker_id, "task": task, "Error": str(e)}
-            )
+    with PoolCursor(connection_pool) as cur:
+        while True:
+            # If Queue is emty go to wait status
+            try:
+                task = task_queue.get(block=True)
+                query, parameters = task
+                cur.execute(query, parameters)
+                throughput_data_container[str(worker_id)] = (
+                    throughput_data_container[str(worker_id)] + 1
+                )
+            except (ValueError, Error) as e:
+                failed_task_queue.put(
+                    {"worker_id": worker_id, "task": task, "Error": str(e)}
+                )
 
 
 class Database(object):
@@ -127,8 +89,10 @@ class Database(object):
         dbname: str,
         number_workers: str,
         workload_publisher_url: str,
+        default_tables: str,
     ) -> None:
         """Initialize database object."""
+        self._default_tables = default_tables
         self._number_workers = int(number_workers)
         self._number_additional_connections = 1
         self._driver = Driver(
@@ -153,6 +117,8 @@ class Database(object):
         self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
+
+        self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
         self._update_throughput_job = self._scheduler.add_job(
@@ -199,23 +165,43 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def load_data(self, datatype: str) -> bool:
+    def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
         table_names = _table_names.get(datatype)
         if not table_names:
             return False
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-        cur = connection.cursor()
-        success: bool = True
-        try:
+        with PoolCursor(self._connection_pool) as cur:
+            success: bool = True
             for name in table_names:
-                cur.execute(f"COPY {name} FROM '{datatype}_cached_tables/{name}.bin';")
-        except DatabaseError:
-            success = False
+                # import pdb; pdb.set_trace()
+                cur.execute(
+                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
+                )
+                if cur.cur.fetchone():
+                    continue
+                try:
+                    # TODO change absolute to relative path
+                    cur.execute(
+                        "COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';",
+                        (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
+                    )
+                except DatabaseError:
+                    success = False  # TODO return tables that could not be imported
 
-        self._connection_pool.putconn(connection)
         return success
+
+    def delete_data(self, datatype: str) -> bool:
+        """Delete tables."""
+        table_names = _table_names.get(datatype)
+        if not table_names:
+            return False
+        with PoolCursor(self._connection_pool) as cur:
+            for name in table_names:
+                try:
+                    cur.execute("DROP TABLE %s;", (AsIs(name),))
+                except DatabaseError:
+                    continue
+        return True
 
     def _update_throughput_data(self) -> None:
         """Put meta data from all workers together."""
@@ -230,7 +216,7 @@ class Database(object):
         # mocking system data
         cpu_data = []
         for _ in range(16):
-            cpu_data.append(secrets.randbelow(1001) / 10)
+            cpu_data.append(randbelow(1001) / 10)
         memory_data = {
             "available": 8467795968,
             "used": 2525601792,
@@ -258,9 +244,13 @@ class Database(object):
         connection.set_session(autocommit=True)
 
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-        meta_segments = sqlio.read_sql_query(sql, connection)
 
+        meta_segments = read_sql_query(sql, connection)
         self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            self._chunks_data = {}
+            return None
 
         chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table_name")
@@ -269,7 +259,7 @@ class Database(object):
             for _, row in grouped.get_group(column).iterrows():
                 data = []
                 for _ in range(row["n_chunks"]):
-                    current = secrets.randbelow(500)
+                    current = randbelow(500)
                     data.append(current if (current < 100) else 0)
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
@@ -280,7 +270,11 @@ class Database(object):
         connection.set_session(autocommit=True)
         sql = "SELECT * FROM meta_segments;"
 
-        meta_segments = sqlio.read_sql_query(sql, connection)
+        meta_segments = read_sql_query(sql, connection)
+        self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            return {}
 
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
@@ -304,7 +298,6 @@ class Database(object):
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
-        self._connection_pool.putconn(connection)
         return self._create_storage_data_dictionary(result)
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
@@ -350,6 +343,13 @@ class Database(object):
 
     def close(self) -> None:
         """Close the database."""
+        # Remove jobs
+        self._update_throughput_job.remove()
+        self._update_system_data_job.remove()
+        self._update_chunks_data_job.remove()
+
+        # Close the scheduler
+        self._scheduler.shutdown()
         # Close worker pool
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
@@ -359,11 +359,3 @@ class Database(object):
 
         # Close queue
         self._task_queue.close()
-
-        # Remove jobs
-        self._update_throughput_job.remove()
-        self._update_system_data_job.remove()
-        self._update_chunks_data_job.remove()
-
-        # Close the scheduler
-        self._scheduler.shutdown()

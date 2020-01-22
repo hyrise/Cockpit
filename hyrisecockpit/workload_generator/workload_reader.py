@@ -1,5 +1,6 @@
 """Module for reading queries."""
-import os
+from os import fsdecode, fsencode, listdir
+from os.path import dirname, exists, splitext
 from typing import Any, Dict, List
 
 from hyrisecockpit.exception import (
@@ -18,7 +19,7 @@ class WorkloadReader(object):
 
     def _create_absolute_workload_path(self, relative_workload_path: str) -> str:
         """Create absolute path to the folder."""
-        absolute_workload_reader_path: str = os.path.dirname(__file__)
+        absolute_workload_reader_path: str = dirname(__file__)
         absolute_workload_path: str = (
             f"{absolute_workload_reader_path}/{relative_workload_path}"
         )
@@ -28,16 +29,16 @@ class WorkloadReader(object):
         self, absolute_workload_path: str, workload_type: str
     ) -> Any:
         """Check if folder exists or is emty and returns it."""
-        if not os.path.exists(absolute_workload_path):
+        if not exists(absolute_workload_path):
             raise NotExistingWorkloadFolderException(
                 f"Workload {workload_type} not found: directory doesn't exist"
             )
-        directory = os.fsencode(absolute_workload_path)
-        if len(os.listdir(directory)) == 0:
+        directory = fsencode(absolute_workload_path)
+        if len(listdir(directory)) == 0:
             raise EmptyWorkloadFolderException(
                 f"Workload {workload_type} directory is empty"
             )
-        return os.listdir(directory)
+        return listdir(directory)
 
     def _read_content_of_workload_folder(
         self,
@@ -49,13 +50,13 @@ class WorkloadReader(object):
         """Read every file in folder and returns content."""
         queries: Dict[str, List[str]] = {}
         for file in workload_folder:
-            filename: str = os.fsdecode(file)
+            filename: str = fsdecode(file)
             if filename.endswith(f".{file_type}"):
                 with open(f"{absolute_workload_path}/{filename}", "r") as f:
                     sub_queries: List = f.read().split(delimiter)
                     del sub_queries[-1]
                     self._append_delimiter(sub_queries, delimiter)
-                    queries[os.path.splitext(filename)[0]] = sub_queries
+                    queries[splitext(filename)[0]] = sub_queries
         return queries
 
     def read_workload(
