@@ -5,8 +5,7 @@
     "scripts": {
         "serve": "vue-cli-service serve --host localhost",
         "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint",
-        "eslint:github-action": "eslint src/"
+        "lint": "vue-cli-service lint"
     },
     "dependencies": {
         "@types/plotly.js": "^1.44.18",
