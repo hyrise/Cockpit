@@ -73,7 +73,7 @@ class WorkloadGenerator(object):
     def _call_workload(self, body: Dict) -> Dict:
         try:
             if body["type"] == "custom":
-                if body.get("queries") is None:
+                if not body.get("queries"):
                     raise QueryTypesNotSpecifiedException(
                         "Missing query types for custom workload"
                     )
