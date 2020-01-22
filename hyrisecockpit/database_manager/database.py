@@ -1,15 +1,15 @@
 """The database object represents the instance of a database."""
 
-import secrets
 from multiprocessing import Manager, Process, Queue
+from secrets import randbelow
 from typing import Dict, List
 
-import pandas.io.sql as sqlio
-import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
+from pandas.io.sql import read_sql_query
 from psycopg2 import DatabaseError, Error, pool
 from psycopg2.extensions import AsIs
+from zmq import SUB, SUBSCRIBE, Context
 
 from .driver import Driver
 from .table_names import table_names as _table_names
@@ -41,10 +41,10 @@ class PoolCursor:
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     """Fill the queue."""
-    context = zmq.Context()
-    subscriber = context.socket(zmq.SUB)
+    context = Context()
+    subscriber = context.socket(SUB)
     subscriber.connect(workload_publisher_url)
-    subscriber.setsockopt_string(zmq.SUBSCRIBE, "")
+    subscriber.setsockopt_string(SUBSCRIBE, "")
 
     while True:
         content = subscriber.recv_json()
@@ -216,7 +216,7 @@ class Database(object):
         # mocking system data
         cpu_data = []
         for _ in range(16):
-            cpu_data.append(secrets.randbelow(1001) / 10)
+            cpu_data.append(randbelow(1001) / 10)
         memory_data = {
             "available": 8467795968,
             "used": 2525601792,
@@ -244,7 +244,7 @@ class Database(object):
         connection.set_session(autocommit=True)
 
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-        meta_segments = sqlio.read_sql_query(sql, connection)
+        meta_segments = read_sql_query(sql, connection)
 
         self._connection_pool.putconn(connection)
 
@@ -255,7 +255,7 @@ class Database(object):
             for _, row in grouped.get_group(column).iterrows():
                 data = []
                 for _ in range(row["n_chunks"]):
-                    current = secrets.randbelow(500)
+                    current = randbelow(500)
                     data.append(current if (current < 100) else 0)
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
@@ -266,7 +266,7 @@ class Database(object):
         connection.set_session(autocommit=True)
         sql = "SELECT * FROM meta_segments;"
 
-        meta_segments = sqlio.read_sql_query(sql, connection)
+        meta_segments = read_sql_query(sql, connection)
 
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],

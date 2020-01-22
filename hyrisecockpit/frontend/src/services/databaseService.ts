@@ -4,7 +4,7 @@ import axios from "axios";
 import colors from "vuetify/lib/util/colors";
 import { backendUrl } from "../types/services";
 
-export function useDatabaseFetchService(): DatabaseData {
+export function useDatabaseService(): DatabaseData {
   const colorsArray: any = Object.keys(colors);
   let usedColors: any = 0;
   const databases = ref<Database[]>([]);

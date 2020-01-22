@@ -1,4 +1,5 @@
 import { Ref } from "@vue/composition-api";
+import { Workload } from "./workloads";
 
 export interface FetchService {
   data: Ref<any>;
@@ -10,6 +11,11 @@ export type TransformationService = (
   primaryKey?: string,
   secondaryKey?: string
 ) => any;
+
+export interface WorkloadService {
+  loadWorkloadData: (workload: Workload) => void;
+  deleteWorkloadData: (workload: Workload) => void;
+}
 
 export type FetchType = "read" | "modify";
 

@@ -5,21 +5,30 @@
     </div>
     <v-divider />
     <v-col cols="12">
-      <div class="mb-2">
-        <b> generate and insert Data </b>
+      <div class="mb-2 mt-2">
+        <b> Load generated workload </b>
       </div>
-
       <v-btn-toggle>
-        <v-btn @click="generateData('tpch')">
-          tpch
+        <v-btn
+          v-for="workload in availableWorkloads"
+          :key="workload"
+          @click="loadWorkloadData(workload)"
+          color="success"
+        >
+          {{ workload }}
         </v-btn>
-
-        <v-btn @click="generateData('tpcds')">
-          tpcds
-        </v-btn>
-
-        <v-btn @click="generateData('job')">
-          job
+      </v-btn-toggle>
+      <div class="mb-2 mt-6">
+        <b> Delete generated workload </b>
+      </div>
+      <v-btn-toggle>
+        <v-btn
+          v-for="workload in availableWorkloads"
+          :key="workload"
+          @click="deleteWorkloadData(workload)"
+          color="error"
+        >
+          {{ workload }}
         </v-btn>
       </v-btn-toggle>
     </v-col>
@@ -34,29 +43,25 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import Workload from "../components/Workload.vue";
+import { Workload, availableWorkloads } from "../types/workloads";
 import axios from "axios";
-import { backendUrl } from "../types/services";
+import { useWorkloadService } from "../services/workloadService";
 
 interface Props {}
 interface Data {
-  generateData: (benchmarkType: string) => void;
+  loadWorkloadData: (workload: Workload) => void;
+  deleteWorkloadData: (workload: Workload) => void;
+  availableWorkloads: string[];
 }
 
 export default createComponent({
   name: "WorkloadScreen",
-
-  components: {
-    Workload
-  },
-
   setup(props: Props, context: SetupContext): Data {
-    function generateData(benchmarkType: string): void {
-      axios.get(`${backendUrl}data/${benchmarkType}`);
-    }
-
+    const { loadWorkloadData, deleteWorkloadData } = useWorkloadService();
     return {
-      generateData
+      loadWorkloadData,
+      deleteWorkloadData,
+      availableWorkloads
     };
   }
 });
