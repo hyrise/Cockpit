@@ -9,6 +9,7 @@ import zmq
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from psycopg2 import DatabaseError, Error, pool
+from psycopg2.extensions import AsIs
 
 from .driver import Driver
 from .table_names import table_names as _table_names
@@ -195,7 +196,7 @@ class Database(object):
         with PoolCursor(self._connection_pool) as cur:
             for name in table_names:
                 try:
-                    cur.execute("DROP TABLE %s;", (name,))
+                    cur.execute("DROP TABLE %s;", (AsIs(name),))
                 except DatabaseError:
                     continue
         return True
