@@ -45,7 +45,7 @@ import {
 } from "../../types/metrics";
 
 export default createComponent({
-  name: "Cpu",
+  name: "CPU",
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
@@ -53,7 +53,7 @@ export default createComponent({
 
     const selectedDatabaseIds = ref<string[]>(props.selectedDatabases); // can be removed when select is away
 
-    const chartConfiguration = ["CPU", "time in s", "workload in %"];
+    const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);

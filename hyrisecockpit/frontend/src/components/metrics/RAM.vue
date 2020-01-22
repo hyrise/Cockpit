@@ -45,18 +45,14 @@ import {
 } from "../../types/metrics";
 
 export default createComponent({
-  name: "Ram",
+  name: "RAM",
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
-    const chartConfiguration = [
-      "Throughput",
-      "time in s",
-      "queries per second"
-    ];
+    const chartConfiguration = ["RAM", "time in sec", "memory usage in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);

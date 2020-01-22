@@ -52,11 +52,7 @@ export default createComponent({
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
-    const chartConfiguration = [
-      "Throughput",
-      "time in s",
-      "queries per second"
-    ];
+    const chartConfiguration = ["Latency", "time in sec", "queries per sec"];
 
     onMounted(() => {
       setInterval(checkState, 1000);

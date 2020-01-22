@@ -52,11 +52,7 @@ export default createComponent({
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const selectedDatabaseIds = ref<string[]>(props.selectedDatabases); // can be removed when select is away
 
-    const chartConfiguration = [
-      "Throughput",
-      "time in s",
-      "queries per second"
-    ];
+    const chartConfiguration = ["Throughput", "time in sec", "queries per sec"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
