@@ -8,9 +8,10 @@ from typing import Dict, List
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
+from zmq import SUB, SUBSCRIBE, Context
+
 from psycopg2 import DatabaseError, Error, pool
 from psycopg2.extensions import AsIs
-from zmq import SUB, SUBSCRIBE, Context
 
 from .driver import Driver
 from .table_names import table_names as _table_names
@@ -344,7 +345,7 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._update_throughput_job.remove()
+        self._update_query_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
 
