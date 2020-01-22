@@ -298,7 +298,6 @@ class Database(object):
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
-        self._connection_pool.putconn(connection)
         return self._create_storage_data_dictionary(result)
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
