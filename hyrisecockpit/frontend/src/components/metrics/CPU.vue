@@ -4,7 +4,7 @@
       <v-col cols="6" class="mx-10">
         <v-select
           v-model="selectedDatabaseIds"
-          :items="databases.map(database => database.id)"
+          :items="$databaseData.databases.value.map(database => database.id)"
           chips
           label="databases"
           multiple
@@ -16,7 +16,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="ram"
+      graph-id="cpu"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -38,29 +38,22 @@ import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "../charts/Linechart.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
-
-interface Data {
-  data: Ref<any>;
-  databases: Ref<Database[]>;
-  selectedDatabaseIds: Ref<string[]>;
-  chartConfiguration: string[];
-}
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ComparisonMetricData
+} from "../../types/metrics";
 
 export default createComponent({
-  name: "Ram",
+  name: "CPU",
   props: MetricPropsValidation,
   components: { Linechart },
-  setup(props: MetricProps, context: SetupContext): Data {
-    const { databases } = context.root.$databaseData;
+  setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
-    const chartConfiguration = [
-      "Throughput",
-      "time in s",
-      "queries per second"
-    ];
+    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases); // can be removed when select is away
+
+    const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
@@ -68,9 +61,8 @@ export default createComponent({
 
     return {
       data,
-      databases,
-      chartConfiguration,
-      selectedDatabaseIds
+      selectedDatabaseIds,
+      chartConfiguration
     };
   }
 });
