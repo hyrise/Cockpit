@@ -35,18 +35,10 @@
       <div class="mb-2 mt-6">
         <b> Start/stop workload </b>
       </div>
-      <v-btn
-        @click="startWorkload(workload)"
-        large
-        color="success"
+      <v-btn @click="startWorkload(workload)" large color="success"
         >Start
       </v-btn>
-      <v-btn
-        @click="startWorkload(workload)"
-        large
-        color="error"
-        >Stop
-      </v-btn>
+      <v-btn @click="startWorkload(workload)" large color="error">Stop </v-btn>
     </v-col>
   </div>
 </template>
