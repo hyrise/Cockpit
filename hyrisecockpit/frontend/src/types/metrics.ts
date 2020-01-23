@@ -21,14 +21,12 @@ export interface MetricMetadata {
 
 export interface ComparisonMetricData {
   data: Ref<any>;
-  selectedDatabaseIds: Ref<string[]>;
   chartConfiguration: string[];
 }
 
 export interface MetricProps {
   metricMeta: MetricMetadata;
   selectedDatabases: string[];
-  enableComparison: boolean; // can be removed when clear if we only use one select box on comparison screen
 }
 
 export const MetricPropsValidation = {
