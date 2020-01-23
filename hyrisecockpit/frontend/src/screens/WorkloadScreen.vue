@@ -35,15 +35,19 @@
       <div class="mb-2 mt-6">
         <b> Start/stop workload </b>
       </div>
-      <v-btn 
+      <v-btn
         :key="workload"
         @click="startWorkload(workload)"
-        large color="success">Start
+        large
+        color="success"
+        >Start
       </v-btn>
-      <v-btn 
+      <v-btn
         :key="workload"
         @click="startWorkload(workload)"
-        large color="error">Stop
+        large
+        color="error"
+        >Stop
       </v-btn>
     </v-col>
   </div>
@@ -73,7 +77,12 @@ interface Data {
 export default createComponent({
   name: "WorkloadScreen",
   setup(props: Props, context: SetupContext): Data {
-    const { loadWorkloadData, deleteWorkloadData, startWorkload, stopWorkload } = useWorkloadService();
+    const {
+      loadWorkloadData,
+      deleteWorkloadData,
+      startWorkload,
+      stopWorkload
+    } = useWorkloadService();
     return {
       loadWorkloadData,
       deleteWorkloadData,
