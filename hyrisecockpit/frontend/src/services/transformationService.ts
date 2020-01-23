@@ -38,7 +38,8 @@ function transformStorageData(
     notEquals(
       Vue.prototype.$databaseData.tables.value,
       Object.keys(data[primaryKey])
-    )
+    ) &&
+    Object.keys(data[primaryKey]).length
   ) {
     Vue.prototype.$databaseData.tables.value = Object.keys(data[primaryKey]);
   }
