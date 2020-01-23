@@ -38,9 +38,6 @@
       <v-btn small color="success">Start</v-btn>
       <v-btn small color="error">Stop</v-btn>
     </v-col>
-
-   
-
   </div>
 </template>
 
