@@ -1,18 +1,5 @@
 <template>
   <div>
-    <v-row v-if="enableComparison" align="center">
-      <v-col cols="6" class="mx-10">
-        <v-select
-          v-model="selectedDatabaseIds"
-          :items="$databaseData.databases.value.map(database => database.id)"
-          chips
-          label="databases"
-          multiple
-          outlined
-          prepend-icon="mdi-database"
-        ></v-select>
-      </v-col>
-    </v-row>
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
@@ -50,9 +37,6 @@ export default createComponent({
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-
-    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases); // can be removed when select is away
-
     const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
     onMounted(() => {
@@ -61,7 +45,6 @@ export default createComponent({
 
     return {
       data,
-      selectedDatabaseIds,
       chartConfiguration
     };
   }
