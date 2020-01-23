@@ -15,6 +15,8 @@ export type TransformationService = (
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
+  startWorkload: (workload: Workload) => void;
+  stopWorkload: (workload: Workload) => void;
 }
 
 export type FetchType = "read" | "modify";
@@ -27,5 +29,5 @@ export type Base =
   | "latency";
 
 const vm = "aurora";
-const port = 6000;
+const port = 8000;
 export const backendUrl = `http://vm-${vm}.eaalab.hpi.uni-potsdam.de:${port}/`;
