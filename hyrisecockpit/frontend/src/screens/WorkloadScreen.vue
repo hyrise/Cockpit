@@ -36,14 +36,12 @@
         <b> Start/stop workload </b>
       </div>
       <v-btn
-        :key="workload"
         @click="startWorkload(workload)"
         large
         color="success"
         >Start
       </v-btn>
       <v-btn
-        :key="workload"
         @click="startWorkload(workload)"
         large
         color="error"
