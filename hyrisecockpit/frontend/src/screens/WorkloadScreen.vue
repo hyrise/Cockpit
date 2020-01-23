@@ -4,6 +4,7 @@
       <b> Workload Generation </b>
     </div>
     <v-divider />
+
     <v-col cols="12">
       <div class="mb-2 mt-2">
         <b> Load generated workload </b>
@@ -31,7 +32,15 @@
           {{ workload }}
         </v-btn>
       </v-btn-toggle>
+      <div class="mb-2 mt-6">
+        <b> Start and stop workload </b>
+      </div>
+      <v-btn small color="success">Start</v-btn>
+      <v-btn small color="error">Stop</v-btn>
     </v-col>
+
+   
+
   </div>
 </template>
 

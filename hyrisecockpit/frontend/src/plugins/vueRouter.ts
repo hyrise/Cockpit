@@ -13,11 +13,7 @@ const routes = [
   { name: "database", path: "/database/:id", component: DatabaseInstance },
   { name: "workload", path: "/workload", component: WorkloadScreen },
   { name: "databases", path: "/databases", component: DatabasesScreen },
-  {
-    name: "comparison",
-    path: "/databases/compare",
-    component: DatabasesComparison
-  }
+  { name: "comparison", path: "/databases/compare", component: DatabasesComparison}
 ];
 
 export default new VueRouter({
