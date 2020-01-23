@@ -33,10 +33,10 @@
         </v-btn>
       </v-btn-toggle>
       <div class="mb-2 mt-6">
-        <b> Start and stop workload </b>
+        <b> Start/stop workload </b>
       </div>
-      <v-btn small color="success">Start</v-btn>
-      <v-btn small color="error">Stop</v-btn>
+      <v-btn large color="success">Start</v-btn>
+      <v-btn large color="error">Stop</v-btn>
     </v-col>
   </div>
 </template>
