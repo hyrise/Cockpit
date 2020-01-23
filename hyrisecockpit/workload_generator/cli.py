@@ -1,5 +1,7 @@
 """CLI used to start the workload generator."""
 from hyrisecockpit.settings import (
+    DB_MANAGER_HOST,
+    DB_MANAGER_PORT,
     GENERATOR_HOST,
     GENERATOR_PORT,
     WORKLOAD_LOCATION,
@@ -19,6 +21,8 @@ def main() -> None:
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
             WORKLOAD_LOCATION,
+            DB_MANAGER_HOST,
+            DB_MANAGER_PORT,
         ) as workload_generator:
             workload_generator.start()
     except KeyboardInterrupt:
