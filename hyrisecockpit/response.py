@@ -8,6 +8,8 @@ __default = {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "bod
 __responses = {
     200: {"header": {"status": 200, "message": "OK"}, "body": {}},
     400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
+    404: {"header": {"status": 404, "message": "NOT FOUND"}, "body": {}},
+    501: {"header": {"status": 501, "message": "NOT IMPLEMENTED"}, "body": {}},
     500: __default,
 }
 
