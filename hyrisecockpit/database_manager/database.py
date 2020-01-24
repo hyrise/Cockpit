@@ -83,6 +83,10 @@ class PoolCursor:
         """Execute a query."""
         return self.cur.execute(query, parameters)
 
+    def fetchone(self):
+        """Fetch one."""
+        return self.cur.fetchone()
+
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     """Fill the queue."""
@@ -160,8 +164,6 @@ class Database(object):
         self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._throughput: int = 0
-        self._latency: float = 0.0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._worker_pool: pool = self._init_worker_pool()
@@ -217,7 +219,7 @@ class Database(object):
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )
-                if cur.cur.fetchone():
+                if cur.fetchone():
                     continue
                 try:
                     # TODO change absolute to relative path
@@ -349,14 +351,6 @@ class Database(object):
                     "encoding": row["encoding_type"],
                 }
         return output
-
-    def get_throughput(self) -> int:
-        """Return throughput."""
-        return self._throughput
-
-    def get_latency(self) -> float:
-        """Return latency."""
-        return self._latency
 
     def get_system_data(self) -> Dict:
         """Return system data."""
