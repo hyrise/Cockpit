@@ -51,7 +51,7 @@ class Workload(object):
     def generate_specific(
         self, query_type: str, factor: int = 1
     ) -> List[Tuple[str, Any]]:
-        """Chose random one query from every type."""
+        """Chose random one query from specific type [factor] times."""
         if query_type not in self._queries.keys():
             raise QueryTypeNotFoundException(f"Query file {query_type} was not found")
 
