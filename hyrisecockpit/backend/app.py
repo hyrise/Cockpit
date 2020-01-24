@@ -4,10 +4,12 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+from time import time
 from typing import Dict
 
 from flask import Flask, request
 from flask_cors import CORS
+from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.settings import (
@@ -15,6 +17,10 @@ from hyrisecockpit.settings import (
     DB_MANAGER_PORT,
     GENERATOR_HOST,
     GENERATOR_PORT,
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
 )
 
 context = Context(io_threads=1)
@@ -25,9 +31,19 @@ db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
 generator_socket = context.socket(REQ)
 generator_socket.connect(f"tcp://{GENERATOR_HOST}:{GENERATOR_PORT}")
 
+
+storage_connection = InfluxDBClient(
+    STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
+)
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
+
+
+def get_all_databases(client: InfluxDBClient):
+    """Return a list of all databases with measurements."""
+    return [d["name"] for d in client.get_list_database()]
 
 
 def _send_message(socket: Socket, message: Dict):
@@ -44,19 +60,31 @@ def home() -> str:
 
 
 @app.route("/throughput")
-def get_throughput() -> Dict:
-    """Return throughput information from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "throughput"}, "body": {}}
-    )
+def get_throughput() -> Dict[str, int]:
+    """Return throughput information from the stored queries."""
+    t = time()
+    throughput: Dict[str, int] = dict()
+    for database in get_all_databases(storage_connection):
+        result = storage_connection.query(
+            f"SELECT COUNT(end) FROM succesful_queries WHERE end > {t-1} AND end <= {t};",
+            database=database,
+        )
+        throughput[database] = list(result["successful_queries", None])[0]["count"]
+    return throughput
 
 
 @app.route("/latency")
-def get_latency() -> Dict:
-    """Return latency information from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "latency"}, "body": {}}
-    )
+def get_latency() -> Dict[str, float]:
+    """Return latency information from the stored queries."""
+    t = time()
+    latency: Dict[str, float] = dict()
+    for database in get_all_databases(storage_connection):
+        result = storage_connection.query(
+            f"SELECT MEAN(latency) AS latency FROM (SELECT end-start AS latency FROM successful_queries WHERE start > {t-1} AND start <= {t});",
+            database=database,
+        )
+        latency[database] = list(result["successful_queries", None])[0]["latency"]
+    return latency
 
 
 @app.route("/queue_length")

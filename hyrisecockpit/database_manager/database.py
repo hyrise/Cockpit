@@ -38,8 +38,9 @@ class StorageCursor:
     def __enter__(self):
         """Establish a connection."""
         self._connection = InfluxDBClient(
-            self._host, self._port, self._user, self._password, self._database
+            self._host, self._port, self._user, self._password
         )
+        self._connection.create_database(self._database)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
