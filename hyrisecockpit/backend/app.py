@@ -51,6 +51,14 @@ def get_throughput() -> Dict:
     )
 
 
+@app.route("/latency")
+def get_latency() -> Dict:
+    """Return latency information from database manager."""
+    return _send_message(
+        db_manager_socket, {"header": {"message": "latency"}, "body": {}}
+    )
+
+
 @app.route("/queue_length")
 def get_queue_length() -> Dict:
     """Return queue length information from database manager."""
@@ -143,13 +151,22 @@ def workload() -> Dict:
     return response
 
 
-@app.route("/load_data/<datatype>", methods=["GET"])
-def load_data(datatype: str) -> Dict:
-    """Load pregenerated tables."""
-    return _send_message(
-        db_manager_socket,
-        {"header": {"message": "load data"}, "body": {"datatype": datatype}},
-    )
+@app.route("/data/<datatype>", methods=["POST", "DELETE"])
+def data(datatype: str) -> Dict:
+    """Load or delete pregenerated tables from all databases."""
+    request_json = request.get_json()
+    if request.method == "POST":
+        message = {
+            "header": {"message": "load data"},
+            "body": {"datatype": datatype, "sf": request_json["body"]["sf"]},
+        }
+    elif request.method == "DELETE":
+        message = {
+            "header": {"message": "delete data"},
+            "body": {"datatype": datatype},
+        }
+    response = _send_message(db_manager_socket, message)
+    return response
 
 
 @app.route("/krueger_data", methods=["GET"])

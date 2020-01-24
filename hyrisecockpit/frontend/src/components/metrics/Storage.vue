@@ -1,5 +1,5 @@
 <template>
-  <div class="treemap mx-10 my-10">
+  <div class="mx-10 my-10">
     <Treemap
       graph-id="storage"
       :labels="labels"
@@ -32,6 +32,7 @@ interface Data {
 }
 
 export default createComponent({
+  name: "Storage",
   components: {
     Treemap
   },
@@ -42,10 +43,10 @@ export default createComponent({
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
-    const chartConfiguration = ref<string[]>([props.preselectedDatabaseId]);
+    const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
 
-    checkState();
     onMounted(() => {
+      checkState();
       setInterval(checkState, 5000);
     });
 
@@ -57,7 +58,7 @@ export default createComponent({
           newSizes
         } = props.metricMeta.transformationService(
           data.value,
-          props.preselectedDatabaseId
+          props.selectedDatabases[0] // not really good style
         );
         labels.value = newLabels;
         parents.value = newParents;
@@ -69,8 +70,3 @@ export default createComponent({
   }
 });
 </script>
-<style>
-.treemap {
-  width: 100%;
-}
-</style>

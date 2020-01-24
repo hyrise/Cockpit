@@ -3,12 +3,12 @@ import VueCompositionApi from "@vue/composition-api";
 import vuetify from "./plugins/vuetify";
 import vueRouter from "./plugins/vueRouter";
 import App from "./App.vue";
-import { useDatabaseFetchService } from "./services/databaseService";
+import { useDatabaseService } from "./services/databaseService";
 
 Vue.use(VueCompositionApi);
 
 Vue.config.productionTip = false;
-Vue.prototype.$databaseData = useDatabaseFetchService();
+Vue.prototype.$databaseData = useDatabaseService();
 
 new Vue({
   vuetify,

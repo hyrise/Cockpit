@@ -1,12 +1,16 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
+import Vue from "vue";
+import { notEquals } from "../helpers/methods";
 
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
     access: transformAccessData,
-    storage: transformStorageData,
     cpu: transformCPUData,
-    throughput: transformThroughputData
+    latency: getReadOnlyData,
+    ram: getReadOnlyData,
+    storage: transformStorageData,
+    throughput: getReadOnlyData
   };
 
   return transformationMap[metric];
@@ -17,7 +21,8 @@ function transformCPUData(data: any, primaryKey: string = ""): number {
     (accumulator: any, currentValue: any) => accumulator + currentValue
   );
 }
-function transformThroughputData(data: any, primaryKey: string = ""): number {
+
+function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
@@ -28,6 +33,16 @@ function transformStorageData(
   const newLabels: string[] = [];
   const newParents: string[] = [];
   const newSizes: number[] = [];
+
+  if (
+    notEquals(
+      Vue.prototype.$databaseData.tables.value,
+      Object.keys(data[primaryKey])
+    ) &&
+    Object.keys(data[primaryKey]).length
+  ) {
+    Vue.prototype.$databaseData.tables.value = Object.keys(data[primaryKey]);
+  }
 
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);

@@ -1,6 +1,7 @@
 """This module represents a workload."""
-import secrets
+
 from random import shuffle
+from secrets import choice
 from typing import Any, Dict, List, Tuple
 
 from hyrisecockpit.exception import QueryTypeNotFoundException
@@ -40,7 +41,7 @@ class Workload(object):
 
         for _ in range(factor):
             for queries_type in self._queries.values():
-                workload_queries.append((secrets.choice(queries_type), None))
+                workload_queries.append((choice(queries_type), None))
 
         if shuffle_flag:
             shuffle(workload_queries)
@@ -55,7 +56,7 @@ class Workload(object):
             raise QueryTypeNotFoundException(f"Query file {query_type} was not found")
 
         workload_queries: List[Tuple[str, Any]] = [
-            (secrets.choice(self._queries[query_type]), None) for _ in range(factor)
+            (choice(self._queries[query_type]), None) for _ in range(factor)
         ]
 
         return workload_queries

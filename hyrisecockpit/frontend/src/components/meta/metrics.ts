@@ -2,7 +2,7 @@ import { backendUrl } from "../../types/services";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { useDataTransformation } from "../../services/transformationService";
 
-export const metricsMetadata: Record<Metric, MetricMetadata> = {
+const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
     transformationService: useDataTransformation("access"),
@@ -14,6 +14,18 @@ export const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("cpu"),
     base: "system_data",
     endpoint: backendUrl + "system_data"
+  },
+  latency: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("latency"),
+    base: "latency",
+    endpoint: backendUrl + "latency"
+  },
+  ram: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("ram"),
+    base: "throughput",
+    endpoint: backendUrl + "throughput"
   },
   storage: {
     fetchType: "read",
@@ -28,3 +40,7 @@ export const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: backendUrl + "throughput"
   }
 };
+
+export function getMetadata(metric: Metric): MetricMetadata {
+  return metricsMetadata[metric];
+}

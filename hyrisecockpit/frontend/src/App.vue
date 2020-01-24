@@ -24,7 +24,7 @@ interface Data {
 export default createComponent({
   components: { AppDrawer },
   setup(props: {}, context: SetupContext): Data {
-    const showNavigationDrawer = ref<boolean>(false);
+    const showNavigationDrawer = ref<boolean>(true);
 
     function toggleNavigationDrawer(): void {
       showNavigationDrawer.value = !showNavigationDrawer.value;

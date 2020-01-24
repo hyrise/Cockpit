@@ -1,4 +1,5 @@
 import { Ref } from "@vue/composition-api";
+import { Workload } from "./workloads";
 
 export interface FetchService {
   data: Ref<any>;
@@ -11,9 +12,19 @@ export type TransformationService = (
   secondaryKey?: string
 ) => any;
 
+export interface WorkloadService {
+  loadWorkloadData: (workload: Workload) => void;
+  deleteWorkloadData: (workload: Workload) => void;
+}
+
 export type FetchType = "read" | "modify";
 
-export type Base = "system_data" | "throughput" | "storage" | "chunks_data";
+export type Base =
+  | "system_data"
+  | "throughput"
+  | "storage"
+  | "chunks_data"
+  | "latency";
 
 const vm = "aurora";
 const port = 8000;
