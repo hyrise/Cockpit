@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="chart mx-10 my-10">
+    <div class="mx-10 my-10">
       <v-row align="center">
         <v-col cols="6" class="mx-10">
           <v-select
@@ -99,9 +99,3 @@ export default createComponent({
   }
 });
 </script>
-<style scoped>
-.chart {
-  max-width: 1200px;
-  max-height: 900px;
-}
-</style>
