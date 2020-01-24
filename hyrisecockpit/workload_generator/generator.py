@@ -5,12 +5,14 @@ Includes the main WorkloadGenerator.
 
 from typing import Any, Callable, Dict
 
+from jsonschema import ValidationError, validate
 from zmq import PUB, REP, REQ, Context
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
     NotExistingWorkloadFolderException,
 )
+from hyrisecockpit.message import request_schema, workload_request_schema
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
@@ -87,8 +89,7 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
-        if not self._load_data(body["type"]):
-            return get_response(400)
+        validate(instance=body, schema=workload_request_schema)
         try:
             workload = self._get_workload(body["type"])
             queries = workload.generate_workload()
@@ -103,13 +104,6 @@ class WorkloadGenerator(object):
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
 
-    def _handle_request(self, request):
-        handler = self._server_calls.get(request["header"]["message"], None)
-        if not handler:
-            return get_response(400)
-        response = handler(request["body"])
-        return response
-
     def start(self) -> None:
         """Run the generator by enabling IPC."""
         print(
@@ -121,8 +115,25 @@ class WorkloadGenerator(object):
             # Get the message
             request = self._rep_socket.recv_json()
 
+            # Validate the message
+            try:
+                validate(instance=request, schema=request_schema)
+            except ValidationError:
+                self._rep_socket.send_json(get_response(400))
+                continue
+
+            # Look for the call
+            call = self._server_calls.get(request["header"]["message"])
+            if not call:
+                self._rep_socket.send_json(get_response(404))
+                continue
+
             # Handle the call
-            response = self._handle_request(request)
+            try:
+                response = call(request["body"])
+            except ValidationError:
+                self._rep_socket.send_json(get_response(400))
+                continue
 
             # Send the reply
             self._rep_socket.send_json(response)
