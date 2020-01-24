@@ -134,7 +134,12 @@ def workload() -> Dict:
     if request.method == "POST":
         message = {
             "header": {"message": "workload"},
-            "body": {"type": request_json["body"]["type"]},  # TODO remove body
+            "body": {
+                "type": request_json.get("type"),
+                "queries": request_json.get("queries"),
+                "factor": request_json.get("factor", 1),
+                "shuffle": request_json.get("shuffle", False),
+            },
         }
     elif request.method == "DELETE":
         message = {
@@ -142,6 +147,7 @@ def workload() -> Dict:
             "body": {},
         }
     response = _send_message(generator_socket, message)
+
     return response
 
 

@@ -3,13 +3,16 @@
 Includes the main WorkloadGenerator.
 """
 
-from typing import Any, Callable, Dict
+from random import shuffle
+from typing import Any, Callable, Dict, List, Tuple
 
 from zmq import PUB, REP, REQ, Context
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
     NotExistingWorkloadFolderException,
+    QueryTypeNotFoundException,
+    QueryTypesNotSpecifiedException,
 )
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
@@ -90,15 +93,48 @@ class WorkloadGenerator(object):
         if not self._load_data(body["type"]):
             return get_response(400)
         try:
-            workload = self._get_workload(body["type"])
-            queries = workload.generate_workload()
+            factor = body.get("factor", 1)
+            shuffle_flag = body.get("shuffle", False)
+            if body["type"] == "custom":
+                if not body.get("queries"):
+                    raise QueryTypesNotSpecifiedException(
+                        "Missing query types for custom workload"
+                    )
+                queries = self._generate_custom_workload(
+                    body["queries"], factor, shuffle_flag
+                )
+            else:
+                workload = self._get_workload(body["type"])
+                queries = workload.generate_workload(factor, shuffle_flag)
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
-        except (NotExistingWorkloadFolderException, EmptyWorkloadFolderException) as e:
+        except (
+            NotExistingWorkloadFolderException,
+            EmptyWorkloadFolderException,
+            QueryTypeNotFoundException,
+            QueryTypesNotSpecifiedException,
+        ) as e:
             return get_error_response(400, str(e))
 
         return get_response(200)
+
+    def _generate_custom_workload(
+        self, query_types: Dict, factor: int, shuffle_flag: bool
+    ):
+        workload_queries: List[Tuple[str, Any]] = []
+        for _ in range(factor):
+            for query_type in query_types.keys():
+                workload_type = query_type.split("/")[0]
+                query = query_type.split("/")[1]
+                factor = query_types[query_type]
+                workload = self._get_workload(workload_type)
+                workload_queries.extend(workload.generate_specific(query, factor))
+
+        if shuffle_flag:
+            shuffle(workload_queries)
+
+        return workload_queries
 
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
