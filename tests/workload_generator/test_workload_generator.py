@@ -85,7 +85,7 @@ class TestWorkloadGenerator:
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure existing workload calls return 200."""
-        body = {"type": workload}
+        body = {"type": workload, "factor": 1, "shuffle": False}
         response = isolated_generator._call_workload(body)
 
         assert response["header"]["status"] == 200
@@ -108,7 +108,7 @@ class TestWorkloadGenerator:
             "Error message"
         )
         isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload"}
+        body = {"type": "dummy workload", "factor": 1, "shuffle": False}
 
         response = isolated_generator._call_workload(body)
 
@@ -133,10 +133,67 @@ class TestWorkloadGenerator:
             "Error message"
         )
         isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload"}
+        body = {"type": "dummy workload", "factor": 1, "shuffle": False}
 
         response = isolated_generator._call_workload(body)
 
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"]["error"] == "Error message"
+
+    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data")
+    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data")
+    def test_generates_custom_workload(
+        self, mock_load_data, mock_publish_data, isolated_generator: WorkloadGenerator
+    ):
+        """Ensure custom workload generation."""
+        mock_publish_data.return_value = None
+        mock_load_data.return_value = True
+
+        workload1 = MagicMock()
+        workload1.generate_specific.return_value = [("dummy query 1", None)]
+        workload2 = MagicMock()
+        workload2.generate_specific.return_value = [("dummy query 2", None)]
+
+        isolated_generator._workloads["workload1"] = workload1
+        isolated_generator._workloads["workload2"] = workload2
+
+        body = {
+            "type": "custom",
+            "queries": {"workload1/1": 1, "workload2/1": 1},
+            "factor": 1,
+            "shuffle": False,
+        }
+
+        response = isolated_generator._call_workload(body)
+        expected_workload = [("dummy query 1", None), ("dummy query 2", None)]
+        expected_publish_response = {
+            "header": {"message": "OK", "status": 200},
+            "body": {"querylist": expected_workload},
+        }
+        assert response["header"]["status"] == 200
+        assert response["header"]["message"] == "OK"
+
+        mock_publish_data.assert_called_with(expected_publish_response)
+
+    @patch(
+        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
+        idle_function,
+    )
+    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data")
+    def test_custom_workload_requires_query_types(
+        self, mock_load_data, isolated_generator: WorkloadGenerator
+    ):
+        """Ensure custom workload request containts queries specification."""
+        mock_load_data.return_value = True
+        body = {
+            "type": "custom",
+            "factor": 1,
+            "shuffle": False,
+        }
+
+        response = isolated_generator._call_workload(body)
+
+        assert response["header"]["status"] == 400
+        assert response["header"]["message"] == "BAD REQUEST"
+        assert response["body"]["error"] == "Missing query types for custom workload"
