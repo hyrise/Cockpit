@@ -1,5 +1,16 @@
 <template>
-  <div class="ml-6">
+  <div class="mx-6">
+    <v-select
+      v-if="$databaseData.isReady"
+      class="select"
+      v-model="watchedInstances"
+      :items="$databaseData.databases.value.map(database => database.id)"
+      chips
+      label="databases"
+      multiple
+      outlined
+      prepend-icon="mdi-database"
+    ></v-select>
     <MetricsTileList :selected-databases="watchedInstances" />
   </div>
 </template>
@@ -25,6 +36,7 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = ref<string[]>([]);
+
     const { isReady } = context.root.$databaseData;
     watch(isReady, () => {
       if (isReady.value) {
@@ -37,3 +49,9 @@ export default createComponent({
   }
 });
 </script>
+<style scoped>
+.select {
+  padding-top: 20px;
+  width: 33%;
+}
+</style>

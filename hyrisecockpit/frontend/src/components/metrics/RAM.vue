@@ -3,7 +3,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="throughput"
+      graph-id="ram"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -32,13 +32,13 @@ import {
 } from "../../types/metrics";
 
 export default createComponent({
-  name: "Throughput",
+  name: "RAM",
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
 
-    const chartConfiguration = ["Throughput", "time in sec", "queries per sec"];
+    const chartConfiguration = ["RAM", "time in sec", "memory usage in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
