@@ -87,6 +87,7 @@ class DatabaseManager(object):
             return get_response(400)
 
         db_instance = Database(
+            body["id"],
             user,
             password,
             host,
