@@ -90,8 +90,8 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
-        if not self._load_data(body["type"]):
-            return get_error_response(400, "Required tables could not be loaded")
+        # if not self._load_data(body["type"]):
+        #     return get_error_response(400, "Required tables could not be loaded")
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
