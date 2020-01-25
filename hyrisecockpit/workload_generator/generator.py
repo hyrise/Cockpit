@@ -90,7 +90,6 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
-        # import pdb; pdb.set_trace()
         if not self._load_data(body["type"], body["sf"]):
             return get_response(400)
         try:
