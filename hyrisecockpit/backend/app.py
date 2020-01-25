@@ -134,7 +134,27 @@ def stop_workload() -> Dict:
         "header": {"message": "stop workload"},
         "body": {},
     }
-    print(message)
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/register_workload", methods=["POST"])
+def register_workload() -> Dict:
+    """Register the workload specification."""
+    request_json = request.get_json()
+    workload = {
+        "type": request_json.get("type"),
+        "queries": request_json.get("queries", None),
+        "shuffle": request_json.get("shuffle", False),
+        "factor": request_json.get("factor", 1),
+        "auto-reload": request_json.get("auto-reload", False),
+    }
+
+    message = {
+        "header": {"message": "register workload"},
+        "body": {"workload": workload},
+    }
     response = _send_message(db_manager_socket, message)
 
     return response

@@ -28,6 +28,10 @@ class DatabaseManager(object):
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
+
+        self._workload_specification: Dict[str, Any] = {}
+        self._workload_flag: bool = False
+
         self._databases: Dict[str, Database] = dict()
         self._scheduler = BackgroundScheduler()
         self._update_log_job = self._scheduler.add_job(
@@ -46,6 +50,7 @@ class DatabaseManager(object):
             "get databases": self._call_get_databases,
             "load data": self._call_load_data,
             "delete data": self._call_delete_data,
+            "register workload": self._call_register_workload,
             "stop workload": self._call_stop_workload,
         }
         self._context = Context(io_threads=1)
@@ -191,6 +196,31 @@ class DatabaseManager(object):
         for database in list(self._databases.values()):
             if not database.load_data(datatype, sf):
                 return get_response(400)  # TODO return which DB couldn't import
+        return get_response(200)
+
+    def _call_register_workload(self, body: Dict) -> Dict:
+        # TODO: move validation to workload generator
+        workload = body.get("workload")
+        if not workload:
+            return get_error_response(
+                400, "Invalid workload: workload key not provided"
+            )
+
+        try:
+            self._workload_specification = {}
+            self._workload_specification["auto-reload"] = workload.get(
+                "auto-reload", False
+            )
+            self._workload_specification["shuffle"] = workload.get("shuffle", False)
+            self._workload_specification["factor"] = workload.get("factor", 1)
+            self._workload_specification["type"] = workload["type"]
+            if workload["type"] == "custom":
+                self._workload_specification["queries"] = workload["queries"]
+        except KeyError:
+            return get_error_response(
+                400, "Invalid workload: type or queries keys are not provided"
+            )
+
         return get_response(200)
 
     def _call_stop_workload(self, body: Dict) -> Dict:
