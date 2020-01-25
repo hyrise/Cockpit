@@ -135,10 +135,11 @@ def workload() -> Dict:
         message = {
             "header": {"message": "workload"},
             "body": {
-                "type": request_json.get("type"),
-                "queries": request_json.get("queries"),
-                "factor": request_json.get("factor", 1),
-                "shuffle": request_json.get("shuffle", False),
+                "type": request_json["body"].get("type"),
+                "sf": request_json["body"].get("sf"),
+                "queries": request_json["body"].get("queries"),
+                "factor": request_json["body"].get("factor", 1),
+                "shuffle": request_json["body"].get("shuffle", False),
             },
         }
     elif request.method == "DELETE":
