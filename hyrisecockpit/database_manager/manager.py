@@ -183,7 +183,7 @@ class DatabaseManager(object):
         return get_response(400)
 
     def _call_load_data(self, body: Dict) -> Dict:
-        datatype = body.get("datatype")
+        datatype = str(body.get("datatype")).lower()
         sf = body.get("sf", "1")
         if not datatype:
             return get_response(400)
