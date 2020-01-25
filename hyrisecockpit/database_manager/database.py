@@ -188,7 +188,7 @@ class Database(object):
     def _update_query_data(self) -> None:
         """Update data calculated from queries."""
         queries = self._query_list
-        self._query_list = []
+        self._query_list = self._manager.list()
         self._throughput = len(queries)
         if len(queries) > 0:
             self._latency = sum(
