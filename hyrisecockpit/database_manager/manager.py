@@ -83,14 +83,14 @@ class DatabaseManager(object):
                 if self._workload_specification["auto-reload"]:
                     factor = auto_reload_factor
                 else:
-                    factor = self._workload_specification["factor"]
+                    factor = self._workload_specification.get("factor", 1)
                     self._workload_proceed_flag = False
                 request = {
                     "header": {"message": "workload"},
                     "body": {
                         "type": self._workload_specification["type"],
                         "queries": self._workload_specification.get("queries", None),
-                        "shuffle": self._workload_specification["shuffle"],
+                        "shuffle": self._workload_specification.get("shuffle", False),
                         "factor": factor,
                     },
                 }
