@@ -3,7 +3,7 @@
 from typing import Any, Callable, Dict, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from zmq import REP, Context
+from zmq import REP, REQ, Context
 
 from hyrisecockpit.response import get_error_response, get_response
 
@@ -18,6 +18,8 @@ class DatabaseManager(object):
         self,
         db_manager_host: str,
         db_manager_port: str,
+        generator_host: str,
+        generator_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
         default_tables: str,
@@ -25,17 +27,19 @@ class DatabaseManager(object):
         """Initialize a DatabaseManager."""
         self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._generator_host = generator_host
+        self._generator_port = generator_port
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
 
         self._workload_specification: Dict[str, Any] = {}
-        self._workload_flag: bool = False
+        self._workload_proceed_flag: bool = False
 
         self._databases: Dict[str, Database] = dict()
         self._scheduler = BackgroundScheduler()
-        self._update_log_job = self._scheduler.add_job(
-            func=self._update_log, trigger="interval", seconds=1,
+        self._reload_workload_job = self._scheduler.add_job(
+            func=self._reload_workload, trigger="interval", seconds=1,
         )
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
@@ -51,6 +55,7 @@ class DatabaseManager(object):
             "load data": self._call_load_data,
             "delete data": self._call_delete_data,
             "register workload": self._call_register_workload,
+            "start workload": self._call_start_workload,
             "stop workload": self._call_stop_workload,
         }
         self._context = Context(io_threads=1)
@@ -58,15 +63,39 @@ class DatabaseManager(object):
         self._socket.bind(
             "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
         )
+        self._generator_socket = self._context.socket(REQ)
+        self._generator_socket.connect(
+            "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
+        )
+        self._scheduler.start()
 
-    def _update_log(self):
-        log = dict()
-        for id, database in self._databases.items():
-            log[id] = database.move_query_log()
-        for id in log.keys():
-            with open(f"log-{id}.csv", "a") as f:
-                for query in log[id]:
-                    print(query, sep=",", file=f)
+    def _reload_workload(self):
+        limit = 10000
+        auto_reload_factor = 10000
+        queue_length = []
+        if self._workload_proceed_flag:
+            queue_length = [
+                database.get_queue_length() for _, database in self._databases.items()
+            ]
+            if min(queue_length) < limit:
+                if self._workload_specification["auto-reload"]:
+                    factor = auto_reload_factor
+                else:
+                    factor = self._workload_specification["factor"]
+                    self._workload_proceed_flag = False
+                request = {
+                    "header": {"message": "workload"},
+                    "body": {
+                        "type": self._workload_specification["type"],
+                        "queries": self._workload_specification.get("queries", None),
+                        "shuffle": self._workload_specification["shuffle"],
+                        "factor": factor,
+                    },
+                }
+                self._generator_socket.send_json(request)
+                reply = self._generator_socket.recv_json()
+                if reply["header"]["status"] != 200:
+                    print("Couldn't reload workload :(")
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -223,7 +252,16 @@ class DatabaseManager(object):
 
         return get_response(200)
 
+    def _call_start_workload(self, body: Dict) -> Dict:
+        if self._workload_specification == {}:
+            return get_error_response(400, "Workload specification not initialized")
+        for database in list(self._databases.values()):
+            database.enable_workload_execution()
+        self._workload_proceed_flag = True
+        return get_response(200)
+
     def _call_stop_workload(self, body: Dict) -> Dict:
+        self._workload_proceed_flag = False
         for database in list(self._databases.values()):
             database.disable_workload_execution()
         return get_response(200)
@@ -259,5 +297,8 @@ class DatabaseManager(object):
         """Close the socket and context, exit all databases."""
         for database in self._databases.values():
             database.close()
+        self._reload_workload_job.remove()
+        self._scheduler.shutdown()
         self._socket.close()
+        self._generator_socket.close()
         self._context.term()

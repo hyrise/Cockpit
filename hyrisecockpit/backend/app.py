@@ -127,18 +127,6 @@ def database() -> Dict:
     return response
 
 
-@app.route("/stop_workload", methods=["POST"])
-def stop_workload() -> Dict:
-    """Stop the workload execution."""
-    message = {
-        "header": {"message": "stop workload"},
-        "body": {},
-    }
-    response = _send_message(db_manager_socket, message)
-
-    return response
-
-
 @app.route("/register_workload", methods=["POST"])
 def register_workload() -> Dict:
     """Register the workload specification."""
@@ -154,6 +142,30 @@ def register_workload() -> Dict:
     message = {
         "header": {"message": "register workload"},
         "body": {"workload": workload},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/start_workload", methods=["POST"])
+def start_workload() -> Dict:
+    """Start the workload execution."""
+    message = {
+        "header": {"message": "start workload"},
+        "body": {},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/stop_workload", methods=["POST"])
+def stop_workload() -> Dict:
+    """Stop the workload execution."""
+    message = {
+        "header": {"message": "stop workload"},
+        "body": {},
     }
     response = _send_message(db_manager_socket, message)
 
