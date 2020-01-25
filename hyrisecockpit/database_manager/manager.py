@@ -5,7 +5,7 @@ from typing import Any, Callable, Dict, Optional
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import REP, Context
 
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import get_error_response, get_response
 
 from .database import Database
 from .driver import Driver
@@ -46,6 +46,7 @@ class DatabaseManager(object):
             "get databases": self._call_get_databases,
             "load data": self._call_load_data,
             "delete data": self._call_delete_data,
+            "stop workload": self._call_stop_workload,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -180,7 +181,7 @@ class DatabaseManager(object):
         return response
 
     def _call_not_found(self, body: Dict) -> Dict:
-        return get_response(400)
+        return get_error_response(400, "Call not found")
 
     def _call_load_data(self, body: Dict) -> Dict:
         datatype = body.get("datatype")
@@ -190,6 +191,11 @@ class DatabaseManager(object):
         for database in list(self._databases.values()):
             if not database.load_data(datatype, sf):
                 return get_response(400)  # TODO return which DB couldn't import
+        return get_response(200)
+
+    def _call_stop_workload(self, body: Dict) -> Dict:
+        for database in list(self._databases.values()):
+            database.disable_workload_execution()
         return get_response(200)
 
     def _call_delete_data(self, body: Dict) -> Dict:
@@ -211,7 +217,6 @@ class DatabaseManager(object):
         while True:
             # Get the message
             request = self._socket.recv_json()
-
             # Handle the call
             response = self._server_calls.get(
                 request["header"]["message"], self._call_not_found

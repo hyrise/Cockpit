@@ -127,6 +127,19 @@ def database() -> Dict:
     return response
 
 
+@app.route("/stop_workload", methods=["POST"])
+def stop_workload() -> Dict:
+    """Stop the workload execution."""
+    message = {
+        "header": {"message": "stop workload"},
+        "body": {},
+    }
+    print(message)
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
 @app.route("/workload", methods=["POST", "DELETE"])
 def workload() -> Dict:
     """Start or stop the workload generator."""

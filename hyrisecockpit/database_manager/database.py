@@ -3,7 +3,7 @@
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
 from time import time
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -60,6 +60,7 @@ def execute_queries(
     query_list: List,
     connection_pool: pool,
     failed_task_queue: Queue,
+    workload_proceed_flag: Any,
 ) -> None:
     """Define workers work loop."""
     with PoolCursor(connection_pool) as cur:
@@ -67,11 +68,12 @@ def execute_queries(
             # If Queue is emty go to wait status
             try:
                 task = task_queue.get(block=True)
-                query, parameters = task
-                startts = time()
-                cur.execute(query, parameters)
-                endts = time()
-                query_list.append((startts, endts, "none", 0))
+                if workload_proceed_flag.value:
+                    query, parameters = task
+                    startts = time()
+                    cur.execute(query, parameters)
+                    endts = time()
+                    query_list.append((startts, endts, "none", 0))
             except (ValueError, Error) as e:
                 failed_task_queue.put(
                     {"worker_id": worker_id, "task": task, "Error": str(e)}
@@ -104,6 +106,7 @@ class Database(object):
             dbname,
             self._number_workers + self._number_additional_connections,
         )
+
         self._connection_pool = self._driver.get_connection_pool()
 
         self._task_queue: Queue = Queue(0)
@@ -116,6 +119,7 @@ class Database(object):
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._query_list: List = self._manager.list()
+        self._workload_proceed_flag = self._manager.Value("b", True)
         self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
@@ -146,6 +150,7 @@ class Database(object):
                     self._query_list,
                     self._connection_pool,
                     self._failed_task_queue,
+                    self._workload_proceed_flag,
                 ),
             )
             worker_pool.append(p)
@@ -154,6 +159,14 @@ class Database(object):
         )
         worker_pool.append(subscriber_process)
         return worker_pool
+
+    def enable_workload_execution(self) -> None:
+        """Enable execution of the workload."""
+        self._workload_proceed_flag.value = True
+
+    def disable_workload_execution(self) -> None:
+        """Disable execution of the workload."""
+        self._workload_proceed_flag.value = False
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""
