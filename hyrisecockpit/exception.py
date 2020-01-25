@@ -15,3 +15,19 @@ class NotExistingWorkloadFolderException(Exception):
     def __init__(self, message: str):
         """Initialize a IdNotValidException."""
         super().__init__(message)
+
+
+class QueryTypeNotFoundException(Exception):
+    """Exception raised for invalid query type."""
+
+    def __init__(self, message: str):
+        """Initialize a QueryTypeNotFoundException."""
+        super().__init__(message)
+
+
+class QueryTypesNotSpecifiedException(Exception):
+    """Exception raised for invalid custom workload request."""
+
+    def __init__(self, message: str):
+        """Initialize a QueryTypesNotSpecifiedException."""
+        super().__init__(message)

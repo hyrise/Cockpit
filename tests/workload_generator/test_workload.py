@@ -3,8 +3,9 @@
 from typing import Any
 from unittest.mock import MagicMock, patch
 
-from pytest import fixture
+from pytest import fixture, raises
 
+from hyrisecockpit.exception import QueryTypeNotFoundException
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
 workload_type: str = "TPCH"
@@ -60,6 +61,37 @@ class TestWorkload:
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
         expected_workload = [("foo", None), ("foo2", None)]
         fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload()
+        received_queries = fake_workload.generate_workload(1, False)
+        assert received_queries[:] == expected_workload[:]
+
+    def test_generates_workload_with_factor(self, fake_workload):
+        """Test cration of workload."""
+        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
+        expected_workload = [
+            ("foo", None),
+            ("foo2", None),
+            ("foo", None),
+            ("foo2", None),
+        ]
+        fake_workload._queries = dummy_queries
+        received_queries = fake_workload.generate_workload(2, False)
+        assert received_queries[:] == expected_workload[:]
+
+    def test_generates_specific_query(self, fake_workload):
+        """Test generating of a single query."""
+        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
+        expected_workload = [("foo", None), ("foo", None)]
+        fake_workload._queries = dummy_queries
+        received_queries = fake_workload.generate_specific("Type1", 2)
 
         assert received_queries[:] == expected_workload[:]
+
+    def test_generates_not_existing_specific_query(self, fake_workload):
+        """Test generating of a single query."""
+        dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
+        fake_workload._queries = dummy_queries
+        expected_error_meassage = "Query file Type3 was not found"
+
+        with raises(QueryTypeNotFoundException) as e:
+            fake_workload.generate_specific("Type3", 2)
+        assert str(e.value) == expected_error_meassage
