@@ -39,7 +39,7 @@ class DatabaseManager(object):
         self._databases: Dict[str, Database] = dict()
         self._scheduler = BackgroundScheduler()
         self._reload_workload_job = self._scheduler.add_job(
-            func=self._reload_workload, trigger="interval", seconds=1,
+            func=self._reload_workload, trigger="interval", seconds=1, max_instances=1
         )
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
@@ -72,11 +72,13 @@ class DatabaseManager(object):
     def _reload_workload(self):
         limit = 10000
         auto_reload_factor = 10000
-        queue_length = []
         if self._workload_proceed_flag:
             queue_length = [
                 database.get_queue_length() for _, database in self._databases.items()
             ]
+            if len(queue_length) == 0:
+                return None
+
             if min(queue_length) < limit:
                 if self._workload_specification["auto-reload"]:
                     factor = auto_reload_factor
@@ -93,9 +95,7 @@ class DatabaseManager(object):
                     },
                 }
                 self._generator_socket.send_json(request)
-                reply = self._generator_socket.recv_json()
-                if reply["header"]["status"] != 200:
-                    print("Couldn't reload workload :(")
+                self._generator_socket.recv_json()
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -228,28 +228,21 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_register_workload(self, body: Dict) -> Dict:
-        # TODO: move validation to workload generator
-        workload = body.get("workload")
-        if not workload:
+        workload: Any = body.get("workload")
+        request = {
+            "header": {"message": "validate workload"},
+            "body": workload,
+        }
+        self._generator_socket.send_json(request)
+        response = self._generator_socket.recv_json()
+
+        if response["header"]["status"] != 200:
             return get_error_response(
-                400, "Invalid workload: workload key not provided"
+                400, response["body"].get("error", "Invalid workload")
             )
 
-        try:
-            self._workload_specification = {}
-            self._workload_specification["auto-reload"] = workload.get(
-                "auto-reload", False
-            )
-            self._workload_specification["shuffle"] = workload.get("shuffle", False)
-            self._workload_specification["factor"] = workload.get("factor", 1)
-            self._workload_specification["type"] = workload["type"]
-            if workload["type"] == "custom":
-                self._workload_specification["queries"] = workload["queries"]
-        except KeyError:
-            return get_error_response(
-                400, "Invalid workload: type or queries keys are not provided"
-            )
-
+        self._workload_specification = workload
+        self._workload_specification["auto-reload"] = workload.get("auto-reload", True)
         return get_response(200)
 
     def _call_start_workload(self, body: Dict) -> Dict:

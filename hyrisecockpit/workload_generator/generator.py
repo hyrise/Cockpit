@@ -41,6 +41,7 @@ class WorkloadGenerator(object):
         self._default_workload_location = default_workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
+            "validate workload": self._call_validate_workload,
         }
         self._workloads: Dict[str, Any] = {}
         self._init_server()
@@ -92,6 +93,7 @@ class WorkloadGenerator(object):
     def _call_workload(self, body: Dict) -> Dict:
         # if not self._load_data(body["type"]):
         #     return get_error_response(400, "Required tables could not be loaded")
+
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
@@ -120,6 +122,31 @@ class WorkloadGenerator(object):
 
         return get_response(200)
 
+    def _call_validate_workload(self, body: Dict):
+        workload_type = body.get("type")
+        if not workload_type:
+            return get_error_response(400, "workload type not provided")
+        try:
+            if workload_type == "custom":
+                query_types = body.get("queries")
+                if not query_types:
+                    return get_error_response(
+                        400, "Missing query types for custom workload"
+                    )
+                for query_type in query_types.keys():
+                    query_types[query_type] = 1
+                self._generate_custom_workload(query_types, 1, False)
+            else:
+                self._get_workload(workload_type)
+        except (
+            NotExistingWorkloadFolderException,
+            EmptyWorkloadFolderException,
+            QueryTypeNotFoundException,
+            QueryTypesNotSpecifiedException,
+        ) as e:
+            return get_error_response(400, str(e))
+        return get_response(200)
+
     def _generate_custom_workload(
         self, query_types: Dict, factor: int, shuffle_flag: bool
     ):
@@ -131,7 +158,6 @@ class WorkloadGenerator(object):
                 factor = query_types[query_type]
                 workload = self._get_workload(workload_type)
                 workload_queries.extend(workload.generate_specific(query, factor))
-
         if shuffle_flag:
             shuffle(workload_queries)
         return workload_queries
