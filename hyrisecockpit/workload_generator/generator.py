@@ -91,7 +91,7 @@ class WorkloadGenerator(object):
 
     def _call_workload(self, body: Dict) -> Dict:
         if not self._load_data(body["type"]):
-            return get_response(400)
+            return get_error_response(400, "Required tables could not be loaded")
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
@@ -106,6 +106,7 @@ class WorkloadGenerator(object):
             else:
                 workload = self._get_workload(body["type"])
                 queries = workload.generate_workload(factor, shuffle_flag)
+
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
@@ -133,7 +134,6 @@ class WorkloadGenerator(object):
 
         if shuffle_flag:
             shuffle(workload_queries)
-
         return workload_queries
 
     def _publish_data(self, data: Dict):
