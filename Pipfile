@@ -27,6 +27,7 @@ python-dotenv = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
+influxdb = "*"
 
 [requires]
 python_version = "3.8.1"
