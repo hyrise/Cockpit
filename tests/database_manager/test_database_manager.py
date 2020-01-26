@@ -77,7 +77,6 @@ class TestDatabaseManager:
         "call",
         [
             "add database",
-            "throughput",
             "storage",
             "system data",
             "delete database",
@@ -94,7 +93,6 @@ class TestDatabaseManager:
     @mark.parametrize(
         "call",
         [
-            "throughput",
             "storage",
             "system data",
             "queue length",
@@ -160,17 +158,6 @@ class TestDatabaseManager:
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"]["error"] == "Call not found"
-
-    def test_call_throughput_returns_throughput(
-        self, database_manager: DatabaseManager, mock_database: Database
-    ):
-        """Returns throughput of previously added databases."""
-        call: Callable = lambda: database_manager._call_throughput({})["body"][
-            "throughput"
-        ]
-        mock_data = 42
-        mock_database.get_throughput.return_value = mock_data  # type: ignore
-        self.convenience_data_call(database_manager, mock_database, call, mock_data)
 
     def test_call_storage_returns_storage(
         self, database_manager: DatabaseManager, mock_database: Database
