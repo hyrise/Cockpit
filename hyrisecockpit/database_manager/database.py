@@ -53,7 +53,7 @@ class StorageCursor:
             {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": benchmark, "query_no": query_no},
-                "fields": {"start": startts, "end": endts},
+                "fields": {"start": float(startts), "end": float(endts)},
             }
         ]
         self._connection.write_points(points, database=self._database)
@@ -231,7 +231,6 @@ class Database(object):
                     success = False  # TODO return tables that could not be imported
 
         return success
-
 
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
