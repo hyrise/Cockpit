@@ -66,7 +66,7 @@ def get_throughput() -> Dict[str, int]:
     throughput: Dict[str, int] = dict()
     for database in get_all_databases(storage_connection):
         result = storage_connection.query(
-            f"SELECT COUNT(end) FROM succesful_queries WHERE end > {t-1} AND end <= {t};",
+            f"""SELECT COUNT("end") FROM succesful_queries WHERE "end" > {t-1} AND "end" <= {t};""",
             database=database,
         )
         throughput[database] = list(result["successful_queries", None])[0]["count"]
