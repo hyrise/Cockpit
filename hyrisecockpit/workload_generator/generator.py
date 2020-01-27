@@ -10,6 +10,7 @@ from zmq import PUB, REP, REQ, Context
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
+    NotExistingConfigFileException,
     NotExistingWorkloadFolderException,
     QueryTypeNotFoundException,
     QueryTypesNotSpecifiedException,
@@ -41,7 +42,7 @@ class WorkloadGenerator(object):
         self._default_workload_location = default_workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
-            "validate workload": self._call_validate_workload,
+            "register workload": self._call_register_workload,
         }
         self._workloads: Dict[str, Any] = {}
         self._init_server()
@@ -91,8 +92,8 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
-        if not self._load_data(body["type"], body["sf"]):
-            return get_response(400)
+        # if not self._load_data(body["type"], body["sf"]):
+        #     return get_response(400)
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
@@ -119,15 +120,15 @@ class WorkloadGenerator(object):
             EmptyWorkloadFolderException,
             QueryTypeNotFoundException,
             QueryTypesNotSpecifiedException,
+            NotExistingConfigFileException,
         ) as e:
             return get_error_response(400, str(e))
 
         return get_response(200)
 
-    def _call_validate_workload(self, body: Dict):
-        type_par: str = str(body.get("type"))
-        sf: str = str(body.get("sf"))
-        workload_type: str = f"{type_par.upper()}_{sf}"
+    def _call_register_workload(self, body: Dict):
+        workload_type = body.get("type")
+        # table_list: List = []
         if not workload_type:
             return get_error_response(400, "workload type not provided")
         try:
@@ -147,6 +148,7 @@ class WorkloadGenerator(object):
             EmptyWorkloadFolderException,
             QueryTypeNotFoundException,
             QueryTypesNotSpecifiedException,
+            NotExistingConfigFileException,
         ) as e:
             return get_error_response(400, str(e))
         return get_response(200)
