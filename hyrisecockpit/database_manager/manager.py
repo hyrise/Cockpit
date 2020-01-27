@@ -199,8 +199,8 @@ class DatabaseManager(object):
         return get_error_response(400, "Call not found")
 
     def _call_load_data(self, body: Dict) -> Dict:
-        datatype = body.get("datatype")
-        sf = body.get("sf", "1.000000")
+        datatype = str(body.get("datatype")).lower()
+        sf = body.get("sf", "1")
         if not datatype:
             return get_response(400)
         for database in list(self._databases.values()):

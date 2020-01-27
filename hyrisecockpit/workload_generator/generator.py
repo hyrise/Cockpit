@@ -79,10 +79,10 @@ class WorkloadGenerator(object):
             self._workloads[workload_type] = workload
         return workload
 
-    def _load_data(self, datatype) -> bool:
+    def _load_data(self, datatype, sf) -> bool:
         message = {
             "header": {"message": "load data"},
-            "body": {"datatype": datatype},
+            "body": {"datatype": datatype, "sf": sf},
         }
         self._db_manager_socket.send_json(message)
         response = self._db_manager_socket.recv_json()
@@ -91,9 +91,8 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
-        # if not self._load_data(body["type"]):
-        #     return get_error_response(400, "Required tables could not be loaded")
-
+        if not self._load_data(body["type"], body["sf"]):
+            return get_response(400)
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
@@ -106,7 +105,10 @@ class WorkloadGenerator(object):
                     body["queries"], factor, shuffle_flag
                 )
             else:
-                workload = self._get_workload(body["type"])
+                type_par: str = str(body.get("type"))
+                sf: str = str(body.get("sf"))
+                workload_type: str = f"{type_par.upper()}_{sf}"
+                workload = self._get_workload(workload_type)
                 queries = workload.generate_workload(factor, shuffle_flag)
 
             response = get_response(200)

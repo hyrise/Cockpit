@@ -61,4 +61,15 @@ table_names: Dict[str, List[str]] = {
         "name",
         "title",
     ],
+    "no-ops": [],
+    "mixed": [
+        "customer",
+        "lineitem",
+        "nation",
+        "orders",
+        "part",
+        "partsupp",
+        "region",
+        "supplier",
+    ],
 }
