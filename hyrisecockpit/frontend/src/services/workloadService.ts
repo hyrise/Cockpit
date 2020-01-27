@@ -25,7 +25,6 @@ export function useKruegerService(): any {
         data.value = transformData(response);
         const dataCopy = JSON.parse(JSON.stringify(data.value));
         data.value = dataCopy;
-        console.log(data.value);
         queryReadyState.value = true;
       })
       .catch(err => {
@@ -36,35 +35,37 @@ export function useKruegerService(): any {
   function transformData(response: any): any {
     let newData = [
       {
-        x: [],
-        y: [],
+        x: [] as string[],
+        y: [] as number[],
         name: "DELETE",
         type: "bar"
       },
       {
-        x: [],
-        y: [],
+        x: [] as string[],
+        y: [] as number[],
         name: "INSERT",
         type: "bar"
       },
       {
-        x: [],
-        y: [],
+        x: [] as string[],
+        y: [] as number[],
         name: "SELECT",
         type: "bar"
       },
       {
-        x: [],
-        y: [],
+        x: [] as string[],
+        y: [] as number[],
         name: "UPDATE",
         type: "bar"
       }
     ];
     for (let [workload, query] of Object.entries(response.data)) {
-      for (let [queryType, amount] of Object.entries(query)) {
+      for (let [queryType, amount] of Object.entries(query as any)) {
         var dataSet = newData.find(x => x.name === queryType);
-        dataSet.x = [...dataSet.x, workload];
-        dataSet.y = [...dataSet.y, amount];
+        if (dataSet) {
+          dataSet.x = [...dataSet.x, workload];
+          dataSet.y = [...dataSet.y, amount as number];
+        }
       }
     }
     return newData;
