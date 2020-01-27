@@ -229,7 +229,6 @@ class Database(object):
         with PoolCursor(self._connection_pool) as cur:
             success: bool = True
             for name in table_names:
-                # import pdb; pdb.set_trace()
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )

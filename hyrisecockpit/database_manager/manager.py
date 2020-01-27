@@ -33,8 +33,8 @@ class DatabaseManager(object):
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
 
-        self._workload_specification: Dict[str, Any] = {}
         self._workload_proceed_flag: bool = False
+        self._auto_reload_flag: bool = False
 
         self._databases: Dict[str, Database] = dict()
         self._scheduler = BackgroundScheduler()
@@ -78,21 +78,17 @@ class DatabaseManager(object):
                 return None
 
             if min(queue_length) < limit:
-                if self._workload_specification["auto-reload"]:
-                    factor = auto_reload_factor
+                if self._auto_reload_flag:
+                    request = {
+                        "header": {"message": "generate registered workload"},
+                        "body": {"factor": auto_reload_factor},
+                    }
                 else:
-                    factor = self._workload_specification.get("factor", 1)
                     self._workload_proceed_flag = False
-                request = {
-                    "header": {"message": "workload"},
-                    "body": {
-                        "type": self._workload_specification["type"],
-                        "queries": self._workload_specification.get("queries", None),
-                        "shuffle": self._workload_specification.get("shuffle", False),
-                        "sf": self._workload_specification.get("sf", 0.1),
-                        "factor": factor,
-                    },
-                }
+                    request = {
+                        "header": {"message": "generate registered workload"},
+                        "body": {},
+                    }
                 self._generator_socket.send_json(request)
                 self._generator_socket.recv_json()
 
@@ -212,7 +208,7 @@ class DatabaseManager(object):
     def _call_register_workload(self, body: Dict) -> Dict:
         workload: Any = body.get("workload")
         request = {
-            "header": {"message": "validate workload"},
+            "header": {"message": "register workload"},
             "body": workload,
         }
         self._generator_socket.send_json(request)
@@ -222,14 +218,19 @@ class DatabaseManager(object):
             return get_error_response(
                 400, response["body"].get("error", "Invalid workload")
             )
+        required_tables = response["body"]["required_tables"]
+        sf = "0.1"  # TODO: Choose appropriate scale factor
+        for table in required_tables:
+            for database in list(self._databases.values()):
+                if not database.load_data(table, sf):
+                    return get_error_response(
+                        400, f"Database {database._id} could not load {table}"
+                    )
+        self._auto_reload_flag = workload.get("auto-reload", True)
 
-        self._workload_specification = workload
-        self._workload_specification["auto-reload"] = workload.get("auto-reload", True)
         return get_response(200)
 
     def _call_start_workload(self, body: Dict) -> Dict:
-        if self._workload_specification == {}:
-            return get_error_response(400, "Workload specification not initialized")
         for database in list(self._databases.values()):
             database.enable_workload_execution()
         self._workload_proceed_flag = True
