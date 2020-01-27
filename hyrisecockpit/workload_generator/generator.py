@@ -137,10 +137,9 @@ class WorkloadGenerator(object):
                         400, "Missing query types for custom workload"
                     )
                 for query_type in query_types.keys():
-                    query_types[query_type] = 1
                     workload = self._get_workload(query_type.split("/")[0])
+                    workload.generate_specific(query_type.split("/")[1])
                     required_tables.update(workload.get_required_tables())
-                self._generate_custom_workload(query_types, 1, False)
             else:
                 workload = self._get_workload(workload_type)
                 required_tables.update(workload.get_required_tables())
@@ -154,7 +153,6 @@ class WorkloadGenerator(object):
             return get_error_response(400, str(e))
         response = get_response(200)
         response["required_tables"] = list(required_tables)
-        print("done")
         return response
 
     def _generate_custom_workload(
