@@ -161,6 +161,7 @@ class Database(object):
             self._number_workers + self._number_additional_connections,
         )
         self._connection_pool = self._driver.get_connection_pool()
+        self._scheduler = BackgroundScheduler()
 
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
@@ -182,7 +183,6 @@ class Database(object):
 
         self.load_data(self._default_tables, sf="0.1")
 
-        self._scheduler = BackgroundScheduler()
         self._update_system_data_job = self._scheduler.add_job(
             func=self._update_system_data, trigger="interval", seconds=1,
         )
@@ -216,15 +216,6 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def _start_subscriber_worker(self):
-        """Start subscriber worker."""
-        self._subscriber_worker.start()
-
-    def _start_workers(self) -> None:
-        """Start all workers in pool."""
-        for i in range(len(self._worker_pool)):
-            self._worker_pool[i].start()
-
     def _shutdown_workers(self, flag) -> None:
         """Shutdown all task execution workers."""
         flag.value = False
@@ -239,6 +230,15 @@ class Database(object):
             worker.terminate()
 
         self._worker_pool[:] = []
+
+    def _start_subscriber_worker(self):
+        """Start subscriber worker."""
+        self._subscriber_worker.start()
+
+    def _start_workers(self) -> None:
+        """Start all workers in pool."""
+        for i in range(len(self._worker_pool)):
+            self._worker_pool[i].start()
 
     def load_data(self, datatype: str, sf: str):
         """Load pregenerated tables."""
@@ -260,19 +260,21 @@ class Database(object):
                         (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
                     )
                 )
-        self._shutdown_workers(self._worker_stay_alive_flag)
-        self._init_worker_pool(
-            execute_queries, self._load_table_task_queue, self._loading_tables_flag
-        )
-        self._check_if_tables_loaded_job = self._scheduler.add_job(
-            func=self._check_if_tables_loaded, trigger="interval", seconds=0.5,
-        )
-        self._start_workers()
+        if not self._load_table_task_queue.empty():
+            self._shutdown_workers(self._worker_stay_alive_flag)
+            self._init_worker_pool(
+                execute_queries, self._load_table_task_queue, self._loading_tables_flag
+            )
+            self._check_if_tables_loaded_job = self._scheduler.add_job(
+                func=self._check_if_tables_loaded, trigger="interval", seconds=0.5,
+            )
+            self._start_workers()
+        return True
 
     def _check_if_tables_loaded(self):
         if self._load_table_task_queue.empty():
+            self._check_if_tables_loaded_job.remove()
             self._shutdown_workers(self._loading_tables_flag)
-            self._check_if_tables_loaded.remove()
             self._init_worker_pool(
                 execute_queries, self._task_queue, self._worker_stay_alive_flag
             )
