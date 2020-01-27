@@ -169,14 +169,15 @@ class Database(object):
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
-        self._worker_stay_alive_flag = self._manager.Value("d", 1)
+        self._worker_stay_alive_flag = self._manager.Value("b", True)
+        self._loading_tables = True
         self._worker_pool: pool = self._init_worker_pool()
         self._subscriber_worker = self._init_subscriber_worker()
 
         self._start_subscriber_worker()
         self._start_workers()
 
-        # self.load_data(self._default_tables, sf="0.1")
+        self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
         self._update_system_data_job = self._scheduler.add_job(
@@ -222,6 +223,17 @@ class Database(object):
 
     def _shutdown_workers(self) -> None:
         """Shutdown all task execution workers."""
+        self._worker_stay_alive_flag.value = False
+        qsize = self.get_queue_length()
+        if self._number_workers > qsize:
+            number_dummy_tasks = self._number_workers - qsize
+            for _ in range(number_dummy_tasks):
+                # We need to wake up worker so terminate them kindly so we don't lock the queue
+                self._task_queue.put(("Select 1;", None))
+        for worker in self._worker_pool:
+            worker.join()
+
+        self._worker_pool[:] = []
 
     def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
@@ -245,7 +257,6 @@ class Database(object):
                     )
                 except DatabaseError:
                     success = False  # TODO return tables that could not be imported
-
         return success
 
     def delete_data(self, datatype: str) -> bool:
@@ -289,6 +300,8 @@ class Database(object):
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
+        if self._loading_tables:
+            return None
 
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
@@ -316,6 +329,9 @@ class Database(object):
 
     def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
+        if self._loading_tables:
+            return {}
+
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
         sql = "SELECT * FROM meta_segments;"
