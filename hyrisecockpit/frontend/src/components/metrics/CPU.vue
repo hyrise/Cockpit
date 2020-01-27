@@ -1,5 +1,12 @@
 <template>
   <div>
+    <metric-details
+      v-if="showDetails"
+      :data="data"
+      :database="selectedDatabases.find(el => true)"
+      :border="1000"
+      unit="%"
+    />
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
@@ -30,12 +37,14 @@ import {
   MetricPropsValidation,
   ComparisonMetricData
 } from "../../types/metrics";
+import MetricDetails from "../details/MetricDetails.vue";
 
 export default createComponent({
   name: "CPU",
   props: MetricPropsValidation,
-  components: { Linechart },
+  components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
+    console.log("cpu", props.showDetails);
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 

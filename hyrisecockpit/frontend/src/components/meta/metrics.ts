@@ -1,5 +1,5 @@
 import { backendUrl } from "../../types/services";
-import { Metric, MetricMetadata } from "../../types/metrics";
+import { Metric, MetricMetadata, MetricValueState } from "../../types/metrics";
 import { useDataTransformation } from "../../services/transformationService";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
@@ -40,6 +40,16 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: backendUrl + "throughput"
   }
 };
+
+const metricDetailColor: Record<MetricValueState, string> = {
+  average: "#fb8c00",
+  high: "#4caf50",
+  low: "#ff5252"
+};
+
+export function getMetricDetailColor(value: MetricValueState): string {
+  return metricDetailColor[value];
+}
 
 export function getMetadata(metric: Metric): MetricMetadata {
   return metricsMetadata[metric];
