@@ -107,7 +107,7 @@ def execute_queries(
     task_queue: Queue,
     connection_pool: pool,
     failed_task_queue: Queue,
-    worker_stay_alive_flag: Any,
+    flag: Any,
     database_id: str,
 ) -> None:
     """Define workers work loop."""
@@ -119,7 +119,7 @@ def execute_queries(
                 # If Queue is emty go to wait status
                 try:
                     task = task_queue.get(block=True)
-                    if not worker_stay_alive_flag.value:
+                    if not flag.value:
                         break
                     query, parameters = task
                     startts = time()
@@ -164,14 +164,17 @@ class Database(object):
 
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
+        self._load_table_task_queue: Queue = Queue(0)
         self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._worker_stay_alive_flag = self._manager.Value("b", True)
-        self._loading_tables = True
-        self._worker_pool: pool = self._init_worker_pool()
+        self._loading_tables_flag = self._manager.Value("b", False)
+        self._worker_pool: pool = self._init_worker_pool(
+            execute_queries, self._task_queue, self._worker_stay_alive_flag
+        )
         self._subscriber_worker = self._init_subscriber_worker()
 
         self._start_subscriber_worker()
@@ -194,17 +197,18 @@ class Database(object):
         )
         return subscriber_process
 
-    def _init_worker_pool(self) -> pool:
+    def _init_worker_pool(self, target, task_queue, flag) -> pool:
         """Initialize a pool of workers."""
+        flag.value = True
         worker_pool = []
         for i in range(self._number_workers):
             p = Process(
-                target=execute_queries,
+                target=target,
                 args=(
                     i,
-                    self._task_queue,
+                    task_queue,
                     self._connection_pool,
-                    self._failed_task_queue,
+                    flag,
                     self._worker_stay_alive_flag,
                     self._id,
                 ),
@@ -221,9 +225,9 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def _shutdown_workers(self) -> None:
+    def _shutdown_workers(self, flag) -> None:
         """Shutdown all task execution workers."""
-        self._worker_stay_alive_flag.value = False
+        flag.value = False
         qsize = self.get_queue_length()
         if self._number_workers > qsize:
             number_dummy_tasks = self._number_workers - qsize
@@ -232,32 +236,47 @@ class Database(object):
                 self._task_queue.put(("Select 1;", None))
         for worker in self._worker_pool:
             worker.join()
+            worker.terminate()
 
         self._worker_pool[:] = []
 
-    def load_data(self, datatype: str, sf: str) -> bool:
+    def load_data(self, datatype: str, sf: str):
         """Load pregenerated tables."""
         table_names = _table_names.get(datatype)
         if table_names is None:
             return False
+
         with PoolCursor(self._connection_pool) as cur:
-            success: bool = True
             for name in table_names:
-                # import pdb; pdb.set_trace()
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )
                 if cur.fetchone():
                     continue
-                try:
-                    # TODO change absolute to relative path
-                    cur.execute(
+                # TODO change absolute to relative path
+                self._load_table_task_queue.put(
+                    (
                         "COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';",
                         (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
                     )
-                except DatabaseError:
-                    success = False  # TODO return tables that could not be imported
-        return success
+                )
+        self._shutdown_workers(self._worker_stay_alive_flag)
+        self._init_worker_pool(
+            execute_queries, self._load_table_task_queue, self._loading_tables_flag
+        )
+        self._check_if_tables_loaded_job = self._scheduler.add_job(
+            func=self._check_if_tables_loaded, trigger="interval", seconds=0.5,
+        )
+        self._start_workers()
+
+    def _check_if_tables_loaded(self):
+        if self._load_table_task_queue.empty():
+            self._shutdown_workers(self._loading_tables_flag)
+            self._check_if_tables_loaded.remove()
+            self._init_worker_pool(
+                execute_queries, self._task_queue, self._worker_stay_alive_flag
+            )
+            self._start_workers()
 
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
@@ -300,7 +319,7 @@ class Database(object):
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
-        if self._loading_tables:
+        if self._loading_tables_flag:
             return None
 
         connection = self._connection_pool.getconn()
@@ -329,7 +348,7 @@ class Database(object):
 
     def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
-        if self._loading_tables:
+        if self._loading_tables_flag:
             return {}
 
         connection = self._connection_pool.getconn()
