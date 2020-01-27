@@ -2,6 +2,7 @@ import axios from "axios";
 import { Workload } from "@/types/workloads";
 import { backendUrl, WorkloadService } from "../types/services";
 import { ref } from "@vue/composition-api";
+import { FetchService } from "@/types/services";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
@@ -13,7 +14,7 @@ export function useWorkloadService(): WorkloadService {
   return { loadWorkloadData, deleteWorkloadData };
 }
 
-export function useKruegerService(): any {
+export function useKruegerService(): FetchService {
   const data = ref<any>([]);
   const queryReadyState = ref<boolean>(true);
 
