@@ -219,7 +219,7 @@ class DatabaseManager(object):
                 400, response["body"].get("error", "Invalid workload")
             )
         required_tables = response["body"]["required_tables"]
-        sf = "0.1"  # TODO: Choose appropriate scale factor
+        sf = workload.get("sf", "0.1")  # TODO: Choose appropriate scale factor
         for table in required_tables:
             for database in list(self._databases.values()):
                 if not database.load_data(table, sf):
