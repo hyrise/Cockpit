@@ -4,7 +4,7 @@ Includes the main WorkloadGenerator.
 """
 
 from random import shuffle
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Set, Tuple
 
 from zmq import PUB, REP, REQ, Context
 
@@ -92,8 +92,6 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
-        # if not self._load_data(body["type"], body["sf"]):
-        #     return get_response(400)
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
@@ -128,7 +126,7 @@ class WorkloadGenerator(object):
 
     def _call_register_workload(self, body: Dict):
         workload_type = body.get("type")
-        # table_list: List = []
+        required_tables: Set = set()
         if not workload_type:
             return get_error_response(400, "workload type not provided")
         try:
@@ -140,9 +138,12 @@ class WorkloadGenerator(object):
                     )
                 for query_type in query_types.keys():
                     query_types[query_type] = 1
+                    workload = self._get_workload(query_type.split("/")[0])
+                    required_tables.update(workload.get_required_tables())
                 self._generate_custom_workload(query_types, 1, False)
             else:
-                self._get_workload(workload_type)
+                workload = self._get_workload(workload_type)
+                required_tables.update(workload.get_required_tables())
         except (
             NotExistingWorkloadFolderException,
             EmptyWorkloadFolderException,
@@ -151,7 +152,10 @@ class WorkloadGenerator(object):
             NotExistingConfigFileException,
         ) as e:
             return get_error_response(400, str(e))
-        return get_response(200)
+        response = get_response(200)
+        response["required_tables"] = list(required_tables)
+        print("done")
+        return response
 
     def _generate_custom_workload(
         self, query_types: Dict, factor: int, shuffle_flag: bool
