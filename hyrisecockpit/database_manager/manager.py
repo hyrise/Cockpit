@@ -89,6 +89,7 @@ class DatabaseManager(object):
                         "type": self._workload_specification["type"],
                         "queries": self._workload_specification.get("queries", None),
                         "shuffle": self._workload_specification.get("shuffle", False),
+                        "sf": self._workload_specification.get("sf", 0.1),
                         "factor": factor,
                     },
                 }

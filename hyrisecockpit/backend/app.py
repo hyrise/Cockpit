@@ -182,6 +182,7 @@ def register_workload() -> Dict:
         "shuffle": request_json.get("shuffle", False),
         "factor": request_json.get("factor", 1),
         "auto-reload": request_json.get("auto-reload", False),
+        "sf": request_json.get("sf", 0.1),
     }
 
     message = {

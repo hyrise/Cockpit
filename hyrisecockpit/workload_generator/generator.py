@@ -125,7 +125,9 @@ class WorkloadGenerator(object):
         return get_response(200)
 
     def _call_validate_workload(self, body: Dict):
-        workload_type = body.get("type")
+        type_par: str = str(body.get("type"))
+        sf: str = str(body.get("sf"))
+        workload_type: str = f"{type_par.upper()}_{sf}"
         if not workload_type:
             return get_error_response(400, "workload type not provided")
         try:
