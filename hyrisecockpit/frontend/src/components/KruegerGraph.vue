@@ -36,7 +36,7 @@ export default createComponent({
     const { databases } = context.root.$databaseData;
     const { data, checkState } = useKruegerService();
 
-    const chartConfiguration = ["Krueger", "Workloads", "amout of queries"];
+    const chartConfiguration = ["Krueger", "Workloads", "amount of queries"];
 
     onMounted(() => {
       setInterval(checkState, 5000);
