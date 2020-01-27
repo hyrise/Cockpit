@@ -3,7 +3,7 @@
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
 from time import time
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
@@ -107,6 +107,7 @@ def execute_queries(
     task_queue: Queue,
     connection_pool: pool,
     failed_task_queue: Queue,
+    worker_stay_alive_flag: Any,
     database_id: str,
 ) -> None:
     """Define workers work loop."""
@@ -118,6 +119,8 @@ def execute_queries(
                 # If Queue is emty go to wait status
                 try:
                     task = task_queue.get(block=True)
+                    if not worker_stay_alive_flag.value:
+                        break
                     query, parameters = task
                     startts = time()
                     cur.execute(query, parameters)
@@ -166,8 +169,11 @@ class Database(object):
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
+        self._worker_stay_alive_flag = self._manager.Value("d", 1)
         self._worker_pool: pool = self._init_worker_pool()
+        self._subscriber_worker = self._init_subscriber_worker()
 
+        self._start_subscriber_worker()
         self._start_workers()
 
         # self.load_data(self._default_tables, sf="0.1")
@@ -181,6 +187,12 @@ class Database(object):
         )
         self._scheduler.start()
 
+    def _init_subscriber_worker(self):
+        subscriber_process = Process(
+            target=fill_queue, args=(self.workload_publisher_url, self._task_queue),
+        )
+        return subscriber_process
+
     def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
         worker_pool = []
@@ -192,20 +204,24 @@ class Database(object):
                     self._task_queue,
                     self._connection_pool,
                     self._failed_task_queue,
+                    self._worker_stay_alive_flag,
                     self._id,
                 ),
             )
             worker_pool.append(p)
-        subscriber_process = Process(
-            target=fill_queue, args=(self.workload_publisher_url, self._task_queue),
-        )
-        worker_pool.append(subscriber_process)
         return worker_pool
+
+    def _start_subscriber_worker(self):
+        """Start subscriber worker."""
+        self._subscriber_worker.start()
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
+
+    def _shutdown_workers(self) -> None:
+        """Shutdown all task execution workers."""
 
     def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
@@ -379,6 +395,8 @@ class Database(object):
 
         # Close the scheduler
         self._scheduler.shutdown()
+        # Close subscriber worker
+        self._subscriber_worker.terminate()
         # Close worker pool
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
