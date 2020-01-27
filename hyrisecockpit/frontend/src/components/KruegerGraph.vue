@@ -17,7 +17,7 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { userKruegerService } from "../services/workloadService";
+import { useKruegerService } from "../services/workloadService";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Barchart from "./charts/Barchart.vue";
@@ -34,12 +34,12 @@ export default createComponent({
   components: { Barchart },
   setup(props: Props, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { data, checkState } = userKruegerService();
+    const { data, checkState } = useKruegerService();
 
     const chartConfiguration = ["Krueger", "Workloads", "Amout of queries"];
 
     onMounted(() => {
-      setInterval(checkState, 1000);
+      setInterval(checkState, 5000);
     });
 
     return {

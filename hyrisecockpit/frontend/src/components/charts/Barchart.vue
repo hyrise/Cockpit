@@ -19,7 +19,6 @@ import Vue from "vue";
 
 interface Props {
   data: any;
-  selectedDatabases: string[];
   graphId: string;
   chartConfiguration: string[];
 }
@@ -27,7 +26,7 @@ interface Props {
 export default createComponent({
   props: {
     data: {
-      type: Object,
+      type: Array,
       default: null
     },
     graphId: {
@@ -50,13 +49,14 @@ export default createComponent({
     onMounted(() => {
       Plotly.newPlot(graphId, data.value, getLayout(), getOptions());
       watch(data, () => {
-        if (Object.keys(data.value).length) {
+        updateChartDatasets();
+        if (data.value.length) {
           updateChartDatasets();
         }
       });
 
       function updateChartDatasets(): void {
-        Plotly.update(graphId, data, getLayout());
+        Plotly.react(graphId, data.value, getLayout(), getOptions());
       }
     });
   }

@@ -13,8 +13,8 @@ export function useWorkloadService(): WorkloadService {
   return { loadWorkloadData, deleteWorkloadData };
 }
 
-export function userKruegerService(): any {
-  const data = ref<any>({});
+export function useKruegerService(): any {
+  const data = ref<any>([]);
   const queryReadyState = ref<boolean>(true);
 
   function getKruegerData(): any {
@@ -23,6 +23,9 @@ export function userKruegerService(): any {
       .get(`${backendUrl}krueger_data`)
       .then(response => {
         data.value = transformData(response);
+        const dataCopy = JSON.parse(JSON.stringify(data.value));
+        data.value = dataCopy;
+        console.log(data.value);
         queryReadyState.value = true;
       })
       .catch(err => {
@@ -31,9 +34,40 @@ export function userKruegerService(): any {
   }
 
   function transformData(response: any): any {
-    console.log(response.data);
-    response.data.reduce((reuslt, currentValue) => {}, []);
-    return response;
+    let newData = [
+      {
+        x: [],
+        y: [],
+        name: "DELETE",
+        type: "bar"
+      },
+      {
+        x: [],
+        y: [],
+        name: "INSERT",
+        type: "bar"
+      },
+      {
+        x: [],
+        y: [],
+        name: "SELECT",
+        type: "bar"
+      },
+      {
+        x: [],
+        y: [],
+        name: "UPDATE",
+        type: "bar"
+      }
+    ];
+    for (let [workload, query] of Object.entries(response.data)) {
+      for (let [queryType, amount] of Object.entries(query)) {
+        var dataSet = newData.find(x => x.name === queryType);
+        dataSet.x = [...dataSet.x, workload];
+        dataSet.y = [...dataSet.y, amount];
+      }
+    }
+    return newData;
   }
 
   function checkState(): void {
