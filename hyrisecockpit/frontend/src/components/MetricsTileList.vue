@@ -56,7 +56,6 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    console.log("tile list", props.showDetails);
     return {
       getMetadata,
       comparisonMetrics

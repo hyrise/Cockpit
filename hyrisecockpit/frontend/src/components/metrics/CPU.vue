@@ -44,7 +44,6 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    console.log("cpu", props.showDetails);
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 

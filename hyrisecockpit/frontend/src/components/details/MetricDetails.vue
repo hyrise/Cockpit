@@ -1,6 +1,9 @@
 <template>
-  <div class="details" v-bind:style="{ color: valueColor, fontSize: '18px' }">
-    {{ currentValue }} in {{ unit }}
+  <div
+    class="details"
+    v-bind:style="{ color: valueColor, fontSize: '18px', fontWeight: 'bold' }"
+  >
+    {{ currentValue }} {{ unit }}
   </div>
 </template>
 
@@ -72,7 +75,7 @@ export default createComponent({
 </script>
 <style>
 .details {
-  z-index: 10;
+  z-index: 1;
   position: absolute;
   top: 15%;
   width: 100%;

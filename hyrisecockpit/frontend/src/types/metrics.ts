@@ -40,10 +40,6 @@ export const MetricPropsValidation = {
     type: Array,
     default: null
   },
-  enableComparison: {
-    type: Boolean,
-    default: null
-  },
   showDetails: {
     type: Boolean,
     default: null
