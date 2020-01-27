@@ -170,7 +170,7 @@ class Database(object):
 
         self._start_workers()
 
-        self.load_data(self._default_tables, sf="0.1")
+        # self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
         self._update_system_data_job = self._scheduler.add_job(
@@ -210,7 +210,7 @@ class Database(object):
     def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
         table_names = _table_names.get(datatype)
-        if not table_names:
+        if table_names is None:
             return False
         with PoolCursor(self._connection_pool) as cur:
             success: bool = True
