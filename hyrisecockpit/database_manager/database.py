@@ -208,8 +208,8 @@ class Database(object):
                     i,
                     task_queue,
                     self._connection_pool,
+                    self._failed_task_queue,
                     flag,
-                    self._worker_stay_alive_flag,
                     self._id,
                 ),
             )
@@ -254,15 +254,12 @@ class Database(object):
                 if cur.fetchone():
                     continue
                 # TODO change absolute to relative path
-                self._load_table_task_queue.put(
-                    (
-                        "COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';",
-                        (AsIs(name), AsIs(datatype), AsIs(sf), AsIs(name),),
-                    )
-                )
+                # Sadly can't pickle AsIs
+                query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
+                self._load_table_task_queue.put((query, None))
         if not self._load_table_task_queue.empty():
             self._shutdown_workers(self._worker_stay_alive_flag)
-            self._init_worker_pool(
+            self._worker_pool = self._init_worker_pool(
                 execute_queries, self._load_table_task_queue, self._loading_tables_flag
             )
             self._check_if_tables_loaded_job = self._scheduler.add_job(
@@ -273,12 +270,14 @@ class Database(object):
 
     def _check_if_tables_loaded(self):
         if self._load_table_task_queue.empty():
-            self._check_if_tables_loaded_job.remove()
             self._shutdown_workers(self._loading_tables_flag)
-            self._init_worker_pool(
+            self._worker_pool = self._init_worker_pool(
                 execute_queries, self._task_queue, self._worker_stay_alive_flag
             )
             self._start_workers()
+            print("inside")
+            self._check_if_tables_loaded_job.remove()
+        print("outside")
 
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
