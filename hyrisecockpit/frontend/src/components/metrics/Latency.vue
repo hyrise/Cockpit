@@ -38,7 +38,7 @@ export default createComponent({
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
 
-    const chartConfiguration = ["Latency", "time in sec", "queries per sec"];
+    const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
