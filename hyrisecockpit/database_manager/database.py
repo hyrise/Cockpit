@@ -216,15 +216,15 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def _shutdown_workers(self, flag) -> None:
+    def _shutdown_workers(self, flag, queue) -> None:
         """Shutdown all task execution workers."""
         flag.value = False
-        qsize = self.get_queue_length()
+        qsize = queue.qsize()
         if self._number_workers > qsize:
             number_dummy_tasks = self._number_workers - qsize
             for _ in range(number_dummy_tasks):
                 # We need to wake up worker so terminate them kindly so we don't lock the queue
-                self._task_queue.put(("Select 1;", None))
+                queue.put(("Select 1;", None))
         for worker in self._worker_pool:
             worker.join()
             worker.terminate()
@@ -258,26 +258,26 @@ class Database(object):
                 query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
                 self._load_table_task_queue.put((query, None))
         if not self._load_table_task_queue.empty():
-            self._shutdown_workers(self._worker_stay_alive_flag)
+            self._shutdown_workers(self._worker_stay_alive_flag, self._task_queue)
             self._worker_pool = self._init_worker_pool(
                 execute_queries, self._load_table_task_queue, self._loading_tables_flag
             )
             self._check_if_tables_loaded_job = self._scheduler.add_job(
-                func=self._check_if_tables_loaded, trigger="interval", seconds=0.5,
+                func=self._check_if_tables_loaded, trigger="interval", seconds=1.0,
             )
             self._start_workers()
         return True
 
     def _check_if_tables_loaded(self):
         if self._load_table_task_queue.empty():
-            self._shutdown_workers(self._loading_tables_flag)
+            self._shutdown_workers(
+                self._loading_tables_flag, self._load_table_task_queue
+            )
             self._worker_pool = self._init_worker_pool(
                 execute_queries, self._task_queue, self._worker_stay_alive_flag
             )
             self._start_workers()
-            print("inside")
             self._check_if_tables_loaded_job.remove()
-        print("outside")
 
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
