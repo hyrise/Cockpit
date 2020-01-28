@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="open" app class="elevation-2" fixed width="300">
+  <v-navigation-drawer v-model="open" app class="elevation-2" width="150">
     <v-toolbar color="primary darken-1"> </v-toolbar>
     <v-card class="text-center" :to="{ name: 'database' }">
       <v-icon size="150">
@@ -9,8 +9,8 @@
         Instanz
       </v-card-title>
     </v-card>
-    <v-card class="text-center" :to="{ name: 'databases' }">
-      <v-icon size="150">
+    <v-card class="text-center" :to="{ name: 'comparison' }">
+      <v-icon class="mt-2" size="100">
         mdi-speedometer
       </v-icon>
       <v-card-title class="justify-center">
@@ -18,7 +18,7 @@
       </v-card-title>
     </v-card>
     <v-card class="text-center" :to="{ name: 'workload' }">
-      <v-icon size="150">
+      <v-icon class="mt-2" size="100">
         mdi-worker
       </v-icon>
       <v-card-title class="justify-center">
@@ -26,7 +26,7 @@
       </v-card-title>
     </v-card>
     <v-card class="text-center" :to="{ name: 'home' }">
-      <v-icon size="150">
+      <v-icon class="mt-2" size="100">
         mdi-settings
       </v-icon>
       <v-card-title class="justify-center">

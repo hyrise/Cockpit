@@ -5,28 +5,32 @@ import { notEquals } from "../helpers/methods";
 
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
-    access: transformAccessData,
-    cpu: transformCPUData,
+    access: getAccessData,
+    cpu: getCPUData,
     latency: getReadOnlyData,
-    ram: getReadOnlyData,
-    storage: transformStorageData,
+    ram: getRAMData,
+    storage: getStorageData,
     throughput: getReadOnlyData
   };
 
   return transformationMap[metric];
 }
 
-function transformCPUData(data: any, primaryKey: string = ""): number {
+function getCPUData(data: any, primaryKey: string = ""): number {
   return data[primaryKey].cpu.reduce(
     (accumulator: any, currentValue: any) => accumulator + currentValue
   );
+}
+
+function getRAMData(data: any, primaryKey: string = ""): number {
+  return data[primaryKey].memory.percent;
 }
 
 function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
-function transformStorageData(
+function getStorageData(
   data: any,
   primaryKey: string = ""
 ): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
@@ -38,7 +42,8 @@ function transformStorageData(
     notEquals(
       Vue.prototype.$databaseData.tables.value,
       Object.keys(data[primaryKey])
-    )
+    ) &&
+    Object.keys(data[primaryKey]).length
   ) {
     Vue.prototype.$databaseData.tables.value = Object.keys(data[primaryKey]);
   }
@@ -57,7 +62,7 @@ function transformStorageData(
   return { newLabels, newParents, newSizes };
 }
 
-function transformAccessData(
+function getAccessData(
   data: any,
   primaryKey: string = "",
   secondaryKey: string = ""

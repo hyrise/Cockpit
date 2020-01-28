@@ -24,8 +24,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   ram: {
     fetchType: "modify",
     transformationService: useDataTransformation("ram"),
-    base: "throughput",
-    endpoint: backendUrl + "throughput"
+    base: "system_data",
+    endpoint: backendUrl + "system_data"
   },
   storage: {
     fetchType: "read",
