@@ -16,7 +16,7 @@ export function useWorkloadService(): WorkloadService {
       sf: 1.0,
       shuffle: false,
       "auto-reload": true
-  });
+    });
   }
   function startWorkload(): void {
     axios.post(`${backendUrl}start_workload`);
@@ -25,5 +25,11 @@ export function useWorkloadService(): WorkloadService {
     axios.post(`${backendUrl}stop_workload`);
   }
 
-  return { loadWorkloadData, deleteWorkloadData, registerWorkload, startWorkload, stopWorkload };
+  return {
+    loadWorkloadData,
+    deleteWorkloadData,
+    registerWorkload,
+    startWorkload,
+    stopWorkload
+  };
 }
