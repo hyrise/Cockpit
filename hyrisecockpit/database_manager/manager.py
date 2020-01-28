@@ -164,10 +164,12 @@ class DatabaseManager(object):
         return get_response(400)
 
     def _call_load_data(self, body: Dict) -> Dict:
-        loading_data = False
+        processing_table_data = False
         for database in list(self._databases.values()):
-            loading_data = loading_data or database.get_loading_tables_flag()
-        if loading_data:
+            processing_table_data = (
+                processing_table_data or database.get_processing_tables_flag()
+            )
+        if processing_table_data:
             return get_error_response(400, "Already loading data")
         datatype = str(body.get("datatype")).lower()
         sf = body.get("sf", "1")

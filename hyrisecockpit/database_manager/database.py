@@ -173,8 +173,8 @@ class Database(object):
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
         self._worker_stay_alive_flag = self._manager.Value("b", True)
-        self._loading_tables_flag = self._manager.Value("b", False)
-        self._worker_pool: pool = self._init_worker_pool(self._worker_stay_alive_flag)
+        self._processing_tables_flag = self._manager.Value("b", False)
+        self._worker_pool: pool = self._init_worker_pool()
         self._subscriber_worker = self._init_subscriber_worker()
 
         self._start_subscriber_worker()
@@ -196,14 +196,14 @@ class Database(object):
             args=(
                 self.workload_publisher_url,
                 self._task_queue,
-                self._loading_tables_flag,
+                self._processing_tables_flag,
             ),
         )
         return subscriber_process
 
-    def _init_worker_pool(self, flag) -> pool:
+    def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
-        flag.value = True
+        self._worker_stay_alive_flag.value = True
         worker_pool = []
         for i in range(self._number_workers):
             p = Process(
@@ -213,16 +213,16 @@ class Database(object):
                     self._task_queue,
                     self._connection_pool,
                     self._failed_task_queue,
-                    flag,
+                    self._worker_stay_alive_flag,
                     self._id,
                 ),
             )
             worker_pool.append(p)
         return worker_pool
 
-    def _shutdown_workers(self, flag) -> None:
+    def _shutdown_workers(self) -> None:
         """Shutdown all task execution workers."""
-        flag.value = False
+        self._worker_stay_alive_flag.value = False
         qsize = self._task_queue.qsize()
         if self._number_workers > qsize:
             number_dummy_tasks = self._number_workers - qsize
@@ -246,10 +246,10 @@ class Database(object):
 
     def load_data(self, datatype: str, sf: str):
         """Load pregenerated tables."""
-        self._loading_tables_flag.value = True
+        self._processing_tables_flag.value = True
         table_names = _table_names.get(datatype)
         if table_names is None:
-            self._loading_tables_flag.value = False
+            self._processing_tables_flag.value = False
             return False
         table_loading_tasks = []
 
@@ -266,12 +266,12 @@ class Database(object):
                 table_loading_tasks.append((query, None))
         # TODO what should happend if we are loading the tables and want to validate a workload at the same time
         if len(table_loading_tasks) == 0:
-            self._loading_tables_flag.value = False
+            self._processing_tables_flag.value = False
             return True
         if not len(table_loading_tasks) == 0:
-            self._shutdown_workers(self._worker_stay_alive_flag)
+            self._shutdown_workers()
             [self._task_queue.put(task) for task in table_loading_tasks]  # type: ignore
-            self._worker_pool = self._init_worker_pool(self._worker_stay_alive_flag)
+            self._worker_pool = self._init_worker_pool()
             self._check_if_tables_loaded_job = self._scheduler.add_job(
                 func=self._check_if_tables_loaded, trigger="interval", seconds=1.0,
             )
@@ -280,15 +280,16 @@ class Database(object):
 
     def _check_if_tables_loaded(self):
         if self._task_queue.empty():
-            self._shutdown_workers(self._worker_stay_alive_flag)
-            self._worker_pool = self._init_worker_pool(self._worker_stay_alive_flag)
+            self._shutdown_workers()
+            self._worker_pool = self._init_worker_pool()
             self._start_workers()
-            self._loading_tables_flag.value = False
+            self._processing_tables_flag.value = False
             self._check_if_tables_loaded_job.remove()
 
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
         table_names = _table_names.get(datatype)
+
         if not table_names:
             return False
         with PoolCursor(self._connection_pool) as cur:
@@ -327,7 +328,7 @@ class Database(object):
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
-        if self.get_loading_tables_flag():
+        if self.get_processing_tables_flag():
             return None
 
         connection = self._connection_pool.getconn()
@@ -356,7 +357,7 @@ class Database(object):
 
     def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
-        if self.get_loading_tables_flag():
+        if self.get_processing_tables_flag():
             return {}
 
         connection = self._connection_pool.getconn()
@@ -415,9 +416,9 @@ class Database(object):
         """Return system data."""
         return self._system_data
 
-    def get_loading_tables_flag(self) -> bool:
+    def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
-        return self._loading_tables_flag.value
+        return self._processing_tables_flag.value
 
     def get_chunks_data(self) -> Dict:
         """Return chunks data."""
