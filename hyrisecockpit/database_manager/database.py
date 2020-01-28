@@ -108,7 +108,7 @@ def execute_queries(
     task_queue: Queue,
     connection_pool: pool,
     failed_task_queue: Queue,
-    flag: Any,
+    worker_stay_alive_flag: Any,
     database_id: str,
 ) -> None:
     """Define workers work loop."""
@@ -119,10 +119,10 @@ def execute_queries(
             while True:
                 # If Queue is emty go to wait status
                 try:
-                    if not flag.value and task_queue.empty():
+                    if not worker_stay_alive_flag.value and task_queue.empty():
                         break
                     task = task_queue.get(block=True)
-                    if flag.value:
+                    if worker_stay_alive_flag.value:
                         query, parameters = task
                         startts = time()
                         cur.execute(query, parameters)
@@ -289,15 +289,18 @@ class Database(object):
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
         table_names = _table_names.get(datatype)
-
         if not table_names:
             return False
+        self._processing_tables_flag.value = True
+        self._shutdown_workers()
         with PoolCursor(self._connection_pool) as cur:
             for name in table_names:
                 try:
                     cur.execute("DROP TABLE %s;", (AsIs(name),))
                 except DatabaseError:
                     continue
+        self._start_workers()
+        self._processing_tables_flag.value = False
         return True
 
     def _update_system_data(self) -> None:
