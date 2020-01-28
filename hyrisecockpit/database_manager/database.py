@@ -118,14 +118,15 @@ def execute_queries(
             while True:
                 # If Queue is emty go to wait status
                 try:
-                    task = task_queue.get(block=True)
-                    if not flag.value:
+                    if not flag.value and task_queue.empty():
                         break
-                    query, parameters = task
-                    startts = time()
-                    cur.execute(query, parameters)
-                    endts = time()
-                    log.log_query(startts, endts, benchmark="none", query_no=0)
+                    task = task_queue.get(block=True)
+                    if flag.value:
+                        query, parameters = task
+                        startts = time()
+                        cur.execute(query, parameters)
+                        endts = time()
+                        log.log_query(startts, endts, benchmark="none", query_no=0)
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
                         {"worker_id": worker_id, "task": task, "Error": str(e)}
@@ -165,7 +166,6 @@ class Database(object):
 
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
-        self._load_table_task_queue: Queue = Queue(0)
         self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
@@ -173,9 +173,7 @@ class Database(object):
         self._chunks_data: Dict = {}
         self._worker_stay_alive_flag = self._manager.Value("b", True)
         self._loading_tables_flag = self._manager.Value("b", False)
-        self._worker_pool: pool = self._init_worker_pool(
-            execute_queries, self._task_queue, self._worker_stay_alive_flag
-        )
+        self._worker_pool: pool = self._init_worker_pool(self._worker_stay_alive_flag)
         self._subscriber_worker = self._init_subscriber_worker()
 
         self._start_subscriber_worker()
@@ -197,16 +195,16 @@ class Database(object):
         )
         return subscriber_process
 
-    def _init_worker_pool(self, target, task_queue, flag) -> pool:
+    def _init_worker_pool(self, flag) -> pool:
         """Initialize a pool of workers."""
         flag.value = True
         worker_pool = []
         for i in range(self._number_workers):
             p = Process(
-                target=target,
+                target=execute_queries,
                 args=(
                     i,
-                    task_queue,
+                    self._task_queue,
                     self._connection_pool,
                     self._failed_task_queue,
                     flag,
@@ -216,15 +214,15 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def _shutdown_workers(self, flag, queue) -> None:
+    def _shutdown_workers(self, flag) -> None:
         """Shutdown all task execution workers."""
         flag.value = False
-        qsize = queue.qsize()
+        qsize = self._task_queue.qsize()
         if self._number_workers > qsize:
             number_dummy_tasks = self._number_workers - qsize
             for _ in range(number_dummy_tasks):
                 # We need to wake up worker so terminate them kindly so we don't lock the queue
-                queue.put(("Select 1;", None))
+                self._task_queue.put(("foo", None))
         for worker in self._worker_pool:
             worker.join()
             worker.terminate()
@@ -245,6 +243,7 @@ class Database(object):
         table_names = _table_names.get(datatype)
         if table_names is None:
             return False
+        table_loading_tasks = []
 
         with PoolCursor(self._connection_pool) as cur:
             for name in table_names:
@@ -255,13 +254,13 @@ class Database(object):
                     continue
                 # TODO change absolute to relative path
                 # Sadly can't pickle AsIs
-                query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
-                self._load_table_task_queue.put((query, None))
-        if not self._load_table_task_queue.empty():
-            self._shutdown_workers(self._worker_stay_alive_flag, self._task_queue)
-            self._worker_pool = self._init_worker_pool(
-                execute_queries, self._load_table_task_queue, self._loading_tables_flag
-            )
+                query = f"""COPY {name} FROM '/usr/local/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
+                table_loading_tasks.append((query, None))
+        # TODO what should happend if we are loading the tables and want to validate a workload at the same time
+        if not len(table_loading_tasks) == 0 and not self._loading_tables_flag.value:
+            self._shutdown_workers(self._worker_stay_alive_flag)
+            [self._task_queue.put(task) for task in table_loading_tasks]  # type: ignore
+            self._worker_pool = self._init_worker_pool(self._loading_tables_flag)
             self._check_if_tables_loaded_job = self._scheduler.add_job(
                 func=self._check_if_tables_loaded, trigger="interval", seconds=1.0,
             )
@@ -269,13 +268,9 @@ class Database(object):
         return True
 
     def _check_if_tables_loaded(self):
-        if self._load_table_task_queue.empty():
-            self._shutdown_workers(
-                self._loading_tables_flag, self._load_table_task_queue
-            )
-            self._worker_pool = self._init_worker_pool(
-                execute_queries, self._task_queue, self._worker_stay_alive_flag
-            )
+        if self._task_queue.empty():
+            self._shutdown_workers(self._loading_tables_flag)
+            self._worker_pool = self._init_worker_pool(self._worker_stay_alive_flag)
             self._start_workers()
             self._check_if_tables_loaded_job.remove()
 
