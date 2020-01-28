@@ -5,7 +5,7 @@ from typing import Any, Callable, Dict, Optional
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import REP, Context
 
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import get_error_response, get_response
 
 from .database import Database
 from .driver import Driver
@@ -164,6 +164,11 @@ class DatabaseManager(object):
         return get_response(400)
 
     def _call_load_data(self, body: Dict) -> Dict:
+        loading_data = False
+        for database in list(self._databases.values()):
+            loading_data = loading_data or database.get_loading_tables_flag()
+        if loading_data:
+            return get_error_response(400, "Already loading data")
         datatype = str(body.get("datatype")).lower()
         sf = body.get("sf", "1")
         if not datatype:
