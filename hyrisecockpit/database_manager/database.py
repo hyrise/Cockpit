@@ -9,8 +9,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from psycopg2 import DatabaseError, Error, pool
-from psycopg2.extensions import AsIs
+from psycopg2 import Error, pool
 from zmq import SUB, SUBSCRIBE, Context
 
 from hyrisecockpit.settings import (
@@ -125,6 +124,7 @@ def execute_queries(
                     if worker_stay_alive_flag.value:
                         query, parameters = task
                         startts = time()
+                        print(f"worker {worker_id}---> {query}")
                         cur.execute(query, parameters)
                         endts = time()
                         log.log_query(startts, endts, benchmark="none", query_no=0)
@@ -244,64 +244,82 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
-    def load_data(self, datatype: str, sf: str):
-        """Load pregenerated tables."""
-        self._processing_tables_flag.value = True
+    def _get_tables_to_process(self, datatype):
         table_names = _table_names.get(datatype)
-        if table_names is None:
-            self._processing_tables_flag.value = False
-            return False
-        table_loading_tasks = []
+        return table_names
 
+    def _get_existing_tables(self, table_names):
+        existing_tables = []
+        not_existing_tables = []
         with PoolCursor(self._connection_pool) as cur:
             for name in table_names:
                 cur.execute(
                     "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
                 )
                 if cur.fetchone():
+                    existing_tables.append(name)
                     continue
-                # TODO change absolute to relative path
-                # Sadly can't pickle AsIs
-                query = f"""COPY {name} FROM '/usr/local/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
-                table_loading_tasks.append((query, None))
-        # TODO what should happend if we are loading the tables and want to validate a workload at the same time
-        if len(table_loading_tasks) == 0:
-            self._processing_tables_flag.value = False
-            return True
-        if not len(table_loading_tasks) == 0:
-            self._shutdown_workers()
-            [self._task_queue.put(task) for task in table_loading_tasks]  # type: ignore
-            self._worker_pool = self._init_worker_pool()
-            self._check_if_tables_loaded_job = self._scheduler.add_job(
-                func=self._check_if_tables_loaded, trigger="interval", seconds=1.0,
-            )
-            self._start_workers()
-        return True
+                not_existing_tables.append(name)
 
-    def _check_if_tables_loaded(self):
+        return {"existing": existing_tables, "not_existing": not_existing_tables}
+
+    def _generate_table_loading_queries(self, table_names, datatype, sf):
+        existing_tables = self._get_existing_tables(table_names)
+        table_loading_tasks = []
+        for name in existing_tables["not_existing"]:
+            # TODO change absolute to relative path
+            query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
+            table_loading_tasks.append((query, None))
+        return table_loading_tasks
+
+    def _generate_table_drop_queries(self, table_names, datatype, sf=None):
+        existing_tables = self._get_existing_tables(table_names)
+        table_drop_tasks = []
+        for name in existing_tables["existing"]:
+            query = f"""DROP TABLE {name};"""
+            table_drop_tasks.append((query, None))
+        return table_drop_tasks
+
+    def _start_table_processing(self, table_loading_tasks):
+        self._shutdown_workers()
+        print(table_loading_tasks)
+        [self._task_queue.put(task) for task in table_loading_tasks]  # type: ignore
+        self._worker_pool = self._init_worker_pool()
+        self._check_if_tables_processed_job = self._scheduler.add_job(
+            func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
+        )
+        self._start_workers()
+
+    def _check_if_tables_processed(self):
         if self._task_queue.empty():
             self._shutdown_workers()
             self._worker_pool = self._init_worker_pool()
             self._start_workers()
             self._processing_tables_flag.value = False
-            self._check_if_tables_loaded_job.remove()
+            self._check_if_tables_processed_job.remove()
+
+    def _process_tables(self, table_action, datatype, sf=None):
+        self._processing_tables_flag.value = True
+        table_names = self._get_tables_to_process(datatype)
+        if table_names is None:
+            self._processing_tables_flag.value = False
+            return False
+
+        table_loading_tasks = table_action(table_names, datatype, sf)
+        if len(table_loading_tasks) == 0:
+            self._processing_tables_flag.value = False
+            return True
+
+        self._start_table_processing(table_loading_tasks)
+        return True
+
+    def load_data(self, datatype: str, sf: str):
+        """Load pregenerated tables."""
+        return self._process_tables(self._generate_table_loading_queries, datatype, sf)
 
     def delete_data(self, datatype: str) -> bool:
         """Delete tables."""
-        table_names = _table_names.get(datatype)
-        if not table_names:
-            return False
-        self._processing_tables_flag.value = True
-        self._shutdown_workers()
-        with PoolCursor(self._connection_pool) as cur:
-            for name in table_names:
-                try:
-                    cur.execute("DROP TABLE %s;", (AsIs(name),))
-                except DatabaseError:
-                    continue
-        self._start_workers()
-        self._processing_tables_flag.value = False
-        return True
+        return self._process_tables(self._generate_table_drop_queries, datatype)
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
