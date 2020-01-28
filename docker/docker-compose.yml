@@ -36,3 +36,10 @@ services:
       -  ../../Cockpit:/usr/local/Cockpit
     ports:
       - "6001:6001"
+
+  influxdb:
+    image: influxdb:1.5-alpine
+    volumes:
+      - /tmp/cockpit/influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
