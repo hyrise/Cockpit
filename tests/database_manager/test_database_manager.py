@@ -11,6 +11,8 @@ from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
+    GENERATOR_HOST,
+    GENERATOR_PORT,
     WORKLOAD_PUBSUB_PORT,
     WORKLOAD_SUB_HOST,
 )
@@ -25,6 +27,8 @@ class TestDatabaseManager:
         with DatabaseManager(
             DB_MANAGER_HOST,
             DB_MANAGER_PORT,
+            GENERATOR_HOST,
+            GENERATOR_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
             DEFAULT_TABLES,
@@ -153,7 +157,7 @@ class TestDatabaseManager:
         response: Dict = database_manager._call_not_found({})
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"] == dict()
+        assert response["body"]["error"] == "Call not found"
 
     def test_call_storage_returns_storage(
         self, database_manager: DatabaseManager, mock_database: Database
