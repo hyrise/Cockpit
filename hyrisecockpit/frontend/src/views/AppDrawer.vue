@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer v-model="open" app class="elevation-2" width="150">
-    <v-toolbar color="primary darken-1"> </v-toolbar>
+    <v-toolbar color="cyan darken-3"> </v-toolbar>
     <v-card class="text-center" :to="{ name: 'databases' }">
       <v-icon class="mt-2" size="100">
         mdi-database-search

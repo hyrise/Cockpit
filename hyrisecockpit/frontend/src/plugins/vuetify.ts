@@ -6,13 +6,13 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
-    //dark: true,
+    dark: true,
     themes: {
       light: {
-        background: colors.shades.white
+        background: colors.grey.darken2
       },
       dark: {
-        primary: colors.orange.darken2,
+        primary: colors.cyan.darken3,
         background: colors.grey.darken4
       }
     }
