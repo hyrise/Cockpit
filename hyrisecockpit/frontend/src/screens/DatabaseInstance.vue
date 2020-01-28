@@ -1,6 +1,9 @@
 <template>
   <div class="ml-6">
-    <MetricsTileList :selected-databases="watchedInstances" />
+    <MetricsTileList
+      :selected-databases="watchedInstances"
+      :show-details="true"
+    />
     <div class="mt-6 mb-2">
       <component
         v-for="metric in instanceMetrics"
