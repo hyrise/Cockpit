@@ -7,7 +7,7 @@
       :values="sizes"
       :chart-configuration="chartConfiguration"
     />
-  </div>
+   </div>
 </template>
 
 <script lang="ts">
