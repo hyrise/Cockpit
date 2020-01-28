@@ -2,6 +2,7 @@
 
 from typing import Any, Callable, Dict, Optional
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import REP, Context
 
 from hyrisecockpit.response import get_response
@@ -28,9 +29,12 @@ class DatabaseManager(object):
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
         self._databases: Dict[str, Database] = dict()
+        self._scheduler = BackgroundScheduler()
+        self._update_log_job = self._scheduler.add_job(
+            func=self._update_log, trigger="interval", seconds=1,
+        )
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
-            "throughput": self._call_throughput,
             "storage": self._call_storage,
             "system data": self._call_system_data,
             "delete database": self._call_delete_database,
@@ -46,6 +50,15 @@ class DatabaseManager(object):
         self._socket.bind(
             "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
         )
+
+    def _update_log(self):
+        log = dict()
+        for id, database in self._databases.items():
+            log[id] = database.move_query_log()
+        for id in log.keys():
+            with open(f"log-{id}.csv", "a") as f:
+                for query in log[id]:
+                    print(query, sep=",", file=f)
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -72,6 +85,7 @@ class DatabaseManager(object):
             return get_response(400)
 
         db_instance = Database(
+            body["id"],
             user,
             password,
             host,
@@ -91,15 +105,6 @@ class DatabaseManager(object):
         databases = list(self._databases.keys())
         response = get_response(200)
         response["body"]["databases"] = databases
-        return response
-
-    def _call_throughput(self, body: Dict) -> Dict:
-        """Get the throughput of all databases."""
-        throughput = {}
-        for id, database in self._databases.items():
-            throughput[id] = database.get_throughput()
-        response = get_response(200)
-        response["body"]["throughput"] = throughput
         return response
 
     def _call_storage(self, body: Dict) -> Dict:
@@ -159,8 +164,8 @@ class DatabaseManager(object):
         return get_response(400)
 
     def _call_load_data(self, body: Dict) -> Dict:
-        datatype = body.get("datatype")
-        sf = body.get("sf", "1.000000")
+        datatype = str(body.get("datatype")).lower()
+        sf = body.get("sf", "1")
         if not datatype:
             return get_response(400)
         for database in list(self._databases.values()):

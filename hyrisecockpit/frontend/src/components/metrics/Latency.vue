@@ -1,18 +1,5 @@
 <template>
   <div>
-    <v-row v-if="enableComparison" align="center">
-      <v-col cols="6" class="mx-10">
-        <v-select
-          v-model="selectedDatabaseIds"
-          :items="databases.map(database => database.id)"
-          chips
-          label="databases"
-          multiple
-          outlined
-          prepend-icon="mdi-database"
-        ></v-select>
-      </v-col>
-    </v-row>
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
@@ -38,29 +25,20 @@ import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
 import Linechart from "../charts/Linechart.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
-
-interface Data {
-  data: Ref<any>;
-  databases: Ref<Database[]>;
-  selectedDatabaseIds: Ref<string[]>;
-  chartConfiguration: string[];
-}
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ComparisonMetricData
+} from "../../types/metrics";
 
 export default createComponent({
   name: "Latency",
   props: MetricPropsValidation,
   components: { Linechart },
-  setup(props: MetricProps, context: SetupContext): Data {
-    const { databases } = context.root.$databaseData;
+  setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-    const selectedDatabaseIds = ref<string[]>(props.selectedDatabases);
 
-    const chartConfiguration = [
-      "Throughput",
-      "time in s",
-      "queries per second"
-    ];
+    const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
@@ -68,9 +46,7 @@ export default createComponent({
 
     return {
       data,
-      databases,
-      chartConfiguration,
-      selectedDatabaseIds
+      chartConfiguration
     };
   }
 });

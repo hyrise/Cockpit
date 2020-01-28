@@ -15,6 +15,18 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: backendUrl + "system_data"
   },
+  latency: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("latency"),
+    base: "latency",
+    endpoint: backendUrl + "latency"
+  },
+  ram: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("ram"),
+    base: "system_data",
+    endpoint: backendUrl + "system_data"
+  },
   storage: {
     fetchType: "read",
     transformationService: useDataTransformation("storage"),

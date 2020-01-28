@@ -19,7 +19,12 @@ export interface WorkloadService {
 
 export type FetchType = "read" | "modify";
 
-export type Base = "system_data" | "throughput" | "storage" | "chunks_data";
+export type Base =
+  | "system_data"
+  | "throughput"
+  | "storage"
+  | "chunks_data"
+  | "latency";
 
 const vm = "aurora";
 const port = 8000;

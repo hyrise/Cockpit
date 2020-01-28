@@ -2,17 +2,62 @@
 
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
+from time import time
 from typing import Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 from psycopg2 import DatabaseError, Error, pool
 from psycopg2.extensions import AsIs
 from zmq import SUB, SUBSCRIBE, Context
 
+from hyrisecockpit.settings import (
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
+)
+
 from .driver import Driver
 from .table_names import table_names as _table_names
+
+
+class StorageCursor:
+    """Context Manager for a connection to log queries persistently."""
+
+    def __init__(self, host, port, user, password, database):
+        """Initialize a StorageCursor."""
+        self._host = host
+        self._port = port
+        self._user = user
+        self._password = password
+        self._database = database
+
+    def __enter__(self):
+        """Establish a connection."""
+        self._connection = InfluxDBClient(
+            self._host, self._port, self._user, self._password
+        )
+        self._connection.create_database(self._database)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Close the cursor and connection."""
+        self._connection.close()
+
+    def log_query(self, startts, endts, benchmark: str, query_no: int) -> None:
+        """Log a successful query to permanent in storage."""
+        points = [
+            {
+                "measurement": "successful_queries",
+                "tags": {"benchmark": benchmark, "query_no": query_no},
+                "fields": {"start": float(startts), "end": float(endts)},
+            }
+        ]
+        self._connection.write_points(points, database=self._database)
+        pass
 
 
 class PoolCursor:
@@ -38,6 +83,10 @@ class PoolCursor:
         """Execute a query."""
         return self.cur.execute(query, parameters)
 
+    def fetchone(self):
+        """Fetch one."""
+        return self.cur.fetchone()
+
 
 def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     """Fill the queue."""
@@ -56,25 +105,28 @@ def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
 def execute_queries(
     worker_id: str,
     task_queue: Queue,
-    throughput_data_container: Dict,
     connection_pool: pool,
     failed_task_queue: Queue,
+    database_id: str,
 ) -> None:
     """Define workers work loop."""
     with PoolCursor(connection_pool) as cur:
-        while True:
-            # If Queue is emty go to wait status
-            try:
-                task = task_queue.get(block=True)
-                query, parameters = task
-                cur.execute(query, parameters)
-                throughput_data_container[str(worker_id)] = (
-                    throughput_data_container[str(worker_id)] + 1
-                )
-            except (ValueError, Error) as e:
-                failed_task_queue.put(
-                    {"worker_id": worker_id, "task": task, "Error": str(e)}
-                )
+        with StorageCursor(
+            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
+        ) as log:
+            while True:
+                # If Queue is emty go to wait status
+                try:
+                    task = task_queue.get(block=True)
+                    query, parameters = task
+                    startts = time()
+                    cur.execute(query, parameters)
+                    endts = time()
+                    log.log_query(startts, endts, benchmark="none", query_no=0)
+                except (ValueError, Error) as e:
+                    failed_task_queue.put(
+                        {"worker_id": worker_id, "task": task, "Error": str(e)}
+                    )
 
 
 class Database(object):
@@ -82,6 +134,7 @@ class Database(object):
 
     def __init__(
         self,
+        id: str,
         user: str,
         password: str,
         host: str,
@@ -92,6 +145,7 @@ class Database(object):
         default_tables: str,
     ) -> None:
         """Initialize database object."""
+        self._id = id
         self._default_tables = default_tables
         self._number_workers = int(number_workers)
         self._number_additional_connections = 1
@@ -110,20 +164,15 @@ class Database(object):
         self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._throughput: int = 0
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
-        self._throughput_data_container: Dict = self._init_throughput_data_container()
         self._worker_pool: pool = self._init_worker_pool()
 
         self._start_workers()
 
-        self.load_data(self._default_tables, sf="0.1")
+        # self.load_data(self._default_tables, sf="0.1")
 
         self._scheduler = BackgroundScheduler()
-        self._update_throughput_job = self._scheduler.add_job(
-            func=self._update_throughput_data, trigger="interval", seconds=1,
-        )
         self._update_system_data_job = self._scheduler.add_job(
             func=self._update_system_data, trigger="interval", seconds=1,
         )
@@ -131,13 +180,6 @@ class Database(object):
             func=self._update_chunks_data, trigger="interval", seconds=5,
         )
         self._scheduler.start()
-
-    def _init_throughput_data_container(self) -> Dict:
-        """Initialize meta data container."""
-        throughput_data_container = self._manager.dict()
-        for i in range(self._number_workers):
-            throughput_data_container[str(i)] = 0
-        return throughput_data_container
 
     def _init_worker_pool(self) -> pool:
         """Initialize a pool of workers."""
@@ -148,9 +190,9 @@ class Database(object):
                 args=(
                     i,
                     self._task_queue,
-                    self._throughput_data_container,
                     self._connection_pool,
                     self._failed_task_queue,
+                    self._id,
                 ),
             )
             worker_pool.append(p)
@@ -168,7 +210,7 @@ class Database(object):
     def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
         table_names = _table_names.get(datatype)
-        if not table_names:
+        if table_names is None:
             return False
         with PoolCursor(self._connection_pool) as cur:
             success: bool = True
@@ -203,14 +245,6 @@ class Database(object):
                     continue
         return True
 
-    def _update_throughput_data(self) -> None:
-        """Put meta data from all workers together."""
-        throughput_data = 0
-        for i in range(self._number_workers):
-            throughput_data = throughput_data + self._throughput_data_container[str(i)]
-            self._throughput_data_container[str(i)] = 0
-        self._throughput = throughput_data
-
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
         # mocking system data
@@ -244,9 +278,13 @@ class Database(object):
         connection.set_session(autocommit=True)
 
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-        meta_segments = read_sql_query(sql, connection)
 
+        meta_segments = read_sql_query(sql, connection)
         self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            self._chunks_data = {}
+            return None
 
         chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table_name")
@@ -267,6 +305,10 @@ class Database(object):
         sql = "SELECT * FROM meta_segments;"
 
         meta_segments = read_sql_query(sql, connection)
+        self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            return {}
 
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
@@ -290,7 +332,6 @@ class Database(object):
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
-        self._connection_pool.putconn(connection)
         return self._create_storage_data_dictionary(result)
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
@@ -310,10 +351,6 @@ class Database(object):
                     "encoding": row["encoding_type"],
                 }
         return output
-
-    def get_throughput(self) -> int:
-        """Return throughput."""
-        return self._throughput
 
     def get_system_data(self) -> Dict:
         """Return system data."""
@@ -336,6 +373,12 @@ class Database(object):
 
     def close(self) -> None:
         """Close the database."""
+        # Remove jobs
+        self._update_system_data_job.remove()
+        self._update_chunks_data_job.remove()
+
+        # Close the scheduler
+        self._scheduler.shutdown()
         # Close worker pool
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].terminate()
@@ -345,11 +388,3 @@ class Database(object):
 
         # Close queue
         self._task_queue.close()
-
-        # Remove jobs
-        self._update_throughput_job.remove()
-        self._update_system_data_job.remove()
-        self._update_chunks_data_job.remove()
-
-        # Close the scheduler
-        self._scheduler.shutdown()

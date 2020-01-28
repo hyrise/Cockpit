@@ -8,6 +8,7 @@
         <button id="add_db_aurora">Add default aurora</button>            
     </p>
     <p>
+        <h5>Add Custom</h5>
         <p><input id="number_workers" type="text" value=""> (Number Workers)<p/>
         <p><input id="db_id" type="text" value=""> (id) <p/> 
         <p><input id="user" type="text" value=""> (User)<p/>
@@ -17,12 +18,22 @@
         <p><input id="dbname" type="text" value=""> (Database name) <p/>   
         <button id="add_db_button">Add database</button>
     <p/>
-
+    <h4>Load workload tables</h4>
+    (tpch (0.1, 1.0), tpcds (1.0), job (1.0))
+    <p id="load_workload_tables">
+        <p><input type="text" id="workload_tables_type" value="">(Tables type)</p>
+        <p><input type="text" id="workload_tables_scale_factor" value="">(scale factor)</p>
+        <button id="load_workload_tables_button">Load Tables</button>
+    </p>
+    <h4>Delete workload tables</h4>
+    <p id="delete_workload_tables">
+        <p><input type="text" id="workload_tables_to_delete" value="">(Workload type)</p>
+        <button id="delete_workload_tables_button">Delete Tables</button>        
+    </p>
     <h4>Start Workload</h4>
-    (mixed, no-ops, TPCH_0.1, TPCH_1.0)
+    (MIXED, NO-OPS, TPCH_0.1, TPCH_1.0, JOB)
     <p>
         <p><input type="text" id="workload_type" value=""> (Workload Type)</p>
-<!--         <p><input type="text" id="workload_factor" value=""> (Workload Factor)</p> -->   
         <button id="execute_workload_button">Execute Workload</button>             
     </p>
 
@@ -62,12 +73,15 @@
             database_name = document.createElement("div");
             database_name.innerHTML = database_id;
 
-            database_throughput = document.createElement("div");
-            database_throughput.innerHTML = "Throughput: " 
-                                            + active_databases.get(database_id)["throughput"];
+            let database_throughput = document.createElement("div");
+            database_throughput.innerHTML = "Throughput: " + active_databases.get(database_id)["throughput"];
             database_throughput.setAttribute("id", database_id + "_throughput");
 
-            remove_button = document.createElement("BUTTON");
+            let database_queue_length = document.createElement("div");
+            database_queue_length.innerHTML = "Queuelength: " + active_databases.get(database_id)["queue_length"];
+            database_queue_length.setAttribute("id", database_id + "_queue_length");
+
+            let remove_button = document.createElement("BUTTON");
             remove_button.innerHTML = "Remove Database";
 
             remove_button.addEventListener("click", () => {
@@ -76,6 +90,7 @@
 
             database_elem.appendChild(database_name);
             database_elem.appendChild(database_throughput);
+            database_elem.appendChild(database_queue_length);
             database_elem.appendChild(remove_button);
 
             let parent = document.getElementById("databases");
@@ -83,7 +98,7 @@
         }
 
         function addNewDatabases(database_id){
-            active_databases.set(database_id, {"throughput": 0});
+            active_databases.set(database_id, {"throughput": 0, "queue_length": 0});
             createDatabaseDomElement(database_id);
         }
 
@@ -145,7 +160,6 @@
         } 
 
         async function updateThroughput(url){
-            //ToDo itterate over throughput and update 
             const response = await fetch(url);
             let data = await response.json()
             let databases = data["body"]["throughput"]
@@ -157,11 +171,54 @@
                     document.getElementById(database_id+"_throughput").innerHTML = ("Throughput: " + value);
                 }
             }
+        } 
 
-        }  
+        async function updateQueueLength(url){
+            const response = await fetch(url);
+            let data = await response.json()
+            let databases = data["body"]["queue_length"]
+            let active_datases = Array.from(active_databases.keys());
+            for (let database_id in databases){
+                if(active_datases.includes(database_id)){
+                    let value = databases[database_id];
+                    active_databases.get(database_id)["queue_length"] = value;
+                    document.getElementById(database_id+"_queue_length").innerHTML = ("Queuelength: " + value);
+                }
+            }
+        }      
 
         async function execute_workload(json){
             const response = await postData(MONITOR_URL + '/workload', json, 'POST');
+            if (response["header"]["status"] != 200) {
+                window.alert(response["body"]["error"]);
+                return 0;  
+            }
+        }
+
+        async function execute_load_workload_tables(json){
+            let workload_tables_type = document.getElementById('workload_tables_type').value
+            let loading_bar = document.createElement("div");
+            loading_bar.innerHTML = "Loading ...";
+            loading_bar.style.backgroundColor = 'red';
+            let parent_node = document.getElementById("load_workload_tables");
+            parent_node.appendChild(loading_bar);
+            const response = await postData(MONITOR_URL + '/data/' + workload_tables_type, json, 'POST');
+            loading_bar.remove();
+            if (response["header"]["status"] != 200) {
+                window.alert(response["body"]["error"]);
+                return 0;  
+            }
+        }
+
+        async function execute_delete_workload_tables(){
+            let workload_tables_type = document.getElementById('workload_tables_to_delete').value
+            let loading_bar = document.createElement("div");
+            loading_bar.innerHTML = "Loading ...";
+            loading_bar.style.backgroundColor = 'red';
+            let parent_node = document.getElementById("delete_workload_tables");
+            parent_node.appendChild(loading_bar);
+            const response = await postData(MONITOR_URL + '/data/' + workload_tables_type, {}, 'DELETE');
+            loading_bar.remove();
             if (response["header"]["status"] != 200) {
                 window.alert(response["body"]["error"]);
                 return 0;  
@@ -176,6 +233,18 @@
                 "body": {
                     "type": document.getElementById('workload_type').value,
                     // "factor": Number(document.getElementById('workload_factor').value)
+                }
+            }
+            return json;
+        }
+
+        function getFormValuesWorkloadTables(){
+            let json = {
+                "header": {
+                    "message": "load data"
+                },
+                "body": {
+                    "sf": document.getElementById('workload_tables_scale_factor').value,
                 }
             }
             return json;
@@ -235,13 +304,22 @@
 
         document.getElementById("add_db_button").addEventListener("click", () => {
             registerNewDatabase(getFormValuesDatabase());
-        })
+        });
 
         document.getElementById("execute_workload_button").addEventListener("click", () => {
             execute_workload(getFormValuesWorkload());
-        })
+        });
+
+        document.getElementById("load_workload_tables_button").addEventListener("click", () => {
+            execute_load_workload_tables(getFormValuesWorkloadTables());
+        });
+
+        document.getElementById("delete_workload_tables_button").addEventListener("click", () => {
+            execute_delete_workload_tables();
+        });
 
         setInterval(() => {
+            updateQueueLength(MONITOR_URL + "/queue_length");
             updateDatabases(MONITOR_URL + "/database");
             updateThroughput(MONITOR_URL + "/throughput");
         }, 500);

@@ -3,7 +3,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="throughput"
+      graph-id="cpu"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -32,13 +32,12 @@ import {
 } from "../../types/metrics";
 
 export default createComponent({
-  name: "Throughput",
+  name: "CPU",
   props: MetricPropsValidation,
   components: { Linechart },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-
-    const chartConfiguration = ["Throughput", "time in sec", "queries per sec"];
+    const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);
