@@ -42,4 +42,4 @@ services:
     volumes:
       - /tmp/cockpit/influxdb:/var/lib/influxdb
     ports:
-      - "8004:8004"
+      - "8086:8086"
