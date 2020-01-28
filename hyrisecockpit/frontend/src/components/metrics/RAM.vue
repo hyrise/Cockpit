@@ -3,8 +3,9 @@
     <metric-details
       v-if="showDetails"
       :data="data"
-      :database="selectedDatabases.find(el => true)"
+      :databases="selectedDatabases"
       :border="100"
+      state-order="asc"
       unit="%"
     />
     <Linechart

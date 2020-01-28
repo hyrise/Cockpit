@@ -1,9 +1,18 @@
 <template>
-  <div
-    class="details"
-    v-bind:style="{ color: valueColor, fontSize: '18px', fontWeight: 'bold' }"
-  >
-    {{ currentValue }} {{ unit }}
+  <div>
+    <div
+      class="details"
+      v-for="(database, idx) in databases"
+      :key="database"
+      :style="{
+        color: valueColor[database],
+        fontSize: '18px',
+        fontWeight: 'bold',
+        top: idx * 5 + 12.5 + '%'
+      }"
+    >
+      {{ currentValue[database] }} {{ unit }}
+    </div>
   </div>
 </template>
 
@@ -17,18 +26,22 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import { getMetricDetailColor } from "../meta/metrics";
-import { MetricValueState } from "../../types/metrics";
+import {
+  getMetricDetailColor,
+  getMetricValueStateOrder
+} from "../meta/metrics";
+import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
 
 interface Props {
   data: any;
-  database: string;
+  databases: string[];
   unit: string;
   border: number;
+  stateOrder: MetricValueStateOrder;
 }
 interface Data {
-  currentValue: Ref<number>;
-  valueColor: Ref<string>;
+  currentValue: Ref<Record<string, number>>;
+  valueColor: Ref<Record<string, string>>;
 }
 
 export default createComponent({
@@ -38,8 +51,8 @@ export default createComponent({
       type: Object,
       default: null
     },
-    database: {
-      type: String,
+    databases: {
+      type: Array,
       default: null
     },
     unit: {
@@ -49,25 +62,42 @@ export default createComponent({
     border: {
       type: Number,
       default: 0
+    },
+    stateOrder: {
+      type: String,
+      default: null
     }
   },
   setup(props: Props, context: SetupContext): Data {
+    const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
+
     function getValueState(value: number): MetricValueState {
       return value > 0.66 * props.border
-        ? "high"
+        ? valueStateOrder[0]
         : value > 0.33 * props.border
-        ? "average"
-        : "low";
+        ? valueStateOrder[1]
+        : valueStateOrder[2];
     }
-    const currentValue = computed(() =>
-      Object.keys(props.data).length
-        ? Math.floor(
-            props.data[props.database][props.data[props.database].length - 1]
-          )
-        : 0
-    );
+    const currentValue = computed(() => {
+      const databaseValueMap: Record<string, number> = {};
+      if (!props.databases.length) return databaseValueMap;
+      props.databases.forEach(
+        database =>
+          (databaseValueMap[database] = Object.keys(props.data).length
+            ? Math.floor(props.data[database][props.data[database].length - 1])
+            : 0)
+      );
+      return databaseValueMap;
+    });
     const valueColor = computed(() => {
-      return getMetricDetailColor(getValueState(currentValue.value));
+      const databaseValueColorMap: Record<string, string> = {};
+      Object.keys(currentValue.value).forEach(
+        database =>
+          (databaseValueColorMap[database] = getMetricDetailColor(
+            getValueState(currentValue.value[database])
+          ))
+      );
+      return databaseValueColorMap;
     });
     return { currentValue, valueColor };
   }
@@ -77,7 +107,6 @@ export default createComponent({
 .details {
   z-index: 1;
   position: absolute;
-  top: 15%;
   width: 100%;
   text-align: center;
 }

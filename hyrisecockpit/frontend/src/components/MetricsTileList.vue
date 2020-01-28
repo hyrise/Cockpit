@@ -91,9 +91,4 @@ export default createComponent({
   margin-bottom: -60px;
   justify-content: center;
 }
-.metric-subtitle {
-  justify-content: center;
-  position: relative;
-  margin-top: 80px;
-}
 </style>

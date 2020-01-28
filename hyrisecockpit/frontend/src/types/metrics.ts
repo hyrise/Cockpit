@@ -2,6 +2,7 @@ import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
 
 export type MetricValueState = "low" | "average" | "high";
+export type MetricValueStateOrder = "asc" | "desc";
 export type Metric =
   | "access"
   | "cpu"
