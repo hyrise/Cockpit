@@ -1,8 +1,8 @@
 <template>
   <v-navigation-drawer v-model="open" app class="elevation-2" width="150">
     <v-toolbar color="primary darken-1"> </v-toolbar>
-    <v-card class="text-center" :to="{ name: 'database' }">
-      <v-icon size="150">
+    <v-card class="text-center" :to="{ name: 'databases' }">
+      <v-icon class="mt-2" size="100">
         mdi-database-search
       </v-icon>
       <v-card-title class="justify-center">
