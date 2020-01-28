@@ -13,6 +13,7 @@
         :is="metric"
         :selected-databases="selectedDatabases"
         :metric-meta="getMetadata(metric.toLowerCase())"
+        :show-details="showDetails"
       />
     </v-card>
   </div>
@@ -34,6 +35,7 @@ interface Data {
 
 interface Props {
   selectedDatabases: string[];
+  showDetails: boolean;
 }
 
 export default createComponent({
@@ -47,9 +49,13 @@ export default createComponent({
     selectedDatabases: {
       type: Array,
       default: null
+    },
+    showDetails: {
+      type: Boolean,
+      default: false
     }
   },
-  setup(props: {}, context: SetupContext): Data {
+  setup(props: Props, context: SetupContext): Data {
     return {
       getMetadata,
       comparisonMetrics
@@ -58,6 +64,9 @@ export default createComponent({
 });
 </script>
 <style scoped>
+.metric {
+  margin-top: -20px;
+}
 .metrics {
   margin-top: 6px;
   display: flex;

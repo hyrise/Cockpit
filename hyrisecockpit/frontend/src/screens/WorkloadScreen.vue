@@ -45,6 +45,7 @@
         </v-btn>
       </v-btn-toggle>
     </v-col>
+    <krueger-graph />
   </div>
 </template>
 
@@ -59,6 +60,7 @@ import {
 import { Workload, availableWorkloads } from "../types/workloads";
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
+import KruegerGraph from "../components/KruegerGraph.vue";
 
 interface Props {}
 interface Data {
@@ -72,6 +74,9 @@ interface Data {
 
 export default createComponent({
   name: "WorkloadScreen",
+  components: {
+    KruegerGraph
+  },
   setup(props: Props, context: SetupContext): Data {
     const {
       loadWorkloadData,
