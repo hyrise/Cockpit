@@ -12,6 +12,7 @@ from flask_cors import CORS
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
+from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
@@ -76,7 +77,9 @@ def get_throughput() -> Dict[str, int]:
             throughput[database] = list(result["successful_queries", None])[0]["count"]
         else:
             throughput[database] = 0
-    return throughput
+    response = get_response(200)
+    response["body"]["throughput"] = throughput
+    return response
 
 
 @app.route("/latency")
@@ -96,7 +99,9 @@ def get_latency() -> Dict[str, float]:
             latency[database] = list(result["successful_queries", None])[0]["latency"]
         else:
             latency[database] = 0
-    return latency
+    response = get_response(200)
+    response["body"]["latency"] = latency
+    return response
 
 
 @app.route("/queue_length")
