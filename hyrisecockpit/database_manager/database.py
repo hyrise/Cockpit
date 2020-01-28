@@ -88,7 +88,7 @@ class PoolCursor:
         return self.cur.fetchone()
 
 
-def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
+def fill_queue(workload_publisher_url: str, task_queue: Queue, flag: Any) -> None:
     """Fill the queue."""
     context = Context()
     subscriber = context.socket(SUB)
@@ -98,8 +98,9 @@ def fill_queue(workload_publisher_url: str, task_queue: Queue) -> None:
     while True:
         content = subscriber.recv_json()
         tasks = content["body"]["querylist"]
-        for task in tasks:
-            task_queue.put(task)
+        if not flag.value:
+            for task in tasks:
+                task_queue.put(task)
 
 
 def execute_queries(
@@ -191,7 +192,12 @@ class Database(object):
 
     def _init_subscriber_worker(self):
         subscriber_process = Process(
-            target=fill_queue, args=(self.workload_publisher_url, self._task_queue),
+            target=fill_queue,
+            args=(
+                self.workload_publisher_url,
+                self._task_queue,
+                self._loading_tables_flag,
+            ),
         )
         return subscriber_process
 
@@ -240,8 +246,10 @@ class Database(object):
 
     def load_data(self, datatype: str, sf: str):
         """Load pregenerated tables."""
+        self._loading_tables_flag.value = True
         table_names = _table_names.get(datatype)
         if table_names is None:
+            self._loading_tables_flag.value = False
             return False
         table_loading_tasks = []
 
@@ -257,10 +265,13 @@ class Database(object):
                 query = f"""COPY {name} FROM '/usr/local/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
                 table_loading_tasks.append((query, None))
         # TODO what should happend if we are loading the tables and want to validate a workload at the same time
-        if not len(table_loading_tasks) == 0 and not self._loading_tables_flag.value:
+        if len(table_loading_tasks) == 0:
+            self._loading_tables_flag.value = False
+            return True
+        if not len(table_loading_tasks) == 0:
             self._shutdown_workers(self._worker_stay_alive_flag)
             [self._task_queue.put(task) for task in table_loading_tasks]  # type: ignore
-            self._worker_pool = self._init_worker_pool(self._loading_tables_flag)
+            self._worker_pool = self._init_worker_pool(self._worker_stay_alive_flag)
             self._check_if_tables_loaded_job = self._scheduler.add_job(
                 func=self._check_if_tables_loaded, trigger="interval", seconds=1.0,
             )
@@ -269,9 +280,10 @@ class Database(object):
 
     def _check_if_tables_loaded(self):
         if self._task_queue.empty():
-            self._shutdown_workers(self._loading_tables_flag)
+            self._shutdown_workers(self._worker_stay_alive_flag)
             self._worker_pool = self._init_worker_pool(self._worker_stay_alive_flag)
             self._start_workers()
+            self._loading_tables_flag.value = False
             self._check_if_tables_loaded_job.remove()
 
     def delete_data(self, datatype: str) -> bool:
@@ -315,7 +327,7 @@ class Database(object):
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
-        if self._loading_tables_flag:
+        if self.get_loading_tables_flag():
             return None
 
         connection = self._connection_pool.getconn()
@@ -344,7 +356,7 @@ class Database(object):
 
     def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
-        if self._loading_tables_flag:
+        if self.get_loading_tables_flag():
             return {}
 
         connection = self._connection_pool.getconn()
@@ -402,6 +414,10 @@ class Database(object):
     def get_system_data(self) -> Dict:
         """Return system data."""
         return self._system_data
+
+    def get_loading_tables_flag(self) -> bool:
+        """Return tables loading flag."""
+        return self._loading_tables_flag.value
 
     def get_chunks_data(self) -> Dict:
         """Return chunks data."""
