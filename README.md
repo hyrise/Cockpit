@@ -137,3 +137,11 @@ You can run all the pre-commit hooks on all files by running:
 ```bash
 pipenv run pre-commit run --all-files
 ```
+
+### Tests
+
+You can run all tests with:
+
+```bash
+pipenv run pre-commit run --hook-stage manual pytest
+```
