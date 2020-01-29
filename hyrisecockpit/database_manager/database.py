@@ -107,7 +107,7 @@ def execute_queries(
     task_queue: Queue,
     connection_pool: pool,
     failed_task_queue: Queue,
-    workload_proceed_flag: Any,
+    workload_proceed_flag: Value,
     database_id: str,
 ) -> None:
     """Define workers work loop."""
