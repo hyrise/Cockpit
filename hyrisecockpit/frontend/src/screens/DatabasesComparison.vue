@@ -11,7 +11,7 @@
       outlined
       prepend-icon="mdi-database"
     ></v-select>
-    <MetricsTileList :selected-databases="watchedInstances" />
+    <MetricsComparisonTable :selected-databases="watchedInstances" />
   </div>
 </template>
 
@@ -25,6 +25,7 @@ import {
   ref
 } from "@vue/composition-api";
 import MetricsTileList from "../components/MetricsTileList.vue";
+import MetricsComparisonTable from "../components/MetricsComparisonTable.vue";
 
 interface Data {
   watchedInstances: Ref<string[]>;
@@ -32,7 +33,8 @@ interface Data {
 
 export default createComponent({
   components: {
-    MetricsTileList
+    MetricsTileList,
+    MetricsComparisonTable
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = ref<string[]>([]);

@@ -3,7 +3,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="ram"
+      :graph-id="graphId || 'ram'"
       :chart-configuration="chartConfiguration"
     />
   </div>

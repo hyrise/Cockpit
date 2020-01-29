@@ -1,7 +1,7 @@
 <template>
   <div class="mx-10 my-10">
     <Treemap
-      graph-id="storage"
+      :graph-id="graphId || 'storage'"
       :labels="labels"
       :parents="parents"
       :values="sizes"

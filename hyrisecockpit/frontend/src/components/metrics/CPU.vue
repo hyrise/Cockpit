@@ -3,7 +3,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="cpu"
+      :graph-id="graphId || 'cpu'"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -38,6 +38,7 @@ export default createComponent({
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
     const chartConfiguration = ["CPU", "time in sec", "workload in %"];
+    console.log(props.graphId);
 
     onMounted(() => {
       setInterval(checkState, 1000);

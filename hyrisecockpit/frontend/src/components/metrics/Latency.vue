@@ -3,7 +3,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="latency"
+      :graph-id="graphId || 'latency'"
       :chart-configuration="chartConfiguration"
     />
   </div>

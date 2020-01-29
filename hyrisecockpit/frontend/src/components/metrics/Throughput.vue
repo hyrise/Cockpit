@@ -3,7 +3,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="throughput"
+      :graph-id="graphId || 'throughput'"
       :chart-configuration="chartConfiguration"
     />
   </div>
