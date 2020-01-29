@@ -162,6 +162,7 @@ class Database(object):
             dbname,
             self._number_workers + self._number_additional_connections,
         )
+
         self._connection_pool = self._driver.get_connection_pool()
         self._scheduler = BackgroundScheduler()
 
@@ -172,6 +173,7 @@ class Database(object):
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
+
         self._worker_stay_alive_flag = self._manager.Value("b", True)
         self._processing_tables_flag = self._manager.Value("b", False)
         self._worker_pool: pool = self._init_worker_pool()
@@ -223,6 +225,14 @@ class Database(object):
     def _start_subscriber_worker(self):
         """Start subscriber worker."""
         self._subscriber_worker.start()
+
+    def enable_workload_execution(self) -> None:
+        """Enable execution of the workload."""
+        self._worker_stay_alive_flag.value = True
+
+    def disable_workload_execution(self) -> None:
+        """Disable execution of the workload."""
+        self._worker_stay_alive_flag.value = False
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""
