@@ -2,9 +2,10 @@
 
 from typing import Any, Callable, Dict, Optional
 
-from zmq import REP, Context
+from apscheduler.schedulers.background import BackgroundScheduler
+from zmq import REP, REQ, Context
 
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import get_error_response, get_response
 
 from .database import Database
 from .driver import Driver
@@ -17,18 +18,31 @@ class DatabaseManager(object):
         self,
         db_manager_host: str,
         db_manager_port: str,
+        generator_host: str,
+        generator_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
+        default_tables: str,
     ) -> None:
         """Initialize a DatabaseManager."""
         self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._generator_host = generator_host
+        self._generator_port = generator_port
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
+        self._default_tables = default_tables
+
+        self._workload_proceed_flag: bool = False
+        self._auto_reload_flag: bool = False
+
         self._databases: Dict[str, Database] = dict()
+        self._scheduler = BackgroundScheduler()
+        self._reload_workload_job = self._scheduler.add_job(
+            func=self._reload_workload, trigger="interval", seconds=1, max_instances=1
+        )
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
-            "throughput": self._call_throughput,
             "storage": self._call_storage,
             "system data": self._call_system_data,
             "delete database": self._call_delete_database,
@@ -37,12 +51,46 @@ class DatabaseManager(object):
             "failed tasks": self._call_failed_tasks,
             "get databases": self._call_get_databases,
             "load data": self._call_load_data,
+            "delete data": self._call_delete_data,
+            "register workload": self._call_register_workload,
+            "start workload": self._call_start_workload,
+            "stop workload": self._call_stop_workload,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
             "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
         )
+        self._generator_socket = self._context.socket(REQ)
+        self._generator_socket.connect(
+            "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
+        )
+        self._scheduler.start()
+
+    def _reload_workload(self):
+        limit = 10000
+        auto_reload_factor = 10000
+        if self._workload_proceed_flag:
+            queue_length = [
+                database.get_queue_length() for _, database in self._databases.items()
+            ]
+            if len(queue_length) == 0:
+                return None
+
+            if min(queue_length) < limit:
+                if self._auto_reload_flag:
+                    request = {
+                        "header": {"message": "generate registered workload"},
+                        "body": {"factor": auto_reload_factor},
+                    }
+                else:
+                    self._workload_proceed_flag = False
+                    request = {
+                        "header": {"message": "generate registered workload"},
+                        "body": {},
+                    }
+                self._generator_socket.send_json(request)
+                self._generator_socket.recv_json()
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -69,6 +117,7 @@ class DatabaseManager(object):
             return get_response(400)
 
         db_instance = Database(
+            body["id"],
             user,
             password,
             host,
@@ -76,8 +125,9 @@ class DatabaseManager(object):
             dbname,
             number_workers,
             "tcp://{:s}:{:s}".format(
-                self._workload_sub_host, self._workload_pubsub_port
+                self._workload_sub_host, self._workload_pubsub_port,
             ),
+            self._default_tables,
         )
         self._databases[body["id"]] = db_instance
         return get_response(200)
@@ -87,15 +137,6 @@ class DatabaseManager(object):
         databases = list(self._databases.keys())
         response = get_response(200)
         response["body"]["databases"] = databases
-        return response
-
-    def _call_throughput(self, body: Dict) -> Dict:
-        """Get the throughput of all databases."""
-        throughput = {}
-        for id, database in self._databases.items():
-            throughput[id] = database.get_throughput()
-        response = get_response(200)
-        response["body"]["throughput"] = throughput
         return response
 
     def _call_storage(self, body: Dict) -> Dict:
@@ -152,14 +193,61 @@ class DatabaseManager(object):
         return response
 
     def _call_not_found(self, body: Dict) -> Dict:
-        return get_response(400)
+        return get_error_response(400, "Call not found")
 
     def _call_load_data(self, body: Dict) -> Dict:
+        datatype = str(body.get("datatype")).lower()
+        sf = body.get("sf", "1")
+        if not datatype:
+            return get_response(400)
+        for database in list(self._databases.values()):
+            if not database.load_data(datatype, sf):
+                return get_response(400)  # TODO return which DB couldn't import
+        return get_response(200)
+
+    def _call_register_workload(self, body: Dict) -> Dict:
+        workload: Any = body.get("workload")
+        request = {
+            "header": {"message": "register workload"},
+            "body": workload,
+        }
+        self._generator_socket.send_json(request)
+        response = self._generator_socket.recv_json()
+
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Invalid workload")
+            )
+        required_tables = response["body"]["required_tables"]
+        sf = workload.get("sf", "0.1")  # TODO: Choose appropriate scale factor
+        for table in required_tables:
+            for database in list(self._databases.values()):
+                if not database.load_data(table, sf):
+                    return get_error_response(
+                        400, f"Database {database._id} could not load {table}"
+                    )
+        self._auto_reload_flag = workload.get("auto-reload", True)
+
+        return get_response(200)
+
+    def _call_start_workload(self, body: Dict) -> Dict:
+        for database in list(self._databases.values()):
+            database.enable_workload_execution()
+        self._workload_proceed_flag = True
+        return get_response(200)
+
+    def _call_stop_workload(self, body: Dict) -> Dict:
+        self._workload_proceed_flag = False
+        for database in list(self._databases.values()):
+            database.disable_workload_execution()
+        return get_response(200)
+
+    def _call_delete_data(self, body: Dict) -> Dict:
         datatype = body.get("datatype")
         if not datatype:
             return get_response(400)
-        for database in self._databases.values():
-            if not database.load_data(datatype):
+        for database in list(self._databases.values()):
+            if not database.delete_data(datatype):
                 return get_response(400)
         return get_response(200)
 
@@ -173,7 +261,6 @@ class DatabaseManager(object):
         while True:
             # Get the message
             request = self._socket.recv_json()
-
             # Handle the call
             response = self._server_calls.get(
                 request["header"]["message"], self._call_not_found
@@ -186,5 +273,8 @@ class DatabaseManager(object):
         """Close the socket and context, exit all databases."""
         for database in self._databases.values():
             database.close()
+        self._reload_workload_job.remove()
+        self._scheduler.shutdown()
         self._socket.close()
+        self._generator_socket.close()
         self._context.term()

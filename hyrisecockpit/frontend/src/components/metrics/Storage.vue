@@ -1,5 +1,5 @@
 <template>
-  <div class="treemap mx-10 my-10">
+  <div class="mx-10 my-10">
     <Treemap
       graph-id="storage"
       :labels="labels"
@@ -45,8 +45,8 @@ export default createComponent({
     const sizes = ref<number[]>([]);
     const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
 
-    checkState();
     onMounted(() => {
+      checkState();
       setInterval(checkState, 5000);
     });
 
@@ -70,8 +70,3 @@ export default createComponent({
   }
 });
 </script>
-<style>
-.treemap {
-  width: 100%;
-}
-</style>

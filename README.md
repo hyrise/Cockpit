@@ -32,7 +32,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 Put the following in your `.bashrc` (or `.zshrc`, etc.):
 
 ```bash
-export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
+export PATH="/home/$USER/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```

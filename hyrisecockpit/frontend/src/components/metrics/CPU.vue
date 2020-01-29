@@ -4,14 +4,14 @@
       v-if="showDetails"
       :data="data"
       :databases="selectedDatabases"
-      :border="1000"
+      :border="1200"
       state-order="desc"
-      unit="sec"
+      unit="%"
     />
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="latency"
+      graph-id="cpu"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -41,13 +41,12 @@ import {
 import MetricDetails from "../details/MetricDetails.vue";
 
 export default createComponent({
-  name: "Latency",
+  name: "CPU",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
-
-    const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
+    const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
     onMounted(() => {
       setInterval(checkState, 1000);

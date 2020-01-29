@@ -4,17 +4,24 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+from time import time
 from typing import Dict
 
 from flask import Flask, request
 from flask_cors import CORS
+from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
+from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
     GENERATOR_HOST,
     GENERATOR_PORT,
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
 )
 
 context = Context(io_threads=1)
@@ -25,9 +32,19 @@ db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
 generator_socket = context.socket(REQ)
 generator_socket.connect(f"tcp://{GENERATOR_HOST}:{GENERATOR_PORT}")
 
+
+storage_connection = InfluxDBClient(
+    STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
+)
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
+
+
+def get_all_databases(client: InfluxDBClient):
+    """Return a list of all databases with measurements."""
+    return [d["name"] for d in client.get_list_database()]
 
 
 def _send_message(socket: Socket, message: Dict):
@@ -44,11 +61,47 @@ def home() -> str:
 
 
 @app.route("/throughput")
-def get_throughput() -> Dict:
-    """Return throughput information from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "throughput"}, "body": {}}
-    )
+def get_throughput() -> Dict[str, int]:
+    """Return throughput information from the stored queries."""
+    t = time()
+    throughput: Dict[str, int] = dict()
+    message = {"header": {"message": "get databases"}, "body": {}}
+    active_databases = _send_message(db_manager_socket, message)["body"]["databases"]
+    for database in active_databases:
+        result = storage_connection.query(
+            f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-1} AND "end" <= {t};""",
+            database=database,
+        )
+        throughput_value = list(result["successful_queries", None])
+        if len(throughput_value) > 0:
+            throughput[database] = list(result["successful_queries", None])[0]["count"]
+        else:
+            throughput[database] = 0
+    response = get_response(200)
+    response["body"]["throughput"] = throughput
+    return response
+
+
+@app.route("/latency")
+def get_latency() -> Dict[str, float]:
+    """Return latency information from the stored queries."""
+    t = time()
+    latency: Dict[str, float] = dict()
+    message = {"header": {"message": "get databases"}, "body": {}}
+    active_databases = _send_message(db_manager_socket, message)["body"]["databases"]
+    for database in active_databases:
+        result = storage_connection.query(
+            f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-1} AND "start" <= {t});""",
+            database=database,
+        )
+        latency_value = list(result["successful_queries", None])
+        if len(latency_value) > 0:
+            latency[database] = list(result["successful_queries", None])[0]["latency"]
+        else:
+            latency[database] = 0
+    response = get_response(200)
+    response["body"]["latency"] = latency
+    return response
 
 
 @app.route("/queue_length")
@@ -119,6 +172,52 @@ def database() -> Dict:
     return response
 
 
+@app.route("/register_workload", methods=["POST"])
+def register_workload() -> Dict:
+    """Register the workload specification."""
+    request_json = request.get_json()
+    workload = {
+        "type": request_json.get("type"),
+        "queries": request_json.get("queries", None),
+        "shuffle": request_json.get("shuffle", False),
+        "factor": request_json.get("factor", 1),
+        "auto-reload": request_json.get("auto-reload", False),
+        "sf": request_json.get("sf", 0.1),
+    }
+
+    message = {
+        "header": {"message": "register workload"},
+        "body": {"workload": workload},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/start_workload", methods=["POST"])
+def start_workload() -> Dict:
+    """Start the workload execution."""
+    message = {
+        "header": {"message": "start workload"},
+        "body": {},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/stop_workload", methods=["POST"])
+def stop_workload() -> Dict:
+    """Stop the workload execution."""
+    message = {
+        "header": {"message": "stop workload"},
+        "body": {},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
 @app.route("/workload", methods=["POST", "DELETE"])
 def workload() -> Dict:
     """Start or stop the workload generator."""
@@ -126,7 +225,13 @@ def workload() -> Dict:
     if request.method == "POST":
         message = {
             "header": {"message": "workload"},
-            "body": {"type": request_json["body"]["type"]},  # TODO remove body
+            "body": {
+                "type": request_json["body"].get("type"),
+                "sf": request_json["body"].get("sf"),
+                "queries": request_json["body"].get("queries"),
+                "factor": request_json["body"].get("factor", 1),
+                "shuffle": request_json["body"].get("shuffle", False),
+            },
         }
     elif request.method == "DELETE":
         message = {
@@ -134,16 +239,26 @@ def workload() -> Dict:
             "body": {},
         }
     response = _send_message(generator_socket, message)
+
     return response
 
 
-@app.route("/load_data/<datatype>", methods=["GET"])
-def load_data(datatype: str) -> Dict:
-    """Load pregenerated tables."""
-    return _send_message(
-        db_manager_socket,
-        {"header": {"message": "load data"}, "body": {"datatype": datatype}},
-    )
+@app.route("/data/<datatype>", methods=["POST", "DELETE"])
+def data(datatype: str) -> Dict:
+    """Load or delete pregenerated tables from all databases."""
+    request_json = request.get_json()
+    if request.method == "POST":
+        message = {
+            "header": {"message": "load data"},
+            "body": {"datatype": datatype, "sf": request_json["body"]["sf"]},
+        }
+    elif request.method == "DELETE":
+        message = {
+            "header": {"message": "delete data"},
+            "body": {"datatype": datatype},
+        }
+    response = _send_message(db_manager_socket, message)
+    return response
 
 
 @app.route("/krueger_data", methods=["GET"])
@@ -151,6 +266,6 @@ def krueger_data() -> Dict:
     """Provide mock data for a Krügergraph."""
     return {
         "tpch": {"SELECT": 555, "INSERT": 265, "UPDATE": 5, "DELETE": 1},
-        "tpds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
+        "tpcds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
         "job": {"SELECT": 537, "INSERT": 80, "UPDATE": 54, "DELETE": 3},
     }
