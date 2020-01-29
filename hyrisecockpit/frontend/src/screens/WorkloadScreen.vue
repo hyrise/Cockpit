@@ -8,7 +8,7 @@
       <div class="mb-2 mt-2">
         <b> Register workload </b>
       </div>
-      <v-btn @click="registerWorkload()" large color="amber">TPCH_0.1 </v-btn>
+      <v-btn @click="registerWorkload()" large color="primary">TPCH_0.1 </v-btn>
       <div class="mb-2 mt-6">
         <b> Start/stop workload </b>
       </div>
