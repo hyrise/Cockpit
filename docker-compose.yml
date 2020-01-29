@@ -1,4 +1,4 @@
-version:  "3.6"
+version: "3.5"
 
 services:
   backend:
@@ -23,7 +23,7 @@ services:
     volumes: 
       -  ../../Cockpit:/usr/local/Cockpit
     ports:
-      - "6555:6555"
+      - "8001:8001"
 
   workload-generator:
     image: udopigorsch/hyrise:cockpit_0.2
@@ -35,7 +35,7 @@ services:
     volumes: 
       -  ../../Cockpit:/usr/local/Cockpit
     ports:
-      - "6001:6001"
+      - "8002:8002"
 
   influxdb:
     image: influxdb:1.5-alpine

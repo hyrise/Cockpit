@@ -32,7 +32,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 Put the following in your `.bashrc` (or `.zshrc`, etc.):
 
 ```bash
-export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
+export PATH="/home/$USER/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```
@@ -136,4 +136,12 @@ You can run all the pre-commit hooks on all files by running:
 
 ```bash
 pipenv run pre-commit run --all-files
+```
+
+### Tests
+
+You can run all tests with:
+
+```bash
+pipenv run pre-commit run --hook-stage manual pytest
 ```

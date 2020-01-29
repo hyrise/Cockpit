@@ -13,7 +13,15 @@ class NotExistingWorkloadFolderException(Exception):
     """Exception raised for empty workload folder."""
 
     def __init__(self, message: str):
-        """Initialize a IdNotValidException."""
+        """Initialize a NotExistingWorkloadFolderException."""
+        super().__init__(message)
+
+
+class NotExistingConfigFileException(Exception):
+    """Exception raised for missing config file."""
+
+    def __init__(self, message: str):
+        """Initialize a  NotExistingConfigFileException."""
         super().__init__(message)
 
 
