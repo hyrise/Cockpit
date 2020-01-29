@@ -9,6 +9,8 @@
     },
     "dependencies": {
         "@types/plotly.js": "^1.44.24",
+        "@typescript-eslint/eslint-plugin": "^2.18.0",
+        "@typescript-eslint/parser": "^2.18.0",
         "@vue/composition-api": "^0.3.4",
         "axios": "^0.19.2",
         "core-js": "^3.6.4",
