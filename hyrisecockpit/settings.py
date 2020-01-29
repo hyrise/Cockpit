@@ -33,6 +33,6 @@ WORKLOAD_LOCATION: str = getenv("WORKLOAD_LOCATION", "workloads/workload_queries
 DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch")
 
 STORAGE_HOST: str = getenv("STORAGE_HOST", "localhost")
-STORAGE_PORT: str = getenv("STORAGE_PORT", "8004")
+STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
 STORAGE_USER: str = getenv("STORAGE_USER", "root")
 STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
