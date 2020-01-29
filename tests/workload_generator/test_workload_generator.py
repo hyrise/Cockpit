@@ -114,10 +114,7 @@ class TestWorkloadGenerator:
 
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
-        assert (
-            response["body"]["error"]
-            == "Workload DUMMY WORKLOAD_42 not found: directory doesn't exist"
-        )
+        assert response["body"]["error"] == "Error message"
 
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
@@ -142,10 +139,7 @@ class TestWorkloadGenerator:
 
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
-        assert (
-            response["body"]["error"]
-            == "Workload DUMMY WORKLOAD_42 not found: directory doesn't exist"
-        )
+        assert response["body"]["error"] == "Error message"
 
     @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data")
     @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data")

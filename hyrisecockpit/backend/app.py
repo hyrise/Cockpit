@@ -172,6 +172,52 @@ def database() -> Dict:
     return response
 
 
+@app.route("/register_workload", methods=["POST"])
+def register_workload() -> Dict:
+    """Register the workload specification."""
+    request_json = request.get_json()
+    workload = {
+        "type": request_json.get("type"),
+        "queries": request_json.get("queries", None),
+        "shuffle": request_json.get("shuffle", False),
+        "factor": request_json.get("factor", 1),
+        "auto-reload": request_json.get("auto-reload", False),
+        "sf": request_json.get("sf", 0.1),
+    }
+
+    message = {
+        "header": {"message": "register workload"},
+        "body": {"workload": workload},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/start_workload", methods=["POST"])
+def start_workload() -> Dict:
+    """Start the workload execution."""
+    message = {
+        "header": {"message": "start workload"},
+        "body": {},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
+@app.route("/stop_workload", methods=["POST"])
+def stop_workload() -> Dict:
+    """Stop the workload execution."""
+    message = {
+        "header": {"message": "stop workload"},
+        "body": {},
+    }
+    response = _send_message(db_manager_socket, message)
+
+    return response
+
+
 @app.route("/workload", methods=["POST", "DELETE"])
 def workload() -> Dict:
     """Start or stop the workload generator."""
@@ -220,6 +266,6 @@ def krueger_data() -> Dict:
     """Provide mock data for a Krügergraph."""
     return {
         "tpch": {"SELECT": 555, "INSERT": 265, "UPDATE": 5, "DELETE": 1},
-        "tpds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
+        "tpcds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
         "job": {"SELECT": 537, "INSERT": 80, "UPDATE": 54, "DELETE": 3},
     }

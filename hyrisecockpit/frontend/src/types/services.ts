@@ -15,6 +15,9 @@ export type TransformationService = (
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
+  registerWorkload: () => void;
+  startWorkload: () => void;
+  stopWorkload: () => void;
 }
 
 export type FetchType = "read" | "modify";
