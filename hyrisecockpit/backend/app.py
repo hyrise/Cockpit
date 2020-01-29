@@ -266,6 +266,6 @@ def krueger_data() -> Dict:
     """Provide mock data for a Krügergraph."""
     return {
         "tpch": {"SELECT": 555, "INSERT": 265, "UPDATE": 5, "DELETE": 1},
-        "tpds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
+        "tpcds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
         "job": {"SELECT": 537, "INSERT": 80, "UPDATE": 54, "DELETE": 3},
     }
