@@ -21,13 +21,13 @@ pytest-cov = "*"
 
 [packages]
 pandas = "*"
+psycopg2-binary = "*"
 pyzmq = "*"
 python-dotenv = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
 influxdb = "*"
-psycopg2-binary = "*"
 
 [requires]
 python_version = "3.8.1"
