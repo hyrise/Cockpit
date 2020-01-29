@@ -6,7 +6,9 @@ import { FetchService } from "@/types/services";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
-    axios.post(`${backendUrl}data/${workload}`);
+    axios.post(`${backendUrl}data/${workload}`, {
+      body: { sf: "1" }
+    });
   }
   function deleteWorkloadData(workload: Workload): void {
     axios.delete(`${backendUrl}data/${workload}`);
