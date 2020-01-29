@@ -15,7 +15,7 @@ export function useWorkloadService(): WorkloadService {
     axios.post(`${backendUrl}register_workload`, {
       type: "TPCH_0.1",
       factor: 1,
-      sf: 0.1,
+      sf: "0.1",
       shuffle: false,
       "auto-reload": true
     });
