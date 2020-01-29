@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "@types/plotly.js": "^1.44.24",
-        "@vue/composition-api": "^0.3.2",
+        "@vue/composition-api": "^0.3.4",
         "axios": "^0.19.2",
         "core-js": "^3.6.4",
         "plotly.js": "^1.52.1",
@@ -23,7 +23,7 @@
         "@vue/cli-plugin-eslint": "^4.1.2",
         "@vue/cli-plugin-typescript": "^4.1.2",
         "@vue/cli-service": "^4.1.2",
-        "@vue/eslint-config-prettier": "^5.0.0",
+        "@vue/eslint-config-prettier": "^6.0.0",
         "@vue/eslint-config-typescript": "^4.0.0",
         "eslint": "^6.8.0",
         "eslint-plugin-prettier": "^3.1.2",
