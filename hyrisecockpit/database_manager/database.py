@@ -1,9 +1,9 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Manager, Process, Queue
+from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
