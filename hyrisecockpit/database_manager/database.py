@@ -93,7 +93,6 @@ def fill_queue(workload_publisher_url: str, task_queue: Queue, flag: Any) -> Non
     subscriber = context.socket(SUB)
     subscriber.connect(workload_publisher_url)
     subscriber.setsockopt_string(SUBSCRIBE, "")
-
     while True:
         content = subscriber.recv_json()
         tasks = content["body"]["querylist"]
@@ -118,13 +117,13 @@ def execute_queries(
             while True:
                 # If Queue is emty go to wait status
                 try:
-                    if not worker_stay_alive_flag.value and task_queue.empty():
-                        break
                     task = task_queue.get(block=True)
+                    if not worker_stay_alive_flag.value and task == "foo":
+                        task_queue.put("foo")
+                        break
                     if worker_stay_alive_flag.value:
                         query, parameters = task
                         startts = time()
-                        print(f"worker {worker_id}---> {query}")
                         cur.execute(query, parameters)
                         endts = time()
                         log.log_query(startts, endts, benchmark="none", query_no=0)
@@ -150,6 +149,7 @@ class Database(object):
         default_tables: str,
     ) -> None:
         """Initialize database object."""
+        # import pdb; pdb.set_trace()
         self._id = id
         self._default_tables = default_tables
         self._number_workers = int(number_workers)
@@ -220,21 +220,6 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def _shutdown_workers(self) -> None:
-        """Shutdown all task execution workers."""
-        self._worker_stay_alive_flag.value = False
-        qsize = self._task_queue.qsize()
-        if self._number_workers > qsize:
-            number_dummy_tasks = self._number_workers - qsize
-            for _ in range(number_dummy_tasks):
-                # We need to wake up worker so terminate them kindly so we don't lock the queue
-                self._task_queue.put(("foo", None))
-        for worker in self._worker_pool:
-            worker.join()
-            worker.terminate()
-
-        self._worker_pool[:] = []
-
     def _start_subscriber_worker(self):
         """Start subscriber worker."""
         self._subscriber_worker.start()
@@ -244,11 +229,31 @@ class Database(object):
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
+    def _shutdown_workers(self) -> None:
+        """Shutdown all task execution workers."""
+        self._worker_stay_alive_flag.value = False
+        self._task_queue.put("foo")
+        for worker in self._worker_pool:
+            worker.join()
+            worker.terminate()
+        self._task_queue.get()
+        self._worker_pool[:] = []
+
+    def _flush_queue(self, default_init_tasks=None) -> None:
+        """Flush queue."""
+        self._shutdown_workers()
+        if default_init_tasks is not None:
+            [self._task_queue.put(task) for task in default_init_tasks]  # type: ignore
+        self._worker_pool = self._init_worker_pool()
+        self._start_workers()
+
     def _get_tables_to_process(self, datatype):
+        """Check for tablenames to process."""
         table_names = _table_names.get(datatype)
         return table_names
 
     def _get_existing_tables(self, table_names):
+        """Check wich tables exists and which not."""
         existing_tables = []
         not_existing_tables = []
         with PoolCursor(self._connection_pool) as cur:
@@ -264,15 +269,17 @@ class Database(object):
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
     def _generate_table_loading_queries(self, table_names, datatype, sf):
+        """Generate queries in tuple form that load tables."""
         existing_tables = self._get_existing_tables(table_names)
         table_loading_tasks = []
         for name in existing_tables["not_existing"]:
             # TODO change absolute to relative path
-            query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
+            query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/Tools/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
             table_loading_tasks.append((query, None))
         return table_loading_tasks
 
     def _generate_table_drop_queries(self, table_names, datatype, sf=None):
+        """Generate queries in tuple form that drop tables."""
         existing_tables = self._get_existing_tables(table_names)
         table_drop_tasks = []
         for name in existing_tables["existing"]:
@@ -280,25 +287,22 @@ class Database(object):
             table_drop_tasks.append((query, None))
         return table_drop_tasks
 
-    def _start_table_processing(self, table_loading_tasks):
-        self._shutdown_workers()
-        print(table_loading_tasks)
-        [self._task_queue.put(task) for task in table_loading_tasks]  # type: ignore
-        self._worker_pool = self._init_worker_pool()
-        self._check_if_tables_processed_job = self._scheduler.add_job(
-            func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
-        )
-        self._start_workers()
-
     def _check_if_tables_processed(self):
+        """Check if all table processing task are taken from the queue an if so flushes it."""
         if self._task_queue.empty():
-            self._shutdown_workers()
-            self._worker_pool = self._init_worker_pool()
-            self._start_workers()
+            self._flush_queue()
             self._processing_tables_flag.value = False
             self._check_if_tables_processed_job.remove()
 
+    def _start_table_processing(self, table_loading_tasks):
+        """Flush queue and initialise it with table processing queries."""
+        self._flush_queue(table_loading_tasks)
+        self._check_if_tables_processed_job = self._scheduler.add_job(
+            func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
+        )
+
     def _process_tables(self, table_action, datatype, sf=None):
+        """Process changes on tables by taking a generig function which creates table processing queries."""
         self._processing_tables_flag.value = True
         table_names = self._get_tables_to_process(datatype)
         if table_names is None:
@@ -349,7 +353,7 @@ class Database(object):
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
-        if self.get_processing_tables_flag():
+        if self._processing_tables_flag.value:
             return None
 
         connection = self._connection_pool.getconn()
@@ -378,7 +382,7 @@ class Database(object):
 
     def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
-        if self.get_processing_tables_flag():
+        if self._processing_tables_flag.value:
             return {}
 
         connection = self._connection_pool.getconn()

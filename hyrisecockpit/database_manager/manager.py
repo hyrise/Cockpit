@@ -220,4 +220,3 @@ class DatabaseManager(object):
         for database in self._databases.values():
             database.close()
         self._socket.close()
-        self._context.term()
