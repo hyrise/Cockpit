@@ -16,6 +16,7 @@
         "core-js": "^3.6.4",
         "plotly.js": "^1.52.1",
         "plotly.js-dist": "^1.52.1",
+        "static-eval": "^2.0.2",
         "vue": "^2.6.11",
         "vue-router": "^3.1.5",
         "vuetify": "^2.2.8"
