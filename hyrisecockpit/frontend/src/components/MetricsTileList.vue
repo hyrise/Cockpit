@@ -80,7 +80,7 @@ export default createComponent({
 }
 @media (min-width: 2000px) {
   .metric-chart {
-    flex: 0 0 24.9%;
+    flex: 0 0 24%;
     margin: 0px 3px 6px 3px;
     padding: 0px;
   }
