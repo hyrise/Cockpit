@@ -32,6 +32,14 @@ class Workload(object):
         self._queries = self._workload_reader.read_workload(
             self._queries_location, self._delimiter, self._file_type, self.workload_type
         )
+        self._config_data = self._workload_reader.read_config_data(
+            self._queries_location
+        )
+        self._required_tables = self._config_data.get("required_tables", [])
+
+    def get_required_tables(self) -> List:
+        """Get list of tables required to execute the workload."""
+        return self._required_tables
 
     def generate_workload(
         self, factor: int = 1, shuffle_flag: bool = False

@@ -11,7 +11,29 @@ export function useWorkloadService(): WorkloadService {
   function deleteWorkloadData(workload: Workload): void {
     axios.delete(`${backendUrl}data/${workload}`);
   }
-  return { loadWorkloadData, deleteWorkloadData };
+  function registerWorkload(): void {
+    axios.post(`${backendUrl}register_workload`, {
+      type: "TPCH_0.1",
+      factor: 1,
+      sf: 0.1,
+      shuffle: false,
+      "auto-reload": true
+    });
+  }
+  function startWorkload(): void {
+    axios.post(`${backendUrl}start_workload`);
+  }
+  function stopWorkload(): void {
+    axios.post(`${backendUrl}stop_workload`);
+  }
+
+  return {
+    loadWorkloadData,
+    deleteWorkloadData,
+    registerWorkload,
+    startWorkload,
+    stopWorkload
+  };
 }
 
 export function useKruegerService(): FetchService {
