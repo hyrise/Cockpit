@@ -71,7 +71,8 @@ function useBarChartConfiguration(
       xaxis: {
         title: {
           text: chartConfiguration[1]
-        }
+        },
+        rangemode: "tozero"
       },
       yaxis: {
         title: {
