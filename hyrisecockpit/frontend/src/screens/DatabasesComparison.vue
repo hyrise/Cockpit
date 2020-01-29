@@ -11,7 +11,10 @@
       outlined
       prepend-icon="mdi-database"
     ></v-select>
-    <MetricsTileList :selected-databases="watchedInstances" />
+    <MetricsTileList
+      :selected-databases="watchedInstances"
+      :show-details="false"
+    />
   </div>
 </template>
 
