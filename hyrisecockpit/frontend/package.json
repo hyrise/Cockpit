@@ -12,7 +12,7 @@
         "@vue/composition-api": "^0.3.2",
         "axios": "^0.19.2",
         "core-js": "^3.6.4",
-        "plotly.js": "^1.51.2",
+        "plotly.js": "^1.52.1",
         "plotly.js-dist": "^1.51.2",
         "vue": "^2.6.11",
         "vue-router": "^3.1.5",
