@@ -20,14 +20,14 @@ jobs:
       shell: bash 
       working-directory: ./hyrisecockpit/frontend
     - run: exit 1
-      if:  steps.counter.outputs.lintSuccess == '0'
+      if:  steps.lint.outputs.lintSuccess == '0'
       working-directory: ./hyrisecockpit/frontend
     - run:   echo ::set-output name=ConsoleErrors::$(grep console.log * -lR | wc -l)
       id:    console
       shell: bash 
       working-directory: ./hyrisecockpit/frontend/src
     - run: exit 1
-      if: steps.counter.outputs.ConsoleErrors > '0'
+      if: steps.console.outputs.ConsoleErrors > '0'
       working-directory: ./hyrisecockpit/frontend/src
 
 
