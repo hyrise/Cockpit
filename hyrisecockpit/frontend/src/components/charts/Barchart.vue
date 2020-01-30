@@ -52,6 +52,7 @@ export default createComponent({
         }
       });
 
+      console.log("test");
       function updateChartDatasets(): void {
         Plotly.react(graphId, data.value.value, getLayout(), getOptions());
       }
