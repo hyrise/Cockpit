@@ -87,7 +87,9 @@ class PoolCursor:
         return self.cur.fetchone()
 
 
-def fill_queue(workload_publisher_url: str, task_queue: Queue, flag: Any) -> None:
+def fill_queue(
+    workload_publisher_url: str, task_queue: Queue, processing_tables_flag: Any
+) -> None:
     """Fill the queue."""
     context = Context()
     subscriber = context.socket(SUB)
@@ -96,7 +98,7 @@ def fill_queue(workload_publisher_url: str, task_queue: Queue, flag: Any) -> Non
     while True:
         content = subscriber.recv_json()
         tasks = content["body"]["querylist"]
-        if not flag.value:
+        if not processing_tables_flag.value:
             for task in tasks:
                 task_queue.put(task)
 
@@ -118,8 +120,9 @@ def execute_queries(
                 # If Queue is emty go to wait status
                 try:
                     task = task_queue.get(block=True)
-                    if not worker_stay_alive_flag.value and task == "foo":
-                        task_queue.put("foo")
+                    if not worker_stay_alive_flag.value:
+                        if task == "wake_up_signal_for_worker":
+                            task_queue.put("wake_up_signal_for_worker")
                         break
                     if worker_stay_alive_flag.value:
                         query, parameters = task
@@ -179,7 +182,6 @@ class Database(object):
         self._worker_pool: pool = self._init_worker_pool()
         self._subscriber_worker = self._init_subscriber_worker()
 
-        self._start_subscriber_worker()
         self._start_workers()
 
         self.load_data(self._default_tables, sf="0.1")
@@ -222,38 +224,35 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def _start_subscriber_worker(self):
-        """Start subscriber worker."""
-        self._subscriber_worker.start()
-
-    def enable_workload_execution(self) -> None:
-        """Enable execution of the workload."""
-        self._worker_stay_alive_flag.value = True
-
     def disable_workload_execution(self) -> None:
         """Disable execution of the workload."""
-        self._worker_stay_alive_flag.value = False
+        self._flush_queue()
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""
+        self._worker_stay_alive_flag.value = True
+        self._subscriber_worker.start()
         for i in range(len(self._worker_pool)):
             self._worker_pool[i].start()
 
     def _shutdown_workers(self) -> None:
         """Shutdown all task execution workers."""
         self._worker_stay_alive_flag.value = False
-        self._task_queue.put("foo")
+        # If the queue is empty we need to wake up the workers
+        self._subscriber_worker.terminate()
+        self._task_queue.put("wake_up_signal_for_worker")
         for worker in self._worker_pool:
             worker.join()
             worker.terminate()
-        self._task_queue.get()
         self._worker_pool[:] = []
 
     def _flush_queue(self, default_init_tasks=None) -> None:
         """Flush queue."""
         self._shutdown_workers()
+        self._task_queue = Queue(0)
         if default_init_tasks is not None:
             [self._task_queue.put(task) for task in default_init_tasks]  # type: ignore
+        self._subscriber_worker = self._init_subscriber_worker()
         self._worker_pool = self._init_worker_pool()
         self._start_workers()
 
