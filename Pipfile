@@ -18,6 +18,7 @@ pytest = "*"
 pytest-testdox = "*"
 mypy = "*"
 pytest-cov = "*"
+pipenv-to-requirements = "*"
 
 [packages]
 pandas = "*"
@@ -28,6 +29,7 @@ flask = "*"
 flask-cors = "*"
 apscheduler = "*"
 influxdb = "*"
+pipenv-to-requirements = "*"
 
 [requires]
 python_version = "3.8.1"
