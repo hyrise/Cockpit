@@ -56,9 +56,7 @@ export function useDatabaseService(): DatabaseData {
             ))
         );
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   }
 
   return {
