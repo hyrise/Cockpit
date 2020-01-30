@@ -23,13 +23,11 @@ import {
   onMounted,
   computed,
   Ref,
-  ref,
-  watch
+  ref
 } from "@vue/composition-api";
 import {
   getMetricDetailColor,
-  getMetricValueStateOrder,
-  getMetricComponent
+  getMetricValueStateOrder
 } from "../meta/metrics";
 import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
 
