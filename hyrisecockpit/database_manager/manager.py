@@ -75,7 +75,7 @@ class DatabaseManager(object):
                 database.get_queue_length() for _, database in self._databases.items()
             ]
             if len(queue_length) == 0:
-                return None
+                return
 
             if min(queue_length) < limit:
                 if self._auto_reload_flag:

@@ -363,7 +363,7 @@ class Database(object):
         """Update chunks data for database instance."""
         # mocking chunks data
         if self._processing_tables_flag.value:
-            return None
+            return
 
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
@@ -375,7 +375,7 @@ class Database(object):
 
         if meta_segments.empty:
             self._chunks_data = {}
-            return None
+            return
 
         chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table_name")
