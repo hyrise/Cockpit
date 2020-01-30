@@ -19,6 +19,7 @@ pytest-testdox = "*"
 mypy = "*"
 pytest-cov = "*"
 pipenv-to-requirements = "*"
+flask-restx = "*"
 
 [packages]
 pandas = "*"
