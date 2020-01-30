@@ -1,9 +1,9 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Manager, Process, Queue
+from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
@@ -88,7 +88,7 @@ class PoolCursor:
 
 
 def fill_queue(
-    workload_publisher_url: str, task_queue: Queue, processing_tables_flag: Any
+    workload_publisher_url: str, task_queue: Queue, processing_tables_flag: Value
 ) -> None:
     """Fill the queue."""
     context = Context()
@@ -108,7 +108,7 @@ def execute_queries(
     task_queue: Queue,
     connection_pool: pool,
     failed_task_queue: Queue,
-    worker_stay_alive_flag: Any,
+    worker_stay_alive_flag: Value,
     database_id: str,
 ) -> None:
     """Define workers work loop."""
@@ -194,7 +194,7 @@ class Database(object):
         )
         self._scheduler.start()
 
-    def _init_subscriber_worker(self):
+    def _init_subscriber_worker(self) -> Process:
         subscriber_process = Process(
             target=fill_queue,
             args=(
@@ -261,7 +261,7 @@ class Database(object):
         table_names = _table_names.get(datatype)
         return table_names
 
-    def _get_existing_tables(self, table_names):
+    def _get_existing_tables(self, table_names) -> Dict:
         """Check wich tables exists and which not."""
         existing_tables = []
         not_existing_tables = []
@@ -277,7 +277,7 @@ class Database(object):
 
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_loading_queries(self, table_names, datatype, sf):
+    def _generate_table_loading_queries(self, table_names, datatype, sf) -> List:
         """Generate queries in tuple form that load tables."""
         existing_tables = self._get_existing_tables(table_names)
         table_loading_tasks = []
@@ -287,7 +287,7 @@ class Database(object):
             table_loading_tasks.append((query, None))
         return table_loading_tasks
 
-    def _generate_table_drop_queries(self, table_names, datatype, sf=None):
+    def _generate_table_drop_queries(self, table_names, datatype, sf=None) -> List:
         """Generate queries in tuple form that drop tables."""
         existing_tables = self._get_existing_tables(table_names)
         table_drop_tasks = []
@@ -296,21 +296,21 @@ class Database(object):
             table_drop_tasks.append((query, None))
         return table_drop_tasks
 
-    def _check_if_tables_processed(self):
+    def _check_if_tables_processed(self) -> None:
         """Check if all table processing task are taken from the queue an if so flushes it."""
         if self._task_queue.empty():
             self._flush_queue()
             self._processing_tables_flag.value = False
             self._check_if_tables_processed_job.remove()
 
-    def _start_table_processing(self, table_loading_tasks):
+    def _start_table_processing(self, table_loading_tasks) -> None:
         """Flush queue and initialise it with table processing queries."""
         self._flush_queue(table_loading_tasks)
         self._check_if_tables_processed_job = self._scheduler.add_job(
             func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
         )
 
-    def _process_tables(self, table_action, datatype, sf=None):
+    def _process_tables(self, table_action, datatype, sf=None) -> bool:
         """Process changes on tables by taking a generig function which creates table processing queries."""
         self._processing_tables_flag.value = True
         table_names = self._get_tables_to_process(datatype)
@@ -326,7 +326,7 @@ class Database(object):
         self._start_table_processing(table_loading_tasks)
         return True
 
-    def load_data(self, datatype: str, sf: str):
+    def load_data(self, datatype: str, sf: str) -> bool:
         """Load pregenerated tables."""
         return self._process_tables(self._generate_table_loading_queries, datatype, sf)
 

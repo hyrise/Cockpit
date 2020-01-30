@@ -261,7 +261,7 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def _check_if_processing_table(self):
+    def _check_if_processing_table(self) -> bool:
         processing_table_data = False
         for database in list(self._databases.values()):
             processing_table_data = (
