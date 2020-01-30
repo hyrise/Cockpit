@@ -250,7 +250,8 @@ class Database(object):
         self._shutdown_workers()
         self._task_queue = Queue(0)
         if default_init_tasks is not None:
-            [self._task_queue.put(task) for task in default_init_tasks]  # type: ignore
+            for task in default_init_tasks:
+                self._task_queue.put(task)
         self._subscriber_worker = self._init_subscriber_worker()
         self._worker_pool = self._init_worker_pool()
         self._start_workers()
