@@ -10,15 +10,15 @@ export type Metric =
   | "throughput"
   | "latency"
   | "ram"
-  | "queue_length";
+  | "queueLength";
 
-export const instanceMetrics = ["Storage", "Access"];
-export const comparisonMetrics = [
-  "Throughput",
-  "Latency",
-  "CPU",
-  "RAM",
-  "Queue_Length"
+export const instanceMetrics: Metric[] = ["storage", "access"];
+export const comparisonMetrics: Metric[] = [
+  "throughput",
+  "latency",
+  "cpu",
+  "ram",
+  "queueLength"
 ];
 
 export interface MetricMetadata {

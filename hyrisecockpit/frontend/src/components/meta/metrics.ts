@@ -26,9 +26,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "latency",
     endpoint: backendUrl + "latency"
   },
-  queue_length: {
+  queueLength: {
     fetchType: "modify",
-    transformationService: useDataTransformation("queue_length"),
+    transformationService: useDataTransformation("queueLength"),
     base: "queue_length",
     endpoint: backendUrl + "queue_length"
   },
@@ -70,12 +70,25 @@ const metricTitels: Record<Metric, string> = {
   access: "Access Frequency",
   cpu: "CPU",
   latency: "Latency",
-  queue_length: "Queue Length",
+  queueLength: "Queue Length",
   ram: "RAM",
   storage: "Storage",
   throughput: "Throughput"
 };
 
+const metricComponents: Record<Metric, string> = {
+  access: "Access",
+  cpu: "CPU",
+  latency: "Latency",
+  queueLength: "QueueLength",
+  ram: "RAM",
+  storage: "Storage",
+  throughput: "Throughput"
+};
+
+export function getMetricComponent(metric: Metric): string {
+  return metricComponents[metric];
+}
 export function getMetricTitle(metric: Metric): string {
   return metricTitels[metric];
 }

@@ -38,7 +38,7 @@ import {
 import MetricDetails from "../details/MetricDetails.vue";
 
 export default createComponent({
-  name: "Queue_Length",
+  name: "QueueLength",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {

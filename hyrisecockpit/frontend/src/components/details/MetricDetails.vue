@@ -28,7 +28,8 @@ import {
 } from "@vue/composition-api";
 import {
   getMetricDetailColor,
-  getMetricValueStateOrder
+  getMetricValueStateOrder,
+  getMetricComponent
 } from "../meta/metrics";
 import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
 

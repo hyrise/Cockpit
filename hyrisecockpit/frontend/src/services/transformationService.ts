@@ -8,7 +8,7 @@ export function useDataTransformation(metric: Metric): TransformationService {
     access: getAccessData,
     cpu: getCPUData,
     latency: getReadOnlyData,
-    queue_length: getReadOnlyData,
+    queueLength: getReadOnlyData,
     ram: getRAMData,
     storage: getStorageData,
     throughput: getReadOnlyData
