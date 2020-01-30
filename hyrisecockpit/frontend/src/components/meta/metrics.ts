@@ -26,6 +26,12 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "latency",
     endpoint: backendUrl + "latency"
   },
+  queue_length: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("queue_length"),
+    base: "queue_length",
+    endpoint: backendUrl + "queue_length"
+  },
   ram: {
     fetchType: "modify",
     transformationService: useDataTransformation("ram"),
@@ -59,6 +65,20 @@ const metricValueStateOrder: Record<
   asc: ["low", "average", "high"],
   desc: ["high", "average", "low"]
 };
+
+const metricTitels: Record<Metric, string> = {
+  access: "Access Frequency",
+  cpu: "CPU",
+  latency: "Latency",
+  queue_length: "Queue Length",
+  ram: "RAM",
+  storage: "Storage",
+  throughput: "Throughput"
+};
+
+export function getMetricTitle(metric: Metric): string {
+  return metricTitels[metric];
+}
 
 export function getMetricValueStateOrder(
   order: MetricValueStateOrder
