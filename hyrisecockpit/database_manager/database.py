@@ -10,6 +10,7 @@ from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 from psycopg2 import Error, pool
+from psycopg2.extensions import AsIs
 from zmq import SUB, SUBSCRIBE, Context
 
 from hyrisecockpit.settings import (
@@ -125,9 +126,19 @@ def execute_queries(
                             task_queue.put("wake_up_signal_for_worker")
                         break
                     if worker_stay_alive_flag.value:
-                        query, parameters = task
+                        query, not_formatted_parameters = task
+                        parameters = None
+                        if not_formatted_parameters is not None:
+                            parameters = []
+                            for not_formated_parameter in not_formatted_parameters:
+                                parameter, protocol = not_formated_parameter
+                                if protocol == "as_is":
+                                    parameters.append(AsIs(parameter))
+                                else:
+                                    parameters.append(parameter)
+                            formatted_parameters = tuple(parameters)
                         startts = time()
-                        cur.execute(query, parameters)
+                        cur.execute(query, formatted_parameters)
                         endts = time()
                         log.log_query(startts, endts, benchmark="none", query_no=0)
                 except (ValueError, Error) as e:
@@ -283,8 +294,14 @@ class Database(object):
         table_loading_tasks = []
         for name in existing_tables["not_existing"]:
             # TODO change absolute to relative path
-            query = f"""COPY {name} FROM '/usr/local/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
-            table_loading_tasks.append((query, None))
+            query = f"COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';"
+            parameters = [
+                (name, "as_is"),
+                (datatype, "as_is"),
+                (sf, "as_is"),
+                (name, "as_is"),
+            ]
+            table_loading_tasks.append((query, parameters))
         return table_loading_tasks
 
     def _generate_table_drop_queries(self, table_names, datatype, sf=None) -> List:
@@ -292,8 +309,9 @@ class Database(object):
         existing_tables = self._get_existing_tables(table_names)
         table_drop_tasks = []
         for name in existing_tables["existing"]:
-            query = f"""DROP TABLE {name};"""
-            table_drop_tasks.append((query, None))
+            query = f"DROP TABLE %s;"
+            parameters = [(name, "as_is")]
+            table_drop_tasks.append((query, parameters))
         return table_drop_tasks
 
     def _check_if_tables_processed(self) -> None:
