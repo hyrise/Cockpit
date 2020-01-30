@@ -2,7 +2,7 @@ import { ref } from "@vue/composition-api";
 import { Database, DatabaseData } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
-import { backendUrl } from "../types/services";
+import { backendUrl } from "../../config";
 
 export function useDatabaseService(): DatabaseData {
   const colorsArray: any = Object.keys(colors);

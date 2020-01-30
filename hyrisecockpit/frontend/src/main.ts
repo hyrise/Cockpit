@@ -10,6 +10,8 @@ Vue.use(VueCompositionApi);
 Vue.config.productionTip = false;
 Vue.prototype.$databaseData = useDatabaseService();
 
+console.log(process.env.VUE_APP_BACKEND_URL);
+
 new Vue({
   vuetify,
   router: vueRouter,
