@@ -196,12 +196,7 @@ class DatabaseManager(object):
         return get_error_response(400, "Call not found")
 
     def _call_load_data(self, body: Dict) -> Dict:
-        processing_table_data = False
-        for database in list(self._databases.values()):
-            processing_table_data = (
-                processing_table_data or database.get_processing_tables_flag()
-            )
-        if processing_table_data:
+        if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         datatype = str(body.get("datatype")).lower()
         sf = body.get("sf", "1")
@@ -213,6 +208,8 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_register_workload(self, body: Dict) -> Dict:
+        if self._check_if_processing_table():
+            return get_error_response(400, "Already loading data")
         workload: Any = body.get("workload")
         request = {
             "header": {"message": "register workload"},
@@ -229,6 +226,7 @@ class DatabaseManager(object):
         sf = workload.get("sf", "0.1")  # TODO: Choose appropriate scale factor
         for table in required_tables:
             for database in list(self._databases.values()):
+                # TODO Check load flag
                 if not database.load_data(table, sf):
                     return get_error_response(
                         400, f"Database {database._id} could not load {table}"
@@ -238,25 +236,23 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_start_workload(self, body: Dict) -> Dict:
-        for database in list(self._databases.values()):
-            database.enable_workload_execution()
+        if self._check_if_processing_table():
+            return get_error_response(400, "Already loading data")
         self._workload_proceed_flag = True
         return get_response(200)
 
     def _call_stop_workload(self, body: Dict) -> Dict:
+        if self._check_if_processing_table():
+            return get_error_response(400, "Already loading data")
         self._workload_proceed_flag = False
         for database in list(self._databases.values()):
             database.disable_workload_execution()
         return get_response(200)
 
     def _call_delete_data(self, body: Dict) -> Dict:
-        processing_table_data = False
-        for database in list(self._databases.values()):
-            processing_table_data = (
-                processing_table_data or database.get_processing_tables_flag()
-            )
-        if processing_table_data:
+        if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
+        self._workload_proceed_flag = False
         datatype = body.get("datatype")
         if not datatype:
             return get_response(400)
@@ -264,6 +260,14 @@ class DatabaseManager(object):
             if not database.delete_data(datatype):
                 return get_response(400)
         return get_response(200)
+
+    def _check_if_processing_table(self):
+        processing_table_data = False
+        for database in list(self._databases.values()):
+            processing_table_data = (
+                processing_table_data or database.get_processing_tables_flag()
+            )
+        return processing_table_data
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
