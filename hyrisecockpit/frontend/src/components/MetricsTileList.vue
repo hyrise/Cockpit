@@ -6,7 +6,7 @@
       :key="metric"
     >
       <v-card-title class="metric-title">
-        {{ getMetricTitle(metric) }}
+        {{ getMetricTitle(metric.toLowerCase()) }}
       </v-card-title>
       <component
         class="metric"
