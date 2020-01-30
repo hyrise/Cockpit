@@ -69,7 +69,7 @@ def get_throughput() -> Dict[str, int]:
     active_databases = _send_message(db_manager_socket, message)["body"]["databases"]
     for database in active_databases:
         result = storage_connection.query(
-            f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-1} AND "end" <= {t};""",
+            f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1};""",
             database=database,
         )
         throughput_value = list(result["successful_queries", None])
