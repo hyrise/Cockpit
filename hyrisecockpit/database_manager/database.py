@@ -283,7 +283,7 @@ class Database(object):
         table_loading_tasks = []
         for name in existing_tables["not_existing"]:
             # TODO change absolute to relative path
-            query = f"""COPY {name} FROM '/home/Alexander.Dubrawski/Tools/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
+            query = f"""COPY {name} FROM '/usr/local/hyrise/{datatype}_cached_tables/sf-{sf}/{name}.bin';"""
             table_loading_tasks.append((query, None))
         return table_loading_tasks
 
