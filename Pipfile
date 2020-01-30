@@ -18,6 +18,7 @@ pytest = "*"
 pytest-testdox = "*"
 mypy = "*"
 pytest-cov = "*"
+pipenv-to-requirements = "*"
 
 [packages]
 pandas = "*"
