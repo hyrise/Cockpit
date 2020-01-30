@@ -152,7 +152,6 @@ class Database(object):
         default_tables: str,
     ) -> None:
         """Initialize database object."""
-        # import pdb; pdb.set_trace()
         self._id = id
         self._default_tables = default_tables
         self._number_workers = int(number_workers)
