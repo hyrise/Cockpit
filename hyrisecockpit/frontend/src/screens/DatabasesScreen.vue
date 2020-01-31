@@ -16,7 +16,7 @@
     <v-row justify="end">
       <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-          <v-btn class="primary white--text my-8" v-on="on"
+          <v-btn class="green white--text my-8" v-on="on"
             >add new database</v-btn
           >
         </template>
@@ -83,11 +83,14 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="showDatabaseDialog = false"
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="showDatabaseDialog = false"
               >Close</v-btn
             >
             <v-btn
-              color="primary"
+              color="blue darken-1"
               text
               @click="
                 createNewDatabase();
@@ -112,6 +115,7 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
+import { useDatabaseFetchService } from "../services/databaseService";
 import axios from "axios";
 import { Database } from "../types/database";
 
@@ -132,15 +136,15 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databases, addDatabase } = context.root.$databaseData;
+    const { databases, addDatabase } = useDatabaseFetchService(); // this has to be changed on merge
 
-    const number_workers = ref<string>("8");
+    const number_workers = ref<string>("");
     const id = ref<string>("");
-    const user = ref<string>("serviceuser");
+    const user = ref<string>("");
     const password = ref<string>("");
-    const host = ref<string>(".eaalab.hpi.uni-potsdam.de");
-    const port = ref<string>("5432");
-    const dbname = ref<string>("postgres");
+    const host = ref<string>("");
+    const port = ref<string>("");
+    const dbname = ref<string>("");
     let showDatabaseDialog = false;
 
     function openDatabaseScreen(databaseId: string): void {

@@ -17,22 +17,20 @@ flake8-bugbear = "*"
 pytest = "*"
 pytest-testdox = "*"
 mypy = "*"
-pytest-cov = "*"
-pipenv-to-requirements = "*"
 
 [packages]
 pandas = "*"
-psycopg2-binary = "*"
+psycopg2 = "*"
 pyzmq = "*"
 python-dotenv = "*"
+redis = "*"
 flask = "*"
 flask-cors = "*"
 apscheduler = "*"
-influxdb = "*"
-flask-restx = "*"
+websockets = "*"
 
 [requires]
-python_version = "3.8.1"
+python_version = "3.8.0"
 
 [pipenv]
 allow_prereleases = true

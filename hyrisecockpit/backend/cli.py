@@ -6,4 +6,4 @@ from .app import app
 
 def main() -> None:
     """Create and start a backend API."""
-    app.run(host=BACKEND_HOST, port=BACKEND_PORT, threaded=False)
+    app.run(host=BACKEND_HOST, port=BACKEND_PORT)
