@@ -18,8 +18,10 @@ class DatabaseManager(object):
         self,
         db_manager_host: str,
         db_manager_port: str,
+        db_manager_listening: str,
         generator_host: str,
         generator_port: str,
+        generator_listening: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
         default_tables: str,
@@ -27,8 +29,10 @@ class DatabaseManager(object):
         """Initialize a DatabaseManager."""
         self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._db_manager_listening = db_manager_listening
         self._generator_host = generator_host
         self._generator_port = generator_port
+        self._generator_listening = generator_listening
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
@@ -63,7 +67,7 @@ class DatabaseManager(object):
         )
         self._generator_socket = self._context.socket(REQ)
         self._generator_socket.connect(
-            "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
+            "tcp://{:s}:{:s}".format(self._generator_listening, self._generator_port)
         )
         self._scheduler.start()
 
