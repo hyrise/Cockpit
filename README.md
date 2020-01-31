@@ -1,8 +1,12 @@
 # Hyrise Cockpit
 
+![Backend Lint and Test](https://github.com/hyrise/Cockpit/workflows/Backend%20Lint%20and%20Test/badge.svg)
+![Frontend Lint](https://github.com/hyrise/Cockpit/workflows/Frontend%20Lint/badge.svg)
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+
 ## Setup
 
-You may need to install a different python version (`3.8.0`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+You may need to install a different python version (`3.8.1`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
 
 
@@ -32,7 +36,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 Put the following in your `.bashrc` (or `.zshrc`, etc.):
 
 ```bash
-export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
+export PATH="/home/$USER/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```
@@ -48,12 +52,12 @@ exec "$SHELL"
 Subsequently, the required version of Python can be installed and set with:
 
 ```bash
-# Install Python 3.8.0
-pyenv install 3.8.0
+# Install Python 3.8.1
+pyenv install 3.8.1
 
-# Set the local (directory) Python version to 3.8.0
+# Set the local (directory) Python version to 3.8.1
 cd Cockpit
-pyenv local 3.8.0
+pyenv local 3.8.1
 ```
 Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
 
@@ -136,4 +140,12 @@ You can run all the pre-commit hooks on all files by running:
 
 ```bash
 pipenv run pre-commit run --all-files
+```
+
+### Tests
+
+You can run all tests with:
+
+```bash
+pipenv run pre-commit run --hook-stage manual pytest
 ```

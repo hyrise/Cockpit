@@ -1,46 +1,46 @@
 """The driver represents an interface to the database."""
 
-from typing import Dict
 
 from psycopg2 import Error, connect, pool
-
-from .exception import ConnectionNotValidException
 
 
 class Driver(object):
     """Interface to database."""
 
-    def __init__(self, access_data, n_connections):
+    def __init__(
+        self, user: str, password: str, host: str, port: str, dbname: str, n_connections
+    ):
         """Initialize the connection."""
-        self._connection_pool = self._create_connection_pool(access_data, n_connections)
+        self._user: str = user
+        self._password: str = password
+        self._host: str = host
+        self._port: str = port
+        self._dbname: str = dbname
+        self._connection_pool = self._create_connection_pool(n_connections)
 
     @classmethod
-    def validate_connection(cls, access_data: Dict[str, str]) -> None:
-        """Validate if the connection data is correct."""
+    def validate_connection(
+        cls, user: str, password: str, host: str, port: str, dbname: str
+    ) -> bool:
+        """Validate whether a connection can be established."""
         try:
-            connection = connect(
-                user=access_data["user"],
-                password=access_data["password"],
-                host=access_data["host"],
-                port=int(access_data["port"]),
-                dbname=access_data["dbname"],
-            )
-            connection.close()
+            connect(
+                user=user, password=password, host=host, port=port, dbname=dbname,
+            ).close()
         except Error:
-            raise ConnectionNotValidException("Database connection refused", Error)
+            return False
+        return True
 
-    def _create_connection_pool(
-        self, access_data: Dict[str, str], n_connections: int
-    ) -> pool:
+    def _create_connection_pool(self, n_connections: int) -> pool:
         """Create thread save connection pool."""
         connection_pool = pool.ThreadedConnectionPool(
             0,
             n_connections,
-            user=access_data["user"],
-            password=access_data["password"],
-            host=access_data["host"],
-            port=int(access_data["port"]),
-            dbname=access_data["dbname"],
+            user=self._user,
+            password=self._password,
+            host=self._host,
+            port=self._port,
+            dbname=self._dbname,
         )
         return connection_pool
 

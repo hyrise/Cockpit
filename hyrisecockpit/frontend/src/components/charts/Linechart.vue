@@ -12,16 +12,12 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import axios from "axios";
-
-import { QueryData } from "../../types/queryData";
 import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
-import Vue from "vue";
 
 interface Props {
-  data: QueryData;
-  selectedDatabaseIds: string[];
+  data: any;
+  selectedDatabases: string[];
   graphId: string;
   chartConfiguration: string[];
 }
@@ -32,7 +28,7 @@ export default createComponent({
       type: Object,
       default: null
     },
-    selectedDatabaseIds: {
+    selectedDatabases: {
       type: Array,
       default: null
     },
@@ -46,35 +42,45 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const selectedDatabaseIds = computed(() => props.selectedDatabaseIds);
+    const selectedDatabaseIds = computed(() => props.selectedDatabases);
     const data = computed(() => props.data);
     const graphId = props.graphId;
-    const { getDataset, getLayout } = useLineChartConfiguration(
+    const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
+      context,
       props.chartConfiguration
     );
+    const { isReady } = context.root.$databaseData;
 
     onMounted(() => {
-      Plotly.newPlot(graphId, [getDataset()], getLayout());
+      watch(isReady, () => {
+        if (isReady.value) {
+          Plotly.newPlot(graphId, getDatasets(), getLayout(), getOptions());
+        }
+      });
       watch(selectedDatabaseIds, () => {
-        handleDatabaseChange();
+        if (isReady.value) {
+          handleDatabaseChange();
+        }
       });
       watch(data, () => {
-        updateChartDatasets();
+        if (isReady.value && Object.keys(data.value).length) {
+          updateChartDatasets();
+        }
       });
     });
 
+    function getDatasets(): any[] {
+      return selectedDatabaseIds.value.reduce((result, id): any => {
+        return [
+          ...result,
+          getDataset(data.value[id] ? data.value[id] : [], id)
+        ];
+      }, []);
+    }
+
     function handleDatabaseChange(): void {
-      const newDatasets = selectedDatabaseIds.value.reduce(
-        (result, id): any => {
-          return [
-            ...result,
-            getDataset(data.value[id] ? data.value[id] : [], id)
-          ];
-        },
-        []
-      );
       Plotly.purge(graphId);
-      Plotly.plot(graphId, newDatasets, getLayout());
+      Plotly.plot(graphId, getDatasets(), getLayout(), getOptions());
     }
 
     function getMaxDatasetLength(): number {
@@ -102,23 +108,61 @@ export default createComponent({
 });
 
 function useLineChartConfiguration(
+  context: SetupContext,
   chartConfiguration: string[]
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (xMin?: number, xMax?: number) => Object;
+  getOptions: () => Object;
 } {
-  const databases: Ref<Database[]> = Vue.prototype.$databases;
+  const databases: Ref<Database[]> = context.root.$databaseData.databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
-      title: chartConfiguration[0],
       xaxis: {
-        title: chartConfiguration[1],
+        title: {
+          text: chartConfiguration[1],
+          font: {
+            //size: 16
+            //color: "#FAFAFA"
+          }
+        },
         range: [xMin, xMax]
+        // linecolor: "#616161",
+        // gridcolor: "#616161",
+        // tickcolor: "#616161",
+        // tickfont: {
+        //   size: 12,
+        //   color: "#FAFAFA"
+        // },
+        //linewidth: 2
       },
       yaxis: {
-        title: chartConfiguration[2],
+        title: {
+          text: chartConfiguration[2],
+          font: {
+            // size: 16
+            //color: "#FAFAFA"
+          }
+        },
         rangemode: "tozero"
+        // linecolor: "#616161",
+        // gridcolor: "#616161",
+        // tickcolor: "#616161",
+        // tickfont: {
+        //   size: 12,
+        //   color: "#FAFAFA"
+        // },
+        //linewidth: 2
       }
+      // plot_bgcolor: "#424242",
+      // paper_bgcolor: "#424242",
+      // legend: {
+      //   font: {
+      //     family: "sans-serif",
+      //     size: 12,
+      //     color: "#FAFAFA"
+      //   }
+      // }
     };
   }
 
@@ -135,12 +179,11 @@ function useLineChartConfiguration(
       name: database ? database.id : {}
     };
   }
-  return { getDataset, getLayout };
+
+  function getOptions(): Object {
+    return { displayModeBar: false };
+  }
+  return { getDataset, getLayout, getOptions };
 }
 </script>
-<style scoped>
-.chart {
-  max-width: 1200px;
-  max-height: 900px;
-}
-</style>
+<style scoped></style>
