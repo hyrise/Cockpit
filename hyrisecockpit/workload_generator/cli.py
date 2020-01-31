@@ -2,6 +2,7 @@
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
+    DB_MANAGER_LISTENING,
     GENERATOR_HOST,
     GENERATOR_PORT,
     WORKLOAD_LOCATION,
@@ -23,6 +24,7 @@ def main() -> None:
             WORKLOAD_LOCATION,
             DB_MANAGER_HOST,
             DB_MANAGER_PORT,
+            DB_MANAGER_LISTENING,
         ) as workload_generator:
             workload_generator.start()
     except KeyboardInterrupt:

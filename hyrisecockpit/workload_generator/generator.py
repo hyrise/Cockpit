@@ -32,6 +32,7 @@ class WorkloadGenerator(object):
         default_workload_location: str,
         db_manager_host: str,
         db_manager_port: str,
+        db_manager_listening: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
         self._generator_host = generator_host
@@ -40,6 +41,7 @@ class WorkloadGenerator(object):
         self._workload_pub_port = workload_pub_port
         self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._db_manager_listening = db_manager_listening
         self._default_workload_location = default_workload_location
         self._workload_specification: Dict[str, Any] = {}
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
@@ -66,11 +68,12 @@ class WorkloadGenerator(object):
             "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
         )
         self._pub_socket.bind(
-            "tcp://{:s}:{:s}".format(self._workload_pub_host, self._workload_pub_port)
+            "tcp://{:s}:{:s}".format(self._workload_pub_host,
+                                     self._workload_pub_port)
         )
         self._db_manager_socket = self._context.socket(REQ)
         self._db_manager_socket.connect(
-            f"tcp://{self._db_manager_host}:{self._db_manager_port}"
+            f"tcp://{self._db_manager_listening}:{self._db_manager_port}"
         )
 
     def _get_default_workload_location(self):
@@ -79,7 +82,8 @@ class WorkloadGenerator(object):
     def _get_workload(self, workload_type: str):
         workload = self._workloads.get(workload_type)
         if not workload:
-            workload = Workload(workload_type, self._get_default_workload_location())
+            workload = Workload(
+                workload_type, self._get_default_workload_location())
             self._workloads[workload_type] = workload
         return workload
 
@@ -175,7 +179,8 @@ class WorkloadGenerator(object):
                 query = query_type.split("/")[1]
                 factor = query_types[query_type]
                 workload = self._get_workload(workload_type)
-                workload_queries.extend(workload.generate_specific(query, factor))
+                workload_queries.extend(
+                    workload.generate_specific(query, factor))
         if shuffle_flag:
             shuffle(workload_queries)
         return workload_queries
