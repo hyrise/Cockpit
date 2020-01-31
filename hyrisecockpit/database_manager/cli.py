@@ -1,12 +1,12 @@
 """CLI used to start the database manager."""
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
-    DB_MANAGER_PORT,
     DB_MANAGER_LISTENING,
+    DB_MANAGER_PORT,
     DEFAULT_TABLES,
     GENERATOR_HOST,
-    GENERATOR_PORT,
     GENERATOR_LISTENING,
+    GENERATOR_PORT,
     WORKLOAD_PUBSUB_PORT,
     WORKLOAD_SUB_HOST,
 )
@@ -19,11 +19,11 @@ def main() -> None:
     try:
         with DatabaseManager(
             DB_MANAGER_HOST,
-            DB_MANAGER_PORT,
             DB_MANAGER_LISTENING,
+            DB_MANAGER_PORT,
             GENERATOR_HOST,
-            GENERATOR_PORT,
             GENERATOR_LISTENING,
+            GENERATOR_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
             DEFAULT_TABLES,
