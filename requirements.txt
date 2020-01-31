@@ -10,20 +10,25 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
+aniso8601==8.0.0
 apscheduler==3.6.3
+attrs==19.3.0
 certifi==2019.11.28
 chardet==3.0.4
 click==7.0
 flask-cors==3.0.8
+flask-restx==0.1.0
 flask==1.1.1
 idna==2.8
 influxdb==5.2.3
 itsdangerous==1.1.0
-jinja2==2.11.0
+jinja2==2.11.1
+jsonschema==3.2.0
 markupsafe==1.1.1
 numpy==1.18.1
 pandas==1.0.0
 psycopg2-binary==2.8.4
+pyrsistent==0.15.7
 python-dateutil==2.8.1
 python-dotenv==0.10.5
 pytz==2019.3
