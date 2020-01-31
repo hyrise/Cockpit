@@ -10,10 +10,10 @@ from typing import Dict
 
 from flask import Flask, request
 from flask_cors import CORS
+from flask_restx import Api, Resource
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
-from flask_restx import Api, Resource
 from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
