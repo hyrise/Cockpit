@@ -17,11 +17,11 @@ class DatabaseManager(object):
     def __init__(
         self,
         db_manager_host: str,
-        db_manager_port: str,
         db_manager_listening: str,
+        db_manager_port: str,
         generator_host: str,
-        generator_port: str,
         generator_listening: str,
+        generator_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
         default_tables: str,

@@ -15,6 +15,7 @@ generator_port = "10000"
 workload_pub_host = "workload_pub_host"
 workload_pub_port = "20000"
 db_manager_host = "db_manager_host"
+db_manager_listening = "db_manager_listening"
 db_manager_port = "123512"
 
 
@@ -45,6 +46,7 @@ class TestWorkloadGenerator:
             workload_pub_port,
             "default_workload_location",
             db_manager_host,
+            db_manager_listening,
             db_manager_port,
         )
 
