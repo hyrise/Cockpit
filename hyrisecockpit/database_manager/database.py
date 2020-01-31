@@ -140,10 +140,10 @@ def execute_queries(
                         if task == "wake_up_signal_for_worker":
                             task_queue.put("wake_up_signal_for_worker")
                         break
-                    if worker_stay_alive_flag.value:
+                    else:
                         query, not_formatted_parameters = task
-                        if not_formatted_parameters is not None:
-                            formatted_parameters = tuple(
+                        formatted_parameters = (
+                            tuple(
                                 [
                                     AsIs(parameter)
                                     if protocol == "as_is"
@@ -151,6 +151,9 @@ def execute_queries(
                                     for parameter, protocol in not_formatted_parameters
                                 ]
                             )
+                            if not_formatted_parameters is not None
+                            else None
+                        )
                         startts = time()
                         cur.execute(query, formatted_parameters)
                         endts = time()
