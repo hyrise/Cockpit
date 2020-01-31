@@ -68,8 +68,7 @@ class WorkloadGenerator(object):
             "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
         )
         self._pub_socket.bind(
-            "tcp://{:s}:{:s}".format(self._workload_pub_host,
-                                     self._workload_pub_port)
+            "tcp://{:s}:{:s}".format(self._workload_pub_host, self._workload_pub_port)
         )
         self._db_manager_socket = self._context.socket(REQ)
         self._db_manager_socket.connect(
