@@ -199,11 +199,10 @@ class DatabaseManager(object):
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         datatype = str(body.get("datatype")).lower()
-        sf = body.get("sf", "1")
         if not datatype:
             return get_response(400)
         for database in list(self._databases.values()):
-            if not database.load_data(datatype, sf):
+            if not database.load_data(datatype):
                 return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
@@ -223,11 +222,10 @@ class DatabaseManager(object):
                 400, response["body"].get("error", "Invalid workload")
             )
         required_tables = response["body"]["required_tables"]
-        sf = workload.get("sf", "0.1")  # TODO: Choose appropriate scale factor
         for table in required_tables:
             for database in list(self._databases.values()):
                 # TODO Check load flag
-                if not database.load_data(table, sf):
+                if not database.load_data(table):
                     return get_error_response(
                         400, f"Database {database._id} could not load {table}"
                     )
