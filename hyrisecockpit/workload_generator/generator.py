@@ -26,22 +26,22 @@ class WorkloadGenerator(object):
     def __init__(
         self,
         generator_host: str,
+        generator_listening: str,
         generator_port: str,
         workload_pub_host: str,
         workload_pub_port: str,
         default_workload_location: str,
         db_manager_host: str,
         db_manager_port: str,
-        db_manager_listening: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
         self._generator_host = generator_host
+        self._generator_listening = generator_listening
         self._generator_port = generator_port
         self._workload_pub_host = workload_pub_host
         self._workload_pub_port = workload_pub_port
-        self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
-        self._db_manager_listening = db_manager_listening
+        self._db_manager_host = db_manager_host
         self._default_workload_location = default_workload_location
         self._workload_specification: Dict[str, Any] = {}
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
@@ -65,14 +65,14 @@ class WorkloadGenerator(object):
         self._rep_socket = self._context.socket(REP)
         self._pub_socket = self._context.socket(PUB)
         self._rep_socket.bind(
-            "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
+            "tcp://{:s}:{:s}".format(self._generator_listening, self._generator_port)
         )
         self._pub_socket.bind(
             "tcp://{:s}:{:s}".format(self._workload_pub_host, self._workload_pub_port)
         )
         self._db_manager_socket = self._context.socket(REQ)
         self._db_manager_socket.connect(
-            f"tcp://{self._db_manager_listening}:{self._db_manager_port}"
+            f"tcp://{self._db_manager_host}:{self._db_manager_port}"
         )
 
     def _get_default_workload_location(self):
