@@ -4,6 +4,7 @@ from hyrisecockpit.settings import (
     DB_MANAGER_LISTENING,
     DB_MANAGER_PORT,
     GENERATOR_HOST,
+    GENERATOR_LISTENING,
     GENERATOR_PORT,
     WORKLOAD_LOCATION,
     WORKLOAD_PUBSUB_PORT,
@@ -18,6 +19,7 @@ def main() -> None:
     try:
         with WorkloadGenerator(
             GENERATOR_HOST,
+            GENERATOR_LISTENING,
             GENERATOR_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,

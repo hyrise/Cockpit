@@ -11,9 +11,11 @@ from hyrisecockpit.exception import (
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
 
 generator_host = "generator_host"
+generator_listening = "generator_listening"
 generator_port = "10000"
 workload_pub_host = "workload_pub_host"
 workload_pub_port = "20000"
+workload_listening = "workload_listening"
 db_manager_host = "db_manager_host"
 db_manager_listening = "db_manager_listening"
 db_manager_port = "123512"
@@ -41,12 +43,13 @@ class TestWorkloadGenerator:
         """Instance of WorkloadGenerator without binding of sockets."""
         return WorkloadGenerator(
             generator_host,
+            generator_listening,
             generator_port,
             workload_pub_host,
             workload_pub_port,
+            workload_listening,
             "default_workload_location",
             db_manager_host,
-            db_manager_listening,
             db_manager_port,
         )
 
