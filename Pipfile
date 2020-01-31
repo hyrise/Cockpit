@@ -29,7 +29,6 @@ flask = "*"
 flask-cors = "*"
 apscheduler = "*"
 influxdb = "*"
-pipenv-to-requirements = "*"
 flask-restx = "*"
 
 [requires]
