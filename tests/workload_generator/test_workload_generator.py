@@ -24,7 +24,7 @@ class TestWorkloadGenerator:
 
     def idle_function(self, *argv) -> None:
         """Idle function."""
-        return None
+        return
 
     def get_fake_workload(self, *argv) -> Any:
         """Get fake workload."""
