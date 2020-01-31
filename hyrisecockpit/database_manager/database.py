@@ -131,7 +131,7 @@ def execute_queries(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             succesful_queries = []
-            lastbatched = time()
+            last_batched = time()
             while True:
                 # If Queue is emty go to wait status
                 try:
@@ -158,8 +158,8 @@ def execute_queries(
                         cur.execute(query, formatted_parameters)
                         endts = time()
                         succesful_queries.append((startts, endts, "none", 0))
-                        if lastbatched < time() - 1:
-                            lastbatched = time()
+                        if last_batched < time() - 1:
+                            last_batched = time()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
