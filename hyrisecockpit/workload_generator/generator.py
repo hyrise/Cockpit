@@ -81,8 +81,7 @@ class WorkloadGenerator(object):
     def _get_workload(self, workload_type: str):
         workload = self._workloads.get(workload_type)
         if not workload:
-            workload = Workload(
-                workload_type, self._get_default_workload_location())
+            workload = Workload(workload_type, self._get_default_workload_location())
             self._workloads[workload_type] = workload
         return workload
 
@@ -178,8 +177,7 @@ class WorkloadGenerator(object):
                 query = query_type.split("/")[1]
                 factor = query_types[query_type]
                 workload = self._get_workload(workload_type)
-                workload_queries.extend(
-                    workload.generate_specific(query, factor))
+                workload_queries.extend(workload.generate_specific(query, factor))
         if shuffle_flag:
             shuffle(workload_queries)
         return workload_queries
