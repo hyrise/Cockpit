@@ -51,7 +51,7 @@ class TestDatabaseManager:
         mock_data,
     ):
         """Check whether a data call works."""
-        assert call() == dict()
+        assert call() == {}
         database_manager._databases["test_db1"] = mock_database
         assert call() == {"test_db1": mock_data}
         database_manager._databases["test_db2"] = mock_database
