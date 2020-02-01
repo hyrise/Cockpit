@@ -14,8 +14,6 @@ generator_host = "generator_host"
 generator_port = "10000"
 workload_pub_host = "workload_pub_host"
 workload_pub_port = "20000"
-db_manager_host = "db_manager_host"
-db_manager_port = "123512"
 
 
 class TestWorkloadGenerator:
@@ -44,8 +42,6 @@ class TestWorkloadGenerator:
             workload_pub_host,
             workload_pub_port,
             "default_workload_location",
-            db_manager_host,
-            db_manager_port,
         )
 
     @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
@@ -72,10 +68,6 @@ class TestWorkloadGenerator:
         assert response["header"]["message"] == "BAD REQUEST"
 
     @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
-        lambda self, type, sf: True,
-    )
-    @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
@@ -91,10 +83,6 @@ class TestWorkloadGenerator:
         assert response["header"]["status"] == 200
         assert response["header"]["message"] == "OK"
 
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
-        lambda self, type, sf: True,
-    )
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
@@ -117,10 +105,6 @@ class TestWorkloadGenerator:
         assert response["body"]["error"] == "Error message"
 
     @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
-        lambda self, type, sf: True,
-    )
-    @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
@@ -142,13 +126,11 @@ class TestWorkloadGenerator:
         assert response["body"]["error"] == "Error message"
 
     @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data")
-    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data")
     def test_generates_custom_workload(
-        self, mock_load_data, mock_publish_data, isolated_generator: WorkloadGenerator
+        self, mock_publish_data, isolated_generator: WorkloadGenerator
     ):
         """Ensure custom workload generation."""
         mock_publish_data.return_value = None
-        mock_load_data.return_value = True
 
         workload1 = MagicMock()
         workload1.generate_specific.return_value = [("dummy query 1", None)]
@@ -176,26 +158,3 @@ class TestWorkloadGenerator:
         assert response["header"]["message"] == "OK"
 
         mock_publish_data.assert_called_with(expected_publish_response)
-
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
-        idle_function,
-    )
-    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data")
-    def test_custom_workload_requires_query_types(
-        self, mock_load_data, isolated_generator: WorkloadGenerator
-    ):
-        """Ensure custom workload request containts queries specification."""
-        mock_load_data.return_value = True
-        body = {
-            "type": "custom",
-            "sf": 1,
-            "factor": 1,
-            "shuffle": False,
-        }
-
-        response = isolated_generator._call_workload(body)
-
-        assert response["header"]["status"] == 400
-        assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"]["error"] == "Missing query types for custom workload"
