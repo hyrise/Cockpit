@@ -5,6 +5,7 @@ Includes the main WorkloadGenerator.
 
 from typing import Any, Callable, Dict
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, REP, Context
 
 from hyrisecockpit.exception import (
@@ -38,11 +39,17 @@ class WorkloadGenerator(object):
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
             "start workload": self._call_start_workload,
+            "stop workload": self._call_stop_workload,
         }
         self._generate_workload_flag = False
         self._frequency = 0
         self._workloads: Dict[str, Any] = {}
         self._init_server()
+        self._scheduler = BackgroundScheduler()
+        self._generate_workload_job = self._scheduler.add_job(
+            func=self._generate_workload, trigger="interval", seconds=1,
+        )
+        self._scheduler.start()
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -133,6 +140,14 @@ class WorkloadGenerator(object):
         response = handler(request["body"])
         return response
 
+    def _generate_workload(self):
+        if self._generate_workload_flag:
+            workload = self._get_workload(self._workload_type)
+            queries = workload.generate_workload(self._frequency)
+            response = get_response(200)
+            response["body"] = {"querylist": queries}
+            self._publish_data(response)
+
     def start(self) -> None:
         """Run the generator by enabling IPC."""
         print(
@@ -152,6 +167,8 @@ class WorkloadGenerator(object):
 
     def close(self) -> None:
         """Close the socket and context."""
+        self._generate_workload_job.remove()
+        self._scheduler.shutdown()
         self._rep_socket.close()
         self._pub_socket.close()
         self._context.term()
