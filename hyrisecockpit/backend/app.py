@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from secrets import choice
 from time import time
-from typing import Dict
+from typing import Dict, List
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -105,12 +105,12 @@ model_queue_length = monitor.clone(
     },
 )
 
-model_data = monitor.model(
+model_data = control.model(
     "Data",
     {
-        "name": fields.String(
-            title="Data name",
-            description="Name of the folder containing the pregenerated data and queries.",
+        "folder_name": fields.String(
+            title="Folder name",
+            description="Name of the folder containing the pregenerated tables.",
             required=True,
             example="tpch_0.1",
         )
@@ -343,9 +343,14 @@ class Workload(Resource):
         return response
 
 
-@control.route("/data", methods=["POST", "DELETE"])
+@control.route("/data")
 class Data(Resource):
     """Manage data in databases."""
+
+    @control.doc(model=[model_data])
+    def get(self) -> List[str]:
+        """Return all pregenerated tables that can be loaded."""
+        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
 
     @control.doc(body=model_data)
     def post(self) -> Dict:
