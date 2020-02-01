@@ -17,8 +17,6 @@ class DatabaseManager(object):
         self,
         db_manager_host: str,
         db_manager_port: str,
-        generator_host: str,
-        generator_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
         default_tables: str,
@@ -26,8 +24,6 @@ class DatabaseManager(object):
         """Initialize a DatabaseManager."""
         self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
-        self._generator_host = generator_host
-        self._generator_port = generator_port
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
