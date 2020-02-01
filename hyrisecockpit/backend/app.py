@@ -40,9 +40,18 @@ storage_connection = InfluxDBClient(
 )
 
 app = Flask(__name__)
-api = Api(app)
 cors = CORS(app)
-app.config["CORS_HEADERS"] = "Content-Type"
+api = Api(
+    app,
+    title="Hyrise Cockpit",
+    description="Monitor and control multiple databases at once.",
+)
+
+monitor = api.namespace(
+    "monitor", description="Get synchronous data from multiple databases at once."
+)
+
+control = api.namespace("control", description="Control multiple databases at once.")
 
 
 def get_all_databases(client: InfluxDBClient):
@@ -57,7 +66,7 @@ def _send_message(socket: Socket, message: Dict):
     return response
 
 
-@api.route("/throughput")
+@monitor.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
 
@@ -86,7 +95,7 @@ class Throughput(Resource):
         return response
 
 
-@api.route("/latency")
+@monitor.route("/latency")
 class Latency(Resource):
     """Latency information of all databases."""
 
@@ -115,7 +124,7 @@ class Latency(Resource):
         return response
 
 
-@api.route("/queue_length")
+@monitor.route("/queue_length")
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
@@ -126,7 +135,7 @@ class QueueLength(Resource):
         )
 
 
-@api.route("/failed_tasks")
+@monitor.route("/failed_tasks")
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
 
@@ -137,7 +146,7 @@ class FailedTasks(Resource):
         )
 
 
-@api.route("/system_data")
+@monitor.route("/system_data")
 class SystemData(Resource):
     """System data information of all databases."""
 
@@ -148,7 +157,7 @@ class SystemData(Resource):
         )
 
 
-@api.route("/chunks_data")
+@monitor.route("/chunks_data")
 class ChunksData(Resource):
     """Chunks data information of all databases."""
 
@@ -159,7 +168,7 @@ class ChunksData(Resource):
         )
 
 
-@api.route("/storage")
+@monitor.route("/storage")
 class Storage(Resource):
     """Storage information of all databases."""
 
@@ -170,7 +179,7 @@ class Storage(Resource):
         )
 
 
-@api.route("/database", methods=["GET", "POST", "DELETE"])
+@control.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
 
@@ -209,7 +218,7 @@ class Database(Resource):
         return response
 
 
-@api.route("/register_workload", methods=["POST"])
+@control.route("/register_workload", methods=["POST"])
 class RegisterWorkload(Resource):
     """Registers workloads."""
 
@@ -234,7 +243,7 @@ class RegisterWorkload(Resource):
         return response
 
 
-@api.route("/start_workload", methods=["POST"])
+@control.route("/start_workload", methods=["POST"])
 class StartWorkload(Resource):
     """Starts workloads."""
 
@@ -248,7 +257,7 @@ class StartWorkload(Resource):
         return response
 
 
-@api.route("/stop_workload", methods=["POST"])
+@control.route("/stop_workload", methods=["POST"])
 class StopWorkload(Resource):
     """Stops workloads."""
 
@@ -262,7 +271,7 @@ class StopWorkload(Resource):
         return response
 
 
-@api.route("/workload", methods=["POST", "DELETE"])
+@control.route("/workload", methods=["POST", "DELETE"])
 class Workload(Resource):
     """Manages workload generation."""
 
@@ -292,7 +301,7 @@ class Workload(Resource):
         return response
 
 
-@api.route("/data/<datatype>", methods=["POST", "DELETE"])
+@control.route("/data/<datatype>", methods=["POST", "DELETE"])
 class Data(Resource):
     """Manage data in databases."""
 
@@ -316,7 +325,7 @@ class Data(Resource):
         return response
 
 
-@api.route("/krueger_data", methods=["GET"])
+@monitor.route("/krueger_data", methods=["GET"])
 class KruegerData(Resource):
     """Krügergraph data for all workloads."""
 
