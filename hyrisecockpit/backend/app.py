@@ -179,6 +179,34 @@ class Storage(Resource):
         )
 
 
+@monitor.route("/krueger_data", methods=["GET"])
+class KruegerData(Resource):
+    """Krügergraph data for all workloads."""
+
+    def get(self) -> Dict:
+        """Provide mock data for a Krügergraph."""
+        return {
+            "tpch": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+            "tpcds": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+            "job": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+        }
+
+
 @control.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
@@ -323,31 +351,3 @@ class Data(Resource):
         }
         response = _send_message(db_manager_socket, message)
         return response
-
-
-@monitor.route("/krueger_data", methods=["GET"])
-class KruegerData(Resource):
-    """Krügergraph data for all workloads."""
-
-    def get(self) -> Dict:
-        """Provide mock data for a Krügergraph."""
-        return {
-            "tpch": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-            "tpcds": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-            "job": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-        }
