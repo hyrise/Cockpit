@@ -10,10 +10,10 @@ from typing import Dict
 
 from flask import Flask, request
 from flask_cors import CORS
-from flask_restx import Api, Resource
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
+from flask_restx import Api, Resource
 from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -209,59 +209,6 @@ class Database(Resource):
         return response
 
 
-@api.route("/register_workload", methods=["POST"])
-class RegisterWorkload(Resource):
-    """Registers workloads."""
-
-    def post(self) -> Dict:
-        """Register the workload specification."""
-        request_json = request.get_json()
-        workload = {
-            "type": request_json.get("type"),
-            "queries": request_json.get("queries", None),
-            "shuffle": request_json.get("shuffle", False),
-            "factor": request_json.get("factor", 1),
-            "auto-reload": request_json.get("auto-reload", False),
-            "sf": request_json.get("sf", 0.1),
-        }
-
-        message = {
-            "header": {"message": "register workload"},
-            "body": {"workload": workload},
-        }
-        response = _send_message(db_manager_socket, message)
-
-        return response
-
-
-@api.route("/start_workload", methods=["POST"])
-class StartWorkload(Resource):
-    """Starts workloads."""
-
-    def post(self) -> Dict:
-        """Start the workload execution."""
-        message = {
-            "header": {"message": "start workload"},
-            "body": {},
-        }
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
-@api.route("/stop_workload", methods=["POST"])
-class StopWorkload(Resource):
-    """Stops workloads."""
-
-    def post(self) -> Dict:
-        """Stop the workload execution."""
-        message = {
-            "header": {"message": "stop workload"},
-            "body": {},
-        }
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
 @api.route("/workload", methods=["POST", "DELETE"])
 class Workload(Resource):
     """Manages workload generation."""
@@ -269,23 +216,31 @@ class Workload(Resource):
     def post(self) -> Dict:
         """Start the workload generator."""
         request_json = request.get_json()
-        message = {
-            "header": {"message": "workload"},
+        workload_message = {
+            "header": {"message": "start workload"},
             "body": {
-                "type": request_json["body"].get("type"),
-                "sf": request_json["body"].get("sf"),
-                "queries": request_json["body"].get("queries"),
-                "factor": request_json["body"].get("factor", 1),
-                "shuffle": request_json["body"].get("shuffle", False),
+                "benchmark": request_json["body"].get("benchmark"),
+                "scale_factor": request_json["body"].get("scale_factor"),
+                "frequency": request_json["body"].get("frequency", 200),
             },
         }
-        response = _send_message(generator_socket, message)
+        response = _send_message(generator_socket, workload_message)
+
+        load_data_message = {
+            "header": {"message": "load data"},
+            "body": {
+                "datatype": request_json["body"].get("benchmark"),
+                "scale_factor": request_json["body"].get("scale_factor"),
+            },
+        }
+        response = _send_message(db_manager_socket, load_data_message)
+
         return response
 
     def delete(self) -> Dict:
         """Stop the workload generator."""
         message = {
-            "header": {"message": "stop"},
+            "header": {"message": "stop workload"},
             "body": {},
         }
         response = _send_message(generator_socket, message)
