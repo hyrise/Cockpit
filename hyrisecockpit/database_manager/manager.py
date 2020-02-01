@@ -28,8 +28,6 @@ class DatabaseManager(object):
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
 
-        self._workload_proceed_flag: bool = False
-
         self._databases: Dict[str, Database] = dict()
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
@@ -167,7 +165,6 @@ class DatabaseManager(object):
     def _call_delete_data(self, body: Dict) -> Dict:
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
-        self._workload_proceed_flag = False
         datatype = body.get("datatype")
         if not datatype:
             return get_response(400)
