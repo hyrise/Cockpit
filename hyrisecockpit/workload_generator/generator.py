@@ -3,9 +3,8 @@
 Includes the main WorkloadGenerator.
 """
 
-from copy import deepcopy
 from random import shuffle
-from typing import Any, Callable, Dict, List, Set, Tuple
+from typing import Any, Callable, Dict, List, Tuple
 
 from zmq import PUB, REP, Context
 
@@ -37,11 +36,8 @@ class WorkloadGenerator(object):
         self._workload_pub_host = workload_pub_host
         self._workload_pub_port = workload_pub_port
         self._default_workload_location = default_workload_location
-        self._workload_specification: Dict[str, Any] = {}
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
-            "register workload": self._call_register_workload,
-            "generate registered workload": self._call_generate_registered_workload,
         }
         self._workloads: Dict[str, Any] = {}
         self._init_server()
@@ -104,47 +100,6 @@ class WorkloadGenerator(object):
             return get_error_response(400, str(e))
 
         return get_response(200)
-
-    def _call_register_workload(self, body: Dict):
-        workload_type = body.get("type")
-        required_tables: Set = set()
-        if not workload_type:
-            return get_error_response(400, "workload type not provided")
-        try:
-            if workload_type == "custom":
-                query_types = body.get("queries")
-                if not query_types:
-                    return get_error_response(
-                        400, "Missing query types for custom workload"
-                    )
-                for query_type in query_types.keys():
-                    workload = self._get_workload(query_type.split("/")[0])
-                    workload.generate_specific(query_type.split("/")[1])
-                    required_tables.update(workload.get_required_tables())
-            else:
-                workload = self._get_workload(workload_type)
-                required_tables.update(workload.get_required_tables())
-        except (
-            NotExistingWorkloadFolderException,
-            EmptyWorkloadFolderException,
-            QueryTypeNotFoundException,
-            QueryTypesNotSpecifiedException,
-            NotExistingConfigFileException,
-        ) as e:
-            return get_error_response(400, str(e))
-        self._workload_specification = body
-        response = get_response(200)
-        response["body"]["required_tables"] = list(required_tables)
-        return response
-
-    def _call_generate_registered_workload(self, body: Dict):
-        if self._workload_specification == {}:
-            return get_error_response(400, "Workload not registered")
-        workload_specification = deepcopy(self._workload_specification)
-        factor = body.get("factor")
-        if factor:
-            workload_specification["factor"] = factor
-        return self._call_workload(workload_specification)
 
     def _generate_custom_workload(
         self, query_types: Dict, factor: int, shuffle_flag: bool
