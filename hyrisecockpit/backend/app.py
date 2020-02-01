@@ -10,10 +10,10 @@ from typing import Dict
 
 from flask import Flask, request
 from flask_cors import CORS
+from flask_restx import Api, Resource
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
-from flask_restx import Api, Resource
 from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -216,15 +216,6 @@ class Workload(Resource):
     def post(self) -> Dict:
         """Start the workload generator."""
         request_json = request.get_json()
-        workload_message = {
-            "header": {"message": "start workload"},
-            "body": {
-                "benchmark": request_json["body"].get("benchmark"),
-                "scale_factor": request_json["body"].get("scale_factor"),
-                "frequency": request_json["body"].get("frequency", 200),
-            },
-        }
-        response = _send_message(generator_socket, workload_message)
 
         load_data_message = {
             "header": {"message": "load data"},
@@ -234,6 +225,16 @@ class Workload(Resource):
             },
         }
         response = _send_message(db_manager_socket, load_data_message)
+
+        workload_message = {
+            "header": {"message": "start workload"},
+            "body": {
+                "benchmark": request_json["body"].get("benchmark"),
+                "scale_factor": request_json["body"].get("scale_factor"),
+                "frequency": request_json["body"].get("frequency", 200),
+            },
+        }
+        response = _send_message(generator_socket, workload_message)
 
         return response
 
