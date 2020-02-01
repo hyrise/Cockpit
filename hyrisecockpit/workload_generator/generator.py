@@ -37,7 +37,10 @@ class WorkloadGenerator(object):
         self._default_workload_location = default_workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "workload": self._call_workload,
+            "start workload": self._call_start_workload,
         }
+        self._generate_workload_flag = False
+        self._frequency = 0
         self._workloads: Dict[str, Any] = {}
         self._init_server()
 
@@ -73,10 +76,9 @@ class WorkloadGenerator(object):
     def _call_workload(self, body: Dict) -> Dict:
         try:
             factor = body.get("factor", 1)
-            shuffle_flag = body.get("shuffle", False)
             workload_type = body["type"]
             workload = self._get_workload(workload_type)
-            queries = workload.generate_workload(factor, shuffle_flag)
+            queries = workload.generate_workload(factor)
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
@@ -89,6 +91,36 @@ class WorkloadGenerator(object):
         ) as e:
             return get_error_response(400, str(e))
 
+        return get_response(200)
+
+    def _call_start_workload(self, body: Dict) -> Dict:
+        scale_factor = body.get("scale_factor")
+        benchmark = body.get("benchmark")
+        if not benchmark:
+            return get_error_response(400, "Benchmark name not provided")
+        if not scale_factor:
+            workload_type = benchmark
+        else:
+            workload_type = f"""{benchmark}_{scale_factor}"""
+        try:
+            self._get_workload(workload_type)
+        except (
+            NotExistingWorkloadFolderException,
+            EmptyWorkloadFolderException,
+            QueryTypeNotFoundException,
+            QueryTypesNotSpecifiedException,
+            NotExistingConfigFileException,
+        ) as e:
+            return get_error_response(400, str(e))
+
+        self._workload_type = workload_type
+        self._frequency = body.get("frequency", 200)
+        self._generate_workload_flag = True
+
+        return get_response(200)
+
+    def _call_stop_workload(self, body: Dict) -> Dict:
+        self._generate_workload_flag = False
         return get_response(200)
 
     def _publish_data(self, data: Dict):
