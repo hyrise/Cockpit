@@ -37,4 +37,4 @@ requests==2.22.0
 six==1.14.0
 tzlocal==2.0.0
 urllib3==1.25.8
-werkzeug==0.16.1
+werkzeug==1.0.0rc1
