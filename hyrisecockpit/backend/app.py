@@ -10,7 +10,7 @@ from typing import Dict
 
 from flask import Flask, request
 from flask_cors import CORS
-from flask_restx import Api, Resource
+from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
@@ -53,6 +53,57 @@ monitor = api.namespace(
 
 control = api.namespace("control", description="Control multiple databases at once.")
 
+model_database = monitor.model(
+    "Database",
+    {
+        "id": fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        )
+    },
+)
+
+model_throughput = monitor.clone(
+    "Throughput",
+    model_database,
+    {
+        "throughput": fields.Integer(
+            title="Throughput",
+            description="Query throughput of a given time interval.",
+            required=True,
+            example=7381,
+        )
+    },
+)
+
+model_latency = monitor.clone(
+    "Latency",
+    model_database,
+    {
+        "latency": fields.Float(
+            title="Latency",
+            description="Average query latency (ms) of a given time interval.",
+            required=True,
+            example=923.263,
+        )
+    },
+)
+
+model_queue_length = monitor.clone(
+    "Queue length",
+    model_database,
+    {
+        "queue_length": fields.Integer(
+            title="Queue length",
+            description="Query queue length of a database at a given point in time.",
+            required=True,
+            example=18623,
+        )
+    },
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -70,6 +121,7 @@ def _send_message(socket: Socket, message: Dict):
 class Throughput(Resource):
     """Throughput information of all databases."""
 
+    @monitor.doc(model=[model_throughput])
     def get(self) -> Dict[str, int]:
         """Return throughput information from the stored queries."""
         t = time()
@@ -99,6 +151,7 @@ class Throughput(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
+    @api.doc(model=[model_latency])
     def get(self) -> Dict[str, float]:
         """Return latency information from the stored queries."""
         t = time()
@@ -128,6 +181,7 @@ class Latency(Resource):
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
+    @api.doc(model=[model_queue_length])
     def get(self) -> Dict:
         """Return queue length information from database manager."""
         return _send_message(
@@ -146,8 +200,8 @@ class FailedTasks(Resource):
         )
 
 
-@monitor.route("/system_data")
-class SystemData(Resource):
+@monitor.route("/system")
+class System(Resource):
     """System data information of all databases."""
 
     def get(self) -> Dict:
@@ -157,8 +211,8 @@ class SystemData(Resource):
         )
 
 
-@monitor.route("/chunks_data")
-class ChunksData(Resource):
+@monitor.route("/chunks")
+class Chunks(Resource):
     """Chunks data information of all databases."""
 
     def get(self) -> Dict:
