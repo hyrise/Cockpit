@@ -35,6 +35,7 @@ repos:
       language: system
       entry: isort
       types: [python]
+      require_serial: true
     - id: black
       name: Running black on python files
       description: 'Black: The uncompromising Python code formatter'
