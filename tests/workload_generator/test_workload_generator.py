@@ -124,37 +124,3 @@ class TestWorkloadGenerator:
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
         assert response["body"]["error"] == "Error message"
-
-    @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data")
-    def test_generates_custom_workload(
-        self, mock_publish_data, isolated_generator: WorkloadGenerator
-    ):
-        """Ensure custom workload generation."""
-        mock_publish_data.return_value = None
-
-        workload1 = MagicMock()
-        workload1.generate_specific.return_value = [("dummy query 1", None)]
-        workload2 = MagicMock()
-        workload2.generate_specific.return_value = [("dummy query 2", None)]
-
-        isolated_generator._workloads["workload1"] = workload1
-        isolated_generator._workloads["workload2"] = workload2
-
-        body = {
-            "type": "custom",
-            "sf": 1,
-            "queries": {"workload1/1": 1, "workload2/1": 1},
-            "factor": 1,
-            "shuffle": False,
-        }
-
-        response = isolated_generator._call_workload(body)
-        expected_workload = [("dummy query 1", None), ("dummy query 2", None)]
-        expected_publish_response = {
-            "header": {"message": "OK", "status": 200},
-            "body": {"querylist": expected_workload},
-        }
-        assert response["header"]["status"] == 200
-        assert response["header"]["message"] == "OK"
-
-        mock_publish_data.assert_called_with(expected_publish_response)

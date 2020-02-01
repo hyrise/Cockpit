@@ -3,8 +3,7 @@
 Includes the main WorkloadGenerator.
 """
 
-from random import shuffle
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict
 
 from zmq import PUB, REP, Context
 
@@ -76,17 +75,8 @@ class WorkloadGenerator(object):
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
             workload_type = body["type"]
-            if workload_type == "custom":
-                if not body.get("queries"):
-                    raise QueryTypesNotSpecifiedException(
-                        "Missing query types for custom workload"
-                    )
-                queries = self._generate_custom_workload(
-                    body["queries"], factor, shuffle_flag
-                )
-            else:
-                workload = self._get_workload(workload_type)
-                queries = workload.generate_workload(factor, shuffle_flag)
+            workload = self._get_workload(workload_type)
+            queries = workload.generate_workload(factor, shuffle_flag)
             response = get_response(200)
             response["body"] = {"querylist": queries}
             self._publish_data(response)
@@ -100,21 +90,6 @@ class WorkloadGenerator(object):
             return get_error_response(400, str(e))
 
         return get_response(200)
-
-    def _generate_custom_workload(
-        self, query_types: Dict, factor: int, shuffle_flag: bool
-    ):
-        workload_queries: List[Tuple[str, Any]] = []
-        for _ in range(factor):
-            for query_type in query_types.keys():
-                workload_type = query_type.split("/")[0]
-                query = query_type.split("/")[1]
-                factor = query_types[query_type]
-                workload = self._get_workload(workload_type)
-                workload_queries.extend(workload.generate_specific(query, factor))
-        if shuffle_flag:
-            shuffle(workload_queries)
-        return workload_queries
 
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
