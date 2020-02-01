@@ -45,6 +45,7 @@ api = Api(
     app,
     title="Hyrise Cockpit",
     description="Monitor and control multiple databases at once.",
+    validate=True,
 )
 
 monitor = api.namespace(
@@ -104,6 +105,18 @@ model_queue_length = monitor.clone(
     },
 )
 
+model_data = monitor.model(
+    "Data",
+    {
+        "name": fields.String(
+            title="Data name",
+            description="Name of the folder containing the pregenerated data and queries.",
+            required=True,
+            example="tpch_0.1",
+        )
+    },
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -151,7 +164,7 @@ class Throughput(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
-    @api.doc(model=[model_latency])
+    @monitor.doc(model=[model_latency])
     def get(self) -> Dict[str, float]:
         """Return latency information from the stored queries."""
         t = time()
@@ -181,7 +194,7 @@ class Latency(Resource):
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
-    @api.doc(model=[model_queue_length])
+    @monitor.doc(model=[model_queue_length])
     def get(self) -> Dict:
         """Return queue length information from database manager."""
         return _send_message(
@@ -330,25 +343,26 @@ class Workload(Resource):
         return response
 
 
-@control.route("/data/<datatype>", methods=["POST", "DELETE"])
+@control.route("/data", methods=["POST", "DELETE"])
 class Data(Resource):
     """Manage data in databases."""
 
-    def post(self, datatype: str) -> Dict:
+    @control.doc(body=model_data)
+    def post(self) -> Dict:
         """Load pregenerated tables for all databases."""
-        request_json = request.get_json()
         message = {
             "header": {"message": "load data"},
-            "body": {"datatype": datatype, "sf": request_json["body"]["sf"]},
+            "body": {"name": control.payload["name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
 
-    def delete(self, datatype: str) -> Dict:
+    @control.doc(body=model_data)
+    def delete(self) -> Dict:
         """Delete pregenerated tables from all databases."""
         message = {
             "header": {"message": "delete data"},
-            "body": {"datatype": datatype},
+            "body": {"name": control.payload["name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
