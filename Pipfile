@@ -32,6 +32,7 @@ flask-cors = "*"
 apscheduler = "*"
 influxdb = "*"
 flask-restx = "*"
+werkzeug = "==0.16.1"
 
 [requires]
 python_version = "3.8.1"
