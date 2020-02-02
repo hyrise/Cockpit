@@ -3,7 +3,7 @@
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
-from typing import Dict, List
+from typing import Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
@@ -128,6 +128,8 @@ def execute_queries(
                     if worker_stay_alive_flag.value:
                         query, not_formatted_parameters = task
                         parameters = None
+                        formatted_parameters: Optional[Tuple] = None
+
                         if not_formatted_parameters is not None:
                             parameters = []
                             for not_formated_parameter in not_formatted_parameters:
@@ -294,7 +296,7 @@ class Database(object):
         table_loading_tasks = []
         for name in existing_tables["not_existing"]:
             # TODO change absolute to relative path
-            query = f"COPY %s FROM '/usr/local/hyrise/%s_cached_tables/sf-%s/%s.bin';"
+            query = f"COPY %s FROM '/usr/local/hyrise/cached_tables/%s_%s/%s.bin';"
             parameters = [
                 (name, "as_is"),
                 (datatype, "as_is"),
