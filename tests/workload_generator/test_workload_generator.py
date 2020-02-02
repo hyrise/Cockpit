@@ -4,10 +4,6 @@ from unittest.mock import MagicMock, patch
 
 from pytest import fixture, mark
 
-from hyrisecockpit.exception import (
-    EmptyWorkloadFolderException,
-    NotExistingWorkloadFolderException,
-)
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
 
 generator_listening = "generator_listening"
@@ -51,7 +47,7 @@ class TestWorkloadGenerator:
         assert isolated_generator._workload_listening == workload_listening
         assert isolated_generator._workload_pub_port == workload_pub_port
 
-    @mark.parametrize("call", ["workload"])
+    @mark.parametrize("call", ["start workload", "stop workload"])
     @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
     def test_initializes_server_calls(
         self, isolated_generator: WorkloadGenerator, call: str
@@ -65,61 +61,3 @@ class TestWorkloadGenerator:
         response = isolated_generator._handle_request(request)
         assert response["header"]["status"] == 400
         assert response["header"]["message"] == "BAD REQUEST"
-
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
-        idle_function,
-    )
-    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    @mark.parametrize("workload", ["no-ops", "mixed", "tpch", "job"])
-    def test_asks_for_existing_workload(
-        self, isolated_generator: WorkloadGenerator, workload: str
-    ):
-        """Ensure existing workload calls return 200."""
-        body = {"type": workload, "sf": 1, "factor": 1, "shuffle": False}
-        response = isolated_generator._call_workload(body)
-
-        assert response["header"]["status"] == 200
-        assert response["header"]["message"] == "OK"
-
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
-        idle_function,
-    )
-    def test_catches_not_existing_workload_folder_exception(
-        self, isolated_generator: WorkloadGenerator
-    ):
-        """Ensure not existing workload calls return 400."""
-        workload = MagicMock()
-        workload.generate_workload.side_effect = NotExistingWorkloadFolderException(
-            "Error message"
-        )
-        isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload", "sf": 42, "factor": 1, "shuffle": False}
-
-        response = isolated_generator._call_workload(body)
-
-        assert response["header"]["status"] == 400
-        assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"]["error"] == "Error message"
-
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
-        idle_function,
-    )
-    def test_catches_empty_workload_folder_exception(
-        self, isolated_generator: WorkloadGenerator
-    ):
-        """Ensure not existing workload calls return 400."""
-        workload = MagicMock()
-        workload.generate_workload.side_effect = EmptyWorkloadFolderException(
-            "Error message"
-        )
-        isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload", "sf": 42, "factor": 1, "shuffle": False}
-
-        response = isolated_generator._call_workload(body)
-
-        assert response["header"]["status"] == 400
-        assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"]["error"] == "Error message"

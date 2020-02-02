@@ -37,7 +37,6 @@ class WorkloadGenerator(object):
         self._workload_pub_port = workload_pub_port
         self._default_workload_location = default_workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
-            "workload": self._call_workload,
             "start workload": self._call_start_workload,
             "stop workload": self._call_stop_workload,
         }
@@ -79,26 +78,6 @@ class WorkloadGenerator(object):
             workload = Workload(workload_type, self._get_default_workload_location())
             self._workloads[workload_type] = workload
         return workload
-
-    def _call_workload(self, body: Dict) -> Dict:
-        try:
-            factor = body.get("factor", 1)
-            workload_type = body["type"]
-            workload = self._get_workload(workload_type)
-            queries = workload.generate_workload(factor)
-            response = get_response(200)
-            response["body"] = {"querylist": queries}
-            self._publish_data(response)
-        except (
-            NotExistingWorkloadFolderException,
-            EmptyWorkloadFolderException,
-            QueryTypeNotFoundException,
-            QueryTypesNotSpecifiedException,
-            NotExistingConfigFileException,
-        ) as e:
-            return get_error_response(400, str(e))
-
-        return get_response(200)
 
     def _call_start_workload(self, body: Dict) -> Dict:
         scale_factor = body.get("scale_factor")
