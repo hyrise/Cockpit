@@ -1,25 +1,24 @@
 """Predefined responses for IPC."""
 
-from copy import deepcopy
-from typing import Any, Dict
+from typing import Dict
 
-__default = {"header": {"status": 500, "message": "INTERNAL SERVER ERROR"}, "body": {}}
-
-__responses = {
-    200: {"header": {"status": 200, "message": "OK"}, "body": {}},
-    400: {"header": {"status": 400, "message": "BAD REQUEST"}, "body": {}},
-    404: {"header": {"status": 404, "message": "NOT FOUND"}, "body": {}},
-    501: {"header": {"status": 501, "message": "NOT IMPLEMENTED"}, "body": {}},
-    500: __default,
+_responses: Dict[int, str] = {
+    200: "OK",
+    400: "BAD REQUEST",
+    404: "NOT FOUND",
+    500: "INTERNAL SERVER ERROR",
+    501: "NOT IMPLEMENTED",
 }
 
 
-def get_response(code: int,) -> Dict[str, Any]:
+def get_response(code: int,) -> Dict[str, Dict]:
     """Get a predefined response with a code."""
-    return deepcopy(__responses.get(code, __default,))
+    code = code if code in _responses else 500
+    message = _responses[code]
+    return {"header": {"status": code, "message": message}, "body": {}}
 
 
-def get_error_response(code: int, message: str) -> Dict[str, Any]:
+def get_error_response(code: int, message: str) -> Dict[str, Dict]:
     """Get a predefined response with a code and error message."""
     response: Dict = get_response(code)
     response["body"]["error"] = message
