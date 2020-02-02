@@ -5,7 +5,7 @@ services:
     build: .
     working_dir: /usr/local/Cockpit
     command: bash -c "
-      python setup.py install
+      pip install .
       && cockpit-backend"
     volumes:
       - .:/usr/local/Cockpit
@@ -16,7 +16,7 @@ services:
     build: .
     working_dir: /usr/local/Cockpit
     command: bash -c "
-      python setup.py install
+      pip install .
       && cockpit-manager"
     volumes:
       - .:/usr/local/Cockpit
@@ -27,7 +27,7 @@ services:
     build: .
     working_dir: /usr/local/Cockpit
     command: bash -c "
-      python setup.py install
+      pip install .
       && cockpit-generator"
     volumes:
       - .:/usr/local/Cockpit
