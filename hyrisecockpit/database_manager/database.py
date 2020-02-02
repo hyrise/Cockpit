@@ -144,12 +144,8 @@ def execute_queries(
                         query, not_formatted_parameters = task
                         formatted_parameters = (
                             tuple(
-                                [
-                                    AsIs(parameter)
-                                    if protocol == "as_is"
-                                    else parameter
-                                    for parameter, protocol in not_formatted_parameters
-                                ]
+                                AsIs(parameter) if protocol == "as_is" else parameter
+                                for parameter, protocol in not_formatted_parameters
                             )
                             if not_formatted_parameters is not None
                             else None
