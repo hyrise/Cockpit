@@ -64,13 +64,6 @@ class TestWorkloadGenerator:
         """Ensure pre-defined calls are implemented."""
         assert call in isolated_generator._server_calls.keys()
 
-    def test_asks_for_not_existing_call(self, isolated_generator: WorkloadGenerator):
-        """Ensure not-existing call returns 400."""
-        request = {"header": {"message": "Ich fuehle mich DISCO!"}}
-        response = isolated_generator._handle_request(request)
-        assert response["header"]["status"] == 400
-        assert response["header"]["message"] == "BAD REQUEST"
-
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
         lambda self, type, sf: True,
