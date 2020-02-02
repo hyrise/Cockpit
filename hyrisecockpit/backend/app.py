@@ -100,7 +100,7 @@ class Latency(Resource):
         ]
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-1} AND "start" <= {t});""",
+                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-2} AND "start" <= {t-1});""",
                 database=database,
             )
             latency_value = list(result["successful_queries", None])
