@@ -217,6 +217,7 @@ class Workload(Resource):
         """Start the workload generator."""
         request_json = request.get_json()
 
+        # TODO: Adjust loading tables for benchmarks which do not require scale factor (e. g. JOB)
         load_data_message = {
             "header": {"message": "load data"},
             "body": {
