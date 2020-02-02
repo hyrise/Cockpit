@@ -26,7 +26,7 @@ class TestWorkload:
 
     def idle_function(self) -> None:
         """Idle function."""
-        return None
+        return
 
     @fixture
     @patch(

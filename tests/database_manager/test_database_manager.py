@@ -1,5 +1,5 @@
 """Tests for the database_manager module."""
-from typing import Callable
+from typing import Callable, Dict
 from unittest.mock import patch
 
 from jsonschema import ValidationError
@@ -12,6 +12,8 @@ from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
+    GENERATOR_HOST,
+    GENERATOR_PORT,
     WORKLOAD_PUBSUB_PORT,
     WORKLOAD_SUB_HOST,
 )
@@ -26,6 +28,8 @@ class TestDatabaseManager:
         with DatabaseManager(
             DB_MANAGER_HOST,
             DB_MANAGER_PORT,
+            GENERATOR_HOST,
+            GENERATOR_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
             DEFAULT_TABLES,
@@ -48,7 +52,7 @@ class TestDatabaseManager:
         mock_data,
     ):
         """Check whether a data call works."""
-        assert call() == dict()
+        assert call() == {}
         database_manager._databases["test_db1"] = mock_database
         assert call() == {"test_db1": mock_data}
         database_manager._databases["test_db2"] = mock_database
@@ -74,7 +78,6 @@ class TestDatabaseManager:
         "call",
         [
             "add database",
-            "throughput",
             "storage",
             "system data",
             "delete database",
@@ -91,7 +94,6 @@ class TestDatabaseManager:
     @mark.parametrize(
         "call",
         [
-            "throughput",
             "storage",
             "system data",
             "queue length",
@@ -150,16 +152,12 @@ class TestDatabaseManager:
         assert call_delete("test_db2") == 404
         assert database_manager._databases.keys() == set()
 
-    def test_call_throughput_returns_throughput(
-        self, database_manager: DatabaseManager, mock_database: Database
-    ):
-        """Returns throughput of previously added databases."""
-        call: Callable = lambda: database_manager._call_throughput({})["body"][
-            "throughput"
-        ]
-        mock_data = 42
-        mock_database.get_throughput.return_value = mock_data  # type: ignore
-        self.convenience_data_call(database_manager, mock_database, call, mock_data)
+    def test_call_not_found_returns_400(self, database_manager: DatabaseManager):
+        """Call not found returns a response with status 400."""
+        response: Dict = database_manager._call_not_found({})
+        assert response["header"]["status"] == 400
+        assert response["header"]["message"] == "BAD REQUEST"
+        assert response["body"]["error"] == "Call not found"
 
     def test_call_storage_returns_storage(
         self, database_manager: DatabaseManager, mock_database: Database

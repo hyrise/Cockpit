@@ -1,5 +1,9 @@
 # Hyrise Cockpit
 
+![Backend Lint and Test](https://github.com/hyrise/Cockpit/workflows/Backend%20Lint%20and%20Test/badge.svg)
+![Frontend Lint](https://github.com/hyrise/Cockpit/workflows/Frontend%20Lint/badge.svg)
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+
 ## Setup
 
 You may need to install a different python version (`3.8.1`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
@@ -32,7 +36,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 Put the following in your `.bashrc` (or `.zshrc`, etc.):
 
 ```bash
-export PATH="/home/<YOUR_USERNAME>/.pyenv/bin:$PATH"
+export PATH="/home/$USER/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```
@@ -136,4 +140,12 @@ You can run all the pre-commit hooks on all files by running:
 
 ```bash
 pipenv run pre-commit run --all-files
+```
+
+### Tests
+
+You can run all tests with:
+
+```bash
+pipenv run pre-commit run --hook-stage manual pytest
 ```

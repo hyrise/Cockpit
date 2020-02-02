@@ -23,7 +23,7 @@ class TestWorkloadGenerator:
 
     def idle_function(self, *argv) -> None:
         """Idle function."""
-        return None
+        return
 
     def get_fake_workload(self, *argv) -> Any:
         """Get fake workload."""
@@ -66,19 +66,19 @@ class TestWorkloadGenerator:
 
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
-        lambda self, query: True,
+        lambda self, type, sf: True,
     )
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
         idle_function,
     )
     @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    @mark.parametrize("workload", ["no-ops", "mixed", "TPCH_0.1", "TPCH_1.0", "JOB"])
+    @mark.parametrize("workload", ["no-ops", "mixed", "tpch", "job"])
     def test_asks_for_existing_workload(
         self, isolated_generator: WorkloadGenerator, workload: str
     ):
         """Ensure existing workload calls return 200."""
-        body = {"type": workload, "factor": 1, "shuffle": False}
+        body = {"type": workload, "sf": 1, "factor": 1, "shuffle": False}
         response = isolated_generator._call_workload(body)
 
         assert response["header"]["status"] == 200
@@ -86,7 +86,7 @@ class TestWorkloadGenerator:
 
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
-        lambda self, query: True,
+        lambda self, type, sf: True,
     )
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
@@ -101,7 +101,7 @@ class TestWorkloadGenerator:
             "Error message"
         )
         isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload", "factor": 1, "shuffle": False}
+        body = {"type": "dummy workload", "sf": 42, "factor": 1, "shuffle": False}
 
         response = isolated_generator._call_workload(body)
 
@@ -111,7 +111,7 @@ class TestWorkloadGenerator:
 
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._load_data",
-        lambda self, query: True,
+        lambda self, type, sf: True,
     )
     @patch(
         "hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data",
@@ -126,7 +126,7 @@ class TestWorkloadGenerator:
             "Error message"
         )
         isolated_generator._workloads["dummy workload"] = workload
-        body = {"type": "dummy workload", "factor": 1, "shuffle": False}
+        body = {"type": "dummy workload", "sf": 42, "factor": 1, "shuffle": False}
 
         response = isolated_generator._call_workload(body)
 
@@ -153,6 +153,7 @@ class TestWorkloadGenerator:
 
         body = {
             "type": "custom",
+            "sf": 1,
             "queries": {"workload1/1": 1, "workload2/1": 1},
             "factor": 1,
             "shuffle": False,
@@ -181,6 +182,7 @@ class TestWorkloadGenerator:
         mock_load_data.return_value = True
         body = {
             "type": "custom",
+            "sf": 1,
             "factor": 1,
             "shuffle": False,
         }

@@ -1,5 +1,13 @@
 <template>
   <div>
+    <metric-details
+      v-if="showDetails"
+      :data="data"
+      :databases="selectedDatabases"
+      :border="1000"
+      state-order="desc"
+      unit="sec"
+    />
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
@@ -30,15 +38,16 @@ import {
   MetricPropsValidation,
   ComparisonMetricData
 } from "../../types/metrics";
+import MetricDetails from "../details/MetricDetails.vue";
 
 export default createComponent({
   name: "Latency",
   props: MetricPropsValidation,
-  components: { Linechart },
+  components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
 
-    const chartConfiguration = ["Latency", "time in sec", "queries per sec"];
+    const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
 
     onMounted(() => {
       setInterval(checkState, 1000);

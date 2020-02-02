@@ -3,6 +3,8 @@ from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
+    GENERATOR_HOST,
+    GENERATOR_PORT,
     WORKLOAD_PUBSUB_PORT,
     WORKLOAD_SUB_HOST,
 )
@@ -16,6 +18,8 @@ def main() -> None:
         with DatabaseManager(
             DB_MANAGER_HOST,
             DB_MANAGER_PORT,
+            GENERATOR_HOST,
+            GENERATOR_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
             DEFAULT_TABLES,
