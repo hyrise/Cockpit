@@ -38,7 +38,7 @@ class DatabaseManager(object):
         self._workload_proceed_flag: bool = False
         self._auto_reload_flag: bool = False
 
-        self._databases: Dict[str, Database] = dict()
+        self._databases: Dict[str, Database] = {}
         self._scheduler = BackgroundScheduler()
         self._reload_workload_job = self._scheduler.add_job(
             func=self._reload_workload, trigger="interval", seconds=1, max_instances=1
