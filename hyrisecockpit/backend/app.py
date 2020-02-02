@@ -135,7 +135,7 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    def get(self) -> Dict[str, int]:
+    def get(self) -> Dict[str, Dict[str, int]]:
         """Return throughput information from the stored queries."""
         t = time()
         throughput: Dict[str, int] = {}
@@ -165,7 +165,7 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    def get(self) -> Dict[str, float]:
+    def get(self) -> Dict[str, Dict[str, float]]:
         """Return latency information from the stored queries."""
         t = time()
         latency: Dict[str, float] = {}
