@@ -208,17 +208,14 @@ class WorkloadGenerator(object):
             call = self._server_calls.get(request["header"]["message"])
             if not call:
                 self._rep_socket.send_json(get_response(404))
-                continue
-
-            # Handle the call
-            try:
-                response = call(request["body"])
-            except ValidationError:
-                self._rep_socket.send_json(get_response(400))
-                continue
-
-            # Send the reply
-            self._rep_socket.send_json(response)
+            else:
+                # Handle the call
+                try:
+                    response = call(request["body"])
+                except ValidationError:
+                    response = get_response(400)
+                finally:  # Send the reply
+                    self._rep_socket.send_json(response)
 
     def close(self) -> None:
         """Close the socket and context."""
