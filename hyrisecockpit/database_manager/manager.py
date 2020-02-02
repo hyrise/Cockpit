@@ -15,20 +15,21 @@ class DatabaseManager(object):
 
     def __init__(
         self,
-        db_manager_host: str,
+        db_manager_listening: str,
         db_manager_port: str,
         workload_sub_host: str,
         workload_pubsub_port: str,
         default_tables: str,
     ) -> None:
         """Initialize a DatabaseManager."""
-        self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._db_manager_listening = db_manager_listening
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
 
-        self._databases: Dict[str, Database] = dict()
+        self._databases: Dict[str, Database] = {}
+
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "add database": self._call_add_database,
             "storage": self._call_storage,
@@ -44,7 +45,7 @@ class DatabaseManager(object):
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
-            "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
+            "tcp://{:s}:{:s}".format(self._db_manager_listening, self._db_manager_port)
         )
 
     def __enter__(self):
@@ -183,11 +184,6 @@ class DatabaseManager(object):
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
-        print(
-            "Database manager running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                self._db_manager_host, self._db_manager_port
-            )
-        )
         while True:
             # Get the message
             request = self._socket.recv_json()

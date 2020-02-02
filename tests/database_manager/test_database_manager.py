@@ -8,7 +8,7 @@ from zmq import Context, Socket
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
 from hyrisecockpit.settings import (
-    DB_MANAGER_HOST,
+    DB_MANAGER_LISTENING,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
     WORKLOAD_PUBSUB_PORT,
@@ -23,7 +23,7 @@ class TestDatabaseManager:
     def database_manager(self) -> DatabaseManager:
         """Get a new DatabaseManager."""
         with DatabaseManager(
-            DB_MANAGER_HOST,
+            DB_MANAGER_LISTENING,
             DB_MANAGER_PORT,
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
@@ -47,7 +47,7 @@ class TestDatabaseManager:
         mock_data,
     ):
         """Check whether a data call works."""
-        assert call() == dict()
+        assert call() == {}
         database_manager._databases["test_db1"] = mock_database
         assert call() == {"test_db1": mock_data}
         database_manager._databases["test_db2"] = mock_database
