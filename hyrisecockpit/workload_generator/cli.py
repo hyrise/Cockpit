@@ -2,7 +2,6 @@
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
-    GENERATOR_HOST,
     GENERATOR_LISTENING,
     GENERATOR_PORT,
     WORKLOAD_LISTENING,
@@ -17,7 +16,6 @@ def main() -> None:
     """Create and start a workload generator."""
     try:
         with WorkloadGenerator(
-            GENERATOR_HOST,
             GENERATOR_LISTENING,
             GENERATOR_PORT,
             WORKLOAD_LISTENING,

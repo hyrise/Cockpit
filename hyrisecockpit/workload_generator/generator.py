@@ -25,7 +25,6 @@ class WorkloadGenerator(object):
 
     def __init__(
         self,
-        generator_host: str,
         generator_listening: str,
         generator_port: str,
         workload_listening: str,
@@ -35,7 +34,6 @@ class WorkloadGenerator(object):
         db_manager_port: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
-        self._generator_host = generator_host
         self._generator_listening = generator_listening
         self._generator_port = generator_port
         self._workload_listening = workload_listening
@@ -194,11 +192,6 @@ class WorkloadGenerator(object):
 
     def start(self) -> None:
         """Run the generator by enabling IPC."""
-        print(
-            "Workload generator running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                self._generator_host, self._generator_port
-            )
-        )
         while True:
             # Get the message
             request = self._rep_socket.recv_json()
