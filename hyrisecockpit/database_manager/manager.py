@@ -3,8 +3,16 @@
 from typing import Any, Callable, Dict, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from jsonschema import ValidationError, validate
 from zmq import REP, REQ, Context
 
+from hyrisecockpit.message import (
+    add_database_request_schema,
+    delete_data_request_schema,
+    delete_database_request_schema,
+    load_data_request_schema,
+    request_schema,
+)
 from hyrisecockpit.response import get_error_response, get_response
 
 from .database import Database
@@ -16,7 +24,7 @@ class DatabaseManager(object):
 
     def __init__(
         self,
-        db_manager_host: str,
+        db_manager_listening: str,
         db_manager_port: str,
         generator_host: str,
         generator_port: str,
@@ -25,8 +33,8 @@ class DatabaseManager(object):
         default_tables: str,
     ) -> None:
         """Initialize a DatabaseManager."""
-        self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._db_manager_listening = db_manager_listening
         self._generator_host = generator_host
         self._generator_port = generator_port
         self._workload_sub_host = workload_sub_host
@@ -59,7 +67,7 @@ class DatabaseManager(object):
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
         self._socket.bind(
-            "tcp://{:s}:{:s}".format(self._db_manager_host, self._db_manager_port)
+            "tcp://{:s}:{:s}".format(self._db_manager_listening, self._db_manager_port)
         )
         self._generator_socket = self._context.socket(REQ)
         self._generator_socket.connect(
@@ -102,16 +110,15 @@ class DatabaseManager(object):
 
     def _call_add_database(self, body: Dict) -> Dict:
         """Add database and initialize driver for it."""
+        validate(instance=body, schema=add_database_request_schema)
         # validating connection data
-        user = body.get("user")
-        password = body.get("password")
-        host = body.get("host")
-        port = body.get("port")
-        dbname = body.get("dbname")
-        number_workers = body.get("number_workers")
-        if not (user and password and host and port and dbname and number_workers):
-            return get_response(400)
-        if not Driver.validate_connection(user, password, host, port, dbname):
+        user = body["user"], password = body["password"], host = body["host"], port = (
+            body["port"],
+            dbname,
+        ) = (body["dbname"], number_workers) = body["number_workers"]
+        if not Driver.validate_connection(
+            user, password, host, port, dbname
+        ):  # TODO move to Database
             return get_response(400)
         if body["id"] in self._databases:
             return get_response(400)
@@ -173,16 +180,15 @@ class DatabaseManager(object):
         return response
 
     def _call_delete_database(self, body: Dict) -> Dict:
-        id: Optional[str] = body.get("id")
-        if not id:
-            return get_response(400)
+        validate(instance=body, schema=delete_database_request_schema)
+        id: str = body["id"]
         database: Optional[Database] = self._databases.pop(id, None)
         if database:
             database.close()
             del database
             return get_response(200)
         else:
-            return get_response(400)
+            return get_response(404)
 
     def _call_failed_tasks(self, body: Dict) -> Dict:
         failed_tasks = {}
@@ -192,16 +198,12 @@ class DatabaseManager(object):
         response["body"]["failed_tasks"] = failed_tasks
         return response
 
-    def _call_not_found(self, body: Dict) -> Dict:
-        return get_error_response(400, "Call not found")
-
     def _call_load_data(self, body: Dict) -> Dict:
+        validate(instance=body, schema=load_data_request_schema)
+        datatype: str = body["datatype"].lower()
+        sf: str = body["sf"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
-        datatype = str(body.get("datatype")).lower()
-        sf = body.get("sf", "1")
-        if not datatype:
-            return get_response(400)
         for database in list(self._databases.values()):
             if not database.load_data(datatype, sf):
                 return get_response(400)  # TODO return which DB couldn't import
@@ -250,12 +252,11 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_delete_data(self, body: Dict) -> Dict:
+        validate(instance=body, schema=delete_data_request_schema)
+        datatype: str = body["datatype"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         self._workload_proceed_flag = False
-        datatype = body.get("datatype")
-        if not datatype:
-            return get_response(400)
         for database in list(self._databases.values()):
             if not database.delete_data(datatype):
                 return get_response(400)
@@ -271,21 +272,29 @@ class DatabaseManager(object):
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
-        print(
-            "Database manager running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                self._db_manager_host, self._db_manager_port
-            )
-        )
         while True:
             # Get the message
             request = self._socket.recv_json()
-            # Handle the call
-            response = self._server_calls.get(
-                request["header"]["message"], self._call_not_found
-            )(request["body"])
 
-            # Send the reply
-            self._socket.send_json(response)
+            # Validate the message
+            try:
+                validate(instance=request, schema=request_schema)
+            except ValidationError:
+                self._socket.send_json(get_response(400))
+                continue
+
+            # Look for the call
+            call = self._server_calls.get(request["header"]["message"])
+            if not call:
+                self._socket.send_json(get_response(404))
+            else:
+                # Handle the call
+                try:
+                    response = call(request["body"])
+                except ValidationError:
+                    response = get_response(400)
+                finally:  # Send the reply
+                    self._socket.send_json(response)
 
     def close(self) -> None:
         """Close the socket and context, exit all databases."""

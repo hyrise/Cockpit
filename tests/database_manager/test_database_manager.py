@@ -1,14 +1,15 @@
 """Tests for the database_manager module."""
-from typing import Callable, Dict
+from typing import Callable
 from unittest.mock import patch
 
-from pytest import fixture, mark
+from jsonschema import ValidationError
+from pytest import fixture, mark, raises
 from zmq import Context, Socket
 
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
 from hyrisecockpit.settings import (
-    DB_MANAGER_HOST,
+    DB_MANAGER_LISTENING,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
     GENERATOR_HOST,
@@ -25,7 +26,7 @@ class TestDatabaseManager:
     def database_manager(self) -> DatabaseManager:
         """Get a new DatabaseManager."""
         with DatabaseManager(
-            DB_MANAGER_HOST,
+            DB_MANAGER_LISTENING,
             DB_MANAGER_PORT,
             GENERATOR_HOST,
             GENERATOR_PORT,
@@ -111,12 +112,11 @@ class TestDatabaseManager:
     @mark.parametrize(
         "call", ["add database", "delete database"],
     )
-    def test_returns_a_failing_response_on_an_empty_call(
-        self, database_manager: DatabaseManager, call
-    ):
+    def test_fails_with_empty_call(self, database_manager: DatabaseManager, call):
         """Returns a status 400 response on a call."""
-        response = database_manager._server_calls[call]({})
-        assert response["header"]["status"] == 400
+        with raises(ValidationError):
+            response = database_manager._server_calls[call]({})
+            assert response["header"]["status"] == 404
 
     def test_get_databases_returns_databases(
         self, database_manager: DatabaseManager, mock_database: Database
@@ -145,19 +145,12 @@ class TestDatabaseManager:
         )["header"]["status"]
         assert call_delete("test_db1") == 200
         assert database_manager._databases.keys() == {"test_db2"}
-        assert call_delete("test_db1") == 400
+        assert call_delete("test_db1") == 404
         assert database_manager._databases.keys() == {"test_db2"}
         assert call_delete("test_db2") == 200
         assert database_manager._databases.keys() == set()
-        assert call_delete("test_db2") == 400
+        assert call_delete("test_db2") == 404
         assert database_manager._databases.keys() == set()
-
-    def test_call_not_found_returns_400(self, database_manager: DatabaseManager):
-        """Call not found returns a response with status 400."""
-        response: Dict = database_manager._call_not_found({})
-        assert response["header"]["status"] == 400
-        assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"]["error"] == "Call not found"
 
     def test_call_storage_returns_storage(
         self, database_manager: DatabaseManager, mock_database: Database

@@ -7,6 +7,7 @@ from copy import deepcopy
 from random import shuffle
 from typing import Any, Callable, Dict, List, Set, Tuple
 
+from jsonschema import ValidationError, validate
 from zmq import PUB, REP, REQ, Context
 
 from hyrisecockpit.exception import (
@@ -16,6 +17,7 @@ from hyrisecockpit.exception import (
     QueryTypeNotFoundException,
     QueryTypesNotSpecifiedException,
 )
+from hyrisecockpit.message import request_schema, workload_request_schema
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
@@ -25,21 +27,21 @@ class WorkloadGenerator(object):
 
     def __init__(
         self,
-        generator_host: str,
+        generator_listening: str,
         generator_port: str,
-        workload_pub_host: str,
+        workload_listening: str,
         workload_pub_port: str,
         default_workload_location: str,
         db_manager_host: str,
         db_manager_port: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
-        self._generator_host = generator_host
+        self._generator_listening = generator_listening
         self._generator_port = generator_port
-        self._workload_pub_host = workload_pub_host
+        self._workload_listening = workload_listening
         self._workload_pub_port = workload_pub_port
-        self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
+        self._db_manager_host = db_manager_host
         self._default_workload_location = default_workload_location
         self._workload_specification: Dict[str, Any] = {}
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
@@ -63,10 +65,10 @@ class WorkloadGenerator(object):
         self._rep_socket = self._context.socket(REP)
         self._pub_socket = self._context.socket(PUB)
         self._rep_socket.bind(
-            "tcp://{:s}:{:s}".format(self._generator_host, self._generator_port)
+            "tcp://{:s}:{:s}".format(self._generator_listening, self._generator_port)
         )
         self._pub_socket.bind(
-            "tcp://{:s}:{:s}".format(self._workload_pub_host, self._workload_pub_port)
+            "tcp://{:s}:{:s}".format(self._workload_listening, self._workload_pub_port)
         )
         self._db_manager_socket = self._context.socket(REQ)
         self._db_manager_socket.connect(
@@ -95,6 +97,7 @@ class WorkloadGenerator(object):
         return True
 
     def _call_workload(self, body: Dict) -> Dict:
+        validate(instance=body, schema=workload_request_schema)
         try:
             factor = body.get("factor", 1)
             shuffle_flag = body.get("shuffle", False)
@@ -183,29 +186,31 @@ class WorkloadGenerator(object):
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
 
-    def _handle_request(self, request):
-        handler = self._server_calls.get(request["header"]["message"], None)
-        if not handler:
-            return get_response(400)
-        response = handler(request["body"])
-        return response
-
     def start(self) -> None:
         """Run the generator by enabling IPC."""
-        print(
-            "Workload generator running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                self._generator_host, self._generator_port
-            )
-        )
         while True:
             # Get the message
             request = self._rep_socket.recv_json()
 
-            # Handle the call
-            response = self._handle_request(request)
+            # Validate the message
+            try:
+                validate(instance=request, schema=request_schema)
+            except ValidationError:
+                self._rep_socket.send_json(get_response(400))
+                continue
 
-            # Send the reply
-            self._rep_socket.send_json(response)
+            # Look for the call
+            call = self._server_calls.get(request["header"]["message"])
+            if not call:
+                self._rep_socket.send_json(get_response(404))
+            else:
+                # Handle the call
+                try:
+                    response = call(request["body"])
+                except ValidationError:
+                    response = get_response(400)
+                finally:  # Send the reply
+                    self._rep_socket.send_json(response)
 
     def close(self) -> None:
         """Close the socket and context."""
