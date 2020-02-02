@@ -16,7 +16,6 @@ class DatabaseManager(object):
 
     def __init__(
         self,
-        db_manager_host: str,
         db_manager_listening: str,
         db_manager_port: str,
         generator_host: str,
@@ -26,7 +25,6 @@ class DatabaseManager(object):
         default_tables: str,
     ) -> None:
         """Initialize a DatabaseManager."""
-        self._db_manager_host = db_manager_host
         self._db_manager_port = db_manager_port
         self._db_manager_listening = db_manager_listening
         self._generator_host = generator_host
@@ -273,11 +271,6 @@ class DatabaseManager(object):
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
-        print(
-            "Database manager running on {:s}:{:s}. Press CTRL+C to quit.".format(
-                self._db_manager_host, self._db_manager_port
-            )
-        )
         while True:
             # Get the message
             request = self._socket.recv_json()
