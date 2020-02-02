@@ -82,7 +82,6 @@ class WorkloadGenerator(object):
         return workload
 
     def _call_start_workload(self, body: Dict) -> Dict:
-        # TODO use validate instead of manual validation
         validate(instance=body, schema=start_workload_request_schema)
         benchmark: str = body["benchmark"]
         scale_factor: str = body["scale-factor"]
