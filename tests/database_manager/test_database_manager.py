@@ -1,5 +1,5 @@
 """Tests for the database_manager module."""
-from typing import Callable, Dict
+from typing import Callable
 from unittest.mock import patch
 
 from jsonschema import ValidationError
@@ -151,13 +151,6 @@ class TestDatabaseManager:
         assert database_manager._databases.keys() == set()
         assert call_delete("test_db2") == 404
         assert database_manager._databases.keys() == set()
-
-    def test_call_not_found_returns_400(self, database_manager: DatabaseManager):
-        """Call not found returns a response with status 400."""
-        response: Dict = database_manager._call_not_found({})
-        assert response["header"]["status"] == 400
-        assert response["header"]["message"] == "BAD REQUEST"
-        assert response["body"]["error"] == "Call not found"
 
     def test_call_storage_returns_storage(
         self, database_manager: DatabaseManager, mock_database: Database

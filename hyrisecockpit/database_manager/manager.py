@@ -198,9 +198,6 @@ class DatabaseManager(object):
         response["body"]["failed_tasks"] = failed_tasks
         return response
 
-    def _call_not_found(self, body: Dict) -> Dict:
-        return get_error_response(400, "Call not found")
-
     def _call_load_data(self, body: Dict) -> Dict:
         validate(instance=body, schema=load_data_request_schema)
         datatype: str = body["datatype"].lower()
