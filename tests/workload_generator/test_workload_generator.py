@@ -10,11 +10,12 @@ from hyrisecockpit.exception import (
 )
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
 
-generator_host = "generator_host"
+generator_listening = "generator_listening"
 generator_port = "10000"
-workload_pub_host = "workload_pub_host"
+workload_listening = "workload_listening"
 workload_pub_port = "20000"
 db_manager_host = "db_manager_host"
+db_manager_listening = "db_manager_listening"
 db_manager_port = "123512"
 
 
@@ -39,9 +40,9 @@ class TestWorkloadGenerator:
     def isolated_generator(self) -> Any:
         """Instance of WorkloadGenerator without binding of sockets."""
         return WorkloadGenerator(
-            generator_host,
+            generator_listening,
             generator_port,
-            workload_pub_host,
+            workload_listening,
             workload_pub_port,
             "default_workload_location",
             db_manager_host,
@@ -51,9 +52,8 @@ class TestWorkloadGenerator:
     @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
     def test_initializes_socket_attributes(self, isolated_generator: WorkloadGenerator):
         """Test initialization of soscket hosts and ports."""
-        assert isolated_generator._generator_host == generator_host
         assert isolated_generator._generator_port == generator_port
-        assert isolated_generator._workload_pub_host == workload_pub_host
+        assert isolated_generator._workload_listening == workload_listening
         assert isolated_generator._workload_pub_port == workload_pub_port
 
     @mark.parametrize("call", ["workload"])
