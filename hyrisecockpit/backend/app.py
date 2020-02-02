@@ -221,7 +221,7 @@ class Workload(Resource):
             "header": {"message": "load data"},
             "body": {
                 "datatype": request_json["body"].get("benchmark"),
-                "scale_factor": request_json["body"].get("scale_factor"),
+                "sf": request_json["body"].get("scale_factor"),
             },
         }
         response = _send_message(db_manager_socket, load_data_message)
