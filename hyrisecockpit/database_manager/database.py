@@ -175,14 +175,14 @@ class Database(object):
         host: str,
         port: str,
         dbname: str,
-        number_workers: str,
+        number_workers: int,
         workload_publisher_url: str,
         default_tables: str,
     ) -> None:
         """Initialize database object."""
         self._id = id
         self._default_tables = default_tables
-        self._number_workers = int(number_workers)
+        self._number_workers = number_workers
         self._number_additional_connections = 1
         self._driver = Driver(
             user,
