@@ -203,10 +203,10 @@ class DatabaseManager(object):
 
     def _call_load_data(self, body: Dict) -> Dict:
         validate(instance=body, schema=load_data_request_schema)
-        if self._check_if_processing_table():
-            return get_error_response(400, "Already loading data")
         datatype: str = body["datatype"].lower()
         sf: str = body["sf"]
+        if self._check_if_processing_table():
+            return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
             if not database.load_data(datatype, sf):
                 return get_response(400)  # TODO return which DB couldn't import
