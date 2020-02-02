@@ -8,7 +8,7 @@ from zmq import Context, Socket
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
 from hyrisecockpit.settings import (
-    DB_MANAGER_HOST,
+    DB_MANAGER_LISTENING,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
     GENERATOR_HOST,
@@ -25,7 +25,7 @@ class TestDatabaseManager:
     def database_manager(self) -> DatabaseManager:
         """Get a new DatabaseManager."""
         with DatabaseManager(
-            DB_MANAGER_HOST,
+            DB_MANAGER_LISTENING,
             DB_MANAGER_PORT,
             GENERATOR_HOST,
             GENERATOR_PORT,
