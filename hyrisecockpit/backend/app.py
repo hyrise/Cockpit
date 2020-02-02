@@ -14,7 +14,7 @@ from flask_restx import Api, Resource
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
@@ -217,7 +217,7 @@ class Workload(Resource):
         """Start the workload generator."""
         request_json = request.get_json()
 
-        # TODO: Adjust loading tables for benchmarks which do not require scale factor (e. g. JOB)
+        # TODO: Adjust table loading for benchmarks which do not require scale factor (e. g. JOB)
         load_data_message = {
             "header": {"message": "load data"},
             "body": {
@@ -226,6 +226,11 @@ class Workload(Resource):
             },
         }
         response = _send_message(db_manager_socket, load_data_message)
+
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during loading of the tables")
+            )
 
         workload_message = {
             "header": {"message": "start workload"},
@@ -237,7 +242,13 @@ class Workload(Resource):
         }
         response = _send_message(generator_socket, workload_message)
 
-        return response
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400,
+                response["body"].get("error", "Error during starting of the workload"),
+            )
+
+        return get_response(200)
 
     def delete(self) -> Dict:
         """Stop the workload generator."""
