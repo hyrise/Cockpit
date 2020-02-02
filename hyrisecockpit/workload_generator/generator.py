@@ -6,6 +6,7 @@ Includes the main WorkloadGenerator.
 from typing import Any, Callable, Dict
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from jsonschema import ValidationError, validate
 from zmq import PUB, REP, Context
 
 from hyrisecockpit.exception import (
@@ -15,6 +16,7 @@ from hyrisecockpit.exception import (
     QueryTypeNotFoundException,
     QueryTypesNotSpecifiedException,
 )
+from hyrisecockpit.message import request_schema, start_workload_request_schema
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
@@ -80,14 +82,12 @@ class WorkloadGenerator(object):
         return workload
 
     def _call_start_workload(self, body: Dict) -> Dict:
-        scale_factor = body.get("scale_factor")
-        benchmark = body.get("benchmark")
-        if not benchmark:
-            return get_error_response(400, "Benchmark name not provided")
-        if not scale_factor:
-            workload_type = benchmark
-        else:
-            workload_type = f"""{benchmark}_{scale_factor}"""
+        # TODO use validate instead of manual validation
+        validate(instance=body, schema=start_workload_request_schema)
+        benchmark: str = body["benchmark"]
+        scale_factor: str = body["scale-factor"]
+        frequency: int = body["frequency"]
+        workload_type = f"{benchmark}_{scale_factor}"
         try:
             self._get_workload(workload_type)
         except (
@@ -100,7 +100,7 @@ class WorkloadGenerator(object):
             return get_error_response(400, str(e))
 
         self._workload_type = workload_type
-        self._frequency = body.get("frequency", 200)
+        self._frequency = frequency
         self._generate_workload_flag = True
 
         return get_response(200)
@@ -111,13 +111,6 @@ class WorkloadGenerator(object):
 
     def _publish_data(self, data: Dict):
         self._pub_socket.send_json(data)
-
-    def _handle_request(self, request):
-        handler = self._server_calls.get(request["header"]["message"], None)
-        if not handler:
-            return get_response(400)
-        response = handler(request["body"])
-        return response
 
     def _generate_workload(self):
         if self._generate_workload_flag:
@@ -133,11 +126,25 @@ class WorkloadGenerator(object):
             # Get the message
             request = self._rep_socket.recv_json()
 
-            # Handle the call
-            response = self._handle_request(request)
+            # Validate the message
+            try:
+                validate(instance=request, schema=request_schema)
+            except ValidationError:
+                self._rep_socket.send_json(get_response(400))
+                continue
 
-            # Send the reply
-            self._rep_socket.send_json(response)
+            # Look for the call
+            call = self._server_calls.get(request["header"]["message"])
+            if not call:
+                self._rep_socket.send_json(get_response(404))
+            else:
+                # Handle the call
+                try:
+                    response = call(request["body"])
+                except ValidationError:
+                    response = get_response(400)
+                finally:  # Send the reply
+                    self._rep_socket.send_json(response)
 
     def close(self) -> None:
         """Close the socket and context."""

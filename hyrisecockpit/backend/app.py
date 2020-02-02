@@ -61,7 +61,7 @@ def _send_message(socket: Socket, message: Dict):
 class Throughput(Resource):
     """Throughput information of all databases."""
 
-    def get(self) -> Dict[str, int]:
+    def get(self) -> Dict[str, Dict[str, int]]:
         """Return throughput information from the stored queries."""
         t = time()
         throughput: Dict[str, int] = {}
@@ -90,7 +90,7 @@ class Throughput(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
-    def get(self) -> Dict[str, float]:
+    def get(self) -> Dict[str, Dict[str, float]]:
         """Return latency information from the stored queries."""
         t = time()
         latency: Dict[str, float] = {}
@@ -222,7 +222,7 @@ class Workload(Resource):
             "header": {"message": "load data"},
             "body": {
                 "datatype": request_json["body"].get("benchmark"),
-                "sf": request_json["body"].get("scale_factor"),
+                "sf": request_json["body"].get("scale-factor"),
             },
         }
         response = _send_message(db_manager_socket, load_data_message)
@@ -236,7 +236,7 @@ class Workload(Resource):
             "header": {"message": "start workload"},
             "body": {
                 "benchmark": request_json["body"].get("benchmark"),
-                "scale_factor": request_json["body"].get("scale_factor"),
+                "scale-factor": request_json["body"].get("scale-factor"),
                 "frequency": request_json["body"].get("frequency", 200),
             },
         }
