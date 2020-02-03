@@ -2,12 +2,16 @@
   <div class="metrics-table">
     <div
       class="metrics-column"
-      v-bind:style="{ flex: `1 0 ${100/ selectedDatabases.length}%`}"
-      v-for="(database) in selectedDatabases"
+      v-bind:style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
+      v-for="database in selectedDatabases"
       :key="`${uuid()}-${database}`"
     >
       {{ database }}
-      <v-card v-for="metric in comparisonMetrics" :key="metric" class="metric-card">
+      <v-card
+        v-for="metric in comparisonMetrics"
+        :key="metric"
+        class="metric-card"
+      >
         <v-card-title class="metric-title">
           {{ metric }}
         </v-card-title>
@@ -62,7 +66,6 @@ export default createComponent({
       getMetadata,
       comparisonMetrics
     };
-
   }
 });
 </script>
