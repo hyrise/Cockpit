@@ -325,10 +325,11 @@ class Workload(Resource):
         load_data_message = {
             "header": {"message": "load data"},
             "body": {
-                "datatype": request_json["body"].get("benchmark"),
-                "sf": request_json["body"].get("scale-factor"),
+                "datatype": control.payload["benchmark"],
+                "sf": control.payload["scale_factor"],
             },
         }
+
         response = _send_message(db_manager_socket, load_data_message)
 
         if response["header"]["status"] != 200:
@@ -339,13 +340,12 @@ class Workload(Resource):
         workload_message = {
             "header": {"message": "start workload"},
             "body": {
-                "benchmark": request_json["body"].get("benchmark"),
-                "scale-factor": request_json["body"].get("scale-factor"),
-                "frequency": request_json["body"].get("frequency", 200),
+                "benchmark": request_json.get("benchmark"),
+                "scale_factor": request_json.get("scale_factor"),
+                "frequency": request_json.get("frequency", 200),
             },
         }
         response = _send_message(generator_socket, workload_message)
-
         if response["header"]["status"] != 200:
             return get_error_response(
                 400,
@@ -373,12 +373,15 @@ class Data(Resource):
         """Return all pregenerated tables that can be loaded."""
         return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
 
-    @control.doc(body=model_data)
+    # @control.doc(body=model_data)
     def post(self) -> Dict:
         """Load pregenerated tables for all databases."""
         message = {
             "header": {"message": "load data"},
-            "body": {"name": control.payload["name"]},
+            "body": {
+                "datatype": control.payload["datatype"],
+                "sf": control.payload["sf"],
+            },
         }
         response = _send_message(db_manager_socket, message)
         return response

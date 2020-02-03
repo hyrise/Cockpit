@@ -84,7 +84,7 @@ class WorkloadGenerator(object):
     def _call_start_workload(self, body: Dict) -> Dict:
         validate(instance=body, schema=start_workload_request_schema)
         benchmark: str = body["benchmark"]
-        scale_factor: str = body["scale-factor"]
+        scale_factor: str = body["scale_factor"]
         frequency: int = body["frequency"]
         workload_type = f"{benchmark}_{scale_factor}"
         try:

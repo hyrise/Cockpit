@@ -3,7 +3,7 @@
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
@@ -62,13 +62,11 @@ class StorageCursor:
         """Log a couple of succesfully executed queries."""
         points = []
         for query in query_list:
-            point = [
-                {
-                    "measurement": "successful_queries",
-                    "tags": {"benchmark": query[2], "query_no": query[3]},
-                    "fields": {"start": float(query[0]), "end": float(query[1])},
-                }
-            ]
+            point = {
+                "measurement": "successful_queries",
+                "tags": {"benchmark": query[2], "query_no": query[3]},
+                "fields": {"start": float(query[0]), "end": float(query[1])},
+            }
             points.append(point)
         self._connection.write_points(points, database=self._database)
 
