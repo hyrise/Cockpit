@@ -34,17 +34,13 @@ import {
   getMetricComponent
 } from "../meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
+import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
   comparisonMetrics: Metric[];
-}
-
-interface Props {
-  selectedDatabases: string[];
-  showDetails: boolean;
 }
 
 export default createComponent({
@@ -55,17 +51,8 @@ export default createComponent({
     RAM,
     QueueLength
   },
-  props: {
-    selectedDatabases: {
-      type: Array,
-      default: null
-    },
-    showDetails: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props: Props, context: SetupContext): Data {
+  props: ContainerPropsValidation,
+  setup(props: ContainerProps, context: SetupContext): Data {
     return {
       getMetadata,
       comparisonMetrics,

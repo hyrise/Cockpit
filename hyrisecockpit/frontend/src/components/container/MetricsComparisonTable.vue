@@ -37,15 +37,12 @@ import RAM from "../metrics/RAM.vue";
 import { uuid } from "vue-uuid";
 import { getMetadata } from "../meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
+import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   comparisonMetrics: string[];
   uuid: () => string;
-}
-
-interface Props {
-  selectedDatabases: string[];
 }
 
 export default createComponent({
@@ -55,13 +52,8 @@ export default createComponent({
     Latency,
     RAM
   },
-  props: {
-    selectedDatabases: {
-      type: Array,
-      default: null
-    }
-  },
-  setup(props: Props, context: SetupContext): Data {
+  props: ContainerPropsValidation,
+  setup(props: ContainerProps, context: SetupContext): Data {
     return {
       uuid: uuid.v1,
       getMetadata,
