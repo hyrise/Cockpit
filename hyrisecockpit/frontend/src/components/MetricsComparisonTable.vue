@@ -2,11 +2,12 @@
   <div class="metrics-table">
     <div
       class="metrics-column"
-      v-for="database in selectedDatabases"
-      :key="database"
+      v-bind:style="{ flex: `1 0 ${100/ selectedDatabases.length}%`}"
+      v-for="(database) in selectedDatabases"
+      :key="`${uuid()}-${database}`"
     >
       {{ database }}
-      <v-card v-for="metric in comparisonMetrics" :key="metric">
+      <v-card v-for="metric in comparisonMetrics" :key="metric" class="metric-card">
         <v-card-title class="metric-title">
           {{ metric }}
         </v-card-title>
@@ -28,12 +29,14 @@ import Throughput from "./metrics/Throughput.vue";
 import CPU from "./metrics/CPU.vue";
 import Latency from "./metrics/Latency.vue";
 import RAM from "./metrics/RAM.vue";
+import { uuid } from "vue-uuid";
 import { getMetadata } from "./meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   comparisonMetrics: string[];
+  uuid: () => string;
 }
 
 interface Props {
@@ -53,23 +56,24 @@ export default createComponent({
       default: null
     }
   },
-  setup(props: {}, context: SetupContext): Data {
+  setup(props: Props, context: SetupContext): Data {
     return {
+      uuid: uuid.v1,
       getMetadata,
       comparisonMetrics
     };
+
   }
 });
 </script>
 <style scoped>
 .metrics-table {
-  margin-top: 6px;
   display: flex;
   flex-direction: row;
+  margin-top: 6px;
 }
 .metrics-column {
-  margin-top: 6px;
-  flex: 0 1 auto;
+  margin-right: 4px;
   display: flex;
   flex-direction: column;
 }
@@ -78,5 +82,8 @@ export default createComponent({
   position: relative;
   margin-bottom: -60px;
   justify-content: center;
+}
+.metric-card {
+  margin-top: 4px;
 }
 </style>
