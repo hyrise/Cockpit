@@ -27,4 +27,5 @@ export type Base =
   | "throughput"
   | "storage"
   | "chunks_data"
-  | "latency";
+  | "latency"
+  | "queue_length";
