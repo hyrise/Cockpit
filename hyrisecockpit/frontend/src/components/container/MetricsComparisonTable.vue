@@ -2,7 +2,7 @@
   <div class="metrics-table">
     <div
       class="metrics-column"
-      v-bind:style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
+      :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
       v-for="database in selectedDatabases"
       :key="`${uuid()}-${database}`"
     >
@@ -29,13 +29,13 @@
 
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
-import Throughput from "./metrics/Throughput.vue";
-import CPU from "./metrics/CPU.vue";
-import Latency from "./metrics/Latency.vue";
-import RAM from "./metrics/RAM.vue";
+import Throughput from "../metrics/Throughput.vue";
+import CPU from "../metrics/CPU.vue";
+import Latency from "../metrics/Latency.vue";
+import RAM from "../metrics/RAM.vue";
 import { uuid } from "vue-uuid";
-import { getMetadata } from "./meta/metrics";
-import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
+import { getMetadata } from "../meta/metrics";
+import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;

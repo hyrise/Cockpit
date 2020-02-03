@@ -17,16 +17,16 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext } from "@vue/composition-api";
-import MetricsTileList from "../components/MetricsTileList.vue";
+import { createComponent, SetupContext, Ref, ref } from "@vue/composition-api";
+import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { getMetadata } from "../components/meta/metrics";
 import { Metric, MetricMetadata, instanceMetrics } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
+import { ScreenData } from "../types/screens";
 
-interface Data {
+interface Data extends ScreenData {
   getMetadata: (metric: Metric) => MetricMetadata;
-  watchedInstances: string[];
   instanceMetrics: string[];
 }
 
@@ -37,7 +37,7 @@ export default createComponent({
     Access
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = [context.root.$route.params.id];
+    const watchedInstances = ref<string[]>([context.root.$route.params.id]);
 
     return {
       getMetadata,

@@ -21,12 +21,12 @@
 
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
-import Throughput from "./metrics/Throughput.vue";
-import CPU from "./metrics/CPU.vue";
-import Latency from "./metrics/Latency.vue";
-import RAM from "./metrics/RAM.vue";
-import { getMetadata } from "./meta/metrics";
-import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
+import Throughput from "../metrics/Throughput.vue";
+import CPU from "../metrics/CPU.vue";
+import Latency from "../metrics/Latency.vue";
+import RAM from "../metrics/RAM.vue";
+import { getMetadata } from "../meta/metrics";
+import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
