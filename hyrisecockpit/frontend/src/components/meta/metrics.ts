@@ -1,4 +1,4 @@
-import { backendUrl } from "../../types/services";
+import { backendUrl } from "../../../config";
 import {
   Metric,
   MetricMetadata,
