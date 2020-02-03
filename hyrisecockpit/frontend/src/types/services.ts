@@ -27,7 +27,8 @@ export type Base =
   | "throughput"
   | "storage"
   | "chunks_data"
-  | "latency";
+  | "latency"
+  | "queue_length";
 
 const vm = "aurora";
 const port = 8000;

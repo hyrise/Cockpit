@@ -112,10 +112,12 @@ class DatabaseManager(object):
         """Add database and initialize driver for it."""
         validate(instance=body, schema=add_database_request_schema)
         # validating connection data
-        user = body["user"], password = body["password"], host = body["host"], port = (
-            body["port"],
-            dbname,
-        ) = (body["dbname"], number_workers) = body["number_workers"]
+        user = body["user"]
+        password = body["password"]
+        host = body["host"]
+        port = body["port"]
+        dbname = body["dbname"]
+        number_workers = body["number_workers"]
         if not Driver.validate_connection(
             user, password, host, port, dbname
         ):  # TODO move to Database
