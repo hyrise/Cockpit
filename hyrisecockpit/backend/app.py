@@ -4,11 +4,13 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+from secrets import choice
 from time import time
-from typing import Dict
+from typing import Dict, List
 
 from flask import Flask, request
 from flask_cors import CORS
+from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
@@ -39,7 +41,81 @@ storage_connection = InfluxDBClient(
 
 app = Flask(__name__)
 cors = CORS(app)
-app.config["CORS_HEADERS"] = "Content-Type"
+api = Api(
+    app,
+    title="Hyrise Cockpit",
+    description="Monitor and control multiple databases at once.",
+    validate=True,
+)
+
+monitor = api.namespace(
+    "monitor", description="Get synchronous data from multiple databases at once."
+)
+
+control = api.namespace("control", description="Control multiple databases at once.")
+
+model_database = monitor.model(
+    "Database",
+    {
+        "id": fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        )
+    },
+)
+
+model_throughput = monitor.clone(
+    "Throughput",
+    model_database,
+    {
+        "throughput": fields.Integer(
+            title="Throughput",
+            description="Query throughput of a given time interval.",
+            required=True,
+            example=7381,
+        )
+    },
+)
+
+model_latency = monitor.clone(
+    "Latency",
+    model_database,
+    {
+        "latency": fields.Float(
+            title="Latency",
+            description="Average query latency (ms) of a given time interval.",
+            required=True,
+            example=923.263,
+        )
+    },
+)
+
+model_queue_length = monitor.clone(
+    "Queue length",
+    model_database,
+    {
+        "queue_length": fields.Integer(
+            title="Queue length",
+            description="Query queue length of a database at a given point in time.",
+            required=True,
+            example=18623,
+        )
+    },
+)
+
+model_data = control.model(
+    "Data",
+    {
+        "folder_name": fields.String(
+            title="Folder name",
+            description="Name of the folder containing the pregenerated tables.",
+            required=True,
+            example="tpch_0.1",
+        )
+    },
+)
 
 
 def get_all_databases(client: InfluxDBClient):
@@ -54,103 +130,163 @@ def _send_message(socket: Socket, message: Dict):
     return response
 
 
-@app.route("/")
-def home() -> str:
-    """Display a greeting to a visitor."""
-    return "Hey there! You found our Database Cockpit."
+@monitor.route("/throughput")
+class Throughput(Resource):
+    """Throughput information of all databases."""
 
-
-@app.route("/throughput")
-def get_throughput() -> Dict[str, int]:
-    """Return throughput information from the stored queries."""
-    t = time()
-    throughput: Dict[str, int] = dict()
-    message = {"header": {"message": "get databases"}, "body": {}}
-    active_databases = _send_message(db_manager_socket, message)["body"]["databases"]
-    for database in active_databases:
-        result = storage_connection.query(
-            f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-1} AND "end" <= {t};""",
-            database=database,
-        )
-        throughput_value = list(result["successful_queries", None])
-        if len(throughput_value) > 0:
-            throughput[database] = list(result["successful_queries", None])[0]["count"]
-        else:
-            throughput[database] = 0
-    response = get_response(200)
-    response["body"]["throughput"] = throughput
-    return response
-
-
-@app.route("/latency")
-def get_latency() -> Dict[str, float]:
-    """Return latency information from the stored queries."""
-    t = time()
-    latency: Dict[str, float] = dict()
-    message = {"header": {"message": "get databases"}, "body": {}}
-    active_databases = _send_message(db_manager_socket, message)["body"]["databases"]
-    for database in active_databases:
-        result = storage_connection.query(
-            f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-1} AND "start" <= {t});""",
-            database=database,
-        )
-        latency_value = list(result["successful_queries", None])
-        if len(latency_value) > 0:
-            latency[database] = list(result["successful_queries", None])[0]["latency"]
-        else:
-            latency[database] = 0
-    response = get_response(200)
-    response["body"]["latency"] = latency
-    return response
-
-
-@app.route("/queue_length")
-def get_queue_length() -> Dict:
-    """Return queue length information from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
-    )
-
-
-@app.route("/failed_tasks")
-def get_failed_tasks() -> Dict:
-    """Return queue length information from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
-    )
-
-
-@app.route("/system_data")
-def get_system_data() -> Dict:
-    """Return cpu and memory information for every database and the number of thread it is using from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "system data"}, "body": {}}
-    )
-
-
-@app.route("/chunks_data")
-def get_chunks_data() -> Dict:
-    """Return chunks data information for every database."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
-    )
-
-
-@app.route("/storage")
-def get_storage_metadata() -> Dict:
-    """Return storage metadata from database manager."""
-    return _send_message(
-        db_manager_socket, {"header": {"message": "storage"}, "body": {}}
-    )
-
-
-@app.route("/database", methods=["GET", "POST", "DELETE"])
-def database() -> Dict:
-    """Add or delete a driver to/from the database manager."""
-    request_json = request.get_json()
-    if request.method == "GET":
+    @monitor.doc(model=[model_throughput])
+    def get(self) -> Dict[str, Dict[str, int]]:
+        """Return throughput information from the stored queries."""
+        t = time()
+        throughput: Dict[str, int] = {}
         message = {"header": {"message": "get databases"}, "body": {}}
-    elif request.method == "POST":
+        active_databases = _send_message(db_manager_socket, message)["body"][
+            "databases"
+        ]
+        for database in active_databases:
+            result = storage_connection.query(
+                f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-1} AND "end" <= {t};""",
+                database=database,
+            )
+            throughput_value = list(result["successful_queries", None])
+            if len(throughput_value) > 0:
+                throughput[database] = list(result["successful_queries", None])[0][
+                    "count"
+                ]
+            else:
+                throughput[database] = 0
+        response = get_response(200)
+        response["body"]["throughput"] = throughput
+        return response
+
+
+@monitor.route("/latency")
+class Latency(Resource):
+    """Latency information of all databases."""
+
+    @monitor.doc(model=[model_latency])
+    def get(self) -> Dict[str, Dict[str, float]]:
+        """Return latency information from the stored queries."""
+        t = time()
+        latency: Dict[str, float] = {}
+        message = {"header": {"message": "get databases"}, "body": {}}
+        active_databases = _send_message(db_manager_socket, message)["body"][
+            "databases"
+        ]
+        for database in active_databases:
+            result = storage_connection.query(
+                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-1} AND "start" <= {t});""",
+                database=database,
+            )
+            latency_value = list(result["successful_queries", None])
+            if len(latency_value) > 0:
+                latency[database] = list(result["successful_queries", None])[0][
+                    "latency"
+                ]
+            else:
+                latency[database] = 0
+        response = get_response(200)
+        response["body"]["latency"] = latency
+        return response
+
+
+@monitor.route("/queue_length")
+class QueueLength(Resource):
+    """Queue length information of all databases."""
+
+    @monitor.doc(model=[model_queue_length])
+    def get(self) -> Dict:
+        """Return queue length information from database manager."""
+        return _send_message(
+            db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
+        )
+
+
+@monitor.route("/failed_tasks")
+class FailedTasks(Resource):
+    """Failed tasks information of all databases."""
+
+    def get(self) -> Dict:
+        """Return queue length information from database manager."""
+        return _send_message(
+            db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
+        )
+
+
+@monitor.route("/system")
+class System(Resource):
+    """System data information of all databases."""
+
+    def get(self) -> Dict:
+        """Return cpu and memory information for every database and the number of thread it is using from database manager."""
+        return _send_message(
+            db_manager_socket, {"header": {"message": "system data"}, "body": {}}
+        )
+
+
+@monitor.route("/chunks")
+class Chunks(Resource):
+    """Chunks data information of all databases."""
+
+    def get(self) -> Dict:
+        """Return chunks data information for every database."""
+        return _send_message(
+            db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
+        )
+
+
+@monitor.route("/storage")
+class Storage(Resource):
+    """Storage information of all databases."""
+
+    def get(self) -> Dict:
+        """Return storage metadata from database manager."""
+        return _send_message(
+            db_manager_socket, {"header": {"message": "storage"}, "body": {}}
+        )
+
+
+@monitor.route("/krueger_data", methods=["GET"])
+class KruegerData(Resource):
+    """Krügergraph data for all workloads."""
+
+    def get(self) -> Dict:
+        """Provide mock data for a Krügergraph."""
+        return {
+            "tpch": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+            "tpcds": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+            "job": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+        }
+
+
+@control.route("/database", methods=["GET", "POST", "DELETE"])
+class Database(Resource):
+    """Manages databases."""
+
+    def get(self) -> Dict:
+        """Get all databases."""
+        message = {"header": {"message": "get databases"}, "body": {}}
+        response = _send_message(db_manager_socket, message)
+        return response
+
+    def post(self) -> Dict:
+        """Add a database."""
+        request_json = request.get_json()
         message = {
             "header": {"message": "add database"},
             "body": {
@@ -163,20 +299,27 @@ def database() -> Dict:
                 "dbname": request_json["dbname"],
             },
         }
-    elif request.method == "DELETE":
+        response = _send_message(db_manager_socket, message)
+        return response
+
+    def delete(self) -> Dict:
+        """Delete a database."""
+        request_json = request.get_json()
         message = {
             "header": {"message": "delete database"},
             "body": {"id": request_json["id"]},
         }
-    response = _send_message(db_manager_socket, message)
-    return response
+        response = _send_message(db_manager_socket, message)
+        return response
 
 
-@app.route("/workload", methods=["POST", "DELETE"])
-def workload() -> Dict:
-    """Start or stop the workload generator."""
-    request_json = request.get_json()
-    if request.method == "POST":
+@control.route("/workload", methods=["POST", "DELETE"])
+class Workload(Resource):
+    """Manages workload generation."""
+
+    def post(self) -> Dict:
+        """Start the workload generator."""
+        request_json = request.get_json()
         message = {
             "header": {"message": "workload"},
             "body": {
@@ -187,39 +330,44 @@ def workload() -> Dict:
                 "shuffle": request_json["body"].get("shuffle", False),
             },
         }
-    elif request.method == "DELETE":
+        response = _send_message(generator_socket, message)
+        return response
+
+    def delete(self) -> Dict:
+        """Stop the workload generator."""
         message = {
             "header": {"message": "stop"},
             "body": {},
         }
-    response = _send_message(generator_socket, message)
+        response = _send_message(generator_socket, message)
+        return response
 
-    return response
 
+@control.route("/data")
+class Data(Resource):
+    """Manage data in databases."""
 
-@app.route("/data/<datatype>", methods=["POST", "DELETE"])
-def data(datatype: str) -> Dict:
-    """Load or delete pregenerated tables from all databases."""
-    request_json = request.get_json()
-    if request.method == "POST":
+    @control.doc(model=[model_data])
+    def get(self) -> List[str]:
+        """Return all pregenerated tables that can be loaded."""
+        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+
+    @control.doc(body=model_data)
+    def post(self) -> Dict:
+        """Load pregenerated tables for all databases."""
         message = {
             "header": {"message": "load data"},
-            "body": {"datatype": datatype, "sf": request_json["body"]["sf"]},
+            "body": {"name": control.payload["name"]},
         }
-    elif request.method == "DELETE":
+        response = _send_message(db_manager_socket, message)
+        return response
+
+    @control.doc(body=model_data)
+    def delete(self) -> Dict:
+        """Delete pregenerated tables from all databases."""
         message = {
             "header": {"message": "delete data"},
-            "body": {"datatype": datatype},
+            "body": {"name": control.payload["name"]},
         }
-    response = _send_message(db_manager_socket, message)
-    return response
-
-
-@app.route("/krueger_data", methods=["GET"])
-def krueger_data() -> Dict:
-    """Provide mock data for a Krügergraph."""
-    return {
-        "tpch": {"SELECT": 555, "INSERT": 265, "UPDATE": 5, "DELETE": 1},
-        "tpds": {"SELECT": 780, "INSERT": 55, "UPDATE": 25, "DELETE": 5},
-        "job": {"SELECT": 537, "INSERT": 80, "UPDATE": 54, "DELETE": 3},
-    }
+        response = _send_message(db_manager_socket, message)
+        return response

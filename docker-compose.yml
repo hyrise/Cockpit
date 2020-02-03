@@ -1,0 +1,43 @@
+version: "3.5"
+
+services:
+  backend:
+    build: .
+    working_dir: /usr/local/Cockpit
+    command: bash -c "
+      pip install .
+      && cockpit-backend"
+    volumes:
+      - .:/usr/local/Cockpit
+    ports:
+      - "8000:8000"
+
+  database-manager:
+    build: .
+    working_dir: /usr/local/Cockpit
+    command: bash -c "
+      pip install .
+      && cockpit-manager"
+    volumes:
+      - .:/usr/local/Cockpit
+    ports:
+      - "8001:8001"
+
+  workload-generator:
+    build: .
+    working_dir: /usr/local/Cockpit
+    command: bash -c "
+      pip install .
+      && cockpit-generator"
+    volumes:
+      - .:/usr/local/Cockpit
+    ports:
+      - "8002:8002"
+      - "8003:8003"
+      
+  influxdb:
+    image: influxdb:alpine
+    volumes:
+      - /tmp/cockpit/influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"

@@ -12,6 +12,10 @@
       prepend-icon="mdi-database"
     ></v-select>
     <MetricsComparisonTable :selected-databases="watchedInstances" />
+    <!-- <MetricsTileList
+      :selected-databases="watchedInstances"
+      :show-details="false"
+    /> -->
   </div>
 </template>
 

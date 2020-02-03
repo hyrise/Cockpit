@@ -1,6 +1,8 @@
 import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
 
+export type MetricValueState = "low" | "average" | "high";
+export type MetricValueStateOrder = "asc" | "desc";
 export type Metric =
   | "access"
   | "cpu"
@@ -28,6 +30,7 @@ export interface MetricProps {
   metricMeta: MetricMetadata;
   selectedDatabases: string[];
   graphId: string;
+  showDetails: boolean;
 }
 
 export const MetricPropsValidation = {
@@ -39,7 +42,7 @@ export const MetricPropsValidation = {
     type: Array,
     default: null
   },
-  enableComparison: {
+  showDetails: {
     type: Boolean,
     default: null
   },
