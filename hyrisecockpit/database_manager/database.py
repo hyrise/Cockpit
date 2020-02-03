@@ -3,7 +3,7 @@
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
-from typing import Dict, List
+from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from influxdb import InfluxDBClient
@@ -283,29 +283,27 @@ class Database(object):
 
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_loading_queries(self, table_names, folder_name: str) -> List:
+    def _generate_table_loading_queries(
+        self, table_names, folder_name: str
+    ) -> List[Tuple[str, Tuple[Any, ...]]]:
         """Generate queries in tuple form that load tables."""
-        table_loading_tasks = []
-        for name in table_names:
-            # TODO change absolute to relative path
-            query = "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';"
-            parameters = [
-                (name, "as_is"),
-                (folder_name, "as_is"),
-                (name, "as_is"),
-            ]
-            table_loading_tasks.append((query, parameters))
-        return table_loading_tasks
+        # TODO change absolute to relative path
+        return [
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+            )
+            for name in table_names
+        ]
 
-    def _generate_table_drop_queries(self, table_names, folder_name: str) -> List:
+    def _generate_table_drop_queries(
+        self, table_names, folder_name: str
+    ) -> List[Tuple[str, Tuple[Any, ...]]]:
         """Generate queries in tuple form that drop tables."""
-        existing_tables = self._get_existing_tables(table_names)
-        table_drop_tasks = []
-        for name in existing_tables["existing"]:
-            query = "DROP TABLE %s;"
-            parameters = [(name, "as_is")]
-            table_drop_tasks.append((query, parameters))
-        return table_drop_tasks
+        return [
+            ("DROP TABLE %s;", ((name, "as_is"),))
+            for name in self._get_existing_tables(table_names)["existing"]
+        ]
 
     def _check_if_tables_processed(self) -> None:
         """Check if all table processing task are taken from the queue and if so flushes it."""
@@ -321,10 +319,10 @@ class Database(object):
             func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
         )
 
-    def _process_tables(self, table_action, folder_name) -> bool:
+    def _process_tables(self, table_action: Callable, folder_name: str) -> bool:
         """Process changes on tables by taking a generic function which creates table processing queries."""
         self._processing_tables_flag.value = True
-        table_names = _table_names.get(folder_name)
+        table_names = _table_names.get(folder_name.split("_")[0])
         if table_names is None:
             self._processing_tables_flag.value = False
             return False
