@@ -2,7 +2,22 @@ FROM python:3.8.1-buster
 
 LABEL maintainer="upigorsch@me.com"
 
+RUN mkdir -p /usr/local/Cockpit/hyrisecockpit
 WORKDIR /usr/local/Cockpit
-COPY . .
-RUN rm -rf /usr/local/Cockpit/frontend
-RUN pip install -r requirements.txt && pip install .
+COPY    setup.py \
+    Pipfile \
+    Pipfile.lock \
+    requirements.txt \
+    requirements-dev.txt \
+    .env \
+    /usr/local/Cockpit/
+COPY    hyrisecockpit/__init__.py \
+    hyrisecockpit/exception.py \
+    hyrisecockpit/message.py \
+    hyrisecockpit/response.py \
+    hyrisecockpit/settings.py \
+    hyrisecockpit/backend \
+    hyrisecockpit/database_manager \
+    hyrisecockpit/workload_generator \
+    /usr/local/Cockpit/hyrisecockpit/
+RUN pip install -r requirements.txt
