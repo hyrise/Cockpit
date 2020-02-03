@@ -8,9 +8,9 @@
       <component
         v-for="metric in instanceMetrics"
         :key="metric"
-        :is="metric"
+        :is="getMetricComponent(metric)"
         :selected-databases="watchedInstances"
-        :metric-meta="getMetadata(metric.toLowerCase())"
+        :metric-meta="getMetadata(metric)"
       />
     </div>
   </div>
@@ -19,13 +19,14 @@
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
 import MetricsTileList from "../components/MetricsTileList.vue";
-import { getMetadata } from "../components/meta/metrics";
+import { getMetadata, getMetricComponent } from "../components/meta/metrics";
 import { Metric, MetricMetadata, instanceMetrics } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
+  getMetricComponent: (metric: Metric) => string;
   watchedInstances: string[];
   instanceMetrics: string[];
 }
@@ -41,6 +42,7 @@ export default createComponent({
 
     return {
       getMetadata,
+      getMetricComponent,
       watchedInstances,
       instanceMetrics
     };
