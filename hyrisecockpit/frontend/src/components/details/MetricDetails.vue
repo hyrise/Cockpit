@@ -23,8 +23,7 @@ import {
   onMounted,
   computed,
   Ref,
-  ref,
-  watch
+  ref
 } from "@vue/composition-api";
 import {
   getMetricDetailColor,

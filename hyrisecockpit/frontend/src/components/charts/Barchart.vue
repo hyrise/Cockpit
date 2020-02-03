@@ -44,16 +44,15 @@ export default createComponent({
     );
 
     onMounted(() => {
-      Plotly.newPlot(graphId, data.value, getLayout(), getOptions());
+      Plotly.newPlot(graphId, data.value.value, getLayout(), getOptions());
       watch(data, () => {
         updateChartDatasets();
         if (data.value.length) {
           updateChartDatasets();
         }
       });
-
       function updateChartDatasets(): void {
-        Plotly.react(graphId, data.value, getLayout(), getOptions());
+        Plotly.react(graphId, data.value.value, getLayout(), getOptions());
       }
     });
   }

@@ -1,4 +1,4 @@
-import { backendUrl } from "../../types/services";
+import { monitorBackend } from "../../../config";
 import {
   Metric,
   MetricMetadata,
@@ -11,38 +11,44 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
     transformationService: useDataTransformation("access"),
-    base: "chunks_data",
-    endpoint: backendUrl + "chunks_data"
+    base: "chunks",
+    endpoint: monitorBackend + "chunks"
   },
   cpu: {
     fetchType: "modify",
     transformationService: useDataTransformation("cpu"),
-    base: "system_data",
-    endpoint: backendUrl + "system_data"
+    base: "system",
+    endpoint: monitorBackend + "system"
   },
   latency: {
     fetchType: "modify",
     transformationService: useDataTransformation("latency"),
     base: "latency",
-    endpoint: backendUrl + "latency"
+    endpoint: monitorBackend + "latency"
+  },
+  queueLength: {
+    fetchType: "modify",
+    transformationService: useDataTransformation("queueLength"),
+    base: "queue_length",
+    endpoint: monitorBackend + "queue_length"
   },
   ram: {
     fetchType: "modify",
     transformationService: useDataTransformation("ram"),
-    base: "system_data",
-    endpoint: backendUrl + "system_data"
+    base: "system",
+    endpoint: monitorBackend + "system"
   },
   storage: {
     fetchType: "read",
     transformationService: useDataTransformation("storage"),
     base: "storage",
-    endpoint: backendUrl + "storage"
+    endpoint: monitorBackend + "storage"
   },
   throughput: {
     fetchType: "modify",
     transformationService: useDataTransformation("throughput"),
     base: "throughput",
-    endpoint: backendUrl + "throughput"
+    endpoint: monitorBackend + "throughput"
   }
 };
 
@@ -59,6 +65,33 @@ const metricValueStateOrder: Record<
   asc: ["low", "average", "high"],
   desc: ["high", "average", "low"]
 };
+
+const metricTitels: Record<Metric, string> = {
+  access: "Access Frequency",
+  cpu: "CPU",
+  latency: "Latency",
+  queueLength: "Queue Length",
+  ram: "RAM",
+  storage: "Storage",
+  throughput: "Throughput"
+};
+
+const metricComponents: Record<Metric, string> = {
+  access: "Access",
+  cpu: "CPU",
+  latency: "Latency",
+  queueLength: "QueueLength",
+  ram: "RAM",
+  storage: "Storage",
+  throughput: "Throughput"
+};
+
+export function getMetricComponent(metric: Metric): string {
+  return metricComponents[metric];
+}
+export function getMetricTitle(metric: Metric): string {
+  return metricTitels[metric];
+}
 
 export function getMetricValueStateOrder(
   order: MetricValueStateOrder
