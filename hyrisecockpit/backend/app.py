@@ -6,11 +6,11 @@ If run as a module, a flask server application will be started.
 
 from secrets import choice
 from time import time
-from typing import Dict
+from typing import Dict, List
 
 from flask import Flask, request
 from flask_cors import CORS
-from flask_restx import Api, Resource
+from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
@@ -40,9 +40,82 @@ storage_connection = InfluxDBClient(
 )
 
 app = Flask(__name__)
-api = Api(app)
 cors = CORS(app)
-app.config["CORS_HEADERS"] = "Content-Type"
+api = Api(
+    app,
+    title="Hyrise Cockpit",
+    description="Monitor and control multiple databases at once.",
+    validate=True,
+)
+
+monitor = api.namespace(
+    "monitor", description="Get synchronous data from multiple databases at once."
+)
+
+control = api.namespace("control", description="Control multiple databases at once.")
+
+model_database = monitor.model(
+    "Database",
+    {
+        "id": fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        )
+    },
+)
+
+model_throughput = monitor.clone(
+    "Throughput",
+    model_database,
+    {
+        "throughput": fields.Integer(
+            title="Throughput",
+            description="Query throughput of a given time interval.",
+            required=True,
+            example=7381,
+        )
+    },
+)
+
+model_latency = monitor.clone(
+    "Latency",
+    model_database,
+    {
+        "latency": fields.Float(
+            title="Latency",
+            description="Average query latency (ms) of a given time interval.",
+            required=True,
+            example=923.263,
+        )
+    },
+)
+
+model_queue_length = monitor.clone(
+    "Queue length",
+    model_database,
+    {
+        "queue_length": fields.Integer(
+            title="Queue length",
+            description="Query queue length of a database at a given point in time.",
+            required=True,
+            example=18623,
+        )
+    },
+)
+
+model_data = control.model(
+    "Data",
+    {
+        "folder_name": fields.String(
+            title="Folder name",
+            description="Name of the folder containing the pregenerated tables.",
+            required=True,
+            example="tpch_0.1",
+        )
+    },
+)
 
 
 def get_all_databases(client: InfluxDBClient):
@@ -57,10 +130,11 @@ def _send_message(socket: Socket, message: Dict):
     return response
 
 
-@api.route("/throughput")
+@monitor.route("/throughput")
 class Throughput(Resource):
     """Throughput information of all databases."""
 
+    @monitor.doc(model=[model_throughput])
     def get(self) -> Dict[str, Dict[str, int]]:
         """Return throughput information from the stored queries."""
         t = time()
@@ -86,10 +160,11 @@ class Throughput(Resource):
         return response
 
 
-@api.route("/latency")
+@monitor.route("/latency")
 class Latency(Resource):
     """Latency information of all databases."""
 
+    @monitor.doc(model=[model_latency])
     def get(self) -> Dict[str, Dict[str, float]]:
         """Return latency information from the stored queries."""
         t = time()
@@ -115,10 +190,11 @@ class Latency(Resource):
         return response
 
 
-@api.route("/queue_length")
+@monitor.route("/queue_length")
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
+    @monitor.doc(model=[model_queue_length])
     def get(self) -> Dict:
         """Return queue length information from database manager."""
         return _send_message(
@@ -126,7 +202,7 @@ class QueueLength(Resource):
         )
 
 
-@api.route("/failed_tasks")
+@monitor.route("/failed_tasks")
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
 
@@ -137,8 +213,8 @@ class FailedTasks(Resource):
         )
 
 
-@api.route("/system_data")
-class SystemData(Resource):
+@monitor.route("/system")
+class System(Resource):
     """System data information of all databases."""
 
     def get(self) -> Dict:
@@ -148,8 +224,8 @@ class SystemData(Resource):
         )
 
 
-@api.route("/chunks_data")
-class ChunksData(Resource):
+@monitor.route("/chunks")
+class Chunks(Resource):
     """Chunks data information of all databases."""
 
     def get(self) -> Dict:
@@ -159,7 +235,7 @@ class ChunksData(Resource):
         )
 
 
-@api.route("/storage")
+@monitor.route("/storage")
 class Storage(Resource):
     """Storage information of all databases."""
 
@@ -170,7 +246,35 @@ class Storage(Resource):
         )
 
 
-@api.route("/database", methods=["GET", "POST", "DELETE"])
+@monitor.route("/krueger_data", methods=["GET"])
+class KruegerData(Resource):
+    """Krügergraph data for all workloads."""
+
+    def get(self) -> Dict:
+        """Provide mock data for a Krügergraph."""
+        return {
+            "tpch": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+            "tpcds": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+            "job": {
+                "SELECT": choice(range(0, 100)),
+                "INSERT": choice(range(0, 100)),
+                "UPDATE": choice(range(0, 100)),
+                "DELETE": choice(range(0, 100)),
+            },
+        }
+
+
+@control.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
 
@@ -209,60 +313,7 @@ class Database(Resource):
         return response
 
 
-@api.route("/register_workload", methods=["POST"])
-class RegisterWorkload(Resource):
-    """Registers workloads."""
-
-    def post(self) -> Dict:
-        """Register the workload specification."""
-        request_json = request.get_json()
-        workload = {
-            "type": request_json.get("type"),
-            "queries": request_json.get("queries", None),
-            "shuffle": request_json.get("shuffle", False),
-            "factor": request_json.get("factor", 1),
-            "auto-reload": request_json.get("auto-reload", False),
-            "sf": request_json.get("sf", 0.1),
-        }
-
-        message = {
-            "header": {"message": "register workload"},
-            "body": {"workload": workload},
-        }
-        response = _send_message(db_manager_socket, message)
-
-        return response
-
-
-@api.route("/start_workload", methods=["POST"])
-class StartWorkload(Resource):
-    """Starts workloads."""
-
-    def post(self) -> Dict:
-        """Start the workload execution."""
-        message = {
-            "header": {"message": "start workload"},
-            "body": {},
-        }
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
-@api.route("/stop_workload", methods=["POST"])
-class StopWorkload(Resource):
-    """Stops workloads."""
-
-    def post(self) -> Dict:
-        """Stop the workload execution."""
-        message = {
-            "header": {"message": "stop workload"},
-            "body": {},
-        }
-        response = _send_message(db_manager_socket, message)
-        return response
-
-
-@api.route("/workload", methods=["POST", "DELETE"])
+@control.route("/workload", methods=["POST", "DELETE"])
 class Workload(Resource):
     """Manages workload generation."""
 
@@ -292,53 +343,31 @@ class Workload(Resource):
         return response
 
 
-@api.route("/data/<datatype>", methods=["POST", "DELETE"])
+@control.route("/data")
 class Data(Resource):
     """Manage data in databases."""
 
-    def post(self, datatype: str) -> Dict:
+    @control.doc(model=[model_data])
+    def get(self) -> List[str]:
+        """Return all pregenerated tables that can be loaded."""
+        return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+
+    @control.doc(body=model_data)
+    def post(self) -> Dict:
         """Load pregenerated tables for all databases."""
-        request_json = request.get_json()
         message = {
             "header": {"message": "load data"},
-            "body": {"datatype": datatype, "sf": request_json["body"]["sf"]},
+            "body": {"name": control.payload["name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
 
-    def delete(self, datatype: str) -> Dict:
+    @control.doc(body=model_data)
+    def delete(self) -> Dict:
         """Delete pregenerated tables from all databases."""
         message = {
             "header": {"message": "delete data"},
-            "body": {"datatype": datatype},
+            "body": {"name": control.payload["name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
-
-
-@api.route("/krueger_data", methods=["GET"])
-class KruegerData(Resource):
-    """Krügergraph data for all workloads."""
-
-    def get(self) -> Dict:
-        """Provide mock data for a Krügergraph."""
-        return {
-            "tpch": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-            "tpcds": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-            "job": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-        }
