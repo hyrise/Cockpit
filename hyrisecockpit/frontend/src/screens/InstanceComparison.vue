@@ -8,10 +8,14 @@
       chips
       label="databases"
       multiple
+      counter="2"
       outlined
       prepend-icon="mdi-database"
     ></v-select>
-    <MetricsComparisonTable :selected-databases="watchedInstances" />
+    <MetricsComparisonTable
+      :selected-databases="watchedInstances"
+      :show-details="true"
+    />
   </div>
 </template>
 

@@ -21,6 +21,7 @@
           :selected-databases="[database]"
           :metric-meta="getMetadata(metric.toLowerCase())"
           :graph-id="`${metric}-${database}`"
+          :show-details="showDetails"
         />
       </v-card>
     </div>

@@ -13,6 +13,7 @@
         :is="getMetricComponent(metric)"
         :selected-databases="selectedDatabases"
         :metric-meta="getMetadata(metric)"
+        :graph-id="metric"
         :show-details="showDetails"
       />
     </v-card>
