@@ -267,11 +267,6 @@ class Database(object):
         self._worker_pool = self._init_worker_pool()
         self._start_workers()
 
-    def _get_tables_to_process(self, folder_name: str):
-        """Check for tablenames to process."""
-        table_names = _table_names.get(folder_name)
-        return table_names
-
     def _get_existing_tables(self, table_names) -> Dict:
         """Check wich tables exists and which not."""
         existing_tables = []
@@ -329,7 +324,7 @@ class Database(object):
     def _process_tables(self, table_action, folder_name) -> bool:
         """Process changes on tables by taking a generic function which creates table processing queries."""
         self._processing_tables_flag.value = True
-        table_names = self._get_tables_to_process(folder_name)
+        table_names = _table_names.get(folder_name)
         if table_names is None:
             self._processing_tables_flag.value = False
             return False
