@@ -299,6 +299,7 @@ class Database(object):
     def _generate_table_drop_queries(
         self, table_names, folder_name: str
     ) -> List[Tuple[str, Tuple[Any, ...]]]:
+        # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
             ("DROP TABLE %s;", ((name, "as_is"),))

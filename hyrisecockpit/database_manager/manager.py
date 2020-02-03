@@ -202,7 +202,7 @@ class DatabaseManager(object):
 
     def _call_load_data(self, body: Dict) -> Dict:
         validate(instance=body, schema=load_data_request_schema)
-        folder_name: str = body["folder_name"].lower()
+        folder_name: str = body["folder_name"].lower()  # TODO why .lower?
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
