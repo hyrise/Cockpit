@@ -13,7 +13,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("access"),
     base: "chunks_data",
     endpoint: backendUrl + "chunks_data",
-    titel: "Access Frequency",
+    title: "Access Frequency",
     component: "Access"
   },
   cpu: {
@@ -21,7 +21,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("cpu"),
     base: "system_data",
     endpoint: backendUrl + "system_data",
-    titel: "CPU",
+    title: "CPU",
     component: "CPU"
   },
   latency: {
@@ -29,7 +29,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("latency"),
     base: "latency",
     endpoint: backendUrl + "latency",
-    titel: "Latency",
+    title: "Latency",
     component: "Latency"
   },
   queryTypeProportion: {
@@ -37,7 +37,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("queryTypeProportion"),
     base: "krueger_data",
     endpoint: backendUrl + "krueger_data",
-    titel: "Query Type Proportion",
+    title: "Query Type Proportion",
     component: "QueryTypeProportion"
   },
   queueLength: {
@@ -45,7 +45,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("queueLength"),
     base: "queue_length",
     endpoint: backendUrl + "queue_length",
-    titel: "Queue Length",
+    title: "Queue Length",
     component: "QueueLength"
   },
   ram: {
@@ -53,7 +53,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("ram"),
     base: "system_data",
     endpoint: backendUrl + "system_data",
-    titel: "RAM",
+    title: "RAM",
     component: "RAM"
   },
   storage: {
@@ -61,7 +61,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("storage"),
     base: "storage",
     endpoint: backendUrl + "storage",
-    titel: "Storage",
+    title: "Storage",
     component: "Storage"
   },
   throughput: {
@@ -69,7 +69,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("throughput"),
     base: "throughput",
     endpoint: backendUrl + "throughput",
-    titel: "Throughput",
+    title: "Throughput",
     component: "Throughput"
   }
 };
@@ -97,7 +97,7 @@ export function getMetricComponent(metric: Metric): string {
 }
 
 export function getMetricTitle(metric: Metric): string {
-  return metricsMetadata[metric].titel;
+  return metricsMetadata[metric].title;
 }
 
 export function getMetricValueStateOrder(

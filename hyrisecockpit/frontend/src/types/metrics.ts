@@ -31,7 +31,7 @@ export interface MetricMetadata {
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
-  titel: string;
+  title: string;
   component: string;
 }
 
