@@ -145,7 +145,7 @@ class Throughput(Resource):
         ]
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-1} AND "end" <= {t};""",
+                f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1};""",
                 database=database,
             )
             throughput_value = list(result["successful_queries", None])
@@ -175,7 +175,7 @@ class Latency(Resource):
         ]
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-1} AND "start" <= {t});""",
+                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-2} AND "start" <= {t-1});""",
                 database=database,
             )
             latency_value = list(result["successful_queries", None])
