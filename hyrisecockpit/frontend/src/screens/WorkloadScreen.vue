@@ -6,13 +6,21 @@
     <v-divider />
     <v-col cols="12">
       <div class="mb-2 mt-2">
-        <b> Select workload </b>
+        <b> Start workload </b>
       </div>
-      <v-btn @click="registerWorkload()" large color="primary">TPCH_0.1 </v-btn>
+      <v-btn-toggle>
+        <v-btn
+          v-for="workload in availableWorkloads"
+          :key="workload"
+          @click="startWorkload(getWorkloadData(workload))"
+          color="success"
+        >
+          {{ workload }}
+        </v-btn>
+      </v-btn-toggle>
       <div class="mb-2 mt-6">
-        <b> Start/stop workload </b>
+        <b> Stop workload </b>
       </div>
-      <v-btn @click="startWorkload()" large color="success">Start </v-btn>
       <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
       <div class="mb-2 mt-6">
         <b> Load generated data into instances</b>
@@ -53,17 +61,18 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import { Workload, availableWorkloads } from "../types/workloads";
+import { Workload, availableWorkloads, WorkloadData } from "../types/workloads";
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
+import { getWorkloadData } from "../components/meta/workloads";
 import KruegerGraph from "../components/KruegerGraph.vue";
 
 interface Props {}
 interface Data {
+  getWorkloadData: (workload: Workload) => WorkloadData;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  registerWorkload: () => void;
-  startWorkload: () => void;
+  startWorkload: (workloadData: WorkloadData) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
 }
@@ -77,15 +86,14 @@ export default createComponent({
     const {
       loadWorkloadData,
       deleteWorkloadData,
-      registerWorkload,
       startWorkload,
       stopWorkload
     } = useWorkloadService();
     return {
+      getWorkloadData,
       loadWorkloadData,
       deleteWorkloadData,
       availableWorkloads,
-      registerWorkload,
       startWorkload,
       stopWorkload
     };
