@@ -26,6 +26,8 @@ export interface MetricMetadata {
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
+  titel: string;
+  component: string;
 }
 
 export interface ComparisonMetricData {
