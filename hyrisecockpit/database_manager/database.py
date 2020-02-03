@@ -49,15 +49,28 @@ class StorageCursor:
 
     def log_query(self, startts, endts, benchmark: str, query_no: int) -> None:
         """Log a successful query to permanent in storage."""
-        points = [
+        point = [
             {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": benchmark, "query_no": query_no},
                 "fields": {"start": float(startts), "end": float(endts)},
             }
         ]
+        self._connection.write_points(point, database=self._database)
+
+    def log_queries(self, query_list) -> None:
+        """Log a couple of succesfully executed queries."""
+        points = []
+        for query in query_list:
+            point = [
+                {
+                    "measurement": "successful_queries",
+                    "tags": {"benchmark": query[2], "query_no": query[3]},
+                    "fields": {"start": float(query[0]), "end": float(query[1])},
+                }
+            ]
+            points.append(point)
         self._connection.write_points(points, database=self._database)
-        pass
 
 
 class PoolCursor:
@@ -117,6 +130,8 @@ def execute_queries(
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
+            succesful_queries = []
+            last_batched = time()
             while True:
                 # If Queue is emty go to wait status
                 try:
@@ -125,22 +140,24 @@ def execute_queries(
                         if task == "wake_up_signal_for_worker":
                             task_queue.put("wake_up_signal_for_worker")
                         break
-                    if worker_stay_alive_flag.value:
+                    else:
                         query, not_formatted_parameters = task
-                        parameters = None
-                        if not_formatted_parameters is not None:
-                            parameters = []
-                            for not_formated_parameter in not_formatted_parameters:
-                                parameter, protocol = not_formated_parameter
-                                if protocol == "as_is":
-                                    parameters.append(AsIs(parameter))
-                                else:
-                                    parameters.append(parameter)
-                            formatted_parameters = tuple(parameters)
+                        formatted_parameters = (
+                            tuple(
+                                AsIs(parameter) if protocol == "as_is" else parameter
+                                for parameter, protocol in not_formatted_parameters
+                            )
+                            if not_formatted_parameters is not None
+                            else None
+                        )
                         startts = time()
                         cur.execute(query, formatted_parameters)
                         endts = time()
-                        log.log_query(startts, endts, benchmark="none", query_no=0)
+                        succesful_queries.append((startts, endts, "none", 0))
+                        if last_batched < time() - 1:
+                            last_batched = time()
+                            log.log_queries(succesful_queries)
+                            succesful_queries = []
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
                         {"worker_id": worker_id, "task": task, "Error": str(e)}
