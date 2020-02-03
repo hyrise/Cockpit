@@ -6,13 +6,13 @@
       :key="metric"
     >
       <v-card-title class="metric-title">
-        {{ metric }}
+        {{ getMetricTitle(metric) }}
       </v-card-title>
       <component
         class="metric"
-        :is="metric"
+        :is="getMetricComponent(metric)"
         :selected-databases="selectedDatabases"
-        :metric-meta="getMetadata(metric.toLowerCase())"
+        :metric-meta="getMetadata(metric)"
         :show-details="showDetails"
       />
     </v-card>
@@ -25,12 +25,19 @@ import Throughput from "./metrics/Throughput.vue";
 import CPU from "./metrics/CPU.vue";
 import Latency from "./metrics/Latency.vue";
 import RAM from "./metrics/RAM.vue";
-import { getMetadata } from "./meta/metrics";
+import QueueLength from "./metrics/QueueLength.vue";
+import {
+  getMetadata,
+  getMetricTitle,
+  getMetricComponent
+} from "./meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
-  comparisonMetrics: string[];
+  getMetricTitle: (metric: Metric) => string;
+  getMetricComponent: (metric: Metric) => string;
+  comparisonMetrics: Metric[];
 }
 
 interface Props {
@@ -43,7 +50,8 @@ export default createComponent({
     Throughput,
     CPU,
     Latency,
-    RAM
+    RAM,
+    QueueLength
   },
   props: {
     selectedDatabases: {
@@ -58,7 +66,9 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     return {
       getMetadata,
-      comparisonMetrics
+      comparisonMetrics,
+      getMetricTitle,
+      getMetricComponent
     };
   }
 });
