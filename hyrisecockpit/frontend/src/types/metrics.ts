@@ -10,9 +10,14 @@ export type Metric =
   | "throughput"
   | "latency"
   | "ram"
-  | "queueLength";
+  | "queueLength"
+  | "queryTypeProportion";
 
-export const instanceMetrics: Metric[] = ["storage", "access"];
+export const instanceMetrics: Metric[] = [
+  "storage",
+  "access",
+  "queryTypeProportion"
+];
 export const comparisonMetrics: Metric[] = [
   "throughput",
   "latency",

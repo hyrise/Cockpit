@@ -32,6 +32,14 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     titel: "Latency",
     component: "Latency"
   },
+  queryTypeProportion: {
+    fetchType: "read",
+    transformationService: useDataTransformation("queryTypeProportion"),
+    base: "krueger_data",
+    endpoint: backendUrl + "krueger_data",
+    titel: "Query Type Proportion",
+    component: "QueryTypeProportion"
+  },
   queueLength: {
     fetchType: "modify",
     transformationService: useDataTransformation("queueLength"),

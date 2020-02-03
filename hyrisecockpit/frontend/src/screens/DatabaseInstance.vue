@@ -23,6 +23,7 @@ import { getMetadata, getMetricComponent } from "../components/meta/metrics";
 import { Metric, MetricMetadata, instanceMetrics } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
+import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
@@ -35,7 +36,8 @@ export default createComponent({
   components: {
     MetricsTileList,
     Storage,
-    Access
+    Access,
+    QueryTypeProportion
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = [context.root.$route.params.id];

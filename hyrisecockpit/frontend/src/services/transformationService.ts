@@ -8,6 +8,7 @@ export function useDataTransformation(metric: Metric): TransformationService {
     access: getAccessData,
     cpu: getCPUData,
     latency: getReadOnlyData,
+    queryTypeProportion: getQueryTypeProportionData,
     queueLength: getReadOnlyData,
     ram: getRAMData,
     storage: getStorageData,
@@ -15,6 +16,46 @@ export function useDataTransformation(metric: Metric): TransformationService {
   };
 
   return transformationMap[metric];
+}
+
+function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
+  console.log(data);
+  let newData = [
+    {
+      x: [] as string[],
+      y: [] as number[],
+      name: "DELETE",
+      type: "bar"
+    },
+    {
+      x: [] as string[],
+      y: [] as number[],
+      name: "INSERT",
+      type: "bar"
+    },
+    {
+      x: [] as string[],
+      y: [] as number[],
+      name: "SELECT",
+      type: "bar"
+    },
+    {
+      x: [] as string[],
+      y: [] as number[],
+      name: "UPDATE",
+      type: "bar"
+    }
+  ];
+  for (let [workload, query] of Object.entries(data)) {
+    for (let [queryType, amount] of Object.entries(query as any)) {
+      var dataSet = newData.find(x => x.name === queryType);
+      if (dataSet) {
+        dataSet.x = [...dataSet.x, workload];
+        dataSet.y = [...dataSet.y, amount as number];
+      }
+    }
+  }
+  return newData;
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {

@@ -28,7 +28,8 @@ export type Base =
   | "storage"
   | "chunks_data"
   | "latency"
-  | "queue_length";
+  | "queue_length"
+  | "krueger_data";
 
 const vm = "aurora";
 const port = 8000;

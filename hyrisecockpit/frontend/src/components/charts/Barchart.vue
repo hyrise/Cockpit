@@ -44,7 +44,7 @@ export default createComponent({
     );
 
     onMounted(() => {
-      Plotly.newPlot(graphId, data.value, getLayout(), getOptions());
+      Plotly.newPlot(graphId, data.value as any, getLayout(), getOptions());
       watch(data, () => {
         updateChartDatasets();
         if (data.value.length) {
@@ -53,7 +53,7 @@ export default createComponent({
       });
 
       function updateChartDatasets(): void {
-        Plotly.react(graphId, data.value, getLayout(), getOptions());
+        Plotly.react(graphId, data.value as any, getLayout(), getOptions());
       }
     });
   }
@@ -63,10 +63,10 @@ function useBarChartConfiguration(
   context: SetupContext,
   chartConfiguration: string[]
 ): {
-  getLayout: (xMin?: number, xMax?: number) => Object;
+  getLayout: () => Object;
   getOptions: () => Object;
 } {
-  function getLayout(xMin: number = 0, xMax: number = 30): Object {
+  function getLayout(): Object {
     return {
       xaxis: {
         title: {
