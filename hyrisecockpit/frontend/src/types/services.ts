@@ -23,13 +23,9 @@ export interface WorkloadService {
 export type FetchType = "read" | "modify";
 
 export type Base =
-  | "system_data"
+  | "system"
   | "throughput"
   | "storage"
-  | "chunks_data"
+  | "chunks"
   | "latency"
   | "queue_length";
-
-const vm = "aurora";
-const port = 8000;
-export const backendUrl = `http://vm-${vm}.eaalab.hpi.uni-potsdam.de:${port}/`;

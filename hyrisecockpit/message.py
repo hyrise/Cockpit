@@ -50,14 +50,14 @@ delete_database_request_schema = {
 
 load_data_request_schema = {
     "type": "object",
-    "required": ["datatype", "sf"],
-    "properties": {"datatype": {"type": "string"}, "sf": {"type": "string"}},
+    "required": ["folder_name"],
+    "properties": {"folder_name": {"type": "string"}},
 }
 
 delete_data_request_schema = {
     "type": "object",
-    "required": ["datatype"],
-    "properties": {"datatype": {"type": "string"}},
+    "required": ["folder_name"],
+    "properties": {"folder_name": {"type": "string"}},
 }
 
 start_workload_request_schema = {

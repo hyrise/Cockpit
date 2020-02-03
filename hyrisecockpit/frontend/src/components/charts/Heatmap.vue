@@ -74,9 +74,9 @@ function useHeatMapConfiguration(
   chartConfiguration: string[]
 ): {
   getDataset: (
-    data?: number[][],
-    columns?: string[],
-    chunks?: string[]
+    data?: readonly number[][],
+    columns?: readonly string[],
+    chunks?: readonly string[]
   ) => Object;
   getLayout: () => Object;
 } {
@@ -87,9 +87,9 @@ function useHeatMapConfiguration(
   }
 
   function getDataset(
-    data: number[][] = [],
-    columns: string[] = [],
-    chunks: string[] = []
+    data: readonly number[][] = [],
+    columns: readonly string[] = [],
+    chunks: readonly string[] = []
   ): Object {
     return {
       z: data,
