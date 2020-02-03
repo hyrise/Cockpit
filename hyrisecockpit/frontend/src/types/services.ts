@@ -29,7 +29,3 @@ export type Base =
   | "chunks_data"
   | "latency"
   | "queue_length";
-
-const vm = "aurora";
-const port = 8000;
-export const backendUrl = `http://vm-${vm}.eaalab.hpi.uni-potsdam.de:${port}/`;

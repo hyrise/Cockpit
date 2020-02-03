@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Workload } from "@/types/workloads";
-import { backendUrl, WorkloadService } from "../types/services";
+import { WorkloadService } from "../types/services";
 import { ref } from "@vue/composition-api";
 import { FetchService } from "@/types/services";
+import { backendUrl } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
