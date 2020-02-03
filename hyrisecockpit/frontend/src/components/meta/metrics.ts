@@ -1,4 +1,4 @@
-import { backendUrl } from "../../../config";
+import { monitorBackend } from "../../../config";
 import {
   Metric,
   MetricMetadata,
@@ -11,16 +11,16 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
     transformationService: useDataTransformation("access"),
-    base: "chunks_data",
-    endpoint: backendUrl + "chunks_data",
+    base: "chunks",
+    endpoint: monitorBackend + "chunks",
     title: "Access Frequency",
     component: "Access"
   },
   cpu: {
     fetchType: "modify",
     transformationService: useDataTransformation("cpu"),
-    base: "system_data",
-    endpoint: backendUrl + "system_data",
+    base: "system",
+    endpoint: monitorBackend + "system",
     title: "CPU",
     component: "CPU"
   },
@@ -28,7 +28,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("latency"),
     base: "latency",
-    endpoint: backendUrl + "latency",
+    endpoint: monitorBackend + "latency",
     title: "Latency",
     component: "Latency"
   },
@@ -36,7 +36,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "read",
     transformationService: useDataTransformation("queryTypeProportion"),
     base: "krueger_data",
-    endpoint: backendUrl + "krueger_data",
+    endpoint: monitorBackend + "krueger_data",
     title: "Query Type Proportion",
     component: "QueryTypeProportion"
   },
@@ -44,15 +44,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("queueLength"),
     base: "queue_length",
-    endpoint: backendUrl + "queue_length",
+    endpoint: monitorBackend + "queue_length",
     title: "Queue Length",
     component: "QueueLength"
   },
   ram: {
     fetchType: "modify",
     transformationService: useDataTransformation("ram"),
-    base: "system_data",
-    endpoint: backendUrl + "system_data",
+    base: "system",
+    endpoint: monitorBackend + "system",
     title: "RAM",
     component: "RAM"
   },
@@ -60,7 +60,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "read",
     transformationService: useDataTransformation("storage"),
     base: "storage",
-    endpoint: backendUrl + "storage",
+    endpoint: monitorBackend + "storage",
     title: "Storage",
     component: "Storage"
   },
@@ -68,7 +68,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("throughput"),
     base: "throughput",
-    endpoint: backendUrl + "throughput",
+    endpoint: monitorBackend+ "throughput",
     title: "Throughput",
     component: "Throughput"
   }
