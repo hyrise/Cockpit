@@ -31,6 +31,5 @@ export type Base =
   | "queue_length"
   | "krueger_data";
 
-const vm = "aurora";
-const port = 8000;
-export const backendUrl = `http://vm-${vm}.eaalab.hpi.uni-potsdam.de:${port}/`;
+
+
