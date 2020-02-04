@@ -34,7 +34,7 @@ WORKLOAD_LISTENING: str = getenv("WORKLOAD_LISTENING", "*")
 
 WORKLOAD_LOCATION: str = getenv("WORKLOAD_LOCATION", "workloads/workload_queries")
 
-DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch")
+DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch_0.1")
 
 STORAGE_HOST: str = getenv("STORAGE_HOST", "localhost")
 STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
