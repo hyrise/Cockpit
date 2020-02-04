@@ -11,7 +11,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="cpu"
+      :graph-id="graphId || 'cpu'"
       :chart-configuration="chartConfiguration"
     />
   </div>
