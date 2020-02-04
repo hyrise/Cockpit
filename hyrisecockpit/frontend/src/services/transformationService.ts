@@ -93,7 +93,7 @@ function getStorageData(
   const newParents: string[] = [];
   const newSizes: number[] = [];
 
-  console.log("storage data", data);
+  console.log("storage data", data, primaryKey, data[primaryKey]);
   if (
     notEquals(
       Vue.prototype.$databaseData.tables.value,

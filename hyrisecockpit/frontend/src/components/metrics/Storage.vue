@@ -47,7 +47,7 @@ export default createComponent({
 
     onMounted(() => {
       checkState();
-      setInterval(checkState, 20000);
+      setInterval(checkState, 5000);
     });
 
     watch(data, () => {
