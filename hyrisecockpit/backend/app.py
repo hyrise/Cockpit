@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from secrets import choice
 from time import time
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -102,6 +102,55 @@ model_queue_length = monitor.clone(
             required=True,
             example=18623,
         )
+    },
+)
+
+model_workload_composition = monitor.model(
+    "Workload composition",
+    {
+        "SELECT": fields.Integer(
+            title="SELECT queries",
+            description="Number of SELECT queries of a given time interval.",
+            required=True,
+            example=241,
+        ),
+        "INSERT": fields.Integer(
+            title="INSERT queries",
+            description="Number of INSERT queries of a given time interval.",
+            required=True,
+            example=67,
+        ),
+        "UPDATE": fields.Integer(
+            title="UPDATE queries",
+            description="Number of UPDATE queries of a given time interval.",
+            required=True,
+            example=573,
+        ),
+        "DELETE": fields.Integer(
+            title="DELETE queries",
+            description="Number of DELETE queries of a given time interval.",
+            required=True,
+            example=14,
+        ),
+    },
+)
+
+model_krueger_data = monitor.clone(
+    "Krüger data",
+    model_database,
+    {
+        "executed": fields.Nested(
+            model_workload_composition,
+            title="Executed queries",
+            description="The composition of queries successfully exectued of a given time interval.",
+            required=True,
+        ),
+        "generated": fields.Nested(
+            model_workload_composition,
+            title="Generated queries",
+            description="The composition of queries generated of a given time interval.",
+            required=True,
+        ),
     },
 )
 
@@ -250,28 +299,30 @@ class Storage(Resource):
 class KruegerData(Resource):
     """Krügergraph data for all workloads."""
 
-    def get(self) -> Dict:
+    @monitor.doc(model=[model_krueger_data])
+    def get(self) -> List[Dict[str, Union[str, Dict[str, int]]]]:
         """Provide mock data for a Krügergraph."""
-        return {
-            "tpch": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-            "tpcds": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-            "job": {
-                "SELECT": choice(range(0, 100)),
-                "INSERT": choice(range(0, 100)),
-                "UPDATE": choice(range(0, 100)),
-                "DELETE": choice(range(0, 100)),
-            },
-        }
+        active_databases = _send_message(
+            db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
+        )["body"]["databases"]
+        return [
+            {
+                "id": database,
+                "executed": {
+                    "SELECT": choice(range(241)),
+                    "INSERT": choice(range(67)),
+                    "UPDATE": choice(range(573)),
+                    "DELETE": choice(range(14)),
+                },
+                "generated": {
+                    "SELECT": choice(range(241)),
+                    "INSERT": choice(range(67)),
+                    "UPDATE": choice(range(573)),
+                    "DELETE": choice(range(14)),
+                },
+            }
+            for database in active_databases
+        ]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
