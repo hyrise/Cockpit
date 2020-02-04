@@ -36,6 +36,7 @@ export interface ComparisonMetricData {
 export interface MetricProps {
   metricMeta: MetricMetadata;
   selectedDatabases: string[];
+  graphId: string;
   showDetails: boolean;
 }
 
@@ -50,6 +51,10 @@ export const MetricPropsValidation = {
   },
   showDetails: {
     type: Boolean,
+    default: null
+  },
+  graphId: {
+    type: String,
     default: null
   }
 };

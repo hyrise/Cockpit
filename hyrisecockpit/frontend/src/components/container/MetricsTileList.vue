@@ -13,6 +13,7 @@
         :is="getMetricComponent(metric)"
         :selected-databases="selectedDatabases"
         :metric-meta="getMetadata(metric)"
+        :graph-id="metric"
         :show-details="showDetails"
       />
     </v-card>
@@ -21,28 +22,25 @@
 
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
-import Throughput from "./metrics/Throughput.vue";
-import CPU from "./metrics/CPU.vue";
-import Latency from "./metrics/Latency.vue";
-import RAM from "./metrics/RAM.vue";
-import QueueLength from "./metrics/QueueLength.vue";
+
+import Throughput from "../metrics/Throughput.vue";
+import CPU from "../metrics/CPU.vue";
+import Latency from "../metrics/Latency.vue";
+import RAM from "../metrics/RAM.vue";
+import QueueLength from "../metrics/QueueLength.vue";
 import {
   getMetadata,
   getMetricTitle,
   getMetricComponent
-} from "./meta/metrics";
-import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
+} from "../meta/metrics";
+import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
+import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
   comparisonMetrics: Metric[];
-}
-
-interface Props {
-  selectedDatabases: string[];
-  showDetails: boolean;
 }
 
 export default createComponent({
@@ -53,17 +51,8 @@ export default createComponent({
     RAM,
     QueueLength
   },
-  props: {
-    selectedDatabases: {
-      type: Array,
-      default: null
-    },
-    showDetails: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props: Props, context: SetupContext): Data {
+  props: ContainerPropsValidation,
+  setup(props: ContainerProps, context: SetupContext): Data {
     return {
       getMetadata,
       comparisonMetrics,

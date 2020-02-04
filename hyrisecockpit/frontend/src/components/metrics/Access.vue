@@ -14,7 +14,7 @@
         </v-col>
       </v-row>
       <Heatmap
-        graph-id="access"
+        :graph-id="graphId || 'access'"
         :data="mapData"
         :x-values="columns"
         :y-values="chunks"
