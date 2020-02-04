@@ -61,7 +61,11 @@
         </v-btn>
       </v-btn-toggle>
     </v-col>
-    <krueger-graph />
+    <MetricsTileList
+      :selected-databases="watchedInstances"
+      :show-details="false"
+      :selected-metrics="workloadMetrics"
+    />
   </div>
 </template>
 
@@ -71,7 +75,8 @@ import {
   SetupContext,
   onMounted,
   Ref,
-  ref
+  ref,
+  watch
 } from "@vue/composition-api";
 import {
   Workload,
@@ -84,10 +89,12 @@ import {
   getWorkloadMetaData,
   getFrequency
 } from "../components/meta/workloads";
-import KruegerGraph from "../components/KruegerGraph.vue";
+import { Metric, workloadMetrics } from "../types/metrics";
+import { ScreenData } from "../types/screens";
+import MetricsTileList from "../components/container/MetricsTileList.vue";
 
 interface Props {}
-interface Data {
+interface Data extends ScreenData {
   getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
@@ -97,14 +104,16 @@ interface Data {
   frequency: Ref<number>;
   getCurrentFrequency: () => void;
   setFrequencyToNull: () => void;
+  workloadMetrics: Metric[];
 }
 
 export default createComponent({
   name: "WorkloadScreen",
   components: {
-    KruegerGraph
+    MetricsTileList
   },
   setup(props: Props, context: SetupContext): Data {
+    const watchedInstances = ref<string[]>([]);
     const frequency = ref<number>(0);
     function getCurrentFrequency(): void {
       frequency.value = getFrequency();
@@ -118,6 +127,18 @@ export default createComponent({
       startWorkload,
       stopWorkload
     } = useWorkloadService();
+
+    const { isReady } = context.root.$databaseData;
+    watch(isReady, () => {
+      if (isReady.value) {
+        watchedInstances.value = [
+          context.root.$databaseData.databases.value.map(
+            database => database.id
+          )[0]
+        ];
+      }
+    });
+
     return {
       getWorkloadMetaData,
       loadWorkloadData,
@@ -127,7 +148,9 @@ export default createComponent({
       stopWorkload,
       frequency,
       getCurrentFrequency,
-      setFrequencyToNull
+      setFrequencyToNull,
+      watchedInstances,
+      workloadMetrics
     };
   }
 });

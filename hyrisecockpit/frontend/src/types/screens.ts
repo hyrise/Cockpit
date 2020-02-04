@@ -1,4 +1,5 @@
 import { Ref } from "@vue/composition-api";
+import { Metric } from "./metrics";
 
 export interface ScreenData {
   watchedInstances: Ref<string[]>;
@@ -6,7 +7,7 @@ export interface ScreenData {
 
 export interface ContainerProps {
   selectedDatabases: string[];
-  selectedMetrics: string[];
+  selectedMetrics: Metric[];
   showDetails: boolean;
 }
 
