@@ -3,19 +3,19 @@ import { Workload } from "@/types/workloads";
 import { WorkloadService } from "../types/services";
 import { ref } from "@vue/composition-api";
 import { FetchService } from "@/types/services";
-import { backendUrl } from "../../config";
+import { controlBackend, monitorBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
-    axios.post(`${backendUrl}data/${workload}`, {
+    axios.post(`${controlBackend}data/${workload}`, {
       body: { sf: "1" }
     });
   }
   function deleteWorkloadData(workload: Workload): void {
-    axios.delete(`${backendUrl}data/${workload}`);
+    axios.delete(`${controlBackend}data/${workload}`);
   }
   function registerWorkload(): void {
-    axios.post(`${backendUrl}register_workload`, {
+    axios.post(`${controlBackend}register_workload`, {
       type: "TPCH_0.1",
       factor: 1,
       sf: "0.1",
@@ -24,10 +24,10 @@ export function useWorkloadService(): WorkloadService {
     });
   }
   function startWorkload(): void {
-    axios.post(`${backendUrl}start_workload`);
+    axios.post(`${controlBackend}start_workload`);
   }
   function stopWorkload(): void {
-    axios.post(`${backendUrl}stop_workload`);
+    axios.post(`${controlBackend}stop_workload`);
   }
 
   return {
@@ -46,7 +46,7 @@ export function useKruegerService(): FetchService {
   function getKruegerData(): any {
     queryReadyState.value = false;
     axios
-      .get(`${backendUrl}krueger_data`)
+      .get(`${monitorBackend}krueger_data`)
       .then(response => {
         data.value = transformData(response);
         const dataCopy = JSON.parse(JSON.stringify(data.value));
