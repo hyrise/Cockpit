@@ -3,23 +3,23 @@ import { Workload, WorkloadData } from "@/types/workloads";
 import { WorkloadService } from "../types/services";
 import { ref } from "@vue/composition-api";
 import { FetchService } from "@/types/services";
-import { backendUrl } from "../../config";
+import { monitorBackend, controlBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
-    axios.post(`${backendUrl}data/${workload}`);
+    axios.post(`${controlBackend}data/${workload}`);
   }
   function deleteWorkloadData(workload: Workload): void {
-    axios.delete(`${backendUrl}data/${workload}`);
+    axios.delete(`${controlBackend}data/${workload}`);
   }
   function startWorkload(workloadData: WorkloadData): void {
-    axios.post(`${backendUrl}workload`, {
+    axios.post(`${controlBackend}workload`, {
       workloadData
     });
   }
 
   function stopWorkload(): void {
-    axios.delete(`${backendUrl}workload`);
+    axios.delete(`${controlBackend}workload`);
   }
 
   return {
@@ -37,7 +37,7 @@ export function useKruegerService(): FetchService {
   function getKruegerData(): any {
     queryReadyState.value = false;
     axios
-      .get(`${backendUrl}krueger_data`)
+      .get(`${monitorBackend}krueger_data`)
       .then(response => {
         data.value = transformData(response);
         const dataCopy = JSON.parse(JSON.stringify(data.value));
