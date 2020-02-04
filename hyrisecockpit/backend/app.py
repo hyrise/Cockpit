@@ -10,11 +10,10 @@ from typing import Dict, List, Union
 
 from flask import Flask, request
 from flask_cors import CORS
-from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
-from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
+from flask_restx import Api, Resource, fields
 from hyrisecockpit.message import get_databases_response_schema, response_schema
 from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
@@ -27,6 +26,7 @@ from hyrisecockpit.settings import (
     STORAGE_PORT,
     STORAGE_USER,
 )
+from jsonschema import ValidationError, validate
 
 context = Context(io_threads=1)
 
@@ -116,6 +116,60 @@ model_data = control.model(
             required=True,
             example="tpch_0.1",
         )
+    },
+)
+
+model_storage = control.model(
+    "storage",
+    {
+        fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        ): {
+            fields.String(
+                title="Tablename",
+                description="Name of the table.",
+                required=True,
+                example="aka_name",
+            ): {
+                "size": fields.Integer(
+                    title="Size",
+                    description="Estimated size of the table given in bytes.",
+                    required=True,
+                    example="2931788734",
+                ),
+                "number_columns": fields.Integer(
+                    title="Number of columns",
+                    description="Number of columns of the table.",
+                    required=True,
+                    example="112",
+                ),
+                "data": {
+                    control.payload["column_name"]: {
+                        "size": fields.Integer(
+                            title="Size",
+                            description="Estimated size of the column given in bytes.",
+                            required=True,
+                            example="8593371",
+                        ),
+                        "encoding": fields.String(
+                            title="Encoding",
+                            description="Encodings of the column.",
+                            required=True,
+                            example="Dictionary",
+                        ),
+                        "data_type": fields.String(
+                            title="Datatype",
+                            description="Datatype of the column.",
+                            required=True,
+                            example="String",
+                        ),
+                    }
+                },
+            }
+        }
     },
 )
 
@@ -306,6 +360,7 @@ class Chunks(Resource):
 class Storage(Resource):
     """Storage information of all databases."""
 
+    # @control.doc(body=[model_storage]) # noqa
     def get(self) -> Dict:
         """Return storage metadata from database manager."""
         return _send_message(
