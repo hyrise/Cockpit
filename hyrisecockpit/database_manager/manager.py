@@ -202,12 +202,11 @@ class DatabaseManager(object):
 
     def _call_load_data(self, body: Dict) -> Dict:
         validate(instance=body, schema=load_data_request_schema)
-        datatype: str = body["datatype"].lower()
-        sf: str = body["sf"]
+        folder_name: str = body["folder_name"].lower()  # TODO why .lower?
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
-            if not database.load_data(datatype, sf):
+            if not database.load_data(folder_name):
                 return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
@@ -227,11 +226,10 @@ class DatabaseManager(object):
                 400, response["body"].get("error", "Invalid workload")
             )
         required_tables = response["body"]["required_tables"]
-        sf = workload.get("sf", "0.1")  # TODO: Choose appropriate scale factor
         for table in required_tables:
             for database in list(self._databases.values()):
                 # TODO Check load flag
-                if not database.load_data(table, sf):
+                if not database.load_data(table):
                     return get_error_response(
                         400, f"Database {database._id} could not load {table}"
                     )
@@ -255,12 +253,12 @@ class DatabaseManager(object):
 
     def _call_delete_data(self, body: Dict) -> Dict:
         validate(instance=body, schema=delete_data_request_schema)
-        datatype: str = body["datatype"]
+        folder_name: str = body["folder_name"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         self._workload_proceed_flag = False
         for database in list(self._databases.values()):
-            if not database.delete_data(datatype):
+            if not database.delete_data(folder_name):
                 return get_response(400)
         return get_response(200)
 
