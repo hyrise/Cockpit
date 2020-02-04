@@ -366,17 +366,16 @@ class Database(object):
         if len(table_loading_tasks) == 0:
             self._processing_tables_flag.value = False
             return True
-
         processing_action(table_loading_tasks)
         return True
 
     def load_data(self, folder_name: str) -> bool:
         """Load pregenerated tables."""
-        self._process_tables(
-            self._generate_table_drop_queries,
-            folder_name,
-            self._start_table_processing_sequential,
-        )
+        # self._process_tables(
+        #     self._generate_table_drop_queries,
+        #     folder_name,
+        #     self._start_table_processing_sequential,
+        # )
         return self._process_tables(
             self._generate_table_loading_queries,
             folder_name,

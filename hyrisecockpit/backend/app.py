@@ -362,11 +362,12 @@ class Workload(Resource):
                 400, response["body"].get("error", "Error during stopping of generator")
             )
 
-        message = {
-            "header": {"message": "delete data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
-        response = _send_message(db_manager_socket, message)
+        # message = {
+        #     "header": {"message": "delete data"},
+        #     "body": {"folder_name": control.payload["folder_name"]},
+        # }
+        # response = _send_message(db_manager_socket, message)
+
         return response
 
 
