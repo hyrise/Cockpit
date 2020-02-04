@@ -196,7 +196,7 @@ model_storage = control.model(
                     example="112",
                 ),
                 "data": {
-                    control.payload["column_name"]: {
+                    "column_name": {
                         "size": fields.Integer(
                             title="Size",
                             description="Estimated size of the column given in bytes.",
