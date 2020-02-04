@@ -324,10 +324,7 @@ class Workload(Resource):
         # TODO: Adjust table loading for benchmarks which do not require scale factor (e. g. JOB)
         load_data_message = {
             "header": {"message": "load data"},
-            "body": {
-                "datatype": control.payload["benchmark"],
-                "sf": control.payload["scale_factor"],
-            },
+            "body": {"folder_name": control.payload["folder_name"]},
         }
 
         response = _send_message(db_manager_socket, load_data_message)
@@ -340,8 +337,7 @@ class Workload(Resource):
         workload_message = {
             "header": {"message": "start workload"},
             "body": {
-                "benchmark": request_json.get("benchmark"),
-                "scale_factor": request_json.get("scale_factor"),
+                "folder_name": control.payload["folder_name"],
                 "frequency": request_json.get("frequency", 200),
             },
         }
@@ -361,6 +357,16 @@ class Workload(Resource):
             "body": {},
         }
         response = _send_message(generator_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during stopping of generator")
+            )
+
+        message = {
+            "header": {"message": "delete data"},
+            "body": {"folder_name": control.payload["folder_name"]},
+        }
+        response = _send_message(db_manager_socket, message)
         return response
 
 
@@ -376,12 +382,10 @@ class Data(Resource):
     # @control.doc(body=model_data)
     def post(self) -> Dict:
         """Load pregenerated tables for all databases."""
+        print(control.payload)
         message = {
             "header": {"message": "load data"},
-            "body": {
-                "datatype": control.payload["datatype"],
-                "sf": control.payload["sf"],
-            },
+            "body": {"folder_name": control.payload["folder_name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
