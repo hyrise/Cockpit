@@ -14,6 +14,8 @@ export type Metric =
   | "executedQueryTypeProportion"
   | "generatedQueryTypeProportion";
 
+export const instanceMetrics: Metric[] = ["storage", "access"];
+
 export const comparisonMetrics: Metric[] = [
   "throughput",
   "latency",

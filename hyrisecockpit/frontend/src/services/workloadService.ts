@@ -1,10 +1,7 @@
 import axios from "axios";
 import { Workload, WorkloadMetaData } from "@/types/workloads";
 import { WorkloadService } from "../types/services";
-import { ref } from "@vue/composition-api";
-import { FetchService } from "@/types/services";
-
-import { monitorBackend, controlBackend } from "../../config";
+import { controlBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
@@ -15,9 +12,7 @@ export function useWorkloadService(): WorkloadService {
   }
 
   function startWorkload(workloadMetaData: WorkloadMetaData): void {
-    axios.post(`${controlBackend}workload`, {
-      workloadMetaData
-    });
+    axios.post(`${controlBackend}workload`, workloadMetaData);
   }
 
   function stopWorkload(): void {
