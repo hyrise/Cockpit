@@ -26,7 +26,7 @@ import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 
-import { ScreenData } from "../types/screens";
+import { ScreenData } from "../types/views";
 
 interface Data extends ScreenData {
   getMetadata: (metric: Metric) => MetricMetadata;

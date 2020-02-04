@@ -87,7 +87,7 @@ import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
 import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
-import { ScreenData } from "../types/screens";
+import { ScreenData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 
 interface Props {}

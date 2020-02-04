@@ -23,7 +23,6 @@ function getExecutedQueryTypeProportionData(
   data: any,
   primaryKey: string = ""
 ): any {
-  console.log(data);
   const executedQueryTypeProportion = data.find(
     (database: any) => database.id === primaryKey
   ).executed;
@@ -93,7 +92,6 @@ function getStorageData(
   const newParents: string[] = [];
   const newSizes: number[] = [];
 
-  console.log("storage data", data, primaryKey, data[primaryKey]);
   if (
     notEquals(
       Vue.prototype.$databaseData.tables.value,
@@ -114,8 +112,6 @@ function getStorageData(
       newSizes.push(data[primaryKey][table].data[attribute].size);
     });
   });
-
-  console.log(newLabels, newParents, newSizes);
 
   return { newLabels, newParents, newSizes };
 }

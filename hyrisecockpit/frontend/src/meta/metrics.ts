@@ -11,7 +11,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
     fetchType: "read",
     transformationService: useDataTransformation("access"),
-    base: "chunks",
+    base: "chunks_data",
     endpoint: monitorBackend + "chunks",
     title: "Access Frequency",
     component: "Access"

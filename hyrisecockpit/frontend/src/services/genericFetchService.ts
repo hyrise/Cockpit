@@ -15,7 +15,6 @@ export function useGenericFetchService(metric: MetricMetadata): FetchService {
           addData(key, metric.transformationService(result, key));
         });
       } else if (metric.fetchType === "read") {
-        console.log("fetch data", result);
         data.value = result;
       }
       queryReadyState.value = true;

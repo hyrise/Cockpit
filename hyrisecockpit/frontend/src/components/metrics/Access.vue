@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mx-10 my-10">
+    <div class="mt-10">
       <v-row align="center">
         <v-col cols="6" class="mx-10">
           <v-select

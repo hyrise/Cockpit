@@ -48,7 +48,7 @@ export default createComponent({
 
       watch(data, () => {
         updateChartDatasets();
-        console.log("bar data", data);
+
         if (data.value.length) {
           updateChartDatasets();
         }

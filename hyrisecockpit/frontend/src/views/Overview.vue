@@ -29,7 +29,7 @@ import {
   ref
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { ScreenData } from "../types/screens";
+import { ScreenData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 
 interface Data extends ScreenData {

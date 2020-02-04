@@ -25,7 +25,7 @@ export type Base =
   | "system_data"
   | "throughput"
   | "storage"
-  | "chunks"
+  | "chunks_data"
   | "latency"
   | "queue_length"
   | "krueger_data";

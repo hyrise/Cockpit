@@ -49,7 +49,7 @@ import {
   getMetricComponent
 } from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
-import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
+import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;

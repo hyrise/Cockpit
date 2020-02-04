@@ -47,7 +47,7 @@ import {
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
-import { ScreenData } from "../types/screens";
+import { ScreenData } from "../types/views";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
