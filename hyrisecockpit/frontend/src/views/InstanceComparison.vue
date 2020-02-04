@@ -46,7 +46,7 @@ import {
 } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
-import { getMetricTitle } from "../components/meta/metrics";
+import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/screens";
 
 interface Data extends ScreenData {

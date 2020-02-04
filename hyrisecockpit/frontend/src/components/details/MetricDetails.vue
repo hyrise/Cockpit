@@ -28,7 +28,7 @@ import {
 import {
   getMetricDetailColor,
   getMetricValueStateOrder
-} from "../meta/metrics";
+} from "../../meta/metrics";
 import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
 
 interface Props {

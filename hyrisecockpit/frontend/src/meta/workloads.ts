@@ -1,4 +1,4 @@
-import { Workload, WorkloadMetaData } from "../../types/workloads";
+import { Workload, WorkloadMetaData } from "../types/workloads";
 
 const workloadMetaData: Record<Workload, WorkloadMetaData> = {
   "tpch_0.1": {

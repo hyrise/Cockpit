@@ -1,11 +1,11 @@
-import { monitorBackend } from "../../../config";
+import { monitorBackend } from "../../config";
 import {
   Metric,
   MetricMetadata,
   MetricValueState,
   MetricValueStateOrder
-} from "../../types/metrics";
-import { useDataTransformation } from "../../services/transformationService";
+} from "../types/metrics";
+import { useDataTransformation } from "../services/transformationService";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {

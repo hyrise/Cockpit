@@ -33,7 +33,7 @@ import {
   getMetadata,
   getMetricTitle,
   getMetricComponent
-} from "../meta/metrics";
+} from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 

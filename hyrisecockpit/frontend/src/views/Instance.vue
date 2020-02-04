@@ -20,7 +20,7 @@
 <script lang="ts">
 import { createComponent, SetupContext, Ref, ref } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { getMetadata, getMetricComponent } from "../components/meta/metrics";
+import { getMetadata, getMetricComponent } from "../meta/metrics";
 import { Metric, MetricMetadata, overviewMetrics } from "../types/metrics";
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
