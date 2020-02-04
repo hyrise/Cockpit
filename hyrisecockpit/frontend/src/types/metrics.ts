@@ -11,12 +11,14 @@ export type Metric =
   | "latency"
   | "ram"
   | "queueLength"
-  | "queryTypeProportion";
+  | "executedQueryTypeProportion"
+  | "generatedQueryTypeProportion";
 
 export const instanceMetrics: Metric[] = [
   "storage",
   "access",
-  "queryTypeProportion"
+  "executedQueryTypeProportion",
+  "generatedQueryTypeProportion"
 ];
 export const comparisonMetrics: Metric[] = [
   "throughput",
@@ -25,6 +27,8 @@ export const comparisonMetrics: Metric[] = [
   "ram",
   "queueLength"
 ];
+
+// add workload specific metric with generated proportion
 
 export interface MetricMetadata {
   fetchType: FetchType;

@@ -8,7 +8,8 @@ export function useDataTransformation(metric: Metric): TransformationService {
     access: getAccessData,
     cpu: getCPUData,
     latency: getReadOnlyData,
-    queryTypeProportion: getQueryTypeProportionData,
+    executedQueryTypeProportion: getExecutedQueryTypeProportionData,
+    generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
     queueLength: getReadOnlyData,
     ram: getRAMData,
     storage: getStorageData,
@@ -18,7 +19,10 @@ export function useDataTransformation(metric: Metric): TransformationService {
   return transformationMap[metric];
 }
 
-function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
+function getQueryTypeProportionDataOld(
+  data: any,
+  primaryKey: string = ""
+): any {
   console.log(data);
   let newData = [
     {
@@ -56,6 +60,59 @@ function getQueryTypeProportionData(data: any, primaryKey: string = ""): any {
     }
   }
   return newData;
+}
+
+function getExecutedQueryTypeProportionData(
+  data: any,
+  primaryKey: string = ""
+): any {
+  console.log(data);
+  const executedQueryTypeProportion = data.find(
+    (database: any) => database.id === primaryKey
+  ).executed;
+
+  return getQueryTypeProportionData(executedQueryTypeProportion);
+}
+
+function getGeneratedQueryTypeProportionData(
+  data: any,
+  primaryKey: string = ""
+): any {
+  console.log(data);
+  const generatedQueryTypeProportion = data.find(
+    (database: any) => database.id === primaryKey
+  ).generated;
+
+  return getQueryTypeProportionData(generatedQueryTypeProportion);
+}
+
+function getQueryTypeProportionData(data: any): any {
+  [
+    {
+      x: ["Workload"],
+      y: [data.DELETE] as number[],
+      name: "DELETE",
+      type: "bar"
+    },
+    {
+      x: ["Workload"],
+      y: [data.INSERT] as number[],
+      name: "INSERT",
+      type: "bar"
+    },
+    {
+      x: ["Workload"],
+      y: [data.SELECT] as number[],
+      name: "SELECT",
+      type: "bar"
+    },
+    {
+      x: ["Workload"],
+      y: [data.UPDATE] as number[],
+      name: "UPDATE",
+      type: "bar"
+    }
+  ];
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {

@@ -51,7 +51,8 @@ export default createComponent({
     watch(data, () => {
       if (Object.keys(data.value).length) {
         transformedData.value = props.metricMeta.transformationService(
-          data.value
+          data.value,
+          props.selectedDatabases[0]
         );
       }
     });

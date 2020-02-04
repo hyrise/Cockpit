@@ -32,9 +32,19 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     title: "Latency",
     component: "Latency"
   },
-  queryTypeProportion: {
+  executedQueryTypeProportion: {
     fetchType: "read",
-    transformationService: useDataTransformation("queryTypeProportion"),
+    transformationService: useDataTransformation("executedQueryTypeProportion"),
+    base: "krueger_data",
+    endpoint: monitorBackend + "krueger_data",
+    title: "Query Type Proportion",
+    component: "QueryTypeProportion"
+  },
+  generatedQueryTypeProportion: {
+    fetchType: "read",
+    transformationService: useDataTransformation(
+      "generatedQueryTypeProportion"
+    ),
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     title: "Query Type Proportion",
@@ -68,7 +78,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     fetchType: "modify",
     transformationService: useDataTransformation("throughput"),
     base: "throughput",
-    endpoint: monitorBackend+ "throughput",
+    endpoint: monitorBackend + "throughput",
     title: "Throughput",
     component: "Throughput"
   }
