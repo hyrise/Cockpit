@@ -11,7 +11,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="queueLength"
+      :graph-id="graphId || 'queueLength'"
       :chart-configuration="chartConfiguration"
     />
   </div>

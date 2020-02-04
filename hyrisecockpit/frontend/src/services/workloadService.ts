@@ -3,6 +3,7 @@ import { Workload, WorkloadMetaData } from "@/types/workloads";
 import { WorkloadService } from "../types/services";
 import { ref } from "@vue/composition-api";
 import { FetchService } from "@/types/services";
+
 import { monitorBackend, controlBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
@@ -12,6 +13,7 @@ export function useWorkloadService(): WorkloadService {
   function deleteWorkloadData(workload: Workload): void {
     axios.delete(`${controlBackend}data/${workload}`);
   }
+
   function startWorkload(workloadMetaData: WorkloadMetaData): void {
     axios.post(`${controlBackend}workload`, {
       workloadMetaData
