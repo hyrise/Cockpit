@@ -6,20 +6,24 @@
       v-for="database in selectedDatabases"
       :key="`${uuid()}-${database}`"
     >
-      {{ database }}
+      <v-card class="database" color="primary" dark elevation="4">
+        <v-card-title class="justify-center">
+          {{ database }}
+        </v-card-title>
+      </v-card>
       <v-card
         v-for="metric in comparisonMetrics"
         :key="metric"
         class="metric-card"
       >
         <v-card-title class="metric-title">
-          {{ metric }}
+          {{ getMetricTitle(metric) }}
         </v-card-title>
         <component
           class="metric"
-          :is="metric"
+          :is="getMetricComponent(metric)"
           :selected-databases="[database]"
-          :metric-meta="getMetadata(metric.toLowerCase())"
+          :metric-meta="getMetadata(metric)"
           :graph-id="`${metric}-${database}`"
           :show-details="showDetails"
         />
@@ -34,13 +38,20 @@ import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";
 import RAM from "../metrics/RAM.vue";
+import QueueLength from "../metrics/QueueLength.vue";
 import { uuid } from "vue-uuid";
-import { getMetadata } from "../meta/metrics";
+import {
+  getMetadata,
+  getMetricTitle,
+  getMetricComponent
+} from "../meta/metrics";
 import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
+  getMetricComponent: (metric: Metric) => string;
+  getMetricTitle: (metric: Metric) => string;
   comparisonMetrics: string[];
   uuid: () => string;
 }
@@ -50,19 +61,25 @@ export default createComponent({
     Throughput,
     CPU,
     Latency,
-    RAM
+    RAM,
+    QueueLength
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {
       uuid: uuid.v1,
       getMetadata,
-      comparisonMetrics
+      comparisonMetrics,
+      getMetricComponent,
+      getMetricTitle
     };
   }
 });
 </script>
 <style scoped>
+.database {
+  margin-bottom: 0.5%;
+}
 .metrics-table {
   display: flex;
   flex-direction: row;
