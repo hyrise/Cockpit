@@ -371,11 +371,6 @@ class Database(object):
 
     def load_data(self, folder_name: str) -> bool:
         """Load pregenerated tables."""
-        # self._process_tables(
-        #     self._generate_table_drop_queries,
-        #     folder_name,
-        #     self._start_table_processing_sequential,
-        # )
         return self._process_tables(
             self._generate_table_loading_queries,
             folder_name,
