@@ -12,7 +12,7 @@
         </v-card-title>
       </v-card>
       <v-card
-        v-for="metric in comparisonMetrics"
+        v-for="metric in selectedMetrics"
         :key="metric"
         class="metric-card"
       >
@@ -45,14 +45,13 @@ import {
   getMetricTitle,
   getMetricComponent
 } from "../meta/metrics";
-import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
+import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
-  comparisonMetrics: string[];
   uuid: () => string;
 }
 
@@ -69,7 +68,6 @@ export default createComponent({
     return {
       uuid: uuid.v1,
       getMetadata,
-      comparisonMetrics,
       getMetricComponent,
       getMetricTitle
     };

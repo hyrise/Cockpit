@@ -6,11 +6,16 @@ export interface ScreenData {
 
 export interface ContainerProps {
   selectedDatabases: string[];
+  selectedMetrics: string[];
   showDetails: boolean;
 }
 
 export const ContainerPropsValidation = {
   selectedDatabases: {
+    type: Array,
+    default: null
+  },
+  selectedMetrics: {
     type: Array,
     default: null
   },
