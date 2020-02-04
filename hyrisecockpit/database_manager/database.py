@@ -62,13 +62,11 @@ class StorageCursor:
         """Log a couple of succesfully executed queries."""
         points = []
         for query in query_list:
-            point = [
-                {
-                    "measurement": "successful_queries",
-                    "tags": {"benchmark": query[2], "query_no": query[3]},
-                    "fields": {"start": float(query[0]), "end": float(query[1])},
-                }
-            ]
+            point = {
+                "measurement": "successful_queries",
+                "tags": {"benchmark": query[2], "query_no": query[3]},
+                "fields": {"start": float(query[0]), "end": float(query[1])},
+            }
             points.append(point)
         self._connection.write_points(points, database=self._database)
 
@@ -297,7 +295,6 @@ class Database(object):
                     existing_tables.append(name)
                     continue
                 not_existing_tables.append(name)
-
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
     def _generate_table_loading_queries(
@@ -330,14 +327,34 @@ class Database(object):
             self._processing_tables_flag.value = False
             self._check_if_tables_processed_job.remove()
 
-    def _start_table_processing(self, table_loading_tasks) -> None:
+    def _start_table_processing_parallel(self, table_loading_tasks) -> None:
         """Flush queue and initialize it with table processing queries."""
         self._flush_queue(table_loading_tasks)
         self._check_if_tables_processed_job = self._scheduler.add_job(
             func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
         )
 
-    def _process_tables(self, table_action: Callable, folder_name: str) -> bool:
+    def _start_table_processing_sequential(self, table_loading_tasks) -> None:
+        """Flush queue and initialize it with table processing queries."""
+        self._flush_queue()
+        with PoolCursor(self._connection_pool) as cur:
+            for task in table_loading_tasks:
+                query, not_formatted_parameters = task
+                formatted_parameters = (
+                    tuple(
+                        AsIs(parameter) if protocol == "as_is" else parameter
+                        for parameter, protocol in not_formatted_parameters
+                    )
+                    if not_formatted_parameters is not None
+                    else None
+                )
+                cur.execute(query, formatted_parameters)
+                self._flush_queue()
+                self._processing_tables_flag.value = False
+
+    def _process_tables(
+        self, table_action: Callable, folder_name: str, processing_action: Callable
+    ) -> bool:
         """Process changes on tables by taking a generic function which creates table processing queries."""
         self._processing_tables_flag.value = True
         table_names = _table_names.get(folder_name.split("_")[0])
@@ -349,17 +366,24 @@ class Database(object):
         if len(table_loading_tasks) == 0:
             self._processing_tables_flag.value = False
             return True
-
-        self._start_table_processing(table_loading_tasks)
+        processing_action(table_loading_tasks)
         return True
 
     def load_data(self, folder_name: str) -> bool:
         """Load pregenerated tables."""
-        return self._process_tables(self._generate_table_loading_queries, folder_name)
+        return self._process_tables(
+            self._generate_table_loading_queries,
+            folder_name,
+            self._start_table_processing_parallel,
+        )
 
     def delete_data(self, folder_name: str) -> bool:
         """Delete tables."""
-        return self._process_tables(self._generate_table_drop_queries, folder_name)
+        return self._process_tables(
+            self._generate_table_drop_queries,
+            folder_name,
+            self._start_table_processing_parallel,
+        )
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
