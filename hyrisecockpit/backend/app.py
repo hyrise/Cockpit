@@ -10,10 +10,11 @@ from typing import Dict, List, Union
 
 from flask import Flask, request
 from flask_cors import CORS
+from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
+from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
-from flask_restx import Api, Resource, fields
 from hyrisecockpit.message import get_databases_response_schema, response_schema
 from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
@@ -26,7 +27,6 @@ from hyrisecockpit.settings import (
     STORAGE_PORT,
     STORAGE_USER,
 )
-from jsonschema import ValidationError, validate
 
 context = Context(io_threads=1)
 
