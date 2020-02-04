@@ -27,17 +27,14 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import MetricsTileList from "../components/MetricsTileList.vue";
-
-interface Data {
-  watchedInstances: Ref<string[]>;
-}
+import MetricsTileList from "../components/container/MetricsTileList.vue";
+import { ScreenData } from "../types/screens";
 
 export default createComponent({
   components: {
     MetricsTileList
   },
-  setup(props: {}, context: SetupContext): Data {
+  setup(props: {}, context: SetupContext): ScreenData {
     const watchedInstances = ref<string[]>([]);
 
     const { isReady } = context.root.$databaseData;
