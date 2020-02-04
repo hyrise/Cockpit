@@ -480,7 +480,7 @@ class Data(Resource):
         """Load pregenerated tables for all databases."""
         message = {
             "header": {"message": "load data"},
-            "body": {"name": control.payload["name"]},
+            "body": {"folder_name": control.payload["folder_name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
