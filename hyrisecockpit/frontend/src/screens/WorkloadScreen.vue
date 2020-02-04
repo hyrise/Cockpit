@@ -12,16 +12,28 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="startWorkload(getWorkloadData(workload))"
+          @click="
+            startWorkload(getWorkloadData(workload));
+            getCurrentFrequency();
+          "
           color="success"
         >
           {{ workload }}
         </v-btn>
       </v-btn-toggle>
+      <p>Frequency is: {{ frequency }}</p>
       <div class="mb-2 mt-6">
         <b> Stop workload </b>
       </div>
-      <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
+      <v-btn
+        @click="
+          stopWorkload();
+          setFrequencyToNull();
+        "
+        large
+        color="error"
+        >Stop
+      </v-btn>
       <div class="mb-2 mt-6">
         <b> Load generated data into instances</b>
       </div>
@@ -64,7 +76,7 @@ import {
 import { Workload, availableWorkloads, WorkloadData } from "../types/workloads";
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
-import { getWorkloadData } from "../components/meta/workloads";
+import { getWorkloadData, getFrequency } from "../components/meta/workloads";
 import KruegerGraph from "../components/KruegerGraph.vue";
 
 interface Props {}
@@ -75,6 +87,9 @@ interface Data {
   startWorkload: (workloadData: WorkloadData) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
+  frequency: Ref<number>;
+  getCurrentFrequency: () => void;
+  setFrequencyToNull: () => void;
 }
 
 export default createComponent({
@@ -83,6 +98,13 @@ export default createComponent({
     KruegerGraph
   },
   setup(props: Props, context: SetupContext): Data {
+    const frequency = ref<number>(0);
+    function getCurrentFrequency(): void {
+      frequency.value = getFrequency();
+    }
+    function setFrequencyToNull(): void {
+      frequency.value = 0;
+    }
     const {
       loadWorkloadData,
       deleteWorkloadData,
@@ -95,7 +117,10 @@ export default createComponent({
       deleteWorkloadData,
       availableWorkloads,
       startWorkload,
-      stopWorkload
+      stopWorkload,
+      frequency,
+      getCurrentFrequency,
+      setFrequencyToNull
     };
   }
 });
