@@ -77,7 +77,6 @@ export default createComponent({
 <style scoped>
 .database-titel {
   justify-content: center;
-  position: sticky;
 }
 .database {
   margin-bottom: 0.5%;
