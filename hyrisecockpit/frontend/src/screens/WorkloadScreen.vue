@@ -6,16 +6,36 @@
     <v-divider />
     <v-col cols="12">
       <div class="mb-2 mt-2">
-        <b> Register workload </b>
+        <b> Start workload </b>
       </div>
-      <v-btn @click="registerWorkload()" large color="primary">TPCH_0.1 </v-btn>
+      <v-btn-toggle>
+        <v-btn
+          v-for="workload in availableWorkloads"
+          :key="workload"
+          @click="
+            startWorkload(getWorkloadMetaData(workload));
+            getCurrentFrequency();
+          "
+          color="success"
+        >
+          {{ workload }}
+        </v-btn>
+      </v-btn-toggle>
+      <p>Frequency is: {{ frequency }}</p>
       <div class="mb-2 mt-6">
-        <b> Start/stop workload </b>
+        <b> Stop workload </b>
       </div>
-      <v-btn @click="startWorkload()" large color="success">Start </v-btn>
-      <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
+      <v-btn
+        @click="
+          stopWorkload();
+          setFrequencyToNull();
+        "
+        large
+        color="error"
+        >Stop
+      </v-btn>
       <div class="mb-2 mt-6">
-        <b> Load generated data </b>
+        <b> Load generated data into instances</b>
       </div>
       <v-btn-toggle>
         <v-btn
@@ -28,7 +48,7 @@
         </v-btn>
       </v-btn-toggle>
       <div class="mb-2 mt-6">
-        <b> Delete generated data </b>
+        <b> Remove generated data from instances</b>
       </div>
       <v-btn-toggle>
         <v-btn
@@ -53,19 +73,30 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import { Workload, availableWorkloads } from "../types/workloads";
+import {
+  Workload,
+  availableWorkloads,
+  WorkloadMetaData
+} from "../types/workloads";
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
+import {
+  getWorkloadMetaData,
+  getFrequency
+} from "../components/meta/workloads";
 import KruegerGraph from "../components/KruegerGraph.vue";
 
 interface Props {}
 interface Data {
+  getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  registerWorkload: () => void;
-  startWorkload: () => void;
+  startWorkload: (workloadMetaData: WorkloadMetaData) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
+  frequency: Ref<number>;
+  getCurrentFrequency: () => void;
+  setFrequencyToNull: () => void;
 }
 
 export default createComponent({
@@ -74,20 +105,29 @@ export default createComponent({
     KruegerGraph
   },
   setup(props: Props, context: SetupContext): Data {
+    const frequency = ref<number>(0);
+    function getCurrentFrequency(): void {
+      frequency.value = getFrequency();
+    }
+    function setFrequencyToNull(): void {
+      frequency.value = 0;
+    }
     const {
       loadWorkloadData,
       deleteWorkloadData,
-      registerWorkload,
       startWorkload,
       stopWorkload
     } = useWorkloadService();
     return {
+      getWorkloadMetaData,
       loadWorkloadData,
       deleteWorkloadData,
       availableWorkloads,
-      registerWorkload,
       startWorkload,
-      stopWorkload
+      stopWorkload,
+      frequency,
+      getCurrentFrequency,
+      setFrequencyToNull
     };
   }
 });

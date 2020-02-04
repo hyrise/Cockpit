@@ -29,6 +29,12 @@ response_schema = {
     },
 }
 
+get_databases_response_schema = {
+    "type": "object",
+    "required": ["databases"],
+    "properties": {"databases": {"type": "array", "items": {"type": "string"}}},
+}
+
 add_database_request_schema = {
     "type": "object",
     "required": ["user", "password", "host", "port", "dbname", "number_workers"],
@@ -50,18 +56,21 @@ delete_database_request_schema = {
 
 load_data_request_schema = {
     "type": "object",
-    "required": ["datatype", "sf"],
-    "properties": {"datatype": {"type": "string"}, "sf": {"type": "string"}},
+    "required": ["folder_name"],
+    "properties": {"folder_name": {"type": "string"}},
 }
 
 delete_data_request_schema = {
     "type": "object",
-    "required": ["datatype"],
-    "properties": {"datatype": {"type": "string"}},
+    "required": ["folder_name"],
+    "properties": {"folder_name": {"type": "string"}},
 }
 
-workload_request_schema = {
+start_workload_request_schema = {
     "type": "object",
-    "required": ["type"],
-    "properties": {"type": {"type": "string"}},
+    "required": ["folder_name", "frequency"],
+    "properties": {
+        "folder_name": {"type": "string"},
+        "frequency": {"type": "integer"},
+    },
 }
