@@ -1,39 +1,32 @@
 import axios from "axios";
-import { Workload } from "@/types/workloads";
+import { Workload, WorkloadMetaData } from "@/types/workloads";
 import { WorkloadService } from "../types/services";
 import { ref } from "@vue/composition-api";
 import { FetchService } from "@/types/services";
-import { controlBackend, monitorBackend } from "../../config";
+
+import { monitorBackend, controlBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
-    axios.post(`${controlBackend}data/${workload}`, {
-      body: { sf: "1" }
-    });
+    axios.post(`${controlBackend}data/${workload}`);
   }
   function deleteWorkloadData(workload: Workload): void {
     axios.delete(`${controlBackend}data/${workload}`);
   }
-  function registerWorkload(): void {
-    axios.post(`${controlBackend}register_workload`, {
-      type: "TPCH_0.1",
-      factor: 1,
-      sf: "0.1",
-      shuffle: false,
-      "auto-reload": true
+
+  function startWorkload(workloadMetaData: WorkloadMetaData): void {
+    axios.post(`${controlBackend}workload`, {
+      workloadMetaData
     });
   }
-  function startWorkload(): void {
-    axios.post(`${controlBackend}start_workload`);
-  }
+
   function stopWorkload(): void {
-    axios.post(`${controlBackend}stop_workload`);
+    axios.delete(`${controlBackend}workload`);
   }
 
   return {
     loadWorkloadData,
     deleteWorkloadData,
-    registerWorkload,
     startWorkload,
     stopWorkload
   };
