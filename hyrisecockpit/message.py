@@ -62,10 +62,9 @@ delete_data_request_schema = {
 
 start_workload_request_schema = {
     "type": "object",
-    "required": ["benchmark", "scale_factor", "frequency"],
+    "required": ["folder_name", "frequency"],
     "properties": {
-        "benchmark": {"type": "string"},
-        "scale_factor": {"type": "string"},
+        "folder_name": {"type": "string"},
         "frequency": {"type": "integer"},
     },
 }

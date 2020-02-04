@@ -304,7 +304,7 @@ class Database(object):
         # TODO change absolute to relative path
         return [
             (
-                "COPY %s FROM '/home/Alexander.Dubrawski/Tools/hyrise/cached_tables/%s/%s.bin';",
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
             )
             for name in table_names
