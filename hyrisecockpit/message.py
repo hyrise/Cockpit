@@ -29,6 +29,12 @@ response_schema = {
     },
 }
 
+get_databases_response_schema = {
+    "type": "object",
+    "required": ["databases"],
+    "properties": {"databases": {"type": "array", "items": {"type": "string"}}},
+}
+
 add_database_request_schema = {
     "type": "object",
     "required": ["user", "password", "host", "port", "dbname", "number_workers"],

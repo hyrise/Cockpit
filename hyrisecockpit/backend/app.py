@@ -6,14 +6,16 @@ If run as a module, a flask server application will be started.
 
 from secrets import choice
 from time import time
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
+from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
+from hyrisecockpit.message import get_databases_response_schema, response_schema
 from hyrisecockpit.response import get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -127,7 +129,17 @@ def _send_message(socket: Socket, message: Dict):
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
     response = socket.recv_json()
+    validate(instance=response, schema=response_schema)
     return response
+
+
+def _active_databases():
+    """Get a list of active databases."""
+    response = _send_message(
+        db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
+    )
+    validate(instance=response["body"], schema=get_databases_response_schema)
+    return response["body"]["databases"]
 
 
 @monitor.route("/throughput")
@@ -135,14 +147,14 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    def get(self) -> Dict[str, Dict[str, int]]:
+    def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
         t = time()
         throughput: Dict[str, int] = {}
-        message = {"header": {"message": "get databases"}, "body": {}}
-        active_databases = _send_message(db_manager_socket, message)["body"][
-            "databases"
-        ]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
         for database in active_databases:
             result = storage_connection.query(
                 f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1};""",
@@ -165,14 +177,14 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    def get(self) -> Dict[str, Dict[str, float]]:
+    def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
         t = time()
         latency: Dict[str, float] = {}
-        message = {"header": {"message": "get databases"}, "body": {}}
-        active_databases = _send_message(db_manager_socket, message)["body"][
-            "databases"
-        ]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
         for database in active_databases:
             result = storage_connection.query(
                 f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-2} AND "start" <= {t-1});""",
