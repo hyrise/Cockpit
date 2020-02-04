@@ -1,7 +1,7 @@
 <template>
   <Barchart
     :data="transformedData"
-    graph-id="queryTypeProportion"
+    :graph-id="graphId || 'queryTypeProportion'"
     :chart-configuration="chartConfiguration"
   />
 </template>
@@ -39,7 +39,7 @@ export default createComponent({
 
     const chartConfiguration = [
       "Query Type Proportion",
-      "workloads",
+      "workload",
       "amount of queries"
     ];
 

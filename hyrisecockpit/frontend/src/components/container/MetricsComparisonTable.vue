@@ -39,6 +39,9 @@ import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";
 import RAM from "../metrics/RAM.vue";
 import QueueLength from "../metrics/QueueLength.vue";
+import Storage from "../metrics/Storage.vue";
+import Access from "../metrics/Access.vue";
+import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import { uuid } from "vue-uuid";
 import {
   getMetadata,
@@ -61,7 +64,10 @@ export default createComponent({
     CPU,
     Latency,
     RAM,
-    QueueLength
+    QueueLength,
+    Storage,
+    Access,
+    QueryTypeProportion
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
@@ -94,7 +100,7 @@ export default createComponent({
 .metric-title {
   z-index: 2;
   position: relative;
-  margin-bottom: -60px;
+  margin-bottom: -40px;
   justify-content: center;
 }
 .metric-card {

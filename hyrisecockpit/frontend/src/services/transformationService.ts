@@ -19,49 +19,6 @@ export function useDataTransformation(metric: Metric): TransformationService {
   return transformationMap[metric];
 }
 
-function getQueryTypeProportionDataOld(
-  data: any,
-  primaryKey: string = ""
-): any {
-  console.log(data);
-  let newData = [
-    {
-      x: [] as string[],
-      y: [] as number[],
-      name: "DELETE",
-      type: "bar"
-    },
-    {
-      x: [] as string[],
-      y: [] as number[],
-      name: "INSERT",
-      type: "bar"
-    },
-    {
-      x: [] as string[],
-      y: [] as number[],
-      name: "SELECT",
-      type: "bar"
-    },
-    {
-      x: [] as string[],
-      y: [] as number[],
-      name: "UPDATE",
-      type: "bar"
-    }
-  ];
-  for (let [workload, query] of Object.entries(data)) {
-    for (let [queryType, amount] of Object.entries(query as any)) {
-      var dataSet = newData.find(x => x.name === queryType);
-      if (dataSet) {
-        dataSet.x = [...dataSet.x, workload];
-        dataSet.y = [...dataSet.y, amount as number];
-      }
-    }
-  }
-  return newData;
-}
-
 function getExecutedQueryTypeProportionData(
   data: any,
   primaryKey: string = ""
@@ -71,43 +28,42 @@ function getExecutedQueryTypeProportionData(
     (database: any) => database.id === primaryKey
   ).executed;
 
-  return getQueryTypeProportionData(executedQueryTypeProportion);
+  return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
 }
 
 function getGeneratedQueryTypeProportionData(
   data: any,
   primaryKey: string = ""
 ): any {
-  console.log(data);
   const generatedQueryTypeProportion = data.find(
     (database: any) => database.id === primaryKey
   ).generated;
 
-  return getQueryTypeProportionData(generatedQueryTypeProportion);
+  return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
 }
 
-function getQueryTypeProportionData(data: any): any {
-  [
+function getQueryTypeProportionData(data: any, type: string): any {
+  return [
     {
-      x: ["Workload"],
+      x: [type],
       y: [data.DELETE] as number[],
       name: "DELETE",
       type: "bar"
     },
     {
-      x: ["Workload"],
+      x: [type],
       y: [data.INSERT] as number[],
       name: "INSERT",
       type: "bar"
     },
     {
-      x: ["Workload"],
+      x: [type],
       y: [data.SELECT] as number[],
       name: "SELECT",
       type: "bar"
     },
     {
-      x: ["Workload"],
+      x: [type],
       y: [data.UPDATE] as number[],
       name: "UPDATE",
       type: "bar"
@@ -137,6 +93,7 @@ function getStorageData(
   const newParents: string[] = [];
   const newSizes: number[] = [];
 
+  console.log("storage data", data);
   if (
     notEquals(
       Vue.prototype.$databaseData.tables.value,
@@ -157,6 +114,8 @@ function getStorageData(
       newSizes.push(data[primaryKey][table].data[attribute].size);
     });
   });
+
+  console.log(newLabels, newParents, newSizes);
 
   return { newLabels, newParents, newSizes };
 }
@@ -181,7 +140,7 @@ function getAccessData(
   for (let i = 0; i < numberOfChunks; i++) {
     newChunks.push("chunk_" + i);
 
-    let chunk: number[] = [];
+    const chunk: number[] = [];
     dataByColumns.forEach(column => {
       chunk.push(column[i]);
     });

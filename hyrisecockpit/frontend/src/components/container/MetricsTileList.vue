@@ -34,7 +34,7 @@ import {
   getMetricTitle,
   getMetricComponent
 } from "../meta/metrics";
-import { Metric, MetricMetadata, overviewMetrics } from "../../types/metrics";
+import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {

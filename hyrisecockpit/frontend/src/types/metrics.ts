@@ -20,7 +20,7 @@ export const comparisonMetrics: Metric[] = [
   "cpu",
   "ram",
   "queueLength",
-  "storage",
+  //"storage", -> breaks comparison table
   "access",
   "executedQueryTypeProportion"
 ];

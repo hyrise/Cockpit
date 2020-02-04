@@ -19,7 +19,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   cpu: {
     fetchType: "modify",
     transformationService: useDataTransformation("cpu"),
-    base: "system",
+    base: "system_data",
     endpoint: monitorBackend + "system",
     title: "CPU",
     component: "CPU"
@@ -61,7 +61,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
   ram: {
     fetchType: "modify",
     transformationService: useDataTransformation("ram"),
-    base: "system",
+    base: "system_data",
     endpoint: monitorBackend + "system",
     title: "RAM",
     component: "RAM"

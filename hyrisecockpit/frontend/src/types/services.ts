@@ -22,13 +22,10 @@ export interface WorkloadService {
 export type FetchType = "read" | "modify";
 
 export type Base =
-  | "system"
+  | "system_data"
   | "throughput"
   | "storage"
   | "chunks"
   | "latency"
   | "queue_length"
   | "krueger_data";
-
-
-
