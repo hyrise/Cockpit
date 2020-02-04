@@ -13,7 +13,7 @@
           v-for="workload in availableWorkloads"
           :key="workload"
           @click="
-            startWorkload(getWorkloadData(workload));
+            startWorkload(getWorkloadMetaData(workload));
             getCurrentFrequency();
           "
           color="success"
@@ -73,18 +73,25 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import { Workload, availableWorkloads, WorkloadData } from "../types/workloads";
+import {
+  Workload,
+  availableWorkloads,
+  WorkloadMetaData
+} from "../types/workloads";
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
-import { getWorkloadData, getFrequency } from "../components/meta/workloads";
+import {
+  getWorkloadMetaData,
+  getFrequency
+} from "../components/meta/workloads";
 import KruegerGraph from "../components/KruegerGraph.vue";
 
 interface Props {}
 interface Data {
-  getWorkloadData: (workload: Workload) => WorkloadData;
+  getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workloadData: WorkloadData) => void;
+  startWorkload: (workloadMetaData: WorkloadMetaData) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
   frequency: Ref<number>;
@@ -112,7 +119,7 @@ export default createComponent({
       stopWorkload
     } = useWorkloadService();
     return {
-      getWorkloadData,
+      getWorkloadMetaData,
       loadWorkloadData,
       deleteWorkloadData,
       availableWorkloads,
