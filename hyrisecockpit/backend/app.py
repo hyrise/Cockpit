@@ -139,8 +139,18 @@ model_krueger_data = monitor.clone(
     "Krüger data",
     model_database,
     {
-        "executed": fields.Nested(model_workload_composition),
-        "generated": fields.Nested(model_workload_composition),
+        "executed": fields.Nested(
+            model_workload_composition,
+            title="Executed queries",
+            description="The composition of queries successfully exectued of a given time interval.",
+            required=True,
+        ),
+        "generated": fields.Nested(
+            model_workload_composition,
+            title="Generated queries",
+            description="The composition of queries generated of a given time interval.",
+            required=True,
+        ),
     },
 )
 
