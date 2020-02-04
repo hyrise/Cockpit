@@ -12,8 +12,10 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
+from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
+from hyrisecockpit.message import get_databases_response_schema, response_schema
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -166,6 +168,115 @@ model_data = control.model(
     },
 )
 
+model_storage = control.model(
+    "storage",
+    {
+        fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        ): {
+            fields.String(
+                title="Tablename",
+                description="Name of the table.",
+                required=True,
+                example="aka_name",
+            ): {
+                "size": fields.Integer(
+                    title="Size",
+                    description="Estimated size of the table given in bytes.",
+                    required=True,
+                    example="2931788734",
+                ),
+                "number_columns": fields.Integer(
+                    title="Number of columns",
+                    description="Number of columns of the table.",
+                    required=True,
+                    example="112",
+                ),
+                "data": {
+                    control.payload["column_name"]: {
+                        "size": fields.Integer(
+                            title="Size",
+                            description="Estimated size of the column given in bytes.",
+                            required=True,
+                            example="8593371",
+                        ),
+                        "encoding": fields.String(
+                            title="Encoding",
+                            description="Encodings of the column.",
+                            required=True,
+                            example="Dictionary",
+                        ),
+                        "data_type": fields.String(
+                            title="Datatype",
+                            description="Datatype of the column.",
+                            required=True,
+                            example="String",
+                        ),
+                    }
+                },
+            }
+        }
+    },
+)
+
+model_control_database = control.model(
+    "Database",
+    {
+        "id": fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        )
+    },
+)
+
+model_add_database = control.clone(
+    "Add Database",
+    model_control_database,
+    {
+        "user": fields.String(
+            title="Username",
+            description="Username used to log in.",
+            required=True,
+            example="user123",
+        ),
+        "password": fields.String(
+            title="Password",
+            description="Password used to log in.",
+            required=True,
+            example="password123",
+        ),
+        "host": fields.String(
+            title="Host",
+            description="Host to log in to.",
+            required=True,
+            example="vm.example.com",
+        ),
+        "port": fields.String(
+            title="Port",
+            description="Port of the host to log in to.",
+            required=True,
+            example="1234",
+        ),
+        "number_workers": fields.Integer(
+            title="Number of initial database worker processes.",
+            description="",
+            required=True,
+            example=8,
+        ),
+        "dbname": fields.String(
+            title="",
+            description="Name of the database to log in to.",
+            required=True,
+            example="mydb",
+        ),
+    },
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -176,7 +287,17 @@ def _send_message(socket: Socket, message: Dict):
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
     response = socket.recv_json()
+    validate(instance=response, schema=response_schema)
     return response
+
+
+def _active_databases():
+    """Get a list of active databases."""
+    response = _send_message(
+        db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
+    )
+    validate(instance=response["body"], schema=get_databases_response_schema)
+    return response["body"]["databases"]
 
 
 @monitor.route("/throughput")
@@ -184,14 +305,14 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    def get(self) -> Dict[str, Dict[str, int]]:
+    def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
         t = time()
         throughput: Dict[str, int] = {}
-        message = {"header": {"message": "get databases"}, "body": {}}
-        active_databases = _send_message(db_manager_socket, message)["body"][
-            "databases"
-        ]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
         for database in active_databases:
             result = storage_connection.query(
                 f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1};""",
@@ -214,14 +335,14 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    def get(self) -> Dict[str, Dict[str, float]]:
+    def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
         t = time()
         latency: Dict[str, float] = {}
-        message = {"header": {"message": "get databases"}, "body": {}}
-        active_databases = _send_message(db_manager_socket, message)["body"][
-            "databases"
-        ]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
         for database in active_databases:
             result = storage_connection.query(
                 f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE "start" > {t-2} AND "start" <= {t-1});""",
@@ -288,6 +409,7 @@ class Chunks(Resource):
 class Storage(Resource):
     """Storage information of all databases."""
 
+    # @control.doc(body=[model_storage]) # noqa
     def get(self) -> Dict:
         """Return storage metadata from database manager."""
         return _send_message(
@@ -329,36 +451,37 @@ class KruegerData(Resource):
 class Database(Resource):
     """Manages databases."""
 
+    @control.doc(model=[model_control_database])
     def get(self) -> Dict:
         """Get all databases."""
         message = {"header": {"message": "get databases"}, "body": {}}
         response = _send_message(db_manager_socket, message)
         return response
 
+    @control.doc(body=model_add_database)
     def post(self) -> Dict:
         """Add a database."""
-        request_json = request.get_json()
         message = {
             "header": {"message": "add database"},
             "body": {
-                "number_workers": request_json["number_workers"],
-                "id": request_json["id"],
-                "user": request_json["user"],
-                "password": request_json["password"],
-                "host": request_json["host"],
-                "port": request_json["port"],
-                "dbname": request_json["dbname"],
+                "number_workers": control.payload["number_workers"],
+                "id": control.payload["id"],
+                "user": control.payload["user"],
+                "password": control.payload["password"],
+                "host": control.payload["host"],
+                "port": control.payload["port"],
+                "dbname": control.payload["dbname"],
             },
         }
         response = _send_message(db_manager_socket, message)
         return response
 
+    @control.doc(body=model_control_database)
     def delete(self) -> Dict:
         """Delete a database."""
-        request_json = request.get_json()
         message = {
             "header": {"message": "delete database"},
-            "body": {"id": request_json["id"]},
+            "body": {"id": control.payload["id"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
