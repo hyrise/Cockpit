@@ -18,8 +18,9 @@
         v-if="$databaseData.isReady"
         class="select-box"
         v-model="selectedMetrics"
-        :items="comparisonMetrics"
+        :items="availableMetrics"
         chips
+        return-object
         label="metrics"
         multiple
         outlined
@@ -28,7 +29,7 @@
     </div>
     <MetricsComparisonTable
       :selected-databases="watchedInstances"
-      :selected-metrics="selectedMetrics"
+      :selected-metrics="selectedMetrics.map(metric => metric.value)"
       :show-details="true"
     />
   </div>
@@ -45,12 +46,13 @@ import {
 } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
+import { getMetricTitle } from "../components/meta/metrics";
 import { ScreenData } from "../types/screens";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
-  selectedMetrics: Ref<string[]>;
-  comparisonMetrics: Metric[];
+  selectedMetrics: Ref<Object[]>;
+  availableMetrics: Object[];
 }
 
 export default createComponent({
@@ -59,8 +61,10 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = ref<string[]>([]);
-    const selectedMetrics = ref<string[]>(comparisonMetrics);
-
+    const availableMetrics = comparisonMetrics.map(metric => {
+      return { text: getMetricTitle(metric), value: metric };
+    });
+    const selectedMetrics = ref<Object[]>(availableMetrics);
     const { isReady } = context.root.$databaseData;
     watch(isReady, () => {
       if (isReady.value) {
@@ -79,7 +83,7 @@ export default createComponent({
       watchedInstances,
       handleMaxSelected,
       selectedMetrics,
-      comparisonMetrics
+      availableMetrics
     };
   }
 });
@@ -93,5 +97,6 @@ export default createComponent({
 }
 .select-box {
   margin: 0px 20px 10px 20px;
+  flex: 0 0 48%;
 }
 </style>
