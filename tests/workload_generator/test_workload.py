@@ -26,7 +26,7 @@ class TestWorkload:
 
     def idle_function(self) -> None:
         """Idle function."""
-        return None
+        return
 
     @fixture
     @patch(
@@ -59,9 +59,9 @@ class TestWorkload:
     def test_generates_workload(self, fake_workload):
         """Test cration of workload."""
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
-        expected_workload = [("foo", None), ("foo2", None)]
+        expected_workload = [("foo", None)]
         fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload(1, False)
+        received_queries = fake_workload.generate_workload(1)
         assert received_queries[:] == expected_workload[:]
 
     def test_generates_workload_with_factor(self, fake_workload):
@@ -74,7 +74,7 @@ class TestWorkload:
             ("foo2", None),
         ]
         fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload(2, False)
+        received_queries = fake_workload.generate_workload(4)
         assert received_queries[:] == expected_workload[:]
 
     def test_generates_specific_query(self, fake_workload):

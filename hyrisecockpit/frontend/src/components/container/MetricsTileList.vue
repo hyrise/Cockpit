@@ -6,13 +6,14 @@
       :key="metric"
     >
       <v-card-title class="metric-title">
-        {{ metric }}
+        {{ getMetricTitle(metric) }}
       </v-card-title>
       <component
         class="metric"
-        :is="metric"
+        :is="getMetricComponent(metric)"
         :selected-databases="selectedDatabases"
-        :metric-meta="getMetadata(metric.toLowerCase())"
+        :metric-meta="getMetadata(metric)"
+        :graph-id="metric"
         :show-details="showDetails"
       />
     </v-card>
@@ -21,21 +22,25 @@
 
 <script lang="ts">
 import { createComponent, SetupContext } from "@vue/composition-api";
-import Throughput from "./metrics/Throughput.vue";
-import CPU from "./metrics/CPU.vue";
-import Latency from "./metrics/Latency.vue";
-import RAM from "./metrics/RAM.vue";
-import { getMetadata } from "./meta/metrics";
-import { Metric, MetricMetadata, comparisonMetrics } from "../types/metrics";
+
+import Throughput from "../metrics/Throughput.vue";
+import CPU from "../metrics/CPU.vue";
+import Latency from "../metrics/Latency.vue";
+import RAM from "../metrics/RAM.vue";
+import QueueLength from "../metrics/QueueLength.vue";
+import {
+  getMetadata,
+  getMetricTitle,
+  getMetricComponent
+} from "../meta/metrics";
+import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
+import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
-  comparisonMetrics: string[];
-}
-
-interface Props {
-  selectedDatabases: string[];
-  showDetails: boolean;
+  getMetricTitle: (metric: Metric) => string;
+  getMetricComponent: (metric: Metric) => string;
+  comparisonMetrics: Metric[];
 }
 
 export default createComponent({
@@ -43,22 +48,16 @@ export default createComponent({
     Throughput,
     CPU,
     Latency,
-    RAM
+    RAM,
+    QueueLength
   },
-  props: {
-    selectedDatabases: {
-      type: Array,
-      default: null
-    },
-    showDetails: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props: Props, context: SetupContext): Data {
+  props: ContainerPropsValidation,
+  setup(props: ContainerProps, context: SetupContext): Data {
     return {
       getMetadata,
-      comparisonMetrics
+      comparisonMetrics,
+      getMetricTitle,
+      getMetricComponent
     };
   }
 });

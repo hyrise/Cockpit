@@ -121,7 +121,7 @@ interface Data {
   openDatabaseScreen: (databaseId: string) => void;
   createNewDatabase: () => void;
   showDatabaseDialog: boolean;
-  number_workers: Ref<string>;
+  number_workers: Ref<number>;
   id: Ref<string>;
   user: Ref<string>;
   password: Ref<string>;
@@ -134,7 +134,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databases, addDatabase } = context.root.$databaseData;
 
-    const number_workers = ref<string>("8");
+    const number_workers = ref<number>(8);
     const id = ref<string>("");
     const user = ref<string>("serviceuser");
     const password = ref<string>("");

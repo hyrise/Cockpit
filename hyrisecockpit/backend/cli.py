@@ -1,9 +1,9 @@
 """CLI used to start the backend API."""
-from hyrisecockpit.settings import BACKEND_HOST, BACKEND_PORT
+from hyrisecockpit.settings import BACKEND_LISTENING, BACKEND_PORT
 
 from .app import app
 
 
 def main() -> None:
     """Create and start a backend API."""
-    app.run(host=BACKEND_HOST, port=BACKEND_PORT, threaded=False)
+    app.run(host=BACKEND_LISTENING, port=BACKEND_PORT, threaded=False)
