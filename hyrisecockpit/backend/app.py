@@ -14,7 +14,7 @@ from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
 from zmq import REQ, Context, Socket
 
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
@@ -371,26 +371,48 @@ class Workload(Resource):
     def post(self) -> Dict:
         """Start the workload generator."""
         request_json = request.get_json()
-        message = {
-            "header": {"message": "workload"},
+
+        # TODO: Adjust table loading for benchmarks which do not require scale factor (e. g. JOB)
+        load_data_message = {
+            "header": {"message": "load data"},
+            "body": {"folder_name": control.payload["folder_name"]},
+        }
+
+        response = _send_message(db_manager_socket, load_data_message)
+
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during loading of the tables")
+            )
+
+        workload_message = {
+            "header": {"message": "start workload"},
             "body": {
-                "type": request_json["body"].get("type"),
-                "sf": request_json["body"].get("sf"),
-                "queries": request_json["body"].get("queries"),
-                "factor": request_json["body"].get("factor", 1),
-                "shuffle": request_json["body"].get("shuffle", False),
+                "folder_name": control.payload["folder_name"],
+                "frequency": request_json.get("frequency", 200),
             },
         }
-        response = _send_message(generator_socket, message)
-        return response
+        response = _send_message(generator_socket, workload_message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400,
+                response["body"].get("error", "Error during starting of the workload"),
+            )
+
+        return get_response(200)
 
     def delete(self) -> Dict:
         """Stop the workload generator."""
         message = {
-            "header": {"message": "stop"},
+            "header": {"message": "stop workload"},
             "body": {},
         }
         response = _send_message(generator_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during stopping of generator")
+            )
+
         return response
 
 
@@ -403,12 +425,13 @@ class Data(Resource):
         """Return all pregenerated tables that can be loaded."""
         return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
 
-    @control.doc(body=model_data)
+    # @control.doc(body=model_data)
     def post(self) -> Dict:
         """Load pregenerated tables for all databases."""
+        print(control.payload)
         message = {
             "header": {"message": "load data"},
-            "body": {"name": control.payload["name"]},
+            "body": {"folder_name": control.payload["folder_name"]},
         }
         response = _send_message(db_manager_socket, message)
         return response

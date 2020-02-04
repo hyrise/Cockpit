@@ -60,8 +60,11 @@ delete_data_request_schema = {
     "properties": {"folder_name": {"type": "string"}},
 }
 
-workload_request_schema = {
+start_workload_request_schema = {
     "type": "object",
-    "required": ["type"],
-    "properties": {"type": {"type": "string"}},
+    "required": ["folder_name", "frequency"],
+    "properties": {
+        "folder_name": {"type": "string"},
+        "frequency": {"type": "integer"},
+    },
 }
