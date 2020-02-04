@@ -119,6 +119,61 @@ model_data = control.model(
     },
 )
 
+model_control_database = control.model(
+    "Database",
+    {
+        "id": fields.String(
+            title="Database ID",
+            description="Used to identify a database.",
+            required=True,
+            example="hyrise-1",
+        )
+    },
+)
+
+model_add_database = control.clone(
+    "Add Database",
+    model_control_database,
+    {
+        "user": fields.String(
+            title="Username",
+            description="Username used to log in.",
+            required=True,
+            example="user123",
+        ),
+        "password": fields.String(
+            title="Password",
+            description="Password used to log in.",
+            required=True,
+            example="password123",
+        ),
+        "host": fields.String(
+            title="Host",
+            description="Host to log in to.",
+            required=True,
+            example="vm.example.com",
+        ),
+        "port": fields.String(
+            title="Port",
+            description="Port of the host to log in to.",
+            required=True,
+            example="1234",
+        ),
+        "number_workers": fields.Integer(
+            title="Number of initial database worker processes.",
+            description="",
+            required=True,
+            example=8,
+        ),
+        "dbname": fields.String(
+            title="",
+            description="Name of the database to log in to.",
+            required=True,
+            example="mydb",
+        ),
+    },
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -290,36 +345,37 @@ class KruegerData(Resource):
 class Database(Resource):
     """Manages databases."""
 
+    @control.doc(model=[model_control_database])
     def get(self) -> Dict:
         """Get all databases."""
         message = {"header": {"message": "get databases"}, "body": {}}
         response = _send_message(db_manager_socket, message)
         return response
 
+    @control.doc(body=model_add_database)
     def post(self) -> Dict:
         """Add a database."""
-        request_json = request.get_json()
         message = {
             "header": {"message": "add database"},
             "body": {
-                "number_workers": request_json["number_workers"],
-                "id": request_json["id"],
-                "user": request_json["user"],
-                "password": request_json["password"],
-                "host": request_json["host"],
-                "port": request_json["port"],
-                "dbname": request_json["dbname"],
+                "number_workers": control.payload["number_workers"],
+                "id": control.payload["id"],
+                "user": control.payload["user"],
+                "password": control.payload["password"],
+                "host": control.payload["host"],
+                "port": control.payload["port"],
+                "dbname": control.payload["dbname"],
             },
         }
         response = _send_message(db_manager_socket, message)
         return response
 
+    @control.doc(body=model_control_database)
     def delete(self) -> Dict:
         """Delete a database."""
-        request_json = request.get_json()
         message = {
             "header": {"message": "delete database"},
-            "body": {"id": request_json["id"]},
+            "body": {"id": control.payload["id"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
