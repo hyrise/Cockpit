@@ -56,8 +56,10 @@ export default createComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const selectedTable = ref<string>("");
     const { tables } = context.root.$databaseData;
+    const selectedTable = ref<string>(
+      tables.value.length ? tables.value[0] : ""
+    );
     const { data, checkState } = useGenericFetchService(props.metricMeta);
 
     const table = computed(() => selectedTable.value);

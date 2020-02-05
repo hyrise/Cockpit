@@ -4,8 +4,8 @@
       v-if="showDetails"
       :data="data"
       :databases="selectedDatabases"
-      :border="1000"
-      state-order="desc"
+      :border="1"
+      state-order="asc"
       unit="sec"
     />
     <Linechart
