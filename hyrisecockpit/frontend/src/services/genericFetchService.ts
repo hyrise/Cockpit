@@ -35,7 +35,12 @@ export function useGenericFetchService(metric: MetricMetadata): FetchService {
       axios
         .get(metric.endpoint)
         .then(response => {
-          resolve(response.data.body[metric.base]);
+          if (metric.component == "QueryTypeProportion") {
+            //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
+            resolve(response.data);
+          } else {
+            resolve(response.data.body[metric.base]);
+          }
         })
         .catch(error => {
           queryReadyState.value = true;

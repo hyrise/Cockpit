@@ -1,20 +1,20 @@
 <template>
-  <v-navigation-drawer v-model="open" app class="elevation-2" width="150">
+  <v-navigation-drawer v-model="open" app class="elevation-2" width="200">
     <v-toolbar color="primary darken-1"> </v-toolbar>
-    <v-card class="text-center" :to="{ name: 'databases' }">
+    <v-card class="text-center" :to="{ name: 'comparison' }">
       <v-icon class="mt-2" size="100">
         mdi-database-search
       </v-icon>
       <v-card-title class="justify-center">
-        Instanz
+        Comparison
       </v-card-title>
     </v-card>
-    <v-card class="text-center" :to="{ name: 'comparison' }">
+    <v-card class="text-center" :to="{ name: 'overview' }">
       <v-icon class="mt-2" size="100">
         mdi-speedometer
       </v-icon>
       <v-card-title class="justify-center">
-        Vergleich
+        Overview
       </v-card-title>
     </v-card>
     <v-card class="text-center" :to="{ name: 'workload' }">
@@ -25,7 +25,7 @@
         Workload
       </v-card-title>
     </v-card>
-    <v-card class="text-center" :to="{ name: 'home' }">
+    <v-card class="text-center" :to="{ name: 'databases' }">
       <v-icon class="mt-2" size="100">
         mdi-settings
       </v-icon>
@@ -47,7 +47,7 @@ export default createComponent({
   props: {
     open: {
       type: Boolean,
-      default: false
+      default: true
     }
   }
 });

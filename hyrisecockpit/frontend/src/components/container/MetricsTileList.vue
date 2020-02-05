@@ -2,7 +2,7 @@
   <div class="metrics">
     <v-card
       class="metric-chart"
-      v-for="metric in comparisonMetrics"
+      v-for="metric in selectedMetrics"
       :key="metric"
     >
       <v-card-title class="metric-title">
@@ -28,19 +28,19 @@ import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";
 import RAM from "../metrics/RAM.vue";
 import QueueLength from "../metrics/QueueLength.vue";
+import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import {
   getMetadata,
   getMetricTitle,
   getMetricComponent
-} from "../meta/metrics";
-import { Metric, MetricMetadata, comparisonMetrics } from "../../types/metrics";
-import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
+} from "../../meta/metrics";
+import { Metric, MetricMetadata } from "../../types/metrics";
+import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
-  comparisonMetrics: Metric[];
 }
 
 export default createComponent({
@@ -49,13 +49,13 @@ export default createComponent({
     CPU,
     Latency,
     RAM,
-    QueueLength
+    QueueLength,
+    QueryTypeProportion
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {
       getMetadata,
-      comparisonMetrics,
       getMetricTitle,
       getMetricComponent
     };
