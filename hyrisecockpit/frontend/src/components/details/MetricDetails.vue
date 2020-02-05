@@ -83,7 +83,9 @@ export default createComponent({
       props.databases.forEach(
         database =>
           (databaseValueMap[database] = Object.keys(props.data).length
-            ? Math.floor(props.data[database][props.data[database].length - 1])
+            ? Math.floor(
+                props.data[database][props.data[database].length - 1] * 100
+              ) / 100
             : 0)
       );
       return databaseValueMap;
