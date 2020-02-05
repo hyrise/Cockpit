@@ -8,6 +8,8 @@ export function useDataTransformation(metric: Metric): TransformationService {
     access: getAccessData,
     cpu: getCPUData,
     latency: getReadOnlyData,
+    executedQueryTypeProportion: getExecutedQueryTypeProportionData,
+    generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
     queueLength: getReadOnlyData,
     ram: getRAMData,
     storage: getStorageData,
@@ -15,6 +17,57 @@ export function useDataTransformation(metric: Metric): TransformationService {
   };
 
   return transformationMap[metric];
+}
+
+function getExecutedQueryTypeProportionData(
+  data: any,
+  primaryKey: string = ""
+): any {
+  const executedQueryTypeProportion = data.find(
+    (database: any) => database.id === primaryKey
+  ).executed;
+
+  return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
+}
+
+function getGeneratedQueryTypeProportionData(
+  data: any,
+  primaryKey: string = ""
+): any {
+  const generatedQueryTypeProportion = data.find(
+    (database: any) => database.id === primaryKey
+  ).generated;
+
+  return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
+}
+
+function getQueryTypeProportionData(data: any, type: string): any {
+  return [
+    {
+      x: [type],
+      y: [data.DELETE] as number[],
+      name: "DELETE",
+      type: "bar"
+    },
+    {
+      x: [type],
+      y: [data.INSERT] as number[],
+      name: "INSERT",
+      type: "bar"
+    },
+    {
+      x: [type],
+      y: [data.SELECT] as number[],
+      name: "SELECT",
+      type: "bar"
+    },
+    {
+      x: [type],
+      y: [data.UPDATE] as number[],
+      name: "UPDATE",
+      type: "bar"
+    }
+  ];
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {
@@ -83,7 +136,7 @@ function getAccessData(
   for (let i = 0; i < numberOfChunks; i++) {
     newChunks.push("chunk_" + i);
 
-    let chunk: number[] = [];
+    const chunk: number[] = [];
     dataByColumns.forEach(column => {
       chunk.push(column[i]);
     });

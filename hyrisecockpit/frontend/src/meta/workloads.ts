@@ -1,24 +1,20 @@
-import { Workload, WorkloadMetaData } from "../../types/workloads";
+import { Workload, WorkloadMetaData } from "../types/workloads";
 
 const workloadMetaData: Record<Workload, WorkloadMetaData> = {
   "tpch_0.1": {
-    benchmark: "TPCH",
-    "scale-factor": 0.1,
+    folder_name: "tpch_0.1",
     frequency: getFrequency()
   },
   tpch_1: {
-    benchmark: "TPCH",
-    "scale-factor": 1,
+    folder_name: "tpch_1",
     frequency: getFrequency()
   },
   tpcds: {
-    benchmark: "TPCDS",
-    "scale-factor": 1,
+    folder_name: "tpcds",
     frequency: getFrequency()
   },
   job: {
-    benchmark: "JOB",
-    "scale-factor": 0,
+    folder_name: "job",
     frequency: getFrequency()
   }
 };

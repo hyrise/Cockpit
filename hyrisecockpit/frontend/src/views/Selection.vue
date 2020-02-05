@@ -138,7 +138,7 @@ export default createComponent({
     const id = ref<string>("");
     const user = ref<string>("serviceuser");
     const password = ref<string>("");
-    const host = ref<string>(".eaalab.hpi.uni-potsdam.de");
+    const host = ref<string>("vm-");
     const port = ref<string>("5432");
     const dbname = ref<string>("postgres");
     let showDatabaseDialog = false;

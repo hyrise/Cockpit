@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="mx-10 my-10">
+    <div class="mt-10">
       <v-row align="center">
         <v-col cols="6" class="mx-10">
           <v-select
             v-model="selectedTable"
             :items="tables"
+            class="select"
             chips
             label="table"
             outlined
@@ -99,3 +100,8 @@ export default createComponent({
   }
 });
 </script>
+<style scoped>
+.select {
+  z-index: 2;
+}
+</style>

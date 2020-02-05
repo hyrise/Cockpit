@@ -10,10 +10,23 @@ export type Metric =
   | "throughput"
   | "latency"
   | "ram"
-  | "queueLength";
+  | "queueLength"
+  | "executedQueryTypeProportion"
+  | "generatedQueryTypeProportion";
 
 export const instanceMetrics: Metric[] = ["storage", "access"];
+
 export const comparisonMetrics: Metric[] = [
+  "throughput",
+  "latency",
+  "cpu",
+  "ram",
+  "queueLength",
+  //"storage", //-> breaks comparison table
+  "access",
+  "executedQueryTypeProportion"
+];
+export const overviewMetrics: Metric[] = [
   "throughput",
   "latency",
   "cpu",
@@ -21,11 +34,15 @@ export const comparisonMetrics: Metric[] = [
   "queueLength"
 ];
 
+export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
+
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
+  title: string;
+  component: string;
 }
 
 export interface ComparisonMetricData {
