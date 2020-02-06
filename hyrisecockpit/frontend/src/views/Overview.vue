@@ -26,11 +26,13 @@ import {
   watch,
   computed,
   Ref,
+  onMounted,
   ref
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { ScreenData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
+import { eventBus } from "../eventBus";
 
 interface Data extends ScreenData {
   overviewMetrics: Metric[];
@@ -44,6 +46,10 @@ export default createComponent({
     const watchedInstances = ref<string[]>([]);
 
     const { isReady } = context.root.$databaseData;
+    onMounted(() => {
+      eventBus.$emit("METRICS_CHANGED", overviewMetrics);
+    });
+
     watch(isReady, () => {
       if (isReady.value) {
         watchedInstances.value = context.root.$databaseData.databases.value.map(

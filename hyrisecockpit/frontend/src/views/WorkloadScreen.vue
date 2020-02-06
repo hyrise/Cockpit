@@ -89,6 +89,7 @@ import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { ScreenData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
+import { eventBus } from "../eventBus";
 
 interface Props {}
 interface Data extends ScreenData {
@@ -134,6 +135,10 @@ export default createComponent({
           )[0]
         ];
       }
+    });
+
+    onMounted(() => {
+      eventBus.$emit("METRICS_CHANGED", workloadMetrics);
     });
 
     return {

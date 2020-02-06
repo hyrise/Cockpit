@@ -42,17 +42,13 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const { checkState, data } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const chartConfiguration = [
       "Queue Length",
       "time in sec",
       "amount of queries"
     ];
-
-    onMounted(() => {
-      setInterval(checkState, 1000);
-    });
 
     return {
       data,

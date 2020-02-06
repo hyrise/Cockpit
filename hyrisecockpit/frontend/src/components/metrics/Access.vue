@@ -60,7 +60,7 @@ export default createComponent({
     const selectedTable = ref<string>(
       tables.value.length ? tables.value[0] : ""
     );
-    const { data, checkState } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const table = computed(() => selectedTable.value);
 
@@ -84,11 +84,6 @@ export default createComponent({
         columns.value = newColumns;
         mapData.value = dataByChunks;
       }
-    });
-
-    checkState();
-    onMounted(() => {
-      setInterval(checkState, 5000);
     });
 
     return {

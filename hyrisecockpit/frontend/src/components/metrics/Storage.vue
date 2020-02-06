@@ -38,17 +38,12 @@ export default createComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { data, checkState } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
     const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
-
-    onMounted(() => {
-      checkState();
-      setInterval(checkState, 20000);
-    });
 
     watch(data, () => {
       if (Object.keys(data.value).length) {

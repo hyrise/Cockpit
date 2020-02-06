@@ -23,6 +23,7 @@
           class="metric"
           :is="getMetricComponent(metric)"
           :selected-databases="[database]"
+          :metric="metric"
           :metric-meta="getMetadata(metric)"
           :graph-id="`${metric}-${database}`"
           :show-details="showDetails"

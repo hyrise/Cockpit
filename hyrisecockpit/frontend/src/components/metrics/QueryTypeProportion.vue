@@ -34,7 +34,7 @@ export default createComponent({
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const { databases } = context.root.$databaseData;
-    const { data, checkState } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
     const transformedData = ref<any>([]);
 
     const chartConfiguration = [
@@ -42,11 +42,6 @@ export default createComponent({
       "workload",
       "amount of queries"
     ];
-
-    onMounted(() => {
-      checkState();
-      setInterval(checkState, 5000);
-    });
 
     watch(data, () => {
       if (Object.keys(data.value).length) {

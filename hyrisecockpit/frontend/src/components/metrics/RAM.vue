@@ -45,13 +45,9 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const { checkState, data } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const chartConfiguration = ["RAM", "time in sec", "memory usage in %"];
-
-    onMounted(() => {
-      setInterval(checkState, 1000);
-    });
 
     return {
       data,

@@ -42,12 +42,14 @@ import {
   watch,
   computed,
   Ref,
-  ref
+  ref,
+  onMounted
 } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/views";
+import { eventBus } from "../eventBus";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
@@ -72,6 +74,13 @@ export default createComponent({
           database => database.id
         );
       }
+    });
+
+    onMounted(() => {
+      eventBus.$emit(
+        "METRICS_CHANGED",
+        selectedMetrics.value.map((metric: any) => metric.value)
+      );
     });
 
     function handleMaxSelected() {
