@@ -322,8 +322,11 @@ class Database(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _check_if_tables_processed(self) -> None:
+    def _check_if_tables_processed(self, table_loading_tasks) -> None:
         """Check if all table processing task are taken from the queue and if so flushes it."""
+        if not self._processing_tables_flag.value:
+            self._processing_tables_flag.value = True
+            self._flush_queue(table_loading_tasks)
         if self._task_queue.empty():
             self._flush_queue()
             self._processing_tables_flag.value = False
@@ -331,13 +334,16 @@ class Database(object):
 
     def _start_table_processing_parallel(self, table_loading_tasks) -> None:
         """Flush queue and initialize it with table processing queries."""
-        self._flush_queue(table_loading_tasks)
         self._check_if_tables_processed_job = self._scheduler.add_job(
-            func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
+            func=self._check_if_tables_processed,
+            args=(table_loading_tasks,),
+            trigger="interval",
+            seconds=0.2,
         )
 
     def _start_table_processing_sequential(self, table_loading_tasks) -> None:
         """Flush queue and initialize it with table processing queries."""
+        self._processing_tables_flag.value = True
         self._flush_queue()
         with PoolCursor(self._connection_pool) as cur:
             for task in table_loading_tasks:
@@ -358,15 +364,12 @@ class Database(object):
         self, table_action: Callable, folder_name: str, processing_action: Callable
     ) -> bool:
         """Process changes on tables by taking a generic function which creates table processing queries."""
-        self._processing_tables_flag.value = True
         table_names = _table_names.get(folder_name.split("_")[0])
         if table_names is None:
-            self._processing_tables_flag.value = False
             return False
 
         table_loading_tasks = table_action(table_names, folder_name)
         if len(table_loading_tasks) == 0:
-            self._processing_tables_flag.value = False
             return True
         processing_action(table_loading_tasks)
         return True
