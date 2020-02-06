@@ -1,20 +1,27 @@
 import { Workload, WorkloadMetaData } from "../types/workloads";
 
+export const workloadNamingForBackend: Record<Workload, string> = {
+  TPCH01: "tpch_0.1",
+  TPCH1: "tpch_1",
+  TPCDS: "tpcds",
+  JOB: "job"
+};
+
 const workloadMetaData: Record<Workload, WorkloadMetaData> = {
-  "tpch_0.1": {
-    folder_name: "tpch_0.1",
+  TPCH01: {
+    folder_name: workloadNamingForBackend["TPCH01"],
     frequency: getFrequency()
   },
-  tpch_1: {
-    folder_name: "tpch_1",
+  TPCH1: {
+    folder_name: workloadNamingForBackend["TPCH1"],
     frequency: getFrequency()
   },
-  tpcds: {
-    folder_name: "tpcds",
+  TPCDS: {
+    folder_name: workloadNamingForBackend["TPCDS"],
     frequency: getFrequency()
   },
-  job: {
-    folder_name: "job",
+  JOB: {
+    folder_name: workloadNamingForBackend["JOB"],
     frequency: getFrequency()
   }
 };

@@ -41,7 +41,7 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="loadWorkloadData(workload)"
+          @click="loadWorkloadData(workloadNamingForBackend[workload])"
           color="success"
         >
           {{ workload }}
@@ -54,7 +54,7 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="deleteWorkloadData(workload)"
+          @click="deleteWorkloadData(workloadNamingForBackend[workload])"
           color="error"
         >
           {{ workload }}
@@ -85,7 +85,11 @@ import {
 } from "../types/workloads";
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
-import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
+import {
+  workloadNamingForBackend,
+  getWorkloadMetaData,
+  getFrequency
+} from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { ScreenData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";

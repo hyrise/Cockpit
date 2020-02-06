@@ -1,5 +1,4 @@
-export type Workload = "tpch_0.1" | "tpch_1" | "tpcds" | "job";
-type Benchmark = "TPCH" | "TPCDS" | "JOB";
+export type Workload = "TPCH01" | "TPCH1" | "TPCDS" | "JOB";
 
 export interface WorkloadMetaData {
   folder_name: string;
@@ -7,8 +6,8 @@ export interface WorkloadMetaData {
 }
 
 export const availableWorkloads: Workload[] = [
-  "tpch_0.1",
-  "tpch_1",
-  "tpcds",
-  "job"
+  "TPCH01",
+  "TPCH1",
+  "TPCDS",
+  "JOB"
 ];
