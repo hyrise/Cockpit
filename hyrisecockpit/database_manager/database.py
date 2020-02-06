@@ -124,8 +124,10 @@ def execute_queries(
     database_id: str,
 ) -> None:
     """Define workers work loop."""
+    # Allow exit without flush
     task_queue.cancel_join_thread()
     failed_task_queue.cancel_join_thread()
+
     with PoolCursor(connection_pool) as cur:
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
