@@ -89,7 +89,7 @@ import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { ScreenData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { eventBus } from "../eventBus";
+import { eventBus } from "../plugins/eventBus";
 
 interface Props {}
 interface Data extends ScreenData {
@@ -126,11 +126,11 @@ export default createComponent({
       stopWorkload
     } = useWorkloadService();
 
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
     watch(isReady, () => {
       if (isReady.value) {
         watchedInstances.value = [
-          context.root.$databaseData.databases.value.map(
+          context.root.$databaseService.databases.value.map(
             database => database.id
           )[0]
         ];

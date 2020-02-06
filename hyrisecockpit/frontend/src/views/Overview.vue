@@ -1,10 +1,10 @@
 <template>
   <div class="mx-6">
     <v-select
-      v-if="$databaseData.isReady"
+      v-if="$databaseService.isReady"
       class="select"
       v-model="watchedInstances"
-      :items="$databaseData.databases.value.map(database => database.id)"
+      :items="$databaseService.databases.value.map(database => database.id)"
       chips
       label="databases"
       multiple
@@ -32,7 +32,7 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { ScreenData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { eventBus } from "../eventBus";
+import { eventBus } from "../plugins/eventBus";
 
 interface Data extends ScreenData {
   overviewMetrics: Metric[];
@@ -45,14 +45,14 @@ export default createComponent({
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = ref<string[]>([]);
 
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
     onMounted(() => {
       eventBus.$emit("METRICS_CHANGED", overviewMetrics);
     });
 
     watch(isReady, () => {
       if (isReady.value) {
-        watchedInstances.value = context.root.$databaseData.databases.value.map(
+        watchedInstances.value = context.root.$databaseService.databases.value.map(
           database => database.id
         );
       }

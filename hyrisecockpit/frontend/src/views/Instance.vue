@@ -36,7 +36,7 @@ import {
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
-import { eventBus } from "../eventBus";
+import { eventBus } from "../plugins/eventBus";
 
 import { ScreenData } from "../types/views";
 

@@ -2,11 +2,11 @@
   <div class="mx-6">
     <div class="select">
       <v-select
-        v-if="$databaseData.isReady"
+        v-if="$databaseService.isReady"
         class="select-box"
         v-model="watchedInstances"
         v-on:input="handleMaxSelected"
-        :items="$databaseData.databases.value.map(database => database.id)"
+        :items="$databaseService.databases.value.map(database => database.id)"
         chips
         label="databases"
         multiple
@@ -15,7 +15,7 @@
         prepend-icon="mdi-database"
       ></v-select>
       <v-select
-        v-if="$databaseData.isReady"
+        v-if="$databaseService.isReady"
         class="select-box"
         v-model="selectedMetrics"
         :items="availableMetrics"
@@ -49,7 +49,7 @@ import MetricsComparisonTable from "../components/container/MetricsComparisonTab
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/views";
-import { eventBus } from "../eventBus";
+import { eventBus } from "../plugins/eventBus";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
@@ -67,10 +67,10 @@ export default createComponent({
       return { text: getMetricTitle(metric), value: metric };
     });
     const selectedMetrics = ref<Object[]>(availableMetrics);
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
     watch(isReady, () => {
       if (isReady.value) {
-        watchedInstances.value = context.root.$databaseData.databases.value.map(
+        watchedInstances.value = context.root.$databaseService.databases.value.map(
           database => database.id
         );
       }

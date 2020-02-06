@@ -28,7 +28,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../../services/genericFetchService";
 import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";

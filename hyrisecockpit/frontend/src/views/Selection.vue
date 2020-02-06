@@ -132,7 +132,7 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databases, addDatabase } = context.root.$databaseData;
+    const { databases, addDatabase } = context.root.$databaseService;
 
     const number_workers = ref<number>(8);
     const id = ref<string>("");

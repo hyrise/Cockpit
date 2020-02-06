@@ -28,7 +28,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../../services/genericFetchService";
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,

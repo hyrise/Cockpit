@@ -7,7 +7,7 @@
       :key="`${uuid()}-${database}`"
     >
       <v-card class="database" color="primary" dark elevation="4">
-        <v-card-title class="database-titel">
+        <v-card-title class="database-title">
           {{ database }}
         </v-card-title>
       </v-card>
@@ -82,7 +82,7 @@ export default createComponent({
 });
 </script>
 <style scoped>
-.database-titel {
+.database-title {
   justify-content: center;
 }
 .database {

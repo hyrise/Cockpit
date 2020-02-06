@@ -36,7 +36,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../../services/genericFetchService";
 import Heatmap from "../charts/Heatmap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
 
@@ -56,7 +55,7 @@ export default createComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { tables } = context.root.$databaseData;
+    const { tables } = context.root.$databaseService;
     const selectedTable = ref<string>(
       tables.value.length ? tables.value[0] : ""
     );

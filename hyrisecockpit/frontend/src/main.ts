@@ -10,7 +10,7 @@ Vue.use(VueCompositionApi);
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$databaseData = useDatabaseService();
+Vue.prototype.$databaseService = useDatabaseService();
 Vue.prototype.$metricController = useMetricController();
 
 new Vue({

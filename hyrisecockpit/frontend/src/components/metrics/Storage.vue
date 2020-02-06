@@ -19,7 +19,6 @@ import {
   ref,
   onMounted
 } from "@vue/composition-api";
-import { useGenericFetchService } from "../../services/genericFetchService";
 import * as Plotly from "plotly.js";
 import Treemap from "../charts/Treemap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";

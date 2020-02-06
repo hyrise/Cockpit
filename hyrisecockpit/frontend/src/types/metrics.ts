@@ -75,6 +75,10 @@ export interface MetricProps {
 }
 
 export const MetricPropsValidation = {
+  metric: {
+    type: String,
+    default: null
+  },
   metricMeta: {
     type: Object,
     default: null
