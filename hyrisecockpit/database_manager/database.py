@@ -124,6 +124,8 @@ def execute_queries(
     database_id: str,
 ) -> None:
     """Define workers work loop."""
+    task_queue.cancel_join_thread()
+    failed_task_queue.cancel_join_thread()
     with PoolCursor(connection_pool) as cur:
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
@@ -349,8 +351,8 @@ class Database(object):
                     else None
                 )
                 cur.execute(query, formatted_parameters)
-                self._flush_queue()
-                self._processing_tables_flag.value = False
+        self._flush_queue()
+        self._processing_tables_flag.value = False
 
     def _process_tables(
         self, table_action: Callable, folder_name: str, processing_action: Callable
