@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="mx-10 my-10">
+    <div class="mt-10">
       <v-row align="center">
         <v-col cols="6" class="mx-10">
           <v-select
             v-model="selectedTable"
             :items="tables"
+            class="select"
             chips
             label="table"
             outlined
@@ -14,7 +15,7 @@
         </v-col>
       </v-row>
       <Heatmap
-        graph-id="access"
+        :graph-id="graphId || 'access'"
         :data="mapData"
         :x-values="columns"
         :y-values="chunks"
@@ -55,8 +56,10 @@ export default createComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const selectedTable = ref<string>("");
     const { tables } = context.root.$databaseData;
+    const selectedTable = ref<string>(
+      tables.value.length ? tables.value[0] : ""
+    );
     const { data, checkState } = useGenericFetchService(props.metricMeta);
 
     const table = computed(() => selectedTable.value);
@@ -99,3 +102,8 @@ export default createComponent({
   }
 });
 </script>
+<style scoped>
+.select {
+  z-index: 2;
+}
+</style>

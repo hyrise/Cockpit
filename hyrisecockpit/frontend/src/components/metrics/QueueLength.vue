@@ -4,14 +4,14 @@
       v-if="showDetails"
       :data="data"
       :databases="selectedDatabases"
-      :border="1"
+      :border="1000000"
       state-order="asc"
-      unit="sec"
+      unit="q"
     />
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      :graph-id="graphId || 'latency'"
+      :graph-id="graphId || 'queueLength'"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -29,9 +29,6 @@ import {
 } from "@vue/composition-api";
 
 import { useGenericFetchService } from "../../services/genericFetchService";
-import { Database } from "../../types/database";
-import * as Plotly from "plotly.js";
-import Vue from "vue";
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
@@ -41,13 +38,17 @@ import {
 import MetricDetails from "../details/MetricDetails.vue";
 
 export default createComponent({
-  name: "Latency",
+  name: "QueueLength",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const { checkState, data } = useGenericFetchService(props.metricMeta);
 
-    const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
+    const chartConfiguration = [
+      "Queue Length",
+      "time in sec",
+      "amount of queries"
+    ];
 
     onMounted(() => {
       setInterval(checkState, 1000);

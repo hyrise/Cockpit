@@ -1,22 +1,28 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import DatabaseInstance from "../screens/DatabaseInstance.vue";
-import DatabasesComparison from "../screens/DatabasesComparison.vue";
-import DatabasesScreen from "../screens/DatabasesScreen.vue";
-import Home from "../screens/Home.vue";
-import WorkloadScreen from "../screens/WorkloadScreen.vue";
+import Instance from "../views/Instance.vue";
+import InstanceComparison from "../views/InstanceComparison.vue";
+import Overview from "../views/Overview.vue";
+import Selection from "../views/Selection.vue";
+import Home from "../views/Home.vue";
+import WorkloadScreen from "../views/WorkloadScreen.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   { name: "home", path: "/", component: Home },
-  { name: "database", path: "/database/:id", component: DatabaseInstance },
+  { name: "database", path: "/database/:id", component: Instance },
   { name: "workload", path: "/workload", component: WorkloadScreen },
-  { name: "databases", path: "/databases", component: DatabasesScreen },
+  { name: "databases", path: "/databases", component: Selection },
   {
     name: "comparison",
     path: "/databases/compare",
-    component: DatabasesComparison
+    component: InstanceComparison
+  },
+  {
+    name: "overview",
+    path: "/databases/overview",
+    component: Overview
   }
 ];
 

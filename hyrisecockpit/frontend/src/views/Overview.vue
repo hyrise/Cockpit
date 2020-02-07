@@ -14,6 +14,7 @@
     <MetricsTileList
       :selected-databases="watchedInstances"
       :show-details="false"
+      :selected-metrics="overviewMetrics"
     />
   </div>
 </template>
@@ -27,10 +28,12 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import MetricsTileList from "../components/MetricsTileList.vue";
+import MetricsTileList from "../components/container/MetricsTileList.vue";
+import { ScreenData } from "../types/views";
+import { Metric, overviewMetrics } from "../types/metrics";
 
-interface Data {
-  watchedInstances: Ref<string[]>;
+interface Data extends ScreenData {
+  overviewMetrics: Metric[];
 }
 
 export default createComponent({
@@ -48,7 +51,7 @@ export default createComponent({
         );
       }
     });
-    return { watchedInstances };
+    return { watchedInstances, overviewMetrics };
   }
 });
 </script>

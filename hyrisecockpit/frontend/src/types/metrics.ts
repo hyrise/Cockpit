@@ -9,16 +9,40 @@ export type Metric =
   | "storage"
   | "throughput"
   | "latency"
-  | "ram";
+  | "ram"
+  | "queueLength"
+  | "executedQueryTypeProportion"
+  | "generatedQueryTypeProportion";
 
-export const instanceMetrics = ["Storage", "Access"];
-export const comparisonMetrics = ["Throughput", "Latency", "CPU", "RAM"];
+export const instanceMetrics: Metric[] = ["storage", "access"];
+
+export const comparisonMetrics: Metric[] = [
+  "throughput",
+  "latency",
+  "cpu",
+  "ram",
+  "queueLength",
+  //"storage", //-> breaks comparison table
+  "access",
+  "executedQueryTypeProportion"
+];
+export const overviewMetrics: Metric[] = [
+  "throughput",
+  "latency",
+  "cpu",
+  "ram",
+  "queueLength"
+];
+
+export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
 
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
+  title: string;
+  component: string;
 }
 
 export interface ComparisonMetricData {
@@ -29,6 +53,7 @@ export interface ComparisonMetricData {
 export interface MetricProps {
   metricMeta: MetricMetadata;
   selectedDatabases: string[];
+  graphId: string;
   showDetails: boolean;
 }
 
@@ -43,6 +68,10 @@ export const MetricPropsValidation = {
   },
   showDetails: {
     type: Boolean,
+    default: null
+  },
+  graphId: {
+    type: String,
     default: null
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="mx-10 my-10">
     <Treemap
-      graph-id="storage"
+      :graph-id="graphId || 'storage'"
       :labels="labels"
       :parents="parents"
       :values="sizes"
@@ -47,7 +47,7 @@ export default createComponent({
 
     onMounted(() => {
       checkState();
-      setInterval(checkState, 5000);
+      setInterval(checkState, 20000);
     });
 
     watch(data, () => {

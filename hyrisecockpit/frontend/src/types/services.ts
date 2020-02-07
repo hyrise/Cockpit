@@ -1,5 +1,5 @@
 import { Ref } from "@vue/composition-api";
-import { Workload } from "./workloads";
+import { Workload, WorkloadMetaData } from "./workloads";
 
 export interface FetchService {
   data: Ref<any>;
@@ -15,8 +15,7 @@ export type TransformationService = (
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  registerWorkload: () => void;
-  startWorkload: () => void;
+  startWorkload: (workloadMetaData: WorkloadMetaData) => void;
   stopWorkload: () => void;
 }
 
@@ -27,8 +26,6 @@ export type Base =
   | "throughput"
   | "storage"
   | "chunks_data"
-  | "latency";
-
-const vm = "aurora";
-const port = 8000;
-export const backendUrl = `http://vm-${vm}.eaalab.hpi.uni-potsdam.de:${port}/`;
+  | "latency"
+  | "queue_length"
+  | "krueger_data";
