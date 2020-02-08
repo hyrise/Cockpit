@@ -66,6 +66,7 @@ class StorageCursor:
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
                 "fields": {"start": float(query[0]), "end": float(query[1])},
+                "time": int(query[0] * 1e9),
             }
             points.append(point)
         self._connection.write_points(points, database=self._database)
