@@ -44,9 +44,6 @@ class Workload(object):
             query_type = query_types[self._query_type_pointer]
             index = self._query_pointers[query_type]
             workload_queries.append((self._queries[query_type][index], None))
-            if query_type == "TPC-H 15":
-                print(self._queries[query_type][index])
-                print("__________")
 
             self._query_pointers[query_type] = (index + 1) % len(
                 self._queries[query_type]
