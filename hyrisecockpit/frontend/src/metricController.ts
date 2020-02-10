@@ -13,6 +13,7 @@ type Interval = {
 
 export function useMetricController(): MetricController {
   eventBus.$on("METRICS_CHANGED", (payload: Metric[]) => {
+    console.log("changed");
     stop();
     start(payload);
   });

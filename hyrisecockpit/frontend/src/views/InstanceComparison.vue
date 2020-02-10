@@ -18,6 +18,7 @@
         v-if="$databaseService.isReady"
         class="select-box"
         v-model="selectedMetrics"
+        v-on:input="handleMetricsChanged"
         :items="availableMetrics"
         chips
         return-object
@@ -53,6 +54,7 @@ import { eventBus } from "../plugins/eventBus";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
+  handleMetricsChanged: () => void;
   selectedMetrics: Ref<Object[]>;
   availableMetrics: Object[];
 }
@@ -77,20 +79,25 @@ export default createComponent({
     });
 
     onMounted(() => {
-      eventBus.$emit(
-        "METRICS_CHANGED",
-        selectedMetrics.value.map((metric: any) => metric.value)
-      );
+      handleMetricsChanged();
     });
 
-    function handleMaxSelected() {
+    function handleMaxSelected(): void {
       if (watchedInstances.value.length > 4) {
         watchedInstances.value.pop();
       }
     }
+    function handleMetricsChanged(): void {
+      eventBus.$emit(
+        "METRICS_CHANGED",
+        selectedMetrics.value.map((metric: any) => metric.value)
+      );
+    }
+
     return {
       watchedInstances,
       handleMaxSelected,
+      handleMetricsChanged,
       selectedMetrics,
       availableMetrics
     };

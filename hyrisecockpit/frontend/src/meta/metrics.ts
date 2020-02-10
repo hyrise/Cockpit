@@ -42,7 +42,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     title: "Query Type Proportion",
     component: "QueryTypeProportion",
-    requestTime: 1000
+    requestTime: 2000
   },
   generatedQueryTypeProportion: {
     fetchType: "read",
@@ -53,7 +53,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "krueger_data",
     title: "Query Type Proportion",
     component: "QueryTypeProportion",
-    requestTime: 1000
+    requestTime: 2000
   },
   queueLength: {
     fetchType: "modify",
