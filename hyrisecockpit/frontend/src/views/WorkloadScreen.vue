@@ -41,7 +41,7 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="loadWorkloadData(workloadNamingForBackend[workload])"
+          @click="loadWorkloadData(getTransferredWorkload[workload])"
           color="success"
         >
           {{ workload }}
@@ -54,7 +54,7 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="deleteWorkloadData(workloadNamingForBackend[workload])"
+          @click="deleteWorkloadData(getTransferredWorkload[workload])"
           color="error"
         >
           {{ workload }}
@@ -86,7 +86,7 @@ import {
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
 import {
-  workloadNamingForBackend,
+  getTransferredWorkload,
   getWorkloadMetaData,
   getFrequency
 } from "../meta/workloads";

@@ -1,33 +1,36 @@
 import { Workload, WorkloadMetaData } from "../types/workloads";
 
-export const workloadNamingForBackend: Record<Workload, string> = {
-  TPCH01: "tpch_0.1",
-  TPCH1: "tpch_1",
-  TPCDS: "tpcds",
-  JOB: "job"
+const transferredWorkload: Record<Workload, string> = {
+  tpch01: "tpch_0.1",
+  tpch1: "tpch_1",
+  tpcds: "tpcds",
+  job: "job"
 };
 
 const workloadMetaData: Record<Workload, WorkloadMetaData> = {
-  TPCH01: {
-    folder_name: workloadNamingForBackend["TPCH01"],
+  tpch01: {
+    folder_name: getTransferredWorkload("tpch01"),
     frequency: getFrequency()
   },
-  TPCH1: {
-    folder_name: workloadNamingForBackend["TPCH1"],
+  tpch1: {
+    folder_name: getTransferredWorkload("tpch1"),
     frequency: getFrequency()
   },
-  TPCDS: {
-    folder_name: workloadNamingForBackend["TPCDS"],
+  tpcds: {
+    folder_name: getTransferredWorkload("tpcds"),
     frequency: getFrequency()
   },
-  JOB: {
-    folder_name: workloadNamingForBackend["JOB"],
+  job: {
+    folder_name: getTransferredWorkload("job"),
     frequency: getFrequency()
   }
 };
 
 export function getFrequency(): number {
   return 200;
+}
+export function getTransferredWorkload(workload: Workload): string {
+  return transferredWorkload[workload];
 }
 export function getWorkloadMetaData(workload: Workload): WorkloadMetaData {
   return workloadMetaData[workload];
