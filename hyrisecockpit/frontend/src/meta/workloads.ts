@@ -6,7 +6,12 @@ const transferredWorkload: Record<Workload, string> = {
   tpcds: "tpcds",
   job: "job"
 };
-
+const displayedWorkload: Record<Workload, string> = {
+  tpch01: "TPC-H SF 0.1",
+  tpch1: "TPC-H SF 1",
+  tpcds: "TPCDS",
+  job: "JOB"
+};
 const workloadMetaData: Record<Workload, WorkloadMetaData> = {
   tpch01: {
     folder_name: getTransferredWorkload("tpch01"),
@@ -31,6 +36,9 @@ export function getFrequency(): number {
 }
 export function getTransferredWorkload(workload: Workload): string {
   return transferredWorkload[workload];
+}
+export function getDisplayedWorkload(workload: Workload): string {
+  return displayedWorkload[workload];
 }
 export function getWorkloadMetaData(workload: Workload): WorkloadMetaData {
   return workloadMetaData[workload];
