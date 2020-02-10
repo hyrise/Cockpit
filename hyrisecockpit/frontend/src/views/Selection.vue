@@ -114,6 +114,7 @@ import {
 } from "@vue/composition-api";
 import axios from "axios";
 import { Database } from "../types/database";
+import { eventBus } from "../plugins/eventBus";
 
 interface Props {}
 interface Data {
@@ -133,6 +134,10 @@ interface Data {
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databases, addDatabase } = context.root.$databaseService;
+
+    onMounted(() => {
+      eventBus.$emit("METRICS_CHANGED", []);
+    });
 
     const number_workers = ref<number>(8);
     const id = ref<string>("");

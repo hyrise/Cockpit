@@ -1,21 +1,23 @@
 <template>
-  <div class="mx-6">
-    <v-select
-      v-if="$databaseService.isReady"
-      class="select"
-      v-model="watchedInstances"
-      :items="$databaseService.databases.value.map(database => database.id)"
-      chips
-      label="databases"
-      multiple
-      outlined
-      prepend-icon="mdi-database"
-    ></v-select>
-    <MetricsTileList
-      :selected-databases="watchedInstances"
-      :show-details="false"
-      :selected-metrics="overviewMetrics"
-    />
+  <div>
+    <div v-if="$databaseService.isReady.value" class="mx-6">
+      <v-select
+        class="select"
+        v-model="watchedInstances"
+        :items="$databaseService.databases.value.map(database => database.id)"
+        chips
+        label="databases"
+        multiple
+        outlined
+        prepend-icon="mdi-database"
+      ></v-select>
+      <MetricsTileList
+        :selected-databases="watchedInstances"
+        :show-details="false"
+        :selected-metrics="overviewMetrics"
+      />
+    </div>
+    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 

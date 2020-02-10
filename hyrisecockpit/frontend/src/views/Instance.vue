@@ -1,13 +1,14 @@
 <template>
-  <div class="ml-6">
-    <MetricsTileList
-      :selected-databases="watchedInstances"
-      :show-details="true"
-      :selected-metrics="overviewMetrics"
-    />
-    <div class="mt-6 mb-2">
+  <div>
+    <div v-if="$databaseService.isReady.value" class="ml-6">
+      <MetricsTileList
+        :selected-databases="watchedInstances"
+        :show-details="true"
+        :selected-metrics="overviewMetrics"
+      />
       <component
         v-for="metric in instanceMetrics"
+        class="instance"
         :key="metric"
         :metric="metric"
         :is="getMetricComponent(metric)"
@@ -15,6 +16,7 @@
         :metric-meta="getMetadata(metric)"
       />
     </div>
+    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
@@ -74,3 +76,8 @@ export default createComponent({
   }
 });
 </script>
+<style scoped>
+.instance {
+  margin-top: 1%;
+}
+</style>

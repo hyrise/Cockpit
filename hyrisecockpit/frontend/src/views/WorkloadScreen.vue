@@ -1,71 +1,80 @@
 <template>
-  <div class="mx-12">
-    <div class="mt-6 mb-2">
-      <b> Workload Generation </b>
-    </div>
-    <v-divider />
-    <v-col cols="12">
-      <div class="mb-2 mt-2">
-        <b> Start workload </b>
-      </div>
-      <v-btn-toggle>
-        <v-btn
-          v-for="workload in availableWorkloads"
-          :key="workload"
-          @click="
-            startWorkload(getWorkloadMetaData(workload));
-            getCurrentFrequency();
-          "
-          color="success"
-        >
-          {{ workload }}
-        </v-btn>
-      </v-btn-toggle>
-      <p>Frequency is: {{ frequency }}</p>
-      <div class="mb-2 mt-6">
-        <b> Stop workload </b>
-      </div>
-      <v-btn
-        @click="
-          stopWorkload();
-          setFrequencyToNull();
-        "
-        large
-        color="error"
-        >Stop
-      </v-btn>
-      <div class="mb-2 mt-6">
-        <b> Load generated data into instances</b>
-      </div>
-      <v-btn-toggle>
-        <v-btn
-          v-for="workload in availableWorkloads"
-          :key="workload"
-          @click="loadWorkloadData(workload)"
-          color="success"
-        >
-          {{ workload }}
-        </v-btn>
-      </v-btn-toggle>
-      <div class="mb-2 mt-6">
-        <b> Remove generated data from instances</b>
-      </div>
-      <v-btn-toggle>
-        <v-btn
-          v-for="workload in availableWorkloads"
-          :key="workload"
-          @click="deleteWorkloadData(workload)"
-          color="error"
-        >
-          {{ workload }}
-        </v-btn>
-      </v-btn-toggle>
-    </v-col>
-    <MetricsTileList
-      :selected-databases="watchedInstances"
-      :show-details="false"
-      :selected-metrics="workloadMetrics"
+  <div>
+    <v-progress-linear
+      v-if="!$databaseService.isReady.value"
+      indeterminate
+      color="primary"
+      height="7"
     />
+    <div class="mx-12">
+      <div class="mt-6 mb-2">
+        <b> Workload Generation </b>
+      </div>
+      <v-divider />
+      <v-col cols="12">
+        <div class="mb-2 mt-2">
+          <b> Start workload </b>
+        </div>
+        <v-btn-toggle>
+          <v-btn
+            v-for="workload in availableWorkloads"
+            :key="workload"
+            @click="
+              startWorkload(getWorkloadMetaData(workload));
+              getCurrentFrequency();
+            "
+            color="success"
+          >
+            {{ workload }}
+          </v-btn>
+        </v-btn-toggle>
+        <p>Frequency is: {{ frequency }}</p>
+        <div class="mb-2 mt-6">
+          <b> Stop workload </b>
+        </div>
+        <v-btn
+          @click="
+            stopWorkload();
+            setFrequencyToNull();
+          "
+          large
+          color="error"
+          >Stop
+        </v-btn>
+        <div class="mb-2 mt-6">
+          <b> Load generated data into instances</b>
+        </div>
+        <v-btn-toggle>
+          <v-btn
+            v-for="workload in availableWorkloads"
+            :key="workload"
+            @click="loadWorkloadData(workload)"
+            color="success"
+          >
+            {{ workload }}
+          </v-btn>
+        </v-btn-toggle>
+        <div class="mb-2 mt-6">
+          <b> Remove generated data from instances</b>
+        </div>
+        <v-btn-toggle>
+          <v-btn
+            v-for="workload in availableWorkloads"
+            :key="workload"
+            @click="deleteWorkloadData(workload)"
+            color="error"
+          >
+            {{ workload }}
+          </v-btn>
+        </v-btn-toggle>
+      </v-col>
+      <MetricsTileList
+        v-if="$databaseService.isReady.value"
+        :selected-databases="watchedInstances"
+        :show-details="false"
+        :selected-metrics="workloadMetrics"
+      />
+    </div>
   </div>
 </template>
 
