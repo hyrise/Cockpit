@@ -14,7 +14,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "chunks_data",
     endpoint: monitorBackend + "chunks",
     title: "Access Frequency",
-    component: "Access"
+    component: "Access",
+    requestTime: 5000
   },
   cpu: {
     fetchType: "modify",
@@ -22,7 +23,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: monitorBackend + "system",
     title: "CPU",
-    component: "CPU"
+    component: "CPU",
+    requestTime: 1000
   },
   latency: {
     fetchType: "modify",
@@ -30,7 +32,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "latency",
     endpoint: monitorBackend + "latency",
     title: "Latency",
-    component: "Latency"
+    component: "Latency",
+    requestTime: 1000
   },
   executedQueryTypeProportion: {
     fetchType: "read",
@@ -38,7 +41,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     title: "Query Type Proportion",
-    component: "QueryTypeProportion"
+    component: "QueryTypeProportion",
+    requestTime: 1000
   },
   generatedQueryTypeProportion: {
     fetchType: "read",
@@ -48,7 +52,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     title: "Query Type Proportion",
-    component: "QueryTypeProportion"
+    component: "QueryTypeProportion",
+    requestTime: 1000
   },
   queueLength: {
     fetchType: "modify",
@@ -56,7 +61,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "queue_length",
     endpoint: monitorBackend + "queue_length",
     title: "Queue Length",
-    component: "QueueLength"
+    component: "QueueLength",
+    requestTime: 1000
   },
   ram: {
     fetchType: "modify",
@@ -64,7 +70,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: monitorBackend + "system",
     title: "RAM",
-    component: "RAM"
+    component: "RAM",
+    requestTime: 1000
   },
   storage: {
     fetchType: "read",
@@ -72,7 +79,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "storage",
     endpoint: monitorBackend + "storage",
     title: "Storage",
-    component: "Storage"
+    component: "Storage",
+    requestTime: 1000
   },
   throughput: {
     fetchType: "modify",
@@ -80,7 +88,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "throughput",
     endpoint: monitorBackend + "throughput",
     title: "Throughput",
-    component: "Throughput"
+    component: "Throughput",
+    requestTime: 1000
   }
 };
 
@@ -108,6 +117,10 @@ export function getMetricComponent(metric: Metric): string {
 
 export function getMetricTitle(metric: Metric): string {
   return metricsMetadata[metric].title;
+}
+
+export function getMetricRequestTime(metric: Metric): number {
+  return metricsMetadata[metric].requestTime;
 }
 
 export function getMetricValueStateOrder(

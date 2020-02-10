@@ -18,6 +18,7 @@ export interface MetricController {
   data: Record<Metric, Ref<any>>;
 }
 
+//TODO: refactor
 export const availableMetrics: Metric[] = [
   "access",
   "cpu",
@@ -59,6 +60,7 @@ export interface MetricMetadata {
   endpoint: string;
   title: string;
   component: string;
+  requestTime: number;
 }
 
 export interface ComparisonMetricData {

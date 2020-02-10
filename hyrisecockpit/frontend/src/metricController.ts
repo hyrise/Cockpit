@@ -3,7 +3,7 @@ import { useMetricService } from "./services/metricService";
 import { Metric, availableMetrics, MetricController } from "./types/metrics";
 import { FetchService } from "./types/services";
 import { Ref } from "@vue/composition-api";
-import { getMetadata } from "./meta/metrics";
+import { getMetadata, getMetricRequestTime } from "./meta/metrics";
 
 type Interval = {
   id: number | undefined;
@@ -17,23 +17,13 @@ export function useMetricController(): MetricController {
     start(payload);
   });
 
-  const metricServices: Record<Metric, FetchService> = setup();
+  const metricServices = setupServices();
 
-  const metricIntervals: Record<Metric, Interval> = {
-    access: getInitialInterval(5000),
-    cpu: getInitialInterval(1000),
-    latency: getInitialInterval(1000),
-    executedQueryTypeProportion: getInitialInterval(1000),
-    generatedQueryTypeProportion: getInitialInterval(1000),
-    queueLength: getInitialInterval(1000),
-    ram: getInitialInterval(1000),
-    storage: getInitialInterval(5000),
-    throughput: getInitialInterval(1000)
-  };
+  const metricIntervals: Record<Metric, Interval> = setupIntervals();
 
   const data: Record<Metric, Ref<any>> = mapToData(metricServices);
 
-  function setup(): Record<Metric, FetchService> {
+  function setupServices(): Record<Metric, FetchService> {
     const services: any = {};
     availableMetrics.forEach(metric => {
       services[metric] = useMetricService(getMetadata(metric));
@@ -41,12 +31,25 @@ export function useMetricController(): MetricController {
     return services;
   }
 
+  function setupIntervals(): Record<Metric, Interval> {
+    const intervals: any = {};
+    availableMetrics.forEach(metric => {
+      intervals[metric] = {
+        id: undefined,
+        runningState: false,
+        time: getMetricRequestTime(metric)
+      };
+    });
+    return intervals;
+  }
+
   function start(metrics: Metric[]): void {
     metrics.forEach(metric => {
-      metricIntervals[metric].id = setInterval(
-        metricServices[metric].getDataIfReady,
-        metricIntervals[metric].time
-      );
+      metricServices[metric].getDataIfReady,
+        (metricIntervals[metric].id = setInterval(
+          metricServices[metric].getDataIfReady,
+          metricIntervals[metric].time
+        ));
       metricIntervals[metric].runningState = true;
     });
   }
@@ -60,10 +63,6 @@ export function useMetricController(): MetricController {
       interval.id = undefined;
       interval.runningState = false;
     });
-  }
-
-  function getInitialInterval(time: number): Interval {
-    return { id: undefined, runningState: false, time };
   }
 
   function mapToData(

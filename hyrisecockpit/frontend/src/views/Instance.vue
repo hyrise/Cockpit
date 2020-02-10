@@ -9,6 +9,7 @@
       <component
         v-for="metric in instanceMetrics"
         :key="metric"
+        :metric="metric"
         :is="getMetricComponent(metric)"
         :selected-databases="watchedInstances"
         :metric-meta="getMetadata(metric)"
