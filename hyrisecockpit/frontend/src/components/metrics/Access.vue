@@ -69,7 +69,7 @@ export default createComponent({
     const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, table], () => {
-      if (data.value != {} && table.value != "") {
+      if (Object.keys(data.value).length && table.value != "") {
         const {
           newColumns,
           newChunks,
