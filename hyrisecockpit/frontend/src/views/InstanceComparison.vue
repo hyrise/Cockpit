@@ -51,12 +51,12 @@ import {
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useMetricEvents } from "../meta/events";
 import { useDatabaseSelection } from "../meta/views";
 
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   handleMaxSelected: () => void;
   handleMetricsChanged: () => void;
   selectedMetrics: Ref<Object[]>;

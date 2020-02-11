@@ -96,13 +96,13 @@ import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
 import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 
 interface Props {}
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;

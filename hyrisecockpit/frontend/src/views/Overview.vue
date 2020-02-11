@@ -33,13 +33,13 @@ import {
   ref
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import { useDatabaseSelection } from "../meta/views";
 
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   overviewMetrics: Metric[];
   availableInstances: Ref<any[]>;
 }
