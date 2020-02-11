@@ -49,7 +49,7 @@ export default createComponent({
       context,
       props.chartConfiguration
     );
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
 
     onMounted(() => {
       watch(isReady, () => {
@@ -115,7 +115,7 @@ function useLineChartConfiguration(
   getLayout: (xMin?: number, xMax?: number) => Object;
   getOptions: () => Object;
 } {
-  const databases: Ref<Database[]> = context.root.$databaseData.databases;
+  const databases: Ref<Database[]> = context.root.$databaseService.databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
       xaxis: {

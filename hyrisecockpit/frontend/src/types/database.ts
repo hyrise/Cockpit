@@ -5,7 +5,7 @@ export interface Database {
   color: string;
 }
 
-export interface DatabaseData {
+export interface DatabaseService {
   databases: Ref<Database[]>;
   tables: Ref<string[]>;
   addDatabase: (databasedata: any) => void;

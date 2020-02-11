@@ -14,6 +14,23 @@ export type Metric =
   | "executedQueryTypeProportion"
   | "generatedQueryTypeProportion";
 
+export interface MetricController {
+  data: Record<Metric, Ref<any>>;
+}
+
+//TODO: refactor
+export const availableMetrics: Metric[] = [
+  "access",
+  "cpu",
+  "storage",
+  "throughput",
+  "latency",
+  "ram",
+  "queueLength",
+  "executedQueryTypeProportion",
+  "generatedQueryTypeProportion"
+];
+
 export const instanceMetrics: Metric[] = ["storage", "access"];
 
 export const comparisonMetrics: Metric[] = [
@@ -43,6 +60,7 @@ export interface MetricMetadata {
   endpoint: string;
   title: string;
   component: string;
+  requestTime: number;
 }
 
 export interface ComparisonMetricData {
@@ -51,6 +69,7 @@ export interface ComparisonMetricData {
 }
 
 export interface MetricProps {
+  metric: Metric;
   metricMeta: MetricMetadata;
   selectedDatabases: string[];
   graphId: string;
@@ -58,6 +77,10 @@ export interface MetricProps {
 }
 
 export const MetricPropsValidation = {
+  metric: {
+    type: String,
+    default: null
+  },
   metricMeta: {
     type: Object,
     default: null

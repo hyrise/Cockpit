@@ -3,9 +3,9 @@ import axios from "axios";
 import { MetricMetadata } from "@/types/metrics";
 import { FetchService } from "@/types/services";
 
-export function useGenericFetchService(metric: MetricMetadata): FetchService {
+export function useMetricService(metric: MetricMetadata): FetchService {
   const queryReadyState = ref<boolean>(true);
-  const data = ref<any>({});
+  const data = ref<any>({}); // TODO: change the initial value
 
   function getData(): void {
     queryReadyState.value = false;
@@ -49,11 +49,11 @@ export function useGenericFetchService(metric: MetricMetadata): FetchService {
     });
   }
 
-  function checkState(): void {
+  function getDataIfReady(): void {
     if (queryReadyState.value) {
       getData();
     }
   }
 
-  return { data, checkState };
+  return { data, getDataIfReady };
 }
