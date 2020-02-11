@@ -19,9 +19,9 @@ export function useMetricController(): MetricController {
 
   const metricServices = setupServices();
 
-  const metricIntervals: Record<Metric, Interval> = setupIntervals();
+  const metricIntervals = setupIntervals();
 
-  const data: Record<Metric, Ref<any>> = mapToData(metricServices);
+  const data = mapToData(metricServices);
 
   function setupServices(): Record<Metric, FetchService> {
     const services: any = {};
@@ -69,8 +69,8 @@ export function useMetricController(): MetricController {
     services: Record<Metric, FetchService>
   ): Record<Metric, Ref<any>> {
     const data: any = {};
-    Object.entries(services).forEach(entry => {
-      data[entry[0] as Metric] = entry[1].data;
+    Object.entries(services).forEach(([metric, service]) => {
+      data[metric as Metric] = service.data;
     });
     return data;
   }

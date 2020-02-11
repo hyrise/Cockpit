@@ -98,7 +98,7 @@ import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { ScreenData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { eventBus } from "../plugins/eventBus";
+import { useMetricEvents } from "../meta/events";
 
 interface Props {}
 interface Data extends ScreenData {
@@ -120,6 +120,7 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: Props, context: SetupContext): Data {
+    const { throwMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<string[]>([]);
     const frequency = ref<number>(0);
     function getCurrentFrequency(): void {
@@ -147,7 +148,7 @@ export default createComponent({
     });
 
     onMounted(() => {
-      eventBus.$emit("METRICS_CHANGED", workloadMetrics);
+      throwMetricsChangedEvent(workloadMetrics);
     });
 
     return {

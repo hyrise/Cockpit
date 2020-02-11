@@ -34,7 +34,7 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { ScreenData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { eventBus } from "../plugins/eventBus";
+import { useMetricEvents } from "../meta/events";
 
 interface Data extends ScreenData {
   overviewMetrics: Metric[];
@@ -46,10 +46,11 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = ref<string[]>([]);
+    const { throwMetricsChangedEvent } = useMetricEvents();
 
     const { isReady } = context.root.$databaseService;
     onMounted(() => {
-      eventBus.$emit("METRICS_CHANGED", overviewMetrics);
+      throwMetricsChangedEvent(overviewMetrics);
     });
 
     watch(isReady, () => {

@@ -51,7 +51,7 @@ import MetricsComparisonTable from "../components/container/MetricsComparisonTab
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/views";
-import { eventBus } from "../plugins/eventBus";
+import { useMetricEvents } from "../meta/events";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
@@ -65,6 +65,7 @@ export default createComponent({
     MetricsComparisonTable
   },
   setup(props: {}, context: SetupContext): Data {
+    const { throwMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<string[]>([]);
     const availableMetrics = comparisonMetrics.map(metric => {
       return { text: getMetricTitle(metric), value: metric };
@@ -89,8 +90,7 @@ export default createComponent({
       }
     }
     function handleMetricsChanged(): void {
-      eventBus.$emit(
-        "METRICS_CHANGED",
+      throwMetricsChangedEvent(
         selectedMetrics.value.map((metric: any) => metric.value)
       );
     }

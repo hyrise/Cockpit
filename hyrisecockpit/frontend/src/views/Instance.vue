@@ -39,7 +39,7 @@ import {
 import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
-import { eventBus } from "../plugins/eventBus";
+import { useMetricEvents } from "../meta/events";
 
 import { ScreenData } from "../types/views";
 
@@ -59,11 +59,9 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const watchedInstances = ref<string[]>([context.root.$route.params.id]);
+    const { throwMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
-      eventBus.$emit(
-        "METRICS_CHANGED",
-        instanceMetrics.concat(overviewMetrics)
-      );
+      throwMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
 
     return {
