@@ -4,15 +4,16 @@
       <v-select
         class="select"
         v-model="watchedInstances"
-        :items="$databaseService.databases.value.map(database => database.id)"
+        :items="availableInstances"
         chips
         label="databases"
         multiple
+        return-object
         outlined
         prepend-icon="mdi-database"
       ></v-select>
       <MetricsTileList
-        :selected-databases="watchedInstances"
+        :selected-databases="watchedInstances.map(database => database.value)"
         :show-details="false"
         :selected-metrics="overviewMetrics"
       />
@@ -35,9 +36,11 @@ import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { ScreenData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
 
 interface Data extends ScreenData {
   overviewMetrics: Metric[];
+  availableInstances: Ref<any[]>;
 }
 
 export default createComponent({
@@ -45,7 +48,8 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<string[]>([]);
+    const watchedInstances = ref<any[]>([]);
+    const availableInstances = ref<any[]>([]);
     const { throwMetricsChangedEvent } = useMetricEvents();
 
     const { isReady } = context.root.$databaseService;
@@ -55,12 +59,15 @@ export default createComponent({
 
     watch(isReady, () => {
       if (isReady.value) {
-        watchedInstances.value = context.root.$databaseService.databases.value.map(
-          database => database.id
+        availableInstances.value = context.root.$databaseService.databases.value.map(
+          database => {
+            return { text: database.id, value: database };
+          }
         );
+        watchedInstances.value = availableInstances.value;
       }
     });
-    return { watchedInstances, overviewMetrics };
+    return { watchedInstances, overviewMetrics, availableInstances };
   }
 });
 </script>

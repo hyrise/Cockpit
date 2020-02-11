@@ -6,12 +6,13 @@
           class="select-box"
           v-model="watchedInstances"
           v-on:input="handleMaxSelected"
-          :items="$databaseService.databases.value.map(database => database.id)"
+          :items="availableInstances"
           chips
           label="databases"
           multiple
           counter="4"
           outlined
+          return-object
           prepend-icon="mdi-database"
         ></v-select>
         <v-select
@@ -28,7 +29,7 @@
         ></v-select>
       </div>
       <MetricsComparisonTable
-        :selected-databases="watchedInstances"
+        :selected-databases="watchedInstances.map(database => database.value)"
         :selected-metrics="selectedMetrics.map(metric => metric.value)"
         :show-details="true"
       />
@@ -51,6 +52,7 @@ import MetricsComparisonTable from "../components/container/MetricsComparisonTab
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/views";
+import { Database } from "../types/database";
 import { useMetricEvents } from "../meta/events";
 
 interface Data extends ScreenData {
@@ -58,6 +60,7 @@ interface Data extends ScreenData {
   handleMetricsChanged: () => void;
   selectedMetrics: Ref<Object[]>;
   availableMetrics: Object[];
+  availableInstances: Ref<any[]>;
 }
 
 export default createComponent({
@@ -66,17 +69,22 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const { throwMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<string[]>([]);
+    const watchedInstances = ref<any[]>([]);
+    const availableInstances = ref<any[]>([]);
     const availableMetrics = comparisonMetrics.map(metric => {
       return { text: getMetricTitle(metric), value: metric };
     });
     const selectedMetrics = ref<Object[]>(availableMetrics);
     const { isReady } = context.root.$databaseService;
+
     watch(isReady, () => {
       if (isReady.value) {
-        watchedInstances.value = context.root.$databaseService.databases.value.map(
-          database => database.id
+        availableInstances.value = context.root.$databaseService.databases.value.map(
+          database => {
+            return { text: database.id, value: database };
+          }
         );
+        watchedInstances.value = availableInstances.value;
       }
     });
 
@@ -97,6 +105,7 @@ export default createComponent({
 
     return {
       watchedInstances,
+      availableInstances,
       handleMaxSelected,
       handleMetricsChanged,
       selectedMetrics,

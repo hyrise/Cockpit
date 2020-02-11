@@ -99,6 +99,7 @@ import { Metric, workloadMetrics } from "../types/metrics";
 import { ScreenData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
 
 interface Props {}
 interface Data extends ScreenData {
@@ -121,7 +122,7 @@ export default createComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const { throwMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<string[]>([]);
+    const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(0);
     function getCurrentFrequency(): void {
       frequency.value = getFrequency();
@@ -140,9 +141,7 @@ export default createComponent({
     watch(isReady, () => {
       if (isReady.value) {
         watchedInstances.value = [
-          context.root.$databaseService.databases.value.map(
-            database => database.id
-          )[0]
+          context.root.$databaseService.databases.value[0]
         ];
       }
     });

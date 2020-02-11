@@ -55,6 +55,8 @@ export default createComponent({
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
+    console.log(props.selectedDatabases);
+
     return {
       getMetadata,
       getMetricTitle,

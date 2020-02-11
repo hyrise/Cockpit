@@ -3,15 +3,15 @@
     <div
       class="details"
       v-for="(database, idx) in databases"
-      :key="database"
+      :key="database.id"
       :style="{
-        color: valueColor[database],
+        color: valueColor[database.id],
         fontSize: '18px',
         fontWeight: 'bold',
         top: idx * 5 + 12.5 + '%'
       }"
     >
-      {{ currentValue[database] }} {{ unit }}
+      {{ currentValue[database.id] }} {{ unit }}
     </div>
   </div>
 </template>
@@ -30,10 +30,11 @@ import {
   getMetricValueStateOrder
 } from "../../meta/metrics";
 import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
+import { Database } from "../../types/database";
 
 interface Props {
   data: any;
-  databases: string[];
+  databases: Database[];
   unit: string;
   border: number;
   stateOrder: MetricValueStateOrder;
@@ -69,6 +70,7 @@ export default createComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
+    const databaseIds = props.databases.map(database => database.id);
 
     function getValueState(value: number): MetricValueState {
       return value > 0.66 * props.border
@@ -79,8 +81,8 @@ export default createComponent({
     }
     const currentValue = computed(() => {
       const databaseValueMap: Record<string, number> = {};
-      if (!props.databases.length) return databaseValueMap;
-      props.databases.forEach(
+      if (!databaseIds.length) return databaseValueMap;
+      databaseIds.forEach(
         database =>
           (databaseValueMap[database] = Object.keys(props.data).length
             ? Math.floor(
