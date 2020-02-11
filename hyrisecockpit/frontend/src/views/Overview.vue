@@ -12,6 +12,9 @@
         outlined
         prepend-icon="mdi-database"
       ></v-select>
+      <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
+        No databases selected.
+      </v-alert>
       <MetricsTileList
         :selected-databases="watchedInstances.map(database => database.value)"
         :show-details="false"
