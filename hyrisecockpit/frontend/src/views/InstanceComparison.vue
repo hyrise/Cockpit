@@ -27,8 +27,15 @@
           outlined
           prepend-icon="mdi-database"
         ></v-select>
-        <v-btn color="primary" outlined @click="resetMetricSelection()">
-          Unselect Metrics
+        <v-btn
+          class="ml-4"
+          color="primary"
+          fab
+          large
+          :disabled="!selectedMetrics.length"
+          @click="resetMetricSelection()"
+        >
+          <v-icon>mdi-close-circle</v-icon>
         </v-btn>
       </div>
 
