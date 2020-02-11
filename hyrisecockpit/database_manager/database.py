@@ -60,15 +60,15 @@ class StorageCursor:
 
     def log_queries(self, query_list) -> None:
         """Log a couple of succesfully executed queries."""
-        points = []
-        for query in query_list:
-            point = {
+        points = [
+            {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
                 "fields": {"start": float(query[0]), "end": float(query[1])},
                 "time": int(query[0] * 1e9),
             }
-            points.append(point)
+            for query in query_list
+        ]
         self._connection.write_points(points, database=self._database)
 
 
