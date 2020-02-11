@@ -1,37 +1,39 @@
 <template>
-  <div class="mx-6">
-    <div class="select">
-      <v-select
-        v-if="$databaseData.isReady"
-        class="select-box"
-        v-model="watchedInstances"
-        v-on:input="handleMaxSelected"
-        :items="$databaseData.databases.value.map(database => database.id)"
-        chips
-        label="databases"
-        multiple
-        counter="4"
-        outlined
-        prepend-icon="mdi-database"
-      ></v-select>
-      <v-select
-        v-if="$databaseData.isReady"
-        class="select-box"
-        v-model="selectedMetrics"
-        :items="availableMetrics"
-        chips
-        return-object
-        label="metrics"
-        multiple
-        outlined
-        prepend-icon="mdi-database"
-      ></v-select>
+  <div>
+    <div v-if="$databaseService.isReady.value" class="mx-6">
+      <div class="select">
+        <v-select
+          class="select-box"
+          v-model="watchedInstances"
+          v-on:input="handleMaxSelected"
+          :items="$databaseService.databases.value.map(database => database.id)"
+          chips
+          label="databases"
+          multiple
+          counter="4"
+          outlined
+          prepend-icon="mdi-database"
+        ></v-select>
+        <v-select
+          class="select-box"
+          v-model="selectedMetrics"
+          v-on:input="handleMetricsChanged"
+          :items="availableMetrics"
+          chips
+          return-object
+          label="metrics"
+          multiple
+          outlined
+          prepend-icon="mdi-database"
+        ></v-select>
+      </div>
+      <MetricsComparisonTable
+        :selected-databases="watchedInstances"
+        :selected-metrics="selectedMetrics.map(metric => metric.value)"
+        :show-details="true"
+      />
     </div>
-    <MetricsComparisonTable
-      :selected-databases="watchedInstances"
-      :selected-metrics="selectedMetrics.map(metric => metric.value)"
-      :show-details="true"
-    />
+    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
@@ -42,15 +44,18 @@ import {
   watch,
   computed,
   Ref,
-  ref
+  ref,
+  onMounted
 } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/views";
+import { useMetricEvents } from "../meta/events";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
+  handleMetricsChanged: () => void;
   selectedMetrics: Ref<Object[]>;
   availableMetrics: Object[];
 }
@@ -60,28 +65,40 @@ export default createComponent({
     MetricsComparisonTable
   },
   setup(props: {}, context: SetupContext): Data {
+    const { throwMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<string[]>([]);
     const availableMetrics = comparisonMetrics.map(metric => {
       return { text: getMetricTitle(metric), value: metric };
     });
     const selectedMetrics = ref<Object[]>(availableMetrics);
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
     watch(isReady, () => {
       if (isReady.value) {
-        watchedInstances.value = context.root.$databaseData.databases.value.map(
+        watchedInstances.value = context.root.$databaseService.databases.value.map(
           database => database.id
         );
       }
     });
 
-    function handleMaxSelected() {
+    onMounted(() => {
+      handleMetricsChanged();
+    });
+
+    function handleMaxSelected(): void {
       if (watchedInstances.value.length > 4) {
         watchedInstances.value.pop();
       }
     }
+    function handleMetricsChanged(): void {
+      throwMetricsChangedEvent(
+        selectedMetrics.value.map((metric: any) => metric.value)
+      );
+    }
+
     return {
       watchedInstances,
       handleMaxSelected,
+      handleMetricsChanged,
       selectedMetrics,
       availableMetrics
     };

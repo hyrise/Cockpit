@@ -28,7 +28,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../../services/genericFetchService";
 import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
@@ -45,12 +44,9 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const { checkState, data } = useGenericFetchService(props.metricMeta);
     const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
-    onMounted(() => {
-      setInterval(checkState, 1000);
-    });
+    const data = context.root.$metricController.data[props.metric];
 
     return {
       data,
