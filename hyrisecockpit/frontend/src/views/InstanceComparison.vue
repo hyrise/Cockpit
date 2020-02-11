@@ -27,12 +27,23 @@
           outlined
           prepend-icon="mdi-database"
         ></v-select>
+        <v-btn color="primary" outlined @click="resetMetricSelection()">
+          Unselect Metrics
+        </v-btn>
       </div>
+
       <MetricsComparisonTable
+        v-if="watchedInstances.length"
         :selected-databases="watchedInstances.map(database => database.value)"
         :selected-metrics="selectedMetrics.map(metric => metric.value)"
         :show-details="true"
       />
+      <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
+        No databases selected.
+      </v-alert>
+      <v-alert v-if="!selectedMetrics.length" class="alert" type="warning">
+        No metrics selected.
+      </v-alert>
     </div>
     <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
@@ -59,6 +70,7 @@ import { useDatabaseSelection } from "../meta/views";
 interface Data extends MetricViewData {
   handleMaxSelected: () => void;
   handleMetricsChanged: () => void;
+  resetMetricSelection: () => void;
   selectedMetrics: Ref<Object[]>;
   availableMetrics: Object[];
   availableInstances: Ref<any[]>;
@@ -94,11 +106,16 @@ export default createComponent({
       );
     }
 
+    function resetMetricSelection(): void {
+      selectedMetrics.value = [];
+    }
+
     return {
       watchedInstances,
       availableInstances,
       handleMaxSelected,
       handleMetricsChanged,
+      resetMetricSelection,
       selectedMetrics,
       availableMetrics
     };
@@ -114,6 +131,9 @@ export default createComponent({
 }
 .select-box {
   margin: 0px 20px 10px 20px;
-  flex: 0 0 48%;
+  flex: 0 0 42%;
+}
+.alert {
+  margin-top: 1%;
 }
 </style>
