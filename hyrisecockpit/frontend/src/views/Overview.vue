@@ -37,6 +37,7 @@ import { ScreenData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
+import { useDatabaseSelection } from "../meta/views";
 
 interface Data extends ScreenData {
   overviewMetrics: Metric[];
@@ -48,25 +49,15 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<any[]>([]);
-    const availableInstances = ref<any[]>([]);
+    const { watchedInstances, availableInstances } = useDatabaseSelection(
+      context
+    );
     const { throwMetricsChangedEvent } = useMetricEvents();
 
-    const { isReady } = context.root.$databaseService;
     onMounted(() => {
       throwMetricsChangedEvent(overviewMetrics);
     });
 
-    watch(isReady, () => {
-      if (isReady.value) {
-        availableInstances.value = context.root.$databaseService.databases.value.map(
-          database => {
-            return { text: database.id, value: database };
-          }
-        );
-        watchedInstances.value = availableInstances.value;
-      }
-    });
     return { watchedInstances, overviewMetrics, availableInstances };
   }
 });

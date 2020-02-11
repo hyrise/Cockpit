@@ -54,6 +54,7 @@ import { getMetricTitle } from "../meta/metrics";
 import { ScreenData } from "../types/views";
 import { Database } from "../types/database";
 import { useMetricEvents } from "../meta/events";
+import { useDatabaseSelection } from "../meta/views";
 
 interface Data extends ScreenData {
   handleMaxSelected: () => void;
@@ -69,24 +70,14 @@ export default createComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const { throwMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<any[]>([]);
-    const availableInstances = ref<any[]>([]);
+    const { watchedInstances, availableInstances } = useDatabaseSelection(
+      context
+    );
+
     const availableMetrics = comparisonMetrics.map(metric => {
       return { text: getMetricTitle(metric), value: metric };
     });
     const selectedMetrics = ref<Object[]>(availableMetrics);
-    const { isReady } = context.root.$databaseService;
-
-    watch(isReady, () => {
-      if (isReady.value) {
-        availableInstances.value = context.root.$databaseService.databases.value.map(
-          database => {
-            return { text: database.id, value: database };
-          }
-        );
-        watchedInstances.value = availableInstances.value;
-      }
-    });
 
     onMounted(() => {
       handleMetricsChanged();
