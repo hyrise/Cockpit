@@ -41,7 +41,7 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="loadWorkloadData(getTransferredWorkload[workload])"
+          @click="loadWorkloadData(workload)"
           color="success"
         >
           {{ getDisplayedWorkload(workload) }}
@@ -54,7 +54,7 @@
         <v-btn
           v-for="workload in availableWorkloads"
           :key="workload"
-          @click="deleteWorkloadData(getTransferredWorkload[workload])"
+          @click="deleteWorkloadData(workload)"
           color="error"
         >
           {{ getDisplayedWorkload(workload) }}
@@ -86,7 +86,6 @@ import {
 import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
 import {
-  getTransferredWorkload,
   getDisplayedWorkload,
   getWorkloadMetaData,
   getFrequency
@@ -97,7 +96,6 @@ import MetricsTileList from "../components/container/MetricsTileList.vue";
 
 interface Props {}
 interface Data extends ScreenData {
-  getTransferredWorkload: (workload: Workload) => string;
   getDisplayedWorkload: (workload: Workload) => string;
   getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
@@ -144,7 +142,6 @@ export default createComponent({
     });
 
     return {
-      getTransferredWorkload,
       getDisplayedWorkload,
       getWorkloadMetaData,
       loadWorkloadData,

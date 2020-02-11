@@ -4,6 +4,10 @@ export interface WorkloadMetaData {
   folder_name: string;
   frequency: number;
 }
+export interface WorkloadProjectionData {
+  transferred: string;
+  displayed: string;
+}
 
 export const availableWorkloads: Workload[] = [
   "tpch01",
