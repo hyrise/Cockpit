@@ -1,22 +1,45 @@
 <template>
-  <div class="mx-12">
-    <div class="mt-6 mb-2">
-      <b> Workload Generation </b>
-    </div>
-    <v-divider />
-    <v-col cols="12">
-      <div class="mb-2 mt-2">
-        <b> Start workload </b>
+  <div>
+    <v-progress-linear
+      v-if="!$databaseService.isReady.value"
+      indeterminate
+      color="primary"
+      height="7"
+    />
+    <div class="mx-12">
+      <div class="mt-6 mb-2">
+        <b> Workload Generation </b>
       </div>
-      <v-btn-toggle>
+      <v-divider />
+      <v-col cols="12">
+        <div class="mb-2 mt-2">
+          <b> Start workload </b>
+        </div>
+        <v-btn-toggle>
+          <v-btn
+            v-for="workload in availableWorkloads"
+            :key="workload"
+            @click="
+              startWorkload(getWorkloadMetaData(workload));
+              getCurrentFrequency();
+            "
+            color="success"
+          >
+            {{ workload }}
+          </v-btn>
+        </v-btn-toggle>
+        <p>Frequency is: {{ frequency }}</p>
+        <div class="mb-2 mt-6">
+          <b> Stop workload </b>
+        </div>
         <v-btn
-          v-for="workload in availableWorkloads"
-          :key="workload"
           @click="
-            startWorkload(getWorkloadMetaData(workload));
-            getCurrentFrequency();
+            stopWorkload();
+            setFrequencyToNull();
           "
-          color="success"
+          large
+          color="error"
+          >Stop
         >
           {{ getDisplayedWorkload(workload) }}
         </v-btn>
@@ -59,13 +82,40 @@
         >
           {{ getDisplayedWorkload(workload) }}
         </v-btn>
-      </v-btn-toggle>
-    </v-col>
-    <MetricsTileList
-      :selected-databases="watchedInstances"
-      :show-details="false"
-      :selected-metrics="workloadMetrics"
-    />
+        <div class="mb-2 mt-6">
+          <b> Load generated data into instances</b>
+        </div>
+        <v-btn-toggle>
+          <v-btn
+            v-for="workload in availableWorkloads"
+            :key="workload"
+            @click="loadWorkloadData(workload)"
+            color="success"
+          >
+            {{ workload }}
+          </v-btn>
+        </v-btn-toggle>
+        <div class="mb-2 mt-6">
+          <b> Remove generated data from instances</b>
+        </div>
+        <v-btn-toggle>
+          <v-btn
+            v-for="workload in availableWorkloads"
+            :key="workload"
+            @click="deleteWorkloadData(workload)"
+            color="error"
+          >
+            {{ workload }}
+          </v-btn>
+        </v-btn-toggle>
+      </v-col>
+      <MetricsTileList
+        v-if="$databaseService.isReady.value"
+        :selected-databases="watchedInstances"
+        :show-details="false"
+        :selected-metrics="workloadMetrics"
+      />
+    </div>
   </div>
 </template>
 
@@ -91,11 +141,13 @@ import {
   getFrequency
 } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
+import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
 
 interface Props {}
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   getDisplayedWorkload: (workload: Workload) => string;
   getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
@@ -115,7 +167,8 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: Props, context: SetupContext): Data {
-    const watchedInstances = ref<string[]>([]);
+    const { emitMetricsChangedEvent } = useMetricEvents();
+    const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(0);
     function getCurrentFrequency(): void {
       frequency.value = getFrequency();
@@ -130,15 +183,17 @@ export default createComponent({
       stopWorkload
     } = useWorkloadService();
 
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
     watch(isReady, () => {
       if (isReady.value) {
         watchedInstances.value = [
-          context.root.$databaseData.databases.value.map(
-            database => database.id
-          )[0]
+          context.root.$databaseService.databases.value[0]
         ];
       }
+    });
+
+    onMounted(() => {
+      emitMetricsChangedEvent(workloadMetrics);
     });
 
     return {

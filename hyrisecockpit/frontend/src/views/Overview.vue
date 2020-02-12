@@ -1,21 +1,30 @@
 <template>
-  <div class="mx-6">
-    <v-select
-      v-if="$databaseData.isReady"
-      class="select"
-      v-model="watchedInstances"
-      :items="$databaseData.databases.value.map(database => database.id)"
-      chips
-      label="databases"
-      multiple
-      outlined
-      prepend-icon="mdi-database"
-    ></v-select>
-    <MetricsTileList
-      :selected-databases="watchedInstances"
-      :show-details="false"
-      :selected-metrics="overviewMetrics"
-    />
+  <div>
+    <div v-if="$databaseService.isReady.value" class="mx-6">
+      <v-select
+        class="select"
+        v-model="watchedInstances"
+        :items="availableInstances"
+        :error="!watchedInstances.length"
+        chips
+        label="databases"
+        multiple
+        clearable
+        deletable-chips
+        return-object
+        outlined
+        prepend-icon="mdi-database"
+      ></v-select>
+      <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
+        No databases selected.
+      </v-alert>
+      <MetricsTileList
+        :selected-databases="watchedInstances.map(database => database.value)"
+        :show-details="false"
+        :selected-metrics="overviewMetrics"
+      />
+    </div>
+    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
@@ -26,14 +35,19 @@ import {
   watch,
   computed,
   Ref,
+  onMounted,
   ref
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
+import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
+import { useDatabaseSelection } from "../meta/views";
 
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   overviewMetrics: Metric[];
+  availableInstances: Ref<any[]>;
 }
 
 export default createComponent({
@@ -41,17 +55,16 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<string[]>([]);
+    const { watchedInstances, availableInstances } = useDatabaseSelection(
+      context
+    );
+    const { emitMetricsChangedEvent } = useMetricEvents();
 
-    const { isReady } = context.root.$databaseData;
-    watch(isReady, () => {
-      if (isReady.value) {
-        watchedInstances.value = context.root.$databaseData.databases.value.map(
-          database => database.id
-        );
-      }
+    onMounted(() => {
+      emitMetricsChangedEvent(overviewMetrics);
     });
-    return { watchedInstances, overviewMetrics };
+
+    return { watchedInstances, overviewMetrics, availableInstances };
   }
 });
 </script>

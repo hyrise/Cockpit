@@ -3,7 +3,7 @@ import { Workload, WorkloadMetaData } from "./workloads";
 
 export interface FetchService {
   data: Ref<any>;
-  checkState: () => void;
+  getDataIfReady: () => void;
 }
 
 export type TransformationService = (
