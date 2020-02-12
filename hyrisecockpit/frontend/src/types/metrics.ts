@@ -1,5 +1,6 @@
 import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
+import { Database } from "./database";
 
 export type MetricValueState = "low" | "average" | "high";
 export type MetricValueStateOrder = "asc" | "desc";
@@ -71,7 +72,7 @@ export interface ComparisonMetricData {
 export interface MetricProps {
   metric: Metric;
   metricMeta: MetricMetadata;
-  selectedDatabases: string[];
+  selectedDatabases: Database[];
   graphId: string;
   showDetails: boolean;
 }

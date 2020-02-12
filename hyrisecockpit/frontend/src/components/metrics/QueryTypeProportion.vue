@@ -46,7 +46,7 @@ export default createComponent({
       if (Object.keys(data.value).length) {
         transformedData.value = props.metricMeta.transformationService(
           data.value,
-          props.selectedDatabases[0]
+          props.selectedDatabases.map(database => database.id)[0]
         );
       }
     });
