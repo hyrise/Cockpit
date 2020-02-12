@@ -47,17 +47,6 @@ class StorageCursor:
         """Close the cursor and connection."""
         self._connection.close()
 
-    def log_query(self, startts, endts, benchmark: str, query_no: int) -> None:
-        """Log a successful query to permanent in storage."""
-        point = [
-            {
-                "measurement": "successful_queries",
-                "tags": {"benchmark": benchmark, "query_no": query_no},
-                "fields": {"start": float(startts), "end": float(endts)},
-            }
-        ]
-        self._connection.write_points(point, database=self._database)
-
     def log_queries(self, query_list) -> None:
         """Log a couple of succesfully executed queries."""
         points = []
