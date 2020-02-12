@@ -36,7 +36,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../../services/genericFetchService";
 import Heatmap from "../charts/Heatmap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
 
@@ -56,11 +55,11 @@ export default createComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { tables } = context.root.$databaseData;
+    const { tables } = context.root.$databaseService;
     const selectedTable = ref<string>(
       tables.value.length ? tables.value[0] : ""
     );
-    const { data, checkState } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const table = computed(() => selectedTable.value);
 
@@ -70,7 +69,7 @@ export default createComponent({
     const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, table], () => {
-      if (data.value != {} && table.value != "") {
+      if (Object.keys(data.value).length && table.value != "") {
         const {
           newColumns,
           newChunks,
@@ -84,11 +83,6 @@ export default createComponent({
         columns.value = newColumns;
         mapData.value = dataByChunks;
       }
-    });
-
-    checkState();
-    onMounted(() => {
-      setInterval(checkState, 5000);
     });
 
     return {

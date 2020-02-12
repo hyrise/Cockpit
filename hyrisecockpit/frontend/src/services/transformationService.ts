@@ -94,12 +94,12 @@ function getStorageData(
 
   if (
     notEquals(
-      Vue.prototype.$databaseData.tables.value,
+      Vue.prototype.$databaseService.tables.value,
       Object.keys(data[primaryKey])
     ) &&
     Object.keys(data[primaryKey]).length
   ) {
-    Vue.prototype.$databaseData.tables.value = Object.keys(data[primaryKey]);
+    Vue.prototype.$databaseService.tables.value = Object.keys(data[primaryKey]);
   }
 
   Object.keys(data[primaryKey]).forEach(table => {

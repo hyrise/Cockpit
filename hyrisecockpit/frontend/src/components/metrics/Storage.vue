@@ -19,7 +19,6 @@ import {
   ref,
   onMounted
 } from "@vue/composition-api";
-import { useGenericFetchService } from "../../services/genericFetchService";
 import * as Plotly from "plotly.js";
 import Treemap from "../charts/Treemap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
@@ -38,17 +37,12 @@ export default createComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { data, checkState } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
     const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
-
-    onMounted(() => {
-      checkState();
-      setInterval(checkState, 20000);
-    });
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
