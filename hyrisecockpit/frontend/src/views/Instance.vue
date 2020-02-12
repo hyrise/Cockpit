@@ -62,9 +62,9 @@ export default createComponent({
     const watchedInstances = ref<Database[]>([
       getDatabaseById(context.root.$route.params.id)
     ]);
-    const { throwMetricsChangedEvent } = useMetricEvents();
+    const { emitMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
-      throwMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
+      emitMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
 
     function getDatabaseById(id: string): Database | undefined {

@@ -5,9 +5,12 @@
         class="select"
         v-model="watchedInstances"
         :items="availableInstances"
+        :error="!watchedInstances.length"
         chips
         label="databases"
         multiple
+        clearable
+        deletable-chips
         return-object
         outlined
         prepend-icon="mdi-database"
@@ -55,10 +58,10 @@ export default createComponent({
     const { watchedInstances, availableInstances } = useDatabaseSelection(
       context
     );
-    const { throwMetricsChangedEvent } = useMetricEvents();
+    const { emitMetricsChangedEvent } = useMetricEvents();
 
     onMounted(() => {
-      throwMetricsChangedEvent(overviewMetrics);
+      emitMetricsChangedEvent(overviewMetrics);
     });
 
     return { watchedInstances, overviewMetrics, availableInstances };

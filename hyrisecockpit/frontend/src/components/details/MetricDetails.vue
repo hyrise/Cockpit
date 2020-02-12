@@ -70,7 +70,6 @@ export default createComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
-    const databaseIds = props.databases.map(database => database.id);
 
     function getValueState(value: number): MetricValueState {
       return value > 0.66 * props.border
@@ -81,12 +80,13 @@ export default createComponent({
     }
     const currentValue = computed(() => {
       const databaseValueMap: Record<string, number> = {};
-      if (!databaseIds.length) return databaseValueMap;
-      databaseIds.forEach(
+      if (!props.databases.length) return databaseValueMap;
+      props.databases.forEach(
         database =>
-          (databaseValueMap[database] = Object.keys(props.data).length
+          (databaseValueMap[database.id] = Object.keys(props.data).length
             ? Math.floor(
-                props.data[database][props.data[database].length - 1] * 100
+                props.data[database.id][props.data[database.id].length - 1] *
+                  100
               ) / 100
             : 0)
       );

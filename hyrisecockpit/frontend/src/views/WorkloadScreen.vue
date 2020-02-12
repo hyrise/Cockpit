@@ -121,7 +121,7 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: Props, context: SetupContext): Data {
-    const { throwMetricsChangedEvent } = useMetricEvents();
+    const { emitMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(0);
     function getCurrentFrequency(): void {
@@ -147,7 +147,7 @@ export default createComponent({
     });
 
     onMounted(() => {
-      throwMetricsChangedEvent(workloadMetrics);
+      emitMetricsChangedEvent(workloadMetrics);
     });
 
     return {

@@ -7,9 +7,12 @@
           v-model="watchedInstances"
           v-on:input="handleMaxSelected"
           :items="availableInstances"
+          :error="!watchedInstances.length"
           chips
           label="databases"
           multiple
+          clearable
+          deletable-chips
           counter="4"
           outlined
           return-object
@@ -24,19 +27,12 @@
           return-object
           label="metrics"
           multiple
+          clearable
+          deletable-chips
+          :error="!selectedMetrics.length"
           outlined
           prepend-icon="mdi-database"
         ></v-select>
-        <v-btn
-          class="ml-4"
-          color="primary"
-          fab
-          large
-          :disabled="!selectedMetrics.length"
-          @click="resetMetricSelection()"
-        >
-          <v-icon>mdi-close-circle</v-icon>
-        </v-btn>
       </div>
 
       <MetricsComparisonTable
@@ -77,7 +73,6 @@ import { useDatabaseSelection } from "../meta/views";
 interface Data extends MetricViewData {
   handleMaxSelected: () => void;
   handleMetricsChanged: () => void;
-  resetMetricSelection: () => void;
   selectedMetrics: Ref<Object[]>;
   availableMetrics: Object[];
   availableInstances: Ref<any[]>;
@@ -88,7 +83,7 @@ export default createComponent({
     MetricsComparisonTable
   },
   setup(props: {}, context: SetupContext): Data {
-    const { throwMetricsChangedEvent } = useMetricEvents();
+    const { emitMetricsChangedEvent } = useMetricEvents();
     const { watchedInstances, availableInstances } = useDatabaseSelection(
       context
     );
@@ -108,13 +103,9 @@ export default createComponent({
       }
     }
     function handleMetricsChanged(): void {
-      throwMetricsChangedEvent(
+      emitMetricsChangedEvent(
         selectedMetrics.value.map((metric: any) => metric.value)
       );
-    }
-
-    function resetMetricSelection(): void {
-      selectedMetrics.value = [];
     }
 
     return {
@@ -122,7 +113,6 @@ export default createComponent({
       availableInstances,
       handleMaxSelected,
       handleMetricsChanged,
-      resetMetricSelection,
       selectedMetrics,
       availableMetrics
     };
