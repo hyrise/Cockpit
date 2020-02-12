@@ -96,12 +96,13 @@ import axios from "axios";
 import { useWorkloadService } from "../services/workloadService";
 import { getWorkloadMetaData, getFrequency } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
 
 interface Props {}
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   getWorkloadMetaData: (workload: Workload) => WorkloadMetaData;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
@@ -120,8 +121,8 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: Props, context: SetupContext): Data {
-    const { throwMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<string[]>([]);
+    const { emitMetricsChangedEvent } = useMetricEvents();
+    const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(0);
     function getCurrentFrequency(): void {
       frequency.value = getFrequency();
@@ -140,15 +141,13 @@ export default createComponent({
     watch(isReady, () => {
       if (isReady.value) {
         watchedInstances.value = [
-          context.root.$databaseService.databases.value.map(
-            database => database.id
-          )[0]
+          context.root.$databaseService.databases.value[0]
         ];
       }
     });
 
     onMounted(() => {
-      throwMetricsChangedEvent(workloadMetrics);
+      emitMetricsChangedEvent(workloadMetrics);
     });
 
     return {

@@ -4,15 +4,22 @@
       <v-select
         class="select"
         v-model="watchedInstances"
-        :items="$databaseService.databases.value.map(database => database.id)"
+        :items="availableInstances"
+        :error="!watchedInstances.length"
         chips
         label="databases"
         multiple
+        clearable
+        deletable-chips
+        return-object
         outlined
         prepend-icon="mdi-database"
       ></v-select>
+      <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
+        No databases selected.
+      </v-alert>
       <MetricsTileList
-        :selected-databases="watchedInstances"
+        :selected-databases="watchedInstances.map(database => database.value)"
         :show-details="false"
         :selected-metrics="overviewMetrics"
       />
@@ -32,12 +39,15 @@ import {
   ref
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
+import { useDatabaseSelection } from "../meta/views";
 
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   overviewMetrics: Metric[];
+  availableInstances: Ref<any[]>;
 }
 
 export default createComponent({
@@ -45,22 +55,16 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<string[]>([]);
-    const { throwMetricsChangedEvent } = useMetricEvents();
+    const { watchedInstances, availableInstances } = useDatabaseSelection(
+      context
+    );
+    const { emitMetricsChangedEvent } = useMetricEvents();
 
-    const { isReady } = context.root.$databaseService;
     onMounted(() => {
-      throwMetricsChangedEvent(overviewMetrics);
+      emitMetricsChangedEvent(overviewMetrics);
     });
 
-    watch(isReady, () => {
-      if (isReady.value) {
-        watchedInstances.value = context.root.$databaseService.databases.value.map(
-          database => database.id
-        );
-      }
-    });
-    return { watchedInstances, overviewMetrics };
+    return { watchedInstances, overviewMetrics, availableInstances };
   }
 });
 </script>
