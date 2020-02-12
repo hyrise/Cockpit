@@ -140,7 +140,7 @@ export default createComponent({
       emitMetricsChangedEvent();
     });
 
-    const number_workers = ref<number>(20);
+    const number_workers = ref<number>(8);
     const id = ref<string>("");
     const user = ref<string>("serviceuser");
     const password = ref<string>("");
