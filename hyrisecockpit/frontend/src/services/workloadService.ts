@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Workload, WorkloadMetaData } from "@/types/workloads";
-import { getTransferredWorkload } from "@/meta/workloads";
+import { getTransferredWorkload, getWorkloadMetaData } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
 import { controlBackend } from "../../config";
 
@@ -12,8 +12,8 @@ export function useWorkloadService(): WorkloadService {
     axios.delete(`${controlBackend}data/${getTransferredWorkload(workload)}`);
   }
 
-  function startWorkload(workloadMetaData: WorkloadMetaData): void {
-    axios.post(`${controlBackend}workload`, workloadMetaData);
+  function startWorkload(workload: Workload): void {
+    axios.post(`${controlBackend}workload`, getWorkloadMetaData(workload));
   }
 
   function stopWorkload(): void {
