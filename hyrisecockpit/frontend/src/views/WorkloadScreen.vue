@@ -15,14 +15,14 @@
         <div class="mb-2 mt-2">
           <b> Start workload </b>
         </div>
+        <p>Frequency is: {{ frequency }}</p>
+        <v-slider v-model="frequency" thumb-label="always" min="1" max="500">
+        </v-slider>
         <v-btn-toggle>
           <v-btn
             v-for="workload in availableWorkloads"
             :key="workload"
-            @click="
-              startWorkload(workload);
-              getCurrentFrequency();
-            "
+            @click="startWorkload(workload, frequency)"
             color="success"
           >
             {{ getDisplayedWorkload(workload) }}
@@ -31,15 +31,7 @@
         <div class="mb-2 mt-6">
           <b> Stop workload </b>
         </div>
-        <v-btn
-          @click="
-            stopWorkload();
-            setFrequencyToNull();
-          "
-          large
-          color="error"
-          >Stop
-        </v-btn>
+        <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
         <div class="mb-2 mt-6">
           <b> Load generated data into instances</b>
         </div>
@@ -86,17 +78,9 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import {
-  Workload,
-  availableWorkloads,
-  WorkloadMetaData
-} from "../types/workloads";
+import { Workload, availableWorkloads } from "../types/workloads";
 import { useWorkloadService } from "../services/workloadService";
-import {
-  getDisplayedWorkload,
-  getWorkloadMetaData,
-  getFrequency
-} from "../meta/workloads";
+import { getDisplayedWorkload } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
@@ -108,12 +92,10 @@ interface Data extends MetricViewData {
   getDisplayedWorkload: (workload: Workload) => string;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workload: Workload) => void;
+  startWorkload: (workload: Workload, frequency: number) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
-  frequency: Ref<number>;
-  getCurrentFrequency: () => void;
-  setFrequencyToNull: () => void;
+  frequency: number;
   workloadMetrics: Metric[];
 }
 
@@ -125,13 +107,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { emitMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
-    const frequency = ref<number>(0);
-    function getCurrentFrequency(): void {
-      frequency.value = getFrequency();
-    }
-    function setFrequencyToNull(): void {
-      frequency.value = 0;
-    }
+    const frequency = 0;
     const {
       loadWorkloadData,
       deleteWorkloadData,
@@ -160,8 +136,6 @@ export default createComponent({
       startWorkload,
       stopWorkload,
       frequency,
-      getCurrentFrequency,
-      setFrequencyToNull,
       watchedInstances,
       workloadMetrics
     };
