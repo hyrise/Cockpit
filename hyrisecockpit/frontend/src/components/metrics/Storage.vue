@@ -52,7 +52,7 @@ export default createComponent({
           newSizes
         } = props.metricMeta.transformationService(
           data.value,
-          props.selectedDatabases[0] // not really good style
+          props.selectedDatabases.map(database => database.id)[0]
         );
         labels.value = newLabels;
         parents.value = newParents;

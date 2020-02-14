@@ -40,10 +40,11 @@ import Storage from "../components/metrics/Storage.vue";
 import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 import { useMetricEvents } from "../meta/events";
+import { Database } from "../types/database";
 
-import { ScreenData } from "../types/views";
+import { MetricViewData } from "../types/views";
 
-interface Data extends ScreenData {
+interface Data extends MetricViewData {
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   overviewMetrics: Metric[];
@@ -58,11 +59,19 @@ export default createComponent({
     QueryTypeProportion
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<string[]>([context.root.$route.params.id]);
-    const { throwMetricsChangedEvent } = useMetricEvents();
+    const watchedInstances = ref<Database[]>([
+      getDatabaseById(context.root.$route.params.id)
+    ]);
+    const { emitMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
-      throwMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
+      emitMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
+
+    function getDatabaseById(id: string): Database | undefined {
+      return context.root.$databaseService.databases.value.find(
+        database => database.id === id
+      );
+    }
 
     return {
       getMetadata,
