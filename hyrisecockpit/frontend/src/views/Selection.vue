@@ -158,7 +158,7 @@ export default createComponent({
 
     function createNewDatabase(): void {
       const databaseData = {
-        number_workers: number_workers.value,
+        number_workers: parseInt(number_workers.value.toString(), 10),
         id: id.value,
         user: user.value,
         password: password.value,
