@@ -156,6 +156,19 @@ model_krueger_data = monitor.clone(
     },
 )
 
+model_process_table_status = monitor.clone(
+    "Process table status",
+    model_database,
+    {
+        "process_table_status": fields.Boolean(
+            title="Process table status",
+            description="Process table stutus of databases.",
+            required=True,
+            example=True,
+        )
+    },
+)
+
 
 model_data = control.model(
     "Data",
@@ -452,6 +465,7 @@ class KruegerData(Resource):
 class ProcessTableStatus(Resource):
     """Process  table status information of all databases."""
 
+    @monitor.doc(model=[model_process_table_status])
     def get(self) -> Dict:
         """Return process_table_status flags from database manager."""
         return _send_message(
