@@ -49,6 +49,7 @@ class DatabaseManager(object):
             "get databases": self._call_get_databases,
             "load data": self._call_load_data,
             "delete data": self._call_delete_data,
+            "process table status": self._call_process_table_status,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -175,6 +176,14 @@ class DatabaseManager(object):
             if not database.delete_data(folder_name):
                 return get_response(400)
         return get_response(200)
+
+    def _call_process_table_status(self, body: Dict) -> Dict:
+        process_table_flags = {}
+        for id, database in self._databases.items():
+            process_table_flags[id] = database.get_processing_tables_flag()
+        response = get_response(200)
+        response["body"]["process_table_status"] = process_table_flags
+        return response
 
     def _check_if_processing_table(self) -> bool:
         processing_table_data = False
