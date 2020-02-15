@@ -156,6 +156,7 @@ model_krueger_data = monitor.clone(
     },
 )
 
+
 model_data = control.model(
     "Data",
     {
@@ -445,6 +446,18 @@ class KruegerData(Resource):
             }
             for database in active_databases
         ]
+
+
+@monitor.route("/process_table_status", methods=["GET"])
+class ProcessTableStatus(Resource):
+    """Process  table status information of all databases."""
+
+    def get(self) -> Dict:
+        """Return process_table_status flags from database manager."""
+        return _send_message(
+            db_manager_socket,
+            {"header": {"message": "process table status"}, "body": {}},
+        )
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
