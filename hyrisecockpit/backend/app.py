@@ -162,7 +162,7 @@ model_process_table_status = monitor.clone(
     {
         "process_table_status": fields.Boolean(
             title="Process table status",
-            description="Process table stutus of databases.",
+            description="Process table status of databases.",
             required=True,
             example=True,
         )
