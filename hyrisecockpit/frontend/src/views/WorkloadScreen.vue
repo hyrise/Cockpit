@@ -15,7 +15,6 @@
         <div class="mb-2 mt-2">
           <b> Start workload </b>
         </div>
-        <p>Frequency is: {{ frequency }}</p>
         <v-slider v-model="frequency" thumb-label="always" min="1" max="500">
         </v-slider>
         <v-btn-toggle>
@@ -92,10 +91,10 @@ interface Data extends MetricViewData {
   getDisplayedWorkload: (workload: Workload) => string;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workload: Workload, frequency: number) => void;
+  startWorkload: (workload: Workload, frequency: Ref<number>) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
-  frequency: number;
+  frequency: Ref<number>;
   workloadMetrics: Metric[];
 }
 
@@ -107,7 +106,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { emitMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
-    const frequency = 0;
+    const frequency = ref<number>(0);
     const {
       loadWorkloadData,
       deleteWorkloadData,
