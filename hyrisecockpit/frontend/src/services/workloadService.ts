@@ -3,7 +3,7 @@ import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
 import { controlBackend } from "../../config";
-import { Ref } from '@vue/composition-api';
+import { Ref } from "@vue/composition-api";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
