@@ -15,7 +15,22 @@
         <div class="mb-2 mt-2">
           <b> Start workload </b>
         </div>
-        <v-slider v-model="frequency" thumb-label="always" min="1" max="500">
+        <v-slider
+          v-model="frequency"
+          thumb-label="always"
+          min="0"
+          max="1000"
+          step="10"
+        >
+          <template v-slot:append>
+            <v-text-field
+              v-model="frequency"
+              class="mt-n1 pt-0"
+              type="number"
+              style="width: 60px"
+              step="10"
+            ></v-text-field>
+          </template>
         </v-slider>
         <v-btn-toggle>
           <v-btn
