@@ -144,7 +144,8 @@ def execute_queries(
                             task_queue.put("wake_up_signal_for_worker")
                         break
                     else:
-                        query, not_formatted_parameters = task
+                        query_tuple, workload_type, query_type = task
+                        query, not_formatted_parameters = query_tuple
                         formatted_parameters = (
                             tuple(
                                 AsIs(parameter) if protocol == "as_is" else parameter
@@ -156,14 +157,16 @@ def execute_queries(
                         startts = time()
                         cur.execute(query, formatted_parameters)
                         endts = time()
-                        succesful_queries.append((startts, endts, "none", 0))
+                        succesful_queries.append(
+                            (startts, endts, workload_type, query_type)
+                        )
                         if last_batched < time() - 1:
                             last_batched = time()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
-                        {"worker_id": worker_id, "task": task, "Error": str(e)}
+                        {"worker_id": worker_id, "task": query_tuple, "Error": str(e)}
                     )
 
 

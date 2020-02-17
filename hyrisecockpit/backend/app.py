@@ -81,6 +81,41 @@ model_throughput = monitor.clone(
     },
 )
 
+model_detailed_throughput = monitor.clone(
+    "Detailed Throughput",
+    model_database,
+    {
+        "detailed_throughput": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "throughput": fields.Integer(
+                            title="throughput",
+                            description="Number of successfully executed queries in given time interval.",
+                            required=True,
+                            example=55,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_latency = monitor.clone(
     "Latency",
     model_database,
@@ -327,6 +362,37 @@ class Throughput(Resource):
                 throughput[database] = 0
         response = get_response(200)
         response["body"]["throughput"] = throughput
+        return response
+
+
+@monitor.route("/detailed_throughput")
+class DetailedThroughput(Resource):
+    """Detailed throughput information of all databases."""
+
+    @monitor.doc(model=[model_detailed_throughput])
+    def get(self) -> Union[int, List[Dict[str, List]]]:
+        """Return detailed throughput information from the stored queries."""
+        t = time()
+        throughput: List[Dict[str, int]]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response = []
+        for database in active_databases:
+            result = storage_connection.query(
+                f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1} GROUP BY benchmark, query_no;""",
+                database=database,
+            )
+            throughput = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "throughput": list(result[table, tags])[0]["count"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "detailed_throughput": throughput})
         return response
 
 
