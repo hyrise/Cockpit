@@ -4,6 +4,7 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+from datetime import datetime, timedelta
 from secrets import choice
 from time import time
 from typing import Dict, List, Union
@@ -13,6 +14,7 @@ from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
 from jsonschema import ValidationError, validate
+from rfc3339 import rfc3339
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
@@ -307,7 +309,9 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
-        t = time()
+        current_time = datetime.utcnow()
+        t_start = rfc3339(current_time - timedelta(seconds=2))
+        t_end = rfc3339(current_time - timedelta(seconds=1))
         throughput: Dict[str, int] = {}
         try:
             active_databases = _active_databases()
@@ -315,7 +319,7 @@ class Throughput(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1};""",
+                f"""SELECT COUNT("end") FROM successful_queries WHERE time > '{t_start}'' AND time <= '{t_end}';""",
                 database=database,
             )
             throughput_value = list(result["successful_queries", None])
