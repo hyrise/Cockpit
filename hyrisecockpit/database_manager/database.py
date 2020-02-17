@@ -1,5 +1,6 @@
 """The database object represents the instance of a database."""
 
+from datetime import datetime
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
@@ -54,7 +55,7 @@ class StorageCursor:
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
                 "fields": {"start": float(query[0]), "end": float(query[1])},
-                "time": int(query[0] * 1e9),
+                "time": datetime.fromtimestamp(query[1]).isoformat(),
             }
             for query in query_list
         ]
