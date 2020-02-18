@@ -53,7 +53,7 @@ class StorageCursor:
             {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
-                "fields": {"start": query[0], "end": query[1]},
+                "fields": {"start": query[0], "end": (query[1] / 1e9)},
                 "time": query[1],
             }
             for query in query_list
@@ -142,8 +142,9 @@ def execute_queries(
                             if not_formatted_parameters is not None
                             else None
                         )
-                        startts = int(time() * 1e9)
+                        startts = time()
                         cur.execute(query, formatted_parameters)
+                        # endts value representate timestamp and needs to be in nanoseconds
                         endts = int(time() * 1e9)
                         succesful_queries.append((startts, endts, "none", 0))
                         if last_batched < time() - 1:

@@ -308,8 +308,8 @@ class Throughput(Resource):
     def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
         current_time = int(time() * 1e9)
-        t_start = int(str(current_time - 2_000_000_000))
-        t_end = int(str(current_time - 1_000_000_000))
+        t_start = current_time - 2_000_000_000
+        t_end = current_time - 1_000_000_000
 
         throughput: Dict[str, int] = {}
         try:
@@ -342,8 +342,8 @@ class Latency(Resource):
     def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
         current_time = int(time() * 1e9)
-        t_start = int(str(current_time - 2_000_000_000))
-        t_end = int(str(current_time - 1_000_000_000))
+        t_start = current_time - 2_000_000_000
+        t_end = current_time - 1_000_000_000
         latency: Dict[str, float] = {}
         try:
             active_databases = _active_databases()
