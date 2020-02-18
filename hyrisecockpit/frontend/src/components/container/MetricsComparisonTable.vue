@@ -11,6 +11,7 @@
           {{ database.id }}
         </v-card-title>
       </v-card>
+
       <v-card
         v-for="metric in selectedMetrics"
         :key="metric"
@@ -20,7 +21,6 @@
           {{ getMetricTitle(metric) }}
         </v-card-title>
         <component
-          class="metric"
           :is="getMetricComponent(metric)"
           :selected-databases="[database]"
           :metric="metric"

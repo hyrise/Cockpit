@@ -89,10 +89,7 @@ function useTreemapConfiguration(
           y: 1.1,
           yanchor: "bottom"
         }
-      ],
-      autosize: false,
-      width: 1200,
-      height: 900
+      ]
     };
   }
   function getDataset(

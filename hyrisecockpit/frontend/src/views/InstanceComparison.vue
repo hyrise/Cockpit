@@ -103,9 +103,20 @@ export default createComponent({
       }
     }
     function handleMetricsChanged(): void {
+      console.log(selectedMetrics.value);
+      sortMetrics(selectedMetrics.value);
       emitMetricsChangedEvent(
         selectedMetrics.value.map((metric: any) => metric.value)
       );
+    }
+
+    function sortMetrics(metrics: Object[]): void {
+      const sorted: Object[] = [];
+      availableMetrics.forEach(metric => {
+        const selectedMetric = metrics.find(elem => elem === metric);
+        if (selectedMetric) sorted.push(selectedMetric);
+      });
+      selectedMetrics.value = sorted;
     }
 
     return {

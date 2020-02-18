@@ -1,7 +1,26 @@
 <template>
   <div class="mx-10 my-10">
+    <v-dialog v-model="showDialog" hide-overlay>
+      <template v-slot:activator="{ on }">
+        <v-btn color="secondary" small right dark v-on="on">
+          <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
+        </v-btn>
+      </template>
+      <Treemap
+        :graph-id="'1' + graphId || 'storage'"
+        :labels="labels"
+        :parents="parents"
+        :values="sizes"
+        :chart-configuration="chartConfiguration"
+      />
+      <v-spacer />
+
+      <v-btn x-large color="primary" @click="showDialog = false"
+        >Close detailed view</v-btn
+      >
+    </v-dialog>
     <Treemap
-      :graph-id="graphId || 'storage'"
+      :graph-id="'2' + graphId || 'storage'"
       :labels="labels"
       :parents="parents"
       :values="sizes"
@@ -28,6 +47,7 @@ interface Data {
   parents: Ref<string[]>;
   sizes: Ref<number[]>;
   chartConfiguration: Ref<string[]>;
+  showDialog: Ref<boolean>;
 }
 
 export default createComponent({
@@ -38,6 +58,7 @@ export default createComponent({
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
+    const showDialog = ref(false);
 
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
@@ -60,7 +81,7 @@ export default createComponent({
       }
     });
 
-    return { labels, parents, sizes, chartConfiguration };
+    return { labels, parents, sizes, chartConfiguration, showDialog };
   }
 });
 </script>
