@@ -1,6 +1,5 @@
 """The database object represents the instance of a database."""
 
-from datetime import datetime
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
 from time import time
@@ -143,9 +142,9 @@ def execute_queries(
                             if not_formatted_parameters is not None
                             else None
                         )
-                        startts = int(datetime.utcnow().timestamp() * 1e9)
+                        startts = int(time() * 1e9)
                         cur.execute(query, formatted_parameters)
-                        endts = int(datetime.utcnow().timestamp() * 1e9)
+                        endts = int(time() * 1e9)
                         succesful_queries.append((startts, endts, "none", 0))
                         if last_batched < time() - 1:
                             last_batched = time()

@@ -4,8 +4,8 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
-from datetime import datetime, timedelta
 from secrets import choice
+from time import time
 from typing import Dict, List, Union
 
 from flask import Flask, request
@@ -307,9 +307,10 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
-        current_time = datetime.utcnow()
-        t_start = int((current_time - timedelta(seconds=2)).timestamp() * 1e9)
-        t_end = int((current_time - timedelta(seconds=1)).timestamp() * 1e9)
+        current_time = int(time() * 1e9)
+        t_start = int(str(current_time - 2_000_000_000))
+        t_end = int(str(current_time - 1_000_000_000))
+
         throughput: Dict[str, int] = {}
         try:
             active_databases = _active_databases()
@@ -317,8 +318,9 @@ class Throughput(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT COUNT("end") FROM successful_queries WHERE time > {t_start} AND time <= {t_end};""",
+                f"""SELECT COUNT("end") FROM successful_queries WHERE time > $t_start AND time <= $t_end;""",
                 database=database,
+                bind_params={"t_start": t_start, "t_end": t_end},
             )
             throughput_value = list(result["successful_queries", None])
             if len(throughput_value) > 0:
@@ -339,9 +341,9 @@ class Latency(Resource):
     @monitor.doc(model=[model_latency])
     def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
-        current_time = datetime.utcnow()
-        t_start = int((current_time - timedelta(seconds=2)).timestamp() * 1e9)
-        t_end = int((current_time - timedelta(seconds=1)).timestamp() * 1e9)
+        current_time = int(time() * 1e9)
+        t_start = int(str(current_time - 2_000_000_000))
+        t_end = int(str(current_time - 1_000_000_000))
         latency: Dict[str, float] = {}
         try:
             active_databases = _active_databases()
@@ -349,8 +351,9 @@ class Latency(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE time > {t_start} AND time <= {t_end});""",
+                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE time > $t_start AND time <= $t_end);""",
                 database=database,
+                bind_params={"t_start": t_start, "t_end": t_end},
             )
             latency_value = list(result["successful_queries", None])
             if len(latency_value) > 0:
