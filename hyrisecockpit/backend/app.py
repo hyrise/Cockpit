@@ -307,7 +307,7 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
-        current_time = int(time() * 1e9)
+        current_time = int(time() * 1_000_000_000)
         t_start = current_time - 2_000_000_000
         t_end = current_time - 1_000_000_000
 
@@ -341,7 +341,7 @@ class Latency(Resource):
     @monitor.doc(model=[model_latency])
     def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
-        current_time = int(time() * 1e9)
+        current_time = int(time() * 1_000_000_000)
         t_start = current_time - 2_000_000_000
         t_end = current_time - 1_000_000_000
         latency: Dict[str, float] = {}

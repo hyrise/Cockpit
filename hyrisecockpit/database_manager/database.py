@@ -146,7 +146,7 @@ def execute_queries(
                         cur.execute(query, formatted_parameters)
                         endts = time()
                         # time_stamp needs to be in nanoseconds
-                        time_stamp = int(endts * 1e9)
+                        time_stamp = int(endts * 1_000_000_000)
                         succesful_queries.append(
                             (time_stamp, startts, endts, "none", 0)
                         )
