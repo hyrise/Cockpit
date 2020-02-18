@@ -307,9 +307,9 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
-        current_time = int(time() * 1_000_000_000)
-        t_start = current_time - 2_000_000_000
-        t_end = current_time - 1_000_000_000
+        currentts = int(time() * 1_000_000_000)
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
 
         throughput: Dict[str, int] = {}
         try:
@@ -318,9 +318,9 @@ class Throughput(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT COUNT("end") FROM successful_queries WHERE time > $t_start AND time <= $t_end;""",
+                f"""SELECT COUNT("end") FROM successful_queries WHERE time > $startts AND time <= $endts;""",
                 database=database,
-                bind_params={"t_start": t_start, "t_end": t_end},
+                bind_params={"startts": startts, "endts": endts},
             )
             throughput_value = list(result["successful_queries", None])
             if len(throughput_value) > 0:
@@ -341,9 +341,9 @@ class Latency(Resource):
     @monitor.doc(model=[model_latency])
     def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
-        current_time = int(time() * 1_000_000_000)
-        t_start = current_time - 2_000_000_000
-        t_end = current_time - 1_000_000_000
+        currentts = int(time() * 1_000_000_000)
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
         latency: Dict[str, float] = {}
         try:
             active_databases = _active_databases()
@@ -351,9 +351,9 @@ class Latency(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE time > $t_start AND time <= $t_end);""",
+                f"""SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE time > $startts AND time <= $endts);""",
                 database=database,
-                bind_params={"t_start": t_start, "t_end": t_end},
+                bind_params={"startts": startts, "endts": endts},
             )
             latency_value = list(result["successful_queries", None])
             if len(latency_value) > 0:
