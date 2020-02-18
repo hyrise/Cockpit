@@ -5,7 +5,7 @@ If run as a module, a flask server application will be started.
 """
 
 from secrets import choice
-from time import time
+from time import time_ns
 from typing import Dict, List, Union
 
 from flask import Flask, request
@@ -307,7 +307,7 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
         """Return throughput information from the stored queries."""
-        currentts = int(time() * 1_000_000_000)
+        currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
 
@@ -341,7 +341,7 @@ class Latency(Resource):
     @monitor.doc(model=[model_latency])
     def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
         """Return latency information from the stored queries."""
-        currentts = int(time() * 1_000_000_000)
+        currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
         latency: Dict[str, float] = {}

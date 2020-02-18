@@ -2,7 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
-from time import time
+from time import time_ns
 from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -123,7 +123,7 @@ def execute_queries(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             succesful_queries = []
-            last_batched = time()
+            last_batched = time_ns()
             while True:
                 # If Queue is emty go to wait status
                 try:
@@ -142,16 +142,16 @@ def execute_queries(
                             if not_formatted_parameters is not None
                             else None
                         )
-                        startts = time()
+                        startts = time_ns()
                         cur.execute(query, formatted_parameters)
-                        endts = time()
+                        endts = time_ns()
                         # time_stamp needs to be in nanoseconds
                         time_stamp = int(endts * 1_000_000_000)
                         succesful_queries.append(
                             (time_stamp, startts, endts, "none", 0)
                         )
-                        if last_batched < time() - 1:
-                            last_batched = time()
+                        if last_batched < time_ns() - 1:
+                            last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
