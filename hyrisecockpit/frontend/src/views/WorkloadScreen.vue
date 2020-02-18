@@ -106,7 +106,7 @@ interface Data extends MetricViewData {
   getDisplayedWorkload: (workload: Workload) => string;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workload: Workload, frequency: Ref<number>) => void;
+  startWorkload: (workload: Workload, frequency: number) => void;
   stopWorkload: () => void;
   availableWorkloads: string[];
   frequency: Ref<number>;
@@ -121,7 +121,7 @@ export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { emitMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
-    const frequency = ref<number>(0);
+    const frequency = ref<number>(200);
     const {
       loadWorkloadData,
       deleteWorkloadData,

@@ -3,7 +3,6 @@ import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
 import { controlBackend } from "../../config";
-import { Ref } from "@vue/composition-api";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
@@ -13,7 +12,7 @@ export function useWorkloadService(): WorkloadService {
     axios.delete(`${controlBackend}data/${getTransferredWorkload(workload)}`);
   }
 
-  function startWorkload(workload: Workload, frequency: Ref<number>): void {
+  function startWorkload(workload: Workload, frequency: number): void {
     axios.post(`${controlBackend}workload`, {
       folder_name: getTransferredWorkload(workload),
       frequency: frequency

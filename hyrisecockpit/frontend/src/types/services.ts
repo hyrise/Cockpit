@@ -15,7 +15,7 @@ export type TransformationService = (
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workload: Workload, frequency: Ref<number>) => void;
+  startWorkload: (workload: Workload, frequency: number) => void;
   stopWorkload: () => void;
 }
 
