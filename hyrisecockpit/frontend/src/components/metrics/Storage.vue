@@ -6,18 +6,23 @@
           <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
         </v-btn>
       </template>
-      <Treemap
-        :graph-id="'1' + graphId || 'storage'"
-        :labels="labels"
-        :parents="parents"
-        :values="sizes"
-        :chart-configuration="chartConfiguration"
-      />
-      <v-spacer />
-
-      <v-btn x-large color="primary" @click="showDialog = false"
-        >Close detailed view</v-btn
-      >
+      <v-card>
+        <v-card-title>Storage</v-card-title>
+        <Treemap
+          :graph-id="'1' + graphId || 'storage'"
+          :labels="labels"
+          :parents="parents"
+          :values="sizes"
+          :chart-configuration="chartConfiguration"
+          :autosize="false"
+        />
+        <v-spacer />
+        <v-card-actions>
+          <v-btn block color="primary" @click="showDialog = false">
+            Close detailed view
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"

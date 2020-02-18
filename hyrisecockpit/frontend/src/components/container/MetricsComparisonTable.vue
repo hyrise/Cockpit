@@ -87,6 +87,7 @@ export default createComponent({
 }
 .database {
   margin-bottom: 0.5%;
+  width: 100%;
 }
 .metrics-table {
   display: flex;
