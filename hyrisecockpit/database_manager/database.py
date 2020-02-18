@@ -52,9 +52,9 @@ class StorageCursor:
         points = [
             {
                 "measurement": "successful_queries",
-                "tags": {"benchmark": query[3], "query_no": query[4]},
-                "fields": {"start": query[1], "end": query[2]},
-                "time": query[0],
+                "tags": {"benchmark": query[2], "query_no": query[3]},
+                "fields": {"start": query[0], "end": query[1]},
+                "time": query[1],
             }
             for query in query_list
         ]
@@ -145,12 +145,8 @@ def execute_queries(
                         startts = time_ns()
                         cur.execute(query, formatted_parameters)
                         endts = time_ns()
-                        # time_stamp needs to be in nanoseconds
-                        time_stamp = int(endts * 1_000_000_000)
-                        succesful_queries.append(
-                            (time_stamp, startts, endts, "none", 0)
-                        )
-                        if last_batched < time_ns() - 1:
+                        succesful_queries.append((startts, endts, "none", 0))
+                        if last_batched < time_ns() - 1_000_000_000:
                             last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
