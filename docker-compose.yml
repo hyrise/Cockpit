@@ -11,8 +11,8 @@ services:
     ports:
       - "8000:8000"
 
-  database-manager:
-    build: .
+  manager:
+    image: udopigorsch/hyrise:buster
     working_dir: /usr/local/Cockpit
     command: "cockpit-manager"
     volumes:
@@ -20,8 +20,8 @@ services:
     ports:
       - "8001:8001"
 
-  workload-generator:
-    build: .
+  generator:
+    image: udopigorsch/hyrise:buster
     working_dir: /usr/local/Cockpit
     command: "cockpit-generator"
     volumes:

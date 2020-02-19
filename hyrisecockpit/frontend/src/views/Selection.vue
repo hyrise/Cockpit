@@ -114,6 +114,7 @@ import {
 } from "@vue/composition-api";
 import axios from "axios";
 import { Database } from "../types/database";
+import { useMetricEvents } from "../meta/events";
 
 interface Props {}
 interface Data {
@@ -121,7 +122,7 @@ interface Data {
   openDatabaseScreen: (databaseId: string) => void;
   createNewDatabase: () => void;
   showDatabaseDialog: boolean;
-  number_workers: Ref<string>;
+  number_workers: Ref<number>;
   id: Ref<string>;
   user: Ref<string>;
   password: Ref<string>;
@@ -132,13 +133,18 @@ interface Data {
 
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databases, addDatabase } = context.root.$databaseData;
+    const { databases, addDatabase } = context.root.$databaseService;
+    const { emitMetricsChangedEvent } = useMetricEvents();
 
-    const number_workers = ref<string>("8");
+    onMounted(() => {
+      emitMetricsChangedEvent();
+    });
+
+    const number_workers = ref<number>(8);
     const id = ref<string>("");
     const user = ref<string>("serviceuser");
     const password = ref<string>("");
-    const host = ref<string>(".eaalab.hpi.uni-potsdam.de");
+    const host = ref<string>("vm-");
     const port = ref<string>("5432");
     const dbname = ref<string>("postgres");
     let showDatabaseDialog = false;
@@ -152,7 +158,7 @@ export default createComponent({
 
     function createNewDatabase(): void {
       const databaseData = {
-        number_workers: number_workers.value,
+        number_workers: parseInt(number_workers.value.toString(), 10),
         id: id.value,
         user: user.value,
         password: password.value,

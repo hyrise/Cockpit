@@ -1,6 +1,5 @@
 """This module represents a workload."""
 
-from random import shuffle
 from secrets import choice
 from typing import Any, Dict, List, Tuple
 
@@ -24,6 +23,7 @@ class Workload(object):
         self._delimiter: str = delimiter
         self._file_type: str = file_type
         self._queries: Dict[str, List[str]] = {}
+        self._query_pointer = 0
         self._workload_reader = WorkloadReader()
         self._initialize()
 
@@ -32,27 +32,15 @@ class Workload(object):
         self._queries = self._workload_reader.read_workload(
             self._queries_location, self._delimiter, self._file_type, self.workload_type
         )
-        self._config_data = self._workload_reader.read_config_data(
-            self._queries_location
-        )
-        self._required_tables = self._config_data.get("required_tables", [])
 
-    def get_required_tables(self) -> List:
-        """Get list of tables required to execute the workload."""
-        return self._required_tables
-
-    def generate_workload(
-        self, factor: int = 1, shuffle_flag: bool = False
-    ) -> List[Tuple[str, Any]]:
+    def generate_workload(self, number_queries: int) -> List[Tuple[str, Any]]:
         """Chose random one query from every type."""
         workload_queries: List[Tuple[str, Any]] = []
-
-        for _ in range(factor):
-            for queries_type in self._queries.values():
-                workload_queries.append((choice(queries_type), None))
-
-        if shuffle_flag:
-            shuffle(workload_queries)
+        query_types = list(self._queries.keys())
+        for _ in range(number_queries):
+            query_type = query_types[self._query_pointer]
+            workload_queries.append((choice(self._queries[query_type]), None))
+            self._query_pointer = (self._query_pointer + 1) % len(query_types)
 
         return workload_queries
 

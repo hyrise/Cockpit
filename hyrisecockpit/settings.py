@@ -16,21 +16,25 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
-BACKEND_HOST: str = getenv("BACKEND_HOST", "0.0.0.0")
+BACKEND_HOST: str = getenv("BACKEND_HOST", "127.0.0.1")
 BACKEND_PORT: str = getenv("BACKEND_PORT", "8000")
+BACKEND_LISTENING: str = getenv("BACKEND_LISTENING", "0.0.0.0")
 
 DB_MANAGER_HOST: str = getenv("DB_MANAGER_HOST", "manager")
 DB_MANAGER_PORT: str = getenv("DB_MANAGER_PORT", "8001")
+DB_MANAGER_LISTENING: str = getenv("DB_MANAGER_LISTENING", "*")
 
 GENERATOR_HOST: str = getenv("GENERATOR_HOST", "generator")
 GENERATOR_PORT: str = getenv("GENERATOR_PORT", "8002")
+GENERATOR_LISTENING: str = getenv("GENERATOR_LISTENING", "*")
 
 WORKLOAD_SUB_HOST: str = getenv("WORKLOAD_SUB_HOST", "generator")
 WORKLOAD_PUBSUB_PORT: str = getenv("WORKLOAD_PUBSUB_PORT", "8003")
+WORKLOAD_LISTENING: str = getenv("WORKLOAD_LISTENING", "*")
 
 WORKLOAD_LOCATION: str = getenv("WORKLOAD_LOCATION", "workloads/workload_queries")
 
-DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch")
+DEFAULT_TABLES: str = getenv("DEFAULT_TABLES", "tpch_0.1")
 
 STORAGE_HOST: str = getenv("STORAGE_HOST", "influxdb")
 STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")

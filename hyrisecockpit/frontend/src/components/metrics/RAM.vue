@@ -11,7 +11,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="ram"
+      :graph-id="graphId || 'ram'"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -28,7 +28,6 @@ import {
   watch
 } from "@vue/composition-api";
 
-import { useGenericFetchService } from "../../services/genericFetchService";
 import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
@@ -45,13 +44,9 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const { checkState, data } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const chartConfiguration = ["RAM", "time in sec", "memory usage in %"];
-
-    onMounted(() => {
-      setInterval(checkState, 1000);
-    });
 
     return {
       data,

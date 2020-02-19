@@ -54,12 +54,12 @@ export default createComponent({
     const xData = computed(() => props.xValues);
     const yData = computed(() => props.yValues);
 
-    const { getDataset, getLayout } = useHeatMapConfiguration(
+    const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
       props.chartConfiguration
     );
 
     onMounted(() => {
-      Plotly.newPlot(props.graphId, [getDataset()], getLayout());
+      Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
       watch([mapData, xData, yData], () => {
         Plotly.deleteTraces(props.graphId, 0);
         Plotly.addTraces(
@@ -74,22 +74,28 @@ function useHeatMapConfiguration(
   chartConfiguration: string[]
 ): {
   getDataset: (
-    data?: number[][],
-    columns?: string[],
-    chunks?: string[]
+    data?: readonly number[][],
+    columns?: readonly string[],
+    chunks?: readonly string[]
   ) => Object;
   getLayout: () => Object;
+  getOptions: () => Object;
 } {
   function getLayout(): Object {
     return {
-      title: chartConfiguration[0]
+      xaxis: {
+        rangemode: "tozero"
+      },
+      yaxis: {
+        rangemode: "tozero"
+      }
     };
   }
 
   function getDataset(
-    data: number[][] = [],
-    columns: string[] = [],
-    chunks: string[] = []
+    data: readonly number[][] = [],
+    columns: readonly string[] = [],
+    chunks: readonly string[] = []
   ): Object {
     return {
       z: data,
@@ -98,6 +104,9 @@ function useHeatMapConfiguration(
       type: "heatmap"
     };
   }
-  return { getDataset, getLayout };
+  function getOptions(): Object {
+    return { displayModeBar: false };
+  }
+  return { getDataset, getLayout, getOptions };
 }
 </script>

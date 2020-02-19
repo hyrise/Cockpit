@@ -1,10 +1,10 @@
 import { ref } from "@vue/composition-api";
-import { Database, DatabaseData } from "../types/database";
+import { Database, DatabaseService } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
-import { backendUrl } from "../types/services";
+import { monitorBackend, controlBackend } from "../../config";
 
-export function useDatabaseService(): DatabaseData {
+export function useDatabaseService(): DatabaseService {
   const colorsArray: any = Object.keys(colors);
   let usedColors: any = 0;
   const databases = ref<Database[]>([]);
@@ -12,14 +12,14 @@ export function useDatabaseService(): DatabaseData {
   const tables = ref<string[]>([]);
 
   function getTables(): void {
-    axios.get(backendUrl + "storage").then(result => {
+    axios.get(monitorBackend + "storage").then(result => {
       const instance = Object.keys(result.data.body.storage)[0];
       tables.value = Object.keys(result.data.body.storage[instance]);
     });
   }
 
   function getDatabases(): void {
-    axios.get(backendUrl + "database").then(response => {
+    axios.get(controlBackend + "database").then(response => {
       databases.value = response.data.body.databases.map((database: any) => ({
         id: database,
         color: getDatabaseColor(database)
@@ -42,11 +42,11 @@ export function useDatabaseService(): DatabaseData {
     return color;
   }
 
-  function addDatabase(databaseData: any): void {
+  function addDatabase(databaseService: any): void {
     axios
-      .post(backendUrl + "database", databaseData)
+      .post(controlBackend + "database", databaseService)
       .then(response => {
-        axios.get(backendUrl + "database").then(
+        axios.get(controlBackend + "database").then(
           result =>
             (databases.value = result.data.body.databases.map(
               (database: any) => ({
@@ -56,9 +56,7 @@ export function useDatabaseService(): DatabaseData {
             ))
         );
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   }
 
   return {

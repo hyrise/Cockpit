@@ -17,7 +17,7 @@ import * as Plotly from "plotly.js";
 
 interface Props {
   data: any;
-  selectedDatabases: string[];
+  selectedDatabases: Database[];
   graphId: string;
   chartConfiguration: string[];
 }
@@ -42,14 +42,16 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const selectedDatabaseIds = computed(() => props.selectedDatabases);
+    const selectedDatabaseIds = computed(() =>
+      props.selectedDatabases.map(database => database.id)
+    );
     const data = computed(() => props.data);
     const graphId = props.graphId;
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
       props.chartConfiguration
     );
-    const { isReady } = context.root.$databaseData;
+    const { isReady } = context.root.$databaseService;
 
     onMounted(() => {
       watch(isReady, () => {
@@ -115,7 +117,7 @@ function useLineChartConfiguration(
   getLayout: (xMin?: number, xMax?: number) => Object;
   getOptions: () => Object;
 } {
-  const databases: Ref<Database[]> = context.root.$databaseData.databases;
+  const databases: Ref<Database[]> = context.root.$databaseService.databases;
   function getLayout(xMin: number = 0, xMax: number = 30): Object {
     return {
       xaxis: {

@@ -11,7 +11,7 @@
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
-      graph-id="throughput"
+      :graph-id="graphId || 'throughput'"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -27,8 +27,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
-import { useGenericFetchService } from "../../services/genericFetchService";
 import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 import Vue from "vue";
@@ -45,13 +43,9 @@ export default createComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const { checkState, data } = useGenericFetchService(props.metricMeta);
+    const data = context.root.$metricController.data[props.metric];
 
     const chartConfiguration = ["Throughput", "time in sec", "queries per sec"];
-
-    onMounted(() => {
-      setInterval(checkState, 1000);
-    });
 
     return {
       data,
