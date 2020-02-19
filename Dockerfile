@@ -8,7 +8,6 @@ COPY    setup.py \
     Pipfile \
     Pipfile.lock \
     requirements.txt \
-    requirements-dev.txt \
     .env \
     /usr/local/Cockpit/
 COPY    hyrisecockpit/__init__.py \
@@ -20,4 +19,4 @@ COPY    hyrisecockpit/__init__.py \
     hyrisecockpit/database_manager \
     hyrisecockpit/workload_generator \
     /usr/local/Cockpit/hyrisecockpit/
-RUN pip3.8 install -r requirements.txt && pip3.8 install .
+RUN pip3.8 install -r requirements.txt && pip3.8 install -e .
