@@ -1,6 +1,45 @@
 """Module for measureing endpoint responsiveness."""
 
 import argparse
+import signal
+import subprocess  # nosec
+import time
+
+import requests
+
+from hyrisecockpit.settings import (
+    BACKEND_HOST,
+    BACKEND_PORT,
+    DB1_HOST,
+    DB1_PASSWORD,
+    DB1_PORT,
+    DB1_TYPE,
+    DB2_HOST,
+    DB2_PASSWORD,
+    DB2_PORT,
+    DB2_TYPE,
+)
+
+DATABASES = {
+    "db1": {
+        "number_workers": 10,
+        "id": "db1",
+        "user": DB1_PASSWORD,
+        "password": DB1_PASSWORD,
+        "host": DB1_HOST,
+        "port": DB1_PORT,
+        "dbname": DB1_TYPE,
+    },
+    "db2": {
+        "number_workers": 10,
+        "id": "db2",
+        "user": DB2_PASSWORD,
+        "password": DB2_PASSWORD,
+        "host": DB2_HOST,
+        "port": DB2_PORT,
+        "dbname": DB2_TYPE,
+    },
+}
 
 
 class ArgumentValidator:
@@ -27,6 +66,8 @@ class ArgumentValidator:
             "databases": self._validate_databases,
             "time": self._validate_time,
             "runs": self._validate_runs,
+            "backend_url": self._validate_url,
+            "number_worker": self._validate_number_worker,
         }
 
     def get_endpoints(self):
@@ -110,6 +151,17 @@ class ArgumentValidator:
             run = 1
         return run
 
+    def _validate_url(self, url_argument):
+        # todo validate via regex
+        return url_argument[0]
+
+    def _validate_number_worker(self, number_worker_argument):
+        number_worker = number_worker_argument[0]
+        if number_worker < 0:
+            print(f"{number_worker} must be positiv")
+            number_worker = 10
+        return number_worker
+
 
 class ArgumentParser:
     """Parse arguments from command line."""
@@ -150,7 +202,7 @@ class ArgumentParser:
 
     def _add_arguments(self):
         self.parser.add_argument(
-            "--end_points",
+            "--endpoints",
             "-ep",
             dest="end_points",
             type=str,
@@ -176,7 +228,7 @@ class ArgumentParser:
         )
         self.parser.add_argument(
             "--workload",
-            "-b",
+            "-w",
             dest="workload",
             type=str,
             nargs="+",
@@ -201,6 +253,24 @@ class ArgumentParser:
             default=[1],
             help="Number of runs.",
         )
+        self.parser.add_argument(
+            "--url",
+            "-u",
+            dest="backend_url",
+            type=str,
+            nargs=1,
+            default=[f"http://{BACKEND_HOST}:{BACKEND_PORT}"],
+            help="Backend url",
+        )
+        self.parser.add_argument(
+            "--nworker",
+            "-nw",
+            dest="number_worker",
+            type=int,
+            nargs=1,
+            default=[10],
+            help="Backend url",
+        )
 
     def _show_info(self):
         if self._arguments.show:
@@ -213,11 +283,79 @@ class ArgumentParser:
         """Retun validated arguments from command line."""
         self._show_info()
         arguments = {}
-        types = ["end_points", "databases", "workload", "time", "runs"]
+        types = [
+            "end_points",
+            "databases",
+            "workload",
+            "time",
+            "runs",
+            "backend_url",
+            "number_worker",
+        ]
         for argument_type in types:
             arguments[argument_type] = self._validator.validate(
                 argument_type, getattr(self._arguments, argument_type)
             )
+        return arguments
+
+
+class EndpointBenchmark:
+    """Handle and execute endpoint benchmark."""
+
+    def __init__(self, configuration):
+        """Initialize a EndpointBenchmark."""
+        self._configuration = configuration
+        self._backend_url = configuration["backend_url"]
+
+    def _start_subprocesses(self):
+        sub_processes = []
+        backend_prosess = subprocess.Popen(  # nosec
+            ["pipenv", "run", "cockpit-backend"],
+            stderr=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+        )
+        sub_processes.append(backend_prosess)
+        time.sleep(1)
+        manager_process = subprocess.Popen(  # nosec
+            ["pipenv", "run", "cockpit-manager"],
+            stderr=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+        )
+        sub_processes.append(manager_process)
+        time.sleep(0.5)
+        generator_process = subprocess.Popen(  # nosec
+            ["pipenv", "run", "cockpit-generator"],
+            stderr=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+        )
+        sub_processes.append(generator_process)
+        time.sleep(0.5)
+        return sub_processes
+
+    def _close_subprocesses(self, sub_processes):
+        for i in range(len(sub_processes)):
+            sub_processes[i].send_signal(signal.SIGINT)
+            sub_processes[i].poll()
+
+    def _check_if_database_added(self, database_id):
+        in_process = True
+        while in_process:
+            time.sleep(0.2)
+            # TODO add time out
+            responce = requests.get(f"{self._backend_url}/control/database")
+            databses = responce["body"]["databases"]
+            check_processed = database_id in databses
+            if check_processed:
+                in_process = False
+
+    def _add_databases(self):
+        databases = self._configuration["databases"]
+        for database in databases:
+            data = DATABASES.get(database)
+            data["number_workers"] = self._configuration["number_workers"]
+            # TODO add time out
+            _ = requests.post(f"{self._backend_url}/control/database", json=data)
+            self._check_if_database_added(database)
 
 
 if __name__ == "__main__":
