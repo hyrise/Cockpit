@@ -4,6 +4,7 @@ import { Workload, WorkloadMetaData } from "./workloads";
 export interface FetchService {
   data: Ref<any>;
   getDataIfReady: () => void;
+  maxValue: Ref<Number>;
 }
 
 export type TransformationService = (

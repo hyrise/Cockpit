@@ -13,6 +13,7 @@
       :data="data"
       :graph-id="graphId || 'throughput'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
     />
   </div>
 </template>
@@ -44,12 +45,13 @@ export default createComponent({
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const data = context.root.$metricController.data[props.metric];
-
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
     const chartConfiguration = ["Throughput", "time in sec", "queries per sec"];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue
     };
   }
 });

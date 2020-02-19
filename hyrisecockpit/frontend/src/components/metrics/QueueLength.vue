@@ -42,6 +42,7 @@ export default createComponent({
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
 
     const chartConfiguration = [
       "Queue Length",
@@ -51,7 +52,8 @@ export default createComponent({
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue
     };
   }
 });

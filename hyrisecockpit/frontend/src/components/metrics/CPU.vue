@@ -13,6 +13,7 @@
       :data="data"
       :graph-id="graphId || 'cpu'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
     />
   </div>
 </template>
@@ -47,10 +48,12 @@ export default createComponent({
     const chartConfiguration = ["CPU", "time in sec", "workload in %"];
 
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue
     };
   }
 });

@@ -47,10 +47,12 @@ export default createComponent({
     const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
 
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue
     };
   }
 });

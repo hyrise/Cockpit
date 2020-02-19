@@ -45,12 +45,14 @@ export default createComponent({
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
 
     const chartConfiguration = ["RAM", "time in sec", "memory usage in %"];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue
     };
   }
 });

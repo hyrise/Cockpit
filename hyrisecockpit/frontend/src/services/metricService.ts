@@ -6,6 +6,7 @@ import { FetchService } from "@/types/services";
 export function useMetricService(metric: MetricMetadata): FetchService {
   const queryReadyState = ref<boolean>(true);
   const data = ref<any>({}); // TODO: change the initial value
+  const maxValue = ref<number>(0);
 
   function getData(): void {
     queryReadyState.value = false;
@@ -13,6 +14,7 @@ export function useMetricService(metric: MetricMetadata): FetchService {
       if (metric.fetchType === "modify") {
         Object.keys(result).forEach(key => {
           addData(key, metric.transformationService(result, key));
+          updateMaxValue();
         });
       } else if (metric.fetchType === "read") {
         data.value = result;
@@ -28,6 +30,15 @@ export function useMetricService(metric: MetricMetadata): FetchService {
     data.value[dataBaseId].push(newData);
     const dataCopy = JSON.parse(JSON.stringify(data.value));
     data.value = dataCopy;
+  }
+
+  function updateMaxValue() {
+    Object.values(data.value).forEach((dataSet: any) => {
+      const currentValue = dataSet[dataSet.length - 1];
+      if (currentValue > maxValue.value) {
+        maxValue.value = currentValue;
+      }
+    });
   }
 
   function fetchData(): Promise<any> {
@@ -55,5 +66,5 @@ export function useMetricService(metric: MetricMetadata): FetchService {
     }
   }
 
-  return { data, getDataIfReady };
+  return { data, getDataIfReady, maxValue };
 }

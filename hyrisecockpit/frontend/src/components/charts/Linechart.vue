@@ -20,6 +20,7 @@ interface Props {
   selectedDatabases: Database[];
   graphId: string;
   chartConfiguration: string[];
+  maxValue: number;
 }
 
 export default createComponent({
@@ -39,6 +40,10 @@ export default createComponent({
     chartConfiguration: {
       type: Array,
       default: null
+    },
+    maxValue: {
+      type: Number,
+      default: 1
     }
   },
   setup(props: Props, context: SetupContext): void {
@@ -46,6 +51,7 @@ export default createComponent({
       props.selectedDatabases.map(database => database.id)
     );
     const data = computed(() => props.data);
+    const maxValue = computed(() => props.maxValue);
     const graphId = props.graphId;
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
@@ -56,7 +62,12 @@ export default createComponent({
     onMounted(() => {
       watch(isReady, () => {
         if (isReady.value) {
-          Plotly.newPlot(graphId, getDatasets(), getLayout(), getOptions());
+          Plotly.newPlot(
+            graphId,
+            getDatasets(),
+            getLayout(props.maxValue),
+            getOptions()
+          );
         }
       });
       watch(selectedDatabaseIds, () => {
@@ -82,7 +93,12 @@ export default createComponent({
 
     function handleDatabaseChange(): void {
       Plotly.purge(graphId);
-      Plotly.plot(graphId, getDatasets(), getLayout(), getOptions());
+      Plotly.plot(
+        graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
+      );
     }
 
     function getMaxDatasetLength(): number {
@@ -101,6 +117,7 @@ export default createComponent({
         graphId,
         newData,
         getLayout(
+          props.maxValue,
           Math.max(maxSelectedLength - 30, 0),
           Math.max(maxSelectedLength, 30)
         )
@@ -114,11 +131,15 @@ function useLineChartConfiguration(
   chartConfiguration: string[]
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
-  getLayout: (xMin?: number, xMax?: number) => Object;
+  getLayout: (yMax: number, xMin?: number, xMax?: number) => Object;
   getOptions: () => Object;
 } {
   const databases: Ref<Database[]> = context.root.$databaseService.databases;
-  function getLayout(xMin: number = 0, xMax: number = 30): Object {
+  function getLayout(
+    yMax: number,
+    xMin: number = 0,
+    xMax: number = 30
+  ): Object {
     return {
       xaxis: {
         title: {
@@ -146,7 +167,8 @@ function useLineChartConfiguration(
             //color: "#FAFAFA"
           }
         },
-        rangemode: "tozero"
+        rangemode: "tozero",
+        "range[1]": yMax * 1.05
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",
