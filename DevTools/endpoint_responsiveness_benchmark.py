@@ -68,6 +68,7 @@ class ArgumentValidator:
             "runs": self._validate_runs,
             "backend_url": self._validate_url,
             "number_workers": self._validate_number_workers,
+            "workload_frequence": self._validate_workload_frequence,
         }
 
     def get_endpoints(self):
@@ -162,6 +163,13 @@ class ArgumentValidator:
             number_worker = 10
         return number_worker
 
+    def _validate_workload_frequence(self, workload_frequence_argument):
+        workload_frequence = workload_frequence_argument[0]
+        if workload_frequence < 0:
+            print(f"{workload_frequence} must be positiv")
+            workload_frequence = 100
+        return workload_frequence
+
 
 class ArgumentParser:
     """Parse arguments from command line."""
@@ -215,7 +223,8 @@ class ArgumentParser:
             choices=self._FUNCTION_MAP.keys(),
             dest="show",
             nargs="+",
-            help="Endpoints to run benchmark on. Default value is all.",
+            default=["all"],
+            help="Show available entpoints, workloads, databases. Default shows all categories.",
         )
         self.parser.add_argument(
             "--databases",
@@ -263,13 +272,22 @@ class ArgumentParser:
             help="Backend url",
         )
         self.parser.add_argument(
-            "--nworker",
-            "-nw",
+            "--worker_number",
+            "-wn",
             dest="number_workers",
             type=int,
             nargs=1,
             default=[10],
-            help="Backend url",
+            help="Number of workers for databases.",
+        )
+        self.parser.add_argument(
+            "--workload_frequence",
+            "-wf",
+            dest="workload_frequence",
+            type=int,
+            nargs=1,
+            default=[200],
+            help="Frequence of workload.",
         )
 
     def _show_info(self):
@@ -291,6 +309,7 @@ class ArgumentParser:
             "runs",
             "backend_url",
             "number_workers",
+            "workload_frequence",
         ]
         for argument_type in types:
             configuration[argument_type] = self._validator.validate(
