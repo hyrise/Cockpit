@@ -21,6 +21,13 @@ class ArgumentValidator:
         self._endpoints_control = ["database", "data"]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         self._databases = ["db1", "db2"]
+        self._validate_calls = {
+            "end_points": self._validate_enpoints,
+            "workload": self._validate_workloads,
+            "databases": self._validate_databases,
+            "time": self._validate_time,
+            "runs": self._validate_runs,
+        }
 
     def get_endpoints(self):
         """Return available enpoints."""
@@ -37,7 +44,13 @@ class ArgumentValidator:
         """Return available databases."""
         return self._databases
 
-    def validate_enpoints(self, endpoint_arguments):
+    def validate(self, type, arguments):
+        """Validate arguments in context of type."""
+        validator_func = self._validate_calls.get(type)
+        valideted_argumets = validator_func(arguments)
+        return valideted_argumets
+
+    def _validate_enpoints(self, endpoint_arguments):
         """Validate endpoint arguments."""
         if "all" in endpoint_arguments:
             return {
@@ -58,8 +71,11 @@ class ArgumentValidator:
             "endpoints_control": endpoints_control,
         }
 
-    def validate_workloads(self, workload_argument):
+    def _validate_workloads(self, workload_argument):
         """Validate workload arguments."""
+        if "all" in workload_argument:
+            return self._workloads
+
         workloads = []
         for workload in workload_argument:
             if workload in self._workloads:
@@ -68,8 +84,10 @@ class ArgumentValidator:
                 print(f"{workload} workload not found")
         return workloads
 
-    def validate_databases(self, database_arguments):
+    def _validate_databases(self, database_arguments):
         """Validate database arguments."""
+        if "all" in database_arguments:
+            return self._databases
         databases = []
         for database in database_arguments:
             if database in self._databases:
@@ -77,6 +95,20 @@ class ArgumentValidator:
             else:
                 print(f"{database} database not found")
         return databases
+
+    def _validate_time(self, time_argument):
+        time = time_argument[0]
+        if time < 0:
+            print(f"{time} must be positiv")
+            time = 1
+        return time
+
+    def _validate_runs(self, run_argument):
+        run = run_argument[0]
+        if run < 0:
+            print(f"{run} must be positiv")
+            run = 1
+        return run
 
 
 class ArgumentParser:
@@ -94,26 +126,22 @@ class ArgumentParser:
             "all": self._show_all,
         }
         self._add_arguments()
-        self.arguments = self.parser.parse_args()
+        self._arguments = self.parser.parse_args()
         self._validator = ArgumentValidator()
 
     def _show_enpoints(self):
         endpoints = self._validator.get_endpoints()
         print("Endpoints: ")
         for key, value in endpoints.items():
-            print(key, value)
+            print(f"-> {key}: {value}")
 
     def _show_databases(self):
         databases = self._validator.get_databases()
-        print("Databases: ")
-        for database in databases:
-            print(database)
+        print(f"Databases: {databases}")
 
     def _show_workloads(self):
         workloads = self._validator.get_workloads()
-        print("Workloads: ")
-        for workload in workloads:
-            print(workload)
+        print(f"Workloads: {workloads}")
 
     def _show_all(self):
         self._show_enpoints()
@@ -175,8 +203,8 @@ class ArgumentParser:
         )
 
     def _show_info(self):
-        if self.arguments.show:
-            for to_show in self.arguments.show:
+        if self._arguments.show:
+            for to_show in self._arguments.show:
                 func = self._FUNCTION_MAP[to_show]
                 func()
             exit()
@@ -184,6 +212,12 @@ class ArgumentParser:
     def get_arguments(self):
         """Retun validated arguments from command line."""
         self._show_info()
+        arguments = {}
+        types = ["end_points", "databases", "workload", "time", "runs"]
+        for argument_type in types:
+            arguments[argument_type] = self._validator.validate(
+                argument_type, getattr(self._arguments, argument_type)
+            )
 
 
 if __name__ == "__main__":
