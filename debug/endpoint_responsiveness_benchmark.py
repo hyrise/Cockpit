@@ -357,11 +357,29 @@ class EndpointBenchmark:
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
             self._check_if_database_added(database)
 
+    def _stress_endpoints(self, endpoint_type):
+        for end_point in self._configuration["end_points"][
+            f"endpoints_{endpoint_type}"
+        ]:
+            sub_process = subprocess.run(  # nosec
+                [
+                    "wrk",
+                    "-t1",
+                    "-c1",
+                    f"-d{self._configuration['time']}s",
+                    f"{self._backend_url}/{endpoint_type}/{end_point}",
+                ],
+                capture_output=True,
+            )
+            print(sub_process.stdout.decode("utf-8"))
+
     def execute_benchmark(self):
         """Execute endpoint responcivness benchmark."""
         try:
             self._start_subprocesses()
             self._add_databases()
+            self._stress_endpoints("monitor")
+            self._stress_endpoints("control")
             self._close_subprocesses()
         except Exception as e:
             print(str(e))
