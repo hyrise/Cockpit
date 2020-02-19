@@ -20,4 +20,4 @@ COPY    hyrisecockpit/__init__.py \
     hyrisecockpit/database_manager \
     hyrisecockpit/workload_generator \
     /usr/local/Cockpit/hyrisecockpit/
-RUN pip install -r requirements.txt
+RUN pip3.8 install -r requirements.txt && pip3.8 install .

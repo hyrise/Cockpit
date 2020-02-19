@@ -41,5 +41,7 @@ services:
     image: udopigorsch/hyrise:hyrise_19.10
     working_dir: "/usr/local/hyrise"
     command: "cmake-build-release/hyriseServer"
+    volumes:
+      - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
       - "5432:5432"
