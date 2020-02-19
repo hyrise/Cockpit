@@ -2,7 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
-from time import time
+from time import time_ns
 from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -47,27 +47,17 @@ class StorageCursor:
         """Close the cursor and connection."""
         self._connection.close()
 
-    def log_query(self, startts, endts, benchmark: str, query_no: int) -> None:
-        """Log a successful query to permanent in storage."""
-        point = [
-            {
-                "measurement": "successful_queries",
-                "tags": {"benchmark": benchmark, "query_no": query_no},
-                "fields": {"start": float(startts), "end": float(endts)},
-            }
-        ]
-        self._connection.write_points(point, database=self._database)
-
     def log_queries(self, query_list) -> None:
         """Log a couple of succesfully executed queries."""
-        points = []
-        for query in query_list:
-            point = {
+        points = [
+            {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
-                "fields": {"start": float(query[0]), "end": float(query[1])},
+                "fields": {"start": query[0], "end": query[1]},
+                "time": query[1],
             }
-            points.append(point)
+            for query in query_list
+        ]
         self._connection.write_points(points, database=self._database)
 
 
@@ -124,12 +114,16 @@ def execute_queries(
     database_id: str,
 ) -> None:
     """Define workers work loop."""
+    # Allow exit without flush
+    task_queue.cancel_join_thread()
+    failed_task_queue.cancel_join_thread()
+
     with PoolCursor(connection_pool) as cur:
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             succesful_queries = []
-            last_batched = time()
+            last_batched = time_ns()
             while True:
                 # If Queue is emty go to wait status
                 try:
@@ -148,12 +142,12 @@ def execute_queries(
                             if not_formatted_parameters is not None
                             else None
                         )
-                        startts = time()
+                        startts = time_ns()
                         cur.execute(query, formatted_parameters)
-                        endts = time()
+                        endts = time_ns()
                         succesful_queries.append((startts, endts, "none", 0))
-                        if last_batched < time() - 1:
-                            last_batched = time()
+                        if last_batched < time_ns() - 1_000_000_000:
+                            last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
@@ -320,8 +314,11 @@ class Database(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _check_if_tables_processed(self) -> None:
+    def _check_if_tables_processed(self, table_loading_tasks) -> None:
         """Check if all table processing task are taken from the queue and if so flushes it."""
+        if not self._processing_tables_flag.value:
+            self._processing_tables_flag.value = True
+            self._flush_queue(table_loading_tasks)
         if self._task_queue.empty():
             self._flush_queue()
             self._processing_tables_flag.value = False
@@ -329,13 +326,16 @@ class Database(object):
 
     def _start_table_processing_parallel(self, table_loading_tasks) -> None:
         """Flush queue and initialize it with table processing queries."""
-        self._flush_queue(table_loading_tasks)
         self._check_if_tables_processed_job = self._scheduler.add_job(
-            func=self._check_if_tables_processed, trigger="interval", seconds=0.2,
+            func=self._check_if_tables_processed,
+            args=(table_loading_tasks,),
+            trigger="interval",
+            seconds=0.2,
         )
 
     def _start_table_processing_sequential(self, table_loading_tasks) -> None:
         """Flush queue and initialize it with table processing queries."""
+        self._processing_tables_flag.value = True
         self._flush_queue()
         with PoolCursor(self._connection_pool) as cur:
             for task in table_loading_tasks:
@@ -349,22 +349,19 @@ class Database(object):
                     else None
                 )
                 cur.execute(query, formatted_parameters)
-                self._flush_queue()
-                self._processing_tables_flag.value = False
+        self._flush_queue()
+        self._processing_tables_flag.value = False
 
     def _process_tables(
         self, table_action: Callable, folder_name: str, processing_action: Callable
     ) -> bool:
         """Process changes on tables by taking a generic function which creates table processing queries."""
-        self._processing_tables_flag.value = True
         table_names = _table_names.get(folder_name.split("_")[0])
         if table_names is None:
-            self._processing_tables_flag.value = False
             return False
 
         table_loading_tasks = table_action(table_names, folder_name)
         if len(table_loading_tasks) == 0:
-            self._processing_tables_flag.value = False
             return True
         processing_action(table_loading_tasks)
         return True

@@ -82,7 +82,14 @@ function useHeatMapConfiguration(
   getOptions: () => Object;
 } {
   function getLayout(): Object {
-    return {};
+    return {
+      xaxis: {
+        rangemode: "tozero"
+      },
+      yaxis: {
+        rangemode: "tozero"
+      }
+    };
   }
 
   function getDataset(

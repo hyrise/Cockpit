@@ -1,10 +1,10 @@
 import { ref } from "@vue/composition-api";
-import { Database, DatabaseData } from "../types/database";
+import { Database, DatabaseService } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
 import { monitorBackend, controlBackend } from "../../config";
 
-export function useDatabaseService(): DatabaseData {
+export function useDatabaseService(): DatabaseService {
   const colorsArray: any = Object.keys(colors);
   let usedColors: any = 0;
   const databases = ref<Database[]>([]);
@@ -42,9 +42,9 @@ export function useDatabaseService(): DatabaseData {
     return color;
   }
 
-  function addDatabase(databaseData: any): void {
+  function addDatabase(databaseService: any): void {
     axios
-      .post(controlBackend + "database", databaseData)
+      .post(controlBackend + "database", databaseService)
       .then(response => {
         axios.get(controlBackend + "database").then(
           result =>

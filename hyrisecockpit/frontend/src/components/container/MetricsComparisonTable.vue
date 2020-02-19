@@ -4,11 +4,11 @@
       class="metrics-column"
       :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
       v-for="database in selectedDatabases"
-      :key="`${uuid()}-${database}`"
+      :key="`${uuid()}-${database.id}`"
     >
       <v-card class="database" color="primary" dark elevation="4">
-        <v-card-title class="database-titel">
-          {{ database }}
+        <v-card-title class="database-title">
+          {{ database.id }}
         </v-card-title>
       </v-card>
       <v-card
@@ -23,8 +23,9 @@
           class="metric"
           :is="getMetricComponent(metric)"
           :selected-databases="[database]"
+          :metric="metric"
           :metric-meta="getMetadata(metric)"
-          :graph-id="`${metric}-${database}`"
+          :graph-id="`${metric}-${database.id}`"
           :show-details="showDetails"
         />
       </v-card>
@@ -81,7 +82,7 @@ export default createComponent({
 });
 </script>
 <style scoped>
-.database-titel {
+.database-title {
   justify-content: center;
 }
 .database {

@@ -1,9 +1,9 @@
 import { Ref } from "@vue/composition-api";
-import { Workload, WorkloadMetaData } from "./workloads";
+import { Workload } from "./workloads";
 
 export interface FetchService {
   data: Ref<any>;
-  checkState: () => void;
+  getDataIfReady: () => void;
 }
 
 export type TransformationService = (
@@ -15,7 +15,7 @@ export type TransformationService = (
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workloadMetaData: WorkloadMetaData) => void;
+  startWorkload: (workload: Workload, frequency: number) => void;
   stopWorkload: () => void;
 }
 
