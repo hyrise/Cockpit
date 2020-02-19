@@ -67,7 +67,7 @@ class ArgumentValidator:
             "time": self._validate_time,
             "runs": self._validate_runs,
             "backend_url": self._validate_url,
-            "number_worker": self._validate_number_worker,
+            "number_workers": self._validate_number_workers,
         }
 
     def get_endpoints(self):
@@ -155,7 +155,7 @@ class ArgumentValidator:
         # todo validate via regex
         return url_argument[0]
 
-    def _validate_number_worker(self, number_worker_argument):
+    def _validate_number_workers(self, number_worker_argument):
         number_worker = number_worker_argument[0]
         if number_worker < 0:
             print(f"{number_worker} must be positiv")
@@ -265,7 +265,7 @@ class ArgumentParser:
         self.parser.add_argument(
             "--nworker",
             "-nw",
-            dest="number_worker",
+            dest="number_workers",
             type=int,
             nargs=1,
             default=[10],
@@ -279,10 +279,10 @@ class ArgumentParser:
                 func()
             exit()
 
-    def get_arguments(self):
+    def get_configuration(self):
         """Retun validated arguments from command line."""
         self._show_info()
-        arguments = {}
+        configuration = {}
         types = [
             "end_points",
             "databases",
@@ -290,13 +290,13 @@ class ArgumentParser:
             "time",
             "runs",
             "backend_url",
-            "number_worker",
+            "number_workers",
         ]
         for argument_type in types:
-            arguments[argument_type] = self._validator.validate(
+            configuration[argument_type] = self._validator.validate(
                 argument_type, getattr(self._arguments, argument_type)
             )
-        return arguments
+        return configuration
 
 
 class EndpointBenchmark:
@@ -306,43 +306,43 @@ class EndpointBenchmark:
         """Initialize a EndpointBenchmark."""
         self._configuration = configuration
         self._backend_url = configuration["backend_url"]
+        self._subprocesses = []
 
     def _start_subprocesses(self):
-        sub_processes = []
         backend_prosess = subprocess.Popen(  # nosec
             ["pipenv", "run", "cockpit-backend"],
             stderr=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
         )
-        sub_processes.append(backend_prosess)
+        self._subprocesses.append(backend_prosess)
         time.sleep(1)
         manager_process = subprocess.Popen(  # nosec
             ["pipenv", "run", "cockpit-manager"],
             stderr=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
         )
-        sub_processes.append(manager_process)
+        self._subprocesses.append(manager_process)
         time.sleep(0.5)
         generator_process = subprocess.Popen(  # nosec
             ["pipenv", "run", "cockpit-generator"],
             stderr=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
         )
-        sub_processes.append(generator_process)
+        self._subprocesses.append(generator_process)
         time.sleep(0.5)
-        return sub_processes
 
-    def _close_subprocesses(self, sub_processes):
-        for i in range(len(sub_processes)):
-            sub_processes[i].send_signal(signal.SIGINT)
-            sub_processes[i].poll()
+    def _close_subprocesses(self):
+        for i in range(len(self._subprocesses)):
+            self._subprocesses[i].send_signal(signal.SIGINT)
+            self._subprocesses[i].poll()
+        self._subprocesses = []
 
     def _check_if_database_added(self, database_id):
         in_process = True
         while in_process:
             time.sleep(0.2)
             # TODO add time out
-            responce = requests.get(f"{self._backend_url}/control/database")
+            responce = requests.get(f"{self._backend_url}/control/database").json()
             databses = responce["body"]["databases"]
             check_processed = database_id in databses
             if check_processed:
@@ -357,7 +357,20 @@ class EndpointBenchmark:
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
             self._check_if_database_added(database)
 
+    def execute_benchmark(self):
+        """Execute endpoint responcivness benchmark."""
+        try:
+            self._start_subprocesses()
+            self._add_databases()
+            self._close_subprocesses()
+        except Exception as e:
+            print(str(e))
+            self._close_subprocesses()
+            exit()
+
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
-    arg_parser.get_arguments()
+    configuration = arg_parser.get_configuration()
+    endpoint_benchmark = EndpointBenchmark(configuration)
+    endpoint_benchmark.execute_benchmark()
