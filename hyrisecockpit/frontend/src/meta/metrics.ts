@@ -80,7 +80,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "storage",
     title: "Storage",
     component: "Storage",
-    requestTime: 1000
+    requestTime: 5000
   },
   throughput: {
     fetchType: "modify",
