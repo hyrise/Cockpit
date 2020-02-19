@@ -1,19 +1,17 @@
 <template>
   <div>
-    <div class="mt-10">
-      <v-row align="center">
-        <v-col cols="6" class="mx-10">
-          <v-select
-            v-model="selectedTable"
-            :items="tables"
-            class="select"
-            chips
-            label="table"
-            outlined
-            prepend-icon="mdi-table"
-          ></v-select>
-        </v-col>
-      </v-row>
+    <div v-if="$databaseService.tables.value.length" class="mt-12">
+      <v-select
+        v-model="selectedTable"
+        :items="tables"
+        class="select"
+        chips
+        label="table"
+        outlined
+        prepend-icon="mdi-table"
+        width="100"
+      ></v-select>
+
       <Heatmap
         :graph-id="graphId || 'access'"
         :data="mapData"
@@ -56,9 +54,7 @@ export default createComponent({
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const { tables } = context.root.$databaseService;
-    const selectedTable = ref<string>(
-      tables.value.length ? tables.value[0] : ""
-    );
+    const selectedTable = ref<string>("");
     const data = context.root.$metricController.data[props.metric];
 
     const table = computed(() => selectedTable.value);
@@ -67,6 +63,10 @@ export default createComponent({
     const columns = ref<string[]>([]);
     const chunks = ref<string[]>([]);
     const chartConfiguration: string[] = ["Access frequency"];
+
+    watch(tables, () => {
+      selectedTable.value = tables.value.length ? tables.value[0] : "";
+    });
 
     watch([data, table], () => {
       if (Object.keys(data.value).length && table.value != "") {
@@ -99,5 +99,7 @@ export default createComponent({
 <style scoped>
 .select {
   z-index: 2;
+  width: 50%;
+  margin: auto;
 }
 </style>

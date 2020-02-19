@@ -37,19 +37,19 @@ export const instanceMetrics: Metric[] = ["storage", "access"];
 export const comparisonMetrics: Metric[] = [
   "throughput",
   "latency",
+  "queueLength",
   "cpu",
   "ram",
-  "queueLength",
-  //"storage", //-> breaks comparison table
+  "storage",
   "access",
   "executedQueryTypeProportion"
 ];
 export const overviewMetrics: Metric[] = [
   "throughput",
   "latency",
+  "queueLength",
   "cpu",
-  "ram",
-  "queueLength"
+  "ram"
 ];
 
 export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];

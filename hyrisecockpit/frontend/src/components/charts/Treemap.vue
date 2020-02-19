@@ -19,6 +19,7 @@ interface Props {
   values: number[];
   graphId: string;
   chartConfiguration: string[];
+  autosize: boolean;
 }
 
 export default createComponent({
@@ -42,10 +43,15 @@ export default createComponent({
     chartConfiguration: {
       type: Array,
       default: null
+    },
+    autosize: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props: Props, context: SetupContext) {
     const { getLayout, getDataset, getOptions } = useTreemapConfiguration(
+      props.autosize,
       props.chartConfiguration
     );
 
@@ -68,6 +74,7 @@ export default createComponent({
   }
 });
 function useTreemapConfiguration(
+  autosize: boolean,
   chartConfiguration: string[]
 ): {
   getLayout: () => Object;
@@ -90,9 +97,9 @@ function useTreemapConfiguration(
           yanchor: "bottom"
         }
       ],
-      autosize: false,
-      width: 1200,
-      height: 900
+      autosize: autosize,
+      width: autosize ? 0 : 1600,
+      height: autosize ? 0 : 800
     };
   }
   function getDataset(
