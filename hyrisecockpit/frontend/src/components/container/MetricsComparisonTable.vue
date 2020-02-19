@@ -20,6 +20,11 @@
         <v-card-title class="metric-title">
           {{ getMetricTitle(metric) }}
         </v-card-title>
+        <v-card-subtitle>
+          <v-chip :color="database.color" class="white--text">
+            {{ database.id }}
+          </v-chip>
+        </v-card-subtitle>
         <component
           :is="getMetricComponent(metric)"
           :selected-databases="[database]"
@@ -34,7 +39,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext } from "@vue/composition-api";
+import {
+  createComponent,
+  SetupContext,
+  Ref,
+  ref,
+  onMounted
+} from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";
@@ -87,7 +98,6 @@ export default createComponent({
 }
 .database {
   margin-bottom: 0.5%;
-  width: 100%;
 }
 .metrics-table {
   display: flex;
@@ -105,6 +115,7 @@ export default createComponent({
   margin-bottom: -40px;
   justify-content: center;
 }
+
 .metric-card {
   margin-top: 4px;
 }

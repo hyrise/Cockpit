@@ -103,17 +103,18 @@ export default createComponent({
       }
     }
     function handleMetricsChanged(): void {
-      console.log(selectedMetrics.value);
-      sortMetrics(selectedMetrics.value);
+      sortMetrics();
       emitMetricsChangedEvent(
         selectedMetrics.value.map((metric: any) => metric.value)
       );
     }
 
-    function sortMetrics(metrics: Object[]): void {
+    function sortMetrics(): void {
       const sorted: Object[] = [];
       availableMetrics.forEach(metric => {
-        const selectedMetric = metrics.find(elem => elem === metric);
+        const selectedMetric = selectedMetrics.value.find(
+          elem => elem === metric
+        );
         if (selectedMetric) sorted.push(selectedMetric);
       });
       selectedMetrics.value = sorted;
