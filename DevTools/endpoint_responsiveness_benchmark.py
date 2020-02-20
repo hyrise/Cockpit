@@ -139,6 +139,7 @@ class ArgumentValidator:
         return databases
 
     def _validate_time(self, time_argument):
+        """Validate time arguments."""
         time = time_argument[0]
         if time < 0:
             print(f"{time} must be positiv")
@@ -146,6 +147,7 @@ class ArgumentValidator:
         return time
 
     def _validate_runs(self, run_argument):
+        """Validate run arguments."""
         run = run_argument[0]
         if run < 0:
             print(f"{run} must be positiv")
@@ -157,6 +159,7 @@ class ArgumentValidator:
         return url_argument[0]
 
     def _validate_number_workers(self, number_worker_argument):
+        """Validate number worker arguments."""
         number_worker = number_worker_argument[0]
         if number_worker < 0:
             print(f"{number_worker} must be positiv")
@@ -164,6 +167,7 @@ class ArgumentValidator:
         return number_worker
 
     def _validate_workload_frequence(self, workload_frequence_argument):
+        """Validate workload frequence arguments."""
         workload_frequence = workload_frequence_argument[0]
         if workload_frequence < 0:
             print(f"{workload_frequence} must be positiv")
@@ -190,16 +194,19 @@ class ArgumentParser:
         self._validator = ArgumentValidator()
 
     def _show_enpoints(self):
+        """Show wich endpoints are available."""
         endpoints = self._validator.get_endpoints()
         print("Endpoints: ")
         for key, value in endpoints.items():
             print(f"-> {key}: {value}")
 
     def _show_databases(self):
+        """Show wich databases are available."""
         databases = self._validator.get_databases()
         print(f"Databases: {databases}")
 
     def _show_workloads(self):
+        """Show wich workloads are available."""
         workloads = self._validator.get_workloads()
         print(f"Workloads: {workloads}")
 
@@ -209,6 +216,7 @@ class ArgumentParser:
         self._show_workloads()
 
     def _add_arguments(self):
+        """Add arguments to the parser."""
         self.parser.add_argument(
             "--endpoints",
             "-ep",
@@ -318,16 +326,17 @@ class ArgumentParser:
         return configuration
 
 
-class EndpointBenchmark:
-    """Handle and execute endpoint benchmark."""
+class WrkBenchmark:
+    """Handle and execute wrk benchmark."""
 
     def __init__(self, configuration):
-        """Initialize a EndpointBenchmark."""
+        """Initialize WrkBenchmark."""
         self._configuration = configuration
         self._backend_url = configuration["backend_url"]
         self._subprocesses = []
 
     def _start_subprocesses(self):
+        """Start main cockpit components as sub-processes."""
         backend_prosess = subprocess.Popen(  # nosec
             ["pipenv", "run", "cockpit-backend"],
             stderr=subprocess.DEVNULL,
@@ -351,12 +360,14 @@ class EndpointBenchmark:
         time.sleep(0.5)
 
     def _close_subprocesses(self):
+        """Close main cockpit components."""
         for i in range(len(self._subprocesses)):
             self._subprocesses[i].send_signal(signal.SIGINT)
             self._subprocesses[i].poll()
         self._subprocesses = []
 
     def _check_if_database_added(self, database_id):
+        """Check if databases are added to cockpit."""
         in_process = True
         while in_process:
             time.sleep(0.2)
@@ -368,6 +379,7 @@ class EndpointBenchmark:
                 in_process = False
 
     def _add_databases(self):
+        """Add databases to cockpit."""
         databases = self._configuration["databases"]
         for database in databases:
             data = DATABASES.get(database)
@@ -376,7 +388,8 @@ class EndpointBenchmark:
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
             self._check_if_database_added(database)
 
-    def _stress_endpoints(self, endpoint_type):
+    def _run_wrk_on_endpoints(self, endpoint_type):
+        """Run wrk benchmark on endpoints."""
         for end_point in self._configuration["end_points"][
             f"endpoints_{endpoint_type}"
         ]:
@@ -392,13 +405,13 @@ class EndpointBenchmark:
             )
             print(sub_process.stdout.decode("utf-8"))
 
-    def execute_benchmark(self):
-        """Execute endpoint responcivness benchmark."""
+    def run_benchmark(self):
+        """Start components, add databases and run wrk benchmark on endpoints."""
         try:
             self._start_subprocesses()
             self._add_databases()
-            self._stress_endpoints("monitor")
-            self._stress_endpoints("control")
+            self._run_wrk_on_endpoints("monitor")
+            self._run_wrk_on_endpoints("control")
             self._close_subprocesses()
         except Exception as e:
             print(str(e))
@@ -409,5 +422,5 @@ class EndpointBenchmark:
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
     configuration = arg_parser.get_configuration()
-    endpoint_benchmark = EndpointBenchmark(configuration)
-    endpoint_benchmark.execute_benchmark()
+    wrk_benchmark = WrkBenchmark(configuration)
+    wrk_benchmark.run_benchmark()
