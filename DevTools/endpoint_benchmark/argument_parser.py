@@ -23,6 +23,7 @@ class ArgumentValidation:
         self._endpoints_control = ["database", "data"]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
         self._databases = ["db1", "db2"]
+        self._plugins = ["wrk"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
             "workload": self._validate_workloads,
@@ -32,6 +33,7 @@ class ArgumentValidation:
             "backend_url": self._validate_url,
             "number_workers": self._validate_number_workers,
             "workload_frequence": self._validate_workload_frequence,
+            "plugins": self._validate_plugin,
         }
 
     def get_endpoints(self):
@@ -136,6 +138,18 @@ class ArgumentValidation:
             print(f"{workload_frequence} must be positive")
             workload_frequence = 100
         return workload_frequence
+
+    def _validate_plugin(self, plugin_argument):
+        if "all" in plugin_argument:
+            return self._plugins
+
+        plugins = []
+        for plugin in plugin_argument:
+            if plugin in self._plugins:
+                plugins.append(plugin)
+            else:
+                print(f"{plugin} plugin not found")
+        return plugins
 
 
 class ArgumentParser:
@@ -260,6 +274,15 @@ class ArgumentParser:
             default=[200],
             help="Frequency of workload.",
         )
+        self.parser.add_argument(
+            "--plugins",
+            "-p",
+            dest="plugins",
+            type=str,
+            nargs="+",
+            default=["wrk"],
+            help="Benchmark plugins. Default is wrk",
+        )
 
     def _show_info(self):
         if self._arguments.show:
@@ -281,6 +304,7 @@ class ArgumentParser:
             "backend_url",
             "number_workers",
             "workload_frequence",
+            "plugins",
         ]
         for argument_type in types:
             configuration[argument_type] = self._argument_validation.validate(

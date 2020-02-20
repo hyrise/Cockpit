@@ -130,3 +130,21 @@ class WrkPlugin:
             print(str(e))
             self._close_subprocesses()
             exit()
+
+
+class PluginManager:
+    """Manage plug-ins."""
+
+    def __init__(self):
+        """Initialize PluginManager."""
+        self.plugins = {"wrk": self._get_wrk_plugin}
+
+    def _get_wrk_plugin(self, configuration):
+        return WrkPlugin(configuration)
+
+    def get_plugins(self, configuration):
+        """Initialize plug-ins and return them."""
+        plugins = []
+        for plugin in configuration["plugins"]:
+            plugins.append(self.plugins.get(plugin)(configuration))
+        return plugins
