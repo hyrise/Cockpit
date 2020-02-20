@@ -178,11 +178,16 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_process_table_status(self, body: Dict) -> Dict:
-        process_table_flags = {}
-        for id, database in self._databases.items():
-            process_table_flags[id] = database.get_processing_tables_flag()
+        process_table_status = []
+        for database_id, database in self._databases.items():
+            process_table_status.append(
+                {
+                    "id": database_id,
+                    "process_table_status": database.get_processing_tables_flag(),
+                }
+            )
         response = get_response(200)
-        response["body"]["process_table_status"] = process_table_flags
+        response["body"]["process_table_status"] = process_table_status
         return response
 
     def _check_if_processing_table(self) -> bool:
