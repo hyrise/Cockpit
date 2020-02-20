@@ -2,7 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
-from time import time
+from time import time_ns
 from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -47,25 +47,14 @@ class StorageCursor:
         """Close the cursor and connection."""
         self._connection.close()
 
-    def log_query(self, startts, endts, benchmark: str, query_no: int) -> None:
-        """Log a successful query to permanent in storage."""
-        point = [
-            {
-                "measurement": "successful_queries",
-                "tags": {"benchmark": benchmark, "query_no": query_no},
-                "fields": {"start": float(startts), "end": float(endts)},
-            }
-        ]
-        self._connection.write_points(point, database=self._database)
-
     def log_queries(self, query_list) -> None:
         """Log a couple of succesfully executed queries."""
         points = [
             {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
-                "fields": {"start": float(query[0]), "end": float(query[1])},
-                "time": int(query[0] * 1e9),
+                "fields": {"start": query[0], "end": query[1]},
+                "time": query[1],
             }
             for query in query_list
         ]
@@ -134,7 +123,7 @@ def execute_queries(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             succesful_queries = []
-            last_batched = time()
+            last_batched = time_ns()
             while True:
                 # If Queue is emty go to wait status
                 try:
@@ -153,12 +142,12 @@ def execute_queries(
                             if not_formatted_parameters is not None
                             else None
                         )
-                        startts = time()
+                        startts = time_ns()
                         cur.execute(query, formatted_parameters)
-                        endts = time()
+                        endts = time_ns()
                         succesful_queries.append((startts, endts, "none", 0))
-                        if last_batched < time() - 1:
-                            last_batched = time()
+                        if last_batched < time_ns() - 1_000_000_000:
+                            last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
