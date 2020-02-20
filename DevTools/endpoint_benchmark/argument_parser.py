@@ -26,7 +26,7 @@ class ArgumentValidation:
         self._plugins = ["wrk"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
-            "workload": self._validate_workloads,
+            "workloads": self._validate_workloads,
             "databases": self._validate_databases,
             "time": self._validate_time,
             "runs": self._validate_runs,
@@ -223,7 +223,7 @@ class ArgumentParser:
         self.parser.add_argument(
             "--workload",
             "-w",
-            dest="workload",
+            dest="workloads",
             type=str,
             nargs="+",
             default=["tpch_0.1"],
@@ -298,7 +298,7 @@ class ArgumentParser:
         types = [
             "end_points",
             "databases",
-            "workload",
+            "workloads",
             "time",
             "runs",
             "backend_url",
