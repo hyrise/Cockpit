@@ -1,4 +1,4 @@
-"""Module for measureing endpoint responsiveness."""
+"""Module for measuring endpoint responsiveness."""
 
 import argparse
 import signal
@@ -42,11 +42,11 @@ DATABASES = {
 }
 
 
-class ArgumentValidator:
-    """Argument validator."""
+class ArgumentValidation:
+    """Argument validation."""
 
     def __init__(self):
-        """Initialize a ArgumentValidator."""
+        """Initialize a ArgumentValidation."""
         self._endpoints_monitor = [
             "throughput",
             "latency",
@@ -72,7 +72,7 @@ class ArgumentValidator:
         }
 
     def get_endpoints(self):
-        """Return available enpoints."""
+        """Return available endpoints."""
         return {
             "endpoints_monitor": self._endpoints_monitor,
             "endpoints_control": self._endpoints_control,
@@ -107,7 +107,7 @@ class ArgumentValidator:
             elif endpoint in self._endpoints_control:
                 endpoints_control.append(endpoint)
             else:
-                print(f"{endpoint} enpoint not found")
+                print(f"{endpoint} endpoint not found")
         return {
             "endpoints_monitor": endpoints_monitor,
             "endpoints_control": endpoints_control,
@@ -142,7 +142,7 @@ class ArgumentValidator:
         """Validate time arguments."""
         time = time_argument[0]
         if time < 0:
-            print(f"{time} must be positiv")
+            print(f"{time} must be positive")
             time = 1
         return time
 
@@ -150,7 +150,7 @@ class ArgumentValidator:
         """Validate run arguments."""
         run = run_argument[0]
         if run < 0:
-            print(f"{run} must be positiv")
+            print(f"{run} must be positive")
             run = 1
         return run
 
@@ -162,15 +162,15 @@ class ArgumentValidator:
         """Validate number worker arguments."""
         number_worker = number_worker_argument[0]
         if number_worker < 0:
-            print(f"{number_worker} must be positiv")
+            print(f"{number_worker} must be positive")
             number_worker = 10
         return number_worker
 
     def _validate_workload_frequence(self, workload_frequence_argument):
-        """Validate workload frequence arguments."""
+        """Validate workload frequency arguments."""
         workload_frequence = workload_frequence_argument[0]
         if workload_frequence < 0:
-            print(f"{workload_frequence} must be positiv")
+            print(f"{workload_frequence} must be positive")
             workload_frequence = 100
         return workload_frequence
 
@@ -191,23 +191,23 @@ class ArgumentParser:
         }
         self._add_arguments()
         self._arguments = self.parser.parse_args()
-        self._validator = ArgumentValidator()
+        self._argument_validation = ArgumentValidation()
 
     def _show_enpoints(self):
-        """Show wich endpoints are available."""
-        endpoints = self._validator.get_endpoints()
+        """Show which endpoints are available."""
+        endpoints = self._argument_validation.get_endpoints()
         print("Endpoints: ")
         for key, value in endpoints.items():
             print(f"-> {key}: {value}")
 
     def _show_databases(self):
-        """Show wich databases are available."""
-        databases = self._validator.get_databases()
+        """Show which databases are available."""
+        databases = self._argument_validation.get_databases()
         print(f"Databases: {databases}")
 
     def _show_workloads(self):
-        """Show wich workloads are available."""
-        workloads = self._validator.get_workloads()
+        """Show which workloads are available."""
+        workloads = self._argument_validation.get_workloads()
         print(f"Workloads: {workloads}")
 
     def _show_all(self):
@@ -232,7 +232,7 @@ class ArgumentParser:
             dest="show",
             nargs="+",
             default=["all"],
-            help="Show available entpoints, workloads, databases. Default shows all categories.",
+            help="Show available endpoints, workloads, databases. Default shows all categories.",
         )
         self.parser.add_argument(
             "--databases",
@@ -295,7 +295,7 @@ class ArgumentParser:
             type=int,
             nargs=1,
             default=[200],
-            help="Frequence of workload.",
+            help="Frequency of workload.",
         )
 
     def _show_info(self):
@@ -306,7 +306,7 @@ class ArgumentParser:
             exit()
 
     def get_configuration(self):
-        """Retun validated arguments from command line."""
+        """Return validated arguments from command line."""
         self._show_info()
         configuration = {}
         types = [
@@ -320,7 +320,7 @@ class ArgumentParser:
             "workload_frequence",
         ]
         for argument_type in types:
-            configuration[argument_type] = self._validator.validate(
+            configuration[argument_type] = self._argument_validation.validate(
                 argument_type, getattr(self._arguments, argument_type)
             )
         return configuration
