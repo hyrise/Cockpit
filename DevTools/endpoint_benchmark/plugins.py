@@ -79,25 +79,47 @@ class Cockpit:
         self._subprocesses = []
 
     def _check_if_database_added(self, database_id):
-        """Check if databases are added to cockpit."""
-        in_process = True
-        while in_process:
+        """Check if databases are added in cockpit."""
+        while True:
             time.sleep(0.2)
-            # TODO add time out
+            # TODO add time out and check response
             response = requests.get(f"{self._backend_url}/control/database").json()
             databses = response["body"]["databases"]
             check_processed = database_id in databses
             if check_processed:
-                in_process = False
+                break
 
     def add_databases(self, databases, number_worker):
-        """Add databases to cockpit."""
+        """Add databases in cockpit."""
         for database in databases:
             data = DATABASES.get(database)
             data["number_workers"] = number_worker
-            # TODO add time out
+            # TODO add time out and check response
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
             self._check_if_database_added(database)
+
+    def _check_if_tables_processed(self):
+        """Check if tables are processed in cockpit."""
+        while True:
+            time.sleep(0.2)
+            responce = requests.get(
+                f"{self._backend_url}/monitor/process_table_status"
+            ).json()
+            process_table_status = responce["body"]["process_table_status"]
+            check_processed = False
+            for process_table_flag in range(len(process_table_status)):
+                check_processed = (
+                    check_processed or process_table_flag["process_table_status"]
+                )
+            if not check_processed:
+                break
+
+    def start_workload(self, workload_type, frequency):
+        """Start workload in cockpit."""
+        data = {"folder_name": workload_type, "frequency": frequency}
+        # TODO add time out and check response
+        _ = requests.post(f"{self._backend_url}/control/workload", json=data)
+        self._check_if_tables_processed()
 
 
 class WrkPlugin:
@@ -133,12 +155,16 @@ class WrkPlugin:
             self._cockpit.add_databases(
                 self._configuration["databases"], self._configuration["number_workers"]
             )
-            self._run_wrk_on_endpoints("monitor")
-            self._run_wrk_on_endpoints("control")
+            for workload in self._configuration["workloads"]:
+                self._cockpit.start_workload(
+                    workload, self._configuration["workload_frequence"],
+                )
+                self._run_wrk_on_endpoints("monitor")
+                self._run_wrk_on_endpoints("control")
             self._cockpit.stop_components()
         except Exception as e:
             print(str(e))
-            self._cockpit_components.stop_components()
+            self._cockpit.stop_components()
             exit()
 
 
