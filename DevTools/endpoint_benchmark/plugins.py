@@ -39,16 +39,15 @@ DATABASES = {
 }
 
 
-class WrkPlugin:
-    """Handle and execute wrk benchmark."""
+class Cockpit:
+    """Manage Cockpit components."""
 
-    def __init__(self, configuration):
-        """Initialize WrkBenchmark."""
-        self._configuration = configuration
-        self._backend_url = configuration["backend_url"]
+    def __init__(self, backen_url):
+        """Initialize CockpitComponentsPool."""
+        self._backend_url = backen_url
         self._subprocesses = []
 
-    def _start_subprocesses(self):
+    def start_components(self):
         """Start main cockpit components as sub-processes."""
         backend_prosess = subprocess.Popen(  # nosec
             ["pipenv", "run", "cockpit-backend"],
@@ -72,7 +71,7 @@ class WrkPlugin:
         self._subprocesses.append(generator_process)
         time.sleep(0.5)
 
-    def _close_subprocesses(self):
+    def stop_components(self):
         """Close main cockpit components."""
         for i in range(len(self._subprocesses)):
             self._subprocesses[i].send_signal(signal.SIGINT)
@@ -91,15 +90,24 @@ class WrkPlugin:
             if check_processed:
                 in_process = False
 
-    def _add_databases(self):
+    def add_databases(self, databases, number_worker):
         """Add databases to cockpit."""
-        databases = self._configuration["databases"]
         for database in databases:
             data = DATABASES.get(database)
-            data["number_workers"] = self._configuration["number_workers"]
+            data["number_workers"] = number_worker
             # TODO add time out
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
             self._check_if_database_added(database)
+
+
+class WrkPlugin:
+    """Handle and execute wrk benchmark."""
+
+    def __init__(self, configuration):
+        """Initialize WrkBenchmark."""
+        self._configuration = configuration
+        self._backend_url = configuration["backend_url"]
+        self._cockpit = Cockpit(self._backend_url)
 
     def _run_wrk_on_endpoints(self, endpoint_type):
         """Run wrk benchmark on endpoints."""
@@ -121,14 +129,16 @@ class WrkPlugin:
     def run_benchmark(self):
         """Start components, add databases and run wrk benchmark on endpoints."""
         try:
-            self._start_subprocesses()
-            self._add_databases()
+            self._cockpit.start_components()
+            self._cockpit.add_databases(
+                self._configuration["databases"], self._configuration["number_workers"]
+            )
             self._run_wrk_on_endpoints("monitor")
             self._run_wrk_on_endpoints("control")
-            self._close_subprocesses()
+            self._cockpit.stop_components()
         except Exception as e:
             print(str(e))
-            self._close_subprocesses()
+            self._cockpit_components.stop_components()
             exit()
 
 
