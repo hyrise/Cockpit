@@ -19,6 +19,7 @@ interface Props {
   values: number[];
   graphId: string;
   chartConfiguration: string[];
+  autosize: boolean;
 }
 
 export default createComponent({
@@ -42,15 +43,20 @@ export default createComponent({
     chartConfiguration: {
       type: Array,
       default: null
+    },
+    autosize: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props: Props, context: SetupContext) {
-    const { getLayout, getDataset } = useTreemapConfiguration(
+    const { getLayout, getDataset, getOptions } = useTreemapConfiguration(
+      props.autosize,
       props.chartConfiguration
     );
 
     onMounted(() => {
-      Plotly.newPlot(props.graphId, getDataset(), getLayout());
+      Plotly.newPlot(props.graphId, getDataset(), getLayout(), getOptions());
       watch(() => {
         if (
           props.labels.length > 0 &&
@@ -68,6 +74,7 @@ export default createComponent({
   }
 });
 function useTreemapConfiguration(
+  autosize: boolean,
   chartConfiguration: string[]
 ): {
   getLayout: () => Object;
@@ -76,22 +83,23 @@ function useTreemapConfiguration(
     parents?: string[],
     values?: number[]
   ) => Object[];
+  getOptions: () => Object;
 } {
   function getLayout(): Object {
     return {
       annotations: [
         {
           showarrow: false,
-          text: "Database: <b>" + chartConfiguration[0] + "</b>",
+          text: "",
           x: 0.25,
           xanchor: "center",
           y: 1.1,
           yanchor: "bottom"
         }
       ],
-      autosize: false,
-      width: 1200,
-      height: 900
+      autosize: autosize,
+      width: autosize ? 0 : 1600,
+      height: autosize ? 0 : 800
     };
   }
   function getDataset(
@@ -112,7 +120,10 @@ function useTreemapConfiguration(
       }
     ];
   }
-  return { getLayout, getDataset };
+  function getOptions(): Object {
+    return { displayModeBar: false };
+  }
+  return { getLayout, getDataset, getOptions };
 }
 </script>
 <style>

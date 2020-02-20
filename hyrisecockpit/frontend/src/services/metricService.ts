@@ -3,9 +3,9 @@ import axios from "axios";
 import { MetricMetadata } from "@/types/metrics";
 import { FetchService } from "@/types/services";
 
-export function useGenericFetchService(metric: MetricMetadata): FetchService {
+export function useMetricService(metric: MetricMetadata): FetchService {
   const queryReadyState = ref<boolean>(true);
-  const data = ref<any>({});
+  const data = ref<any>({}); // TODO: change the initial value
 
   function getData(): void {
     queryReadyState.value = false;
@@ -35,7 +35,12 @@ export function useGenericFetchService(metric: MetricMetadata): FetchService {
       axios
         .get(metric.endpoint)
         .then(response => {
-          resolve(response.data.body[metric.base]);
+          if (metric.component == "QueryTypeProportion") {
+            //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
+            resolve(response.data);
+          } else {
+            resolve(response.data.body[metric.base]);
+          }
         })
         .catch(error => {
           queryReadyState.value = true;
@@ -44,11 +49,11 @@ export function useGenericFetchService(metric: MetricMetadata): FetchService {
     });
   }
 
-  function checkState(): void {
+  function getDataIfReady(): void {
     if (queryReadyState.value) {
       getData();
     }
   }
 
-  return { data, checkState };
+  return { data, getDataIfReady };
 }

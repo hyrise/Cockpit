@@ -1,5 +1,6 @@
 import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
+import { Database } from "./database";
 
 export type MetricValueState = "low" | "average" | "high";
 export type MetricValueStateOrder = "asc" | "desc";
@@ -10,22 +11,57 @@ export type Metric =
   | "throughput"
   | "latency"
   | "ram"
-  | "queueLength";
+  | "queueLength"
+  | "executedQueryTypeProportion"
+  | "generatedQueryTypeProportion";
+
+export interface MetricController {
+  data: Record<Metric, Ref<any>>;
+}
+
+//TODO: refactor
+export const availableMetrics: Metric[] = [
+  "access",
+  "cpu",
+  "storage",
+  "throughput",
+  "latency",
+  "ram",
+  "queueLength",
+  "executedQueryTypeProportion",
+  "generatedQueryTypeProportion"
+];
 
 export const instanceMetrics: Metric[] = ["storage", "access"];
+
 export const comparisonMetrics: Metric[] = [
   "throughput",
   "latency",
+  "queueLength",
   "cpu",
   "ram",
-  "queueLength"
+  "storage",
+  "access",
+  "executedQueryTypeProportion"
 ];
+export const overviewMetrics: Metric[] = [
+  "throughput",
+  "latency",
+  "queueLength",
+  "cpu",
+  "ram"
+];
+
+export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
 
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
+  title: string;
+  component: string;
+  requestTime: number;
 }
 
 export interface ComparisonMetricData {
@@ -34,13 +70,18 @@ export interface ComparisonMetricData {
 }
 
 export interface MetricProps {
+  metric: Metric;
   metricMeta: MetricMetadata;
-  selectedDatabases: string[];
+  selectedDatabases: Database[];
   graphId: string;
   showDetails: boolean;
 }
 
 export const MetricPropsValidation = {
+  metric: {
+    type: String,
+    default: null
+  },
   metricMeta: {
     type: Object,
     default: null

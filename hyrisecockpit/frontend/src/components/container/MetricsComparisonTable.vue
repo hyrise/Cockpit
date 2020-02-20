@@ -4,13 +4,14 @@
       class="metrics-column"
       :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
       v-for="database in selectedDatabases"
-      :key="`${uuid()}-${database}`"
+      :key="`${uuid()}-${database.id}`"
     >
       <v-card class="database" color="primary" dark elevation="4">
-        <v-card-title class="database-titel">
-          {{ database }}
+        <v-card-title class="database-title">
+          {{ database.id }}
         </v-card-title>
       </v-card>
+
       <v-card
         v-for="metric in selectedMetrics"
         :key="metric"
@@ -19,12 +20,17 @@
         <v-card-title class="metric-title">
           {{ getMetricTitle(metric) }}
         </v-card-title>
+        <v-card-subtitle>
+          <v-chip :color="database.color" class="white--text">
+            {{ database.id }}
+          </v-chip>
+        </v-card-subtitle>
         <component
-          class="metric"
           :is="getMetricComponent(metric)"
           :selected-databases="[database]"
+          :metric="metric"
           :metric-meta="getMetadata(metric)"
-          :graph-id="`${metric}-${database}`"
+          :graph-id="`${metric}-${database.id}`"
           :show-details="showDetails"
         />
       </v-card>
@@ -33,20 +39,29 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext } from "@vue/composition-api";
+import {
+  createComponent,
+  SetupContext,
+  Ref,
+  ref,
+  onMounted
+} from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";
 import RAM from "../metrics/RAM.vue";
 import QueueLength from "../metrics/QueueLength.vue";
+import Storage from "../metrics/Storage.vue";
+import Access from "../metrics/Access.vue";
+import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import { uuid } from "vue-uuid";
 import {
   getMetadata,
   getMetricTitle,
   getMetricComponent
-} from "../meta/metrics";
+} from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
-import { ContainerProps, ContainerPropsValidation } from "../../types/screens";
+import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
@@ -61,7 +76,10 @@ export default createComponent({
     CPU,
     Latency,
     RAM,
-    QueueLength
+    QueueLength,
+    Storage,
+    Access,
+    QueryTypeProportion
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
@@ -75,7 +93,7 @@ export default createComponent({
 });
 </script>
 <style scoped>
-.database-titel {
+.database-title {
   justify-content: center;
 }
 .database {
@@ -94,9 +112,10 @@ export default createComponent({
 .metric-title {
   z-index: 2;
   position: relative;
-  margin-bottom: -60px;
+  margin-bottom: -40px;
   justify-content: center;
 }
+
 .metric-card {
   margin-top: 4px;
 }

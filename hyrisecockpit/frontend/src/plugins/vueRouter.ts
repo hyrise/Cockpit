@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Instance from "../screens/Instance.vue";
-import InstanceComparison from "../screens/InstanceComparison.vue";
-import Overview from "../screens/Overview.vue";
-import Selection from "../screens/Selection.vue";
-import Home from "../screens/Home.vue";
-import WorkloadScreen from "../screens/WorkloadScreen.vue";
+import Instance from "../views/Instance.vue";
+import InstanceComparison from "../views/InstanceComparison.vue";
+import Overview from "../views/Overview.vue";
+import Selection from "../views/Selection.vue";
+import Home from "../views/Home.vue";
+import WorkloadScreen from "../views/WorkloadScreen.vue";
 
 Vue.use(VueRouter);
 

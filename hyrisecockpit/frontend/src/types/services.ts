@@ -3,7 +3,7 @@ import { Workload, WorkloadMetaData } from "./workloads";
 
 export interface FetchService {
   data: Ref<any>;
-  checkState: () => void;
+  getDataIfReady: () => void;
 }
 
 export type TransformationService = (
@@ -15,7 +15,7 @@ export type TransformationService = (
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workloadMetaData: WorkloadMetaData) => void;
+  startWorkload: (workload: Workload, frequency: number) => void;
   stopWorkload: () => void;
 }
 
@@ -25,6 +25,7 @@ export type Base =
   | "system"
   | "throughput"
   | "storage"
-  | "chunks"
+  | "chunks_data"
   | "latency"
-  | "queue_length";
+  | "queue_length"
+  | "krueger_data";

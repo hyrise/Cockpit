@@ -1,13 +1,15 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import Vue from "vue";
-import { notEquals } from "../helpers/methods";
+import { equals } from "../helpers/methods";
 
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
     access: getAccessData,
     cpu: getCPUData,
     latency: getReadOnlyData,
+    executedQueryTypeProportion: getExecutedQueryTypeProportionData,
+    generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
     queueLength: getReadOnlyData,
     ram: getRAMData,
     storage: getStorageData,
@@ -15,6 +17,57 @@ export function useDataTransformation(metric: Metric): TransformationService {
   };
 
   return transformationMap[metric];
+}
+
+function getExecutedQueryTypeProportionData(
+  data: any,
+  primaryKey: string = ""
+): any {
+  const executedQueryTypeProportion = data.find(
+    (database: any) => database.id === primaryKey
+  ).executed;
+
+  return getQueryTypeProportionData(executedQueryTypeProportion, "executed");
+}
+
+function getGeneratedQueryTypeProportionData(
+  data: any,
+  primaryKey: string = ""
+): any {
+  const generatedQueryTypeProportion = data.find(
+    (database: any) => database.id === primaryKey
+  ).generated;
+
+  return getQueryTypeProportionData(generatedQueryTypeProportion, "generated");
+}
+
+function getQueryTypeProportionData(data: any, type: string): any {
+  return [
+    {
+      x: [type],
+      y: [data.DELETE] as number[],
+      name: "DELETE",
+      type: "bar"
+    },
+    {
+      x: [type],
+      y: [data.INSERT] as number[],
+      name: "INSERT",
+      type: "bar"
+    },
+    {
+      x: [type],
+      y: [data.SELECT] as number[],
+      name: "SELECT",
+      type: "bar"
+    },
+    {
+      x: [type],
+      y: [data.UPDATE] as number[],
+      name: "UPDATE",
+      type: "bar"
+    }
+  ];
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {
@@ -40,13 +93,13 @@ function getStorageData(
   const newSizes: number[] = [];
 
   if (
-    notEquals(
-      Vue.prototype.$databaseData.tables.value,
+    !equals(
+      Vue.prototype.$databaseService.tables.value,
       Object.keys(data[primaryKey])
     ) &&
     Object.keys(data[primaryKey]).length
   ) {
-    Vue.prototype.$databaseData.tables.value = Object.keys(data[primaryKey]);
+    Vue.prototype.$databaseService.tables.value = Object.keys(data[primaryKey]);
   }
 
   Object.keys(data[primaryKey]).forEach(table => {
@@ -83,7 +136,7 @@ function getAccessData(
   for (let i = 0; i < numberOfChunks; i++) {
     newChunks.push("chunk_" + i);
 
-    let chunk: number[] = [];
+    const chunk: number[] = [];
     dataByColumns.forEach(column => {
       chunk.push(column[i]);
     });

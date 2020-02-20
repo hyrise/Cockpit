@@ -1,22 +1,23 @@
 import axios from "axios";
-import { Workload, WorkloadMetaData } from "@/types/workloads";
+import { Workload } from "@/types/workloads";
+import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
-import { ref } from "@vue/composition-api";
-import { FetchService } from "@/types/services";
+import { controlBackend } from "../../config";
 
 import { monitorBackend, controlBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
-    axios.post(`${controlBackend}data/${workload}`);
+    axios.post(`${controlBackend}data/${getTransferredWorkload(workload)}`);
   }
   function deleteWorkloadData(workload: Workload): void {
-    axios.delete(`${controlBackend}data/${workload}`);
+    axios.delete(`${controlBackend}data/${getTransferredWorkload(workload)}`);
   }
 
-  function startWorkload(workloadMetaData: WorkloadMetaData): void {
+  function startWorkload(workload: Workload, frequency: number): void {
     axios.post(`${controlBackend}workload`, {
-      workloadMetaData
+      folder_name: getTransferredWorkload(workload),
+      frequency: frequency
     });
   }
 
@@ -30,71 +31,4 @@ export function useWorkloadService(): WorkloadService {
     startWorkload,
     stopWorkload
   };
-}
-
-export function useKruegerService(): FetchService {
-  const data = ref<any>([]);
-  const queryReadyState = ref<boolean>(true);
-
-  function getKruegerData(): any {
-    queryReadyState.value = false;
-    axios
-      .get(`${monitorBackend}krueger_data`)
-      .then(response => {
-        data.value = transformData(response);
-        const dataCopy = JSON.parse(JSON.stringify(data.value));
-        data.value = dataCopy;
-        queryReadyState.value = true;
-      })
-      .catch(err => {
-        queryReadyState.value = true;
-      });
-  }
-
-  function transformData(response: any): any {
-    let newData = [
-      {
-        x: [] as string[],
-        y: [] as number[],
-        name: "DELETE",
-        type: "bar"
-      },
-      {
-        x: [] as string[],
-        y: [] as number[],
-        name: "INSERT",
-        type: "bar"
-      },
-      {
-        x: [] as string[],
-        y: [] as number[],
-        name: "SELECT",
-        type: "bar"
-      },
-      {
-        x: [] as string[],
-        y: [] as number[],
-        name: "UPDATE",
-        type: "bar"
-      }
-    ];
-    for (let [workload, query] of Object.entries(response.data)) {
-      for (let [queryType, amount] of Object.entries(query as any)) {
-        var dataSet = newData.find(x => x.name === queryType);
-        if (dataSet) {
-          dataSet.x = [...dataSet.x, workload];
-          dataSet.y = [...dataSet.y, amount as number];
-        }
-      }
-    }
-    return newData;
-  }
-
-  function checkState(): void {
-    if (queryReadyState.value) {
-      getKruegerData();
-    }
-  }
-
-  return { data, checkState };
 }

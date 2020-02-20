@@ -1,15 +1,13 @@
-export type Workload = "tpch_0.1" | "tpch_1" | "tpcds" | "job";
-type Benchmark = "TPCH" | "TPCDS" | "JOB";
+export type Workload = "tpch01" | "tpch1" | "tpcds" | "job";
 
-export interface WorkloadMetaData {
-  benchmark: Benchmark;
-  "scale-factor": number;
-  frequency: number;
+export interface WorkloadProjectionData {
+  transferred: string;
+  displayed: string;
 }
 
 export const availableWorkloads: Workload[] = [
-  "tpch_0.1",
-  "tpch_1",
+  "tpch01",
+  "tpch1",
   "tpcds",
   "job"
 ];

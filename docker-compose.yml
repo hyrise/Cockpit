@@ -2,33 +2,28 @@ version: "3.5"
 
 services:
   backend:
+    image: cockpit:buster
     build: .
     working_dir: /usr/local/Cockpit
-    command: bash -c "
-      pip install .
-      && cockpit-backend"
+    command: "cockpit-backend"
     volumes:
       - .:/usr/local/Cockpit
     ports:
       - "8000:8000"
 
-  database-manager:
-    build: .
+  manager:
+    image: cockpit:buster
     working_dir: /usr/local/Cockpit
-    command: bash -c "
-      pip install .
-      && cockpit-manager"
+    command: "cockpit-manager"
     volumes:
       - .:/usr/local/Cockpit
     ports:
       - "8001:8001"
 
-  workload-generator:
-    build: .
+  generator:
+    image: cockpit:buster
     working_dir: /usr/local/Cockpit
-    command: bash -c "
-      pip install .
-      && cockpit-generator"
+    command: "cockpit-generator"
     volumes:
       - .:/usr/local/Cockpit
     ports:
@@ -41,3 +36,12 @@ services:
       - /tmp/cockpit/influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
+  
+  hyrise:
+    image: udopigorsch/hyrise:hyrise_19.10
+    working_dir: "/usr/local/hyrise"
+    command: "cmake-build-release/hyriseServer"
+    volumes:
+      - ./cached_tables:/usr/local/hyrise/cached_tables
+    ports:
+      - "5432:5432"
