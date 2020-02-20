@@ -51,6 +51,7 @@ export default createComponent({
       props.selectedDatabases.map(database => database.id)
     );
     const data = computed(() => props.data);
+    let timestamps = [];
     const maxValue = computed(() => props.maxValue);
     const graphId = props.graphId;
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
@@ -108,8 +109,10 @@ export default createComponent({
     }
 
     function updateChartDatasets(): void {
+      timestamps = [...timestamps, Date.now()];
       const newData = {
-        y: Object.values(selectedDatabaseIds.value).map(id => data.value[id])
+        y: Object.values(selectedDatabaseIds.value).map(id => data.value[id]),
+        x: Object.values(selectedDatabaseIds.value).map(() => timestamps)
       };
       const maxSelectedLength = getMaxDatasetLength();
 
@@ -118,7 +121,7 @@ export default createComponent({
         newData,
         getLayout(
           props.maxValue,
-          Math.max(maxSelectedLength - 30, 0),
+          Math.min(maxSelectedLength, 30),
           Math.max(maxSelectedLength, 30)
         )
       );
@@ -137,9 +140,10 @@ function useLineChartConfiguration(
   const databases: Ref<Database[]> = context.root.$databaseService.databases;
   function getLayout(
     yMax: number,
-    xMin: number = 0,
+    xMin: number = 1,
     xMax: number = 30
   ): Object {
+    console.log(xMin);
     return {
       xaxis: {
         title: {
@@ -149,7 +153,8 @@ function useLineChartConfiguration(
             //color: "#FAFAFA"
           }
         },
-        range: [xMin, xMax]
+        type: "date",
+        range: [Date.now() - xMin * 1000, Date.now()]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",
