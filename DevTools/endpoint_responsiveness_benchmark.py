@@ -372,8 +372,8 @@ class WrkBenchmark:
         while in_process:
             time.sleep(0.2)
             # TODO add time out
-            responce = requests.get(f"{self._backend_url}/control/database").json()
-            databses = responce["body"]["databases"]
+            response = requests.get(f"{self._backend_url}/control/database").json()
+            databses = response["body"]["databases"]
             check_processed = database_id in databses
             if check_processed:
                 in_process = False
