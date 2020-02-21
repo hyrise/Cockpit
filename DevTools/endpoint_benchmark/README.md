@@ -143,9 +143,16 @@ A configuration can look as following :
 }
 ```
 Please add the name of the plug-in in `DevTools.endpoint_benchmark.argument_parser.ArgumentValidation.__init__` to 
+
 ```python
-self._plugins
+self._plugins = ["wrk", "yourPlugin"]
 ```
+So you can use your plugin in the following way:
+
+```
+python benchmark.py --plugin yourPlugin
+```
+
 Moreover you need to add our plugin in `DevTools.endpoint_benchmark.plugins.PluginManager` like the `wrk` plug-in:
 
 ```python
