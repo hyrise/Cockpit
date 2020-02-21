@@ -53,8 +53,8 @@ class StorageCursor:
             {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
-                "fields": {"start": query[0], "end": query[1]},
-                "time": query[1],
+                "fields": {"latency": query[1]},
+                "time": query[0],
             }
             for query in query_list
         ]
@@ -145,7 +145,7 @@ def execute_queries(
                         startts = time_ns()
                         cur.execute(query, formatted_parameters)
                         endts = time_ns()
-                        succesful_queries.append((startts, endts, "none", 0))
+                        succesful_queries.append((endts, endts - startts, "none", 0))
                         if last_batched < time_ns() - 1_000_000_000:
                             last_batched = time_ns()
                             log.log_queries(succesful_queries)

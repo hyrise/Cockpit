@@ -332,7 +332,7 @@ class Throughput(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT COUNT("end") FROM successful_queries WHERE time > $startts AND time <= $endts;',
+                'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
@@ -365,7 +365,7 @@ class Latency(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT MEAN("latency") AS "latency" FROM (SELECT "end"-"start" AS "latency" FROM successful_queries WHERE time > $startts AND time <= $endts);',
+                'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
