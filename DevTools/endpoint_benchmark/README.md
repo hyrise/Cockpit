@@ -34,7 +34,25 @@ If we are running:
 python benchmark.py
 ```
 
-all default values are used. That means we are running the wrk benchmark on two databases, on all endpoints of the backend (for one second), while executing the `tpch_0.1` workload. 
+All default values are used. That means we are running the wrk benchmark on two databases, on all endpoints of the backend (for one second), while executing the `tpch_0.1` workload. 
+
+The command `python benchmark.py --show enpoints` will display all available endpoints: 
+
+```
+Endpoints:
+-> endpoints_monitor: ['throughput', 'latency', 'queue_length', 'failed_tasks', 'system', 'chunks', 'storage', 'krueger_data']
+-> endpoints_control: ['database', 'data']
+```
+
+The command `python benchmark.py --show all` will display all information needed: 
+
+```
+Endpoints:
+-> endpoints_monitor: ['throughput', 'latency', 'queue_length', 'failed_tasks', 'system', 'chunks', 'storage', 'krueger_data']
+-> endpoints_control: ['database', 'data']
+Databases: ['db1', 'db2']
+Workloads: ['tpch_0.1', 'tpch_1', 'tpcds_1', 'job']
+```
 
 ## Command Line Options
 
@@ -58,7 +76,25 @@ all default values are used. That means we are running the wrk benchmark on two 
                         Benchmark plugins. Default is wrk
 ```
 
-## Setup 
+## Setup
+
+### .env
+Please add in your `.env` the access values for your two default databases `db1` and `db2`.
+
+```
+# Set this to the databases you want to run the endpoint benchmark with
+DB1_HOST="*" 
+DB1_PORT="*" 
+DB1_PASSWORD="*"
+DB1_TYPE="*"
+
+DB2_HOST="*" 
+DB2_PORT="*" 
+DB2_PASSWORD="*"
+DB2_TYPE="*"
+```
+
+### WRK
 
 To be able to use the wrk plugin you muss install the wrk benchmark tool.
 
