@@ -195,7 +195,7 @@ class ArgumentParser:
     def _add_arguments(self):
         """Add arguments to the parser."""
         self.parser.add_argument(
-            "--endpoints",
+            "--endpoint",
             "-ep",
             dest="end_points",
             type=str,
@@ -212,7 +212,7 @@ class ArgumentParser:
             help="Show available endpoints, workloads, databases. Default shows all categories.",
         )
         self.parser.add_argument(
-            "--databases",
+            "--database",
             "-db",
             dest="databases",
             type=str,
@@ -239,7 +239,7 @@ class ArgumentParser:
             help="Time to benchmark endpoints in seconds. Default value is 1.",
         )
         self.parser.add_argument(
-            "--runs",
+            "--run",
             "-r",
             dest="runs",
             type=int,
@@ -275,7 +275,7 @@ class ArgumentParser:
             help="Frequency of workload.",
         )
         self.parser.add_argument(
-            "--plugins",
+            "--plugin",
             "-p",
             dest="plugins",
             type=str,
