@@ -108,7 +108,23 @@ https://github.com/wg/wrk/wiki/Installing-wrk-on-OS-X
 
 ## Add a Plugin 
 
-If you want to add your own plugin you can do so by creating a class for the plugin-in in `plugins.py`. You just need to implement the `run_benchmark` function. The plug-in is getting a configuration in the form of a dictionary. A configuration can look as following : 
+If you want to add your own plugin you can do so by creating a class for the plugin-in in `plugins.py`. You just need to implement the `run_benchmark` function. The plug-in is getting a configuration in the form of a dictionary.
+
+```python
+class YourPlugin:
+
+    def __init__(self, configuration):
+        self._configuration = configuration
+        self._backend_url = configuration["backend_url"]
+        
+        
+    #...
+    
+    def run_benchmark(self):
+        # do some stuff
+```
+
+A configuration can look as following : 
 
 ```python
 {
