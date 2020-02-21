@@ -26,5 +26,6 @@ if __name__ == "__main__":
                         workload, configuration["workload_frequence"]
                     )
                     plugin.run_benchmark()
+                    cockpit_manager.close_components()
         except KeyboardInterrupt:
             print("Benchmark closed.")
