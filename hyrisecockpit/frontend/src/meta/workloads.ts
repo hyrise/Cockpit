@@ -1,8 +1,4 @@
-import {
-  Workload,
-  WorkloadMetaData,
-  WorkloadProjectionData
-} from "../types/workloads";
+import { Workload, WorkloadProjectionData } from "../types/workloads";
 
 const workloadProjectionData: Record<Workload, WorkloadProjectionData> = {
   tpch01: {
@@ -22,34 +18,10 @@ const workloadProjectionData: Record<Workload, WorkloadProjectionData> = {
     displayed: "JOB"
   }
 };
-const workloadMetaData: Record<Workload, WorkloadMetaData> = {
-  tpch01: {
-    folder_name: getTransferredWorkload("tpch01"),
-    frequency: getFrequency()
-  },
-  tpch1: {
-    folder_name: getTransferredWorkload("tpch1"),
-    frequency: getFrequency()
-  },
-  tpcds: {
-    folder_name: getTransferredWorkload("tpcds"),
-    frequency: getFrequency()
-  },
-  job: {
-    folder_name: getTransferredWorkload("job"),
-    frequency: getFrequency()
-  }
-};
 
-export function getFrequency(): number {
-  return 200;
-}
 export function getTransferredWorkload(workload: Workload): string {
   return workloadProjectionData[workload].transferred;
 }
 export function getDisplayedWorkload(workload: Workload): string {
   return workloadProjectionData[workload].displayed;
-}
-export function getWorkloadMetaData(workload: Workload): WorkloadMetaData {
-  return workloadMetaData[workload];
 }

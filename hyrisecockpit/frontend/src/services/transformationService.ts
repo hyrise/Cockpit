@@ -1,7 +1,7 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import Vue from "vue";
-import { notEquals } from "../helpers/methods";
+import { equals } from "../helpers/methods";
 
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
@@ -93,7 +93,7 @@ function getStorageData(
   const newSizes: number[] = [];
 
   if (
-    notEquals(
+    !equals(
       Vue.prototype.$databaseService.tables.value,
       Object.keys(data[primaryKey])
     ) &&
