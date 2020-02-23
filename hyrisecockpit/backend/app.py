@@ -129,6 +129,41 @@ model_latency = monitor.clone(
     },
 )
 
+model_detailed_latency = monitor.clone(
+    "Detailed Latency",
+    model_database,
+    {
+        "detailed_latency": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Latency per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "latency": fields.Integer(
+                            title="latency",
+                            description="Time passed between starting to execute a query and receiving the result.",
+                            required=True,
+                            example=98634929882,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_queue_length = monitor.clone(
     "Queue length",
     model_database,
@@ -397,6 +432,40 @@ class DetailedThroughput(Resource):
                 for table, tags in list(result.keys())
             ]
             response.append({"id": database, "detailed_throughput": throughput})
+        return response
+
+
+@monitor.route("/detailed_latency")
+class DetailedLatency(Resource):
+    """Detailed throughput information of all databases."""
+
+    @monitor.doc(model=[model_detailed_latency])
+    def get(self) -> Union[int, List[Dict[str, List]]]:
+        """Return detailed throughput information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        latency: List[Dict[str, int]]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            latency = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "latency": list(result[table, tags])[0]["latency"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "detailed_latency": latency})
         return response
 
 
