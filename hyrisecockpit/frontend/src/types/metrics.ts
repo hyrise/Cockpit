@@ -18,6 +18,7 @@ export type Metric =
 export interface MetricController {
   data: Record<Metric, Ref<any>>;
   maxValueData: Record<Metric, Ref<number>>;
+  timestamps: Record<Metric, Ref<Date[]>>;
 }
 
 //TODO: refactor
@@ -69,6 +70,7 @@ export interface ComparisonMetricData {
   data: Ref<any>;
   chartConfiguration: string[];
   maxValue: Ref<number>;
+  timestamps: Ref<Date[]>;
 }
 
 export interface MetricProps {

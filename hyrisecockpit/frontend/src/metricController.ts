@@ -23,6 +23,7 @@ export function useMetricController(): MetricController {
 
   let data = {} as any;
   let maxValueData = {} as any;
+  let timestamps = {} as any;
 
   mapToData(metricServices);
 
@@ -72,8 +73,9 @@ export function useMetricController(): MetricController {
     Object.entries(services).forEach(([metric, service]) => {
       data[metric as Metric] = service.data;
       maxValueData[metric as Metric] = service.maxValue;
+      timestamps[metric as Metric] = service.timestamps;
     });
   }
 
-  return { data, maxValueData };
+  return { data, maxValueData, timestamps };
 }

@@ -7,6 +7,7 @@ export function useMetricService(metric: MetricMetadata): FetchService {
   const queryReadyState = ref<boolean>(true);
   const data = ref<any>({}); // TODO: change the initial value
   const maxValue = ref<number>(0);
+  const timestamps = ref<Date[]>([]);
 
   function getData(): void {
     queryReadyState.value = false;
@@ -14,7 +15,6 @@ export function useMetricService(metric: MetricMetadata): FetchService {
       if (metric.fetchType === "modify") {
         Object.keys(result).forEach(key => {
           addData(key, metric.transformationService(result, key));
-          updateMaxValue();
         });
       } else if (metric.fetchType === "read") {
         data.value = result;
@@ -63,8 +63,10 @@ export function useMetricService(metric: MetricMetadata): FetchService {
   function getDataIfReady(): void {
     if (queryReadyState.value) {
       getData();
+      updateMaxValue();
+      timestamps.value.push(new Date());
     }
   }
 
-  return { data, getDataIfReady, maxValue };
+  return { data, getDataIfReady, maxValue, timestamps };
 }

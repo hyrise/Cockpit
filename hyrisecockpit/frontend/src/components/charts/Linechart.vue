@@ -21,6 +21,7 @@ interface Props {
   graphId: string;
   chartConfiguration: string[];
   maxValue: number;
+  timestamps: Date[];
 }
 
 export default createComponent({
@@ -44,6 +45,10 @@ export default createComponent({
     maxValue: {
       type: Number,
       default: 1
+    },
+    timestamps: {
+      type: Array,
+      default: null
     }
   },
   setup(props: Props, context: SetupContext): void {
@@ -51,8 +56,6 @@ export default createComponent({
       props.selectedDatabases.map(database => database.id)
     );
     const data = computed(() => props.data);
-    let timestamps = [];
-    const maxValue = computed(() => props.maxValue);
     const graphId = props.graphId;
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
@@ -109,7 +112,7 @@ export default createComponent({
     }
 
     function updateChartDatasets(): void {
-      timestamps = [...timestamps, Date.now()];
+      const timestamps = props.timestamps;
       const newData = {
         y: Object.values(selectedDatabaseIds.value).map(id => data.value[id]),
         x: Object.values(selectedDatabaseIds.value).map(() => timestamps)
@@ -119,11 +122,7 @@ export default createComponent({
       Plotly.update(
         graphId,
         newData,
-        getLayout(
-          props.maxValue,
-          Math.min(maxSelectedLength, 30),
-          Math.max(maxSelectedLength, 30)
-        )
+        getLayout(props.maxValue, Math.min(maxSelectedLength, 30))
       );
     }
   }
@@ -134,16 +133,12 @@ function useLineChartConfiguration(
   chartConfiguration: string[]
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
-  getLayout: (yMax: number, xMin?: number, xMax?: number) => Object;
+  getLayout: (yMax: number, xMin?: number) => Object;
   getOptions: () => Object;
 } {
   const databases: Ref<Database[]> = context.root.$databaseService.databases;
-  function getLayout(
-    yMax: number,
-    xMin: number = 1,
-    xMax: number = 30
-  ): Object {
-    console.log(xMin);
+  function getLayout(yMax: number, xMin: number = 1): Object {
+    const currentDate = Date.now();
     return {
       xaxis: {
         title: {
@@ -154,7 +149,8 @@ function useLineChartConfiguration(
           }
         },
         type: "date",
-        range: [Date.now() - xMin * 1000, Date.now()]
+        tickformat: "%H:%M:%S",
+        range: [currentDate - xMin * 1000, currentDate]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",
@@ -172,8 +168,7 @@ function useLineChartConfiguration(
             //color: "#FAFAFA"
           }
         },
-        rangemode: "tozero",
-        "range[1]": yMax * 1.05
+        range: [0, yMax * 1.05]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",

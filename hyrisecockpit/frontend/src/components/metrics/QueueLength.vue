@@ -13,6 +13,8 @@
       :data="data"
       :graph-id="graphId || 'queueLength'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
+      :timestamps="timestamps"
     />
   </div>
 </template>
@@ -43,6 +45,7 @@ export default createComponent({
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const data = context.root.$metricController.data[props.metric];
     const maxValue = context.root.$metricController.maxValueData[props.metric];
+    const timestamps = context.root.$metricController.timestamps[props.metric];
 
     const chartConfiguration = [
       "Queue Length",
@@ -53,7 +56,8 @@ export default createComponent({
     return {
       data,
       chartConfiguration,
-      maxValue
+      maxValue,
+      timestamps
     };
   }
 });

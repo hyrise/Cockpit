@@ -5,6 +5,7 @@ export interface FetchService {
   data: Ref<any>;
   getDataIfReady: () => void;
   maxValue: Ref<Number>;
+  timestamps: Ref<any>;
 }
 
 export type TransformationService = (
