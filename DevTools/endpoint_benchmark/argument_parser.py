@@ -105,7 +105,7 @@ class ArgumentValidation:
 
     def _validate_time(self, time_argument):
         """Validate time arguments."""
-        time = time_argument[0]
+        time = time_argument
         if time < 0:
             print(f"{time} must be positive")
             time = 1
@@ -113,7 +113,7 @@ class ArgumentValidation:
 
     def _validate_runs(self, run_argument):
         """Validate run arguments."""
-        run = run_argument[0]
+        run = run_argument
         if run < 0:
             print(f"{run} must be positive")
             run = 1
@@ -125,7 +125,7 @@ class ArgumentValidation:
 
     def _validate_number_workers(self, number_worker_argument):
         """Validate number worker arguments."""
-        number_worker = number_worker_argument[0]
+        number_worker = number_worker_argument
         if number_worker < 0:
             print(f"{number_worker} must be positive")
             number_worker = 10
@@ -133,7 +133,7 @@ class ArgumentValidation:
 
     def _validate_workload_frequence(self, workload_frequence_argument):
         """Validate workload frequency arguments."""
-        workload_frequence = workload_frequence_argument[0]
+        workload_frequence = workload_frequence_argument
         if workload_frequence < 0:
             print(f"{workload_frequence} must be positive")
             workload_frequence = 100
@@ -158,7 +158,7 @@ class ArgumentParser:
     def __init__(self):
         """Initialize a ArgumentParser."""
         self.parser = argparse.ArgumentParser(
-            description="Process endpoint benchmark arguments."
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter
         )
         self._FUNCTION_MAP = {
             "endpoints": self._show_enpoints,
@@ -201,7 +201,8 @@ class ArgumentParser:
             type=str,
             nargs="+",
             default=["all"],
-            help="Endpoints to run benchmark on. Default value is all.",
+            metavar="",
+            help="endpoints to run the benchmark on",
         )
         self.parser.add_argument(
             "--show",
@@ -209,7 +210,8 @@ class ArgumentParser:
             dest="show",
             type=str,
             nargs="+",
-            help="Show available endpoints, workloads, databases. Default shows all categories.",
+            metavar="",
+            help="show available endpoints, workloads, databases, plug_ins",
         )
         self.parser.add_argument(
             "--database",
@@ -217,8 +219,9 @@ class ArgumentParser:
             dest="databases",
             type=str,
             nargs="+",
+            metavar="",
             default=["all"],
-            help="Databases to run benchmark on. Default value is all.",
+            help="databases to use in benchmark",
         )
         self.parser.add_argument(
             "--workload",
@@ -226,8 +229,9 @@ class ArgumentParser:
             dest="workloads",
             type=str,
             nargs="+",
+            metavar="",
             default=["tpch_0.1"],
-            help="Workload to run on databases. Default value is tpch_0.1.",
+            help="workloads to run on databases",
         )
         self.parser.add_argument(
             "--time",
@@ -235,8 +239,9 @@ class ArgumentParser:
             dest="time",
             type=int,
             nargs=1,
-            default=[1],
-            help="Time to benchmark endpoints in seconds. Default value is 1.",
+            metavar="",
+            default=1,
+            help="duration of the benchmark per endpoint in seconds",
         )
         self.parser.add_argument(
             "--run",
@@ -244,8 +249,9 @@ class ArgumentParser:
             dest="runs",
             type=int,
             nargs=1,
-            default=[1],
-            help="Number of runs.",
+            metavar="",
+            default=1,
+            help="number of runs",
         )
         self.parser.add_argument(
             "--url",
@@ -253,8 +259,9 @@ class ArgumentParser:
             dest="backend_url",
             type=str,
             nargs=1,
+            metavar="",
             default=[f"http://{BACKEND_HOST}:{BACKEND_PORT}"],
-            help="Backend url",
+            help="back-end URL",
         )
         self.parser.add_argument(
             "--worker_number",
@@ -262,8 +269,9 @@ class ArgumentParser:
             dest="number_workers",
             type=int,
             nargs=1,
-            default=[10],
-            help="Number of workers for databases.",
+            metavar="",
+            default=10,
+            help="number of workers per database",
         )
         self.parser.add_argument(
             "--workload_frequence",
@@ -271,8 +279,8 @@ class ArgumentParser:
             dest="workload_frequence",
             type=int,
             nargs=1,
-            default=[200],
-            help="Frequency of workload.",
+            default=200,
+            help="frequency of workload",
         )
         self.parser.add_argument(
             "--plugin",
@@ -280,8 +288,9 @@ class ArgumentParser:
             dest="plugins",
             type=str,
             nargs="+",
+            metavar="",
             default=["wrk"],
-            help="Benchmark plugins. Default is wrk",
+            help="benchmark plug-ins to use",
         )
 
     def _show_info(self):
@@ -310,4 +319,5 @@ class ArgumentParser:
             configuration[argument_type] = self._argument_validation.validate(
                 argument_type, getattr(self._arguments, argument_type)
             )
+        print(configuration)
         return configuration
