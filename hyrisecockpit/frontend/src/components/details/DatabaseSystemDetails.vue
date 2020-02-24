@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="details">
     <v-card class="card" color="primary" dark @click="togglePanelView()">
       <v-card-title>
         Databases
         <v-icon class="ml-1" v-if="!showDatabasePanels">
-          mdi-chevron-down</v-icon
-        >
+          mdi-chevron-down
+        </v-icon>
         <v-icon class="ml-1" v-else> mdi-chevron-up</v-icon>
       </v-card-title>
     </v-card>
@@ -77,6 +77,25 @@ export default createComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const showDatabasePanels = ref(true);
+    let details: any = null;
+    let detailsPageOffset = 0;
+
+    onMounted(() => {
+      details = document.getElementById("details");
+      detailsPageOffset = details!.offsetTop;
+      window.onscroll = function() {
+        handleScrollEvent();
+      };
+    });
+
+    function handleScrollEvent(): void {
+      if (window.pageYOffset > detailsPageOffset) {
+        details.classList.add("sticky");
+      } else {
+        details.classList.remove("sticky");
+      }
+    }
+
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
@@ -90,5 +109,18 @@ export default createComponent({
 }
 .entry {
   margin-top: 0.5%;
+}
+.content {
+  padding: 16px;
+}
+.sticky {
+  position: fixed;
+  top: 70px;
+  z-index: 10;
+  width: 500px;
+  right: 0px;
+}
+.sticky + .content {
+  padding-top: 102px;
 }
 </style>
