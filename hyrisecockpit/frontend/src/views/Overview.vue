@@ -18,6 +18,10 @@
       <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
         No databases selected.
       </v-alert>
+      <database-system-details
+        v-if="watchedInstances.length"
+        :databases="watchedInstances.map(database => database.value)"
+      />
       <MetricsTileList
         :selected-databases="watchedInstances.map(database => database.value)"
         :show-details="false"
@@ -44,6 +48,7 @@ import { Metric, overviewMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import { useDatabaseSelection } from "../meta/views";
+import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 
 interface Data extends MetricViewData {
   overviewMetrics: Metric[];
@@ -52,7 +57,8 @@ interface Data extends MetricViewData {
 
 export default createComponent({
   components: {
-    MetricsTileList
+    MetricsTileList,
+    DatabaseSystemDetails
   },
   setup(props: {}, context: SetupContext): Data {
     const { watchedInstances, availableInstances } = useDatabaseSelection(
