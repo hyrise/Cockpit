@@ -222,7 +222,7 @@ class ArgumentParser:
             type=str,
             nargs="+",
             metavar="",
-            help="show available endpoints, workloads, databases, plug_ins",
+            help="show available endpoints, workloads, databases, plug-ins and exit",
         )
         self.parser.add_argument(
             "--database",
