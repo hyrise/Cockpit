@@ -1,9 +1,15 @@
 <template>
   <div>
-    <v-card class="card" color="primary" dark>
-      <v-card-title> Databases </v-card-title>
+    <v-card class="card" color="primary" dark @click="togglePanelView()">
+      <v-card-title>
+        Databases
+        <v-icon class="ml-1" v-if="!showDatabasePanels">
+          mdi-chevron-down</v-icon
+        >
+        <v-icon class="ml-1" v-else> mdi-chevron-up</v-icon>
+      </v-card-title>
     </v-card>
-    <v-expansion-panels multiple accordion>
+    <v-expansion-panels v-if="showDatabasePanels" multiple accordion>
       <v-expansion-panel v-for="database in databases" :key="database.id">
         <v-expansion-panel-header class="title">
           {{ database.id }}
@@ -49,7 +55,10 @@ import { Database } from "../../types/database";
 interface Props {
   databases: Database[];
 }
-interface Data {}
+interface Data {
+  showDatabasePanels: Ref<boolean>;
+  togglePanelView: () => void;
+}
 
 export default createComponent({
   name: "DatabaseSystemDetails",
@@ -60,7 +69,11 @@ export default createComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    return {};
+    const showDatabasePanels = ref(true);
+    function togglePanelView(): void {
+      showDatabasePanels.value = !showDatabasePanels.value;
+    }
+    return { showDatabasePanels, togglePanelView };
   }
 });
 </script>
