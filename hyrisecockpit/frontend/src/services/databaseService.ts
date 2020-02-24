@@ -23,7 +23,7 @@ export function useDatabaseService(): DatabaseService {
       databases.value = response.data.body.databases.map(
         (databaseId: string) => ({
           id: databaseId,
-          color: getDatabaseColor(databaseId).length,
+          color: getDatabaseColor(databaseId),
           systemDetails: {
             host: databaseId,
             mainMemoryCapacity: 1000,
