@@ -158,8 +158,12 @@ Moreover you need to add our plugin in `DevTools.endpoint_benchmark.plugins.Plug
 ```python
     def __init__(self):
         """Initialize PluginManager."""
-        self.plugins = {"wrk": self._get_wrk_plugin}
+        self.plugins = {"wrk": self._get_wrk_plugin,
+                        "yourPlugin": self._get_your_plugin}
 
     def _get_wrk_plugin(self, configuration):
         return WrkPlugin(configuration)
+        
+    def _get_your_plugin(self, configuration):
+        return YourPlugin(configuration)
 ```
