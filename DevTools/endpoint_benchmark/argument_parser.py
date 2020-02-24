@@ -51,6 +51,10 @@ class ArgumentValidation:
         """Return available databases."""
         return self._databases
 
+    def get_plugins(self):
+        """Return available plug-ins."""
+        return self._plugins
+
     def validate(self, type, arguments):
         """Validate arguments in context of type."""
         validator_func = self._validate_calls.get(type)
@@ -164,6 +168,7 @@ class ArgumentParser:
             "endpoints": self._show_enpoints,
             "databases": self._show_databases,
             "workloads": self._show_workloads,
+            "plugins": self._show_plugins,
             "all": self._show_all,
         }
         self._add_arguments()
@@ -187,10 +192,16 @@ class ArgumentParser:
         workloads = self._argument_validation.get_workloads()
         print(f"Workloads: {workloads}")
 
+    def _show_plugins(self):
+        """Show which plug-ins are available."""
+        plugins = self._argument_validation.get_plugins()
+        print(f"Plug-ins: {plugins}")
+
     def _show_all(self):
         self._show_enpoints()
         self._show_databases()
         self._show_workloads()
+        self._show_plugins()
 
     def _add_arguments(self):
         """Add arguments to the parser."""
@@ -279,6 +290,7 @@ class ArgumentParser:
             dest="workload_frequence",
             type=int,
             nargs=1,
+            metavar="",
             default=200,
             help="frequency of workload",
         )
