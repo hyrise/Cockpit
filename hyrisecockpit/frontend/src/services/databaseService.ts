@@ -20,10 +20,19 @@ export function useDatabaseService(): DatabaseService {
 
   function getDatabases(): void {
     axios.get(controlBackend + "database").then(response => {
-      databases.value = response.data.body.databases.map((database: any) => ({
-        id: database,
-        color: getDatabaseColor(database)
-      }));
+      databases.value = response.data.body.databases.map(
+        (databaseId: string) => ({
+          id: databaseId,
+          color: getDatabaseColor(databaseId).length,
+          systemDetails: {
+            host: databaseId,
+            mainMemoryCapacity: 1000,
+            memoryFootprint: 100,
+            numberOfCPUs: 16,
+            numberOfWorkers: 8
+          }
+        })
+      );
       isReady.value = true;
     });
   }
