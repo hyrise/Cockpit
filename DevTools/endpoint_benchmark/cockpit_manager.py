@@ -83,7 +83,7 @@ class CockpitManager:
         """Close main cockpit components."""
         for i in range(len(self._subprocesses)):
             self._subprocesses[i].send_signal(signal.SIGINT)
-            self._subprocesses[i].poll()
+            self._subprocesses[i].wait()
         self._subprocesses = []
 
     def _check_if_database_added(self, database_id):
