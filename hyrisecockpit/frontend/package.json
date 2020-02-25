@@ -35,9 +35,9 @@
         "eslint-plugin-vue": "^6.2.1",
         "lint-staged": "^10.0.8",
         "prettier": "^1.18.2",
-        "sass": "^1.25.0",
+        "sass": "^1.26.0",
         "sass-loader": "^8.0.2",
-        "typescript": "^3.7.5",
+        "typescript": "^3.8.2",
         "vue-cli-plugin-vuetify": "^2.0.3",
         "vue-template-compiler": "^2.6.11",
         "vuetify-loader": "^1.4.3"
