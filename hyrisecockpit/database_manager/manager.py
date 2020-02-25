@@ -186,7 +186,7 @@ class DatabaseManager(object):
         return processing_table_data
 
     def _call_purge_queue(self, body: Dict) -> Dict:
-        for _id, database in self._databases.items():
+        for database in self._databases.values():
             if not database.disable_workload_execution():
                 return get_response(400)
         return get_response(200)
