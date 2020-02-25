@@ -667,7 +667,7 @@ class Workload(Resource):
         return get_response(200)
 
     def delete(self) -> Dict:
-        """Stop the workload generator."""
+        """Stop the workload generator and empty database queues."""
         message = {
             "header": {"message": "stop workload"},
             "body": {},
@@ -676,6 +676,16 @@ class Workload(Resource):
         if response["header"]["status"] != 200:
             return get_error_response(
                 400, response["body"].get("error", "Error during stopping of generator")
+            )
+
+        message = {
+            "header": {"message": "purge queue"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during purging of the queues")
             )
 
         return response
