@@ -13,9 +13,9 @@ class Driver(object):
         """Initialize the connection."""
         self._user: str = user
         self._password: str = password
-        self._host: str = host
-        self._port: str = port
-        self._dbname: str = dbname
+        self.host: str = host
+        self.port: str = port
+        self.dbname: str = dbname
         self._connection_pool = self._create_connection_pool(n_connections)
 
     @classmethod
@@ -38,9 +38,9 @@ class Driver(object):
             n_connections,
             user=self._user,
             password=self._password,
-            host=self._host,
-            port=self._port,
-            dbname=self._dbname,
+            host=self.host,
+            port=self.port,
+            dbname=self.dbname,
         )
         return connection_pool
 
