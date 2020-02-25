@@ -13,13 +13,13 @@ class Workload(object):
     def __init__(
         self,
         workload_type: str,
-        queries_location: str,
+        workload_location: str,
         delimiter: str = ";",
         file_type: str = "sql",
     ) -> None:
         """Initialize a Workload."""
         self.workload_type: str = workload_type
-        self._queries_location: str = f"{queries_location}/{workload_type}"
+        self._queries_location: str = f"{workload_location}/{workload_type}"
         self._delimiter: str = delimiter
         self._file_type: str = file_type
         self._queries: Dict[str, List[str]] = {}

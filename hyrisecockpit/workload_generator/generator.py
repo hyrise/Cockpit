@@ -30,14 +30,14 @@ class WorkloadGenerator(object):
         generator_port: str,
         workload_listening: str,
         workload_pub_port: str,
-        default_workload_location: str,
+        workload_location: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
         self._generator_listening = generator_listening
         self._generator_port = generator_port
         self._workload_listening = workload_listening
         self._workload_pub_port = workload_pub_port
-        self._default_workload_location = default_workload_location
+        self._workload_location = workload_location
         self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "start workload": self._call_start_workload,
             "stop workload": self._call_stop_workload,
@@ -71,13 +71,10 @@ class WorkloadGenerator(object):
             "tcp://{:s}:{:s}".format(self._workload_listening, self._workload_pub_port)
         )
 
-    def _get_default_workload_location(self):
-        return self._default_workload_location
-
     def _get_workload(self, workload_type: str):
         workload = self._workloads.get(workload_type)
         if not workload:
-            workload = Workload(workload_type, self._get_default_workload_location())
+            workload = Workload(workload_type, self._workload_location)
             self._workloads[workload_type] = workload
         return workload
 
