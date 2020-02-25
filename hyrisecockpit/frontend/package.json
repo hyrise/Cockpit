@@ -24,10 +24,10 @@
         "vuetify": "^2.2.8"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "^4.1.2",
-        "@vue/cli-plugin-eslint": "^4.1.2",
-        "@vue/cli-plugin-typescript": "^4.1.2",
-        "@vue/cli-service": "^4.1.2",
+        "@vue/cli-plugin-babel": "^4.2.2",
+        "@vue/cli-plugin-eslint": "^4.2.2",
+        "@vue/cli-plugin-typescript": "^4.2.2",
+        "@vue/cli-service": "^4.2.2",
         "@vue/eslint-config-prettier": "^6.0.0",
         "@vue/eslint-config-typescript": "^5.0.1",
         "eslint": "^6.8.0",
