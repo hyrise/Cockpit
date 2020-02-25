@@ -156,6 +156,20 @@ model_krueger_data = monitor.clone(
     },
 )
 
+model_process_table_status = monitor.clone(
+    "Process table status",
+    model_database,
+    {
+        "process_table_status": fields.Boolean(
+            title="Process table status",
+            description="Process table status of databases.",
+            required=True,
+            example=True,
+        )
+    },
+)
+
+
 model_data = control.model(
     "Data",
     {
@@ -454,6 +468,19 @@ class KruegerData(Resource):
         ]
 
 
+@monitor.route("/process_table_status", methods=["GET"])
+class ProcessTableStatus(Resource):
+    """Process table status information of all databases."""
+
+    @monitor.doc(model=[model_process_table_status])
+    def get(self) -> Dict:
+        """Return process table status for databases."""
+        return _send_message(
+            db_manager_socket,
+            {"header": {"message": "process table status"}, "body": {}},
+        )
+
+
 @control.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
@@ -532,7 +559,7 @@ class Workload(Resource):
         return get_response(200)
 
     def delete(self) -> Dict:
-        """Stop the workload generator."""
+        """Stop the workload generator and empty database queues."""
         message = {
             "header": {"message": "stop workload"},
             "body": {},
@@ -541,6 +568,16 @@ class Workload(Resource):
         if response["header"]["status"] != 200:
             return get_error_response(
                 400, response["body"].get("error", "Error during stopping of generator")
+            )
+
+        message = {
+            "header": {"message": "purge queue"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during purging of the queues")
             )
 
         return response
