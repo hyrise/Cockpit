@@ -411,7 +411,9 @@ class DetailedThroughput(Resource):
     @monitor.doc(model=[model_detailed_throughput])
     def get(self) -> Union[int, List[Dict[str, List]]]:
         """Return detailed throughput information from the stored queries."""
-        t = time_ns()
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
         throughput: List[Dict[str, int]]
         try:
             active_databases = _active_databases()
@@ -420,8 +422,9 @@ class DetailedThroughput(Resource):
         response = []
         for database in active_databases:
             result = storage_connection.query(
-                f"""SELECT COUNT("end") FROM successful_queries WHERE "end" > {t-2} AND "end" <= {t-1} GROUP BY benchmark, query_no;""",
+                'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
                 database=database,
+                bind_params={"startts": startts, "endts": endts},
             )
             throughput = [
                 {
