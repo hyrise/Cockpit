@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$databaseService.isReady.value" class="mx-6">
-      <database-metric-selection :metrics="watchedMetrics" />
+      <database-metric-selection class="select" :metrics="watchedMetrics" />
       <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
         No databases selected.
       </v-alert>
@@ -11,6 +11,7 @@
         :handle-scroll="false"
       />
       <MetricsTileList
+        class="list"
         :selected-databases="selectedDatabases"
         :show-details="false"
         :selected-metrics="selectedMetrics"
@@ -51,7 +52,10 @@ export default createComponent({
 </script>
 <style scoped>
 .select {
-  padding-top: 20px;
-  width: 33%;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+.list {
+  margin-top: 1%;
 }
 </style>

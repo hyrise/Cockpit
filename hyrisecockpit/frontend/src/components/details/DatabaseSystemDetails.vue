@@ -3,10 +3,6 @@
     <v-card class="card" color="primary" dark @click="togglePanelView()">
       <v-card-title>
         Databases
-        <v-icon class="ml-1" v-if="!showDatabasePanels">
-          mdi-chevron-down
-        </v-icon>
-        <v-icon class="ml-1" v-else> mdi-chevron-up</v-icon>
       </v-card-title>
     </v-card>
     <v-expansion-panels

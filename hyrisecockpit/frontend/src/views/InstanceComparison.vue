@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$databaseService.isReady.value" class="mx-6">
-      <database-metric-selection :metrics="watchedMetrics" />
+      <database-metric-selection class="select" :metrics="watchedMetrics" />
       <MetricsComparisonTable
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -51,14 +51,8 @@ export default createComponent({
 </script>
 <style scoped>
 .select {
-  display: flex;
-  flex-direction: row;
-  margin-top: 2%;
-  margin-bottom: 1%;
-}
-.select-box {
-  margin: 0px 20px 10px 20px;
-  flex: 0 0 42%;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
 }
 .alert {
   margin-top: 1%;

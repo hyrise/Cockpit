@@ -1,38 +1,46 @@
 <template>
-  <div v-if="$databaseService.isReady.value" class="mx-6">
-    <div class="select">
-      <v-select
-        class="select-box"
-        v-model="selectedDatabases"
-        v-on:input="handleMaxSelected"
-        :items="availableDatabases"
-        :error="!selectedDatabases.length"
-        chips
-        label="databases"
-        multiple
-        clearable
-        deletable-chips
-        counter="4"
-        outlined
-        return-object
-        prepend-icon="mdi-database"
-      ></v-select>
-      <v-select
-        class="select-box"
-        v-model="selectedMetrics"
-        v-on:input="handleMetricsChanged"
-        :items="availableMetrics"
-        chips
-        return-object
-        label="metrics"
-        multiple
-        clearable
-        deletable-chips
-        :error="!selectedMetrics.length"
-        outlined
-        prepend-icon="mdi-database"
-      ></v-select>
-    </div>
+  <div v-if="$databaseService.isReady.value">
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header class="title">
+          Selection
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <div class="select">
+            <v-select
+              class="select-box"
+              v-model="selectedDatabases"
+              v-on:input="handleMaxSelected"
+              :items="availableDatabases"
+              :error="!selectedDatabases.length"
+              chips
+              label="databases"
+              multiple
+              clearable
+              deletable-chips
+              counter="4"
+              outlined
+              return-object
+              prepend-icon="mdi-database"
+            ></v-select>
+            <v-select
+              class="select-box"
+              v-model="selectedMetrics"
+              v-on:input="handleMetricsChanged"
+              :items="availableMetrics"
+              chips
+              return-object
+              label="metrics"
+              multiple
+              clearable
+              deletable-chips
+              :error="!selectedMetrics.length"
+              outlined
+              prepend-icon="mdi-database"
+            ></v-select></div
+        ></v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </div>
 </template>
 
