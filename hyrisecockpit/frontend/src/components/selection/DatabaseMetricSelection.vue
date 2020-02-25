@@ -100,7 +100,7 @@ function useMetricSelection(
   handleMetricsChanged: () => void;
 } {
   const {
-    emitMetricsChangedEvent,
+    emitWatchedMetricsChangedEvent,
     emitSelectedMetricsChangedEvent
   } = useMetricEvents();
 
@@ -126,7 +126,7 @@ function useMetricSelection(
 
   function handleMetricsChanged(): void {
     sortMetrics();
-    emitMetricsChangedEvent(
+    emitWatchedMetricsChangedEvent(
       selectedMetrics.value.map((metric: any) => metric.value)
     );
     emitSelectedMetricsChangedEvent(

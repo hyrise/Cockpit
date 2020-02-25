@@ -96,13 +96,12 @@ import { Workload, availableWorkloads } from "../types/workloads";
 import { useWorkloadService } from "../services/workloadService";
 import { getDisplayedWorkload } from "../meta/workloads";
 import { Metric, workloadMetrics } from "../types/metrics";
-import { MetricViewData } from "../types/views";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 
 interface Props {}
-interface Data extends MetricViewData {
+interface Data {
   getDisplayedWorkload: (workload: Workload) => string;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
@@ -111,6 +110,7 @@ interface Data extends MetricViewData {
   availableWorkloads: string[];
   frequency: Ref<number>;
   workloadMetrics: Metric[];
+  watchedInstances: Ref<Database[]>;
 }
 
 export default createComponent({
@@ -119,7 +119,7 @@ export default createComponent({
     MetricsTileList
   },
   setup(props: Props, context: SetupContext): Data {
-    const { emitMetricsChangedEvent } = useMetricEvents();
+    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(200);
     const {
@@ -139,7 +139,7 @@ export default createComponent({
     });
 
     onMounted(() => {
-      emitMetricsChangedEvent(workloadMetrics);
+      emitWatchedMetricsChangedEvent(workloadMetrics);
     });
 
     return {

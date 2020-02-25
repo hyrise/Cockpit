@@ -42,13 +42,12 @@ import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 
-import { MetricViewData } from "../types/views";
-
-interface Data extends MetricViewData {
+interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   overviewMetrics: Metric[];
   instanceMetrics: Metric[];
+  watchedInstances: Ref<Database[]>;
 }
 
 export default createComponent({
@@ -62,9 +61,9 @@ export default createComponent({
     const watchedInstances = ref<Database[]>([
       getDatabaseById(context.root.$route.params.id)
     ]);
-    const { emitMetricsChangedEvent } = useMetricEvents();
+    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
-      emitMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
+      emitWatchedMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
 
     function getDatabaseById(id: string): Database | undefined {
