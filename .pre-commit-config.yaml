@@ -69,10 +69,3 @@ repos:
       entry: pipenv run bandit
       types: [python]
       args: [--exclude, tests]
-    - id: pytest
-      stages: [manual,]
-      name: Running Python tests
-      description: 'The pytest framework makes it easy to write small tests, yet scales to support complex functional testing'
-      entry: pytest
-      language: system
-      pass_filenames: false
