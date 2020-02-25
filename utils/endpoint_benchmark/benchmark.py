@@ -1,8 +1,8 @@
 """Module for run benchmark with plug-ins."""
 
-from DevTools.endpoint_benchmark.argument_parser import ArgumentParser
-from DevTools.endpoint_benchmark.cockpit_manager import CockpitManager
-from DevTools.endpoint_benchmark.plugins import PluginManager
+from utils.endpoint_benchmark.argument_parser import ArgumentParser
+from utils.endpoint_benchmark.cockpit_manager import CockpitManager
+from utils.endpoint_benchmark.plugins import PluginManager
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
