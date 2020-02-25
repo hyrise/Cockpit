@@ -9,7 +9,12 @@
         <v-icon class="ml-1" v-else> mdi-chevron-up</v-icon>
       </v-card-title>
     </v-card>
-    <v-expansion-panels v-if="showDatabasePanels" multiple accordion>
+    <v-expansion-panels
+      class="panels"
+      v-if="showDatabasePanels"
+      multiple
+      accordion
+    >
       <v-expansion-panel v-for="database in databases" :key="database.id">
         <v-expansion-panel-header class="title">
           <v-avatar
@@ -61,6 +66,7 @@ import { Database } from "../../types/database";
 
 interface Props {
   databases: Database[];
+  handleScroll: boolean;
 }
 interface Data {
   showDatabasePanels: Ref<boolean>;
@@ -73,6 +79,10 @@ export default createComponent({
     databases: {
       type: Array,
       default: null
+    },
+    handleScroll: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props: Props, context: SetupContext): Data {
@@ -83,9 +93,10 @@ export default createComponent({
     onMounted(() => {
       details = document.getElementById("details");
       detailsPageOffset = details!.offsetTop;
-      window.onscroll = function() {
-        handleScrollEvent();
-      };
+      if (props.handleScroll)
+        window.onscroll = function() {
+          handleScrollEvent();
+        };
     });
 
     function handleScrollEvent(): void {
@@ -104,14 +115,14 @@ export default createComponent({
 });
 </script>
 <style>
+.panels {
+  margin-top: 0.5%;
+}
 .card {
   margin: 1%, 0%, 1%, 0%;
 }
 .entry {
   margin-top: 0.5%;
-}
-.content {
-  padding: 16px;
 }
 .sticky {
   position: fixed;
@@ -119,8 +130,5 @@ export default createComponent({
   z-index: 10;
   width: 500px;
   right: 0px;
-}
-.sticky + .content {
-  padding-top: 102px;
 }
 </style>

@@ -21,6 +21,7 @@
       <database-system-details
         v-if="watchedInstances.length"
         :databases="watchedInstances.map(database => database.value)"
+        :handle-scroll="false"
       />
       <MetricsTileList
         :selected-databases="watchedInstances.map(database => database.value)"
