@@ -59,7 +59,7 @@ class TestWorkload:
     def test_generates_workload(self, fake_workload):
         """Test cration of workload."""
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
-        expected_workload = [("foo", None)]
+        expected_workload = [(("foo", None), workload_type, "Type1")]
         fake_workload._queries = dummy_queries
         received_queries = fake_workload.generate_workload(1)
         assert received_queries[:] == expected_workload[:]
@@ -68,10 +68,10 @@ class TestWorkload:
         """Test cration of workload."""
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
         expected_workload = [
-            ("foo", None),
-            ("foo2", None),
-            ("foo", None),
-            ("foo2", None),
+            (("foo", None), workload_type, "Type1"),
+            (("foo2", None), workload_type, "Type2"),
+            (("foo", None), workload_type, "Type1"),
+            (("foo2", None), workload_type, "Type2"),
         ]
         fake_workload._queries = dummy_queries
         received_queries = fake_workload.generate_workload(4)
