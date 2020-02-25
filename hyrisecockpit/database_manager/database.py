@@ -133,7 +133,8 @@ def execute_queries(
                             task_queue.put("wake_up_signal_for_worker")
                         break
                     else:
-                        query, not_formatted_parameters = task
+                        query_tuple, workload_type, query_type = task
+                        query, not_formatted_parameters = query_tuple
                         formatted_parameters = (
                             tuple(
                                 AsIs(parameter) if protocol == "as_is" else parameter
@@ -145,14 +146,16 @@ def execute_queries(
                         startts = time_ns()
                         cur.execute(query, formatted_parameters)
                         endts = time_ns()
-                        succesful_queries.append((endts, endts - startts, "none", 0))
+                        succesful_queries.append(
+                            (endts, endts - startts, workload_type, query_type)
+                        )
                         if last_batched < time_ns() - 1_000_000_000:
                             last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
-                        {"worker_id": worker_id, "task": task, "Error": str(e)}
+                        {"worker_id": worker_id, "task": query_tuple, "Error": str(e)}
                     )
 
 
@@ -243,9 +246,15 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def disable_workload_execution(self) -> None:
+    def disable_workload_execution(self) -> bool:
         """Disable execution of the workload."""
-        self._flush_queue()
+        if not self._processing_tables_flag.value:
+            self._processing_tables_flag.value = True
+            self._flush_queue()
+            self._processing_tables_flag.value = False
+            return True
+        else:
+            return False
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""
