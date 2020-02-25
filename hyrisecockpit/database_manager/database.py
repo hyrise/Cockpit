@@ -243,9 +243,15 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def disable_workload_execution(self) -> None:
+    def disable_workload_execution(self) -> bool:
         """Disable execution of the workload."""
-        self._flush_queue()
+        if not self._processing_tables_flag.value:
+            self._processing_tables_flag.value = True
+            self._flush_queue()
+            self._processing_tables_flag.value = False
+            return True
+        else:
+            return False
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""

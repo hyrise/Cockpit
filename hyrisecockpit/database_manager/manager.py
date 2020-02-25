@@ -50,6 +50,7 @@ class DatabaseManager(object):
             "load data": self._call_load_data,
             "delete data": self._call_delete_data,
             "process table status": self._call_process_table_status,
+            "purge queue": self._call_purge_queue,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -196,6 +197,12 @@ class DatabaseManager(object):
                 processing_table_data or database.get_processing_tables_flag()
             )
         return processing_table_data
+
+    def _call_purge_queue(self, body: Dict) -> Dict:
+        for database in self._databases.values():
+            if not database.disable_workload_execution():
+                return get_response(400)
+        return get_response(200)
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""
