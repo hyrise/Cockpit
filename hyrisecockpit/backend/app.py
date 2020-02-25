@@ -8,7 +8,7 @@ from secrets import choice
 from time import time_ns
 from typing import Dict, List, Union
 
-from flask import Flask, request
+from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
@@ -665,9 +665,6 @@ class Workload(Resource):
 
     def post(self) -> Dict:
         """Start the workload generator."""
-        request_json = request.get_json()
-
-        # TODO: Adjust table loading for benchmarks which do not require scale factor (e. g. JOB)
         load_data_message = {
             "header": {"message": "load data"},
             "body": {"folder_name": control.payload["folder_name"]},
@@ -684,7 +681,7 @@ class Workload(Resource):
             "header": {"message": "start workload"},
             "body": {
                 "folder_name": control.payload["folder_name"],
-                "frequency": request_json.get("frequency", 200),
+                "frequency": control.payload.get("frequency", 200),
             },
         }
         response = _send_message(generator_socket, workload_message)
