@@ -178,14 +178,13 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_process_table_status(self, body: Dict) -> Dict:
-        process_table_status = []
-        for database_id, database in self._databases.items():
-            process_table_status.append(
-                {
-                    "id": database_id,
-                    "process_table_status": database.get_processing_tables_flag(),
-                }
-            )
+        process_table_status = [
+            {
+                "id": database_id,
+                "process_table_status": database.get_processing_tables_flag(),
+            }
+            for database_id, database in self._databases.items()
+        ]
         response = get_response(200)
         response["body"]["process_table_status"] = process_table_status
         return response
