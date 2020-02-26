@@ -60,7 +60,6 @@ export default createComponent({
     )[0];
     const tables = ref<string[]>(props.selectedDatabases[0].tables);
     const { isReady } = context.root.$databaseService;
-    console.log(tables);
 
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
