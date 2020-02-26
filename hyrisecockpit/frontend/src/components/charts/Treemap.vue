@@ -112,8 +112,8 @@ function useTreemapConfiguration(
         type: "treemap",
         labels: labels,
         parents: parents,
-        values: values,
-        textinfo: "label+value+percent parent+percent entry",
+        hoverinfo: "percent parent+percent entry",
+        texttemplate: "<b>%{label}</b> <br>%{value}MB",
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }

@@ -109,7 +109,7 @@ function getStorageData(
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
-      newSizes.push(data[primaryKey][table].data[attribute].size);
+      newSizes.push(data[primaryKey][table].data[attribute].size / 1000000);
     });
   });
 
