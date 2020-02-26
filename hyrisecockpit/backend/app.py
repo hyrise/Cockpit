@@ -8,7 +8,7 @@ from secrets import choice
 from time import time_ns
 from typing import Dict, List, Union
 
-from flask import Flask, request
+from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
@@ -81,6 +81,41 @@ model_throughput = monitor.clone(
     },
 )
 
+model_detailed_throughput = monitor.clone(
+    "Detailed Throughput",
+    model_database,
+    {
+        "detailed_throughput": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "throughput": fields.Integer(
+                            title="throughput",
+                            description="Number of successfully executed queries in given time interval.",
+                            required=True,
+                            example=55,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_latency = monitor.clone(
     "Latency",
     model_database,
@@ -90,6 +125,41 @@ model_latency = monitor.clone(
             description="Average query latency (ms) of a given time interval.",
             required=True,
             example=923.263,
+        )
+    },
+)
+
+model_detailed_latency = monitor.clone(
+    "Detailed Latency",
+    model_database,
+    {
+        "detailed_latency": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Latency per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "latency": fields.Integer(
+                            title="latency",
+                            description="Time passed between starting to execute a query and receiving the result.",
+                            required=True,
+                            example=98634929882,
+                        ),
+                    },
+                )
+            ),
+            required=True,
         )
     },
 )
@@ -155,6 +225,20 @@ model_krueger_data = monitor.clone(
         ),
     },
 )
+
+model_process_table_status = monitor.clone(
+    "Process table status",
+    model_database,
+    {
+        "process_table_status": fields.Boolean(
+            title="Process table status",
+            description="Process table status of databases.",
+            required=True,
+            example=True,
+        )
+    },
+)
+
 
 model_data = control.model(
     "Data",
@@ -234,22 +318,10 @@ model_control_database = control.model(
     },
 )
 
-model_add_database = control.clone(
-    "Add Database",
+model_get_database = control.clone(
+    "Get Database",
     model_control_database,
     {
-        "user": fields.String(
-            title="Username",
-            description="Username used to log in.",
-            required=True,
-            example="user123",
-        ),
-        "password": fields.String(
-            title="Password",
-            description="Password used to log in.",
-            required=True,
-            example="password123",
-        ),
         "host": fields.String(
             title="Host",
             description="Host to log in to.",
@@ -277,6 +349,25 @@ model_add_database = control.clone(
     },
 )
 
+model_add_database = control.clone(
+    "Add Database",
+    model_get_database,
+    {
+        "user": fields.String(
+            title="Username",
+            description="Username used to log in.",
+            required=True,
+            example="user123",
+        ),
+        "password": fields.String(
+            title="Password",
+            description="Password used to log in.",
+            required=True,
+            example="password123",
+        ),
+    },
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -297,7 +388,7 @@ def _active_databases():
         db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
     )
     validate(instance=response["body"], schema=get_databases_response_schema)
-    return response["body"]["databases"]
+    return [database["id"] for database in response["body"]["databases"]]
 
 
 @monitor.route("/throughput")
@@ -331,6 +422,74 @@ class Throughput(Resource):
                 throughput[database] = 0
         response = get_response(200)
         response["body"]["throughput"] = throughput
+        return response
+
+
+@monitor.route("/detailed_throughput")
+class DetailedThroughput(Resource):
+    """Detailed throughput information of all databases."""
+
+    @monitor.doc(model=[model_detailed_throughput])
+    def get(self) -> Union[int, List[Dict[str, List]]]:
+        """Return detailed throughput information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        throughput: List[Dict[str, int]]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            throughput = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "throughput": list(result[table, tags])[0]["count"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "detailed_throughput": throughput})
+        return response
+
+
+@monitor.route("/detailed_latency")
+class DetailedLatency(Resource):
+    """Detailed throughput information of all databases."""
+
+    @monitor.doc(model=[model_detailed_latency])
+    def get(self) -> Union[int, List[Dict[str, List]]]:
+        """Return detailed throughput information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        latency: List[Dict[str, int]]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            latency = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "latency": list(result[table, tags])[0]["latency"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "detailed_latency": latency})
         return response
 
 
@@ -431,9 +590,7 @@ class KruegerData(Resource):
     @monitor.doc(model=[model_krueger_data])
     def get(self) -> List[Dict[str, Union[str, Dict[str, int]]]]:
         """Provide mock data for a Krügergraph."""
-        active_databases = _send_message(
-            db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
-        )["body"]["databases"]
+        active_databases = _active_databases()
         return [
             {
                 "id": database,
@@ -454,16 +611,29 @@ class KruegerData(Resource):
         ]
 
 
+@monitor.route("/process_table_status", methods=["GET"])
+class ProcessTableStatus(Resource):
+    """Process table status information of all databases."""
+
+    @monitor.doc(model=[model_process_table_status])
+    def get(self) -> Dict:
+        """Return process table status for databases."""
+        return _send_message(
+            db_manager_socket,
+            {"header": {"message": "process table status"}, "body": {}},
+        )["body"]["process_table_status"]
+
+
 @control.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
 
-    @control.doc(model=[model_control_database])
+    @control.doc(model=[model_get_database])
     def get(self) -> Dict:
         """Get all databases."""
         message = {"header": {"message": "get databases"}, "body": {}}
         response = _send_message(db_manager_socket, message)
-        return response
+        return response["body"]["databases"]
 
     @control.doc(body=model_add_database)
     def post(self) -> Dict:
@@ -500,9 +670,6 @@ class Workload(Resource):
 
     def post(self) -> Dict:
         """Start the workload generator."""
-        request_json = request.get_json()
-
-        # TODO: Adjust table loading for benchmarks which do not require scale factor (e. g. JOB)
         load_data_message = {
             "header": {"message": "load data"},
             "body": {"folder_name": control.payload["folder_name"]},
@@ -519,7 +686,7 @@ class Workload(Resource):
             "header": {"message": "start workload"},
             "body": {
                 "folder_name": control.payload["folder_name"],
-                "frequency": request_json.get("frequency", 200),
+                "frequency": control.payload.get("frequency", 200),
             },
         }
         response = _send_message(generator_socket, workload_message)
@@ -532,7 +699,7 @@ class Workload(Resource):
         return get_response(200)
 
     def delete(self) -> Dict:
-        """Stop the workload generator."""
+        """Stop the workload generator and empty database queues."""
         message = {
             "header": {"message": "stop workload"},
             "body": {},
@@ -541,6 +708,16 @@ class Workload(Resource):
         if response["header"]["status"] != 200:
             return get_error_response(
                 400, response["body"].get("error", "Error during stopping of generator")
+            )
+
+        message = {
+            "header": {"message": "purge queue"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during purging of the queues")
             )
 
         return response
