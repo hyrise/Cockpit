@@ -17,6 +17,7 @@ interface Props {
   labels: string[];
   parents: string[];
   values: number[];
+  text: string[];
   graphId: string;
   chartConfiguration: string[];
   autosize: boolean;
@@ -33,6 +34,10 @@ export default createComponent({
       default: null
     },
     values: {
+      type: Array,
+      default: null
+    },
+    text: {
       type: Array,
       default: null
     },
@@ -66,7 +71,7 @@ export default createComponent({
           Plotly.deleteTraces(props.graphId, 0);
           Plotly.addTraces(
             props.graphId,
-            getDataset(props.labels, props.parents, props.values)
+            getDataset(props.labels, props.parents, props.values, props.text)
           );
         }
       });
@@ -81,7 +86,8 @@ function useTreemapConfiguration(
   getDataset: (
     labels?: string[],
     parents?: string[],
-    values?: number[]
+    values?: number[],
+    text?: string[]
   ) => Object[];
   getOptions: () => Object;
 } {
@@ -105,14 +111,17 @@ function useTreemapConfiguration(
   function getDataset(
     labels: string[] = [],
     parents: string[] = [],
-    values: number[] = []
+    values: number[] = [],
+    text: string[] = []
   ): Object[] {
     return [
       {
         type: "treemap",
         labels: labels,
         parents: parents,
-        hoverinfo: "percent parent+percent entry",
+        values: values,
+        text: text,
+        hoverinfo: "label+text+percent parent+percent entry",
         texttemplate: "<b>%{label}</b> <br>%{value}MB",
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },

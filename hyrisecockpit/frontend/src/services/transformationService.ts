@@ -85,27 +85,35 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
 function getStorageData(
   data: any,
   primaryKey: string = ""
-): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
+): {
+  newLabels: string[];
+  newParents: string[];
+  newSizes: number[];
+  newText: string[];
+} {
   const newLabels: string[] = [];
   const newParents: string[] = [];
-  let newSizes: number[] = [];
+  const newSizes: number[] = [];
+  const newText: string[] = [];
 
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
-    newParents.push("");
-    let currentTableSizes: number[] = [];
-    let totalTableSize = 0;
+    newParents.push(primaryKey);
+    newSizes.push(0);
+    newText.push(`${data[primaryKey][table].size / Math.pow(10, 6)}MB`);
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
-      let currentSize = data[primaryKey][table].data[attribute].size / 1000000;
-      currentTableSizes.push(currentSize);
-      totalTableSize += currentSize;
+      newSizes.push(
+        data[primaryKey][table].data[attribute].size / Math.pow(10, 6)
+      );
+      newText.push(
+        `${data[primaryKey][table].data[attribute].size / Math.pow(10, 6)}MB`
+      );
     });
-    newSizes = [...newSizes, totalTableSize, ...currentTableSizes];
   });
 
-  return { newLabels, newParents, newSizes };
+  return { newLabels, newParents, newSizes, newText };
 }
 
 function getAccessData(
