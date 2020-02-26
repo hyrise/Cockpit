@@ -21,7 +21,7 @@ class ArgumentValidation:
             "krueger_data",
         ]
         self._endpoints_control = ["database", "data"]
-        self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
+        self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
         self._databases = ["db1", "db2"]
         self._plugins = ["wrk"]
         self._validate_calls = {
