@@ -34,7 +34,7 @@ import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelec
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
-import { useSelection } from "../meta/views";
+import { useSelectionHandling } from "../meta/views";
 
 export default createComponent({
   components: {
@@ -44,7 +44,7 @@ export default createComponent({
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: comparisonMetrics,
-      ...useSelection(context)
+      ...useSelectionHandling(context)
     };
   }
 });

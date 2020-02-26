@@ -35,7 +35,7 @@ import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 import { Database } from "../types/database";
-import { useSelection } from "../meta/views";
+import { useSelectionHandling } from "../meta/views";
 import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 
@@ -46,7 +46,10 @@ export default createComponent({
     DatabaseMetricSelection
   },
   setup(props: {}, context: SetupContext): MetricViewData {
-    return { watchedMetrics: overviewMetrics, ...useSelection(context) };
+    return {
+      watchedMetrics: overviewMetrics,
+      ...useSelectionHandling(context)
+    };
   }
 });
 </script>

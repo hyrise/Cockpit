@@ -3,7 +3,7 @@ import { eventBus } from "../plugins/eventBus";
 import { Metric } from "@/types/metrics";
 import { Database } from "@/types/database";
 
-export function useSelection(
+export function useSelectionHandling(
   context: SetupContext
 ): { selectedMetrics: Ref<Metric[]>; selectedDatabases: Ref<Database[]> } {
   const selectedMetrics = ref<Metric[]>([]);

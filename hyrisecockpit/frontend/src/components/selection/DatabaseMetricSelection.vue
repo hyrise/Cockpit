@@ -2,7 +2,7 @@
   <div v-if="$databaseService.isReady.value">
     <v-expansion-panels>
       <v-expansion-panel>
-        <v-expansion-panel-header class="title">
+        <v-expansion-panel-header class="title primary--text">
           Selection
         </v-expansion-panel-header>
         <v-expansion-panel-content>
