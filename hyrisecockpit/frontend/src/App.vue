@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { SetupContext, createComponent, ref, Ref } from "@vue/composition-api";
+import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
 
 interface Data {
@@ -21,7 +21,7 @@ interface Data {
   showNavigationDrawer: Ref<boolean>;
 }
 
-export default createComponent({
+export default defineComponent({
   components: { AppDrawer },
   setup(props: {}, context: SetupContext): Data {
     const showNavigationDrawer = ref<boolean>(true);

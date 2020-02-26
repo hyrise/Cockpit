@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   Ref,
   ref,
@@ -50,7 +50,7 @@ interface Data {
   watchedInstances: Ref<Database[]>;
 }
 
-export default createComponent({
+export default defineComponent({
   components: {
     MetricsTileList,
     Storage,

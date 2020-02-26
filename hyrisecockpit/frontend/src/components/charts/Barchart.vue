@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -20,7 +20,7 @@ interface Props {
   chartConfiguration: string[];
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
     data: {
       type: Array,

@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -69,7 +69,7 @@ interface Data {
   togglePanelView: () => void;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "DatabaseSystemDetails",
   props: {
     databases: {

@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -46,7 +46,7 @@ interface Data {
   selectedTable: Ref<string>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "Access",
   components: {
     Heatmap
