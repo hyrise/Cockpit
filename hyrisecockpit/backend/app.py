@@ -388,7 +388,7 @@ def _active_databases():
         db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
     )
     validate(instance=response["body"], schema=get_databases_response_schema)
-    return response["body"]["databases"]
+    return [database["id"] for database in response["body"]["databases"]]
 
 
 @monitor.route("/throughput")
