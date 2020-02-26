@@ -318,22 +318,10 @@ model_control_database = control.model(
     },
 )
 
-model_add_database = control.clone(
-    "Add Database",
+model_get_database = control.clone(
+    "Get Database",
     model_control_database,
     {
-        "user": fields.String(
-            title="Username",
-            description="Username used to log in.",
-            required=True,
-            example="user123",
-        ),
-        "password": fields.String(
-            title="Password",
-            description="Password used to log in.",
-            required=True,
-            example="password123",
-        ),
         "host": fields.String(
             title="Host",
             description="Host to log in to.",
@@ -361,6 +349,25 @@ model_add_database = control.clone(
     },
 )
 
+model_add_database = control.clone(
+    "Add Database",
+    model_get_database,
+    {
+        "user": fields.String(
+            title="Username",
+            description="Username used to log in.",
+            required=True,
+            example="user123",
+        ),
+        "password": fields.String(
+            title="Password",
+            description="Password used to log in.",
+            required=True,
+            example="password123",
+        ),
+    },
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -381,7 +388,7 @@ def _active_databases():
         db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
     )
     validate(instance=response["body"], schema=get_databases_response_schema)
-    return response["body"]["databases"]
+    return [database["id"] for database in response["body"]["databases"]]
 
 
 @monitor.route("/throughput")
@@ -616,19 +623,19 @@ class ProcessTableStatus(Resource):
         return _send_message(
             db_manager_socket,
             {"header": {"message": "process table status"}, "body": {}},
-        )
+        )["body"]["process_table_status"]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
 
-    @control.doc(model=[model_control_database])
+    @control.doc(model=[model_get_database])
     def get(self) -> Dict:
         """Get all databases."""
         message = {"header": {"message": "get databases"}, "body": {}}
         response = _send_message(db_manager_socket, message)
-        return response
+        return response["body"]["databases"]
 
     @control.doc(body=model_add_database)
     def post(self) -> Dict:
