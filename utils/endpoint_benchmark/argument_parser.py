@@ -2,7 +2,7 @@
 
 import argparse
 
-from hyrisecockpit.settings import BACKEND_HOST, BACKEND_PORT
+from utils.settings import BACKEND_HOST, BACKEND_PORT
 
 
 class ArgumentValidation:

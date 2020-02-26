@@ -40,14 +40,3 @@ STORAGE_HOST: str = getenv("STORAGE_HOST", "influxdb")
 STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
 STORAGE_USER: str = getenv("STORAGE_USER", "root")
 STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
-
-# TODO set correct type
-DB1_HOST = getenv("DB1_HOST")
-DB1_PORT = getenv("DB1_PORT")
-DB1_PASSWORD = getenv("DB1_PASSWORD")
-DB1_TYPE = getenv("DB1_TYPE")
-
-DB2_HOST = getenv("DB2_HOST")
-DB2_PORT = getenv("DB2_PORT")
-DB2_PASSWORD = getenv("DB2_PASSWORD")
-DB2_TYPE = getenv("DB2_TYPE")

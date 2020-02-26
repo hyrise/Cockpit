@@ -6,7 +6,7 @@ import time
 
 import requests
 
-from hyrisecockpit.settings import (
+from utils.settings import (
     DB1_HOST,
     DB1_PASSWORD,
     DB1_PORT,
