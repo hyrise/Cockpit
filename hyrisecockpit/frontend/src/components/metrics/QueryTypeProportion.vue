@@ -39,7 +39,7 @@ export default createComponent({
     const chartConfiguration = [
       "Query Type Proportion",
       "workload",
-      "amount of queries"
+      "number of queries"
     ];
 
     watch(data, () => {

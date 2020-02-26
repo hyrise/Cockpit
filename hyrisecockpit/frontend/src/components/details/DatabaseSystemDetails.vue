@@ -29,11 +29,11 @@
           </div>
           <div class="entry">
             <v-icon left> mdi-memory</v-icon> <b>main memory capacity:</b>
-            {{ database.systemDetails.mainMemoryCapacity }}
+            {{ database.systemDetails.mainMemoryCapacity }} GB
           </div>
           <div class="entry">
             <v-icon left> mdi-shoe-print</v-icon> <b>memory footprint:</b>
-            {{ database.systemDetails.memoryFootprint }}
+            {{ database.systemDetails.memoryFootprint }} MB
           </div>
           <div class="entry">
             <v-icon left> mdi-cpu-64-bit</v-icon> <b>number of CPUs:</b>
