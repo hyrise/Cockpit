@@ -13,6 +13,8 @@
       :data="data"
       :graph-id="graphId || 'ram'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
+      :timestamps="timestamps"
     />
   </div>
 </template>
@@ -45,12 +47,16 @@ export default createComponent({
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
+    const timestamps = context.root.$metricController.timestamps[props.metric];
 
     const chartConfiguration = ["RAM", "time in sec", "memory usage in %"];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue,
+      timestamps
     };
   }
 });
