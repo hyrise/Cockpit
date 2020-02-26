@@ -46,7 +46,7 @@ export default createComponent({
     const chartConfiguration = [
       "Queue Length",
       "time in sec",
-      "amount of queries"
+      "number of queries"
     ];
 
     return {
