@@ -79,15 +79,7 @@ export function useDatabaseService(): DatabaseService {
     axios
       .post(controlBackend + "database", databaseService)
       .then(response => {
-        axios.get(controlBackend + "database").then(
-          result =>
-            (databases.value = result.data.body.databases.map(
-              (database: any) => ({
-                id: database,
-                color: getDatabaseColor(database)
-              })
-            ))
-        );
+        getDatabases();
       })
       .catch(error => {});
   }
