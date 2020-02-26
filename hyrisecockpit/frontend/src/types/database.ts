@@ -9,6 +9,7 @@ export interface DatabaseSystemDetails {
 }
 
 export interface Database {
+  //TODO: when updating consider to make this all refs
   id: string;
   color: string;
   systemDetails: DatabaseSystemDetails;
@@ -17,7 +18,6 @@ export interface Database {
 
 export interface DatabaseService {
   databases: Ref<Database[]>;
-  tables: Ref<string[]>;
   addDatabase: (databasedata: any) => void;
   isReady: Ref<boolean>;
 }

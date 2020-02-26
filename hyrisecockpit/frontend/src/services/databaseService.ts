@@ -10,8 +10,11 @@ export function useDatabaseService(): DatabaseService {
   let usedColors: any = 0;
   const databases = ref<Database[]>([]);
   const isReady = ref<boolean>(false);
-  const tables = ref<string[]>([]);
-  const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
+
+  const {
+    getDatabaseMemoryFootprint,
+    getDatabaseMainMemoryCapacity
+  } = useDataTransformationHelpers();
 
   getDatabases();
 
@@ -53,8 +56,9 @@ export function useDatabaseService(): DatabaseService {
         database!.systemDetails.numberOfCPUs = Object.keys(
           (data as any).cpu
         ).length;
-        database!.systemDetails.mainMemoryCapacity =
-          Math.floor((data as any).memory.total / Math.pow(10, 6)) / 1000;
+        database!.systemDetails.mainMemoryCapacity = getDatabaseMainMemoryCapacity(
+          data
+        );
       });
     });
   }
@@ -67,7 +71,6 @@ export function useDatabaseService(): DatabaseService {
           data
         );
         database!.tables = Object.keys(data as any);
-        console.log(database!.tables);
       });
     });
   }
@@ -92,7 +95,6 @@ export function useDatabaseService(): DatabaseService {
   return {
     databases,
     addDatabase,
-    isReady,
-    tables
+    isReady
   };
 }

@@ -1,7 +1,5 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
-import Vue from "vue";
-import { equals } from "../helpers/methods";
 
 export function useDataTransformation(metric: Metric): TransformationService {
   const transformationMap: Record<Metric, TransformationService> = {
@@ -92,16 +90,6 @@ function getStorageData(
   const newParents: string[] = [];
   const newSizes: number[] = [];
 
-  if (
-    !equals(
-      Vue.prototype.$databaseService.tables.value,
-      Object.keys(data[primaryKey])
-    ) &&
-    Object.keys(data[primaryKey]).length
-  ) {
-    Vue.prototype.$databaseService.tables.value = Object.keys(data[primaryKey]);
-  }
-
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
     newParents.push("");
@@ -147,11 +135,15 @@ function getAccessData(
 
 export function useDataTransformationHelpers(): {
   getDatabaseMemoryFootprint: (data: any) => number;
+  getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
   function getDatabaseMemoryFootprint(data: any): number {
     let sum = 0;
     Object.values(data as any).forEach((table: any) => (sum += table.size));
     return Math.floor(sum / Math.pow(10, 3)) / 1000;
   }
-  return { getDatabaseMemoryFootprint };
+  function getDatabaseMainMemoryCapacity(data: any): number {
+    return Math.floor(data.memory.total / Math.pow(10, 6)) / 1000;
+  }
+  return { getDatabaseMemoryFootprint, getDatabaseMainMemoryCapacity };
 }
