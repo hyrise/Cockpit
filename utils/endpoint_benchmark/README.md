@@ -57,23 +57,24 @@ Workloads: ['tpch_0.1', 'tpch_1', 'tpcds_1', 'job']
 ## Command Line Options
 
 ```
+optional arguments:
   -h, --help            show this help message and exit
-  --endpoint           [END_POINTS ...], -ep [END_POINTS ...]
-                        Endpoints to run benchmark on. Default value is all.
-  --show {endpoints,databases,workloads,all} [{endpoints,databases,workloads,all} ...]
-                        Show available endpoints, workloads, databases. Default shows all categories.
-  --database            [DATABASES ...], -db [DATABASES ...]
-                        Databases to run benchmark on. Default value is all.
-  --workload            [WORKLOADS ...], -w [WORKLOADS ...]
-                        Workload to run on databases. Default value is tpch_0.1.
-  --time, -t            Time to benchmark endpoints in seconds. Default value is 1.
-  --run, -r             Number of runs.
-  --url, -u             Backend url
-
-  --worker_number, -wn  Number of workers for databases.
-  --workload_frequence , -wf Frequency of workload.
-  --plugin [PLUGINS ...], -p [PLUGINS ...]
-                        Benchmark plugins. Default is wrk
+  --endpoint  [ ...], -ep  [ ...]
+                        endpoints to run the benchmark on (default: ['all'])
+  --show  [ ...]        show available endpoints, workloads, databases, plug-ins and exit (default: None)
+  --database  [ ...], -db  [ ...]
+                        databases to use in benchmark (default: ['all'])
+  --workload  [ ...], -w  [ ...]
+                        workloads to run on databases (default: ['tpch_0.1'])
+  --time [], -t []      duration of the benchmark per endpoint in seconds (default: 1)
+  --run [], -r []       number of runs (default: 1)
+  --url [], -u []       back-end URL (default: ['http://0.0.0.0:8000'])
+  --worker_number [], -wn []
+                        number of workers per database (default: 10)
+  --workload_frequence , -wf
+                        frequency of workload (default: 200)
+  --plugin  [ ...], -p  [ ...]
+                        benchmark plug-ins to use (default: ['wrk'])
 ```
 
 ## Setup
