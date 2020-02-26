@@ -144,3 +144,14 @@ function getAccessData(
   }
   return { newChunks, newColumns, dataByChunks };
 }
+
+export function useDataTransformationHelpers(): {
+  getDatabaseMemoryFootprint: (data: any) => number;
+} {
+  function getDatabaseMemoryFootprint(data: any): number {
+    let sum = 0;
+    Object.values(data as any).forEach((table: any) => (sum += table.size));
+    return Math.floor(sum / Math.pow(10, 3)) / 1000;
+  }
+  return { getDatabaseMemoryFootprint };
+}

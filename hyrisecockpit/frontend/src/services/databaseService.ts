@@ -3,6 +3,7 @@ import { Database, DatabaseService } from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
 import { monitorBackend, controlBackend } from "../../config";
+import { useDataTransformationHelpers } from "./transformationService";
 
 export function useDatabaseService(): DatabaseService {
   const colorsArray: any = Object.keys(colors);
@@ -10,13 +11,9 @@ export function useDatabaseService(): DatabaseService {
   const databases = ref<Database[]>([]);
   const isReady = ref<boolean>(false);
   const tables = ref<string[]>([]);
+  const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
 
-  function getTables(): void {
-    axios.get(monitorBackend + "storage").then(result => {
-      const instance = Object.keys(result.data.body.storage)[0];
-      tables.value = Object.keys(result.data.body.storage[instance]);
-    });
-  }
+  getDatabases();
 
   function getDatabases(): void {
     axios.get(controlBackend + "database").then(response => {
@@ -29,16 +26,14 @@ export function useDatabaseService(): DatabaseService {
           memoryFootprint: 0,
           numberOfCPUs: 0,
           numberOfWorkers: database.number_workers
-        }
+        },
+        tables: []
       }));
       getDatabaseCPUInformation();
-      getDatabaseMemoryFootprintInformation();
+      getDatabaseStorageInformation();
       isReady.value = true;
     });
   }
-
-  getDatabases();
-  getTables();
 
   function getDatabaseColor(id: string): string {
     const database =
@@ -64,14 +59,15 @@ export function useDatabaseService(): DatabaseService {
     });
   }
 
-  function getDatabaseMemoryFootprintInformation(): void {
+  function getDatabaseStorageInformation(): void {
     axios.get(monitorBackend + "storage").then(response => {
       Object.entries(response.data.body.storage).forEach(([id, data]) => {
         const database = databases.value.find(database => database.id === id);
-        let sum = 0;
-        Object.values(data as any).forEach((table: any) => (sum += table.size));
-        database!.systemDetails.memoryFootprint =
-          Math.floor(sum / Math.pow(10, 3)) / 1000;
+        database!.systemDetails.memoryFootprint = getDatabaseMemoryFootprint(
+          data
+        );
+        database!.tables = Object.keys(data as any);
+        console.log(database!.tables);
       });
     });
   }
