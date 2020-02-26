@@ -147,5 +147,5 @@ pipenv run pre-commit run --all-files
 You can run all tests with:
 
 ```bash
-pipenv run pre-commit run --hook-stage manual pytest
+pipenv run pytest
 ```

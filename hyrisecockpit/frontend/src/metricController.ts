@@ -21,7 +21,11 @@ export function useMetricController(): MetricController {
 
   const metricIntervals = setupIntervals();
 
-  const data = mapToData(metricServices);
+  let data = {} as any;
+  let maxValueData = {} as any;
+  let timestamps = {} as any;
+
+  mapToData(metricServices);
 
   function setupServices(): Record<Metric, FetchService> {
     const services: any = {};
@@ -65,15 +69,13 @@ export function useMetricController(): MetricController {
     });
   }
 
-  function mapToData(
-    services: Record<Metric, FetchService>
-  ): Record<Metric, Ref<any>> {
-    const data: any = {};
+  function mapToData(services: Record<Metric, FetchService>): void {
     Object.entries(services).forEach(([metric, service]) => {
       data[metric as Metric] = service.data;
+      maxValueData[metric as Metric] = service.maxValue;
+      timestamps[metric as Metric] = service.timestamps;
     });
-    return data;
   }
 
-  return { data };
+  return { data, maxValueData, timestamps };
 }

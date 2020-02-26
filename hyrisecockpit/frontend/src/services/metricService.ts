@@ -6,6 +6,8 @@ import { FetchService } from "@/types/services";
 export function useMetricService(metric: MetricMetadata): FetchService {
   const queryReadyState = ref<boolean>(true);
   const data = ref<any>({}); // TODO: change the initial value
+  const maxValue = ref<number>(0);
+  const timestamps = ref<Date[]>([]);
 
   function getData(): void {
     queryReadyState.value = false;
@@ -30,6 +32,15 @@ export function useMetricService(metric: MetricMetadata): FetchService {
     data.value = dataCopy;
   }
 
+  function updateMaxValue() {
+    Object.values(data.value).forEach((dataSet: any) => {
+      const currentValue = dataSet[dataSet.length - 1];
+      if (currentValue > maxValue.value) {
+        maxValue.value = currentValue;
+      }
+    });
+  }
+
   function fetchData(): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
@@ -52,8 +63,10 @@ export function useMetricService(metric: MetricMetadata): FetchService {
   function getDataIfReady(): void {
     if (queryReadyState.value) {
       getData();
+      updateMaxValue();
+      timestamps.value.push(new Date());
     }
   }
 
-  return { data, getDataIfReady };
+  return { data, getDataIfReady, maxValue, timestamps };
 }
