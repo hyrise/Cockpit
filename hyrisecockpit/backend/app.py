@@ -590,9 +590,7 @@ class KruegerData(Resource):
     @monitor.doc(model=[model_krueger_data])
     def get(self) -> List[Dict[str, Union[str, Dict[str, int]]]]:
         """Provide mock data for a Krügergraph."""
-        active_databases = _send_message(
-            db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
-        )["body"]["databases"]
+        active_databases = _active_databases()
         return [
             {
                 "id": database,
