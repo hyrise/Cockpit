@@ -289,7 +289,7 @@ class ArgumentParser:
             "-wf",
             dest="workload_frequence",
             type=int,
-            nargs=1,
+            nargs="?",
             metavar="",
             default=200,
             help="frequency of workload",
