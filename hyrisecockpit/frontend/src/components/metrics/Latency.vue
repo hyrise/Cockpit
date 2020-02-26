@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -41,7 +41,7 @@ import {
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
 
-export default createComponent({
+export default defineComponent({
   name: "Latency",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },

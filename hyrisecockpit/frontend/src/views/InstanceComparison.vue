@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   watch,
   computed,
@@ -36,7 +36,7 @@ import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
 
-export default createComponent({
+export default defineComponent({
   components: {
     MetricsComparisonTable,
     DatabaseMetricSelection

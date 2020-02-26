@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext } from "@vue/composition-api";
+import { defineComponent, SetupContext } from "@vue/composition-api";
 
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
@@ -44,7 +44,7 @@ interface Data {
   getMetricComponent: (metric: Metric) => string;
 }
 
-export default createComponent({
+export default defineComponent({
   components: {
     Throughput,
     CPU,

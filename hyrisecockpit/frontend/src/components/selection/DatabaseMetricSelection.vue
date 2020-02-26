@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   watch,
   computed,
@@ -71,7 +71,7 @@ interface Data {
   selectedDatabases: Ref<any[]>;
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
     metrics: {
       type: Array,

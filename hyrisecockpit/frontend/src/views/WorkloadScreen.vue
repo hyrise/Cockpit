@@ -85,7 +85,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   Ref,
@@ -113,7 +113,7 @@ interface Data {
   watchedInstances: Ref<Database[]>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "WorkloadScreen",
   components: {
     MetricsTileList

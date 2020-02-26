@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   Ref,
   ref,
@@ -68,7 +68,7 @@ interface Data {
   uuid: () => string;
 }
 
-export default createComponent({
+export default defineComponent({
   components: {
     Throughput,
     CPU,
