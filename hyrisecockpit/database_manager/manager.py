@@ -49,6 +49,8 @@ class DatabaseManager(object):
             "get databases": self._call_get_databases,
             "load data": self._call_load_data,
             "delete data": self._call_delete_data,
+            "process table status": self._call_process_table_status,
+            "purge queue": self._call_purge_queue,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -99,7 +101,16 @@ class DatabaseManager(object):
 
     def _call_get_databases(self, body: Dict) -> Dict:
         """Get list of all databases."""
-        databases = list(self._databases.keys())
+        databases = [
+            {
+                "id": id,
+                "host": database.driver.host,
+                "port": database.driver.port,
+                "number_workers": database.number_workers,
+                "dbname": database.driver.dbname,
+            }
+            for id, database in self._databases.items()
+        ]
         response = get_response(200)
         response["body"]["databases"] = databases
         return response
@@ -176,6 +187,18 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
+    def _call_process_table_status(self, body: Dict) -> Dict:
+        process_table_status = [
+            {
+                "id": database_id,
+                "process_table_status": database.get_processing_tables_flag(),
+            }
+            for database_id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["process_table_status"] = process_table_status
+        return response
+
     def _check_if_processing_table(self) -> bool:
         processing_table_data = False
         for database in list(self._databases.values()):
@@ -183,6 +206,12 @@ class DatabaseManager(object):
                 processing_table_data or database.get_processing_tables_flag()
             )
         return processing_table_data
+
+    def _call_purge_queue(self, body: Dict) -> Dict:
+        for database in self._databases.values():
+            if not database.disable_workload_execution():
+                return get_response(400)
+        return get_response(200)
 
     def start(self) -> None:
         """Start the manager by enabling IPC."""

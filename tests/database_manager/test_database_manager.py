@@ -120,14 +120,19 @@ class TestDatabaseManager:
         """Returns previously added databases."""
         assert database_manager._databases == {}
         database_manager._databases["test_db1"] = mock_database
-        assert database_manager._call_get_databases({})["body"]["databases"] == [
-            "test_db1"
-        ]
+        assert (
+            database_manager._call_get_databases({})["body"]["databases"][0]["id"]
+            == "test_db1"
+        )
         database_manager._databases["test_db2"] = mock_database
-        assert database_manager._call_get_databases({})["body"]["databases"] == [
-            "test_db1",
-            "test_db2",
-        ]
+        assert (
+            database_manager._call_get_databases({})["body"]["databases"][0]["id"]
+            == "test_db1"
+        )
+        assert (
+            database_manager._call_get_databases({})["body"]["databases"][1]["id"]
+            == "test_db2"
+        )
 
     def test_delete_database_deletes_databases(
         self, database_manager: DatabaseManager, mock_database: Database

@@ -2,7 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue, Value
 from secrets import randbelow
-from time import time
+from time import time_ns
 from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -53,8 +53,8 @@ class StorageCursor:
             {
                 "measurement": "successful_queries",
                 "tags": {"benchmark": query[2], "query_no": query[3]},
-                "fields": {"start": float(query[0]), "end": float(query[1])},
-                "time": int(query[0] * 1e9),
+                "fields": {"latency": query[1]},
+                "time": query[0],
             }
             for query in query_list
         ]
@@ -123,7 +123,7 @@ def execute_queries(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             succesful_queries = []
-            last_batched = time()
+            last_batched = time_ns()
             while True:
                 # If Queue is emty go to wait status
                 try:
@@ -133,7 +133,8 @@ def execute_queries(
                             task_queue.put("wake_up_signal_for_worker")
                         break
                     else:
-                        query, not_formatted_parameters = task
+                        query_tuple, workload_type, query_type = task
+                        query, not_formatted_parameters = query_tuple
                         formatted_parameters = (
                             tuple(
                                 AsIs(parameter) if protocol == "as_is" else parameter
@@ -142,17 +143,19 @@ def execute_queries(
                             if not_formatted_parameters is not None
                             else None
                         )
-                        startts = time()
+                        startts = time_ns()
                         cur.execute(query, formatted_parameters)
-                        endts = time()
-                        succesful_queries.append((startts, endts, "none", 0))
-                        if last_batched < time() - 1:
-                            last_batched = time()
+                        endts = time_ns()
+                        succesful_queries.append(
+                            (endts, endts - startts, workload_type, query_type)
+                        )
+                        if last_batched < time_ns() - 1_000_000_000:
+                            last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
-                        {"worker_id": worker_id, "task": task, "Error": str(e)}
+                        {"worker_id": worker_id, "task": query_tuple, "Error": str(e)}
                     )
 
 
@@ -174,18 +177,18 @@ class Database(object):
         """Initialize database object."""
         self._id = id
         self._default_tables = default_tables
-        self._number_workers = number_workers
+        self.number_workers = number_workers
         self._number_additional_connections = 1
-        self._driver = Driver(
+        self.driver = Driver(
             user,
             password,
             host,
             port,
             dbname,
-            self._number_workers + self._number_additional_connections,
+            self.number_workers + self._number_additional_connections,
         )
 
-        self._connection_pool = self._driver.get_connection_pool()
+        self._connection_pool = self.driver.get_connection_pool()
         self._scheduler = BackgroundScheduler()
 
         self._task_queue: Queue = Queue(0)
@@ -228,7 +231,7 @@ class Database(object):
         """Initialize a pool of workers."""
         self._worker_stay_alive_flag.value = True
         worker_pool = []
-        for i in range(self._number_workers):
+        for i in range(self.number_workers):
             p = Process(
                 target=execute_queries,
                 args=(
@@ -243,9 +246,15 @@ class Database(object):
             worker_pool.append(p)
         return worker_pool
 
-    def disable_workload_execution(self) -> None:
+    def disable_workload_execution(self) -> bool:
         """Disable execution of the workload."""
-        self._flush_queue()
+        if not self._processing_tables_flag.value:
+            self._processing_tables_flag.value = True
+            self._flush_queue()
+            self._processing_tables_flag.value = False
+            return True
+        else:
+            return False
 
     def _start_workers(self) -> None:
         """Start all workers in pool."""
@@ -293,24 +302,28 @@ class Database(object):
 
     def _generate_table_loading_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[str, Tuple[Any, ...]]]:
+    ) -> List[Tuple[Tuple[str, Any], str, str]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                (
+                    "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                    ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                ),
+                "system",
+                "generate table query",
             )
             for name in table_names
         ]
 
     def _generate_table_drop_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[str, Tuple[Any, ...]]]:
+    ) -> List[Tuple[Tuple[str, Any], str, str]]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
-            ("DROP TABLE %s;", ((name, "as_is"),))
+            (("DROP TABLE %s;", ((name, "as_is"),)), "system", "drop table query")
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
