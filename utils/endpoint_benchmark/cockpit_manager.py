@@ -113,12 +113,10 @@ class CockpitManager:
             responce = requests.get(
                 f"{self._backend_url}/monitor/process_table_status"
             ).json()
-            process_table_status = responce["body"]["process_table_status"]
+            databases = responce["body"]["process_table_status"]
             check_processed = False
-            for process_table_flag in range(len(process_table_status)):
-                check_processed = (
-                    check_processed or process_table_flag["process_table_status"]
-                )
+            for database in databases:
+                check_processed = check_processed or database["process_table_status"]
             if not check_processed:
                 break
 

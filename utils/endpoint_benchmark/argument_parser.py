@@ -331,5 +331,4 @@ class ArgumentParser:
             configuration[argument_type] = self._argument_validation.validate(
                 argument_type, getattr(self._arguments, argument_type)
             )
-        print(configuration)
         return configuration
