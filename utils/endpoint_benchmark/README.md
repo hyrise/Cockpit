@@ -79,7 +79,7 @@ Workloads: ['tpch_0.1', 'tpch_1', 'tpcds_1', 'job']
 ## Setup
 
 ### .env
-Please add in your `.env` the access values for your two default databases `db1` and `db2`.
+Please add in your `.env` (in the utils module) the access values for your two default databases `db1` and `db2`.
 
 ```
 # Set this to the databases you want to run the endpoint benchmark with
