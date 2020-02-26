@@ -92,8 +92,8 @@ class CockpitManager:
             time.sleep(0.2)
             # TODO add time out and check response
             response = requests.get(f"{self._backend_url}/control/database").json()
-            databses = response["body"]["databases"]
-            check_processed = database_id in databses
+            databases = [database["id"] for database in response]
+            check_processed = database_id in databases
             if check_processed:
                 break
 
@@ -110,13 +110,13 @@ class CockpitManager:
         """Check if tables are processed in cockpit."""
         while True:
             time.sleep(0.2)
-            responce = requests.get(
+            response = requests.get(
                 f"{self._backend_url}/monitor/process_table_status"
             ).json()
-            databases = responce["body"]["process_table_status"]
+            status_flags = [database["process_table_status"] for database in response]
             check_processed = False
-            for database in databases:
-                check_processed = check_processed or database["process_table_status"]
+            for flag in status_flags:
+                check_processed = check_processed or flag
             if not check_processed:
                 break
 
