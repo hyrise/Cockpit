@@ -12,7 +12,7 @@ type Interval = {
 };
 
 export function useMetricController(): MetricController {
-  eventBus.$on("METRICS_CHANGED", (payload: Metric[]) => {
+  eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
     stop();
     start(payload);
   });
