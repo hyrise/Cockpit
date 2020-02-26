@@ -133,7 +133,8 @@ def execute_queries(
                             task_queue.put("wake_up_signal_for_worker")
                         break
                     else:
-                        query, not_formatted_parameters = task
+                        query_tuple, workload_type, query_type = task
+                        query, not_formatted_parameters = query_tuple
                         formatted_parameters = (
                             tuple(
                                 AsIs(parameter) if protocol == "as_is" else parameter
@@ -145,14 +146,16 @@ def execute_queries(
                         startts = time_ns()
                         cur.execute(query, formatted_parameters)
                         endts = time_ns()
-                        succesful_queries.append((endts, endts - startts, "none", 0))
+                        succesful_queries.append(
+                            (endts, endts - startts, workload_type, query_type)
+                        )
                         if last_batched < time_ns() - 1_000_000_000:
                             last_batched = time_ns()
                             log.log_queries(succesful_queries)
                             succesful_queries = []
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
-                        {"worker_id": worker_id, "task": task, "Error": str(e)}
+                        {"worker_id": worker_id, "task": query_tuple, "Error": str(e)}
                     )
 
 
@@ -299,24 +302,28 @@ class Database(object):
 
     def _generate_table_loading_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[str, Tuple[Any, ...]]]:
+    ) -> List[Tuple[Tuple[str, Any], str, str]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
             (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                (
+                    "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                    ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                ),
+                "system",
+                "generate table query",
             )
             for name in table_names
         ]
 
     def _generate_table_drop_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[str, Tuple[Any, ...]]]:
+    ) -> List[Tuple[Tuple[str, Any], str, str]]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
-            ("DROP TABLE %s;", ((name, "as_is"),))
+            (("DROP TABLE %s;", ((name, "as_is"),)), "system", "drop table query")
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 

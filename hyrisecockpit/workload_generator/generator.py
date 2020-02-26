@@ -84,7 +84,7 @@ class WorkloadGenerator(object):
     def _call_start_workload(self, body: Dict) -> Dict:
         validate(instance=body, schema=start_workload_request_schema)
         frequency: int = body["frequency"]
-        workload_type: str = body["folder_name"].upper()
+        workload_type: str = body["folder_name"]
         try:
             self._get_workload(workload_type)
         except (

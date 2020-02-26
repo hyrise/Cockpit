@@ -8,7 +8,7 @@ from secrets import choice
 from time import time_ns
 from typing import Dict, List, Union
 
-from flask import Flask, request
+from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
@@ -81,6 +81,41 @@ model_throughput = monitor.clone(
     },
 )
 
+model_detailed_throughput = monitor.clone(
+    "Detailed Throughput",
+    model_database,
+    {
+        "detailed_throughput": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "throughput": fields.Integer(
+                            title="throughput",
+                            description="Number of successfully executed queries in given time interval.",
+                            required=True,
+                            example=55,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_latency = monitor.clone(
     "Latency",
     model_database,
@@ -90,6 +125,41 @@ model_latency = monitor.clone(
             description="Average query latency (ms) of a given time interval.",
             required=True,
             example=923.263,
+        )
+    },
+)
+
+model_detailed_latency = monitor.clone(
+    "Detailed Latency",
+    model_database,
+    {
+        "detailed_latency": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Latency per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "latency": fields.Integer(
+                            title="latency",
+                            description="Time passed between starting to execute a query and receiving the result.",
+                            required=True,
+                            example=98634929882,
+                        ),
+                    },
+                )
+            ),
+            required=True,
         )
     },
 )
@@ -348,6 +418,74 @@ class Throughput(Resource):
         return response
 
 
+@monitor.route("/detailed_throughput")
+class DetailedThroughput(Resource):
+    """Detailed throughput information of all databases."""
+
+    @monitor.doc(model=[model_detailed_throughput])
+    def get(self) -> Union[int, List[Dict[str, List]]]:
+        """Return detailed throughput information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        throughput: List[Dict[str, int]]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            throughput = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "throughput": list(result[table, tags])[0]["count"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "detailed_throughput": throughput})
+        return response
+
+
+@monitor.route("/detailed_latency")
+class DetailedLatency(Resource):
+    """Detailed throughput information of all databases."""
+
+    @monitor.doc(model=[model_detailed_latency])
+    def get(self) -> Union[int, List[Dict[str, List]]]:
+        """Return detailed throughput information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        latency: List[Dict[str, int]]
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            latency = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "latency": list(result[table, tags])[0]["latency"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "detailed_latency": latency})
+        return response
+
+
 @monitor.route("/latency")
 class Latency(Resource):
     """Latency information of all databases."""
@@ -527,9 +665,6 @@ class Workload(Resource):
 
     def post(self) -> Dict:
         """Start the workload generator."""
-        request_json = request.get_json()
-
-        # TODO: Adjust table loading for benchmarks which do not require scale factor (e. g. JOB)
         load_data_message = {
             "header": {"message": "load data"},
             "body": {"folder_name": control.payload["folder_name"]},
@@ -546,7 +681,7 @@ class Workload(Resource):
             "header": {"message": "start workload"},
             "body": {
                 "folder_name": control.payload["folder_name"],
-                "frequency": request_json.get("frequency", 200),
+                "frequency": control.payload.get("frequency", 200),
             },
         }
         response = _send_message(generator_socket, workload_message)
