@@ -101,7 +101,16 @@ class DatabaseManager(object):
 
     def _call_get_databases(self, body: Dict) -> Dict:
         """Get list of all databases."""
-        databases = list(self._databases.keys())
+        databases = [
+            {
+                "id": id,
+                "host": database.driver.host,
+                "port": database.driver.port,
+                "number_workers": database.number_workers,
+                "dbname": database.driver.dbname,
+            }
+            for id, database in self._databases.items()
+        ]
         response = get_response(200)
         response["body"]["databases"] = databases
         return response

@@ -177,18 +177,18 @@ class Database(object):
         """Initialize database object."""
         self._id = id
         self._default_tables = default_tables
-        self._number_workers = number_workers
+        self.number_workers = number_workers
         self._number_additional_connections = 1
-        self._driver = Driver(
+        self.driver = Driver(
             user,
             password,
             host,
             port,
             dbname,
-            self._number_workers + self._number_additional_connections,
+            self.number_workers + self._number_additional_connections,
         )
 
-        self._connection_pool = self._driver.get_connection_pool()
+        self._connection_pool = self.driver.get_connection_pool()
         self._scheduler = BackgroundScheduler()
 
         self._task_queue: Queue = Queue(0)
@@ -231,7 +231,7 @@ class Database(object):
         """Initialize a pool of workers."""
         self._worker_stay_alive_flag.value = True
         worker_pool = []
-        for i in range(self._number_workers):
+        for i in range(self.number_workers):
             p = Process(
                 target=execute_queries,
                 args=(
