@@ -1,27 +1,20 @@
 <template>
   <div>
     <div v-if="$databaseService.isReady.value" class="mx-6">
-      <v-select
-        class="select"
-        v-model="watchedInstances"
-        :items="availableInstances"
-        :error="!watchedInstances.length"
-        chips
-        label="databases"
-        multiple
-        clearable
-        deletable-chips
-        return-object
-        outlined
-        prepend-icon="mdi-database"
-      ></v-select>
-      <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
+      <database-metric-selection class="select" :metrics="watchedMetrics" />
+      <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
         No databases selected.
       </v-alert>
+      <database-system-details
+        v-if="selectedDatabases.length"
+        :databases="selectedDatabases"
+        :handle-scroll="false"
+      />
       <MetricsTileList
-        :selected-databases="watchedInstances.map(database => database.value)"
+        class="list"
+        :selected-databases="selectedDatabases"
         :show-details="false"
-        :selected-metrics="overviewMetrics"
+        :selected-metrics="selectedMetrics"
       />
     </div>
     <v-progress-linear v-else indeterminate color="primary" height="7" />
@@ -41,36 +34,31 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
-import { useDatabaseSelection } from "../meta/views";
-
-interface Data extends MetricViewData {
-  overviewMetrics: Metric[];
-  availableInstances: Ref<any[]>;
-}
+import { useSelectionHandling } from "../meta/views";
+import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
+import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 
 export default createComponent({
   components: {
-    MetricsTileList
+    MetricsTileList,
+    DatabaseSystemDetails,
+    DatabaseMetricSelection
   },
-  setup(props: {}, context: SetupContext): Data {
-    const { watchedInstances, availableInstances } = useDatabaseSelection(
-      context
-    );
-    const { emitMetricsChangedEvent } = useMetricEvents();
-
-    onMounted(() => {
-      emitMetricsChangedEvent(overviewMetrics);
-    });
-
-    return { watchedInstances, overviewMetrics, availableInstances };
+  setup(props: {}, context: SetupContext): MetricViewData {
+    return {
+      watchedMetrics: overviewMetrics,
+      ...useSelectionHandling(context)
+    };
   }
 });
 </script>
 <style scoped>
 .select {
-  padding-top: 20px;
-  width: 33%;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+.list {
+  margin-top: 1%;
 }
 </style>

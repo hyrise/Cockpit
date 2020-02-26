@@ -134,10 +134,10 @@ interface Data {
 export default createComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databases, addDatabase } = context.root.$databaseService;
-    const { emitMetricsChangedEvent } = useMetricEvents();
+    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
 
     onMounted(() => {
-      emitMetricsChangedEvent();
+      emitWatchedMetricsChangedEvent();
     });
 
     const number_workers = ref<number>(8);
