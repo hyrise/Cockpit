@@ -1,162 +1,19 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Manager, Process, Queue, Value
+from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
-from time import time_ns
 from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from psycopg2 import Error, pool
+from psycopg2 import pool
 from psycopg2.extensions import AsIs
-from zmq import SUB, SUBSCRIBE, Context
 
-from hyrisecockpit.settings import (
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
-
+from .cursor import PoolCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
-
-
-class StorageCursor:
-    """Context Manager for a connection to log queries persistently."""
-
-    def __init__(self, host, port, user, password, database):
-        """Initialize a StorageCursor."""
-        self._host = host
-        self._port = port
-        self._user = user
-        self._password = password
-        self._database = database
-
-    def __enter__(self):
-        """Establish a connection."""
-        self._connection = InfluxDBClient(
-            self._host, self._port, self._user, self._password
-        )
-        self._connection.create_database(self._database)
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """Close the cursor and connection."""
-        self._connection.close()
-
-    def log_queries(self, query_list) -> None:
-        """Log a couple of succesfully executed queries."""
-        points = [
-            {
-                "measurement": "successful_queries",
-                "tags": {"benchmark": query[2], "query_no": query[3]},
-                "fields": {"latency": query[1]},
-                "time": query[0],
-            }
-            for query in query_list
-        ]
-        self._connection.write_points(points, database=self._database)
-
-
-class PoolCursor:
-    """Context manager for connections from a pool."""
-
-    def __init__(self, pool):
-        """Initialize a PoolCursor."""
-        self.pool = pool
-        self.connection = self.pool.getconn()
-        self.connection.set_session(autocommit=True)
-        self.cur = self.connection.cursor()
-
-    def __enter__(self):
-        """Return self for a context manager."""
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """Close the cursor and connection."""
-        self.cur.close()
-        self.pool.putconn(self.connection)
-
-    def execute(self, query, parameters):
-        """Execute a query."""
-        return self.cur.execute(query, parameters)
-
-    def fetchone(self):
-        """Fetch one."""
-        return self.cur.fetchone()
-
-
-def fill_queue(
-    workload_publisher_url: str, task_queue: Queue, processing_tables_flag: Value
-) -> None:
-    """Fill the queue."""
-    context = Context()
-    subscriber = context.socket(SUB)
-    subscriber.connect(workload_publisher_url)
-    subscriber.setsockopt_string(SUBSCRIBE, "")
-    while True:
-        content = subscriber.recv_json()
-        tasks = content["body"]["querylist"]
-        if not processing_tables_flag.value:
-            for task in tasks:
-                task_queue.put(task)
-
-
-def execute_queries(
-    worker_id: str,
-    task_queue: Queue,
-    connection_pool: pool,
-    failed_task_queue: Queue,
-    worker_stay_alive_flag: Value,
-    database_id: str,
-) -> None:
-    """Define workers work loop."""
-    # Allow exit without flush
-    task_queue.cancel_join_thread()
-    failed_task_queue.cancel_join_thread()
-
-    with PoolCursor(connection_pool) as cur:
-        with StorageCursor(
-            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
-        ) as log:
-            succesful_queries = []
-            last_batched = time_ns()
-            while True:
-                # If Queue is emty go to wait status
-                try:
-                    task = task_queue.get(block=True)
-                    if not worker_stay_alive_flag.value:
-                        if task == "wake_up_signal_for_worker":
-                            task_queue.put("wake_up_signal_for_worker")
-                        break
-                    else:
-                        query_tuple, workload_type, query_type = task
-                        query, not_formatted_parameters = query_tuple
-                        formatted_parameters = (
-                            tuple(
-                                AsIs(parameter) if protocol == "as_is" else parameter
-                                for parameter, protocol in not_formatted_parameters
-                            )
-                            if not_formatted_parameters is not None
-                            else None
-                        )
-                        startts = time_ns()
-                        cur.execute(query, formatted_parameters)
-                        endts = time_ns()
-                        succesful_queries.append(
-                            (endts, endts - startts, workload_type, query_type)
-                        )
-                        if last_batched < time_ns() - 1_000_000_000:
-                            last_batched = time_ns()
-                            log.log_queries(succesful_queries)
-                            succesful_queries = []
-                except (ValueError, Error) as e:
-                    failed_task_queue.put(
-                        {"worker_id": worker_id, "task": query_tuple, "Error": str(e)}
-                    )
+from .worker import execute_queries, fill_queue
 
 
 class Database(object):
