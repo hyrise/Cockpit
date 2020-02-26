@@ -90,7 +90,7 @@ function getStorageData(
 ): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
   const newLabels: string[] = [];
   const newParents: string[] = [];
-  const newSizes: number[] = [];
+  let newSizes: number[] = [];
 
   if (
     !equals(
@@ -105,12 +105,16 @@ function getStorageData(
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
     newParents.push("");
-    newSizes.push(0);
+    let currentTableSizes: number[] = [];
+    let totalTableSize = 0;
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
-      newSizes.push(data[primaryKey][table].data[attribute].size / 1000000);
+      let currentSize = data[primaryKey][table].data[attribute].size / 1000000;
+      currentTableSizes.push(currentSize);
+      totalTableSize += currentSize;
     });
+    newSizes = [...newSizes, totalTableSize, ...currentTableSizes];
   });
 
   return { newLabels, newParents, newSizes };
