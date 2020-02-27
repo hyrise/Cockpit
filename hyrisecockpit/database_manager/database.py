@@ -115,7 +115,6 @@ def execute_queries(
 ) -> None:
     """Define workers work loop."""
     # Allow exit without flush
-    task_queue.cancel_join_thread()
     failed_task_queue.cancel_join_thread()
 
     with PoolCursor(connection_pool) as cur:
@@ -131,6 +130,8 @@ def execute_queries(
                     if not worker_stay_alive_flag.value:
                         if task == "wake_up_signal_for_worker":
                             task_queue.put("wake_up_signal_for_worker")
+                        else:
+                            task_queue.cancel_join_thread()
                         break
                     else:
                         query_tuple, workload_type, query_type = task
@@ -199,8 +200,8 @@ class Database(object):
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
 
-        self._worker_stay_alive_flag = self._manager.Value("b", True)
-        self._processing_tables_flag = self._manager.Value("b", False)
+        self._worker_stay_alive_flag = Value("b", True)
+        self._processing_tables_flag = Value("b", False)
         self._worker_pool: pool = self._init_worker_pool()
         self._subscriber_worker = self._init_subscriber_worker()
 
@@ -352,7 +353,8 @@ class Database(object):
         self._flush_queue()
         with PoolCursor(self._connection_pool) as cur:
             for task in table_loading_tasks:
-                query, not_formatted_parameters = task
+                query_tuple, benchmark, query_no = task
+                query, not_formatted_parameters = query_tuple
                 formatted_parameters = (
                     tuple(
                         AsIs(parameter) if protocol == "as_is" else parameter
