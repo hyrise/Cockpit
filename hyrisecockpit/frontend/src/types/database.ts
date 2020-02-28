@@ -16,8 +16,15 @@ export interface Database {
   tables: string[];
 }
 
+export interface DatabaseController {
+  getDatabaseById: (id: string) => Database | undefined;
+  databasesUpdated: Ref<boolean>;
+}
+
 export interface DatabaseService {
-  databases: Ref<Database[]>;
   addDatabase: (databasedata: any) => void;
-  isReady: Ref<boolean>;
+  getDatabases: () => Promise<any[]>;
+  getDatabasesCPUInformation: () => Promise<any[]>;
+  getDatabasesStorageInformation: () => Promise<any[]>;
+  setDatabaseColor: () => string;
 }

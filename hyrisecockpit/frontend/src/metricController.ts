@@ -2,7 +2,6 @@ import { eventBus } from "./plugins/eventBus";
 import { useMetricService } from "./services/metricService";
 import { Metric, availableMetrics, MetricController } from "./types/metrics";
 import { FetchService } from "./types/services";
-import { Ref } from "@vue/composition-api";
 import { getMetadata, getMetricRequestTime } from "./meta/metrics";
 
 type Interval = {
