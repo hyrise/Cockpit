@@ -17,7 +17,7 @@ import * as Plotly from "plotly.js";
 
 interface Props {
   data: any;
-  selectedDatabases: Database[];
+  selectedDatabases: string[];
   graphId: string;
   chartConfiguration: string[];
   maxValue: number;
@@ -52,20 +52,18 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const selectedDatabaseIds = computed(() =>
-      props.selectedDatabases.map(database => database.id)
-    );
+    const selectedDatabaseIds = computed(() => props.selectedDatabases); //not needed
     const data = computed(() => props.data);
     const graphId = props.graphId;
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
       props.chartConfiguration
     );
-    const { isReady } = context.root.$databaseService;
+    const { databasesUpdated } = context.root.$databaseController;
 
     onMounted(() => {
-      watch(isReady, () => {
-        if (isReady.value) {
+      watch(databasesUpdated, () => {
+        if (databasesUpdated.value) {
           Plotly.newPlot(
             graphId,
             getDatasets(),
@@ -75,12 +73,12 @@ export default defineComponent({
         }
       });
       watch(selectedDatabaseIds, () => {
-        if (isReady.value) {
+        if (databasesUpdated.value) {
           handleDatabaseChange();
         }
       });
       watch(data, () => {
-        if (isReady.value && Object.keys(data.value).length) {
+        if (databasesUpdated.value && Object.keys(data.value).length) {
           updateChartDatasets();
         }
       });
@@ -136,7 +134,10 @@ function useLineChartConfiguration(
   getLayout: (yMax: number, xMin?: number) => Object;
   getOptions: () => Object;
 } {
-  const databases: Ref<Database[]> = context.root.$databaseService.databases;
+  const databases: Database[] = Object.values(
+    //is this reactive??
+    context.root.$databaseController.databases
+  );
   function getLayout(yMax: number, xMin: number = 1): Object {
     const currentDate = Date.now();
     return {
@@ -191,7 +192,7 @@ function useLineChartConfiguration(
   }
 
   function getDatabaseById(databaseId: string): Database | undefined {
-    return databases.value.find(element => element.id === databaseId);
+    return databases.find(element => element.id === databaseId);
   }
 
   function getDataset(data: number[] = [], databaseId: string = ""): Object {

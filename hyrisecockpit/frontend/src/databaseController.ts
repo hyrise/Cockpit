@@ -4,7 +4,7 @@ import { useDatabaseService } from "./services/databaseService";
 import { ref } from "@vue/composition-api";
 
 export function useDatabaseController(): DatabaseController {
-  let databases: Record<string, Database> = {};
+  let databases: Record<string, Database> = {}; // TODO: use array???
   let databasesUpdated = ref(false);
   const databaseService = useDatabaseService();
 
@@ -15,7 +15,6 @@ export function useDatabaseController(): DatabaseController {
   updateDatabases();
 
   function updateDatabases(): void {
-    databasesUpdated.value = false;
     databaseService.getDatabases().then(currentDatabases => {
       databaseService
         .getDatabasesCPUInformation()
@@ -68,5 +67,5 @@ export function useDatabaseController(): DatabaseController {
     return databases[id];
   }
 
-  return { getDatabaseById, databasesUpdated };
+  return { databases, databasesUpdated };
 }

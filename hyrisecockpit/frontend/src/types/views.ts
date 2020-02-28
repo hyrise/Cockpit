@@ -5,11 +5,11 @@ import { Database } from "./database";
 export interface MetricViewData {
   watchedMetrics: Metric[];
   selectedMetrics: Ref<Metric[]>;
-  selectedDatabases: Ref<Database[]>;
+  selectedDatabases: Ref<string[]>;
 }
 
 export interface ContainerProps {
-  selectedDatabases: Database[];
+  selectedDatabases: string[];
   selectedMetrics: Metric[];
   showDetails: boolean;
 }

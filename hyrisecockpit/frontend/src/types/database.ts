@@ -17,7 +17,7 @@ export interface Database {
 }
 
 export interface DatabaseController {
-  getDatabaseById: (id: string) => Database | undefined;
+  databases: Record<string, Database>;
   databasesUpdated: Ref<boolean>;
 }
 

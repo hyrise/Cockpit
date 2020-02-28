@@ -76,7 +76,7 @@ export interface ComparisonMetricData {
 export interface MetricProps {
   metric: Metric;
   metricMeta: MetricMetadata;
-  selectedDatabases: Database[];
+  selectedDatabases: string[];
   graphId: string;
   showDetails: boolean;
 }
