@@ -51,6 +51,8 @@ class DatabaseManager(object):
             "delete data": self._call_delete_data,
             "process table status": self._call_process_table_status,
             "purge queue": self._call_purge_queue,
+            "activate plugin": self._call_activate_plugin,
+            "deactivate plugin": self._call_deactivate_plugin,
         }
         self._context = Context(io_threads=1)
         self._socket = self._context.socket(REP)
@@ -197,6 +199,29 @@ class DatabaseManager(object):
         ]
         response = get_response(200)
         response["body"]["process_table_status"] = process_table_status
+        return response
+
+    def _call_activate_plugin(self, body: Dict) -> Dict:
+        database_id = body["id"]
+        plugin = body["plugin"]
+        for id, database in self._databases.items():
+            if id == database_id:
+                database.activate_plugin(plugin)
+                if database.deactivate_plugin(plugin):
+                    response = get_response(200)
+            else:
+                response = get_response(400)
+        return response
+
+    def _call_deactivate_plugin(self, body: Dict) -> Dict:
+        database_id = body["id"]
+        plugin = body["plugin"]
+        for id, database in self._databases.items():
+            if id == database_id:
+                if database.deactivate_plugin(plugin):
+                    response = get_response(200)
+            else:
+                response = get_response(400)
         return response
 
     def _check_if_processing_table(self) -> bool:
