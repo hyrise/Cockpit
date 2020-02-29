@@ -3,7 +3,7 @@ import { Ref } from "@vue/composition-api";
 export interface DatabaseSystemDetails {
   host: string;
   mainMemoryCapacity: number;
-  memoryFootprint: Ref<number>;
+  memoryFootprint: number;
   numberOfCPUs: number;
   numberOfWorkers: number;
 }

@@ -120,45 +120,26 @@ import { useMetricEvents } from "../meta/events";
 import { useDatabaseService } from "../services/databaseService";
 
 interface Props {}
-interface Data {
-  number_workers: Ref<number>;
-  id: Ref<string>;
-  user: Ref<string>;
-  password: Ref<string>;
-  host: Ref<string>;
-  port: Ref<string>;
-  dbname: Ref<string>;
-  createNewDatabase: () => void;
+interface Data extends DatabaseCreationData {
   databases: Ref<readonly string[]>;
-  openDatabaseScreen: (databaseId: string) => void;
-  showDatabaseDialog: Ref<boolean>;
 }
 
 export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
-    const showDatabaseDialog = ref(false);
 
     onMounted(() => {
       emitWatchedMetricsChangedEvent();
     });
 
-    function openDatabaseScreen(databaseId: string): void {
-      context.root.$router.push({
-        name: "database",
-        params: { id: databaseId }
-      });
-    }
-
     return {
       databases: context.root.$databaseController.availableDatabasesById,
-      openDatabaseScreen,
-      showDatabaseDialog,
-      ...useDatabaseConnection()
+      ...useDatabaseCreation(context)
     };
   }
 });
-function useDatabaseConnection(): {
+
+type DatabaseCreationData = {
   number_workers: Ref<number>;
   id: Ref<string>;
   user: Ref<string>;
@@ -167,7 +148,10 @@ function useDatabaseConnection(): {
   port: Ref<string>;
   dbname: Ref<string>;
   createNewDatabase: () => void;
-} {
+  showDatabaseDialog: Ref<boolean>;
+  openDatabaseScreen: (databaseId: string) => void;
+};
+function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const { addDatabase } = useDatabaseService();
 
   const number_workers = ref<number>(8);
@@ -177,6 +161,15 @@ function useDatabaseConnection(): {
   const host = ref<string>("vm-");
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
+
+  const showDatabaseDialog = ref(false);
+
+  function openDatabaseScreen(databaseId: string): void {
+    context.root.$router.push({
+      name: "database",
+      params: { id: databaseId }
+    });
+  }
 
   function createNewDatabase(): void {
     addDatabase({
@@ -198,7 +191,9 @@ function useDatabaseConnection(): {
     host,
     port,
     dbname,
-    createNewDatabase
+    createNewDatabase,
+    showDatabaseDialog,
+    openDatabaseScreen
   };
 }
 </script>
