@@ -1,6 +1,6 @@
 <template>
   <div>
-    <database-system-details :databases="selectedDatabases" />
+    <database-system-details :selected-databases="selectedDatabases" />
     <div class="metrics-table">
       <div
         class="metrics-column"
@@ -62,6 +62,7 @@ import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
 import { Database } from "../../types/database";
+import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Data {
   databases: Ref<readonly Database[]>;
@@ -86,11 +87,7 @@ export default defineComponent({
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {
-      databases: computed(() =>
-        context.root.$databaseController.getDatabasesByIds(
-          props.selectedDatabases
-        )
-      ),
+      ...useUpdatingDatabases(props, context),
       uuid: uuid.v1,
       getMetadata,
       getMetricComponent,

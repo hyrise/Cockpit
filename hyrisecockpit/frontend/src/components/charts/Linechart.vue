@@ -13,6 +13,7 @@ import {
   watch
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Props {
   data: any;
@@ -136,9 +137,7 @@ function useLineChartConfiguration(
   getLayout: (yMax: number, xMin?: number) => Object;
   getOptions: () => Object;
 } {
-  const databases = computed(() =>
-    context.root.$databaseController.getDatabasesByIds(props.selectedDatabases)
-  );
+  const { databases } = useUpdatingDatabases(props, context);
   function getLayout(yMax: number, xMin: number = 1): Object {
     const currentDate = Date.now();
     return {

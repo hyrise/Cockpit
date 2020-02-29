@@ -34,6 +34,7 @@ import {
 } from "@vue/composition-api";
 import Heatmap from "../charts/Heatmap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Data {
   tables: Ref<readonly string[]>;
@@ -53,12 +54,8 @@ export default defineComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const data = context.root.$metricController.data[props.metric];
-    const watchedDatabase = computed(
-      () =>
-        context.root.$databaseController.getDatabasesByIds(
-          props.selectedDatabases
-        )[0]
-    );
+    const watchedDatabase = useUpdatingDatabases(props, context).databases
+      .value[0];
 
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
@@ -73,7 +70,7 @@ export default defineComponent({
           dataByChunks
         } = props.metricMeta.transformationService(
           data.value,
-          watchedDatabase.value.id,
+          watchedDatabase.id,
           selectedTable.value
         );
         chunks.value = newChunks;
@@ -84,7 +81,7 @@ export default defineComponent({
 
     return {
       chartConfiguration,
-      tables: computed(() => watchedDatabase.value.tables),
+      tables: computed(() => watchedDatabase.tables),
       mapData,
       columns,
       chunks,

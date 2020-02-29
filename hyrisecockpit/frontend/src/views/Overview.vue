@@ -7,7 +7,7 @@
       </v-alert>
       <database-system-details
         v-if="selectedDatabases.length"
-        :databases="selectedDatabases"
+        :selected-databases="selectedDatabases"
         :handle-scroll="false"
       />
       <MetricsTileList

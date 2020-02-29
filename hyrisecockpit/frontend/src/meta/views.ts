@@ -1,4 +1,4 @@
-import { SetupContext, Ref, ref } from "@vue/composition-api";
+import { Ref, ref } from "@vue/composition-api";
 import { eventBus } from "../plugins/eventBus";
 import { Metric } from "@/types/metrics";
 

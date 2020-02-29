@@ -9,10 +9,7 @@
       multiple
       accordion
     >
-      <v-expansion-panel
-        v-for="database in watchedDatabases"
-        :key="database.id"
-      >
+      <v-expansion-panel v-for="database in databases" :key="database.id">
         <v-expansion-panel-header class="title">
           <v-avatar
             class="mr-2"
@@ -60,21 +57,22 @@ import {
   ref
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
+import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Props {
-  databases: string[];
+  selectedDatabases: string[];
   handleScroll: boolean;
 }
 interface Data {
   showDatabasePanels: Ref<boolean>;
   togglePanelView: () => void;
-  watchedDatabases: Ref<readonly Database[]>;
+  databases: Ref<readonly Database[]>;
 }
 
 export default defineComponent({
   name: "DatabaseSystemDetails",
   props: {
-    databases: {
+    selectedDatabases: {
       type: Array,
       default: null
     },
@@ -111,9 +109,7 @@ export default defineComponent({
     return {
       showDatabasePanels,
       togglePanelView,
-      watchedDatabases: computed(() =>
-        context.root.$databaseController.getDatabasesByIds(props.databases)
-      )
+      ...useUpdatingDatabases(props, context)
     };
   }
 });

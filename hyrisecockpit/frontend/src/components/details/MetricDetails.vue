@@ -30,7 +30,6 @@ import {
   getMetricValueStateOrder
 } from "../../meta/metrics";
 import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
-import { Database } from "../../types/database";
 
 interface Props {
   data: any;
