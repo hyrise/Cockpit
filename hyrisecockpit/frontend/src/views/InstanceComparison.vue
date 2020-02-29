@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="mx-6">
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
       <MetricsComparisonTable
         v-if="selectedDatabases.length"
@@ -44,7 +44,7 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: comparisonMetrics,
-      ...useSelectionHandling(context)
+      ...useSelectionHandling()
     };
   }
 });

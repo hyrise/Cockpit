@@ -23,7 +23,6 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext } from "@vue/composition-api";
-
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";

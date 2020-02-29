@@ -1,6 +1,5 @@
 import { Ref } from "@vue/composition-api";
 import { Metric } from "./metrics";
-import { Database } from "./database";
 
 export interface MetricViewData {
   watchedMetrics: Metric[];

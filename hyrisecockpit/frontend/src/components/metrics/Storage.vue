@@ -43,7 +43,6 @@ import {
   ref,
   onMounted
 } from "@vue/composition-api";
-import * as Plotly from "plotly.js";
 import Treemap from "../charts/Treemap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
 
@@ -68,7 +67,6 @@ export default defineComponent({
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
-    const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
@@ -78,7 +76,7 @@ export default defineComponent({
           newSizes
         } = props.metricMeta.transformationService(
           data.value,
-          props.selectedDatabases.map(database => database.id)[0]
+          props.selectedDatabases[0]
         );
         labels.value = newLabels;
         parents.value = newParents;
@@ -86,7 +84,13 @@ export default defineComponent({
       }
     });
 
-    return { labels, parents, sizes, chartConfiguration, showDialog };
+    return {
+      labels,
+      parents,
+      sizes,
+      chartConfiguration: ref<string[]>([props.selectedDatabases[0]]),
+      showDialog
+    };
   }
 });
 </script>

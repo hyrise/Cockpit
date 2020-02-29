@@ -1,9 +1,7 @@
 <template>
   <div id="details">
     <v-card class="card" color="primary" dark @click="togglePanelView()">
-      <v-card-title>
-        Databases
-      </v-card-title>
+      <v-card-title> Databases </v-card-title>
     </v-card>
     <v-expansion-panels
       class="panels"
@@ -11,7 +9,10 @@
       multiple
       accordion
     >
-      <v-expansion-panel v-for="database in databases" :key="database.id">
+      <v-expansion-panel
+        v-for="database in watchedDatabases"
+        :key="database.id"
+      >
         <v-expansion-panel-header class="title">
           <v-avatar
             class="mr-2"
@@ -61,12 +62,13 @@ import {
 import { Database } from "../../types/database";
 
 interface Props {
-  databases: Database[];
+  databases: string[];
   handleScroll: boolean;
 }
 interface Data {
   showDatabasePanels: Ref<boolean>;
   togglePanelView: () => void;
+  watchedDatabases: Ref<readonly Database[]>;
 }
 
 export default defineComponent({
@@ -106,7 +108,13 @@ export default defineComponent({
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
-    return { showDatabasePanels, togglePanelView };
+    return {
+      showDatabasePanels,
+      togglePanelView,
+      watchedDatabases: computed(() =>
+        context.root.$databaseController.getDatabasesByIds(props.databases)
+      )
+    };
   }
 });
 </script>

@@ -29,7 +29,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
@@ -43,21 +42,11 @@ export default defineComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const data = context.root.$metricController.data[props.metric];
-    const maxValue = context.root.$metricController.maxValueData[props.metric];
-    const timestamps = context.root.$metricController.timestamps[props.metric];
-
-    const chartConfiguration = [
-      "Queue Length",
-      "time in sec",
-      "number of queries"
-    ];
-
     return {
-      data,
-      chartConfiguration,
-      maxValue,
-      timestamps
+      data: context.root.$metricController.data[props.metric],
+      chartConfiguration: ["Queue Length", "time in sec", "number of queries"],
+      maxValue: context.root.$metricController.maxValueData[props.metric],
+      timestamps: context.root.$metricController.timestamps[props.metric]
     };
   }
 });

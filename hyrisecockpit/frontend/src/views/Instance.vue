@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="ml-6">
+    <div v-if="$databaseController.databasesUpdated.value" class="ml-6">
       <MetricsTileList
         :selected-databases="watchedInstances"
         :show-details="true"
@@ -47,7 +47,7 @@ interface Data {
   getMetricComponent: (metric: Metric) => string;
   overviewMetrics: Metric[];
   instanceMetrics: Metric[];
-  watchedInstances: Ref<Database[]>;
+  watchedInstances: Ref<string[]>;
 }
 
 export default defineComponent({
@@ -58,24 +58,15 @@ export default defineComponent({
     QueryTypeProportion
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<Database[]>([
-      getDatabaseById(context.root.$route.params.id)
-    ]);
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
       emitWatchedMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
 
-    function getDatabaseById(id: string): Database | undefined {
-      return context.root.$databaseService.databases.value.find(
-        database => database.id === id
-      );
-    }
-
     return {
       getMetadata,
       getMetricComponent,
-      watchedInstances,
+      watchedInstances: ref([context.root.$route.params.id]),
       overviewMetrics,
       instanceMetrics
     };

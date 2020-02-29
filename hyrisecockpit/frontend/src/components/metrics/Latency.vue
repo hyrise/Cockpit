@@ -29,10 +29,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
-import { Database } from "../../types/database";
-import * as Plotly from "plotly.js";
-import Vue from "vue";
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
@@ -46,17 +42,11 @@ export default defineComponent({
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
-
-    const data = context.root.$metricController.data[props.metric];
-    const maxValue = context.root.$metricController.maxValueData[props.metric];
-    const timestamps = context.root.$metricController.timestamps[props.metric];
-
     return {
-      data,
-      chartConfiguration,
-      maxValue,
-      timestamps
+      data: context.root.$metricController.data[props.metric],
+      chartConfiguration: ["Latency", "time in sec", "latency in sec"],
+      maxValue: context.root.$metricController.maxValueData[props.metric],
+      timestamps: context.root.$metricController.timestamps[props.metric]
     };
   }
 });

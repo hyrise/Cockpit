@@ -5,7 +5,7 @@
       <div
         class="metrics-column"
         :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
-        v-for="database in selectedDatabases"
+        v-for="database in databases"
         :key="`${uuid()}-${database.id}`"
       >
         <v-card
@@ -23,7 +23,7 @@
           </v-card-subtitle>
           <component
             :is="getMetricComponent(metric)"
-            :selected-databases="[database]"
+            :selected-databases="[database.id]"
             :metric="metric"
             :metric-meta="getMetadata(metric)"
             :graph-id="`${metric}-${database.id}`"
@@ -41,7 +41,8 @@ import {
   SetupContext,
   Ref,
   ref,
-  onMounted
+  onMounted,
+  computed
 } from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
@@ -60,8 +61,10 @@ import {
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
+import { Database } from "../../types/database";
 
 interface Data {
+  databases: Ref<readonly Database[]>;
   getMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
@@ -83,6 +86,11 @@ export default defineComponent({
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {
+      databases: computed(() =>
+        context.root.$databaseController.getDatabasesByIds(
+          props.selectedDatabases
+        )
+      ),
       uuid: uuid.v1,
       getMetadata,
       getMetricComponent,

@@ -32,13 +32,11 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
 import Heatmap from "../charts/Heatmap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
-import { equals } from "../../helpers/methods";
 
 interface Data {
-  tables: Ref<string[]>;
+  tables: Ref<readonly string[]>;
   mapData: Ref<number[][]>;
   columns: Ref<string[]>;
   chunks: Ref<string[]>;
@@ -55,25 +53,17 @@ export default defineComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const selectedTable = ref<string>("");
     const data = context.root.$metricController.data[props.metric];
-    const watchedDatabase = props.selectedDatabases.map(
-      database => database.id
-    )[0];
-    const tables = ref<string[]>(props.selectedDatabases[0].tables);
-    const { isReady } = context.root.$databaseService;
+    const watchedDatabase = computed(
+      () =>
+        context.root.$databaseController.getDatabasesByIds(
+          props.selectedDatabases
+        )[0]
+    );
 
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
     const chunks = ref<string[]>([]);
     const chartConfiguration: string[] = ["Access frequency"];
-
-    watch(
-      () => props.selectedDatabases[0].tables,
-      () => {
-        if (isReady) {
-          tables.value = props.selectedDatabases[0].tables;
-        }
-      }
-    );
 
     watch([data, selectedTable], () => {
       if (Object.keys(data.value).length && selectedTable.value != "") {
@@ -83,7 +73,7 @@ export default defineComponent({
           dataByChunks
         } = props.metricMeta.transformationService(
           data.value,
-          watchedDatabase,
+          watchedDatabase.value.id,
           selectedTable.value
         );
         chunks.value = newChunks;
@@ -94,7 +84,7 @@ export default defineComponent({
 
     return {
       chartConfiguration,
-      tables,
+      tables: computed(() => watchedDatabase.value.tables),
       mapData,
       columns,
       chunks,

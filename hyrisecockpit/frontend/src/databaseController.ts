@@ -1,20 +1,22 @@
 import { eventBus } from "./plugins/eventBus";
 import { DatabaseController, Database } from "./types/database";
 import { useDatabaseService } from "./services/databaseService";
-import { ref } from "@vue/composition-api";
+import { ref, reactive, computed } from "@vue/composition-api";
 
 export function useDatabaseController(): DatabaseController {
-  let databases: Record<string, Database> = {}; // TODO: use array???
-  let databasesUpdated = ref(false);
+  const databases = ref<Database[]>([]);
+  const databasesUpdated = ref(false);
   const databaseService = useDatabaseService();
 
   eventBus.$on("DATABASE_ADDED", () => {
+    databasesUpdated.value = false;
     updateDatabases();
   });
 
   updateDatabases();
 
   function updateDatabases(): void {
+    const updatedDatabases: Database[] = [];
     databaseService.getDatabases().then(currentDatabases => {
       databaseService
         .getDatabasesCPUInformation()
@@ -22,18 +24,19 @@ export function useDatabaseController(): DatabaseController {
           databaseService
             .getDatabasesStorageInformation()
             .then(databasesWithStorageInformation => {
-              currentDatabases.forEach(databaseObject => {
-                if (!getDatabaseById(databaseObject.id)) {
-                  databases[databaseObject.id] = getDatabaseInformation(
-                    databaseObject,
+              currentDatabases.forEach(database => {
+                updatedDatabases.push(
+                  getDatabaseInformation(
+                    database,
                     databasesWithCPUInformation,
                     databasesWithStorageInformation
-                  );
-                }
+                  )
+                );
               });
+              databases.value = updatedDatabases;
+              databasesUpdated.value = true;
             });
         });
-      databasesUpdated.value = true;
     });
   }
 
@@ -48,10 +51,9 @@ export function useDatabaseController(): DatabaseController {
     const storageInformation = databasesStorageInformation.find(
       object => object.id === database.id
     );
-
-    return {
+    return reactive({
       id: database.id,
-      color: databaseService.setDatabaseColor(),
+      color: databaseService.getDatabaseColor(),
       systemDetails: {
         host: database.host,
         mainMemoryCapacity: cpuInformation.mainMemoryCapacity,
@@ -60,12 +62,26 @@ export function useDatabaseController(): DatabaseController {
         numberOfWorkers: database.numberOfWorkers
       },
       tables: storageInformation.tables
-    };
+    });
   }
 
   function getDatabaseById(id: string): Database | undefined {
-    return databases[id];
+    return databases.value.find(database => database.id === id);
   }
 
-  return { databases, databasesUpdated };
+  function getDatabasesByIds(ids: string[]): Database[] {
+    return ids.reduce((availableDatabases, id) => {
+      const database = getDatabaseById(id);
+      if (database) availableDatabases.push(database);
+      return availableDatabases;
+    }, [] as Database[]);
+  }
+
+  return {
+    databasesUpdated,
+    availableDatabasesById: computed(() =>
+      databases.value.map(database => database.id)
+    ),
+    getDatabasesByIds
+  };
 }

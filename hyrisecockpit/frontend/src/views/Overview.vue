@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="mx-6">
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
       <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
         No databases selected.
@@ -34,7 +34,6 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
 import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
@@ -48,7 +47,7 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: overviewMetrics,
-      ...useSelectionHandling(context)
+      ...useSelectionHandling()
     };
   }
 });

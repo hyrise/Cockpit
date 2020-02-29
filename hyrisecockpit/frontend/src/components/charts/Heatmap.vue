@@ -50,22 +50,20 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const mapData = computed(() => props.data);
-    const xData = computed(() => props.xValues);
-    const yData = computed(() => props.yValues);
-
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
       props.chartConfiguration
     );
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
-      watch([mapData, xData, yData], () => {
-        Plotly.deleteTraces(props.graphId, 0);
-        Plotly.addTraces(
-          props.graphId,
-          getDataset(mapData.value, xData.value, yData.value)
-        );
+      watch(() => {
+        if (props.data && props.xValues && props.yValues) {
+          Plotly.deleteTraces(props.graphId, 0);
+          Plotly.addTraces(
+            props.graphId,
+            getDataset(props.data, props.xValues, props.yValues)
+          );
+        }
       });
     });
   }

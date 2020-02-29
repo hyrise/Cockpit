@@ -3,7 +3,7 @@ import { Ref } from "@vue/composition-api";
 export interface DatabaseSystemDetails {
   host: string;
   mainMemoryCapacity: number;
-  memoryFootprint: number;
+  memoryFootprint: Ref<number>;
   numberOfCPUs: number;
   numberOfWorkers: number;
 }
@@ -17,8 +17,9 @@ export interface Database {
 }
 
 export interface DatabaseController {
-  databases: Record<string, Database>;
   databasesUpdated: Ref<boolean>;
+  availableDatabasesById: Ref<readonly string[]>;
+  getDatabasesByIds: (ids: string[]) => Database[];
 }
 
 export interface DatabaseService {
@@ -26,5 +27,5 @@ export interface DatabaseService {
   getDatabases: () => Promise<any[]>;
   getDatabasesCPUInformation: () => Promise<any[]>;
   getDatabasesStorageInformation: () => Promise<any[]>;
-  setDatabaseColor: () => string;
+  getDatabaseColor: () => string;
 }

@@ -17,6 +17,7 @@ export function useDatabaseService(): DatabaseService {
   } = useDataTransformationHelpers();
 
   async function getDatabases(): Promise<any[]> {
+    //TODO: add types
     const fetchedDatabases: any[] = [];
     await axios.get(controlBackend + "database").then(response => {
       Object.values(response.data).forEach(data => {
@@ -30,7 +31,7 @@ export function useDatabaseService(): DatabaseService {
     return fetchedDatabases;
   }
 
-  function setDatabaseColor(): string {
+  function getDatabaseColor(): string {
     const color: any = (colors as any)[colorsArray[usedColors]].base;
     usedColors += 2;
     return color;
@@ -41,7 +42,7 @@ export function useDatabaseService(): DatabaseService {
     await axios.get(monitorBackend + "system").then(response => {
       Object.entries(response.data.body.system_data).forEach(([id, data]) => {
         databasesWithCPUInformation.push({
-          id,
+          id: id,
           numberOfCPUs: Object.keys((data as any).cpu).length,
           mainMemoryCapacity: getDatabaseMainMemoryCapacity(data)
         });
@@ -55,7 +56,7 @@ export function useDatabaseService(): DatabaseService {
     await axios.get(monitorBackend + "storage").then(response => {
       Object.entries(response.data.body.storage).forEach(([id, data]) => {
         databasesWithStorageInformation.push({
-          id,
+          id: id,
           memoryFootprint: getDatabaseMemoryFootprint(data),
           tables: Object.keys(data as any)
         });
@@ -65,12 +66,9 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function addDatabase(databaseService: any): void {
-    axios
-      .post(controlBackend + "database", databaseService)
-      .then(() => {
-        emitDatabaseAddedEvent();
-      })
-      .catch(() => {});
+    axios.post(controlBackend + "database", databaseService).then(() => {
+      emitDatabaseAddedEvent();
+    });
   }
 
   return {
@@ -78,6 +76,6 @@ export function useDatabaseService(): DatabaseService {
     getDatabases,
     getDatabasesCPUInformation,
     getDatabasesStorageInformation,
-    setDatabaseColor
+    getDatabaseColor
   };
 }

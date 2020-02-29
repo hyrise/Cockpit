@@ -6,13 +6,14 @@
     <v-divider class="mb-4"></v-divider>
     <v-list>
       <v-list-item
-        v-for="(item, index) in databases"
-        :key="index"
-        @click="openDatabaseScreen(item.id)"
+        v-for="database in databases"
+        :key="database"
+        @click="openDatabaseScreen(database)"
       >
-        <v-list-item-title>{{ item.id }}</v-list-item-title>
+        <v-list-item-title>{{ database }}</v-list-item-title>
       </v-list-item>
     </v-list>
+
     <v-row justify="end">
       <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
@@ -67,6 +68,7 @@
                   <v-text-field
                     v-model="number_workers"
                     label="Number of Workers*"
+                    type="number"
                     required
                   ></v-text-field>
                 </v-col>
@@ -115,13 +117,10 @@ import {
 import axios from "axios";
 import { Database } from "../types/database";
 import { useMetricEvents } from "../meta/events";
+import { useDatabaseService } from "../services/databaseService";
 
 interface Props {}
 interface Data {
-  databases: Ref<Database[]>;
-  openDatabaseScreen: (databaseId: string) => void;
-  createNewDatabase: () => void;
-  showDatabaseDialog: boolean;
   number_workers: Ref<number>;
   id: Ref<string>;
   user: Ref<string>;
@@ -129,25 +128,20 @@ interface Data {
   host: Ref<string>;
   port: Ref<string>;
   dbname: Ref<string>;
+  createNewDatabase: () => void;
+  databases: Ref<readonly string[]>;
+  openDatabaseScreen: (databaseId: string) => void;
+  showDatabaseDialog: Ref<boolean>;
 }
 
 export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { databases, addDatabase } = context.root.$databaseService;
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
+    const showDatabaseDialog = ref(false);
 
     onMounted(() => {
       emitWatchedMetricsChangedEvent();
     });
-
-    const number_workers = ref<number>(8);
-    const id = ref<string>("");
-    const user = ref<string>("serviceuser");
-    const password = ref<string>("");
-    const host = ref<string>("vm-");
-    const port = ref<string>("5432");
-    const dbname = ref<string>("postgres");
-    let showDatabaseDialog = false;
 
     function openDatabaseScreen(databaseId: string): void {
       context.root.$router.push({
@@ -156,33 +150,56 @@ export default defineComponent({
       });
     }
 
-    function createNewDatabase(): void {
-      const databaseData = {
-        number_workers: parseInt(number_workers.value.toString(), 10),
-        id: id.value,
-        user: user.value,
-        password: password.value,
-        host: host.value,
-        port: port.value,
-        dbname: dbname.value
-      };
-      addDatabase(databaseData);
-    }
-
     return {
-      number_workers,
-      id,
-      user,
-      password,
-      host,
-      port,
-      dbname,
-      databases,
+      databases: context.root.$databaseController.availableDatabasesById,
       openDatabaseScreen,
       showDatabaseDialog,
-      createNewDatabase
+      ...useDatabaseConnection()
     };
   }
 });
+function useDatabaseConnection(): {
+  number_workers: Ref<number>;
+  id: Ref<string>;
+  user: Ref<string>;
+  password: Ref<string>;
+  host: Ref<string>;
+  port: Ref<string>;
+  dbname: Ref<string>;
+  createNewDatabase: () => void;
+} {
+  const { addDatabase } = useDatabaseService();
+
+  const number_workers = ref<number>(8);
+  const id = ref<string>("");
+  const user = ref<string>("serviceuser");
+  const password = ref<string>("");
+  const host = ref<string>("vm-");
+  const port = ref<string>("5432");
+  const dbname = ref<string>("postgres");
+
+  function createNewDatabase(): void {
+    addDatabase({
+      number_workers: number_workers.value,
+      id: id.value,
+      user: user.value,
+      password: password.value,
+      host: host.value,
+      port: port.value,
+      dbname: dbname.value
+    });
+  }
+
+  return {
+    number_workers,
+    id,
+    user,
+    password,
+    host,
+    port,
+    dbname,
+    createNewDatabase
+  };
+}
 </script>
 <style scoped></style>

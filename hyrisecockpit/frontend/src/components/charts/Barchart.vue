@@ -36,25 +36,34 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const data = computed(() => props.data);
-    const graphId = props.graphId;
     const { getLayout, getOptions } = useBarChartConfiguration(
       context,
       props.chartConfiguration
     );
 
     onMounted(() => {
-      Plotly.newPlot(graphId, data.value as any, getLayout(), getOptions());
+      Plotly.newPlot(
+        props.graphId,
+        props.data as any,
+        getLayout(),
+        getOptions()
+      );
 
-      watch(data, () => {
-        updateChartDatasets();
-
-        if (data.value.length) {
-          updateChartDatasets();
+      watch(
+        () => props.data,
+        () => {
+          if (props.data.length) {
+            updateChartDatasets();
+          }
         }
-      });
+      );
       function updateChartDatasets(): void {
-        Plotly.react(graphId, data.value as any, getLayout(), getOptions());
+        Plotly.react(
+          props.graphId,
+          props.data as any,
+          getLayout(),
+          getOptions()
+        );
       }
     });
   }

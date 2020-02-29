@@ -3,15 +3,15 @@
     <div
       class="details"
       v-for="(database, idx) in databases"
-      :key="database.id"
+      :key="database"
       :style="{
-        color: valueColor[database.id],
+        color: valueColor[database],
         fontSize: '18px',
         fontWeight: 'bold',
         top: idx * 5 + 12.5 + '%'
       }"
     >
-      {{ currentValue[database.id] }} {{ unit }}
+      {{ currentValue[database] }} {{ unit }}
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ import { Database } from "../../types/database";
 
 interface Props {
   data: any;
-  databases: Database[];
+  databases: string[];
   unit: string;
   border: number;
   stateOrder: MetricValueStateOrder;
@@ -83,10 +83,9 @@ export default defineComponent({
       if (!props.databases.length) return databaseValueMap;
       props.databases.forEach(
         database =>
-          (databaseValueMap[database.id] = Object.keys(props.data).length
+          (databaseValueMap[database] = Object.keys(props.data).length
             ? Math.floor(
-                props.data[database.id][props.data[database.id].length - 1] *
-                  100
+                props.data[database][props.data[database].length - 1] * 100
               ) / 100
             : 0)
       );

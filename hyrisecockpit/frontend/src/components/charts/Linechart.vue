@@ -12,7 +12,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
 
 interface Props {
@@ -52,12 +51,9 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const selectedDatabaseIds = computed(() => props.selectedDatabases); //not needed
-    const data = computed(() => props.data);
-    const graphId = props.graphId;
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
-      props.chartConfiguration
+      props
     );
     const { databasesUpdated } = context.root.$databaseController;
 
@@ -65,38 +61,44 @@ export default defineComponent({
       watch(databasesUpdated, () => {
         if (databasesUpdated.value) {
           Plotly.newPlot(
-            graphId,
+            props.graphId,
             getDatasets(),
             getLayout(props.maxValue),
             getOptions()
           );
         }
       });
-      watch(selectedDatabaseIds, () => {
-        if (databasesUpdated.value) {
-          handleDatabaseChange();
+      watch(
+        () => props.selectedDatabases, //need this because selected db is an array
+        () => {
+          if (databasesUpdated.value) {
+            handleDatabaseChange();
+          }
         }
-      });
-      watch(data, () => {
-        if (databasesUpdated.value && Object.keys(data.value).length) {
-          updateChartDatasets();
+      );
+      watch(
+        () => props.data,
+        () => {
+          if (databasesUpdated.value && Object.keys(props.data).length) {
+            updateChartDatasets();
+          }
         }
-      });
+      );
     });
 
     function getDatasets(): any[] {
-      return selectedDatabaseIds.value.reduce((result, id): any => {
+      return props.selectedDatabases.reduce((result, id): any => {
         return [
           ...result,
-          getDataset(data.value[id] ? data.value[id] : [], id)
+          getDataset(props.data[id] ? props.data[id] : [], id)
         ];
       }, []);
     }
 
     function handleDatabaseChange(): void {
-      Plotly.purge(graphId);
+      Plotly.purge(props.graphId);
       Plotly.plot(
-        graphId,
+        props.graphId,
         getDatasets(),
         getLayout(props.maxValue),
         getOptions()
@@ -104,21 +106,21 @@ export default defineComponent({
     }
 
     function getMaxDatasetLength(): number {
-      return selectedDatabaseIds.value.reduce((currentMax, id) => {
-        return Math.max(data.value[id].length, currentMax);
+      return props.selectedDatabases.reduce((currentMax, id) => {
+        return Math.max(props.data[id].length, currentMax);
       }, 0);
     }
 
     function updateChartDatasets(): void {
       const timestamps = props.timestamps;
       const newData = {
-        y: Object.values(selectedDatabaseIds.value).map(id => data.value[id]),
-        x: Object.values(selectedDatabaseIds.value).map(() => timestamps)
+        y: Object.values(props.selectedDatabases).map(id => props.data[id]),
+        x: Object.values(props.selectedDatabases).map(() => timestamps)
       };
       const maxSelectedLength = getMaxDatasetLength();
 
       Plotly.update(
-        graphId,
+        props.graphId,
         newData,
         getLayout(props.maxValue, Math.min(maxSelectedLength, 30))
       );
@@ -128,22 +130,21 @@ export default defineComponent({
 
 function useLineChartConfiguration(
   context: SetupContext,
-  chartConfiguration: string[]
+  props: Props
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (yMax: number, xMin?: number) => Object;
   getOptions: () => Object;
 } {
-  const databases: Database[] = Object.values(
-    //is this reactive??
-    context.root.$databaseController.databases
+  const databases = computed(() =>
+    context.root.$databaseController.getDatabasesByIds(props.selectedDatabases)
   );
   function getLayout(yMax: number, xMin: number = 1): Object {
     const currentDate = Date.now();
     return {
       xaxis: {
         title: {
-          text: chartConfiguration[1],
+          text: props.chartConfiguration[1],
           font: {
             //size: 16
             //color: "#FAFAFA"
@@ -163,7 +164,7 @@ function useLineChartConfiguration(
       },
       yaxis: {
         title: {
-          text: chartConfiguration[2],
+          text: props.chartConfiguration[2],
           font: {
             // size: 16
             //color: "#FAFAFA"
@@ -191,12 +192,10 @@ function useLineChartConfiguration(
     };
   }
 
-  function getDatabaseById(databaseId: string): Database | undefined {
-    return databases.find(element => element.id === databaseId);
-  }
-
   function getDataset(data: number[] = [], databaseId: string = ""): Object {
-    const database: Database | undefined = getDatabaseById(databaseId);
+    const database = databases.value.find(
+      database => database.id === databaseId
+    );
     return {
       y: data,
       mode: "lines+markers",
