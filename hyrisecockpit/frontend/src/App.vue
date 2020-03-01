@@ -5,6 +5,9 @@
       <v-app-bar-nav-icon @click="toggleNavigationDrawer()">
       </v-app-bar-nav-icon>
       <b> Hyrise Cockpit </b>
+      <v-icon class="mt-2 plugin-icon">
+        mdi-widgets
+      </v-icon>
     </v-app-bar>
     <v-content>
       <router-view />
@@ -33,3 +36,8 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+.plugin-icon {
+  margin-left: auto;
+}
+</style>
