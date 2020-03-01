@@ -37,13 +37,13 @@
 </template>
 
 <script lang="ts">
-import { SetupContext, createComponent } from "@vue/composition-api";
+import { SetupContext, defineComponent } from "@vue/composition-api";
 
 interface Props {
   open: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
     open: {
       type: Boolean,

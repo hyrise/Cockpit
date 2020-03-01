@@ -104,7 +104,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -131,7 +131,7 @@ interface Data {
   dbname: Ref<string>;
 }
 
-export default createComponent({
+export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databases, addDatabase } = context.root.$databaseService;
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
