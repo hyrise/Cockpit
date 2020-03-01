@@ -33,15 +33,20 @@ import {
   watch
 } from "@vue/composition-api";
 import Heatmap from "../charts/Heatmap.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ChartConfiguration
+} from "../../types/metrics";
 import { useUpdatingDatabases } from "../../meta/databases";
+import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
   tables: Ref<readonly string[]>;
   mapData: Ref<number[][]>;
   columns: Ref<string[]>;
   chunks: Ref<string[]>;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
   selectedTable: Ref<string>;
 }
 
@@ -60,7 +65,6 @@ export default defineComponent({
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
     const chunks = ref<string[]>([]);
-    const chartConfiguration: string[] = ["Access frequency"];
 
     watch([data, selectedTable], () => {
       if (Object.keys(data.value).length && selectedTable.value != "") {
@@ -80,7 +84,7 @@ export default defineComponent({
     });
 
     return {
-      chartConfiguration,
+      chartConfiguration: getMetricChartConfiguration(props.metric),
       tables: computed(() => watchedDatabase.tables),
       mapData,
       columns,

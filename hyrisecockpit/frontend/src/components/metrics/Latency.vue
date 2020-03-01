@@ -36,6 +36,7 @@ import {
   ComparisonMetricData
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
+import { useLineChartComponent } from "../../meta/components";
 
 export default defineComponent({
   name: "Latency",
@@ -43,10 +44,7 @@ export default defineComponent({
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     return {
-      data: context.root.$metricController.data[props.metric],
-      chartConfiguration: ["Latency", "time in sec", "latency in sec"],
-      maxValue: context.root.$metricController.maxValueData[props.metric],
-      timestamps: context.root.$metricController.timestamps[props.metric]
+      ...useLineChartComponent(props, context)
     };
   }
 });

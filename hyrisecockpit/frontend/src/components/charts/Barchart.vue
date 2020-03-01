@@ -13,11 +13,12 @@ import {
   watch
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   data: any;
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
 }
 
 export default defineComponent({
@@ -31,7 +32,7 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     }
   },
@@ -71,7 +72,7 @@ export default defineComponent({
 
 function useBarChartConfiguration(
   context: SetupContext,
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
   getOptions: () => Object;
@@ -80,13 +81,13 @@ function useBarChartConfiguration(
     return {
       xaxis: {
         title: {
-          text: chartConfiguration[1]
+          text: chartConfiguration.xaxis
         },
         rangemode: "tozero"
       },
       yaxis: {
         title: {
-          text: chartConfiguration[2]
+          text: chartConfiguration.yaxis
         },
         rangemode: "tozero"
       },

@@ -12,17 +12,15 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import axios from "axios";
-
 import * as Plotly from "plotly.js";
-import Vue from "vue";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   data: number[][];
   xValues: string[];
   yValues: string[];
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
 }
 
 export default defineComponent({
@@ -45,7 +43,7 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     }
   },
@@ -69,7 +67,7 @@ export default defineComponent({
   }
 });
 function useHeatMapConfiguration(
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getDataset: (
     data?: readonly number[][],

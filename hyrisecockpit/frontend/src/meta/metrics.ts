@@ -3,7 +3,8 @@ import {
   Metric,
   MetricMetadata,
   MetricValueState,
-  MetricValueStateOrder
+  MetricValueStateOrder,
+  ChartConfiguration
 } from "../types/metrics";
 import { useDataTransformation } from "../services/transformationService";
 
@@ -13,7 +14,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("access"),
     base: "chunks_data",
     endpoint: monitorBackend + "chunks",
-    title: "Access Frequency",
     component: "Access",
     requestTime: 5000
   },
@@ -22,7 +22,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("cpu"),
     base: "system_data",
     endpoint: monitorBackend + "system",
-    title: "CPU",
     component: "CPU",
     requestTime: 1000
   },
@@ -31,7 +30,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("latency"),
     base: "latency",
     endpoint: monitorBackend + "latency",
-    title: "Latency",
     component: "Latency",
     requestTime: 1000
   },
@@ -40,7 +38,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("executedQueryTypeProportion"),
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
-    title: "Query Type Proportion",
     component: "QueryTypeProportion",
     requestTime: 2000
   },
@@ -51,7 +48,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     ),
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
-    title: "Query Type Proportion",
     component: "QueryTypeProportion",
     requestTime: 2000
   },
@@ -60,7 +56,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("queueLength"),
     base: "queue_length",
     endpoint: monitorBackend + "queue_length",
-    title: "Queue Length",
     component: "QueueLength",
     requestTime: 1000
   },
@@ -69,7 +64,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("ram"),
     base: "system_data",
     endpoint: monitorBackend + "system",
-    title: "RAM",
     component: "RAM",
     requestTime: 1000
   },
@@ -78,7 +72,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("storage"),
     base: "storage",
     endpoint: monitorBackend + "storage",
-    title: "Storage",
     component: "Storage",
     requestTime: 5000
   },
@@ -87,7 +80,6 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     transformationService: useDataTransformation("throughput"),
     base: "throughput",
     endpoint: monitorBackend + "throughput",
-    title: "Throughput",
     component: "Throughput",
     requestTime: 1000
   }
@@ -107,6 +99,53 @@ const metricValueStateOrder: Record<
   desc: ["high", "average", "low"]
 };
 
+const timeLabel = "Time in s";
+const queryLabel = "Number of queries";
+
+const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
+  access: {
+    title: "Access Frequency"
+  },
+  cpu: {
+    title: "CPU",
+    xaxis: timeLabel,
+    yaxis: "Workload in %"
+  },
+  executedQueryTypeProportion: {
+    title: "Query Type Proportion",
+    xaxis: "Workload",
+    yaxis: queryLabel
+  },
+  generatedQueryTypeProportion: {
+    title: "Query Type Proportion",
+    xaxis: "Workload",
+    yaxis: queryLabel
+  },
+  latency: {
+    title: "Latency",
+    xaxis: timeLabel,
+    yaxis: "Latency in ns"
+  },
+  queueLength: {
+    title: "Queue Length",
+    xaxis: timeLabel,
+    yaxis: queryLabel
+  },
+  ram: {
+    title: "RAM",
+    xaxis: timeLabel,
+    yaxis: "Memory usage in %"
+  },
+  storage: {
+    title: "Storage"
+  },
+  throughput: {
+    title: "Throughput",
+    xaxis: timeLabel,
+    yaxis: queryLabel
+  }
+};
+
 export function getMetadata(metric: Metric): MetricMetadata {
   return metricsMetadata[metric];
 }
@@ -116,7 +155,7 @@ export function getMetricComponent(metric: Metric): string {
 }
 
 export function getMetricTitle(metric: Metric): string {
-  return metricsMetadata[metric].title;
+  return metricsChartConfiguration[metric].title;
 }
 
 export function getMetricRequestTime(metric: Metric): number {
@@ -131,4 +170,10 @@ export function getMetricValueStateOrder(
 
 export function getMetricDetailColor(value: MetricValueState): string {
   return metricDetailColor[value];
+}
+
+export function getMetricChartConfiguration(
+  metric: Metric
+): ChartConfiguration {
+  return metricsChartConfiguration[metric];
 }

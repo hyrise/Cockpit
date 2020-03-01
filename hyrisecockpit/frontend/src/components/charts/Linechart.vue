@@ -14,12 +14,13 @@ import {
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { useUpdatingDatabases } from "../../meta/databases";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   data: any;
   selectedDatabases: string[];
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
   maxValue: number;
   timestamps: Date[];
 }
@@ -39,7 +40,7 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     },
     maxValue: {
@@ -143,7 +144,7 @@ function useLineChartConfiguration(
     return {
       xaxis: {
         title: {
-          text: props.chartConfiguration[1],
+          text: props.chartConfiguration.xaxis,
           font: {
             //size: 16
             //color: "#FAFAFA"
@@ -163,7 +164,7 @@ function useLineChartConfiguration(
       },
       yaxis: {
         title: {
-          text: props.chartConfiguration[2],
+          text: props.chartConfiguration.yaxis,
           font: {
             // size: 16
             //color: "#FAFAFA"

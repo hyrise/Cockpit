@@ -17,11 +17,16 @@ import {
   watch
 } from "@vue/composition-api";
 import Barchart from "../charts/Barchart.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ChartConfiguration
+} from "../../types/metrics";
+import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
   transformedData: Ref<any>;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
 }
 
 export default defineComponent({
@@ -43,11 +48,7 @@ export default defineComponent({
 
     return {
       transformedData,
-      chartConfiguration: [
-        "Query Type Proportion",
-        "workload",
-        "number of queries"
-      ]
+      chartConfiguration: getMetricChartConfiguration(props.metric)
     };
   }
 });

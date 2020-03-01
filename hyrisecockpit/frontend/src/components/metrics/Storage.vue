@@ -44,13 +44,18 @@ import {
   onMounted
 } from "@vue/composition-api";
 import Treemap from "../charts/Treemap.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ChartConfiguration
+} from "../../types/metrics";
+import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
   labels: Ref<string[]>;
   parents: Ref<string[]>;
   sizes: Ref<number[]>;
-  chartConfiguration: Ref<string[]>;
+  chartConfiguration: ChartConfiguration;
   showDialog: Ref<boolean>;
 }
 
@@ -88,7 +93,7 @@ export default defineComponent({
       labels,
       parents,
       sizes,
-      chartConfiguration: ref<string[]>([props.selectedDatabases[0]]),
+      chartConfiguration: getMetricChartConfiguration(props.metric),
       showDialog
     };
   }

@@ -12,13 +12,14 @@ import {
   ref
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   labels: string[];
   parents: string[];
   values: number[];
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
   autosize: boolean;
 }
 
@@ -75,7 +76,7 @@ export default defineComponent({
 });
 function useTreemapConfiguration(
   autosize: boolean,
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
   getDataset: (
