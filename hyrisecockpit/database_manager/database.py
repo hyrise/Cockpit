@@ -397,20 +397,22 @@ class Database(object):
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
-        # mocking system data
-        cpu_data = []
-        for _ in range(16):
-            cpu_data.append(randbelow(1001) / 10)
+        # mocked cpu data
+        cpu_data = [randbelow(1001) / 10 for _ in range(16)]
+        # mocked memory data
+        total_memory = 32 * (1024 ** 3)
+        used_memory = randbelow(total_memory)
+        available_memory = total_memory - used_memory
         memory_data = {
-            "available": 8467795968,
-            "used": 2525601792,
+            "available": available_memory,
+            "used": used_memory,
             "cached": 4237438976,
-            "percent": 32.1,
+            "percent": used_memory / total_memory,
             "free": 5536755712,
             "inactive": 2687451136,
             "active": 3657117696,
             "shared": 1149366272,
-            "total": 12469334016,
+            "total": total_memory,
             "buffers": 169537536,
         }
 
