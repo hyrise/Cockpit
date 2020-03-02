@@ -43,13 +43,21 @@
           </v-radio>
         </v-radio-group>
         <v-btn-toggle>
-          <v-btn @click="startWorkload(workload, frequency)" large color="error"
-            >Start
+          <v-btn @click="startWorkload(workload, frequency)">
+            <v-icon>
+              mdi-play
+            </v-icon>
           </v-btn>
-          <v-btn @click="startWorkload(workload, 0)" large color="error"
-            >Pause
+          <v-btn @click="startWorkload(workload, 0)">
+            <v-icon>
+              mdi-pause
+            </v-icon>
           </v-btn>
-          <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
+          <v-btn @click="stopWorkload()">
+            <v-icon>
+              mdi-stop
+            </v-icon>
+          </v-btn>
         </v-btn-toggle>
         <div class="mb-2 mt-6">
           <b> Load generated data into instances</b>
