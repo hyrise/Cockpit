@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 from hyrisecockpit.database_manager.cursor import StorageCursor
 
 
-class TestWorker:
+class TestCursor:
     """Tests Cursor classes."""
 
     def test_log_queries(self):
