@@ -1,20 +1,20 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 
-export function useDataTransformation(metric: Metric): TransformationService {
-  const transformationMap: Record<Metric, TransformationService> = {
-    access: getAccessData,
-    cpu: getCPUData,
-    latency: getReadOnlyData,
-    executedQueryTypeProportion: getExecutedQueryTypeProportionData,
-    generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
-    queueLength: getReadOnlyData,
-    ram: getRAMData,
-    storage: getStorageData,
-    throughput: getReadOnlyData
-  };
+const transformationServiceMap: Record<Metric, TransformationService> = {
+  access: getAccessData,
+  cpu: getCPUData,
+  latency: getReadOnlyData,
+  executedQueryTypeProportion: getExecutedQueryTypeProportionData,
+  generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  queueLength: getReadOnlyData,
+  ram: getRAMData,
+  storage: getStorageData,
+  throughput: getReadOnlyData
+};
 
-  return transformationMap[metric];
+export function useDataTransformation(metric: Metric): TransformationService {
+  return transformationServiceMap[metric];
 }
 
 function getExecutedQueryTypeProportionData(
@@ -138,9 +138,14 @@ export function useDataTransformationHelpers(): {
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
   function getDatabaseMemoryFootprint(data: any): number {
-    let sum = 0;
-    Object.values(data).forEach((table: any) => (sum += table.size));
-    return Math.floor(sum / Math.pow(10, 3)) / 1000;
+    return (
+      Math.floor(
+        (Object.values(data).reduce(
+          (sum1: any, table: any) => sum1 + table.size,
+          0
+        ) as number) / Math.pow(10, 3)
+      ) / 1000
+    );
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return Math.floor(data.memory.total / Math.pow(10, 6)) / 1000;
