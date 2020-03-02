@@ -1,7 +1,7 @@
 import { eventBus } from "./plugins/eventBus";
 import { useMetricService } from "./services/metricService";
 import { Metric, availableMetrics, MetricController } from "./types/metrics";
-import { FetchService } from "./types/services";
+import { MetricService } from "./types/services";
 import { getMetricRequestTime } from "./meta/metrics";
 
 type Interval = {
@@ -26,7 +26,7 @@ export function useMetricController(): MetricController {
 
   mapToData(metricServices);
 
-  function setupServices(): Record<Metric, FetchService> {
+  function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     availableMetrics.forEach(metric => {
       services[metric] = useMetricService(metric);
@@ -68,7 +68,7 @@ export function useMetricController(): MetricController {
     });
   }
 
-  function mapToData(services: Record<Metric, FetchService>): void {
+  function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
       data[metric as Metric] = service.data;
       maxValueData[metric as Metric] = service.maxValue;

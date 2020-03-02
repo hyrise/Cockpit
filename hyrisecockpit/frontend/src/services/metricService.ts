@@ -1,14 +1,14 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { Metric } from "@/types/metrics";
-import { FetchService } from "@/types/services";
+import { MetricService } from "@/types/services";
 import { useUpdatingData } from "../meta/components";
 import { getMetricMetadata } from "../meta/metrics";
 
-export function useMetricService(metric: Metric): FetchService {
-  const queryReadyState = ref<boolean>(true);
+export function useMetricService(metric: Metric): MetricService {
+  const queryReadyState = ref(true);
   const data = ref<any>({});
-  const maxValue = ref<number>(0);
+  const maxValue = ref(0);
   const timestamps = ref<Date[]>([]);
   const metricMetaData = getMetricMetadata(metric);
 
