@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -44,7 +44,7 @@ interface Data {
   valueColor: Ref<Record<string, string>>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "MetricDetails",
   props: {
     data: {

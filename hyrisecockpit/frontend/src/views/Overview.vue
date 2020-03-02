@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   watch,
   computed,
@@ -39,7 +39,7 @@ import { useSelectionHandling } from "../meta/views";
 import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 
-export default createComponent({
+export default defineComponent({
   components: {
     MetricsTileList,
     DatabaseSystemDetails,

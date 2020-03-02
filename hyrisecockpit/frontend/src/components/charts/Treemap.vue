@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   watch,
@@ -23,7 +23,7 @@ interface Props {
   autosize: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
     labels: {
       type: Array,

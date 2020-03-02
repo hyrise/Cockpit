@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   watch,
   Ref,
@@ -58,7 +58,7 @@ interface Data {
   showDialog: Ref<boolean>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "Storage",
   components: {
     Treemap
