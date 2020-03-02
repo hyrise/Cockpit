@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$databaseService.tables.value.length" class="mt-12">
+    <div class="mt-12">
       <v-select
         v-model="selectedTable"
         :items="tables"
@@ -10,8 +10,7 @@
         outlined
         prepend-icon="mdi-table"
         width="100"
-      ></v-select>
-
+      />
       <Heatmap
         :graph-id="graphId || 'access'"
         :data="mapData"
@@ -25,7 +24,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -36,6 +35,7 @@ import {
 
 import Heatmap from "../charts/Heatmap.vue";
 import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import { equals } from "../../helpers/methods";
 
 interface Data {
   tables: Ref<string[]>;
@@ -46,38 +46,45 @@ interface Data {
   selectedTable: Ref<string>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "Access",
   components: {
     Heatmap
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { tables } = context.root.$databaseService;
     const selectedTable = ref<string>("");
     const data = context.root.$metricController.data[props.metric];
-
-    const table = computed(() => selectedTable.value);
+    const watchedDatabase = props.selectedDatabases.map(
+      database => database.id
+    )[0];
+    const tables = ref<string[]>(props.selectedDatabases[0].tables);
+    const { isReady } = context.root.$databaseService;
 
     const mapData = ref<number[][]>([]);
     const columns = ref<string[]>([]);
     const chunks = ref<string[]>([]);
     const chartConfiguration: string[] = ["Access frequency"];
 
-    watch(tables, () => {
-      selectedTable.value = tables.value.length ? tables.value[0] : "";
-    });
+    watch(
+      () => props.selectedDatabases[0].tables,
+      () => {
+        if (isReady) {
+          tables.value = props.selectedDatabases[0].tables;
+        }
+      }
+    );
 
-    watch([data, table], () => {
-      if (Object.keys(data.value).length && table.value != "") {
+    watch([data, selectedTable], () => {
+      if (Object.keys(data.value).length && selectedTable.value != "") {
         const {
           newColumns,
           newChunks,
           dataByChunks
         } = props.metricMeta.transformationService(
           data.value,
-          props.selectedDatabases.map(database => database.id)[0],
-          table.value
+          watchedDatabase,
+          selectedTable.value
         );
         chunks.value = newChunks;
         columns.value = newColumns;

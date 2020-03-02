@@ -104,7 +104,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -131,13 +131,13 @@ interface Data {
   dbname: Ref<string>;
 }
 
-export default createComponent({
+export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { databases, addDatabase } = context.root.$databaseService;
-    const { emitMetricsChangedEvent } = useMetricEvents();
+    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
 
     onMounted(() => {
-      emitMetricsChangedEvent();
+      emitWatchedMetricsChangedEvent();
     });
 
     const number_workers = ref<number>(8);

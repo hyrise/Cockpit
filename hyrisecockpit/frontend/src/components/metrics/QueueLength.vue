@@ -13,13 +13,15 @@
       :data="data"
       :graph-id="graphId || 'queueLength'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
+      :timestamps="timestamps"
     />
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -36,22 +38,26 @@ import {
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
 
-export default createComponent({
+export default defineComponent({
   name: "QueueLength",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
+    const timestamps = context.root.$metricController.timestamps[props.metric];
 
     const chartConfiguration = [
       "Queue Length",
       "time in sec",
-      "amount of queries"
+      "number of queries"
     ];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue,
+      timestamps
     };
   }
 });
