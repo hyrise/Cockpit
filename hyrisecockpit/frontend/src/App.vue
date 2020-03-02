@@ -9,9 +9,7 @@
       <v-row justify="end">
         <v-dialog v-model="showWorkloadDialog" persistent max-width="600px">
           <template v-slot:activator="{ on }">
-            <v-btn class=" white--text mr-5" v-on="on"
-              >Generate Workload</v-btn
-            >
+            <v-btn class=" white--text mr-5" v-on="on">Generate Workload</v-btn>
           </template>
           <v-card>
             <v-card-text>
