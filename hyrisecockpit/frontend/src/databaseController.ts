@@ -15,24 +15,28 @@ export function useDatabaseController(): DatabaseController {
   const databasesUpdated = ref(false);
   const databaseService = useDatabaseService();
 
+  updateDatabases();
+
   eventBus.$on("DATABASE_ADDED", () => {
     databasesUpdated.value = false;
     updateDatabases();
   });
 
   eventBus.$on("STORAGE_DATA_CHANGED", (data: any) => {
-    //TODO: check always if db exists
-    console.log("storage-changed", data);
-    updateDatabaseStorageInformation(data);
+    if (!allDatabasesExist(Object.keys(data))) {
+      updateDatabases();
+    } else {
+      updateDatabaseStorageInformation(data);
+    }
   });
 
   eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
-    //TODO: check always if db exists
-    console.log("cpu-changed", data);
-    updateDatabaseCPUInformation(data);
+    if (!allDatabasesExist(Object.keys(data))) {
+      updateDatabases();
+    } else {
+      updateDatabaseCPUInformation(data);
+    }
   });
-
-  updateDatabases();
 
   function updateDatabases(): void {
     const updatedDatabases: Database[] = [];
@@ -119,6 +123,14 @@ export function useDatabaseController(): DatabaseController {
       if (!equals(database.tables, storageInfo.tables))
         database.tables = storageInfo.tables;
     });
+  }
+
+  function allDatabasesExist(currentDatabases: string[]): boolean {
+    return currentDatabases.reduce(
+      (allDatabasesExist: boolean, database) =>
+        allDatabasesExist && Boolean(getDatabaseById(database)),
+      true
+    );
   }
 
   return {
