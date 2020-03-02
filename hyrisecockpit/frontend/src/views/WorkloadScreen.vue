@@ -121,6 +121,8 @@ interface Data {
   stopWorkload: () => void;
   availableWorkloads: string[];
   frequency: Ref<number>;
+  workload: Ref<String>;
+  workloadData: Ref<String>;
   workloadMetrics: Metric[];
   watchedInstances: Ref<Database[]>;
 }
@@ -134,6 +136,8 @@ export default defineComponent({
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(200);
+    const workload = ref<String>("tpch01");
+    const workloadData = ref<String>("tpch01");
     const {
       loadWorkloadData,
       deleteWorkloadData,
@@ -162,6 +166,8 @@ export default defineComponent({
       startWorkload,
       stopWorkload,
       frequency,
+      workload,
+      workloadData,
       watchedInstances,
       workloadMetrics
     };
