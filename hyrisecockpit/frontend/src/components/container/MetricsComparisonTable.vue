@@ -1,6 +1,6 @@
 <template>
   <div>
-    <database-system-details :selected-databases="selectedDatabases" />
+    <database-details-panel :selected-databases="selectedDatabases" />
     <div class="metrics-table">
       <div
         class="metrics-column"
@@ -60,7 +60,7 @@ import {
 } from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
-import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
+import DatabaseDetailsPanel from "../details/DatabaseDetailsPanel.vue";
 import { Database } from "../../types/database";
 import { useUpdatingDatabases } from "../../meta/databases";
 
@@ -82,7 +82,7 @@ export default defineComponent({
     Storage,
     Access,
     QueryTypeProportion,
-    DatabaseSystemDetails
+    DatabaseDetailsPanel
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {

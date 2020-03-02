@@ -5,7 +5,7 @@
       <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
         No databases selected.
       </v-alert>
-      <database-system-details
+      <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
         :handle-scroll="false"
@@ -35,13 +35,13 @@ import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
 import { useSelectionHandling } from "../meta/views";
-import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
+import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 
 export default defineComponent({
   components: {
     MetricsTileList,
-    DatabaseSystemDetails,
+    DatabaseDetailsPanel,
     DatabaseMetricSelection
   },
   setup(props: {}, context: SetupContext): MetricViewData {
