@@ -1,5 +1,11 @@
 import { eventBus } from "./plugins/eventBus";
-import { DatabaseController, Database } from "./types/database";
+import {
+  DatabaseController,
+  Database,
+  DatabaseCPUResponse,
+  DatabaseStorageResponse,
+  DatabaseResponse
+} from "./types/database";
 import { useDatabaseService } from "./services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
 
@@ -41,9 +47,9 @@ export function useDatabaseController(): DatabaseController {
   }
 
   function getDatabaseInformation(
-    database: any,
-    databasesCPUInformation: any[],
-    databasesStorageInformation: any[]
+    database: DatabaseResponse,
+    databasesCPUInformation: DatabaseCPUResponse[],
+    databasesStorageInformation: DatabaseStorageResponse[]
   ): Database {
     const cpuInformation = databasesCPUInformation.find(
       object => object.id === database.id
@@ -56,13 +62,13 @@ export function useDatabaseController(): DatabaseController {
       color: databaseService.getDatabaseColor(),
       systemDetails: {
         host: database.host,
-        mainMemoryCapacity: cpuInformation.mainMemoryCapacity,
-        memoryFootprint: storageInformation.memoryFootprint,
-        numberOfCPUs: cpuInformation.numberOfCPUs,
+        mainMemoryCapacity: cpuInformation!.mainMemoryCapacity,
+        memoryFootprint: storageInformation!.memoryFootprint,
+        numberOfCPUs: cpuInformation!.numberOfCPUs,
         numberOfWorkers: database.numberOfWorkers
       },
-      tables: storageInformation.tables
-    });
+      tables: storageInformation!.tables
+    } as Database);
   }
 
   function getDatabaseById(id: string): Database | undefined {
@@ -71,8 +77,7 @@ export function useDatabaseController(): DatabaseController {
 
   function getDatabasesByIds(ids: string[]): Database[] {
     return ids.reduce((availableDatabases, id) => {
-      const database = getDatabaseById(id);
-      if (database) availableDatabases.push(database);
+      availableDatabases.push(getDatabaseById(id)!);
       return availableDatabases;
     }, [] as Database[]);
   }

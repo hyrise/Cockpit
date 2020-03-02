@@ -9,7 +9,6 @@ export interface DatabaseSystemDetails {
 }
 
 export interface Database {
-  //TODO: when updating consider to make this all refs
   id: string;
   color: string;
   systemDetails: DatabaseSystemDetails;
@@ -23,9 +22,27 @@ export interface DatabaseController {
 }
 
 export interface DatabaseService {
-  addDatabase: (databasedata: any) => void;
+  addDatabase: (databaseConnection: any) => void;
   getDatabases: () => Promise<any[]>;
   getDatabasesCPUInformation: () => Promise<any[]>;
   getDatabasesStorageInformation: () => Promise<any[]>;
   getDatabaseColor: () => string;
 }
+
+export type DatabaseResponse = {
+  id: string;
+  host: string;
+  numberOfWorkers: number;
+};
+
+export type DatabaseCPUResponse = {
+  id: string;
+  numberOfCPUs: number;
+  mainMemoryCapacity: number;
+};
+
+export type DatabaseStorageResponse = {
+  id: string;
+  memoryFootprint: number;
+  tables: string[];
+};

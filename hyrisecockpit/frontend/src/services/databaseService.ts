@@ -1,30 +1,17 @@
-import { ref } from "@vue/composition-api";
-import { Database, DatabaseService } from "../types/database";
+import {
+  DatabaseService,
+  DatabaseCPUResponse,
+  DatabaseStorageResponse,
+  DatabaseResponse
+} from "../types/database";
 import axios from "axios";
 import colors from "vuetify/lib/util/colors";
 import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "./transformationService";
 import { useDatabaseEvents } from "../meta/events";
 
-type DatabaseResponse = {
-  id: string;
-  host: string;
-  numberOfWorkers: number;
-};
-
-type DatabaseCPUResponse = {
-  id: string;
-  numberOfCPUs: number;
-  mainMemoryCapacity: number;
-};
-
-type DatabaseStorageResponse = {
-  id: string;
-  memoryFootprint: number;
-  tables: string[];
-};
-
 export function useDatabaseService(): DatabaseService {
+  //TODO: think about how to handle colors now
   const colorsArray: any = Object.keys(colors);
   let usedColors: any = 0;
   const { emitDatabaseAddedEvent } = useDatabaseEvents();
@@ -88,8 +75,8 @@ export function useDatabaseService(): DatabaseService {
     return databasesWithStorageInformation;
   }
 
-  function addDatabase(databaseService: any): void {
-    axios.post(controlBackend + "database", databaseService).then(() => {
+  function addDatabase(databaseConnection: any): void {
+    axios.post(controlBackend + "database", databaseConnection).then(() => {
       emitDatabaseAddedEvent();
     });
   }

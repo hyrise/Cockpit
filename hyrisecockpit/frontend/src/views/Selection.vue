@@ -139,7 +139,7 @@ export default defineComponent({
   }
 });
 
-type DatabaseCreationData = {
+interface DatabaseCreationData {
   number_workers: Ref<number>;
   id: Ref<string>;
   user: Ref<string>;
@@ -150,7 +150,7 @@ type DatabaseCreationData = {
   createNewDatabase: () => void;
   showDatabaseDialog: Ref<boolean>;
   openDatabaseScreen: (databaseId: string) => void;
-};
+}
 function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const { addDatabase } = useDatabaseService();
 
