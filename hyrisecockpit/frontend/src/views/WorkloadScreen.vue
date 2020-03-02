@@ -59,30 +59,29 @@
             </v-icon>
           </v-btn>
         </v-btn-toggle>
+
         <div class="mb-2 mt-6">
-          <b> Load generated data into instances</b>
+          <b> Load and remove generated data into/from instances</b>
         </div>
-        <v-btn-toggle>
-          <v-btn
+        <v-radio-group v-model="workloadData">
+          <v-radio
             v-for="workload in availableWorkloads"
             :key="workload"
-            @click="loadWorkloadData(workload)"
-            color="success"
+            :label="getDisplayedWorkload(workload)"
+            :value="workload"
           >
-            {{ getDisplayedWorkload(workload) }}
+          </v-radio>
+        </v-radio-group>
+        <v-btn-toggle>
+          <v-btn @click="loadWorkloadData(workloadData)">
+            <v-icon>
+              mdi-plus
+            </v-icon>
           </v-btn>
-        </v-btn-toggle>
-        <div class="mb-2 mt-6">
-          <b> Remove generated data from instances</b>
-        </div>
-        <v-btn-toggle>
-          <v-btn
-            v-for="workload in availableWorkloads"
-            :key="workload"
-            @click="deleteWorkloadData(workload)"
-            color="error"
-          >
-            {{ getDisplayedWorkload(workload) }}
+          <v-btn @click="deleteWorkloadData(workloadData)">
+            <v-icon>
+              mdi-minus
+            </v-icon>
           </v-btn>
         </v-btn-toggle>
       </v-col>
@@ -122,7 +121,6 @@ interface Data {
   stopWorkload: () => void;
   availableWorkloads: string[];
   frequency: Ref<number>;
-  workload: String;
   workloadMetrics: Metric[];
   watchedInstances: Ref<Database[]>;
 }
@@ -136,7 +134,6 @@ export default defineComponent({
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(200);
-    const workload = "tpch01";
     const {
       loadWorkloadData,
       deleteWorkloadData,
@@ -165,7 +162,6 @@ export default defineComponent({
       startWorkload,
       stopWorkload,
       frequency,
-      workload,
       watchedInstances,
       workloadMetrics
     };
