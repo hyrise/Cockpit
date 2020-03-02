@@ -23,10 +23,12 @@ export interface DatabaseController {
 
 export interface DatabaseService {
   addDatabase: (databaseConnection: any) => void;
-  getDatabases: () => Promise<any[]>;
-  getDatabasesCPUInformation: () => Promise<any[]>;
-  getDatabasesStorageInformation: () => Promise<any[]>;
+  fetchDatabases: () => Promise<any[]>;
+  fetchDatabasesCPUInformation: () => Promise<any[]>;
+  fetchDatabasesStorageInformation: () => Promise<any[]>;
   getDatabaseColor: () => string;
+  getStorageInformation: (response: any) => DatabaseStorageResponse[];
+  getCPUInformation: (response: any) => DatabaseCPUResponse[];
 }
 
 export type DatabaseResponse = {

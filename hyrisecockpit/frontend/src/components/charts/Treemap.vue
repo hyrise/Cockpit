@@ -42,7 +42,7 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     },
     autosize: {

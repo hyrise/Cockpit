@@ -25,7 +25,7 @@
             :is="getMetricComponent(metric)"
             :selected-databases="[database.id]"
             :metric="metric"
-            :metric-meta="getMetadata(metric)"
+            :metric-meta="getMetricMetadata(metric)"
             :graph-id="`${metric}-${database.id}`"
             :show-details="showDetails"
           />
@@ -54,7 +54,7 @@ import Access from "../metrics/Access.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import { uuid } from "vue-uuid";
 import {
-  getMetadata,
+  getMetricMetadata,
   getMetricTitle,
   getMetricComponent
 } from "../../meta/metrics";
@@ -66,7 +66,7 @@ import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Data {
   databases: Ref<readonly Database[]>;
-  getMetadata: (metric: Metric) => MetricMetadata;
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
   uuid: () => string;
@@ -89,7 +89,7 @@ export default defineComponent({
     return {
       ...useUpdatingDatabases(props, context),
       uuid: uuid.v1,
-      getMetadata,
+      getMetricMetadata,
       getMetricComponent,
       getMetricTitle
     };

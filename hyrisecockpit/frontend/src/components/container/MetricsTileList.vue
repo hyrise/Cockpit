@@ -13,7 +13,7 @@
         :is="getMetricComponent(metric)"
         :selected-databases="selectedDatabases"
         :metric="metric"
-        :metric-meta="getMetadata(metric)"
+        :metric-meta="getMetricMetadata(metric)"
         :graph-id="metric"
         :show-details="showDetails"
       />
@@ -30,7 +30,7 @@ import RAM from "../metrics/RAM.vue";
 import QueueLength from "../metrics/QueueLength.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import {
-  getMetadata,
+  getMetricMetadata,
   getMetricTitle,
   getMetricComponent
 } from "../../meta/metrics";
@@ -38,7 +38,7 @@ import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata;
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
 }
@@ -55,7 +55,7 @@ export default defineComponent({
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {
-      getMetadata,
+      getMetricMetadata,
       getMetricTitle,
       getMetricComponent
     };

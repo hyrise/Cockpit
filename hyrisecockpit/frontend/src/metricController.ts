@@ -2,7 +2,7 @@ import { eventBus } from "./plugins/eventBus";
 import { useMetricService } from "./services/metricService";
 import { Metric, availableMetrics, MetricController } from "./types/metrics";
 import { FetchService } from "./types/services";
-import { getMetadata, getMetricRequestTime } from "./meta/metrics";
+import { getMetricRequestTime } from "./meta/metrics";
 
 type Interval = {
   id: number | undefined;
@@ -29,7 +29,7 @@ export function useMetricController(): MetricController {
   function setupServices(): Record<Metric, FetchService> {
     const services: any = {};
     availableMetrics.forEach(metric => {
-      services[metric] = useMetricService(getMetadata(metric));
+      services[metric] = useMetricService(metric);
     });
     return services;
   }

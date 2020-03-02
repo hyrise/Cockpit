@@ -8,6 +8,7 @@ import {
 } from "./types/database";
 import { useDatabaseService } from "./services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
+import { equals } from "./helpers/methods";
 
 export function useDatabaseController(): DatabaseController {
   const databases = ref<Database[]>([]);
@@ -19,16 +20,28 @@ export function useDatabaseController(): DatabaseController {
     updateDatabases();
   });
 
+  eventBus.$on("STORAGE_DATA_CHANGED", (data: any) => {
+    //TODO: check always if db exists
+    console.log("storage-changed", data);
+    updateDatabaseStorageInformation(data);
+  });
+
+  eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
+    //TODO: check always if db exists
+    console.log("cpu-changed", data);
+    updateDatabaseCPUInformation(data);
+  });
+
   updateDatabases();
 
   function updateDatabases(): void {
     const updatedDatabases: Database[] = [];
-    databaseService.getDatabases().then(currentDatabases => {
+    databaseService.fetchDatabases().then(currentDatabases => {
       databaseService
-        .getDatabasesCPUInformation()
+        .fetchDatabasesCPUInformation()
         .then(databasesWithCPUInformation => {
           databaseService
-            .getDatabasesStorageInformation()
+            .fetchDatabasesStorageInformation()
             .then(databasesWithStorageInformation => {
               currentDatabases.forEach(database => {
                 updatedDatabases.push(
@@ -80,6 +93,32 @@ export function useDatabaseController(): DatabaseController {
       availableDatabases.push(getDatabaseById(id)!);
       return availableDatabases;
     }, [] as Database[]);
+  }
+
+  function updateDatabaseCPUInformation(data: any): void {
+    databaseService.getCPUInformation(data).forEach(cpuInfo => {
+      const database = getDatabaseById(cpuInfo.id)!;
+      if (
+        database.systemDetails.mainMemoryCapacity !== cpuInfo.mainMemoryCapacity
+      )
+        database.systemDetails.mainMemoryCapacity = cpuInfo.mainMemoryCapacity;
+
+      if (database.systemDetails.numberOfCPUs !== cpuInfo.numberOfCPUs)
+        database.systemDetails.numberOfCPUs = cpuInfo.numberOfCPUs;
+    });
+  }
+
+  function updateDatabaseStorageInformation(data: any): void {
+    databaseService.getStorageInformation(data).forEach(storageInfo => {
+      const database = getDatabaseById(storageInfo.id)!;
+      if (
+        database.systemDetails.memoryFootprint !== storageInfo.memoryFootprint
+      )
+        database.systemDetails.memoryFootprint = storageInfo.memoryFootprint;
+
+      if (!equals(database.tables, storageInfo.tables))
+        database.tables = storageInfo.tables;
+    });
   }
 
   return {

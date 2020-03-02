@@ -139,7 +139,7 @@ export function useDataTransformationHelpers(): {
 } {
   function getDatabaseMemoryFootprint(data: any): number {
     let sum = 0;
-    Object.values(data as any).forEach((table: any) => (sum += table.size));
+    Object.values(data).forEach((table: any) => (sum += table.size));
     return Math.floor(sum / Math.pow(10, 3)) / 1000;
   }
   function getDatabaseMainMemoryCapacity(data: any): number {

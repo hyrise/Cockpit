@@ -21,16 +21,10 @@ export function useDatabaseService(): DatabaseService {
     getDatabaseMainMemoryCapacity
   } = useDataTransformationHelpers();
 
-  async function getDatabases(): Promise<DatabaseResponse[]> {
-    const databases: DatabaseResponse[] = [];
+  async function fetchDatabases(): Promise<DatabaseResponse[]> {
+    let databases: DatabaseResponse[] = [];
     await axios.get(controlBackend + "database").then(response => {
-      Object.values(response.data).forEach((data: any) => {
-        databases.push({
-          id: data.id,
-          host: data.host,
-          numberOfWorkers: data.number_workers
-        } as DatabaseResponse);
-      });
+      databases = getDatabasesInformation(response.data);
     });
     return databases;
   }
@@ -41,36 +35,62 @@ export function useDatabaseService(): DatabaseService {
     return color;
   }
 
-  async function getDatabasesCPUInformation(): Promise<DatabaseCPUResponse[]> {
-    const databasesWithCPUInformation: DatabaseCPUResponse[] = [];
+  async function fetchDatabasesCPUInformation(): Promise<
+    DatabaseCPUResponse[]
+  > {
+    let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
     await axios.get(monitorBackend + "system").then(response => {
-      Object.entries(response.data.body.system_data).forEach(
-        ([id, data]: [string, any]) => {
-          databasesWithCPUInformation.push({
-            id: id,
-            numberOfCPUs: Object.keys(data.cpu).length,
-            mainMemoryCapacity: getDatabaseMainMemoryCapacity(data)
-          } as DatabaseCPUResponse);
-        }
+      databasesWithCPUInformation = getCPUInformation(
+        response.data.body.system_data
       );
     });
     return databasesWithCPUInformation;
   }
 
-  async function getDatabasesStorageInformation(): Promise<
+  async function fetchDatabasesStorageInformation(): Promise<
     DatabaseStorageResponse[]
   > {
-    const databasesWithStorageInformation: DatabaseStorageResponse[] = [];
+    let databasesWithStorageInformation: DatabaseStorageResponse[] = [];
     await axios.get(monitorBackend + "storage").then(response => {
-      Object.entries(response.data.body.storage).forEach(
-        ([id, data]: [string, any]) => {
-          databasesWithStorageInformation.push({
-            id: id,
-            memoryFootprint: getDatabaseMemoryFootprint(data),
-            tables: Object.keys(data)
-          } as DatabaseStorageResponse);
-        }
+      databasesWithStorageInformation = getStorageInformation(
+        response.data.body.storage
       );
+    });
+    return databasesWithStorageInformation;
+  }
+
+  function getDatabasesInformation(response: any): DatabaseResponse[] {
+    const databases: DatabaseResponse[] = [];
+    Object.values(response).forEach((data: any) => {
+      databases.push({
+        id: data.id,
+        host: data.host,
+        numberOfWorkers: data.number_workers
+      } as DatabaseResponse);
+    });
+    return databases;
+  }
+
+  function getCPUInformation(response: any): DatabaseCPUResponse[] {
+    const databasesWithCPUInformation: DatabaseCPUResponse[] = [];
+    Object.entries(response).forEach(([id, data]: [string, any]) => {
+      databasesWithCPUInformation.push({
+        id: id,
+        numberOfCPUs: Object.keys(data.cpu).length,
+        mainMemoryCapacity: getDatabaseMainMemoryCapacity(data)
+      } as DatabaseCPUResponse);
+    });
+    return databasesWithCPUInformation;
+  }
+
+  function getStorageInformation(response: any): DatabaseStorageResponse[] {
+    const databasesWithStorageInformation: DatabaseStorageResponse[] = [];
+    Object.entries(response).forEach(([id, data]: [string, any]) => {
+      databasesWithStorageInformation.push({
+        id: id,
+        memoryFootprint: getDatabaseMemoryFootprint(data),
+        tables: Object.keys(data)
+      } as DatabaseStorageResponse);
     });
     return databasesWithStorageInformation;
   }
@@ -83,9 +103,11 @@ export function useDatabaseService(): DatabaseService {
 
   return {
     addDatabase,
-    getDatabases,
-    getDatabasesCPUInformation,
-    getDatabasesStorageInformation,
-    getDatabaseColor
+    fetchDatabases,
+    fetchDatabasesCPUInformation,
+    fetchDatabasesStorageInformation,
+    getDatabaseColor,
+    getCPUInformation,
+    getStorageInformation
   };
 }

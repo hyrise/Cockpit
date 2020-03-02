@@ -13,7 +13,7 @@
         :metric="metric"
         :is="getMetricComponent(metric)"
         :selected-databases="watchedInstances"
-        :metric-meta="getMetadata(metric)"
+        :metric-meta="getMetricMetadata(metric)"
       />
     </div>
     <v-progress-linear v-else indeterminate color="primary" height="7" />
@@ -29,7 +29,7 @@ import {
   onMounted
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { getMetadata, getMetricComponent } from "../meta/metrics";
+import { getMetricMetadata, getMetricComponent } from "../meta/metrics";
 import {
   Metric,
   MetricMetadata,
@@ -43,7 +43,7 @@ import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata;
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   overviewMetrics: Metric[];
   instanceMetrics: Metric[];
@@ -64,7 +64,7 @@ export default defineComponent({
     });
 
     return {
-      getMetadata,
+      getMetricMetadata,
       getMetricComponent,
       watchedInstances: ref([context.root.$route.params.id]),
       overviewMetrics,

@@ -1,22 +1,26 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
-import { MetricMetadata } from "@/types/metrics";
+import { Metric } from "@/types/metrics";
 import { FetchService } from "@/types/services";
+import { useUpdatingData } from "../meta/components";
+import { getMetricMetadata } from "../meta/metrics";
 
-export function useMetricService(metric: MetricMetadata): FetchService {
+export function useMetricService(metric: Metric): FetchService {
   const queryReadyState = ref<boolean>(true);
-  const data = ref<any>({}); // TODO: change the initial value
+  const data = ref<any>({});
   const maxValue = ref<number>(0);
   const timestamps = ref<Date[]>([]);
+  const metricMetaData = getMetricMetadata(metric);
 
   function getData(): void {
     queryReadyState.value = false;
     fetchData().then(result => {
-      if (metric.fetchType === "modify") {
+      useUpdatingData(result, metric);
+      if (metricMetaData.fetchType === "modify") {
         Object.keys(result).forEach(key => {
-          addData(key, metric.transformationService(result, key));
+          addData(key, metricMetaData.transformationService(result, key));
         });
-      } else if (metric.fetchType === "read") {
+      } else if (metricMetaData.fetchType === "read") {
         data.value = result;
       }
       queryReadyState.value = true;
@@ -44,13 +48,13 @@ export function useMetricService(metric: MetricMetadata): FetchService {
   function fetchData(): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
-        .get(metric.endpoint)
+        .get(metricMetaData.endpoint)
         .then(response => {
-          if (metric.component == "QueryTypeProportion") {
+          if (metricMetaData.component == "QueryTypeProportion") {
             //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
             resolve(response.data);
           } else {
-            resolve(response.data.body[metric.base]);
+            resolve(response.data.body[metricMetaData.base]);
           }
         })
         .catch(error => {

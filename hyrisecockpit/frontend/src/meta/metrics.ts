@@ -146,7 +146,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   }
 };
 
-export function getMetadata(metric: Metric): MetricMetadata {
+export function getMetricMetadata(metric: Metric): MetricMetadata {
   return metricsMetadata[metric];
 }
 
