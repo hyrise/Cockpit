@@ -1,18 +1,15 @@
 """Module for managing databases."""
 
-from typing import Any, Callable, Dict, Optional
-
-from jsonschema import ValidationError, validate
-from zmq import REP, Context
+from typing import Any, Callable, Dict, Optional, Tuple
 
 from hyrisecockpit.message import (
     add_database_request_schema,
     delete_data_request_schema,
     delete_database_request_schema,
     load_data_request_schema,
-    request_schema,
 )
 from hyrisecockpit.response import get_error_response, get_response
+from hyrisecockpit.server import Server
 
 from .database import Database
 from .driver import Driver
@@ -30,33 +27,31 @@ class DatabaseManager(object):
         default_tables: str,
     ) -> None:
         """Initialize a DatabaseManager."""
-        self._db_manager_port = db_manager_port
-        self._db_manager_listening = db_manager_listening
         self._workload_sub_host = workload_sub_host
         self._workload_pubsub_port = workload_pubsub_port
         self._default_tables = default_tables
 
         self._databases: Dict[str, Database] = {}
-
-        self._server_calls: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
-            "add database": self._call_add_database,
-            "storage": self._call_storage,
-            "system data": self._call_system_data,
-            "delete database": self._call_delete_database,
-            "queue length": self._call_queue_length,
-            "chunks data": self._call_chunks_data,
-            "failed tasks": self._call_failed_tasks,
-            "get databases": self._call_get_databases,
-            "load data": self._call_load_data,
-            "delete data": self._call_delete_data,
-            "process table status": self._call_process_table_status,
-            "purge queue": self._call_purge_queue,
+        server_calls: Dict[
+            str, Tuple[Callable[[Dict[str, Any]], Dict[str, Any]], Optional[Dict]]
+        ] = {
+            "add database": (self._call_add_database, add_database_request_schema),
+            "storage": (self._call_storage, None),
+            "system data": (self._call_system_data, None),
+            "delete database": (
+                self._call_delete_database,
+                delete_database_request_schema,
+            ),
+            "queue length": (self._call_queue_length, None),
+            "chunks data": (self._call_chunks_data, None),
+            "failed tasks": (self._call_failed_tasks, None),
+            "get databases": (self._call_get_databases, None),
+            "load data": (self._call_load_data, load_data_request_schema),
+            "delete data": (self._call_delete_data, delete_data_request_schema),
+            "process table status": (self._call_process_table_status, None),
+            "purge queue": (self._call_purge_queue, None),
         }
-        self._context = Context(io_threads=1)
-        self._socket = self._context.socket(REP)
-        self._socket.bind(
-            "tcp://{:s}:{:s}".format(self._db_manager_listening, self._db_manager_port)
-        )
+        self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -68,8 +63,6 @@ class DatabaseManager(object):
 
     def _call_add_database(self, body: Dict) -> Dict:
         """Add database and initialize driver for it."""
-        validate(instance=body, schema=add_database_request_schema)
-        # validating connection data
         user = body["user"]
         password = body["password"]
         host = body["host"]
@@ -149,7 +142,6 @@ class DatabaseManager(object):
         return response
 
     def _call_delete_database(self, body: Dict) -> Dict:
-        validate(instance=body, schema=delete_database_request_schema)
         id: str = body["id"]
         database: Optional[Database] = self._databases.pop(id, None)
         if database:
@@ -168,7 +160,6 @@ class DatabaseManager(object):
         return response
 
     def _call_load_data(self, body: Dict) -> Dict:
-        validate(instance=body, schema=load_data_request_schema)
         folder_name: str = body["folder_name"].lower()  # TODO why .lower?
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
@@ -178,7 +169,6 @@ class DatabaseManager(object):
         return get_response(200)
 
     def _call_delete_data(self, body: Dict) -> Dict:
-        validate(instance=body, schema=delete_data_request_schema)
         folder_name: str = body["folder_name"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
@@ -213,35 +203,12 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def start(self) -> None:
-        """Start the manager by enabling IPC."""
-        while True:
-            # Get the message
-            request = self._socket.recv_json()
-
-            # Validate the message
-            try:
-                validate(instance=request, schema=request_schema)
-            except ValidationError:
-                self._socket.send_json(get_response(400))
-                continue
-
-            # Look for the call
-            call = self._server_calls.get(request["header"]["message"])
-            if not call:
-                self._socket.send_json(get_response(404))
-            else:
-                # Handle the call
-                try:
-                    response = call(request["body"])
-                except ValidationError:
-                    response = get_response(400)
-                finally:  # Send the reply
-                    self._socket.send_json(response)
+    def start(self):
+        """Start the manager by starting the server."""
+        self._server.start()
 
     def close(self) -> None:
         """Close the socket and context, exit all databases."""
         for database in self._databases.values():
             database.close()
-        self._socket.close()
-        self._context.term()
+        self._server.close()

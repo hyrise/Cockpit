@@ -85,23 +85,35 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
 function getStorageData(
   data: any,
   primaryKey: string = ""
-): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
+): {
+  newLabels: string[];
+  newParents: string[];
+  newSizes: number[];
+  newText: string[];
+} {
   const newLabels: string[] = [];
   const newParents: string[] = [];
   const newSizes: number[] = [];
+  const newText: string[] = [];
 
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
-    newParents.push("");
+    newParents.push(primaryKey);
     newSizes.push(0);
+    newText.push(`${data[primaryKey][table].size / Math.pow(10, 6)}MB`);
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
-      newSizes.push(data[primaryKey][table].data[attribute].size);
+      newSizes.push(
+        data[primaryKey][table].data[attribute].size / Math.pow(10, 6)
+      );
+      newText.push(
+        `${data[primaryKey][table].data[attribute].size / Math.pow(10, 6)}MB`
+      );
     });
   });
 
-  return { newLabels, newParents, newSizes };
+  return { newLabels, newParents, newSizes, newText };
 }
 
 function getAccessData(
