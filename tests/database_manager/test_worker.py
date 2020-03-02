@@ -1,4 +1,4 @@
-"""Tests for the database_manager module."""
+"""Tests for the worker module."""
 from unittest.mock import MagicMock, patch
 
 from psycopg2.extensions import AsIs
