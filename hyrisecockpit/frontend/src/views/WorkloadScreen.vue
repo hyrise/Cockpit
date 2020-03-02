@@ -13,10 +13,11 @@
       <v-divider />
       <v-col cols="12">
         <div class="mb-2 mt-2">
-          <b> Start workload </b>
+          <b> Start, pause and stop workload </b>
         </div>
         <v-slider
           v-model="frequency"
+          class="mt-10"
           thumb-label="always"
           min="0"
           max="1000"
@@ -32,20 +33,24 @@
             ></v-text-field>
           </template>
         </v-slider>
-        <v-btn-toggle>
-          <v-btn
+        <v-radio-group v-model="workload">
+          <v-radio
             v-for="workload in availableWorkloads"
             :key="workload"
-            @click="startWorkload(workload, frequency)"
-            color="success"
+            :label="getDisplayedWorkload(workload)"
+            :value="workload"
           >
-            {{ getDisplayedWorkload(workload) }}
+          </v-radio>
+        </v-radio-group>
+        <v-btn-toggle>
+          <v-btn @click="startWorkload(workload, frequency)" large color="error"
+            >Start
           </v-btn>
+          <v-btn @click="startWorkload(workload, 0)" large color="error"
+            >Pause
+          </v-btn>
+          <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
         </v-btn-toggle>
-        <div class="mb-2 mt-6">
-          <b> Stop workload </b>
-        </div>
-        <v-btn @click="stopWorkload()" large color="error">Stop </v-btn>
         <div class="mb-2 mt-6">
           <b> Load generated data into instances</b>
         </div>
@@ -109,6 +114,7 @@ interface Data {
   stopWorkload: () => void;
   availableWorkloads: string[];
   frequency: Ref<number>;
+  workload: String;
   workloadMetrics: Metric[];
   watchedInstances: Ref<Database[]>;
 }
@@ -122,6 +128,7 @@ export default defineComponent({
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     const watchedInstances = ref<Database[]>([]);
     const frequency = ref<number>(200);
+    const workload = "tpch01";
     const {
       loadWorkloadData,
       deleteWorkloadData,
@@ -150,6 +157,7 @@ export default defineComponent({
       startWorkload,
       stopWorkload,
       frequency,
+      workload,
       watchedInstances,
       workloadMetrics
     };
