@@ -8,15 +8,22 @@
       v-for="database in databases"
       :key="database.id"
     >
-      <v-card-title>
-        <v-avatar class="mr-2" size="20" :color="database.color" />
-        {{ database.id }}
-      </v-card-title>
       <v-container class="grey lighten-5" fluid>
         <v-row no-gutters>
           <v-col class="entry">
+            <v-icon left> mdi-database</v-icon>
+            <b>ID: </b>
+          </v-col>
+          <v-col class="entry">
+            <v-avatar class="mr-2" size="16" :color="database.color" />
+            <b>{{ database.id }}</b>
+          </v-col>
+        </v-row>
+        <v-divider class="divider" />
+        <v-row no-gutters>
+          <v-col class="entry">
             <v-icon left> mdi-desktop-classic</v-icon>
-            <b v-if="showDescription">host:</b>
+            <b>host:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.host }}
@@ -25,7 +32,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-memory</v-icon>
-            <b v-if="showDescription">main memory capacity:</b>
+            <b>main memory capacity:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.mainMemoryCapacity }} GB
@@ -34,7 +41,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-shoe-print</v-icon>
-            <b v-if="showDescription">memory footprint:</b>
+            <b>memory footprint:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.memoryFootprint }} MB
@@ -43,7 +50,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-cpu-64-bit</v-icon>
-            <b v-if="showDescription">number of CPUs:</b>
+            <b>number of CPUs:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.numberOfCPUs }}
@@ -52,7 +59,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-worker</v-icon>
-            <b v-if="showDescription">number of workers:</b>
+            <b>number of workers:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.numberOfWorkers }}
@@ -77,7 +84,6 @@ import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Props {
   selectedDatabases: string[];
-  showDescription: boolean;
 }
 interface Data {
   databases: Ref<readonly Database[]>;
@@ -89,10 +95,6 @@ export default defineComponent({
     selectedDatabases: {
       type: Array,
       default: null
-    },
-    showDescription: {
-      type: Boolean,
-      default: true
     }
   },
   setup(props: Props, context: SetupContext): Data {
@@ -117,7 +119,8 @@ export default defineComponent({
   margin-top: 1%;
   margin-right: 0.5%;
 }
-.last {
-  margin-bottom: 2%;
+.divider {
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 </style>

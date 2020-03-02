@@ -1,7 +1,8 @@
 <template>
   <div id="details">
     <v-expansion-panels
-      v-model="showPanels"
+      v-model="verticalPanels"
+      v-if="!fixedContent"
       multiple
       class="panels white--text"
     >
@@ -13,10 +14,28 @@
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <database-system-details
-            :selected-databases="selectedDatabases"
-            :show-description="showDescription"
-          />
+          <database-system-details :selected-databases="selectedDatabases" />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    <v-expansion-panels
+      v-model="horizontalPanels"
+      v-if="fixedContent"
+      multiple
+      accordion
+    >
+      <v-card color="primary" width="100%">
+        <v-card-title class="white--text"> Databases </v-card-title>
+      </v-card>
+      <v-expansion-panel v-for="database in databases" :key="database.id">
+        <v-expansion-panel-header class="title">
+          {{ database.id }}
+          <template #actions>
+            <v-icon>$expand</v-icon>
+          </template>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <database-system-details :selected-databases="[database.id]" />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -34,14 +53,17 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
+import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Props {
   selectedDatabases: string[];
   handleScroll: boolean;
 }
 interface Data {
-  showDescription: Ref<boolean>;
-  showPanels: Ref<number[]>;
+  fixedContent: Ref<boolean>;
+  verticalPanels: Ref<number[]>;
+  horizontalPanels: Ref<number[]>;
+  databases: Ref<readonly Database[]>;
 }
 
 export default defineComponent({
@@ -58,8 +80,9 @@ export default defineComponent({
   },
   components: { DatabaseSystemDetails },
   setup(props: Props, context: SetupContext): Data {
-    const showDescription = ref(true);
-    const showPanels = ref<number[]>([0]);
+    const fixedContent = ref(false);
+    const verticalPanels = ref<number[]>([0]);
+    const horizontalPanels = ref<number[]>([]);
     let details: any = null;
     let detailsPageOffset = 0;
 
@@ -75,16 +98,23 @@ export default defineComponent({
     function handleScrollEvent(): void {
       if (window.pageYOffset > detailsPageOffset) {
         details.classList.add("sticky");
-        if (showDescription.value) showDescription.value = false;
+        if (!fixedContent.value) {
+          fixedContent.value = true;
+        }
       } else {
         details.classList.remove("sticky");
-        if (!showDescription.value) showDescription.value = true;
+        if (fixedContent.value) {
+          fixedContent.value = false;
+          horizontalPanels.value = [];
+        }
       }
     }
 
     return {
-      showDescription,
-      showPanels
+      fixedContent,
+      verticalPanels,
+      horizontalPanels,
+      ...useUpdatingDatabases(props, context)
     };
   }
 });
