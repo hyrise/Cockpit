@@ -1,44 +1,37 @@
 <template>
   <div id="details">
-    <v-expansion-panels
-      v-model="verticalPanels"
-      v-if="!fixedContent"
-      multiple
-      class="panels white--text"
-    >
-      <v-expansion-panel>
-        <v-expansion-panel-header class="title white--text" color="primary">
+    <panels v-if="!fixedContent">
+      <template #header>
+        <div class="white--text">
           Databases
-          <template #actions>
-            <v-icon color="white">$expand</v-icon>
-          </template>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <database-system-details :selected-databases="selectedDatabases" />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-    <v-expansion-panels
-      v-model="horizontalPanels"
+        </div>
+      </template>
+      <template #content>
+        <database-system-details :selected-databases="selectedDatabases" />
+      </template>
+    </panels>
+    <panels
       v-if="fixedContent"
-      multiple
-      accordion
+      :accordion="true"
+      header-color="white"
+      :content-list="selectedDatabases"
+      :show-panels="showDatabasePanels"
     >
-      <v-card color="primary" width="100%">
-        <v-card-title class="white--text"> Databases </v-card-title>
-      </v-card>
-      <v-expansion-panel v-for="database in databases" :key="database.id">
-        <v-expansion-panel-header class="title">
-          {{ database.id }}
-          <template #actions>
-            <v-icon>$expand</v-icon>
-          </template>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <database-system-details :selected-databases="[database.id]" />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+      <template #optionalHeader>
+        <v-card color="primary" width="100%" @click="toggleDatabasePanels()">
+          <v-card-title class="white--text">
+            Databases
+            <v-spacer />
+            <v-icon left v-if="!showDatabasePanels" color="white"
+              >mdi-plus</v-icon
+            >
+            <v-icon left v-if="showDatabasePanels" color="white"
+              >mdi-minus</v-icon
+            >
+          </v-card-title>
+        </v-card>
+      </template>
+    </panels>
   </div>
 </template>
 
@@ -52,17 +45,15 @@ import {
   ref
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
-import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
+import DatabaseSystemDetails from "./DatabaseSystemDetails.vue";
+import Panels from "./Panels.vue";
 import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Props {
   selectedDatabases: string[];
   handleScroll: boolean;
 }
-interface Data {
-  fixedContent: Ref<boolean>;
-  verticalPanels: Ref<number[]>;
-  horizontalPanels: Ref<number[]>;
+interface Data extends PanelTogglingData, ScrollHandlingData {
   databases: Ref<readonly Database[]>;
 }
 
@@ -78,72 +69,69 @@ export default defineComponent({
       default: true
     }
   },
-  components: { DatabaseSystemDetails },
+  components: { DatabaseSystemDetails, Panels },
   setup(props: Props, context: SetupContext): Data {
-    const fixedContent = ref(false);
-    const verticalPanels = ref<number[]>([0]);
-    const horizontalPanels = ref<number[]>([]);
-    let details: any = null;
-    let detailsPageOffset = 0;
-
-    onMounted(() => {
-      details = document.getElementById("details");
-      detailsPageOffset = details!.offsetTop;
-      if (props.handleScroll)
-        window.onscroll = function() {
-          handleScrollEvent();
-        };
-    });
-
-    function handleScrollEvent(): void {
-      if (window.pageYOffset > detailsPageOffset) {
-        details.classList.add("sticky");
-        if (!fixedContent.value) {
-          fixedContent.value = true;
-        }
-      } else {
-        details.classList.remove("sticky");
-        if (fixedContent.value) {
-          fixedContent.value = false;
-          horizontalPanels.value = [];
-        }
-      }
-    }
-
     return {
-      fixedContent,
-      verticalPanels,
-      horizontalPanels,
-      ...useUpdatingDatabases(props, context)
+      ...useScrollHandling(props),
+      ...useUpdatingDatabases(props, context),
+      ...usePanelToggling()
     };
   }
 });
+
+interface PanelTogglingData {
+  toggleDatabasePanels: () => void;
+  showDatabasePanels: Ref<boolean>;
+}
+
+function usePanelToggling(): PanelTogglingData {
+  const showDatabasePanels = ref(true);
+  function toggleDatabasePanels(): void {
+    showDatabasePanels.value = !showDatabasePanels.value;
+  }
+  return { toggleDatabasePanels, showDatabasePanels };
+}
+
+interface ScrollHandlingData {
+  fixedContent: Ref<boolean>;
+}
+
+function useScrollHandling(props: Props): ScrollHandlingData {
+  const fixedContent = ref(false);
+  let details: any = null;
+  let detailsPageOffset = 0;
+
+  onMounted(() => {
+    details = document.getElementById("details");
+    detailsPageOffset = details!.offsetTop;
+    if (props.handleScroll)
+      window.onscroll = function() {
+        handleScrollEvent();
+      };
+  });
+
+  function handleScrollEvent(): void {
+    if (window.pageYOffset > detailsPageOffset) {
+      details.classList.add("sticky");
+      if (!fixedContent.value) {
+        fixedContent.value = true;
+      }
+    } else {
+      details.classList.remove("sticky");
+      if (fixedContent.value) {
+        fixedContent.value = false;
+      }
+    }
+  }
+  return { fixedContent };
+}
 </script>
 <style>
-.panels {
-  margin-top: 0.5%;
-}
-.card {
-  margin: 1%, 0%, 1%, 0%;
-}
-.entry {
-  margin-top: 0.5%;
-}
 .sticky {
   position: fixed;
   top: 70px;
   z-index: 10;
   width: 500px;
   right: 0px;
-}
-.flex {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.flex-item {
-  flex: 0 0 32.5%;
-  margin: 0px 3px 6px 3px;
-  padding: 0px;
 }
 </style>

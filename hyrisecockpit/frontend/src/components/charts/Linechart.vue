@@ -71,7 +71,7 @@ export default defineComponent({
         }
       });
       watch(
-        () => props.selectedDatabases, //need this because selected db is an array
+        () => props.selectedDatabases,
         () => {
           if (databasesUpdated.value) {
             handleDatabaseChange();
