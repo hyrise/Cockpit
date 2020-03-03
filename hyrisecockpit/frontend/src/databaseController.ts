@@ -79,7 +79,7 @@ export function useDatabaseController(): DatabaseController {
       color: databaseService.getDatabaseColor(),
       systemDetails: {
         host: database.host,
-        mainMemoryCapacity: cpuInformation!.mainMemoryCapacity,
+        memoryCapacity: cpuInformation!.memoryCapacity,
         memoryFootprint: storageInformation!.memoryFootprint,
         numberOfCPUs: cpuInformation!.numberOfCPUs,
         numberOfWorkers: database.numberOfWorkers
@@ -103,9 +103,9 @@ export function useDatabaseController(): DatabaseController {
     databaseService.getCPUInformation(data).forEach(cpuInfo => {
       const database = getDatabaseById(cpuInfo.id)!;
       if (
-        database.systemDetails.mainMemoryCapacity !== cpuInfo.mainMemoryCapacity
+        database.systemDetails.memoryCapacity !== cpuInfo.memoryCapacity
       )
-        database.systemDetails.mainMemoryCapacity = cpuInfo.mainMemoryCapacity;
+        database.systemDetails.memoryCapacity = cpuInfo.memoryCapacity;
 
       if (database.systemDetails.numberOfCPUs !== cpuInfo.numberOfCPUs)
         database.systemDetails.numberOfCPUs = cpuInfo.numberOfCPUs;

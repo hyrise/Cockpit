@@ -2,7 +2,7 @@ import { Ref } from "@vue/composition-api";
 
 export interface DatabaseSystemDetails {
   host: string;
-  mainMemoryCapacity: number;
+  memoryCapacity: number;
   memoryFootprint: number;
   numberOfCPUs: number;
   numberOfWorkers: number;
@@ -40,7 +40,7 @@ export type DatabaseResponse = {
 export type DatabaseCPUResponse = {
   id: string;
   numberOfCPUs: number;
-  mainMemoryCapacity: number;
+  memoryCapacity: number;
 };
 
 export type DatabaseStorageResponse = {

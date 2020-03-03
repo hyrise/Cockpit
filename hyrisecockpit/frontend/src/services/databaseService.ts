@@ -77,7 +77,7 @@ export function useDatabaseService(): DatabaseService {
       databasesWithCPUInformation.push({
         id: id,
         numberOfCPUs: Object.keys(data.cpu).length,
-        mainMemoryCapacity: getDatabaseMainMemoryCapacity(data)
+        memoryCapacity: getDatabaseMainMemoryCapacity(data)
       } as DatabaseCPUResponse);
     });
     return databasesWithCPUInformation;

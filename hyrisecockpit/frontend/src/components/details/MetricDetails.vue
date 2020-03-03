@@ -80,6 +80,8 @@ export default defineComponent({
     const currentValue = computed(() => {
       const databaseValueMap: Record<string, number> = {};
       if (!props.databases.length) return databaseValueMap;
+      // props.databases.reduce((valueMap: Record<string, number>, database) => {},
+      // {} as Record<string, number>);
       props.databases.forEach(
         database =>
           (databaseValueMap[database] = Object.keys(props.data).length

@@ -21,7 +21,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-desktop-classic</v-icon>
-            <b>host:</b>
+            <b>Host:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.host }}
@@ -30,16 +30,16 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-memory</v-icon>
-            <b>main memory capacity:</b>
+            <b>Memory capacity:</b>
           </v-col>
           <v-col class="entry">
-            {{ database.systemDetails.mainMemoryCapacity }} GB
+            {{ database.systemDetails.memoryCapacity }} GB
           </v-col>
         </v-row>
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-shoe-print</v-icon>
-            <b>memory footprint:</b>
+            <b>Memory footprint:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.memoryFootprint }} MB
@@ -48,7 +48,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-cpu-64-bit</v-icon>
-            <b>number of CPUs:</b>
+            <b>Number of CPUs:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.numberOfCPUs }}
@@ -57,7 +57,7 @@
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-worker</v-icon>
-            <b>number of workers:</b>
+            <b>Number of workers:</b>
           </v-col>
           <v-col class="entry">
             {{ database.systemDetails.numberOfWorkers }}
