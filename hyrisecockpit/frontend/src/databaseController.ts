@@ -93,10 +93,7 @@ export function useDatabaseController(): DatabaseController {
   }
 
   function getDatabasesByIds(ids: string[]): Database[] {
-    return ids.reduce((availableDatabases, id) => {
-      availableDatabases.push(getDatabaseById(id)!);
-      return availableDatabases;
-    }, [] as Database[]);
+    return ids.map(id => getDatabaseById(id)!);
   }
 
   function updateDatabaseCPUInformation(data: any): void {
