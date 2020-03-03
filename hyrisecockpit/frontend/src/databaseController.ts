@@ -102,9 +102,7 @@ export function useDatabaseController(): DatabaseController {
   function updateDatabaseCPUInformation(data: any): void {
     databaseService.getCPUInformation(data).forEach(cpuInfo => {
       const database = getDatabaseById(cpuInfo.id)!;
-      if (
-        database.systemDetails.memoryCapacity !== cpuInfo.memoryCapacity
-      )
+      if (database.systemDetails.memoryCapacity !== cpuInfo.memoryCapacity)
         database.systemDetails.memoryCapacity = cpuInfo.memoryCapacity;
 
       if (database.systemDetails.numberOfCPUs !== cpuInfo.numberOfCPUs)

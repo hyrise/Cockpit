@@ -96,19 +96,24 @@ function getStorageData(
   const newSizes: number[] = [];
   const newText: string[] = [];
 
+  function getRoundedData(value: number): number {
+    return Math.floor(value / Math.pow(10, 4)) / 100;
+  }
+
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
     newParents.push(primaryKey);
     newSizes.push(0);
-    newText.push(`${data[primaryKey][table].size / Math.pow(10, 6)}MB`);
+    newText.push(`${getRoundedData(data[primaryKey][table].size)} MB`);
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
+      getRoundedData(data[primaryKey][table].data[attribute].size);
       newSizes.push(
-        data[primaryKey][table].data[attribute].size / Math.pow(10, 6)
+        getRoundedData(data[primaryKey][table].data[attribute].size)
       );
       newText.push(
-        `${data[primaryKey][table].data[attribute].size / Math.pow(10, 6)}MB`
+        `${getRoundedData(data[primaryKey][table].data[attribute].size)} MB`
       );
     });
   });

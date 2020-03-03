@@ -123,7 +123,8 @@ function useTreemapConfiguration(
         values: values,
         text: text,
         hoverinfo: "label+text+percent parent+percent entry",
-        texttemplate: "<b>%{label}</b> <br>%{value}MB",
+        texttemplate:
+          "<b>%{label}</b> <br>size:%{value} MB <br>data type: %{text}", //TODO: data type and encoding
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }
