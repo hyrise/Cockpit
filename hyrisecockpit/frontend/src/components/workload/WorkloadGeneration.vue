@@ -1,12 +1,17 @@
 <template>
-  <v-dialog v-model="open" persistent max-width="600px">
+  <v-dialog v-model="open" persistent max-width="750px">
     <v-card>
-      <v-card-text>
-        <div class="mx-12">
-          <v-col cols="12">
-            <div class="mb-2 mt-2">
-              <b> Start, pause and stop workload </b>
-            </div>
+      <v-system-bar>
+        <v-spacer></v-spacer>
+        <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
+      </v-system-bar>
+      <v-card-title class="justify-center">
+        Workload Generation
+      </v-card-title>
+      <v-card-text class="pb-0">
+        <v-row>
+          <v-col max-width="300px">
+            <b> Start, pause and stop workload </b>
             <v-slider
               v-model="frequency"
               class="mt-10"
@@ -25,7 +30,7 @@
                 ></v-text-field>
               </template>
             </v-slider>
-            <v-radio-group v-model="workload">
+            <v-radio-group v-model="workload" class="mt-0">
               <v-radio
                 v-for="workload in availableWorkloads"
                 :key="workload"
@@ -51,10 +56,10 @@
                 </v-icon>
               </v-btn>
             </v-btn-toggle>
-
-            <div class="mb-2 mt-6">
-              <b> Load and remove generated data into/from instances</b>
-            </div>
+          </v-col>
+          <v-divider vertical class="ml-4 mr-4" />
+          <v-col>
+            <b> Load and remove generated data into/from instances</b>
             <v-radio-group v-model="workloadData">
               <v-radio
                 v-for="workload in availableWorkloads"
@@ -77,12 +82,8 @@
               </v-btn>
             </v-btn-toggle>
           </v-col>
-        </div>
+        </v-row>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer />
-        <v-btn color="primary" text @click="closeWorkloadDialog()">Close</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
