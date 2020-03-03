@@ -1,6 +1,6 @@
 <template>
   <div id="details">
-    <panels v-if="!fixedContent">
+    <database-panel-template v-if="!fixedContent">
       <template #header>
         <div class="white--text">
           Databases
@@ -9,8 +9,8 @@
       <template #content>
         <database-system-details :selected-databases="selectedDatabases" />
       </template>
-    </panels>
-    <panels
+    </database-panel-template>
+    <database-panel-template
       v-if="fixedContent"
       :accordion="true"
       header-color="white"
@@ -31,7 +31,7 @@
           </v-card-title>
         </v-card>
       </template>
-    </panels>
+    </database-panel-template>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import DatabaseSystemDetails from "./DatabaseSystemDetails.vue";
-import Panels from "./Panels.vue";
+import DatabasePanelTemplate from "./DatabasePanelTemplate.vue";
 import { useUpdatingDatabases } from "../../meta/databases";
 
 interface Props {
@@ -69,7 +69,7 @@ export default defineComponent({
       default: true
     }
   },
-  components: { DatabaseSystemDetails, Panels },
+  components: { DatabaseSystemDetails, DatabasePanelTemplate },
   setup(props: Props, context: SetupContext): Data {
     return {
       ...useScrollHandling(props),
