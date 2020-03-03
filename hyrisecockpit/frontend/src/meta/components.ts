@@ -1,4 +1,4 @@
-import { SetupContext, Ref, watch } from "@vue/composition-api";
+import { SetupContext, Ref, computed } from "@vue/composition-api";
 import { MetricProps, ComparisonMetricData, Metric } from "../types/metrics";
 import { getMetricChartConfiguration } from "./metrics";
 import { useDataEvents } from "../meta/events";
@@ -29,4 +29,14 @@ export function useUpdatingData(data: any, metric: Metric): void {
   if (Object.keys(data).length) {
     if (metricEventMap[metric]) metricEventMap[metric]!(data);
   }
+}
+
+export function useDatabaseFlex(
+  props: any
+): { databaseFlex: Readonly<Ref<Object>> } {
+  return {
+    databaseFlex: computed(() => {
+      return { flex: `1 0 ${100 / props.selectedDatabases.length - 1}%` };
+    })
+  };
 }

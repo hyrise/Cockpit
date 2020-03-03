@@ -2,9 +2,7 @@
   <div class="flex">
     <v-card
       class="card"
-      :style="{
-        flex: `1 0 ${100 / selectedDatabases.length - 1}%`
-      }"
+      :style="databaseFlex"
       v-for="database in databases"
       :key="database.id"
     >
@@ -81,12 +79,14 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import { useUpdatingDatabases } from "../../meta/databases";
+import { useDatabaseFlex } from "../../meta/components";
 
 interface Props {
   selectedDatabases: string[];
 }
 interface Data {
   databases: Ref<readonly Database[]>;
+  databaseFlex: Readonly<Ref<Object>>;
 }
 
 export default defineComponent({
@@ -99,7 +99,8 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     return {
-      ...useUpdatingDatabases(props, context)
+      ...useUpdatingDatabases(props, context),
+      ...useDatabaseFlex(props)
     };
   }
 });

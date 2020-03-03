@@ -4,7 +4,7 @@
     <div class="metrics-table">
       <div
         class="metrics-column"
-        :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
+        :style="databaseFlex"
         v-for="database in databases"
         :key="`${uuid()}-${database.id}`"
       >
@@ -63,6 +63,7 @@ import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import DatabaseDetailsPanel from "../details/DatabaseDetailsPanel.vue";
 import { Database } from "../../types/database";
 import { useUpdatingDatabases } from "../../meta/databases";
+import { useDatabaseFlex } from "../../meta/components";
 
 interface Data {
   databases: Ref<readonly Database[]>;
@@ -70,6 +71,7 @@ interface Data {
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
   uuid: () => string;
+  databaseFlex: Readonly<Ref<Object>>;
 }
 
 export default defineComponent({
@@ -91,7 +93,8 @@ export default defineComponent({
       uuid: uuid.v1,
       getMetricMetadata,
       getMetricComponent,
-      getMetricTitle
+      getMetricTitle,
+      ...useDatabaseFlex(props)
     };
   }
 });
