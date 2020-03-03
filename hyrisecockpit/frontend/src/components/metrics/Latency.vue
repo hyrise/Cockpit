@@ -13,13 +13,15 @@
       :data="data"
       :graph-id="graphId || 'latency'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
+      :timestamps="timestamps"
     />
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -39,7 +41,7 @@ import {
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
 
-export default createComponent({
+export default defineComponent({
   name: "Latency",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
@@ -47,10 +49,14 @@ export default createComponent({
     const chartConfiguration = ["Latency", "time in sec", "latency in sec"];
 
     const data = context.root.$metricController.data[props.metric];
+    const maxValue = context.root.$metricController.maxValueData[props.metric];
+    const timestamps = context.root.$metricController.timestamps[props.metric];
 
     return {
       data,
-      chartConfiguration
+      chartConfiguration,
+      maxValue,
+      timestamps
     };
   }
 });

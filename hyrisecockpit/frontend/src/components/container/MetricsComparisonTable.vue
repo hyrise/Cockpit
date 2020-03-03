@@ -1,46 +1,43 @@
 <template>
-  <div class="metrics-table">
-    <div
-      class="metrics-column"
-      :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
-      v-for="database in selectedDatabases"
-      :key="`${uuid()}-${database.id}`"
-    >
-      <v-card class="database" color="primary" dark elevation="4">
-        <v-card-title class="database-title">
-          {{ database.id }}
-        </v-card-title>
-      </v-card>
-
-      <v-card
-        v-for="metric in selectedMetrics"
-        :key="metric"
-        class="metric-card"
+  <div>
+    <database-system-details :databases="selectedDatabases" />
+    <div class="metrics-table">
+      <div
+        class="metrics-column"
+        :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
+        v-for="database in selectedDatabases"
+        :key="`${uuid()}-${database.id}`"
       >
-        <v-card-title class="metric-title">
-          {{ getMetricTitle(metric) }}
-        </v-card-title>
-        <v-card-subtitle>
-          <v-chip :color="database.color" class="white--text">
-            {{ database.id }}
-          </v-chip>
-        </v-card-subtitle>
-        <component
-          :is="getMetricComponent(metric)"
-          :selected-databases="[database]"
-          :metric="metric"
-          :metric-meta="getMetadata(metric)"
-          :graph-id="`${metric}-${database.id}`"
-          :show-details="showDetails"
-        />
-      </v-card>
+        <v-card
+          v-for="metric in selectedMetrics"
+          :key="metric"
+          class="metric-card"
+        >
+          <v-card-title class="metric-title">
+            {{ getMetricTitle(metric) }}
+          </v-card-title>
+          <v-card-subtitle>
+            <v-chip :color="database.color" class="white--text">
+              {{ database.id }}
+            </v-chip>
+          </v-card-subtitle>
+          <component
+            :is="getMetricComponent(metric)"
+            :selected-databases="[database]"
+            :metric="metric"
+            :metric-meta="getMetadata(metric)"
+            :graph-id="`${metric}-${database.id}`"
+            :show-details="showDetails"
+          />
+        </v-card>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   Ref,
   ref,
@@ -62,6 +59,7 @@ import {
 } from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
+import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
 
 interface Data {
   getMetadata: (metric: Metric) => MetricMetadata;
@@ -70,7 +68,7 @@ interface Data {
   uuid: () => string;
 }
 
-export default createComponent({
+export default defineComponent({
   components: {
     Throughput,
     CPU,
@@ -79,7 +77,8 @@ export default createComponent({
     QueueLength,
     Storage,
     Access,
-    QueryTypeProportion
+    QueryTypeProportion,
+    DatabaseSystemDetails
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {

@@ -13,6 +13,7 @@
           :labels="labels"
           :parents="parents"
           :values="sizes"
+          :text="text"
           :chart-configuration="chartConfiguration"
           :autosize="false"
         />
@@ -27,6 +28,7 @@
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
       :labels="labels"
+      :text="text"
       :parents="parents"
       :values="sizes"
       :chart-configuration="chartConfiguration"
@@ -36,7 +38,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   watch,
   Ref,
@@ -51,11 +53,12 @@ interface Data {
   labels: Ref<string[]>;
   parents: Ref<string[]>;
   sizes: Ref<number[]>;
+  text: Ref<string[]>;
   chartConfiguration: Ref<string[]>;
   showDialog: Ref<boolean>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "Storage",
   components: {
     Treemap
@@ -68,6 +71,8 @@ export default createComponent({
     const labels = ref<string[]>([]);
     const parents = ref<string[]>([]);
     const sizes = ref<number[]>([]);
+    const text = ref<string[]>([]);
+
     const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
 
     watch(data, () => {
@@ -75,7 +80,8 @@ export default createComponent({
         const {
           newLabels,
           newParents,
-          newSizes
+          newSizes,
+          newText
         } = props.metricMeta.transformationService(
           data.value,
           props.selectedDatabases.map(database => database.id)[0]
@@ -83,10 +89,11 @@ export default createComponent({
         labels.value = newLabels;
         parents.value = newParents;
         sizes.value = newSizes;
+        text.value = newText;
       }
     });
 
-    return { labels, parents, sizes, chartConfiguration, showDialog };
+    return { labels, parents, sizes, text, chartConfiguration, showDialog };
   }
 });
 </script>

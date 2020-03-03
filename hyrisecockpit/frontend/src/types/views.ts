@@ -3,7 +3,9 @@ import { Metric } from "./metrics";
 import { Database } from "./database";
 
 export interface MetricViewData {
-  watchedInstances: Ref<Database[]>;
+  watchedMetrics: Metric[];
+  selectedMetrics: Ref<Metric[]>;
+  selectedDatabases: Ref<Database[]>;
 }
 
 export interface ContainerProps {

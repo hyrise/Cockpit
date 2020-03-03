@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -27,7 +27,7 @@ interface Data {
   chartConfiguration: string[];
 }
 
-export default createComponent({
+export default defineComponent({
   name: "QueryTypeProportion",
   components: { Barchart },
   props: MetricPropsValidation,
@@ -39,7 +39,7 @@ export default createComponent({
     const chartConfiguration = [
       "Query Type Proportion",
       "workload",
-      "amount of queries"
+      "number of queries"
     ];
 
     watch(data, () => {
