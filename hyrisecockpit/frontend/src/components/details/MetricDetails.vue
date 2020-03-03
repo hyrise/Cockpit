@@ -68,43 +68,66 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
+    const { currentValue } = useMetricValues(props);
+    return { currentValue, ...useMetricColors(props, currentValue) };
+  }
+});
 
-    function getValueState(value: number): MetricValueState {
-      return value > 0.66 * props.border
-        ? valueStateOrder[0]
-        : value > 0.33 * props.border
-        ? valueStateOrder[1]
-        : valueStateOrder[2];
-    }
-    const currentValue = computed(() => {
-      const databaseValueMap: Record<string, number> = {};
-      if (!props.databases.length) return databaseValueMap;
-      // props.databases.reduce((valueMap: Record<string, number>, database) => {},
-      // {} as Record<string, number>);
-      props.databases.forEach(
-        database =>
-          (databaseValueMap[database] = Object.keys(props.data).length
+interface MetricValueData {
+  currentValue: Ref<Record<string, number>>;
+}
+
+function useMetricValues(props: Props): MetricValueData {
+  return {
+    currentValue: computed(() => {
+      if (!props.databases.length) return {};
+      return props.databases.reduce(
+        (valueMap: Record<string, number>, database: string) => {
+          valueMap[database] = Object.keys(props.data).length
             ? Math.floor(
                 props.data[database][props.data[database].length - 1] * 100
               ) / 100
-            : 0)
+            : 0;
+          return valueMap;
+        },
+        {} as Record<string, number>
       );
-      return databaseValueMap;
-    });
-    const valueColor = computed(() => {
-      const databaseValueColorMap: Record<string, string> = {};
-      Object.keys(currentValue.value).forEach(
-        database =>
-          (databaseValueColorMap[database] = getMetricDetailColor(
-            getValueState(currentValue.value[database])
-          ))
-      );
-      return databaseValueColorMap;
-    });
-    return { currentValue, valueColor };
+    })
+  };
+}
+
+interface MetricColorData {
+  valueColor: Ref<Record<string, string>>;
+}
+
+function useMetricColors(
+  props: Props,
+  currentValue: Ref<Record<string, number>>
+): MetricColorData {
+  const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
+
+  function getValueState(value: number): MetricValueState {
+    return value > 0.66 * props.border
+      ? valueStateOrder[0]
+      : value > 0.33 * props.border
+      ? valueStateOrder[1]
+      : valueStateOrder[2];
   }
-});
+
+  return {
+    valueColor: computed(() => {
+      return Object.keys(currentValue.value).reduce(
+        (colorMap: Record<string, string>, database: string) => {
+          colorMap[database] = getMetricDetailColor(
+            getValueState(currentValue.value[database])
+          );
+          return colorMap;
+        },
+        {} as Record<string, string>
+      );
+    })
+  };
+}
 </script>
 <style>
 .details {
