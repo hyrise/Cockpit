@@ -24,8 +24,7 @@
                 <v-text-field
                   v-model="frequency"
                   class="mt-n1 pt-0"
-                  type="number"
-                  style="width: 60px"
+                  style="width: 80px"
                   step="10"
                 ></v-text-field>
               </template>
@@ -93,6 +92,7 @@ import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { getDisplayedWorkload } from "../../meta/workloads";
+import { eventBus } from "../../plugins/eventBus";
 
 interface Props {
   open: boolean;
@@ -105,8 +105,9 @@ interface Data {
   startWorkload: (workload: Workload, frequency: number) => void;
   stopWorkload: () => void;
   frequency: Ref<number>;
-  workload: Ref<String>;
-  workloadData: Ref<String>;
+  workload: Ref<string>;
+  workloadData: Ref<string>;
+  closeWorkloadDialog: () => void;
 }
 
 export default defineComponent({
@@ -116,15 +117,10 @@ export default defineComponent({
       default: false
     }
   },
-  methods: {
-    closeWorkloadDialog() {
-      this.$emit("close");
-    }
-  },
   setup(context: SetupContext): Data {
     const frequency = ref<number>(200);
-    const workload = ref<String>("tpch01");
-    const workloadData = ref<String>("tpch01");
+    const workload = ref<string>("tpch01");
+    const workloadData = ref<string>("tpch01");
     const {
       loadWorkloadData,
       deleteWorkloadData,
@@ -132,6 +128,9 @@ export default defineComponent({
       stopWorkload
     } = useWorkloadService();
 
+    function closeWorkloadDialog(): void {
+      eventBus.$emit("close", false);
+    }
     return {
       availableWorkloads,
       getDisplayedWorkload,
@@ -141,7 +140,8 @@ export default defineComponent({
       stopWorkload,
       frequency,
       workload,
-      workloadData
+      workloadData,
+      closeWorkloadDialog
     };
   }
 });
