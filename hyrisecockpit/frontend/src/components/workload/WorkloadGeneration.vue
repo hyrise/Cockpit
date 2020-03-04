@@ -24,7 +24,7 @@
                 <v-text-field
                   v-model="frequency"
                   class="mt-n1 pt-0"
-                  style="width: 80px"
+                  style="width: 50px"
                   step="10"
                 ></v-text-field>
               </template>
@@ -92,7 +92,6 @@ import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { getDisplayedWorkload } from "../../meta/workloads";
-import { eventBus } from "../../plugins/eventBus";
 
 interface Props {
   open: boolean;
@@ -117,7 +116,7 @@ export default defineComponent({
       default: false
     }
   },
-  setup(context: SetupContext): Data {
+  setup(props: {}, context: SetupContext): Data {
     const frequency = ref<number>(200);
     const workload = ref<string>("tpch01");
     const workloadData = ref<string>("tpch01");
@@ -129,7 +128,7 @@ export default defineComponent({
     } = useWorkloadService();
 
     function closeWorkloadDialog(): void {
-      eventBus.$emit("close", false);
+      context.emit("close");
     }
     return {
       availableWorkloads,

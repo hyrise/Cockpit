@@ -6,7 +6,10 @@
       </v-app-bar-nav-icon>
       <b> Hyrise Cockpit </b>
       <v-spacer />
-      <workload-generation :open="showWorkloadDialog" />
+      <workload-generation
+        :open="showWorkloadDialog"
+        @close="showWorkloadDialog = false"
+      />
       <v-btn class=" white--text mr-5" @click="openWorkloadDialog()"
         >Generate Workload</v-btn
       >
@@ -18,17 +21,9 @@
 </template>
 
 <script lang="ts">
-import {
-  SetupContext,
-  defineComponent,
-  ref,
-  Ref,
-  onMounted,
-  watch
-} from "@vue/composition-api";
+import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
 import WorkloadGeneration from "./components/workload/WorkloadGeneration.vue";
-import { eventBus } from "./plugins/eventBus";
 
 interface Data {
   showNavigationDrawer: Ref<boolean>;
@@ -48,12 +43,6 @@ export default defineComponent({
     function openWorkloadDialog(): void {
       showWorkloadDialog.value = true;
     }
-
-    onMounted(() => {
-      eventBus.$on("close", (value: boolean) => {
-        showWorkloadDialog.value = value;
-      });
-    });
 
     return {
       showNavigationDrawer,
