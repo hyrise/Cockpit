@@ -1,6 +1,5 @@
 import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
-import { Database } from "./database";
 
 export type MetricValueState = "low" | "average" | "high";
 export type MetricValueStateOrder = "asc" | "desc";
@@ -61,14 +60,13 @@ export interface MetricMetadata {
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
-  title: string;
   component: string;
   requestTime: number;
 }
 
 export interface ComparisonMetricData {
   data: Ref<any>;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
   maxValue: Ref<number>;
   timestamps: Ref<Date[]>;
 }
@@ -76,7 +74,7 @@ export interface ComparisonMetricData {
 export interface MetricProps {
   metric: Metric;
   metricMeta: MetricMetadata;
-  selectedDatabases: Database[];
+  selectedDatabases: string[];
   graphId: string;
   showDetails: boolean;
 }
@@ -102,4 +100,10 @@ export const MetricPropsValidation = {
     type: String,
     default: null
   }
+};
+
+export type ChartConfiguration = {
+  title: string;
+  xaxis?: string;
+  yaxis?: string;
 };
