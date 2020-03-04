@@ -1,9 +1,8 @@
 import { eventBus } from "./plugins/eventBus";
 import { useMetricService } from "./services/metricService";
 import { Metric, availableMetrics, MetricController } from "./types/metrics";
-import { FetchService } from "./types/services";
-import { Ref } from "@vue/composition-api";
-import { getMetadata, getMetricRequestTime } from "./meta/metrics";
+import { MetricService } from "./types/services";
+import { getMetricRequestTime } from "./meta/metrics";
 
 type Interval = {
   id: number | undefined;
@@ -27,10 +26,10 @@ export function useMetricController(): MetricController {
 
   mapToData(metricServices);
 
-  function setupServices(): Record<Metric, FetchService> {
+  function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     availableMetrics.forEach(metric => {
-      services[metric] = useMetricService(getMetadata(metric));
+      services[metric] = useMetricService(metric);
     });
     return services;
   }
@@ -69,7 +68,7 @@ export function useMetricController(): MetricController {
     });
   }
 
-  function mapToData(services: Record<Metric, FetchService>): void {
+  function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
       data[metric as Metric] = service.data;
       maxValueData[metric as Metric] = service.maxValue;
