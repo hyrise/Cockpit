@@ -17,6 +17,7 @@
         :x-values="columns"
         :y-values="chunks"
         :chart-configuration="chartConfiguration"
+        :selected-databases="selectedDatabases"
       />
     </div>
   </div>

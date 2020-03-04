@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="metric-comparison-table">
     <database-details-panel :selected-databases="selectedDatabases" />
     <div class="metrics-table">
       <div
@@ -42,7 +42,8 @@ import {
   Ref,
   ref,
   onMounted,
-  computed
+  computed,
+  provide
 } from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
@@ -88,6 +89,19 @@ export default defineComponent({
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
+    const width = ref(0);
+    provide("width", width);
+    provide(
+      "length",
+      computed(() => props.selectedDatabases.length)
+    );
+
+    onMounted(() => {
+      width.value = document.getElementById(
+        "metric-comparison-table"
+      )!.offsetWidth;
+    });
+
     return {
       ...useUpdatingDatabases(props, context),
       uuid: uuid.v1,

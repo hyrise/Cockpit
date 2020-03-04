@@ -3,6 +3,7 @@
     :data="transformedData"
     :graph-id="graphId || 'queryTypeProportion'"
     :chart-configuration="chartConfiguration"
+    :selected-databases="selectedDatabases"
   />
 </template>
 

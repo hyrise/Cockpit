@@ -22,6 +22,7 @@ interface Props {
   graphId: string;
   chartConfiguration: ChartConfiguration;
   autosize: boolean;
+  selectedDatabases: string[];
 }
 
 export default defineComponent({
@@ -53,6 +54,10 @@ export default defineComponent({
     autosize: {
       type: Boolean,
       default: true
+    },
+    selectedDatabases: {
+      type: Array,
+      default: null
     }
   },
   setup(props: Props, context: SetupContext) {

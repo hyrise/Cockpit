@@ -10,15 +10,18 @@ import {
   computed,
   Ref,
   ref,
-  watch
+  watch,
+  inject
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration } from "../../types/metrics";
+import { useResizingOnDatabaseChange } from "../../meta/charts";
 
 interface Props {
   data: any;
   graphId: string;
   chartConfiguration: ChartConfiguration;
+  selectedDatabases: string[];
 }
 
 export default defineComponent({
@@ -34,6 +37,10 @@ export default defineComponent({
     chartConfiguration: {
       type: Object,
       default: null
+    },
+    selectedDatabases: {
+      type: Array,
+      default: null
     }
   },
   setup(props: Props, context: SetupContext): void {
@@ -41,6 +48,8 @@ export default defineComponent({
       context,
       props.chartConfiguration
     );
+    const chartWidth = ref(inject<Ref<number>>("width", ref(0)));
+    const length = inject<Ref<number>>("length", ref(0));
 
     onMounted(() => {
       Plotly.newPlot(
@@ -49,6 +58,8 @@ export default defineComponent({
         getLayout(),
         getOptions()
       );
+
+      useResizingOnDatabaseChange(props.graphId, chartWidth, length);
 
       watch(
         () => props.data,
@@ -59,12 +70,7 @@ export default defineComponent({
         }
       );
       function updateChartDatasets(): void {
-        Plotly.react(
-          props.graphId,
-          props.data as any,
-          getLayout(),
-          getOptions()
-        );
+        Plotly.update(props.graphId, props.data as any, getLayout());
       }
     });
   }
@@ -96,7 +102,7 @@ function useBarChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false, responsive: true };
+    return { displayModeBar: false };
   }
   return { getLayout, getOptions };
 }

@@ -21,6 +21,7 @@ interface Props {
   yValues: string[];
   graphId: string;
   chartConfiguration: ChartConfiguration;
+  selectedDatabases: string[];
 }
 
 export default defineComponent({
@@ -44,6 +45,10 @@ export default defineComponent({
     },
     chartConfiguration: {
       type: Object,
+      default: null
+    },
+    selectedDatabases: {
+      type: Array,
       default: null
     }
   },

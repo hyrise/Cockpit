@@ -6,15 +6,18 @@
 import {
   defineComponent,
   SetupContext,
+  onUnmounted,
   onMounted,
   computed,
   Ref,
   ref,
-  watch
+  watch,
+  inject
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
+import { useResizingOnDatabaseChange } from "../../meta/charts";
 
 interface Props {
   data: any;
@@ -58,26 +61,19 @@ export default defineComponent({
       props
     );
     const { databasesUpdated } = context.root.$databaseController;
+    const chartWidth = inject<Ref<number>>("width", ref(0));
+    const length = inject<Ref<number>>("length", ref(0));
 
     onMounted(() => {
-      watch(databasesUpdated, () => {
-        if (databasesUpdated.value) {
-          Plotly.newPlot(
-            props.graphId,
-            getDatasets(),
-            getLayout(props.maxValue),
-            getOptions()
-          );
-        }
-      });
-      watch(
-        () => props.selectedDatabases,
-        () => {
-          if (databasesUpdated.value) {
-            handleDatabaseChange();
-          }
-        }
+      Plotly.newPlot(
+        props.graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
       );
+
+      useResizingOnDatabaseChange(props.graphId, chartWidth, length);
+
       watch(
         () => props.data,
         () => {
@@ -95,16 +91,6 @@ export default defineComponent({
           getDataset(props.data[id] ? props.data[id] : [], id)
         ];
       }, []);
-    }
-
-    function handleDatabaseChange(): void {
-      Plotly.purge(props.graphId);
-      Plotly.plot(
-        props.graphId,
-        getDatasets(),
-        getLayout(props.maxValue),
-        getOptions()
-      );
     }
 
     function getMaxDatasetLength(): number {
@@ -179,7 +165,11 @@ function useLineChartConfiguration(
         //   color: "#FAFAFA"
         // },
         //linewidth: 2
-      }
+      },
+      autosize: true
+      //  width: 100,
+      //  height: 100
+
       // plot_bgcolor: "#424242",
       // paper_bgcolor: "#424242",
       // legend: {
@@ -205,7 +195,7 @@ function useLineChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false, responsive: true };
+    return { displayModeBar: false };
   }
   return { getDataset, getLayout, getOptions };
 }

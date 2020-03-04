@@ -16,6 +16,7 @@
           :text="text"
           :chart-configuration="chartConfiguration"
           :autosize="false"
+          :selected-databases="selectedDatabases"
         />
         <v-spacer />
         <v-card-actions>
