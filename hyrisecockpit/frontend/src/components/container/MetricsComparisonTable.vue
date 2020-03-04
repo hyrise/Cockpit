@@ -1,11 +1,11 @@
 <template>
   <div>
-    <database-system-details :databases="selectedDatabases" />
+    <database-details-panel :selected-databases="selectedDatabases" />
     <div class="metrics-table">
       <div
         class="metrics-column"
-        :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
-        v-for="database in selectedDatabases"
+        :style="databaseFlex"
+        v-for="database in databases"
         :key="`${uuid()}-${database.id}`"
       >
         <v-card
@@ -23,9 +23,9 @@
           </v-card-subtitle>
           <component
             :is="getMetricComponent(metric)"
-            :selected-databases="[database]"
+            :selected-databases="[database.id]"
             :metric="metric"
-            :metric-meta="getMetadata(metric)"
+            :metric-meta="getMetricMetadata(metric)"
             :graph-id="`${metric}-${database.id}`"
             :show-details="showDetails"
           />
@@ -41,7 +41,8 @@ import {
   SetupContext,
   Ref,
   ref,
-  onMounted
+  onMounted,
+  computed
 } from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
@@ -53,19 +54,24 @@ import Access from "../metrics/Access.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import { uuid } from "vue-uuid";
 import {
-  getMetadata,
+  getMetricMetadata,
   getMetricTitle,
   getMetricComponent
 } from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
-import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
+import DatabaseDetailsPanel from "../details/DatabaseDetailsPanel.vue";
+import { Database } from "../../types/database";
+import { useUpdatingDatabases } from "../../meta/databases";
+import { useDatabaseFlex } from "../../meta/components";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata;
+  databases: Ref<readonly Database[]>;
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
   uuid: () => string;
+  databaseFlex: Readonly<Ref<Object>>;
 }
 
 export default defineComponent({
@@ -78,15 +84,17 @@ export default defineComponent({
     Storage,
     Access,
     QueryTypeProportion,
-    DatabaseSystemDetails
+    DatabaseDetailsPanel
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
     return {
+      ...useUpdatingDatabases(props, context),
       uuid: uuid.v1,
-      getMetadata,
+      getMetricMetadata,
       getMetricComponent,
-      getMetricTitle
+      getMetricTitle,
+      ...useDatabaseFlex(props)
     };
   }
 });
