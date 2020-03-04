@@ -14,7 +14,7 @@
       multiple
       accordion
     >
-      <v-expansion-panel v-for="database in databases" :key="database.id">
+      <v-expansion-panel bordered v-for="database in databases" :key="database.id">
         <v-expansion-panel-header class="title">
           <v-avatar
             class="mr-2"
@@ -26,7 +26,12 @@
           {{ database.id }}
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-switch loading />
+          <div class="plugin" v-for="plugin in plugins" :key="plugin">
+            <div class="plugin-name">
+              {{ plugin }}
+            </div>
+            <v-switch loading />
+          </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -52,6 +57,7 @@ interface Data {
   showDatabasePanels: Ref<boolean>;
   togglePanelView: () => void;
   databases: Ref<Database[]>;
+  plugins: Ref<String[]>;
 }
 
 export default defineComponent({
@@ -69,11 +75,11 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     var { databases } = context.root.$databaseService;
     const showDatabasePanels = ref(true);
-
+    const plugins = ref(["auto-index", "ki-stuff", "no-more-problems"]);
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
-    return { showDatabasePanels, togglePanelView, databases };
+    return { showDatabasePanels, togglePanelView, databases, plugins };
   }
 });
 </script>
@@ -87,7 +93,12 @@ export default defineComponent({
 .entry {
   margin-top: 0.5%;
 }
+.plugin-name {
+  flex: 0 0 50%;
+}
 .plugin-overview {
+  height: 600px;
+  overflow: scroll;
   position: fixed;
   top: 70px;
   z-index: 11;
@@ -96,5 +107,11 @@ export default defineComponent({
 }
 .close-icon {
   margin-left: auto;
+}
+.plugin {
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>
