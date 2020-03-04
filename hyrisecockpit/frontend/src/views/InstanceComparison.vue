@@ -15,7 +15,10 @@
         No metrics selected.
       </v-alert>
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
   </div>
 </template>
 
@@ -35,11 +38,13 @@ import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 export default defineComponent({
   components: {
     MetricsComparisonTable,
-    DatabaseMetricSelection
+    DatabaseMetricSelection,
+    LinearLoader
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {

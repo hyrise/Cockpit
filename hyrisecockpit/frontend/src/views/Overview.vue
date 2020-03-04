@@ -17,7 +17,10 @@
         :selected-metrics="selectedMetrics"
       />
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
   </div>
 </template>
 
@@ -37,12 +40,14 @@ import { Metric, overviewMetrics } from "../types/metrics";
 import { useSelectionHandling } from "../meta/views";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 export default defineComponent({
   components: {
     MetricsTileList,
     DatabaseDetailsPanel,
-    DatabaseMetricSelection
+    DatabaseMetricSelection,
+    LinearLoader
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {

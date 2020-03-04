@@ -16,7 +16,10 @@
         :metric-meta="getMetricMetadata(metric)"
       />
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
   </div>
 </template>
 
@@ -41,6 +44,7 @@ import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 interface Data {
   getMetricMetadata: (metric: Metric) => MetricMetadata;
@@ -55,7 +59,8 @@ export default defineComponent({
     MetricsTileList,
     Storage,
     Access,
-    QueryTypeProportion
+    QueryTypeProportion,
+    LinearLoader
   },
   setup(props: {}, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
