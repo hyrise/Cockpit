@@ -1,5 +1,9 @@
 <template>
   <div>
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
       <MetricsComparisonTable
@@ -15,10 +19,6 @@
         No metrics selected.
       </v-alert>
     </div>
-    <linear-loader
-      :conditions="[$databaseController.databasesUpdated]"
-      :evaluations="[false]"
-    />
   </div>
 </template>
 

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
     <div v-if="$databaseController.databasesUpdated.value" class="ml-6">
       <MetricsTileList
         :selected-databases="watchedInstances"
@@ -16,10 +20,6 @@
         :metric-meta="getMetricMetadata(metric)"
       />
     </div>
-    <linear-loader
-      :conditions="[$databaseController.databasesUpdated]"
-      :evaluations="[false]"
-    />
   </div>
 </template>
 
