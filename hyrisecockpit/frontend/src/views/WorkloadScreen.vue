@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-progress-linear
-      v-if="!$databaseService.isReady.value"
+      v-if="!$databaseController.databasesUpdated.value"
       indeterminate
       color="primary"
       height="7"
@@ -74,7 +74,7 @@
         </v-btn-toggle>
       </v-col>
       <MetricsTileList
-        v-if="$databaseService.isReady.value"
+        v-if="$databaseController.databasesUpdated.value"
         :selected-databases="watchedInstances"
         :show-details="false"
         :selected-metrics="workloadMetrics"
@@ -110,7 +110,7 @@ interface Data {
   availableWorkloads: string[];
   frequency: Ref<number>;
   workloadMetrics: Metric[];
-  watchedInstances: Ref<Database[]>;
+  watchedInstances: Ref<string[]>;
 }
 
 export default defineComponent({
@@ -120,20 +120,14 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<Database[]>([]);
+    const watchedInstances = ref<string[]>([]);
     const frequency = ref<number>(200);
-    const {
-      loadWorkloadData,
-      deleteWorkloadData,
-      startWorkload,
-      stopWorkload
-    } = useWorkloadService();
+    const { databasesUpdated } = context.root.$databaseController;
 
-    const { isReady } = context.root.$databaseService;
-    watch(isReady, () => {
-      if (isReady.value) {
+    watch(databasesUpdated, () => {
+      if (databasesUpdated.value) {
         watchedInstances.value = [
-          context.root.$databaseService.databases.value[0]
+          context.root.$databaseController.availableDatabasesById.value[0]
         ];
       }
     });
@@ -144,14 +138,11 @@ export default defineComponent({
 
     return {
       getDisplayedWorkload,
-      loadWorkloadData,
-      deleteWorkloadData,
       availableWorkloads,
-      startWorkload,
-      stopWorkload,
       frequency,
       watchedInstances,
-      workloadMetrics
+      workloadMetrics,
+      ...useWorkloadService()
     };
   }
 });

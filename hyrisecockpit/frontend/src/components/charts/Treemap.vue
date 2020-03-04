@@ -12,13 +12,15 @@ import {
   ref
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   labels: string[];
   parents: string[];
   values: number[];
+  text: string[];
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
   autosize: boolean;
 }
 
@@ -36,12 +38,16 @@ export default defineComponent({
       type: Array,
       default: null
     },
+    text: {
+      type: Array,
+      default: null
+    },
     graphId: {
       type: String,
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     },
     autosize: {
@@ -66,7 +72,7 @@ export default defineComponent({
           Plotly.deleteTraces(props.graphId, 0);
           Plotly.addTraces(
             props.graphId,
-            getDataset(props.labels, props.parents, props.values)
+            getDataset(props.labels, props.parents, props.values, props.text)
           );
         }
       });
@@ -75,13 +81,14 @@ export default defineComponent({
 });
 function useTreemapConfiguration(
   autosize: boolean,
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
   getDataset: (
     labels?: string[],
     parents?: string[],
-    values?: number[]
+    values?: number[],
+    text?: string[]
   ) => Object[];
   getOptions: () => Object;
 } {
@@ -105,7 +112,8 @@ function useTreemapConfiguration(
   function getDataset(
     labels: string[] = [],
     parents: string[] = [],
-    values: number[] = []
+    values: number[] = [],
+    text: string[] = []
   ): Object[] {
     return [
       {
@@ -113,7 +121,10 @@ function useTreemapConfiguration(
         labels: labels,
         parents: parents,
         values: values,
-        textinfo: "label+value+percent parent+percent entry",
+        text: text,
+        hoverinfo: "label+text+percent parent+percent entry",
+        texttemplate:
+          "<b>%{label}</b> <br>size:%{value} MB <br>data type: %{text}", //TODO: data type and encoding
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }
