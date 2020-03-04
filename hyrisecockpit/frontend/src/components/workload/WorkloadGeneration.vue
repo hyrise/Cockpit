@@ -1,34 +1,34 @@
 <template>
-  <v-dialog v-model="open" persistent max-width="750px">
+  <v-dialog v-model="open" persistent max-width="900px">
     <v-card>
-      <v-system-bar>
+      <v-system-bar :height="50">
+        <v-card-title>
+          Workload Generation
+        </v-card-title>
         <v-spacer></v-spacer>
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
-      <v-card-title class="justify-center">
-        Workload Generation
-      </v-card-title>
       <v-card-text class="pb-0">
         <v-row>
           <v-col max-width="300px">
-            <b> Start, pause and stop workload </b>
+            <v-text class="subtitle-1 font-weight-medium">
+              Start, pause and stop workload
+            </v-text>
+            <v-text-field
+              class="mt-5"
+              v-model="frequency"
+              label="Number of queries per second"
+              outlined
+              dense
+            ></v-text-field>
             <v-slider
               v-model="frequency"
-              class="mt-10"
+              class="mt-5"
               thumb-label="always"
               min="0"
               max="1000"
               step="10"
-            >
-              <template v-slot:append>
-                <v-text-field
-                  v-model="frequency"
-                  class="mt-n1 pt-0"
-                  style="width: 50px"
-                  step="10"
-                ></v-text-field>
-              </template>
-            </v-slider>
+            ></v-slider>
             <v-radio-group v-model="workload" class="mt-0">
               <v-radio
                 v-for="workload in availableWorkloads"
@@ -58,7 +58,9 @@
           </v-col>
           <v-divider vertical class="ml-4 mr-4" />
           <v-col>
-            <b> Load and remove generated data into/from instances</b>
+            <v-text class="subtitle-1 font-weight-medium">
+              Load and remove generated data into/from instances</v-text
+            >
             <v-radio-group v-model="workloadData">
               <v-radio
                 v-for="workload in availableWorkloads"
