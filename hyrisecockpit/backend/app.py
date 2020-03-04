@@ -804,7 +804,7 @@ class Plugin(Resource):
     @control.doc(model=model_get_plugins)
     def get(self) -> List:
         """Get all available plugins."""
-        return ["a", "b", "c"]
+        return ["Clustering", "b", "c"]
 
     @control.doc(body=model_activate_plugin)
     def post(self) -> Dict:

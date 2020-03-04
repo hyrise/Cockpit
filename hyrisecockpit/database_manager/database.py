@@ -394,7 +394,10 @@ class Database(object):
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
-                    ("INSERT INTO meta_plugins(name) VALUES %s);", (AsIs(plugin),),)
+                    (
+                        "INSERT INTO meta_plugins(plugin_name) VALUES %s);",
+                        (AsIs(plugin),),
+                    )
                 )
             return True
         else:
@@ -405,7 +408,7 @@ class Database(object):
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
-                    ("DELETE FROM meta_plugins WHERE name=%s;", (AsIs(plugin),),)
+                    ("DELETE FROM meta_plugins WHERE plugin_name=%s;", (AsIs(plugin),),)
                 )
             return True
         else:
