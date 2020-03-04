@@ -14,7 +14,7 @@
       multiple
       accordion
     >
-      <v-expansion-panel bordered v-for="database in databases" :key="database.id">
+      <v-expansion-panel v-for="database in databases" :key="database.id">
         <v-expansion-panel-header class="title">
           <v-avatar
             class="mr-2"
@@ -30,7 +30,13 @@
             <div class="plugin-name">
               {{ plugin }}
             </div>
-            <v-switch loading />
+            <v-switch
+              :disabled="disableAll"
+              :loading="isLoading[database.id + '_' + plugin]"
+              v-model="activePlugins"
+              :value="database.id + '_' + plugin"
+              @change="onClickPluginSwitch(database.id, plugin)"
+            />
           </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -50,23 +56,23 @@ import {
 import { Database } from "../../types/database";
 
 interface Props {
-  handleScroll: boolean;
   onClose: () => void;
 }
+
 interface Data {
   showDatabasePanels: Ref<boolean>;
   togglePanelView: () => void;
   databases: Ref<Database[]>;
-  plugins: Ref<String[]>;
+  plugins: Ref<string[]>;
+  activePlugins: Ref<string[]>;
+  onClickPluginSwitch: (databaseId: string, plugin: string) => void;
+  isLoading: Ref<any>;
+  disableAll: Ref<boolean>;
 }
 
 export default defineComponent({
   name: "PluginOverview",
   props: {
-    handleScroll: {
-      type: Boolean,
-      default: true
-    },
     onClose: {
       type: Function,
       default: null
@@ -75,11 +81,43 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     var { databases } = context.root.$databaseService;
     const showDatabasePanels = ref(true);
-    const plugins = ref(["auto-index", "ki-stuff", "no-more-problems"]);
+    const disableAll = ref(false);
+    const isLoading: Ref<any> = ref({});
+    const plugins: Ref<string[]> = ref([
+      "auto-index",
+      "ki-stuff",
+      "no-more-problems"
+    ]);
+    const activePlugins: Ref<string[]> = ref([]);
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
-    return { showDatabasePanels, togglePanelView, databases, plugins };
+
+    function onClickPluginSwitch(databaseId: string, plugin: string): void {
+      isLoading.value[databaseId + "_" + plugin] = true;
+      disableAll.value = true;
+      const currentPluginIndex = activePlugins.value.findIndex(
+        x => x === databaseId + "_" + plugin
+      );
+      if (currentPluginIndex) {
+        // toggle to not active
+      } else {
+        // toggle to active
+      }
+      isLoading.value[databaseId + "_" + plugin] = false;
+      disableAll.value = false;
+    }
+
+    return {
+      showDatabasePanels,
+      togglePanelView,
+      databases,
+      plugins,
+      onClickPluginSwitch,
+      activePlugins,
+      isLoading,
+      disableAll
+    };
   }
 });
 </script>
