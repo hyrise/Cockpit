@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="ml-6">
+    <div v-if="$databaseController.databasesUpdated.value" class="ml-6">
       <MetricsTileList
         :selected-databases="watchedInstances"
         :show-details="true"
@@ -13,7 +13,7 @@
         :metric="metric"
         :is="getMetricComponent(metric)"
         :selected-databases="watchedInstances"
-        :metric-meta="getMetadata(metric)"
+        :metric-meta="getMetricMetadata(metric)"
       />
     </div>
     <v-progress-linear v-else indeterminate color="primary" height="7" />
@@ -29,7 +29,7 @@ import {
   onMounted
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { getMetadata, getMetricComponent } from "../meta/metrics";
+import { getMetricMetadata, getMetricComponent } from "../meta/metrics";
 import {
   Metric,
   MetricMetadata,
@@ -43,11 +43,11 @@ import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata;
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   overviewMetrics: Metric[];
   instanceMetrics: Metric[];
-  watchedInstances: Ref<Database[]>;
+  watchedInstances: Ref<string[]>;
 }
 
 export default defineComponent({
@@ -58,24 +58,15 @@ export default defineComponent({
     QueryTypeProportion
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<Database[]>([
-      getDatabaseById(context.root.$route.params.id)
-    ]);
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
       emitWatchedMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
 
-    function getDatabaseById(id: string): Database | undefined {
-      return context.root.$databaseService.databases.value.find(
-        database => database.id === id
-      );
-    }
-
     return {
-      getMetadata,
+      getMetricMetadata,
       getMetricComponent,
-      watchedInstances,
+      watchedInstances: ref([context.root.$route.params.id]),
       overviewMetrics,
       instanceMetrics
     };

@@ -1,20 +1,20 @@
 import { Metric } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 
-export function useDataTransformation(metric: Metric): TransformationService {
-  const transformationMap: Record<Metric, TransformationService> = {
-    access: getAccessData,
-    cpu: getCPUData,
-    latency: getReadOnlyData,
-    executedQueryTypeProportion: getExecutedQueryTypeProportionData,
-    generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
-    queueLength: getReadOnlyData,
-    ram: getRAMData,
-    storage: getStorageData,
-    throughput: getReadOnlyData
-  };
+const transformationServiceMap: Record<Metric, TransformationService> = {
+  access: getAccessData,
+  cpu: getCPUData,
+  latency: getReadOnlyData,
+  executedQueryTypeProportion: getExecutedQueryTypeProportionData,
+  generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  queueLength: getReadOnlyData,
+  ram: getRAMData,
+  storage: getStorageData,
+  throughput: getReadOnlyData
+};
 
-  return transformationMap[metric];
+export function useDataTransformation(metric: Metric): TransformationService {
+  return transformationServiceMap[metric];
 }
 
 function getExecutedQueryTypeProportionData(
@@ -96,19 +96,24 @@ function getStorageData(
   const newSizes: number[] = [];
   const newText: string[] = [];
 
+  function getRoundedData(value: number): number {
+    return Math.floor(value / Math.pow(10, 4)) / 100;
+  }
+
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
     newParents.push(primaryKey);
     newSizes.push(0);
-    newText.push(`${data[primaryKey][table].size / Math.pow(10, 6)}MB`);
+    newText.push(`${getRoundedData(data[primaryKey][table].size)} MB`);
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
+      getRoundedData(data[primaryKey][table].data[attribute].size);
       newSizes.push(
-        data[primaryKey][table].data[attribute].size / Math.pow(10, 6)
+        getRoundedData(data[primaryKey][table].data[attribute].size)
       );
       newText.push(
-        `${data[primaryKey][table].data[attribute].size / Math.pow(10, 6)}MB`
+        `${getRoundedData(data[primaryKey][table].data[attribute].size)} MB`
       );
     });
   });
@@ -150,9 +155,14 @@ export function useDataTransformationHelpers(): {
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
   function getDatabaseMemoryFootprint(data: any): number {
-    let sum = 0;
-    Object.values(data as any).forEach((table: any) => (sum += table.size));
-    return Math.floor(sum / Math.pow(10, 3)) / 1000;
+    return (
+      Math.floor(
+        (Object.values(data).reduce(
+          (sum1: any, table: any) => sum1 + table.size,
+          0
+        ) as number) / Math.pow(10, 3)
+      ) / 1000
+    );
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return Math.floor(data.memory.total / Math.pow(10, 6)) / 1000;
