@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$databaseService.isReady.value">
+  <div v-if="$databaseController.databasesUpdated.value">
     <v-expansion-panels>
       <v-expansion-panel>
         <v-expansion-panel-header class="title primary--text">
@@ -10,7 +10,7 @@
             <v-select
               class="select-box"
               v-model="selectedDatabases"
-              v-on:input="handleMaxSelected"
+              v-on:input="handleDatabasesChanged"
               :items="availableDatabases"
               :error="!selectedDatabases.length"
               chips
@@ -20,9 +20,8 @@
               deletable-chips
               counter="4"
               outlined
-              return-object
               prepend-icon="mdi-database"
-            ></v-select>
+            />
             <v-select
               class="select-box"
               v-model="selectedMetrics"
@@ -37,7 +36,7 @@
               :error="!selectedMetrics.length"
               outlined
               prepend-icon="mdi-database"
-            ></v-select></div
+            /></div
         ></v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -63,7 +62,7 @@ interface Props {
 }
 
 interface Data {
-  handleMaxSelected: () => void;
+  handleDatabasesChanged: () => void;
   handleMetricsChanged: () => void;
   selectedMetrics: Ref<Object[]>;
   availableMetrics: Object[];
@@ -148,37 +147,41 @@ function useMetricSelection(
 function useDatabaseSelection(
   context: SetupContext
 ): {
-  availableDatabases: Ref<any[]>;
-  selectedDatabases: Ref<any[]>;
-  handleMaxSelected: () => void;
+  availableDatabases: Ref<string[]>;
+  selectedDatabases: Ref<string[]>;
+  handleDatabasesChanged: () => void;
 } {
-  const selectedDatabases = ref<any[]>([]);
-  const availableDatabases = ref<any[]>([]);
-  const { isReady } = context.root.$databaseService;
+  const selectedDatabases = ref<string[]>([]);
+  const availableDatabases = ref<string[]>([]);
+  const { databasesUpdated } = context.root.$databaseController;
   const { emitSelectedDatabasesChangedEvent } = useDatabaseEvents();
 
-  watch(isReady, () => {
-    if (isReady.value) {
-      availableDatabases.value = context.root.$databaseService.databases.value.map(
-        database => {
-          return { text: database.id, value: database };
-        }
-      );
+  watch(databasesUpdated, () => {
+    if (databasesUpdated.value) {
+      availableDatabases.value = context.root.$databaseController
+        .availableDatabasesById.value as string[];
+
       selectedDatabases.value = availableDatabases.value;
-      emitSelectedDatabasesChangedEvent(
-        selectedDatabases.value.map(database => database.value)
-      );
+      emitSelectedDatabasesChangedEvent(selectedDatabases.value);
     }
   });
-  function handleMaxSelected(): void {
+  function sortDatabases(): void {
+    const sorted: string[] = [];
+    availableDatabases.value.forEach(db => {
+      const selected = selectedDatabases.value.find(elem => elem === db);
+      if (selected) sorted.push(selected);
+    });
+    selectedDatabases.value = sorted;
+  }
+
+  function handleDatabasesChanged(): void {
     if (selectedDatabases.value.length > 4) {
       selectedDatabases.value.pop();
     }
-    emitSelectedDatabasesChangedEvent(
-      selectedDatabases.value.map(database => database.value)
-    );
+    sortDatabases();
+    emitSelectedDatabasesChangedEvent(selectedDatabases.value);
   }
-  return { selectedDatabases, availableDatabases, handleMaxSelected };
+  return { selectedDatabases, availableDatabases, handleDatabasesChanged };
 }
 </script>
 <style scoped>

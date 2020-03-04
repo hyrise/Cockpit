@@ -13,11 +13,12 @@ import {
   watch
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   data: any;
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
 }
 
 export default defineComponent({
@@ -31,30 +32,39 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const data = computed(() => props.data);
-    const graphId = props.graphId;
     const { getLayout, getOptions } = useBarChartConfiguration(
       context,
       props.chartConfiguration
     );
 
     onMounted(() => {
-      Plotly.newPlot(graphId, data.value as any, getLayout(), getOptions());
+      Plotly.newPlot(
+        props.graphId,
+        props.data as any,
+        getLayout(),
+        getOptions()
+      );
 
-      watch(data, () => {
-        updateChartDatasets();
-
-        if (data.value.length) {
-          updateChartDatasets();
+      watch(
+        () => props.data,
+        () => {
+          if (props.data.length) {
+            updateChartDatasets();
+          }
         }
-      });
+      );
       function updateChartDatasets(): void {
-        Plotly.react(graphId, data.value as any, getLayout(), getOptions());
+        Plotly.react(
+          props.graphId,
+          props.data as any,
+          getLayout(),
+          getOptions()
+        );
       }
     });
   }
@@ -62,7 +72,7 @@ export default defineComponent({
 
 function useBarChartConfiguration(
   context: SetupContext,
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
   getOptions: () => Object;
@@ -71,13 +81,13 @@ function useBarChartConfiguration(
     return {
       xaxis: {
         title: {
-          text: chartConfiguration[1]
+          text: chartConfiguration.xaxis
         },
         rangemode: "tozero"
       },
       yaxis: {
         title: {
-          text: chartConfiguration[2]
+          text: chartConfiguration.yaxis
         },
         rangemode: "tozero"
       },
@@ -86,7 +96,7 @@ function useBarChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false };
+    return { displayModeBar: false, responsive: true };
   }
   return { getLayout, getOptions };
 }

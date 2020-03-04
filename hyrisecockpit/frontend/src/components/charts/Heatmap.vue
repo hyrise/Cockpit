@@ -12,17 +12,15 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import axios from "axios";
-
 import * as Plotly from "plotly.js";
-import Vue from "vue";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   data: number[][];
   xValues: string[];
   yValues: string[];
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
 }
 
 export default defineComponent({
@@ -45,33 +43,31 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     }
   },
   setup(props: Props, context: SetupContext): void {
-    const mapData = computed(() => props.data);
-    const xData = computed(() => props.xValues);
-    const yData = computed(() => props.yValues);
-
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
       props.chartConfiguration
     );
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
-      watch([mapData, xData, yData], () => {
-        Plotly.deleteTraces(props.graphId, 0);
-        Plotly.addTraces(
-          props.graphId,
-          getDataset(mapData.value, xData.value, yData.value)
-        );
+      watch(() => {
+        if (props.data && props.xValues && props.yValues) {
+          Plotly.deleteTraces(props.graphId, 0);
+          Plotly.addTraces(
+            props.graphId,
+            getDataset(props.data, props.xValues, props.yValues)
+          );
+        }
       });
     });
   }
 });
 function useHeatMapConfiguration(
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getDataset: (
     data?: readonly number[][],
@@ -105,7 +101,7 @@ function useHeatMapConfiguration(
     };
   }
   function getOptions(): Object {
-    return { displayModeBar: false };
+    return { displayModeBar: false, responsive: true };
   }
   return { getDataset, getLayout, getOptions };
 }
