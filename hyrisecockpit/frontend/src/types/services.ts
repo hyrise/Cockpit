@@ -15,6 +15,7 @@ export type TransformationService = (
 ) => any;
 
 export interface WorkloadService {
+  getWorkloadData: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
   startWorkload: (workload: Workload, frequency: number) => void;

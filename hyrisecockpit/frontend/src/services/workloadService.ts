@@ -5,6 +5,9 @@ import { WorkloadService } from "../types/services";
 import { controlBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
+  async function getWorkloadData(): Promise<string[]> {
+    return axios.get(`${controlBackend}data`);
+  }
   function loadWorkloadData(workload: Workload): void {
     axios.post(`${controlBackend}data/${getTransferredWorkload(workload)}`);
   }
@@ -18,12 +21,12 @@ export function useWorkloadService(): WorkloadService {
       frequency: frequency
     });
   }
-
   function stopWorkload(): void {
     axios.delete(`${controlBackend}workload`);
   }
 
   return {
+    getWorkloadData,
     loadWorkloadData,
     deleteWorkloadData,
     startWorkload,
