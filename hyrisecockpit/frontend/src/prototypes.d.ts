@@ -6,5 +6,6 @@ declare module "vue/types/vue" {
   interface Vue {
     $databaseService: DatabaseService;
     $metricController: MetricController;
+    $pluginService: any;
   }
 }

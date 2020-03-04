@@ -83,12 +83,11 @@ export default defineComponent({
     const showDatabasePanels = ref(true);
     const disableAll = ref(false);
     const isLoading: Ref<any> = ref({});
-    const plugins: Ref<string[]> = ref([
-      "auto-index",
-      "ki-stuff",
-      "no-more-problems"
-    ]);
-    const activePlugins: Ref<string[]> = ref([]);
+    const {
+      plugins,
+      activePlugins,
+      updatePlugins
+    } = context.root.$pluginService;
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
@@ -96,14 +95,7 @@ export default defineComponent({
     function onClickPluginSwitch(databaseId: string, plugin: string): void {
       isLoading.value[databaseId + "_" + plugin] = true;
       disableAll.value = true;
-      const currentPluginIndex = activePlugins.value.findIndex(
-        x => x === databaseId + "_" + plugin
-      );
-      if (currentPluginIndex) {
-        // toggle to not active
-      } else {
-        // toggle to active
-      }
+      updatePlugins(activePlugins.value);
       isLoading.value[databaseId + "_" + plugin] = false;
       disableAll.value = false;
     }
