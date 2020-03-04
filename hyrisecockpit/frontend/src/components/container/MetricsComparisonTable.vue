@@ -6,7 +6,7 @@
         class="metrics-column"
         :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
         v-for="database in selectedDatabases"
-        :key="`${uuid()}-${database.id}`"
+        :key="`${database.id}`"
       >
         <v-card
           v-for="metric in selectedMetrics"

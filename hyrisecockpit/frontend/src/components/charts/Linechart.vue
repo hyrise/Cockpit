@@ -205,7 +205,7 @@ function useLineChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false };
+    return { displayModeBar: false, responsive: true };
   }
   return { getDataset, getLayout, getOptions };
 }
