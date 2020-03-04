@@ -1,5 +1,5 @@
 <template>
-  <v-progress-linear v-if="loading" indeterminate color="primary" height="7" />
+  <v-progress-linear v-if="loading" indeterminate :color="color" height="7" />
 </template>
 <script lang="ts">
 import {
@@ -19,6 +19,7 @@ interface Data {
 interface Props {
   conditions: Ref<boolean>[];
   evaluations: boolean[];
+  color: string;
 }
 
 export default defineComponent({
@@ -31,6 +32,10 @@ export default defineComponent({
     evaluations: {
       type: Array,
       default: () => []
+    },
+    color: {
+      type: String,
+      default: "primary"
     }
   },
   setup(props: Props, context: SetupContext): Data {
