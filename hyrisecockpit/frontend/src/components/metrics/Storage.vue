@@ -43,12 +43,13 @@ import Treemap from "../charts/Treemap.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ChartConfiguration
+  ChartConfiguration,
+  StorageData
 } from "../../types/metrics";
 import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
-  storageData: Ref<Object>;
+  storageData: Ref<StorageData>;
   chartConfiguration: ChartConfiguration;
   showDialog: Ref<boolean>;
 }
@@ -62,7 +63,7 @@ export default defineComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
     const showDialog = ref(false);
-    const storageData = ref<Object>({}); // add type
+    const storageData = ref<StorageData>({});
 
     watch(data, () => {
       if (Object.keys(data.value).length) {

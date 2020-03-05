@@ -12,10 +12,10 @@ import {
   ref
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
-import { ChartConfiguration } from "../../types/metrics";
+import { ChartConfiguration, StorageData } from "../../types/metrics";
 
 interface Props {
-  storageData: Object; //TODO: add storage type
+  storageData: StorageData;
   graphId: string;
   chartConfiguration: ChartConfiguration;
   autosize: boolean;
@@ -50,7 +50,6 @@ export default defineComponent({
       Plotly.newPlot(props.graphId, getDataset(), getLayout(), getOptions());
       watch(() => {
         if (Object.keys(props.storageData).length) {
-          console.log(props.storageData);
           Plotly.deleteTraces(props.graphId, 0);
           Plotly.addTraces(props.graphId, getDataset(props.storageData));
         }
@@ -63,7 +62,7 @@ function useTreemapConfiguration(
   chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
-  getDataset: (data?: Object) => Object[];
+  getDataset: (data?: StorageData) => Object[];
   getOptions: () => Object;
 } {
   function getLayout(): Object {
@@ -85,18 +84,20 @@ function useTreemapConfiguration(
       hoverlabel: { bgcolor: "#FFF" }
     };
   }
-  function getDataset(data: Object = {}): Object[] {
+  function getDataset(
+    data: StorageData = { labels: [], parents: [], sizes: [], descriptions: [] }
+  ): Object[] {
     return [
       {
         type: "treemap",
         labels: data.labels,
         parents: data.parents,
         values: data.sizes,
-        text: data.texts,
+        text: data.descriptions,
         hovertemplate:
           "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable} <br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
         texttemplate:
-          "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}", //TODO: data type and encoding
+          "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}",
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }

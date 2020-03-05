@@ -1,4 +1,4 @@
-import { Metric } from "../types/metrics";
+import { Metric, StorageData, TreemapDescription } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
@@ -82,12 +82,11 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
-function getStorageData(data: any, primaryKey: string = ""): Object {
-  //TODO: add type
+function getStorageData(data: any, primaryKey: string = ""): StorageData {
   const newLabels: string[] = [];
   const newParents: string[] = [];
   const newSizes: number[] = [];
-  const newText: Object[] = [];
+  const newDescriptions: TreemapDescription[] = [];
 
   const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
 
@@ -104,7 +103,7 @@ function getStorageData(data: any, primaryKey: string = ""): Object {
   newLabels.push(primaryKey);
   newParents.push("");
   newSizes.push(0);
-  newText.push({
+  newDescriptions.push({
     size: `${totalDatabaseMemory} MB`,
     encoding: "",
     dataType: "",
@@ -115,7 +114,7 @@ function getStorageData(data: any, primaryKey: string = ""): Object {
     newLabels.push(table);
     newParents.push(primaryKey);
     newSizes.push(0);
-    newText.push({
+    newDescriptions.push({
       size: `${getRoundedData(data[primaryKey][table].size)} MB`,
       encoding: "",
       dataType: "",
@@ -132,7 +131,7 @@ function getStorageData(data: any, primaryKey: string = ""): Object {
       newSizes.push(
         getRoundedData(data[primaryKey][table].data[attribute].size)
       );
-      newText.push({
+      newDescriptions.push({
         size: `${getRoundedData(
           data[primaryKey][table].data[attribute].size
         )} MB`,
@@ -154,7 +153,7 @@ function getStorageData(data: any, primaryKey: string = ""): Object {
     parents: newParents,
     labels: newLabels,
     sizes: newSizes,
-    texts: newText
+    descriptions: newDescriptions
   };
 }
 
