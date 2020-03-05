@@ -85,7 +85,18 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
   const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
 
-  const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
+  //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
+  const memory: number[] = [];
+  Object.entries(data[primaryKey]).forEach(
+    ([table, tableData]: [string, any]) => {
+      memory.push(getDatabaseMemoryFootprint(tableData.data));
+    }
+  );
+  const totalDatabaseMemory =
+    Math.floor(
+      memory.reduce((total, tableMemory) => total + tableMemory) * 100
+    ) / 100;
+
   const labels: string[] = [primaryKey];
   const parents: string[] = [""];
   const sizes: number[] = [0];
@@ -113,11 +124,11 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       parents.push(primaryKey);
       sizes.push(0);
       descriptions.push({
-        size: `${getRoundedData(tableData.size)} MB`,
+        size: `${getDatabaseMemoryFootprint(tableData.data)} MB`,
         encoding: "",
         dataType: "",
         percentOfDatabase: `${getPercentage(
-          getRoundedData(tableData.size),
+          getDatabaseMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
         percentOfTable: `100% of ${table}`
@@ -137,8 +148,8 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
               totalDatabaseMemory
             )} % of total footprint`,
             percentOfTable: `${getPercentage(
-              attributeData.size,
-              tableData.size
+              getRoundedData(attributeData.size),
+              getDatabaseMemoryFootprint(tableData.data)
             )} % of ${table}`
           });
         }
