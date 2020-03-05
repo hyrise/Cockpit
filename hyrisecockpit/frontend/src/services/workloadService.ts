@@ -9,10 +9,16 @@ export function useWorkloadService(): WorkloadService {
     return axios.get(`${controlBackend}data`);
   }
   function loadWorkloadData(workload: Workload): void {
-    axios.post(`${controlBackend}data/${getTransferredWorkload(workload)}`);
+    axios.post(`${controlBackend}data`, {
+      folder_name: getTransferredWorkload(workload)
+    });
   }
   function deleteWorkloadData(workload: Workload): void {
-    axios.delete(`${controlBackend}data/${getTransferredWorkload(workload)}`);
+    axios.delete(`${controlBackend}data`, {
+      data: {
+        folder_name: getTransferredWorkload(workload)
+      }
+    });
   }
 
   function startWorkload(workload: Workload, frequency: number): void {

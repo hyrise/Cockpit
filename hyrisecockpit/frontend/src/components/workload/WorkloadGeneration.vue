@@ -66,7 +66,7 @@
               v-for="workload in availableWorkloads"
               :key="workload"
               :label="getDisplayedWorkload(workload)"
-              :value="getTransferredWorkload(workload)"
+              :value="workload"
               @change="checkWorkloadData(workload)"
             >
             </v-switch>
@@ -81,11 +81,7 @@
 import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
-import {
-  getDisplayedWorkload,
-  getTransferredWorkload
-} from "../../meta/workloads";
-import axios from "axios";
+import { getDisplayedWorkload } from "../../meta/workloads";
 
 interface Props {
   open: boolean;
@@ -93,7 +89,6 @@ interface Props {
 interface Data {
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
-  getTransferredWorkload: (workload: Workload) => string;
   getWorkloadData: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
@@ -101,7 +96,7 @@ interface Data {
   stopWorkload: () => void;
   frequency: Ref<number>;
   workload: Ref<Workload>;
-  workloadData: Ref<string[]>;
+  workloadData: Ref<Workload[]>;
   checkWorkloadData: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
@@ -124,11 +119,11 @@ export default defineComponent({
       stopWorkload
     } = useWorkloadService();
     const workloadData = ref<Workload[]>([]);
-    getWorkloadData().then((response: any) => {
+    /* getWorkloadData().then((response: any) => {
       workloadData.value = response.data;
-    });
+    }); */
     function checkWorkloadData(workload: Workload): void {
-      if (workload in workloadData) {
+      if (workloadData.value.includes(workload)) {
         loadWorkloadData(workload);
       } else {
         deleteWorkloadData(workload);
@@ -140,7 +135,6 @@ export default defineComponent({
     return {
       availableWorkloads,
       getDisplayedWorkload,
-      getTransferredWorkload,
       getWorkloadData,
       loadWorkloadData,
       deleteWorkloadData,
