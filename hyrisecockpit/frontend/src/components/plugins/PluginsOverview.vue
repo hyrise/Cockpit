@@ -1,48 +1,55 @@
 <template>
-  <div id="plugin-overview" class="plugin-overview">
-    <v-card class="card" color="primary" dark>
-      <v-card-title>
-        Plugins
-        <v-icon class="close-icon" @click="onClose()">
-          mdi-close
-        </v-icon>
-      </v-card-title>
-    </v-card>
-    <v-expansion-panels
-      class="panels"
-      v-if="showDatabasePanels"
-      multiple
-      accordion
-    >
-      <v-expansion-panel v-for="database in databases" :key="database.id">
-        <v-expansion-panel-header class="title">
-          <v-avatar
-            class="mr-2"
-            size="20"
-            max-width="20"
-            max-height="20"
-            :color="database.color"
-          />
-          {{ database.id }}
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <div class="plugin" v-for="plugin in plugins" :key="plugin">
-            <div class="plugin-name">
-              {{ plugin }}
-            </div>
-            <v-switch
-              :disabled="disableAll"
-              :loading="isLoading[database.id + '_' + plugin]"
-              v-model="activePlugins"
-              :value="database.id + '_' + plugin"
-              @change="onClickPluginSwitch(database.id, plugin)"
-            />
-          </div>
-          <PluginsLog />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-  </div>
+  <Moveable
+    v-bind="moveable"
+    @drag="handleDrag"
+    class="moveable"
+    className="box"
+  >
+    <div id="plugin-overview" class="plugin-overview">
+      <v-card class="card" color="primary">
+        <v-card-title class="white--text">
+          Plugins
+          <v-icon class="close-icon white--text" @click="onClose()">
+            mdi-close
+          </v-icon>
+        </v-card-title>
+        <v-expansion-panels
+          class="panels"
+          v-if="showDatabasePanels"
+          multiple
+          accordion
+        >
+          <v-expansion-panel v-for="database in databases" :key="database.id">
+            <v-expansion-panel-header class="title">
+              <v-avatar
+                class="mr-2"
+                size="20"
+                max-width="20"
+                max-height="20"
+                :color="database.color"
+              />
+              {{ database.id }}
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <div class="plugin" v-for="plugin in plugins" :key="plugin">
+                <div class="plugin-name">
+                  {{ plugin }}
+                </div>
+                <v-switch
+                  :disabled="disableAll"
+                  :loading="isLoading[database.id + '_' + plugin]"
+                  v-model="activePlugins"
+                  :value="database.id + '_' + plugin"
+                  @change="onClickPluginSwitch(database.id, plugin)"
+                />
+              </div>
+              <PluginsLog />
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-card>
+    </div>
+  </Moveable>
 </template>
 
 <script lang="ts">
@@ -56,6 +63,7 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
+import Moveable from "vue-moveable";
 
 interface Props {
   onClose: () => void;
@@ -70,12 +78,15 @@ interface Data {
   onClickPluginSwitch: (databaseId: string, plugin: string) => void;
   isLoading: Ref<any>;
   disableAll: Ref<boolean>;
+  handleDrag: any;
+  moveable: any;
 }
 
 export default defineComponent({
   name: "PluginOverview",
   components: {
-    PluginsLog
+    PluginsLog,
+    Moveable
   },
   props: {
     onClose: {
@@ -94,6 +105,13 @@ export default defineComponent({
       updatePlugins
     } = context.root.$pluginService;
 
+    const moveable = {
+      draggable: true,
+      throttleDrag: 1,
+      origin: false,
+      edge: false
+    };
+
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
@@ -106,6 +124,10 @@ export default defineComponent({
       disableAll.value = false;
     }
 
+    function handleDrag({ target, transform }) {
+      target.style.transform = transform;
+    }
+
     return {
       showDatabasePanels,
       togglePanelView,
@@ -114,12 +136,18 @@ export default defineComponent({
       onClickPluginSwitch,
       activePlugins,
       isLoading,
-      disableAll
+      disableAll,
+      handleDrag,
+      moveable
     };
   }
 });
 </script>
 <style>
+.box {
+  color: transparent !important;
+  visibility: hidden !important;
+}
 .panels {
   margin-top: 0.5%;
 }
@@ -133,13 +161,13 @@ export default defineComponent({
   flex: 0 0 50%;
 }
 .plugin-overview {
-  height: 600px;
-  overflow: scroll;
-  position: fixed;
-  top: 70px;
   z-index: 11;
   width: 500px;
-  left: 0px;
+  position: fixed;
+}
+.moveable {
+  z-index: 11;
+  position: absolute;
 }
 .close-icon {
   margin-left: auto;

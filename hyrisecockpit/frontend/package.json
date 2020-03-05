@@ -19,6 +19,7 @@
         "plotly.js-dist": "^1.52.2",
         "static-eval": "^2.0.3",
         "vue": "^2.6.11",
+        "vue-moveable": "^1.5.0",
         "vue-router": "^3.1.5",
         "vue-uuid": "^1.1.1",
         "vuetify": "^2.2.14"
