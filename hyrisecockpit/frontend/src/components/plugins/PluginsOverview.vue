@@ -38,38 +38,7 @@
               @change="onClickPluginSwitch(database.id, plugin)"
             />
           </div>
-          <v-expansion-panels flat>
-            <v-expansion-panel>
-              <v-expansion-panel-header flat>
-                <div class="log">
-                  log
-                </div>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-textarea
-                  class="log"
-                  readonly
-                  solo
-                  label="log"
-                  value="ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table"
-                ></v-textarea>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
+          <PluginsLog />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -86,6 +55,7 @@ import {
   ref
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
+import PluginsLog from "./PluginsLog.vue";
 
 interface Props {
   onClose: () => void;
@@ -104,6 +74,9 @@ interface Data {
 
 export default defineComponent({
   name: "PluginOverview",
+  components: {
+    PluginsLog
+  },
   props: {
     onClose: {
       type: Function,
@@ -120,6 +93,7 @@ export default defineComponent({
       activePlugins,
       updatePlugins
     } = context.root.$pluginService;
+
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
@@ -146,9 +120,6 @@ export default defineComponent({
 });
 </script>
 <style>
-.log {
-  text-align: right;
-}
 .panels {
   margin-top: 0.5%;
 }
