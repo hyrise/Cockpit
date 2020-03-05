@@ -77,6 +77,7 @@ export interface MetricProps {
   selectedDatabases: string[];
   graphId: string;
   showDetails: boolean;
+  maxChartWidth: number;
 }
 
 export const MetricPropsValidation = {
@@ -99,6 +100,10 @@ export const MetricPropsValidation = {
   graphId: {
     type: String,
     default: null
+  },
+  maxChartWidth: {
+    type: Number,
+    default: 0
   }
 };
 

@@ -12,8 +12,8 @@
           :graph-id="'1' + graphId || 'storage'"
           :storage-data="storageData"
           :chart-configuration="chartConfiguration"
-          :autosize="false"
           :selected-databases="selectedDatabases"
+          :max-chart-width="1600"
         />
         <v-spacer />
         <v-card-actions>
@@ -27,6 +27,8 @@
       :graph-id="'2' + graphId || 'storage'"
       :storage-data="storageData"
       :chart-configuration="chartConfiguration"
+      :autosize="false"
+      :max-chart-width="maxChartWidth"
     />
   </div>
 </template>

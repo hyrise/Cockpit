@@ -18,12 +18,10 @@ import * as Plotly from "plotly.js";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
 import { useResizingOnDatabaseChange } from "../../meta/charts";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
-interface Props {
+interface Props extends ChartProps {
   data: any;
-  selectedDatabases: string[];
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
   maxValue: number;
   timestamps: Date[];
 }
@@ -34,18 +32,6 @@ export default defineComponent({
       type: Object,
       default: null
     },
-    selectedDatabases: {
-      type: Array,
-      default: null
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
     maxValue: {
       type: Number,
       default: 1
@@ -53,7 +39,8 @@ export default defineComponent({
     timestamps: {
       type: Array,
       default: null
-    }
+    },
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
@@ -62,7 +49,6 @@ export default defineComponent({
     );
     const { databasesUpdated } = context.root.$databaseController;
     const chartWidth = inject<Ref<number>>("width", ref(0));
-    const length = inject<Ref<number>>("length", ref(0));
 
     onMounted(() => {
       Plotly.newPlot(
@@ -72,7 +58,15 @@ export default defineComponent({
         getOptions()
       );
 
-      useResizingOnDatabaseChange(props.graphId, chartWidth, length);
+      //useResizingOnDatabaseChange(props.graphId, chartWidth, length);
+
+      watch(
+        () => props.maxChartWidth,
+        () =>
+          Plotly.relayout(props.graphId, {
+            width: props.maxChartWidth
+          })
+      );
 
       watch(
         () => props.data,
@@ -195,7 +189,7 @@ function useLineChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false };
+    return { displayModeBar: false, responsive: true };
   }
   return { getDataset, getLayout, getOptions };
 }

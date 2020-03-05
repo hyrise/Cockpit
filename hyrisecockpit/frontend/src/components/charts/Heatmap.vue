@@ -14,14 +14,12 @@ import {
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration } from "../../types/metrics";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
-interface Props {
+interface Props extends ChartProps {
   data: number[][];
   xValues: string[];
   yValues: string[];
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
-  selectedDatabases: string[];
 }
 
 export default defineComponent({
@@ -39,18 +37,7 @@ export default defineComponent({
       type: Array,
       default: null
     },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
-    selectedDatabases: {
-      type: Array,
-      default: null
-    }
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
@@ -68,6 +55,14 @@ export default defineComponent({
           );
         }
       });
+
+      watch(
+        () => props.maxChartWidth,
+        () =>
+          Plotly.relayout(props.graphId, {
+            width: props.maxChartWidth
+          })
+      );
     });
   }
 });
@@ -89,7 +84,8 @@ function useHeatMapConfiguration(
       },
       yaxis: {
         rangemode: "tozero"
-      }
+      },
+      autosize: true
     };
   }
 

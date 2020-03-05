@@ -16,12 +16,10 @@ import {
 import * as Plotly from "plotly.js";
 import { ChartConfiguration } from "../../types/metrics";
 import { useResizingOnDatabaseChange } from "../../meta/charts";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
-interface Props {
+interface Props extends ChartProps {
   data: any;
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
-  selectedDatabases: string[];
 }
 
 export default defineComponent({
@@ -30,18 +28,7 @@ export default defineComponent({
       type: Array,
       default: null
     },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
-    selectedDatabases: {
-      type: Array,
-      default: null
-    }
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { getLayout, getOptions } = useBarChartConfiguration(
@@ -59,7 +46,13 @@ export default defineComponent({
         getOptions()
       );
 
-      useResizingOnDatabaseChange(props.graphId, chartWidth, length);
+      watch(
+        () => props.maxChartWidth,
+        () =>
+          Plotly.relayout(props.graphId, {
+            width: props.maxChartWidth
+          })
+      );
 
       watch(
         () => props.data,
@@ -97,12 +90,13 @@ function useBarChartConfiguration(
         },
         rangemode: "tozero"
       },
-      barmode: "stack"
+      barmode: "stack",
+      autosize: true
     };
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false };
+    return { displayModeBar: false, responsive: true };
   }
   return { getLayout, getOptions };
 }

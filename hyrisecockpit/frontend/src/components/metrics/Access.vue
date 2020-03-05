@@ -18,6 +18,7 @@
         :y-values="chunks"
         :chart-configuration="chartConfiguration"
         :selected-databases="selectedDatabases"
+        :max-chart-width="maxChartWidth"
       />
     </div>
   </div>

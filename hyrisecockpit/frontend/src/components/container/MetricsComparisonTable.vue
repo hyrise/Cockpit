@@ -28,6 +28,7 @@
             :metric-meta="getMetricMetadata(metric)"
             :graph-id="`${metric}-${database.id}`"
             :show-details="showDetails"
+            :max-chart-width="maxChartWidth"
           />
         </v-card>
       </div>
@@ -73,6 +74,7 @@ interface Data {
   getMetricTitle: (metric: Metric) => string;
   uuid: () => string;
   databaseFlex: Readonly<Ref<Object>>;
+  maxChartWidth: Readonly<Ref<number>>;
 }
 
 export default defineComponent({
@@ -89,15 +91,14 @@ export default defineComponent({
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
-    const width = ref(0);
-    provide("width", width);
-    provide(
-      "length",
-      computed(() => props.selectedDatabases.length)
+    const totalViewWidth = ref(0);
+    const maxChartWidth = computed(
+      () =>
+        Math.floor(totalViewWidth.value / props.selectedDatabases.length) - 10
     );
 
     onMounted(() => {
-      width.value = document.getElementById(
+      totalViewWidth.value = document.getElementById(
         "metric-comparison-table"
       )!.offsetWidth;
     });
@@ -108,7 +109,8 @@ export default defineComponent({
       getMetricMetadata,
       getMetricComponent,
       getMetricTitle,
-      ...useDatabaseFlex(props)
+      ...useDatabaseFlex(props),
+      maxChartWidth
     };
   }
 });

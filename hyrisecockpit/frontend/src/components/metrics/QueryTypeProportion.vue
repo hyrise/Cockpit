@@ -4,6 +4,7 @@
     :graph-id="graphId || 'queryTypeProportion'"
     :chart-configuration="chartConfiguration"
     :selected-databases="selectedDatabases"
+    :max-chart-width="maxChartWidth"
   />
 </template>
 

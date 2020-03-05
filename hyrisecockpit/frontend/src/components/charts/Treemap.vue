@@ -13,25 +13,15 @@ import {
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration, StorageData } from "../../types/metrics";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
-interface Props {
+interface Props extends ChartProps {
   storageData: StorageData;
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
   autosize: boolean;
-  selectedDatabases: string[];
 }
 
 export default defineComponent({
   props: {
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
     storageData: {
       type: Object,
       default: null
@@ -40,15 +30,13 @@ export default defineComponent({
       type: Boolean,
       default: true
     },
-    selectedDatabases: {
-      type: Array,
-      default: null
-    }
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext) {
     const { getLayout, getDataset, getOptions } = useTreemapConfiguration(
       props.autosize,
-      props.chartConfiguration
+      props.chartConfiguration,
+      props.maxChartWidth
     );
 
     onMounted(() => {
@@ -59,12 +47,25 @@ export default defineComponent({
           Plotly.addTraces(props.graphId, getDataset(props.storageData));
         }
       });
+
+      watch(
+        () => props.maxChartWidth,
+        () => {
+          if (props.maxChartWidth != 0) {
+            console.log(props.maxChartWidth, props.autosize);
+            Plotly.relayout(props.graphId, {
+              width: 0.8 * props.maxChartWidth
+            });
+          }
+        }
+      );
     });
   }
 });
 function useTreemapConfiguration(
   autosize: boolean,
-  chartConfiguration: ChartConfiguration
+  chartConfiguration: ChartConfiguration,
+  width: number
 ): {
   getLayout: () => Object;
   getDataset: (data?: StorageData) => Object[];
@@ -82,9 +83,9 @@ function useTreemapConfiguration(
           yanchor: "bottom"
         }
       ],
-      autosize: autosize,
-      width: autosize ? 0 : 1600,
-      height: autosize ? 0 : 800,
+      autosize: false,
+      width: width,
+      height: width / 2,
       hovermode: "closest",
       hoverlabel: { bgcolor: "#FFF" }
     };
@@ -100,7 +101,8 @@ function useTreemapConfiguration(
         values: data.sizes,
         text: data.descriptions,
         hovertemplate:
-          "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable} <br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
+          "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable}" +
+          "<br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
         texttemplate:
           "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}",
         outsidetextfont: { size: 20, color: "#377eb8" },

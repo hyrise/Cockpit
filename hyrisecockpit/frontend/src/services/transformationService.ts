@@ -94,7 +94,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   );
   const totalDatabaseMemory =
     Math.floor(
-      memory.reduce((total, tableMemory) => total + tableMemory) * 100
+      memory.reduce((total, tableMemory) => total + tableMemory, 0) * 100
     ) / 100;
 
   const labels: string[] = [primaryKey];
