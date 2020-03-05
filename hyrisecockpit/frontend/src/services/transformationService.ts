@@ -177,10 +177,14 @@ function getAccessData(
 
   Object.keys(data[primaryKey][secondaryKey]).forEach(column => {
     dataByColumns.push(data[primaryKey][secondaryKey][column]);
-    newColumns.push(column);
+    newColumns.push(truncateColumn(column));
   });
 
   const numberOfChunks = dataByColumns[0].length;
+
+  function truncateColumn(column: string): string {
+    return column.length > 6 ? column.substring(0, 6) + ".." : column;
+  }
 
   for (let i = 0; i < numberOfChunks; i++) {
     newChunks.push("chunk_" + i);

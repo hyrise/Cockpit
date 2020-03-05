@@ -80,10 +80,16 @@ function useHeatMapConfiguration(
   function getLayout(): Object {
     return {
       xaxis: {
-        rangemode: "tozero"
+        rangemode: "tozero",
+        title: {
+          text: chartConfiguration.xaxis
+        }
       },
       yaxis: {
-        rangemode: "tozero"
+        rangemode: "tozero",
+        title: {
+          text: chartConfiguration.yaxis
+        }
       }
     };
   }
