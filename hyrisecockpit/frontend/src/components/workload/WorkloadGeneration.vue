@@ -101,7 +101,7 @@ interface Data {
   stopWorkload: () => void;
   frequency: Ref<number>;
   workload: Ref<Workload>;
-  workloadData: Ref<Workload[]>;
+  workloadData: Ref<string[]>;
   checkWorkloadData: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
