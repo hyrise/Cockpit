@@ -1,10 +1,8 @@
 <template>
   <div>
-    <v-progress-linear
-      v-if="!$databaseController.databasesUpdated.value"
-      indeterminate
-      color="primary"
-      height="7"
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
     />
     <div class="mx-12">
       <div class="mt-6 mb-2">
@@ -34,6 +32,7 @@ import { Metric, workloadMetrics } from "../types/metrics";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 interface Props {}
 interface Data {
@@ -44,7 +43,8 @@ interface Data {
 export default defineComponent({
   name: "WorkloadScreen",
   components: {
-    MetricsTileList
+    MetricsTileList,
+    LinearLoader
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
