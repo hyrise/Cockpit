@@ -1,7 +1,8 @@
 """Wrapper for backend."""
 
+from os import remove
 from signal import SIGINT
-from subprocess import DEVNULL, Popen  # nosec
+from subprocess import Popen  # nosec
 
 import requests
 
@@ -13,6 +14,9 @@ class CockpitBackend:
 
     def __init__(self):
         """Initialize backend wrapper."""
+        self.error_file = open("backend_stderr.txt", "w")
+        self.output_file = open("backend_stdout.txt", "w")
+
         self._backend_host = BACKEND_HOST
         self._backend_port = BACKEND_PORT
 
@@ -20,14 +24,30 @@ class CockpitBackend:
         """Start backend."""
         self.backend_process = Popen(  # nosec
             ["pipenv", "run", "python", "cli_backend.py"],
-            stderr=DEVNULL,
-            stdout=DEVNULL,
+            stderr=self.error_file,
+            stdout=self.output_file,
         )
 
     def shutdown(self):
         """Stop backend."""
         self.backend_process.send_signal(SIGINT)
         self.backend_process.wait()
+        self.output_file.close()
+        self.error_file.close()
+        remove("backend_stderr.txt")
+        remove("backend_stdout.txt")
+
+    def get_stderr(self):
+        """Get standard error output."""
+        with open("backend_stderr.txt", "r") as err:
+            errors = err.read()
+        return errors
+
+    def get_stdout(self):
+        """Get standard output."""
+        with open("backend_stdout.txt", "r") as out:
+            output = out.read()
+        return output
 
     def get_monitor_property(self, property: str):
         """Get monitor property."""
