@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-progress-linear
-      v-if="!$databaseService.isReady.value"
+      v-if="!$databaseController.databasesUpdated.value"
       indeterminate
       color="primary"
       height="7"
@@ -12,7 +12,7 @@
       </div>
       <v-divider />
       <MetricsTileList
-        v-if="$databaseService.isReady.value"
+        v-if="$databaseController.databasesUpdated.value"
         :selected-databases="watchedInstances"
         :show-details="false"
         :selected-metrics="workloadMetrics"
@@ -38,7 +38,7 @@ import { Database } from "../types/database";
 interface Props {}
 interface Data {
   workloadMetrics: Metric[];
-  watchedInstances: Ref<Database[]>;
+  watchedInstances: Ref<string[]>;
 }
 
 export default defineComponent({
@@ -48,13 +48,13 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<Database[]>([]);
+    const watchedInstances = ref<string[]>([]);
+    const { databasesUpdated } = context.root.$databaseController;
 
-    const { isReady } = context.root.$databaseService;
-    watch(isReady, () => {
-      if (isReady.value) {
+    watch(databasesUpdated, () => {
+      if (databasesUpdated.value) {
         watchedInstances.value = [
-          context.root.$databaseService.databases.value[0]
+          context.root.$databaseController.availableDatabasesById.value[0]
         ];
       }
     });
@@ -65,7 +65,7 @@ export default defineComponent({
 
     return {
       watchedInstances,
-      workloadMetrics
+      workloadMetrics,
     };
   }
 });

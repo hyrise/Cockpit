@@ -1,7 +1,7 @@
 import { Ref } from "@vue/composition-api";
 import { Workload } from "./workloads";
 
-export interface FetchService {
+export interface MetricService {
   data: Ref<any>;
   getDataIfReady: () => void;
   maxValue: Ref<Number>;
