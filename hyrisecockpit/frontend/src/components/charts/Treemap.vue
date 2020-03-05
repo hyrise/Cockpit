@@ -12,6 +12,7 @@ import {
   ref
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
   labels: string[];
@@ -19,7 +20,7 @@ interface Props {
   values: number[];
   text: string[];
   graphId: string;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
   autosize: boolean;
 }
 
@@ -46,7 +47,7 @@ export default defineComponent({
       default: null
     },
     chartConfiguration: {
-      type: Array,
+      type: Object,
       default: null
     },
     autosize: {
@@ -80,7 +81,7 @@ export default defineComponent({
 });
 function useTreemapConfiguration(
   autosize: boolean,
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
   getDataset: (
@@ -122,7 +123,8 @@ function useTreemapConfiguration(
         values: values,
         text: text,
         hoverinfo: "label+text+percent parent+percent entry",
-        texttemplate: "<b>%{label}</b> <br>%{value}MB",
+        texttemplate:
+          "<b>%{label}</b> <br>size:%{value} MB <br>data type: %{text}", //TODO: data type and encoding
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }
