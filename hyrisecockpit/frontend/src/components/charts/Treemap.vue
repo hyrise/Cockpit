@@ -15,10 +15,7 @@ import * as Plotly from "plotly.js";
 import { ChartConfiguration } from "../../types/metrics";
 
 interface Props {
-  labels: string[];
-  parents: string[];
-  values: number[];
-  text: string[];
+  storageData: Object; //TODO: add storage type
   graphId: string;
   chartConfiguration: ChartConfiguration;
   autosize: boolean;
@@ -26,27 +23,15 @@ interface Props {
 
 export default defineComponent({
   props: {
-    labels: {
-      type: Array,
-      default: null
-    },
-    parents: {
-      type: Array,
-      default: null
-    },
-    values: {
-      type: Array,
-      default: null
-    },
-    text: {
-      type: Array,
-      default: null
-    },
     graphId: {
       type: String,
       default: null
     },
     chartConfiguration: {
+      type: Object,
+      default: null
+    },
+    storageData: {
       type: Object,
       default: null
     },
@@ -64,16 +49,10 @@ export default defineComponent({
     onMounted(() => {
       Plotly.newPlot(props.graphId, getDataset(), getLayout(), getOptions());
       watch(() => {
-        if (
-          props.labels.length > 0 &&
-          props.parents.length > 0 &&
-          props.values.length > 0
-        ) {
+        if (Object.keys(props.storageData).length) {
+          console.log(props.storageData);
           Plotly.deleteTraces(props.graphId, 0);
-          Plotly.addTraces(
-            props.graphId,
-            getDataset(props.labels, props.parents, props.values, props.text)
-          );
+          Plotly.addTraces(props.graphId, getDataset(props.storageData));
         }
       });
     });
@@ -84,12 +63,7 @@ function useTreemapConfiguration(
   chartConfiguration: ChartConfiguration
 ): {
   getLayout: () => Object;
-  getDataset: (
-    labels?: string[],
-    parents?: string[],
-    values?: number[],
-    text?: string[]
-  ) => Object[];
+  getDataset: (data?: Object) => Object[];
   getOptions: () => Object;
 } {
   function getLayout(): Object {
@@ -106,25 +80,23 @@ function useTreemapConfiguration(
       ],
       autosize: autosize,
       width: autosize ? 0 : 1600,
-      height: autosize ? 0 : 800
+      height: autosize ? 0 : 800,
+      hovermode: "closest",
+      hoverlabel: { bgcolor: "#FFF" }
     };
   }
-  function getDataset(
-    labels: string[] = [],
-    parents: string[] = [],
-    values: number[] = [],
-    text: string[] = []
-  ): Object[] {
+  function getDataset(data: Object = {}): Object[] {
     return [
       {
         type: "treemap",
-        labels: labels,
-        parents: parents,
-        values: values,
-        text: text,
-        hoverinfo: "label+text+percent parent+percent entry",
+        labels: data.labels,
+        parents: data.parents,
+        values: data.sizes,
+        text: data.texts,
+        hovertemplate:
+          "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable} <br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
         texttemplate:
-          "<b>%{label}</b> <br>size:%{value} MB <br>data type: %{text}", //TODO: data type and encoding
+          "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}", //TODO: data type and encoding
         outsidetextfont: { size: 20, color: "#377eb8" },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }

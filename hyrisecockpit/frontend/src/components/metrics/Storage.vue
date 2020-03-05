@@ -10,10 +10,7 @@
         <v-card-title>Storage</v-card-title>
         <Treemap
           :graph-id="'1' + graphId || 'storage'"
-          :labels="labels"
-          :parents="parents"
-          :values="sizes"
-          :text="text"
+          :storage-data="storageData"
           :chart-configuration="chartConfiguration"
           :autosize="false"
         />
@@ -27,10 +24,7 @@
     </v-dialog>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
-      :labels="labels"
-      :text="text"
-      :parents="parents"
-      :values="sizes"
+      :storage-data="storageData"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -54,11 +48,8 @@ import {
 import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
-  labels: Ref<string[]>;
-  parents: Ref<string[]>;
-  sizes: Ref<number[]>;
+  storageData: Ref<Object>;
   chartConfiguration: ChartConfiguration;
-  text: Ref<string[]>;
   showDialog: Ref<boolean>;
 }
 
@@ -71,36 +62,20 @@ export default defineComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
     const showDialog = ref(false);
-
-    const labels = ref<string[]>([]);
-    const parents = ref<string[]>([]);
-    const sizes = ref<number[]>([]);
-    const text = ref<string[]>([]);
+    const storageData = ref<Object>({}); // add type
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
-        const {
-          newLabels,
-          newParents,
-          newSizes,
-          newText
-        } = props.metricMeta.transformationService(
+        storageData.value = props.metricMeta.transformationService(
           data.value,
           props.selectedDatabases[0]
         );
-        labels.value = newLabels;
-        parents.value = newParents;
-        sizes.value = newSizes;
-        text.value = newText;
       }
     });
 
     return {
-      labels,
-      parents,
-      sizes,
+      storageData,
       chartConfiguration: getMetricChartConfiguration(props.metric),
-      text,
       showDialog
     };
   }

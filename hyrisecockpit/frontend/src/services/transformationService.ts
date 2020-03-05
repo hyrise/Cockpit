@@ -82,29 +82,49 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
-function getStorageData(
-  data: any,
-  primaryKey: string = ""
-): {
-  newLabels: string[];
-  newParents: string[];
-  newSizes: number[];
-  newText: string[];
-} {
+function getStorageData(data: any, primaryKey: string = ""): Object {
+  //TODO: add type
   const newLabels: string[] = [];
   const newParents: string[] = [];
   const newSizes: number[] = [];
-  const newText: string[] = [];
+  const newText: Object[] = [];
+
+  const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
+
+  const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
 
   function getRoundedData(value: number): number {
     return Math.floor(value / Math.pow(10, 4)) / 100;
   }
 
+  function getPercentage(part: number, total: number): number {
+    return Math.floor((part / total) * Math.pow(10, 4)) / 100;
+  }
+
+  newLabels.push(primaryKey);
+  newParents.push("");
+  newSizes.push(0);
+  newText.push({
+    size: `${totalDatabaseMemory} MB`,
+    encoding: "",
+    dataType: "",
+    percentOfDatabase: "100% of total footprint",
+    percentOfTable: ""
+  });
   Object.keys(data[primaryKey]).forEach(table => {
     newLabels.push(table);
     newParents.push(primaryKey);
     newSizes.push(0);
-    newText.push(`${getRoundedData(data[primaryKey][table].size)} MB`);
+    newText.push({
+      size: `${getRoundedData(data[primaryKey][table].size)} MB`,
+      encoding: "",
+      dataType: "",
+      percentOfDatabase: `${getPercentage(
+        getRoundedData(data[primaryKey][table].size),
+        totalDatabaseMemory
+      )} % of total footprint`,
+      percentOfTable: `100% of ${table}`
+    });
     Object.keys(data[primaryKey][table].data).forEach(attribute => {
       newLabels.push(attribute);
       newParents.push(table);
@@ -112,13 +132,30 @@ function getStorageData(
       newSizes.push(
         getRoundedData(data[primaryKey][table].data[attribute].size)
       );
-      newText.push(
-        `${getRoundedData(data[primaryKey][table].data[attribute].size)} MB`
-      );
+      newText.push({
+        size: `${getRoundedData(
+          data[primaryKey][table].data[attribute].size
+        )} MB`,
+        encoding: `encoding: ${data[primaryKey][table].data[attribute].encoding}`,
+        dataType: `data type: ${data[primaryKey][table].data[attribute].data_type}`,
+        percentOfDatabase: `${getPercentage(
+          getRoundedData(data[primaryKey][table].data[attribute].size),
+          totalDatabaseMemory
+        )} % of total footprint`,
+        percentOfTable: `${getPercentage(
+          data[primaryKey][table].data[attribute].size,
+          data[primaryKey][table].size
+        )} % of ${table}`
+      });
     });
   });
 
-  return { newLabels, newParents, newSizes, newText };
+  return {
+    parents: newParents,
+    labels: newLabels,
+    sizes: newSizes,
+    texts: newText
+  };
 }
 
 function getAccessData(
@@ -155,6 +192,7 @@ export function useDataTransformationHelpers(): {
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
   function getDatabaseMemoryFootprint(data: any): number {
+    console.log(data);
     return (
       Math.floor(
         (Object.values(data).reduce(
