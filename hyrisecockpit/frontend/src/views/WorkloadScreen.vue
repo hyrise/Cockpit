@@ -65,7 +65,7 @@ export default defineComponent({
 
     return {
       watchedInstances,
-      workloadMetrics,
+      workloadMetrics
     };
   }
 });
