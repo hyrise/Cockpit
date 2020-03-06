@@ -3,8 +3,6 @@
 from time import sleep
 
 from influxdb import InfluxDBClient
-from pytest import skip
-from requests.exceptions import ConnectionError
 
 from cockpit_backend import CockpitBackend
 from cockpit_generator import CockpitGenerator
@@ -75,45 +73,39 @@ class TestSystem:
             "system_data",
         ]
 
-        try:
-            for i in range(len(metrics)):
-                response = self.backend.get_monitor_property(metrics[i])
-                assert response["body"][metrics_attributes[i]] == {}  # nosec
+        for i in range(len(metrics)):
+            response = self.backend.get_monitor_property(metrics[i])
+            assert response["body"][metrics_attributes[i]] == {}  # nosec
 
-            available_datasets = self.backend.get_control_property("data")
-            available_databases = self.backend.get_control_property("database")
+        available_datasets = self.backend.get_control_property("data")
+        available_databases = self.backend.get_control_property("database")
 
-            assert available_datasets == [  # nosec
-                "tpch_0.1",
-                "tpch_1",
-                "tpcds_1",
-                "job",
-            ]  # nosec
-            assert available_databases == []  # nosec
+        assert available_datasets == [  # nosec
+            "tpch_0.1",
+            "tpch_1",
+            "tpcds_1",
+            "job",
+        ]  # nosec
+        assert available_databases == []  # nosec
 
-            self.check_stderr()
-        except ConnectionError:
-            skip("Connection error")
+        self.check_stderr()
 
     def test_database_handling(self):
         """Add and remove database."""
-        try:
-            response = self.backend.add_database("test_database1", DATABASE1_HOST)
-            assert response == get_response(200)  # nosec
+        response = self.backend.add_database("test_database1", DATABASE1_HOST)
+        assert response == get_response(200)  # nosec
 
-            available_databases = self.backend.get_control_property("database")
-            assert available_databases == [  # nosec
-                {
-                    "id": "test_database1",
-                    "host": DATABASE1_HOST,
-                    "port": "5432",
-                    "number_workers": 8,
-                    "dbname": "postgres",
-                }
-            ]
-            response = self.backend.remove_database("test_database1")
-            assert response == get_response(200)  # nosec
+        available_databases = self.backend.get_control_property("database")
+        assert available_databases == [  # nosec
+            {
+                "id": "test_database1",
+                "host": DATABASE1_HOST,
+                "port": "5432",
+                "number_workers": 8,
+                "dbname": "postgres",
+            }
+        ]
+        response = self.backend.remove_database("test_database1")
+        assert response == get_response(200)  # nosec
 
-            self.check_stderr()
-        except ConnectionError:
-            skip("Connection error")
+        self.check_stderr()
