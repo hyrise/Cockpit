@@ -50,6 +50,12 @@ class TestSystem:
         influx_client.drop_database("test_database1")
         influx_client.drop_database("test_database2")
 
+    def check_stderr(self):
+        """Check standard error output of the components."""
+        assert self.manager.get_stderr() == ""  # nosec
+        assert self.generator.get_stderr() == ""  # nosec
+        assert self.backend.get_stderr() == ""  # nosec
+
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
         metrics = [
@@ -85,6 +91,7 @@ class TestSystem:
             ]  # nosec
             assert available_databases == []  # nosec
 
+            self.check_stderr()
         except ConnectionError:
             skip("Connection error")
 
@@ -107,5 +114,6 @@ class TestSystem:
             response = self.backend.remove_database("test_database1")
             assert response == get_response(200)  # nosec
 
+            self.check_stderr()
         except ConnectionError:
             skip("Connection error")
