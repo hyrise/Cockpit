@@ -183,7 +183,6 @@ function getAccessData(
 
   const availableColumns: string[] = [];
 
-  //TODO: refactor to Object.entries
   Object.entries(data[primaryKey][secondaryKey]).forEach(
     ([column, columnData]: [string, any]) => {
       dataByColumns.push(columnData);
