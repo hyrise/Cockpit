@@ -1,4 +1,9 @@
-import { Metric, StorageData, TreemapDescription } from "../types/metrics";
+import {
+  Metric,
+  StorageData,
+  TreemapDescription,
+  AccessData
+} from "../types/metrics";
 import { TransformationService } from "@/types/services";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
@@ -169,25 +174,33 @@ function getAccessData(
   data: any,
   primaryKey: string = "",
   secondaryKey: string = ""
-) {
+): AccessData {
   const dataByColumns: number[][] = [];
   const dataByChunks: number[][] = [];
-  const newChunks: string[] = [];
-  const newColumns: string[] = [];
+  const chunks: string[] = [];
+  const columns: string[] = [];
+  const descriptions: string[][] = [];
 
-  Object.keys(data[primaryKey][secondaryKey]).forEach(column => {
-    dataByColumns.push(data[primaryKey][secondaryKey][column]);
-    newColumns.push(truncateColumn(column));
-  });
+  const availableColumns: string[] = [];
+
+  //TODO: refactor to Object.entries
+  Object.entries(data[primaryKey][secondaryKey]).forEach(
+    ([column, columnData]: [string, any]) => {
+      dataByColumns.push(columnData);
+      columns.push(truncateColumnName(column));
+      availableColumns.push(column);
+    }
+  );
 
   const numberOfChunks = dataByColumns[0].length;
 
-  function truncateColumn(column: string): string {
-    return column.length > 6 ? column.substring(0, 6) + ".." : column;
+  function truncateColumnName(column: string): string {
+    return column.length > 7 ? column.substring(0, 7) + ".." : column;
   }
 
   for (let i = 0; i < numberOfChunks; i++) {
-    newChunks.push("chunk_" + i);
+    chunks.push("Nr. " + i);
+    descriptions.push(availableColumns);
 
     const chunk: number[] = [];
     dataByColumns.forEach(column => {
@@ -195,7 +208,7 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
-  return { newChunks, newColumns, dataByChunks };
+  return { chunks, columns, dataByChunks, descriptions };
 }
 
 export function useDataTransformationHelpers(): {
