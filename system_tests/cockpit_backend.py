@@ -8,6 +8,8 @@ import requests
 
 from settings import BACKEND_HOST, BACKEND_PORT
 
+REQUEST_TIMEOUT = 1.0
+
 
 class CockpitBackend:
     """Wrapper for backend."""
@@ -52,12 +54,12 @@ class CockpitBackend:
     def get_monitor_property(self, property: str):
         """Get monitor property."""
         url = f"http://{self._backend_host}:{self._backend_port}/monitor/{property}"
-        return requests.get(url).json()
+        return requests.get(url, timeout=REQUEST_TIMEOUT).json()
 
     def get_control_property(self, property: str):
         """Get control property."""
         url = f"http://{self._backend_host}:{self._backend_port}/control/{property}"
-        return requests.get(url).json()
+        return requests.get(url, timeout=REQUEST_TIMEOUT).json()
 
     def add_database(self, id: str, host: str):
         """Add database."""
@@ -71,10 +73,10 @@ class CockpitBackend:
             "password": "serviceuser",
         }
         url = f"http://{self._backend_host}:{self._backend_port}/control/database"
-        return requests.post(url, json=body).json()
+        return requests.post(url, json=body, timeout=REQUEST_TIMEOUT).json()
 
     def remove_database(self, id: str):
         """Add database."""
         body = {"id": id}
         url = f"http://{self._backend_host}:{self._backend_port}/control/database"
-        return requests.delete(url, json=body).json()
+        return requests.delete(url, json=body, timeout=REQUEST_TIMEOUT).json()
