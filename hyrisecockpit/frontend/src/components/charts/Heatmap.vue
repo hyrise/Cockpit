@@ -13,92 +13,100 @@ import {
   watch
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
-import { ChartConfiguration } from "../../types/metrics";
+import { ChartConfiguration, AccessData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
 interface Props extends ChartProps {
-  data: number[][];
-  xValues: string[];
-  yValues: string[];
+  data: AccessData;
+  autosize: boolean;
 }
 
 export default defineComponent({
   name: "Heatmap",
   props: {
     data: {
-      type: Array,
+      type: Object,
       default: null
     },
-    xValues: {
-      type: Array,
-      default: null
-    },
-    yValues: {
-      type: Array,
-      default: null
+    autosize: {
+      type: Boolean,
+      default: true
     },
     ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
-      props.chartConfiguration
+      props.chartConfiguration,
+      props.autosize
     );
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
-      watch(() => {
-        if (props.data && props.xValues && props.yValues) {
-          Plotly.deleteTraces(props.graphId, 0);
-          Plotly.addTraces(
-            props.graphId,
-            getDataset(props.data, props.xValues, props.yValues)
-          );
-        }
-      });
-
       watch(
-        () => props.maxChartWidth,
-        () =>
-          Plotly.relayout(props.graphId, {
-            width: props.maxChartWidth
-          })
-      );
+        () => props.data,
+        () => {
+          if (Object.keys(props.data).length) {
+            Plotly.addTraces(props.graphId, getDataset(props.data));
+            Plotly.deleteTraces(props.graphId, 0);
+          }
+        }
+      ),
+        watch(
+          () => props.maxChartWidth,
+          () =>
+            Plotly.relayout(props.graphId, {
+              width: props.maxChartWidth
+            })
+        );
     });
   }
 });
+
 function useHeatMapConfiguration(
-  chartConfiguration: ChartConfiguration
+  chartConfiguration: ChartConfiguration,
+  autosize: boolean
 ): {
-  getDataset: (
-    data?: readonly number[][],
-    columns?: readonly string[],
-    chunks?: readonly string[]
-  ) => Object;
+  getDataset: (data?: AccessData) => Object;
   getLayout: () => Object;
   getOptions: () => Object;
 } {
   function getLayout(): Object {
     return {
       xaxis: {
-        rangemode: "tozero"
+        rangemode: "tozero",
+        title: {
+          text: chartConfiguration.xaxis
+        }
       },
       yaxis: {
-        rangemode: "tozero"
+        rangemode: "tozero",
+        title: {
+          text: chartConfiguration.yaxis
+        }
       },
-      autosize: true
+      autosize: autosize,
+      width: autosize ? 0 : 1400,
+      height: autosize ? 0 : 700
     };
   }
 
   function getDataset(
-    data: readonly number[][] = [],
-    columns: readonly string[] = [],
-    chunks: readonly string[] = []
+    data: AccessData = {
+      dataByChunks: [],
+      descriptions: [],
+      chunks: [],
+      columns: []
+    }
   ): Object {
     return {
-      z: data,
-      x: columns,
-      y: chunks,
-      type: "heatmap"
+      z: data.dataByChunks,
+      x: data.columns,
+      y: data.chunks,
+      text: data.descriptions,
+      type: "heatmap",
+      hovermode: "closest",
+      hovertemplate:
+        "<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>"
     };
   }
   function getOptions(): Object {

@@ -1,13 +1,10 @@
 <template>
   <div class="mx-10 my-10">
-    <v-dialog v-model="showDialog" hide-overlay>
-      <template v-slot:activator="{ on }">
-        <v-btn color="secondary" small right dark v-on="on">
-          <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
-        </v-btn>
+    <metric-detailed-view>
+      <template #header>
+        Storage
       </template>
-      <v-card>
-        <v-card-title>Storage</v-card-title>
+      <template #content>
         <Treemap
           :graph-id="'1' + graphId || 'storage'"
           :storage-data="storageData"
@@ -15,14 +12,8 @@
           :selected-databases="selectedDatabases"
           :max-chart-width="1600"
         />
-        <v-spacer />
-        <v-card-actions>
-          <v-btn block color="primary" @click="showDialog = false">
-            Close detailed view
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      </template>
+    </metric-detailed-view>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
       :storage-data="storageData"
@@ -43,6 +34,7 @@ import {
   onMounted
 } from "@vue/composition-api";
 import Treemap from "../charts/Treemap.vue";
+import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
 import {
   MetricProps,
   MetricPropsValidation,
@@ -54,18 +46,17 @@ import { getMetricChartConfiguration } from "../../meta/metrics";
 interface Data {
   storageData: Ref<StorageData>;
   chartConfiguration: ChartConfiguration;
-  showDialog: Ref<boolean>;
 }
 
 export default defineComponent({
   name: "Storage",
   components: {
-    Treemap
+    Treemap,
+    MetricDetailedView
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
-    const showDialog = ref(false);
     const storageData = ref<StorageData>({});
 
     watch(data, () => {
@@ -79,8 +70,7 @@ export default defineComponent({
 
     return {
       storageData,
-      chartConfiguration: getMetricChartConfiguration(props.metric),
-      showDialog
+      chartConfiguration: getMetricChartConfiguration(props.metric)
     };
   }
 });

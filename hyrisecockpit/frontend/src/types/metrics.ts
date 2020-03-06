@@ -127,3 +127,10 @@ export type StorageData = {
   sizes: number[];
   descriptions: TreemapDescription[];
 };
+
+export type AccessData = {
+  dataByChunks: number[][];
+  chunks: string[];
+  columns: string[];
+  descriptions: string[][];
+};
