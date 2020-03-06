@@ -6,7 +6,7 @@
       :databases="selectedDatabases"
       :border="1"
       state-order="asc"
-      unit="sec"
+      unit="nano sec"
     />
     <Linechart
       :selected-databases="selectedDatabases"

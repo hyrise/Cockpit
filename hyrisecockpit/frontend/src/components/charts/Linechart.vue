@@ -17,21 +17,16 @@ import {
 import * as Plotly from "plotly.js";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
-import { useResizingOnDatabaseChange } from "../../meta/charts";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
 interface Props extends ChartProps {
-  data: any;
   maxValue: number;
   timestamps: Date[];
 }
 
 export default defineComponent({
   props: {
-    data: {
-      type: Object,
-      default: null
-    },
     maxValue: {
       type: Number,
       default: 1
@@ -48,9 +43,11 @@ export default defineComponent({
       props
     );
     const { databasesUpdated } = context.root.$databaseController;
-    const multipleDatabasesAllowed = inject<boolean>("multiple", true);
-
-    console.log("inject", multipleDatabasesAllowed);
+    const { updateLayout } = useResizingOnChange(props);
+    const multipleDatabasesAllowed = inject<boolean>(
+      "multipleDatabasesAllowed",
+      true
+    );
 
     onMounted(() => {
       Plotly.newPlot(
@@ -59,16 +56,8 @@ export default defineComponent({
         getLayout(props.maxValue),
         getOptions()
       );
+      useChartReactivity(props, context, updateChartDatasets, updateLayout);
 
-      //useResizingOnDatabaseChange(props.graphId, chartWidth, length);
-
-      watch(
-        () => props.maxChartWidth,
-        () =>
-          Plotly.relayout(props.graphId, {
-            width: props.maxChartWidth
-          })
-      );
       watch(
         () => props.selectedDatabases,
         () => {
@@ -77,18 +66,10 @@ export default defineComponent({
           }
         }
       );
-      watch(
-        () => props.data,
-        () => {
-          if (databasesUpdated.value && Object.keys(props.data).length) {
-            updateChartDatasets();
-          }
-        }
-      );
     });
 
     function handleDatabaseChange(): void {
-      Plotly.newPlot(
+      Plotly.react(
         props.graphId,
         getDatasets(),
         getLayout(props.maxValue),
@@ -207,7 +188,7 @@ function useLineChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false, responsive: true };
+    return { displayModeBar: false };
   }
   return { getDataset, getLayout, getOptions };
 }

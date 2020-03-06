@@ -5,9 +5,14 @@ export interface ChartProps {
   graphId: string;
   maxChartWidth: number;
   chartConfiguration: ChartConfiguration;
+  data: any;
 }
 
 export const ChartPropsValidation = {
+  data: {
+    type: [Object, Array],
+    default: {}
+  },
   selectedDatabases: {
     type: Array,
     default: null

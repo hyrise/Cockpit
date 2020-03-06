@@ -15,62 +15,26 @@ import {
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration } from "../../types/metrics";
-import { useResizingOnDatabaseChange } from "../../meta/charts";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
-interface Props extends ChartProps {
-  data: any;
-}
-
 export default defineComponent({
-  props: {
-    data: {
-      type: Array,
-      default: null
-    },
-    ...ChartPropsValidation
-  },
-  setup(props: Props, context: SetupContext): void {
+  props: ChartPropsValidation,
+  setup(props: ChartProps, context: SetupContext): void {
     const { getLayout, getOptions } = useBarChartConfiguration(
       context,
       props.chartConfiguration
     );
-    const chartWidth = ref(inject<Ref<number>>("width", ref(0)));
-    const length = inject<Ref<number>>("length", ref(0));
+    const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
-      Plotly.newPlot(
-        props.graphId,
-        props.data as any,
-        getLayout(),
-        getOptions()
-      );
-
-      watch(
-        () => props.maxChartWidth,
-        () =>
-          Plotly.relayout(props.graphId, {
-            width: props.maxChartWidth
-          })
-      );
-
-      watch(
-        () => props.data,
-        () => {
-          if (props.data.length) {
-            updateChartDatasets();
-          }
-        }
-      );
-      function updateChartDatasets(): void {
-        Plotly.react(
-          props.graphId,
-          props.data as any,
-          getLayout(),
-          getOptions()
-        );
-      }
+      Plotly.newPlot(props.graphId, props.data, getLayout(), getOptions());
+      useChartReactivity(props, context, updateChartDatasets, updateLayout);
     });
+
+    function updateChartDatasets(): void {
+      Plotly.react(props.graphId, props.data, getLayout(), getOptions());
+    }
   }
 });
 
@@ -101,9 +65,8 @@ function useBarChartConfiguration(
   }
 
   function getOptions(): Object {
-    return { displayModeBar: false, responsive: true };
+    return { displayModeBar: false };
   }
   return { getLayout, getOptions };
 }
 </script>
-<style scoped></style>

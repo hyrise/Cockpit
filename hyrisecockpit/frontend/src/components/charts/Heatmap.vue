@@ -15,19 +15,15 @@ import {
 import * as Plotly from "plotly.js";
 import { ChartConfiguration, AccessData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 
 interface Props extends ChartProps {
-  data: AccessData;
   autosize: boolean;
 }
 
 export default defineComponent({
   name: "Heatmap",
   props: {
-    data: {
-      type: Object,
-      default: null
-    },
     autosize: {
       type: Boolean,
       default: true
@@ -39,26 +35,17 @@ export default defineComponent({
       props.chartConfiguration,
       props.autosize
     );
+    const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
-      watch(
-        () => props.data,
-        () => {
-          if (Object.keys(props.data).length) {
-            Plotly.addTraces(props.graphId, getDataset(props.data));
-            Plotly.deleteTraces(props.graphId, 0);
-          }
-        }
-      ),
-        watch(
-          () => props.maxChartWidth,
-          () =>
-            Plotly.relayout(props.graphId, {
-              width: props.maxChartWidth
-            })
-        );
+      useChartReactivity(props, context, updateDataset, updateLayout);
     });
+
+    function updateDataset(): void {
+      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.deleteTraces(props.graphId, 0);
+    }
   }
 });
 
@@ -86,7 +73,14 @@ function useHeatMapConfiguration(
       },
       autosize: autosize,
       width: autosize ? 0 : 1400,
-      height: autosize ? 0 : 700
+      height: autosize ? 0 : 700,
+      margin: {
+        l: 80,
+        r: 50,
+        b: 100,
+        t: 50,
+        pad: 10
+      }
     };
   }
 
@@ -110,7 +104,7 @@ function useHeatMapConfiguration(
     };
   }
   function getOptions(): Object {
-    return { displayModeBar: false, responsive: true };
+    return { displayModeBar: false };
   }
   return { getDataset, getLayout, getOptions };
 }

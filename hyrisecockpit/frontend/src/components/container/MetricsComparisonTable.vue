@@ -5,8 +5,8 @@
       <div
         class="metrics-column"
         :style="databaseFlex"
-        v-for="(database, idx) in databases"
-        :key="`${database.id}-${idx}`"
+        v-for="database in databases"
+        :key="database.id"
       >
         <v-card
           v-for="metric in selectedMetrics"
@@ -96,7 +96,7 @@ export default defineComponent({
       () =>
         Math.floor(totalViewWidth.value / props.selectedDatabases.length) - 10
     );
-    provide("multiple", false);
+    provide("multipleDatabasesAllowed", false);
 
     onMounted(() => {
       totalViewWidth.value = document.getElementById(
@@ -106,7 +106,7 @@ export default defineComponent({
 
     return {
       ...useUpdatingDatabases(props, context),
-      uuid: uuid.v1,
+      uuid: uuid.v1, //TODO: remove uuid
       getMetricMetadata,
       getMetricComponent,
       getMetricTitle,

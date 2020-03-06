@@ -1,21 +1,43 @@
+import { watch, SetupContext } from "@vue/composition-api";
+import { ChartProps } from "@/types/charts";
 import * as Plotly from "plotly.js";
-import { watch, Ref, SetupContext } from "@vue/composition-api";
 
-export function useResizingOnDatabaseChange(
-  graphId: string,
-  availableSize: Ref<number>,
-  length: Ref<number>
-): any {
+export function useChartReactivity(
+  props: ChartProps,
+  context: SetupContext,
+  updateDataFunction: () => void,
+  updateLayoutFunction: () => void
+): void {
+  const { databasesUpdated } = context.root.$databaseController;
+
+  function isValidData(data: any): boolean {
+    return Array.isArray(data)
+      ? props.data.length !== 0 && databasesUpdated.value
+      : Object.keys(props.data).length !== 0 && databasesUpdated.value;
+  }
+
   watch(
-    () => length,
+    () => props.data,
     () => {
-      resizeChart();
+      if (isValidData(props.data)) updateDataFunction();
     }
   );
-  function resizeChart(): void {
-    console.log("resize", length.value);
-    Plotly.relayout(graphId, {
-      width: Math.floor(availableSize.value / length.value)
+  watch(
+    () => props.maxChartWidth,
+    () => {
+      if (props.maxChartWidth !== 0) updateLayoutFunction();
+    }
+  );
+}
+
+export function useResizingOnChange(
+  props: ChartProps
+): { updateLayout: () => void } {
+  function updateLayout(): void {
+    Plotly.relayout(props.graphId, {
+      width: props.maxChartWidth
     });
   }
+
+  return { updateLayout };
 }
