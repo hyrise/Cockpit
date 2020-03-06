@@ -23,7 +23,7 @@ class CockpitBackend:
     def start(self):
         """Start backend."""
         self.backend_process = Popen(  # nosec
-            ["pipenv", "run", "python", "cli_backend.py"],
+            ["pipenv", "run", "python", "-u", "cli_backend.py"],
             stderr=self.error_file,
             stdout=self.output_file,
         )
