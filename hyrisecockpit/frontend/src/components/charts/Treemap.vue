@@ -54,7 +54,8 @@ export default defineComponent({
           if (props.maxChartWidth != 0) {
             console.log(props.maxChartWidth, props.autosize);
             Plotly.relayout(props.graphId, {
-              width: 0.8 * props.maxChartWidth
+              width: 0.8 * props.maxChartWidth,
+              height: (0.8 * props.maxChartWidth) / 2
             });
           }
         }
@@ -87,7 +88,14 @@ function useTreemapConfiguration(
       width: width,
       height: width / 2,
       hovermode: "closest",
-      hoverlabel: { bgcolor: "#FFF" }
+      hoverlabel: { bgcolor: "#FFF" },
+      margin: {
+        l: 10,
+        r: 0,
+        b: 0,
+        t: 10,
+        pad: 0
+      }
     };
   }
   function getDataset(

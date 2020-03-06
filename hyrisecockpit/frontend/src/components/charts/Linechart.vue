@@ -48,7 +48,9 @@ export default defineComponent({
       props
     );
     const { databasesUpdated } = context.root.$databaseController;
-    const chartWidth = inject<Ref<number>>("width", ref(0));
+    const multipleDatabasesAllowed = inject<boolean>("multiple", true);
+
+    console.log("inject", multipleDatabasesAllowed);
 
     onMounted(() => {
       Plotly.newPlot(
@@ -67,7 +69,14 @@ export default defineComponent({
             width: props.maxChartWidth
           })
       );
-
+      watch(
+        () => props.selectedDatabases,
+        () => {
+          if (databasesUpdated.value && multipleDatabasesAllowed) {
+            handleDatabaseChange();
+          }
+        }
+      );
       watch(
         () => props.data,
         () => {
@@ -77,6 +86,15 @@ export default defineComponent({
         }
       );
     });
+
+    function handleDatabaseChange(): void {
+      Plotly.newPlot(
+        props.graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
+      );
+    }
 
     function getDatasets(): any[] {
       return props.selectedDatabases.reduce((result, id): any => {

@@ -63,7 +63,12 @@ export default defineComponent({
         }
       );
       function updateChartDatasets(): void {
-        Plotly.update(props.graphId, props.data as any, getLayout());
+        Plotly.react(
+          props.graphId,
+          props.data as any,
+          getLayout(),
+          getOptions()
+        );
       }
     });
   }

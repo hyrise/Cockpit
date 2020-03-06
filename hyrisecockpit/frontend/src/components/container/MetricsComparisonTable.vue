@@ -96,6 +96,7 @@ export default defineComponent({
       () =>
         Math.floor(totalViewWidth.value / props.selectedDatabases.length) - 10
     );
+    provide("multiple", false);
 
     onMounted(() => {
       totalViewWidth.value = document.getElementById(
