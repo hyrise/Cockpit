@@ -39,17 +39,29 @@
               </v-radio>
             </v-radio-group>
             <v-btn-toggle>
-              <v-btn @click="startWorkload(workload, frequency)">
+              <v-btn
+                @click="startingWorkload(workload, frequency)"
+                :disabled="waitForStartWorkload"
+                :loading="waitForStartWorkload"
+              >
                 <v-icon>
                   mdi-play
                 </v-icon>
               </v-btn>
-              <v-btn @click="startWorkload(workload, 0)">
+              <v-btn
+                @click="startingWorkload(workload, 0)"
+                :disabled="waitForPauseWorkload"
+                :loading="waitForPauseWorkload"
+              >
                 <v-icon>
                   mdi-pause
                 </v-icon>
               </v-btn>
-              <v-btn @click="stopWorkload()">
+              <v-btn
+                @click="stoppingWorkload()"
+                :disabled="waitForStopWorkload"
+                :loading="waitForStopWorkload"
+              >
                 <v-icon>
                   mdi-stop
                 </v-icon>
@@ -63,11 +75,13 @@
             </p>
             <v-switch
               v-model="workloadData"
-              v-for="workload in availableWorkloads"
+              v-for="(workload, index) in availableWorkloads"
               :key="workload"
               :label="getDisplayedWorkload(workload)"
               :value="workload"
-              @change="checkWorkloadData(workload)"
+              @change="checkWorkloadData(workload, index)"
+              :loading="waitForWorkloadData[index].value"
+              :disabled="waitForWorkloadData[index].value"
             >
             </v-switch>
           </v-col>
@@ -90,14 +104,21 @@ interface Data {
   availableWorkloads: string[];
   getDisplayedWorkload: (workload: Workload) => string;
   getWorkloadData: () => Promise<string[]>;
-  loadWorkloadData: (workload: Workload) => void;
-  deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workload: Workload, frequency: number) => void;
-  stopWorkload: () => void;
+  loadWorkloadData: (workload: Workload) => Promise<void>;
+  deleteWorkloadData: (workload: Workload) => Promise<void>;
+  startWorkload: (workload: Workload, frequency: number) => Promise<void>;
+  stopWorkload: () => Promise<void>;
   frequency: Ref<number>;
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
-  checkWorkloadData: (workload: Workload) => void;
+  waitForStartWorkload: Ref<boolean>;
+  waitForPauseWorkload: Ref<boolean>;
+  startingWorkload: (workload: Workload, frequency: number) => void;
+  waitForStopWorkload: Ref<boolean>;
+  stoppingWorkload: () => void;
+  waitForWorkloadDataValue: Ref<boolean>;
+  waitForWorkloadData: Ref<boolean>[];
+  checkWorkloadData: (workload: Workload, index: number) => void;
   closeWorkloadDialog: () => void;
 }
 
@@ -111,6 +132,17 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): Data {
     const frequency = ref<number>(200);
     const workload = ref<Workload>("tpch01");
+    const waitForStartWorkload = ref<boolean>(false);
+    const waitForPauseWorkload = ref<boolean>(false);
+    const waitForStopWorkload = ref<boolean>(false);
+    const waitForWorkloadDataValue = ref<boolean>(false);
+    const waitForWorkloadData: Ref<boolean>[] = [
+      waitForWorkloadDataValue,
+      waitForWorkloadDataValue,
+      waitForWorkloadDataValue,
+      waitForWorkloadDataValue
+    ];
+
     const {
       getWorkloadData,
       loadWorkloadData,
@@ -122,16 +154,40 @@ export default defineComponent({
     /* getWorkloadData().then((response: any) => {
       workloadData.value = response.data;
     }); */
-    function checkWorkloadData(workload: Workload): void {
-      if (workloadData.value.includes(workload)) {
-        loadWorkloadData(workload);
-      } else {
-        deleteWorkloadData(workload);
-      }
-    }
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
+
+    function startingWorkload(workload: Workload, frequency: number): void {
+      if (frequency != 0) {
+        waitForStartWorkload.value = true;
+      } else {
+        waitForPauseWorkload.value = true;
+      }
+      startWorkload(workload, frequency).then(() => {
+        waitForStartWorkload.value = false;
+        waitForPauseWorkload.value = false;
+      });
+    }
+    function stoppingWorkload(): void {
+      waitForStopWorkload.value = true;
+      stopWorkload().then(() => {
+        waitForStopWorkload.value = false;
+      });
+    }
+    function checkWorkloadData(workload: Workload, index: number): void {
+      waitForWorkloadData[index].value = true;
+      if (workloadData.value.includes(workload)) {
+        loadWorkloadData(workload).then(() => {
+          waitForWorkloadData[index].value = false;
+        });
+      } else {
+        deleteWorkloadData(workload).then(() => {
+          waitForWorkloadData[index].value = false;
+        });
+      }
+    }
+
     return {
       availableWorkloads,
       getDisplayedWorkload,
@@ -143,6 +199,13 @@ export default defineComponent({
       frequency,
       workload,
       workloadData,
+      waitForStartWorkload,
+      waitForPauseWorkload,
+      startingWorkload,
+      waitForStopWorkload,
+      stoppingWorkload,
+      waitForWorkloadDataValue,
+      waitForWorkloadData,
       checkWorkloadData,
       closeWorkloadDialog
     };
