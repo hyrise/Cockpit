@@ -50,9 +50,13 @@ class TestSystem:
 
     def check_stderr(self):
         """Check standard error output of the components."""
-        assert self.manager.get_stderr() == ""  # nosec
         assert self.generator.get_stderr() == ""  # nosec
         assert self.backend.get_stderr() == ""  # nosec
+
+        for line in self.manager.get_stderr().split("\n"):
+            assert line == "" or line.startswith(  # nosec
+                'Execution of job "Database._check_if_tables_processed'
+            )
 
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
