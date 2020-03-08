@@ -109,7 +109,7 @@ class TestSystem:
                 "dbname": "postgres",
             }
         ]
-        sleep(4.0)  # wait until default tables are loaded
+        sleep(5.0)  # wait until default tables are loaded
 
         table_processing_status = self.backend.get_monitor_property(
             "process_table_status"
@@ -130,12 +130,18 @@ class TestSystem:
         response = self.backend.add_database("test_database1", DATABASE1_HOST)
         assert response == get_response(200)  # nosec
 
-        sleep(4.0)  # wait until default tables are loaded
+        sleep(5.0)  # wait until default tables are loaded
 
         response = self.backend.start_workload("tpch_0.1", 200)
         assert response == get_response(200)  # nosec
 
-        sleep(4.0)  # wait until default tables are loaded
+        sleep(5.0)  # wait until default tables are loaded
+        sleep(2.0)  # wait for query executions
+
+        metrics = ["throughput", "latency", "queue_length"]
+        for metric in metrics:
+            response = self.backend.get_monitor_property(metric)
+            assert response["body"][metric]["test_database1"] > 0  # nosec
 
         response = self.backend.stop_workload()
         assert response == get_response(200)  # nosec
