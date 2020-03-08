@@ -111,6 +111,12 @@ class TestSystem:
         ]
         sleep(4.0)  # wait until default tables are loaded
 
+        table_processing_status = self.backend.get_monitor_property(
+            "process_table_status"
+        )
+        expected_status = {"id": "test_database1", "process_table_status": False}
+        assert expected_status in table_processing_status  # nosec
+
         influx_databases = influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
 
