@@ -3,6 +3,7 @@
 from os import remove
 from signal import SIGINT
 from subprocess import Popen  # nosec
+from time import sleep
 
 
 class CockpitManager:
@@ -33,6 +34,8 @@ class CockpitManager:
 
     def shutdown(self):
         """Shutdown database manager."""
+        self.manager_process.send_signal(SIGINT)
+        sleep(0.1)
         self.manager_process.send_signal(SIGINT)
         self.manager_process.wait()
         self.output_file.close()

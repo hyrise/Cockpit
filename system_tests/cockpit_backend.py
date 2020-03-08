@@ -80,3 +80,14 @@ class CockpitBackend:
         body = {"id": id}
         url = f"http://{self._backend_host}:{self._backend_port}/control/database"
         return delete(url, json=body, timeout=REQUEST_TIMEOUT).json()
+
+    def start_workload(self, workload_folder: str, frequency: int):
+        """Start workload execution."""
+        body = {"folder_name": workload_folder, "frequency": frequency}
+        url = f"http://{self._backend_host}:{self._backend_port}/control/workload"
+        return post(url, json=body, timeout=REQUEST_TIMEOUT).json()
+
+    def stop_workload(self):
+        """Stop workload execution."""
+        url = f"http://{self._backend_host}:{self._backend_port}/control/workload"
+        return delete(url, timeout=REQUEST_TIMEOUT).json()

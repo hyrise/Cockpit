@@ -124,3 +124,20 @@ class TestSystem:
         assert response == get_response(200)  # nosec
 
         self.check_stderr()
+
+    def test_execute_workload(self):
+        """Execute workload."""
+        response = self.backend.add_database("test_database1", DATABASE1_HOST)
+        assert response == get_response(200)  # nosec
+
+        sleep(4.0)  # wait until default tables are loaded
+
+        response = self.backend.start_workload("tpch_0.1", 200)
+        assert response == get_response(200)  # nosec
+
+        sleep(4.0)  # wait until default tables are loaded
+
+        response = self.backend.stop_workload()
+        assert response == get_response(200)  # nosec
+
+        self.check_stderr()
