@@ -109,6 +109,11 @@ class TestSystem:
                 "dbname": "postgres",
             }
         ]
+        sleep(4.0)  # wait until default tables are loaded
+
+        influx_databases = influx_client.get_list_database()
+        assert {"name": "test_database1"} in influx_databases  # nosec
+
         response = self.backend.remove_database("test_database1")
         assert response == get_response(200)  # nosec
 
