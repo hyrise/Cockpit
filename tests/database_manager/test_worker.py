@@ -55,25 +55,20 @@ class TestWorker:
 
         mocked_task_queue.put.assert_not_called()
 
-    def test_get_formated_parameters_returns_none(
-        self, mocked_sub_socket, mocked_task_queue
-    ):
+    def test_get_formated_parameters_returns_none(self):
         """Test get_formated_parameters returns None for not present parameters."""
         assert get_formatted_parameters(None) is None
 
-    def test_get_formated_parameters_returns_parameters_without_protocol(
-        self, mocked_sub_socket, mocked_task_queue
-    ):
+    def test_get_formated_parameters_returns_parameters_without_protocol(self):
         """Test get_formated_parameters returns parameters for not present protocols."""
         not_formated_parameters = ((1, None), (2, None), (3, None))
 
         formated_parameters = get_formatted_parameters(not_formated_parameters)
+
         for i in range(len(not_formated_parameters)):
             assert not_formated_parameters[i][0] == formated_parameters[i]
 
-    def test_get_formated_parameters_returns_parameters_with_asis_protocol(
-        self, mocked_sub_socket, mocked_task_queue
-    ):
+    def test_get_formated_parameters_returns_parameters_with_asis_protocol(self):
         """Test get_formated_parameters returns parameters for asis protocol."""
         not_formated_parameters = ((1, "as_is"), (2, "as_is"), (3, "as_is"))
 
@@ -85,15 +80,16 @@ class TestWorker:
             ].getquoted().decode("utf-8")
 
     @patch("hyrisecockpit.database_manager.worker.time_ns",)
-    def test_execute_task(self, mocked_time_ns, mocked_sub_socket, mocked_task_queue):
+    def test_execute_task(self, mocked_time_ns):
         """Test execute_task."""
         mocked_time_ns.return_value = 10
-        mocked_task = ("SELECT 1;", None, "Benchmark", "query_no")
+        mocked_query = "SELECT 1;"
         mocked_cursor = MagicMock()
         mocked_cursor.execute.return_value = None
-        successful_queries = []
+        formatted_parameters = None
 
-        execute_task(mocked_task, mocked_cursor, successful_queries)
+        endts, latency = execute_task(mocked_cursor, mocked_query, formatted_parameters)
 
         mocked_cursor.execute.assert_any_call("SELECT 1;", None)
-        assert successful_queries[0] == (10, 0, "Benchmark", "query_no")
+        assert endts == 10
+        assert latency == 0
