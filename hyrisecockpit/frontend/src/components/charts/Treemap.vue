@@ -1,65 +1,50 @@
 <template>
-  <div :id="graphId"></div>
+  <div class="treemap" :id="graphId"></div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  onMounted,
-  watch,
-  Ref,
-  ref
-} from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration, StorageData } from "../../types/metrics";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useChartReactivity } from "../../meta/charts";
 
-interface Props {
-  storageData: StorageData;
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
+interface Props extends ChartProps {
   autosize: boolean;
 }
 
 export default defineComponent({
   props: {
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
-    storageData: {
-      type: Object,
-      default: null
-    },
     autosize: {
       type: Boolean,
       default: true
-    }
+    },
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext) {
     const { getLayout, getDataset, getOptions } = useTreemapConfiguration(
-      props.autosize,
-      props.chartConfiguration
+      props
     );
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, getDataset(), getLayout(), getOptions());
-      watch(() => {
-        if (Object.keys(props.storageData).length) {
-          Plotly.deleteTraces(props.graphId, 0);
-          Plotly.addTraces(props.graphId, getDataset(props.storageData));
-        }
-      });
+      useChartReactivity(props, context, updateDatasets, updateLayout);
     });
+
+    function updateDatasets(): void {
+      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.deleteTraces(props.graphId, 0);
+    }
+    function updateLayout(): void {
+      Plotly.relayout(props.graphId, {
+        width: 0.8 * props.maxChartWidth,
+        height: (0.8 * props.maxChartWidth) / 2
+      });
+    }
   }
 });
 function useTreemapConfiguration(
-  autosize: boolean,
-  chartConfiguration: ChartConfiguration
+  props: Props
 ): {
   getLayout: () => Object;
   getDataset: (data?: StorageData) => Object[];
@@ -77,11 +62,18 @@ function useTreemapConfiguration(
           yanchor: "bottom"
         }
       ],
-      autosize: autosize,
-      width: autosize ? 0 : 1600,
-      height: autosize ? 0 : 800,
+      autosize: props.autosize,
+      width: props.autosize ? 0 : 1400,
+      height: props.autosize ? 0 : 700,
       hovermode: "closest",
-      hoverlabel: { bgcolor: "#FFF" }
+      hoverlabel: { bgcolor: "#FFF" },
+      margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 0,
+        pad: 0
+      }
     };
   }
   function getDataset(
@@ -95,7 +87,8 @@ function useTreemapConfiguration(
         values: data.sizes,
         text: data.descriptions,
         hovertemplate:
-          "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable} <br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
+          "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable}" +
+          "<br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
         texttemplate:
           "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}",
         outsidetextfont: { size: 20, color: "#377eb8" },
@@ -112,6 +105,6 @@ function useTreemapConfiguration(
 </script>
 <style>
 .treemap {
-  width: 100%;
+  margin: 1% 1% 3% 10%;
 }
 </style>

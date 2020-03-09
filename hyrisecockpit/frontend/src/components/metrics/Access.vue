@@ -38,6 +38,8 @@
         :graph-id="'2' + graphId || 'access'"
         :data="accessData"
         :chart-configuration="chartConfiguration"
+        :selected-databases="selectedDatabases"
+        :max-chart-width="maxChartWidth"
       />
     </div>
   </div>
