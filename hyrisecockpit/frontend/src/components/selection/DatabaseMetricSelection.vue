@@ -110,6 +110,7 @@ function useMetricSelection(
     emitWatchedMetricsChangedEvent,
     emitSelectedMetricsChangedEvent
   } = useMetricEvents();
+  const { sortElements } = useSorting();
 
   const availableMetrics = props.metrics.map(metric => {
     return { text: getMetricTitle(metric), value: metric };
@@ -120,19 +121,11 @@ function useMetricSelection(
     selectedMetrics.value.map(metric => metric.value)
   );
 
-  function sortMetrics(): void {
-    const sorted: Object[] = [];
-    availableMetrics.forEach(metric => {
-      const selectedMetric = selectedMetrics.value.find(
-        elem => elem === metric
-      );
-      if (selectedMetric) sorted.push(selectedMetric);
-    });
-    selectedMetrics.value = sorted;
-  }
-
   function handleMetricsChanged(): void {
-    sortMetrics();
+    selectedMetrics.value = sortElements(
+      selectedMetrics.value,
+      availableMetrics
+    );
     emitWatchedMetricsChangedEvent(
       selectedMetrics.value.map((metric: any) => metric.value)
     );
@@ -155,6 +148,7 @@ function useDatabaseSelection(
   const availableDatabases = ref<string[]>([]);
   const { databasesUpdated } = context.root.$databaseController;
   const { emitSelectedDatabasesChangedEvent } = useDatabaseEvents();
+  const { sortElements } = useSorting();
 
   watch(databasesUpdated, () => {
     if (databasesUpdated.value) {
@@ -165,13 +159,41 @@ function useDatabaseSelection(
       emitSelectedDatabasesChangedEvent(selectedDatabases.value);
     }
   });
+
   function handleDatabasesChanged(): void {
     if (selectedDatabases.value.length > 4) {
       selectedDatabases.value.pop();
     }
+    selectedDatabases.value = sortElements(
+      selectedDatabases.value,
+      availableDatabases.value
+    ) as string[];
     emitSelectedDatabasesChangedEvent(selectedDatabases.value);
   }
   return { selectedDatabases, availableDatabases, handleDatabasesChanged };
+}
+
+function useSorting(): {
+  sortElements: (
+    selected: string[] | Object[],
+    available: string[] | Object[]
+  ) => string[] | Object[];
+} {
+  function sortElements(
+    selected: string[] | Object[],
+    available: string[] | Object[]
+  ): string[] | Object[] {
+    const sorted: string[] | Object[] = [];
+    available.forEach(availableElement => {
+      const relatedSelectedElement = selected.find(
+        selectedElement => selectedElement === availableElement
+      );
+      if (relatedSelectedElement) sorted.push(relatedSelectedElement as any);
+    });
+    return sorted;
+  }
+
+  return { sortElements };
 }
 </script>
 <style scoped>
