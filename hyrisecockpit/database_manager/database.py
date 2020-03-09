@@ -2,7 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -388,6 +388,16 @@ class Database(object):
         while not self._failed_task_queue.empty():
             failed_task.append(self._failed_task_queue.get())
         return failed_task
+
+    def get_plugins(self) -> Optional[List]:
+        """Return all currently activated plugins."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(("SELECT plugin_name FROM meta_plugins"))
+                result = cur.fetchall()
+                return result
+        else:
+            return None
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate Plugin."""

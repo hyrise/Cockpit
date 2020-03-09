@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from secrets import choice
 from time import time_ns
-from typing import Dict, List, Union
+from typing import Dict, List, Sequence, Union
 
 from flask import Flask
 from flask_cors import CORS
@@ -369,19 +369,50 @@ model_add_database = control.clone(
 )
 
 model_get_plugins = control.model(
-    "Get Plugins",
     fields.List(
-        control.model(
-            "Plugins",
-            {
-                "plugin": fields.String(
-                    title="Plugin",
-                    description="Available Plugin.",
-                    required=True,
-                    example="a",
+        "Plugins",
+        {
+            "plugins": fields.List(
+                fields.Nested(
+                    control.model(
+                        "List of all activated Plugins",
+                        {
+                            "plugin": fields.String(
+                                title="Plugin",
+                                description="Available Plugin.",
+                                required=True,
+                                example="a",
+                            )
+                        },
+                    )
                 )
-            },
-        )
+            )
+        },
+    ),
+)
+
+model_get_activated_plugins = control.clone(
+    "Get Plugins",
+    model_database,
+    fields.List(
+        "Plugins",
+        {
+            "plugins": fields.List(
+                fields.Nested(
+                    control.model(
+                        "List of all activated Plugins",
+                        {
+                            "plugin": fields.String(
+                                title="Plugin",
+                                description="Available Plugin.",
+                                required=True,
+                                example="a",
+                            )
+                        },
+                    )
+                )
+            )
+        },
     ),
 )
 
@@ -797,14 +828,29 @@ class Data(Resource):
         return response
 
 
+@control.route("/available_plugins")
+class ActivatedPlugin(Resource):
+    """Get available Plugins."""
+
+    @control.doc(model=model_get_activated_plugins)
+    def get(self) -> List:
+        """Return available plugins."""
+        return ["Clustering", "Compression"]
+
+
 @control.route("/plugin")
 class Plugin(Resource):
-    """Activate, Deactive Plugins, respectively show which ones are available."""
+    """Activate, Deactive Plugins, respectively show which ones are activated."""
 
-    @control.doc(model=model_get_plugins)
-    def get(self) -> List:
-        """Get all available plugins."""
-        return ["Clustering", "b", "c"]
+    @control.doc(model=model_get_activated_plugins)
+    def get(self) -> Union[Dict, List[Dict[str, Sequence[str]]]]:
+        """Return activated plugins in each database."""
+        message = {
+            "header": {"message": "get plugins"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response["body"]["plugins"]
 
     @control.doc(body=model_activate_plugin)
     def post(self) -> Dict:

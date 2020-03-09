@@ -1,6 +1,6 @@
 """Module for managing databases."""
 
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from hyrisecockpit.message import (
     add_database_request_schema,
@@ -50,6 +50,7 @@ class DatabaseManager(object):
             "delete data": (self._call_delete_data, delete_data_request_schema),
             "process table status": (self._call_process_table_status, None),
             "purge queue": (self._call_purge_queue, None),
+            "get plugins": (self._call_get_plugins, None),
             "activate plugin": (self._call_activate_plugin, None),
             "deactivate plugin": (self._call_deactivate_plugin, None),
         }
@@ -191,27 +192,33 @@ class DatabaseManager(object):
         response["body"]["process_table_status"] = process_table_status
         return response
 
+    def _call_get_plugins(self, body: Dict) -> Dict:
+        activated_plugins = []
+        for id, database in self._databases.items():
+            plugins: Optional[List] = database.get_plugins()
+            activated_plugins.append({"id": id, "plugins": plugins})
+        response = get_response(200)
+        response["body"]["plugins"] = activated_plugins
+        return response
+
     def _call_activate_plugin(self, body: Dict) -> Dict:
         database_id = body["id"]
         plugin = body["plugin"]
-        for id, database in self._databases.items():
-            if id == database_id:
-                database.activate_plugin(plugin)
-                if database.deactivate_plugin(plugin):
-                    response = get_response(200)
-            else:
-                response = get_response(400)
+        database = self._databases[database_id]
+        if database.activate_plugin(plugin):
+            response = get_response(200)
+        else:
+            response = get_response(400)
         return response
 
     def _call_deactivate_plugin(self, body: Dict) -> Dict:
         database_id = body["id"]
         plugin = body["plugin"]
-        for id, database in self._databases.items():
-            if id == database_id:
-                if database.deactivate_plugin(plugin):
-                    response = get_response(200)
-            else:
-                response = get_response(400)
+        database = self._databases[database_id]
+        if database.deactivate_plugin(plugin):
+            response = get_response(200)
+        else:
+            response = get_response(400)
         return response
 
     def _check_if_processing_table(self) -> bool:
