@@ -779,9 +779,9 @@ class Data(Resource):
         return response
 
 
-@control.route("/available_plugins")
+@control.route("/plugins")
 class ActivatedPlugin(Resource):
-    """Get available Plugins."""
+    """Get all available Plugins."""
 
     @control.doc(model=model_get_all_plugins)
     def get(self) -> List:
