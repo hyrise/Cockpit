@@ -9,7 +9,12 @@ if __name__ == "__main__":
     configuration = arg_parser.get_configuration()
     plugin_manager = PluginManager()
     plugins = plugin_manager.get_plugins(configuration)
-    with CockpitManager(configuration["backend_url"]) as cockpit_manager:
+    start_components = False
+    if configuration["start_components"] == "Y":
+        start_components = True
+    with CockpitManager(
+        configuration["backend_url"], start_components
+    ) as cockpit_manager:
         try:
             for plugin in plugins:
                 print(

@@ -42,10 +42,11 @@ DATABASES = {
 class CockpitManager:
     """Manage cockpit components."""
 
-    def __init__(self, backen_url):
+    def __init__(self, backen_url, start_components):
         """Initialize CockpitManager."""
         self._backend_url = backen_url
         self._subprocesses = []
+        self._start_components = start_components
 
     def __enter__(self):
         """Return self for a context manager."""
@@ -57,27 +58,28 @@ class CockpitManager:
 
     def start_components(self):
         """Start main cockpit components as sub-processes."""
-        backend_prosess = subprocess.Popen(  # nosec
-            ["pipenv", "run", "cockpit-backend"],
-            stderr=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-        )
-        self._subprocesses.append(backend_prosess)
-        time.sleep(1)
-        manager_process = subprocess.Popen(  # nosec
-            ["pipenv", "run", "cockpit-manager"],
-            stderr=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-        )
-        self._subprocesses.append(manager_process)
-        time.sleep(0.5)
-        generator_process = subprocess.Popen(  # nosec
-            ["pipenv", "run", "cockpit-generator"],
-            stderr=subprocess.DEVNULL,
-            stdout=subprocess.DEVNULL,
-        )
-        self._subprocesses.append(generator_process)
-        time.sleep(0.5)
+        if self._start_components:
+            backend_prosess = subprocess.Popen(  # nosec
+                ["pipenv", "run", "cockpit-backend"],
+                stderr=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+            )
+            self._subprocesses.append(backend_prosess)
+            time.sleep(1)
+            manager_process = subprocess.Popen(  # nosec
+                ["pipenv", "run", "cockpit-manager"],
+                stderr=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+            )
+            self._subprocesses.append(manager_process)
+            time.sleep(0.5)
+            generator_process = subprocess.Popen(  # nosec
+                ["pipenv", "run", "cockpit-generator"],
+                stderr=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+            )
+            self._subprocesses.append(generator_process)
+            time.sleep(0.5)
 
     def close_components(self):
         """Close main cockpit components."""

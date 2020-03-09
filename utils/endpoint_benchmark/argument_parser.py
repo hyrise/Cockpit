@@ -34,6 +34,7 @@ class ArgumentValidation:
             "number_workers": self._validate_number_workers,
             "workload_frequence": self._validate_workload_frequence,
             "plugins": self._validate_plugin,
+            "start_components": self._validate_start_components,
         }
 
     def get_endpoints(self):
@@ -154,6 +155,13 @@ class ArgumentValidation:
             else:
                 print(f"{plugin} plugin not found")
         return plugins
+
+    def _validate_start_components(self, start_components_arguments):
+        if start_components_arguments.upper() in ["Y", "N"]:
+            return start_components_arguments.upper()
+        else:
+            print(f"{start_components_arguments} not Y/N. Default Y is used.")
+            return "Y"
 
 
 class ArgumentParser:
@@ -304,6 +312,16 @@ class ArgumentParser:
             default=["wrk"],
             help="benchmark plug-ins to use",
         )
+        self.parser.add_argument(
+            "--start_components",
+            "-sc",
+            dest="start_components",
+            type=str,
+            nargs="?",
+            metavar="",
+            default=["Y"],
+            help="start components as subprocesses [Y/N]",
+        )
 
     def _show_info(self):
         if self._arguments.show:
@@ -326,6 +344,7 @@ class ArgumentParser:
             "number_workers",
             "workload_frequence",
             "plugins",
+            "start_components",
         ]
         for argument_type in types:
             configuration[argument_type] = self._argument_validation.validate(
