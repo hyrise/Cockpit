@@ -101,7 +101,6 @@ export default defineComponent({
       showDatabasePanels.value = !showDatabasePanels.value;
     }
 
-    console.log(dragElement);
     onMounted(() => {
       // Make the DIV element draggable:
       dragElement(pluginDraggableId, pluginDraggerId);
