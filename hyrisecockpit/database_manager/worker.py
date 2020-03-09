@@ -31,15 +31,15 @@ def fill_queue(
 
     while True:
         published_data = sub_socket.recv_json()
-        handle_published_data(published_data, task_queue, processing_tables_flag)
+        if not processing_tables_flag.value:
+            handle_published_data(published_data, task_queue)
 
 
-def handle_published_data(published_data, task_queue, processing_tables_flag) -> None:
+def handle_published_data(published_data, task_queue) -> None:
     """Fill task queue."""
     tasks = published_data["body"]["querylist"]
-    if not processing_tables_flag.value:
-        for task in tasks:
-            task_queue.put(task)
+    for task in tasks:
+        task_queue.put(task)
 
 
 def execute_queries(
