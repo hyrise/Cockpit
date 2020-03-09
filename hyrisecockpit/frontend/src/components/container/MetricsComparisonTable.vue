@@ -10,7 +10,7 @@
         <metric-tile
           class="metric-card"
           :metric="metric"
-          :database="database"
+          :tile-database="database"
           :selected-databases="[database]"
           :show-details="showDetails"
           :graph-id="`${metric}-${database}`"

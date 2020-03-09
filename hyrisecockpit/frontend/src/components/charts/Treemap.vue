@@ -36,14 +36,14 @@ export default defineComponent({
       Plotly.deleteTraces(props.graphId, 0);
     }
 
-    function getHeight(autosize: boolean): number {
+    function getHeightFactor(autosize: boolean): number {
       return autosize ? 1.75 : 1.25;
     }
 
     function updateLayout(): void {
       Plotly.relayout(props.graphId, {
         width: 0.8 * props.maxChartWidth,
-        height: (0.8 * props.maxChartWidth) / getHeight(props.autosize)
+        height: (0.8 * props.maxChartWidth) / getHeightFactor(props.autosize)
       });
     }
   }

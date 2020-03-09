@@ -26,7 +26,6 @@
       :is="getMetricComponent(metric)"
       :selected-databases="selectedDatabases"
       :metric="metric"
-      :metric-meta="getMetricMetadata(metric)"
       :graph-id="graphId"
       :show-details="showDetails"
       :max-chart-width="maxChartWidth"
@@ -44,17 +43,13 @@ import QueueLength from "../metrics/QueueLength.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import Storage from "../metrics/Storage.vue";
 import Access from "../metrics/Access.vue";
-import {
-  getMetricMetadata,
-  getMetricTitle,
-  getMetricComponent
-} from "../../meta/metrics";
-import { Metric, MetricMetadata } from "../../types/metrics";
+import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
+import { Metric } from "../../types/metrics";
 import { Database } from "../../types/database";
 import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
 
 interface Props {
-  database: string;
+  tileDatabase: string;
   metric: Metric;
   selectedDatabases: string[];
   showDetails: boolean;
@@ -63,7 +58,6 @@ interface Props {
 }
 
 interface Data {
-  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
   selectedDatabase: Database | { id: string; color: string };
@@ -82,7 +76,7 @@ export default defineComponent({
     MetricDescriptionTooltip
   },
   props: {
-    database: {
+    tileDatabase: {
       type: String,
       default: null
     },
@@ -110,11 +104,10 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { getDatabasesByIds } = context.root.$databaseController;
     return {
-      getMetricMetadata,
       getMetricTitle,
       getMetricComponent,
-      selectedDatabase: props.database
-        ? getDatabasesByIds([props.database])[0]
+      selectedDatabase: props.tileDatabase
+        ? getDatabasesByIds([props.tileDatabase])[0]
         : { id: "", color: "" }
     };
   }
