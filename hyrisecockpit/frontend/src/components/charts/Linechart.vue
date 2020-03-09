@@ -156,8 +156,6 @@ function useLineChartConfiguration(
         //linewidth: 2
       },
       autosize: true
-      //  width: 100,
-      //  height: 100
 
       // plot_bgcolor: "#424242",
       // paper_bgcolor: "#424242",
