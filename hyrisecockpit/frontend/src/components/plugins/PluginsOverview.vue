@@ -14,16 +14,9 @@
       multiple
       accordion
     >
-      <v-expansion-panel v-for="database in databases" :key="database.id">
+      <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
-          <v-avatar
-            class="mr-2"
-            size="20"
-            max-width="20"
-            max-height="20"
-            :color="database.color"
-          />
-          {{ database.id }}
+          {{ database }}
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div class="plugin" v-for="plugin in plugins" :key="plugin">
@@ -32,10 +25,10 @@
             </div>
             <v-switch
               :disabled="disableAll"
-              :loading="isLoading[database.id + '_' + plugin]"
+              :loading="isLoading[database + '_' + plugin]"
               v-model="activePlugins"
-              :value="database.id + '_' + plugin"
-              @change="onClickPluginSwitch(database.id, plugin)"
+              :value="database + '_' + plugin"
+              @change="onClickPluginSwitch(database, plugin)"
             />
           </div>
           <PluginsLog />
@@ -65,7 +58,7 @@ interface Props {
 interface Data {
   showDatabasePanels: Ref<boolean>;
   togglePanelView: () => void;
-  databases: Ref<Database[]>;
+  databases: Ref<readonly string[]>;
   plugins: Ref<string[]>;
   activePlugins: Ref<string[]>;
   onClickPluginSwitch: (databaseId: string, plugin: string) => void;
@@ -85,7 +78,7 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    var { databases } = context.root.$databaseService;
+    var { availableDatabasesById } = context.root.$databaseController;
     const showDatabasePanels = ref(true);
     const disableAll = ref(false);
     const isLoading: Ref<any> = ref({});
@@ -118,7 +111,7 @@ export default defineComponent({
     return {
       showDatabasePanels,
       togglePanelView,
-      databases,
+      databases: availableDatabasesById,
       plugins,
       onClickPluginSwitch,
       activePlugins,

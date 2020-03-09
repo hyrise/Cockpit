@@ -1,37 +1,25 @@
 <template>
-  <div class="mx-10 my-10">
-    <v-dialog v-model="showDialog" hide-overlay>
-      <template v-slot:activator="{ on }">
-        <v-btn color="secondary" small right dark v-on="on">
-          <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
-        </v-btn>
+  <div>
+    <metric-detailed-view>
+      <template #header>
+        Storage
       </template>
-      <v-card>
-        <v-card-title>Storage</v-card-title>
+      <template #content>
         <Treemap
           :graph-id="'1' + graphId || 'storage'"
-          :labels="labels"
-          :parents="parents"
-          :values="sizes"
-          :text="text"
+          :data="storageData"
           :chart-configuration="chartConfiguration"
-          :autosize="false"
+          :selected-databases="selectedDatabases"
+          :max-chart-width="1600"
         />
-        <v-spacer />
-        <v-card-actions>
-          <v-btn block color="primary" @click="showDialog = false">
-            Close detailed view
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      </template>
+    </metric-detailed-view>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
-      :labels="labels"
-      :text="text"
-      :parents="parents"
-      :values="sizes"
+      :data="storageData"
       :chart-configuration="chartConfiguration"
+      :autosize="false"
+      :max-chart-width="maxChartWidth"
     />
   </div>
 </template>
@@ -45,55 +33,45 @@ import {
   ref,
   onMounted
 } from "@vue/composition-api";
-import * as Plotly from "plotly.js";
 import Treemap from "../charts/Treemap.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ChartConfiguration,
+  StorageData
+} from "../../types/metrics";
+import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
-  labels: Ref<string[]>;
-  parents: Ref<string[]>;
-  sizes: Ref<number[]>;
-  text: Ref<string[]>;
-  chartConfiguration: Ref<string[]>;
-  showDialog: Ref<boolean>;
+  storageData: Ref<StorageData>;
+  chartConfiguration: ChartConfiguration;
 }
 
 export default defineComponent({
   name: "Storage",
   components: {
-    Treemap
+    Treemap,
+    MetricDetailedView
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
-    const showDialog = ref(false);
-
-    const labels = ref<string[]>([]);
-    const parents = ref<string[]>([]);
-    const sizes = ref<number[]>([]);
-    const text = ref<string[]>([]);
-
-    const chartConfiguration = ref<string[]>([props.selectedDatabases[0]]);
+    const storageData = ref<StorageData>({});
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
-        const {
-          newLabels,
-          newParents,
-          newSizes,
-          newText
-        } = props.metricMeta.transformationService(
+        storageData.value = props.metricMeta.transformationService(
           data.value,
-          props.selectedDatabases.map(database => database.id)[0]
+          props.selectedDatabases[0]
         );
-        labels.value = newLabels;
-        parents.value = newParents;
-        sizes.value = newSizes;
-        text.value = newText;
       }
     });
 
-    return { labels, parents, sizes, text, chartConfiguration, showDialog };
+    return {
+      storageData,
+      chartConfiguration: getMetricChartConfiguration(props.metric)
+    };
   }
 });
 </script>

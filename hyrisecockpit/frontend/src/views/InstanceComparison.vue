@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="mx-6">
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
       <MetricsComparisonTable
         v-if="selectedDatabases.length"
@@ -15,7 +19,6 @@
         No metrics selected.
       </v-alert>
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
@@ -35,16 +38,18 @@ import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 export default defineComponent({
   components: {
     MetricsComparisonTable,
-    DatabaseMetricSelection
+    DatabaseMetricSelection,
+    LinearLoader
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: comparisonMetrics,
-      ...useSelectionHandling(context)
+      ...useSelectionHandling()
     };
   }
 });

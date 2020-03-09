@@ -1,10 +1,8 @@
 <template>
   <div>
-    <v-progress-linear
-      v-if="!$databaseService.isReady.value"
-      indeterminate
-      color="primary"
-      height="7"
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
     />
     <div class="mx-12">
       <div class="mt-6 mb-2">
@@ -74,7 +72,7 @@
         </v-btn-toggle>
       </v-col>
       <MetricsTileList
-        v-if="$databaseService.isReady.value"
+        v-if="$databaseController.databasesUpdated.value"
         :selected-databases="watchedInstances"
         :show-details="false"
         :selected-metrics="workloadMetrics"
@@ -99,6 +97,7 @@ import { Metric, workloadMetrics } from "../types/metrics";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 interface Props {}
 interface Data {
@@ -110,30 +109,25 @@ interface Data {
   availableWorkloads: string[];
   frequency: Ref<number>;
   workloadMetrics: Metric[];
-  watchedInstances: Ref<Database[]>;
+  watchedInstances: Ref<string[]>;
 }
 
 export default defineComponent({
   name: "WorkloadScreen",
   components: {
-    MetricsTileList
+    MetricsTileList,
+    LinearLoader
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
-    const watchedInstances = ref<Database[]>([]);
+    const watchedInstances = ref<string[]>([]);
     const frequency = ref<number>(200);
-    const {
-      loadWorkloadData,
-      deleteWorkloadData,
-      startWorkload,
-      stopWorkload
-    } = useWorkloadService();
+    const { databasesUpdated } = context.root.$databaseController;
 
-    const { isReady } = context.root.$databaseService;
-    watch(isReady, () => {
-      if (isReady.value) {
+    watch(databasesUpdated, () => {
+      if (databasesUpdated.value) {
         watchedInstances.value = [
-          context.root.$databaseService.databases.value[0]
+          context.root.$databaseController.availableDatabasesById.value[0]
         ];
       }
     });
@@ -144,14 +138,11 @@ export default defineComponent({
 
     return {
       getDisplayedWorkload,
-      loadWorkloadData,
-      deleteWorkloadData,
       availableWorkloads,
-      startWorkload,
-      stopWorkload,
       frequency,
       watchedInstances,
-      workloadMetrics
+      workloadMetrics,
+      ...useWorkloadService()
     };
   }
 });
