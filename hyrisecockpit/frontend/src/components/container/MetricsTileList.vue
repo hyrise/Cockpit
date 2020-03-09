@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext } from "@vue/composition-api";
-import { Metric, MetricMetadata } from "../../types/metrics";
+import { Metric } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
 import MetricTile from "@/components/container/MetricTile.vue";
 
