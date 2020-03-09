@@ -5,22 +5,42 @@
       <div
         class="metrics-column"
         :style="databaseFlex"
-        v-for="database in databases"
-        :key="database.id"
+        v-for="database in selectedDatabases"
+        :key="database"
       >
-        <v-card
+        <div v-for="metric in selectedMetrics" :key="metric">
+          <metric-tile
+            class="metric-card"
+            :metric="metric"
+            :database="database"
+            :selected-databases="[database]"
+            :show-details="showDetails"
+            :graph-id="`${metric}-${database}`"
+            :max-chart-width="maxChartWidth"
+          />
+        </div>
+        <!-- <v-card
           v-for="metric in selectedMetrics"
           :key="metric"
           class="metric-card"
         >
-          <v-card-title class="metric-title">
-            {{ getMetricTitle(metric) }}
+          <v-card-title>
+            <v-container fluid>
+              <v-row no-gutters>
+                <v-col>
+                  <v-chip :color="database.color" class="white--text">
+                    {{ database.id }}
+                  </v-chip>
+                </v-col>
+                <v-col class="metric-title">
+                  {{ getMetricTitle(metric) }}
+                </v-col>
+                <v-col class="metric-description">
+                  <metric-description-tooltip :metric="metric" />
+                </v-col>
+              </v-row>
+            </v-container>
           </v-card-title>
-          <v-card-subtitle>
-            <v-chip :color="database.color" class="white--text">
-              {{ database.id }}
-            </v-chip>
-          </v-card-subtitle>
           <component
             :is="getMetricComponent(metric)"
             :selected-databases="[database.id]"
@@ -30,7 +50,7 @@
             :show-details="showDetails"
             :max-chart-width="maxChartWidth"
           />
-        </v-card>
+        </v-card> -->
       </div>
     </div>
   </div>
@@ -51,9 +71,6 @@ import CPU from "../metrics/CPU.vue";
 import Latency from "../metrics/Latency.vue";
 import RAM from "../metrics/RAM.vue";
 import QueueLength from "../metrics/QueueLength.vue";
-import Storage from "../metrics/Storage.vue";
-import Access from "../metrics/Access.vue";
-import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
 import {
   getMetricMetadata,
   getMetricTitle,
@@ -65,6 +82,7 @@ import DatabaseDetailsPanel from "../details/DatabaseDetailsPanel.vue";
 import { Database } from "../../types/database";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { useDatabaseFlex } from "../../meta/components";
+import MetricTile from "@/components/container/MetricTile.vue";
 
 interface Data {
   databases: Ref<readonly Database[]>;
@@ -77,15 +95,8 @@ interface Data {
 
 export default defineComponent({
   components: {
-    Throughput,
-    CPU,
-    Latency,
-    RAM,
-    QueueLength,
-    Storage,
-    Access,
-    QueryTypeProportion,
-    DatabaseDetailsPanel
+    DatabaseDetailsPanel,
+    MetricTile
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
@@ -114,12 +125,6 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.database-title {
-  justify-content: center;
-}
-.database {
-  margin-bottom: 0.5%;
-}
 .metrics-table {
   display: flex;
   flex-direction: row;
@@ -130,13 +135,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
-.metric-title {
-  z-index: 2;
-  position: relative;
-  margin-bottom: -40px;
-  justify-content: center;
-}
-
 .metric-card {
   margin-top: 4px;
 }
