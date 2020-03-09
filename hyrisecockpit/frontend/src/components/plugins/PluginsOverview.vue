@@ -159,9 +159,10 @@ export default defineComponent({
     function onClickPluginSwitch(databaseId: string, plugin: string): void {
       isLoading.value[databaseId + "_" + plugin] = true;
       disableAll.value = true;
-      updatePlugins(activePlugins.value);
-      isLoading.value[databaseId + "_" + plugin] = false;
-      disableAll.value = false;
+      updatePlugins(activePlugins.value).then(() => {
+        isLoading.value[databaseId + "_" + plugin] = false;
+        disableAll.value = false;
+      });
     }
 
     return {

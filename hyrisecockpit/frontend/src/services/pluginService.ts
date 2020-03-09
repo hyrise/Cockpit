@@ -9,15 +9,15 @@ export function usePluginService(): any {
   getPlugins();
 
   function getPlugins(): void {
-    axios.get(monitorBackend + "throughput").then(response => {
+    axios.get(monitorBackend + "queue_length").then(response => {
       console.log(response);
     });
     plugins.value = ["auto-index", "ki-stuff", "no-more-problems"];
   }
 
-  function updatePlugins(activePlugins: any): void {
+  function updatePlugins(activePlugins: any): Promise<void> {
     console.log(activePlugins);
-    axios.get(monitorBackend + "throughput").then(response => {
+    return axios.get(monitorBackend + "queue_length").then(response => {
       activePlugins.value = activePlugins;
     });
   }
