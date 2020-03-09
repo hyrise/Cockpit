@@ -1,4 +1,9 @@
-import { Metric } from "../types/metrics";
+import {
+  Metric,
+  StorageData,
+  TreemapDescription,
+  AccessData
+} from "../types/metrics";
 import { TransformationService } from "@/types/services";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
@@ -82,64 +87,119 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
-function getStorageData(
-  data: any,
-  primaryKey: string = ""
-): {
-  newLabels: string[];
-  newParents: string[];
-  newSizes: number[];
-  newText: string[];
-} {
-  const newLabels: string[] = [];
-  const newParents: string[] = [];
-  const newSizes: number[] = [];
-  const newText: string[] = [];
+function getStorageData(data: any, primaryKey: string = ""): StorageData {
+  const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
+
+  //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
+  const memory: number[] = [];
+  Object.entries(data[primaryKey]).forEach(
+    ([table, tableData]: [string, any]) => {
+      memory.push(getDatabaseMemoryFootprint(tableData.data));
+    }
+  );
+  const totalDatabaseMemory =
+    Math.floor(
+      memory.reduce((total, tableMemory) => total + tableMemory) * 100
+    ) / 100;
+
+  const labels: string[] = [primaryKey];
+  const parents: string[] = [""];
+  const sizes: number[] = [0];
+  const descriptions: TreemapDescription[] = [
+    {
+      size: `${totalDatabaseMemory} MB`,
+      encoding: "",
+      dataType: "",
+      percentOfDatabase: "100% of total footprint",
+      percentOfTable: ""
+    }
+  ];
 
   function getRoundedData(value: number): number {
     return Math.floor(value / Math.pow(10, 4)) / 100;
   }
 
-  Object.keys(data[primaryKey]).forEach(table => {
-    newLabels.push(table);
-    newParents.push(primaryKey);
-    newSizes.push(0);
-    newText.push(`${getRoundedData(data[primaryKey][table].size)} MB`);
-    Object.keys(data[primaryKey][table].data).forEach(attribute => {
-      newLabels.push(attribute);
-      newParents.push(table);
-      getRoundedData(data[primaryKey][table].data[attribute].size);
-      newSizes.push(
-        getRoundedData(data[primaryKey][table].data[attribute].size)
-      );
-      newText.push(
-        `${getRoundedData(data[primaryKey][table].data[attribute].size)} MB`
-      );
-    });
-  });
+  function getPercentage(part: number, total: number): number {
+    return Math.floor((part / total) * Math.pow(10, 4)) / 100;
+  }
 
-  return { newLabels, newParents, newSizes, newText };
+  Object.entries(data[primaryKey]).forEach(
+    ([table, tableData]: [string, any]) => {
+      labels.push(table);
+      parents.push(primaryKey);
+      sizes.push(0);
+      descriptions.push({
+        size: `${getDatabaseMemoryFootprint(tableData.data)} MB`,
+        encoding: "",
+        dataType: "",
+        percentOfDatabase: `${getPercentage(
+          getDatabaseMemoryFootprint(tableData.data),
+          totalDatabaseMemory
+        )} % of total footprint`,
+        percentOfTable: `100% of ${table}`
+      });
+      Object.entries(tableData.data).forEach(
+        ([attribute, attributeData]: [string, any]) => {
+          labels.push(attribute);
+          parents.push(table);
+          getRoundedData(attributeData.size);
+          sizes.push(getRoundedData(attributeData.size));
+          descriptions.push({
+            size: `${getRoundedData(attributeData.size)} MB`,
+            encoding: `encoding: ${attributeData.encoding}`,
+            dataType: `data type: ${attributeData.data_type}`,
+            percentOfDatabase: `${getPercentage(
+              getRoundedData(attributeData.size),
+              totalDatabaseMemory
+            )} % of total footprint`,
+            percentOfTable: `${getPercentage(
+              getRoundedData(attributeData.size),
+              getDatabaseMemoryFootprint(tableData.data)
+            )} % of ${table}`
+          });
+        }
+      );
+    }
+  );
+
+  return {
+    parents,
+    labels,
+    sizes,
+    descriptions
+  };
 }
 
 function getAccessData(
   data: any,
   primaryKey: string = "",
   secondaryKey: string = ""
-) {
+): AccessData {
   const dataByColumns: number[][] = [];
   const dataByChunks: number[][] = [];
-  const newChunks: string[] = [];
-  const newColumns: string[] = [];
+  const chunks: string[] = [];
+  const columns: string[] = [];
+  const descriptions: string[][] = [];
 
-  Object.keys(data[primaryKey][secondaryKey]).forEach(column => {
-    dataByColumns.push(data[primaryKey][secondaryKey][column]);
-    newColumns.push(column);
-  });
+  const availableColumns: string[] = [];
+
+  Object.entries(data[primaryKey][secondaryKey]).forEach(
+    ([column, columnData]: [string, any]) => {
+      dataByColumns.push(columnData);
+      columns.push(truncateColumnName(column));
+      availableColumns.push(column);
+    }
+  );
 
   const numberOfChunks = dataByColumns[0].length;
 
+  function truncateColumnName(column: string): string {
+    return column.length > 7 ? column.substring(0, 7) + ".." : column;
+  }
+
   for (let i = 0; i < numberOfChunks; i++) {
-    newChunks.push("chunk_" + i);
+    chunks.push("Nr. " + i);
+    descriptions.push(availableColumns);
 
     const chunk: number[] = [];
     dataByColumns.forEach(column => {
@@ -147,7 +207,7 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
-  return { newChunks, newColumns, dataByChunks };
+  return { chunks, columns, dataByChunks, descriptions };
 }
 
 export function useDataTransformationHelpers(): {
