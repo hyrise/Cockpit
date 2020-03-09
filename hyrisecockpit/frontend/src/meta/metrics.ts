@@ -104,7 +104,9 @@ const queryLabel = "Number of queries";
 
 const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   access: {
-    title: "Access Frequency"
+    title: "Access Frequency",
+    xaxis: "columns",
+    yaxis: "chunks"
   },
   cpu: {
     title: "CPU",
