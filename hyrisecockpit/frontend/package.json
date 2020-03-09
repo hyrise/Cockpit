@@ -9,7 +9,6 @@
     },
     "dependencies": {
         "@types/plotly.js": "^1.44.28",
-        "@types/uuid": "^3.4.7",
         "@typescript-eslint/eslint-plugin": "^2.21.0",
         "@typescript-eslint/parser": "^2.21.0",
         "@vue/composition-api": "^0.4.0",
@@ -20,7 +19,6 @@
         "static-eval": "^2.0.3",
         "vue": "^2.6.11",
         "vue-router": "^3.1.5",
-        "vue-uuid": "^1.1.1",
         "vuetify": "^2.2.14"
     },
     "devDependencies": {
