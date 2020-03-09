@@ -1,6 +1,6 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Manager, Process, Queue
+from multiprocessing import Process, Queue, Value
 from secrets import randbelow
 from typing import Any, Callable, Dict, List, Tuple
 
@@ -13,7 +13,6 @@ from psycopg2.extensions import AsIs
 from .cursor import PoolCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
-
 from .worker import execute_queries, fill_queue
 
 
@@ -51,7 +50,6 @@ class Database(object):
 
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
-        self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
