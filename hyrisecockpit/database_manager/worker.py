@@ -75,7 +75,21 @@ def execute_queries(
                             task_queue.put("wake_up_signal_for_worker")
                         break
                     else:
-                        execute_task(task, cur, succesful_queries)
+                        (
+                            query,
+                            not_formatted_parameters,
+                            workload_type,
+                            query_type,
+                        ) = task
+                        formatted_parameters = get_formatted_parameters(
+                            not_formatted_parameters
+                        )
+
+                        endts, latency = execute_task(cur, query, formatted_parameters)
+                        succesful_queries.append(
+                            (endts, latency, workload_type, query_type)
+                        )
+
                         if last_batched < time_ns() - 1_000_000_000:
                             last_batched = time_ns()
                             log.log_queries(succesful_queries)
@@ -86,15 +100,13 @@ def execute_queries(
                     )
 
 
-def execute_task(task, cursor, succesful_queries):
+def execute_task(cursor, query, formatted_parameters):
     """Handle given task."""
-    query, not_formatted_parameters, workload_type, query_type = task
-    formatted_parameters = get_formatted_parameters(not_formatted_parameters)
-
     startts = time_ns()
     cursor.execute(query, formatted_parameters)
     endts = time_ns()
-    succesful_queries.append((endts, endts - startts, workload_type, query_type))
+
+    return endts, endts - startts
 
 
 def get_formatted_parameters(not_formatted_parameters):
