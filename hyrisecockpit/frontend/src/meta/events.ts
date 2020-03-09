@@ -1,6 +1,5 @@
 import { eventBus } from "../plugins/eventBus";
 import { Metric } from "@/types/metrics";
-import { Database } from "@/types/database";
 
 export function useMetricEvents(): {
   emitWatchedMetricsChangedEvent: (metrics?: Metric[]) => void;
@@ -16,10 +15,27 @@ export function useMetricEvents(): {
 }
 
 export function useDatabaseEvents(): {
-  emitSelectedDatabasesChangedEvent: (databases?: Database[]) => void;
+  emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
+  emitDatabaseAddedEvent: () => void;
 } {
-  function emitSelectedDatabasesChangedEvent(databases: Database[] = []): void {
+  function emitSelectedDatabasesChangedEvent(databases: string[] = []): void {
     eventBus.$emit("SELECTED_DATABASES_CHANGED", databases);
   }
-  return { emitSelectedDatabasesChangedEvent };
+  function emitDatabaseAddedEvent(): void {
+    eventBus.$emit("DATABASE_ADDED");
+  }
+  return { emitSelectedDatabasesChangedEvent, emitDatabaseAddedEvent };
+}
+
+export function useDataEvents(): {
+  emitStorageDataChangedEvent: (data: any) => void;
+  emitCPUDataChangedEvent: (data: any) => void;
+} {
+  function emitStorageDataChangedEvent(data: any): void {
+    eventBus.$emit("STORAGE_DATA_CHANGED", data);
+  }
+  function emitCPUDataChangedEvent(data: any): void {
+    eventBus.$emit("CPU_DATA_CHANGED", data);
+  }
+  return { emitCPUDataChangedEvent, emitStorageDataChangedEvent };
 }

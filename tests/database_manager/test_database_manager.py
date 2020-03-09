@@ -2,9 +2,7 @@
 from typing import Callable
 from unittest.mock import patch
 
-from jsonschema import ValidationError
-from pytest import fixture, mark, raises
-from zmq import Context, Socket
+from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
@@ -58,61 +56,9 @@ class TestDatabaseManager:
         """A DatabaseManager initializes."""
         assert isinstance(database_manager, DatabaseManager)
 
-    def test_has_a_context(self, database_manager: DatabaseManager):
-        """A DatabaseManager has a ZMQ Context."""
-        assert isinstance(database_manager._context, Context)
-
-    def test_has_a_socket(self, database_manager: DatabaseManager):
-        """A DatabaseManager has a ZMQ Socket."""
-        assert isinstance(database_manager._socket, Socket)
-
     def test_has_no_databases(self, database_manager: DatabaseManager):
         """A DatabaseManager has no databases."""
         assert database_manager._databases == {}
-
-    @mark.parametrize(
-        "call",
-        [
-            "add database",
-            "storage",
-            "system data",
-            "delete database",
-            "queue length",
-            "chunks data",
-            "failed tasks",
-            "get databases",
-        ],
-    )
-    def test_has_server_call(self, database_manager: DatabaseManager, call: str):
-        """A DatabaseManager has a server call."""
-        assert call in database_manager._server_calls.keys()
-
-    @mark.parametrize(
-        "call",
-        [
-            "storage",
-            "system data",
-            "queue length",
-            "chunks data",
-            "failed tasks",
-            "get databases",
-        ],
-    )
-    def test_returns_a_successful_response_on_an_empty_call(
-        self, database_manager: DatabaseManager, call
-    ):
-        """Returns a status 200 response on a call."""
-        response = database_manager._server_calls[call]({})
-        assert response["header"]["status"] == 200
-
-    @mark.parametrize(
-        "call", ["add database", "delete database"],
-    )
-    def test_fails_with_empty_call(self, database_manager: DatabaseManager, call):
-        """Returns a status 400 response on a call."""
-        with raises(ValidationError):
-            response = database_manager._server_calls[call]({})
-            assert response["header"]["status"] == 404
 
     def test_get_databases_returns_databases(
         self, database_manager: DatabaseManager, mock_database: Database

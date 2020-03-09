@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <database-system-details :databases="selectedDatabases" />
+  <div id="metric-comparison-table">
+    <database-details-panel :selected-databases="selectedDatabases" />
     <div class="metrics-table">
       <div
         class="metrics-column"
-        :style="{ flex: `1 0 ${100 / selectedDatabases.length}%` }"
-        v-for="database in selectedDatabases"
-        :key="`${uuid()}-${database.id}`"
+        :style="databaseFlex"
+        v-for="database in databases"
+        :key="database.id"
       >
         <v-card
           v-for="metric in selectedMetrics"
@@ -23,11 +23,12 @@
           </v-card-subtitle>
           <component
             :is="getMetricComponent(metric)"
-            :selected-databases="[database]"
+            :selected-databases="[database.id]"
             :metric="metric"
-            :metric-meta="getMetadata(metric)"
+            :metric-meta="getMetricMetadata(metric)"
             :graph-id="`${metric}-${database.id}`"
             :show-details="showDetails"
+            :max-chart-width="maxChartWidth"
           />
         </v-card>
       </div>
@@ -41,7 +42,9 @@ import {
   SetupContext,
   Ref,
   ref,
-  onMounted
+  onMounted,
+  computed,
+  provide
 } from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
@@ -51,21 +54,25 @@ import QueueLength from "../metrics/QueueLength.vue";
 import Storage from "../metrics/Storage.vue";
 import Access from "../metrics/Access.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
-import { uuid } from "vue-uuid";
 import {
-  getMetadata,
+  getMetricMetadata,
   getMetricTitle,
   getMetricComponent
 } from "../../meta/metrics";
 import { Metric, MetricMetadata } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
-import DatabaseSystemDetails from "../details/DatabaseSystemDetails.vue";
+import DatabaseDetailsPanel from "../details/DatabaseDetailsPanel.vue";
+import { Database } from "../../types/database";
+import { useUpdatingDatabases } from "../../meta/databases";
+import { useDatabaseFlex } from "../../meta/components";
 
 interface Data {
-  getMetadata: (metric: Metric) => MetricMetadata;
+  databases: Ref<readonly Database[]>;
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
-  uuid: () => string;
+  databaseFlex: Readonly<Ref<Object>>;
+  maxChartWidth: Readonly<Ref<number>>;
 }
 
 export default defineComponent({
@@ -78,15 +85,30 @@ export default defineComponent({
     Storage,
     Access,
     QueryTypeProportion,
-    DatabaseSystemDetails
+    DatabaseDetailsPanel
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
+    const totalViewWidth = ref(0);
+    const maxChartWidth = computed(
+      () =>
+        Math.floor(totalViewWidth.value / props.selectedDatabases.length) - 10
+    );
+    provide("multipleDatabasesAllowed", false);
+
+    onMounted(() => {
+      totalViewWidth.value = document.getElementById(
+        "metric-comparison-table"
+      )!.offsetWidth;
+    });
+
     return {
-      uuid: uuid.v1,
-      getMetadata,
+      ...useUpdatingDatabases(props, context),
+      getMetricMetadata,
       getMetricComponent,
-      getMetricTitle
+      getMetricTitle,
+      ...useDatabaseFlex(props),
+      maxChartWidth
     };
   }
 });

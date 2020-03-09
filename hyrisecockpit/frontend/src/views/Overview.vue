@@ -1,13 +1,17 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="mx-6">
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
       <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
         No databases selected.
       </v-alert>
-      <database-system-details
+      <database-details-panel
         v-if="selectedDatabases.length"
-        :databases="selectedDatabases"
+        :selected-databases="selectedDatabases"
         :handle-scroll="false"
       />
       <MetricsTileList
@@ -17,7 +21,6 @@
         :selected-metrics="selectedMetrics"
       />
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
@@ -34,21 +37,22 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
-import DatabaseSystemDetails from "../components/details/DatabaseSystemDetails.vue";
+import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
+import LinearLoader from "../components/loading/linearLoader.vue";
 
 export default defineComponent({
   components: {
     MetricsTileList,
-    DatabaseSystemDetails,
-    DatabaseMetricSelection
+    DatabaseDetailsPanel,
+    DatabaseMetricSelection,
+    LinearLoader
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: overviewMetrics,
-      ...useSelectionHandling(context)
+      ...useSelectionHandling()
     };
   }
 });
