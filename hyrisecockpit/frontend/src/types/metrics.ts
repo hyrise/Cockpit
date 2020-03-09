@@ -107,3 +107,25 @@ export type ChartConfiguration = {
   xaxis?: string;
   yaxis?: string;
 };
+
+export type TreemapDescription = {
+  size: string;
+  encoding: string;
+  dataType: string;
+  percentOfDatabase: string;
+  percentOfTable: string;
+};
+
+export type StorageData = {
+  parents: string[];
+  labels: string[];
+  sizes: number[];
+  descriptions: TreemapDescription[];
+};
+
+export type AccessData = {
+  dataByChunks: number[][];
+  chunks: string[];
+  columns: string[];
+  descriptions: string[][];
+};
