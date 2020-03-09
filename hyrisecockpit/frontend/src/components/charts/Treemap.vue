@@ -35,10 +35,15 @@ export default defineComponent({
       Plotly.addTraces(props.graphId, getDataset(props.data));
       Plotly.deleteTraces(props.graphId, 0);
     }
+
+    function getHeight(autosize: boolean): number {
+      return autosize ? 1.75 : 1.25;
+    }
+
     function updateLayout(): void {
       Plotly.relayout(props.graphId, {
         width: 0.8 * props.maxChartWidth,
-        height: (0.8 * props.maxChartWidth) / 2
+        height: (0.8 * props.maxChartWidth) / getHeight(props.autosize)
       });
     }
   }
@@ -70,7 +75,7 @@ function useTreemapConfiguration(
       margin: {
         l: 0,
         r: 0,
-        b: 0,
+        b: 20,
         t: 0,
         pad: 0
       }

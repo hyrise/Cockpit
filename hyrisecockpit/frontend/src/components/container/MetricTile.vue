@@ -22,7 +22,7 @@
       </v-container>
     </v-card-title>
     <component
-      class="metric"
+      class="metric-component"
       :is="getMetricComponent(metric)"
       :selected-databases="selectedDatabases"
       :metric="metric"
@@ -121,6 +121,9 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.metric-component {
+  margin-top: -20px;
+}
 .metric-title {
   display: flex;
   align-items: center;
