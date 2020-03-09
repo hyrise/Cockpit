@@ -15,6 +15,7 @@
       :chart-configuration="chartConfiguration"
       :max-value="maxValue"
       :timestamps="timestamps"
+      :max-chart-width="maxChartWidth"
     />
   </div>
 </template>

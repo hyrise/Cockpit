@@ -3,65 +3,44 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  onMounted,
-  computed,
-  Ref,
-  ref,
-  watch
-} from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration, AccessData } from "../../types/metrics";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 
-interface Props {
-  data: AccessData;
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
+interface Props extends ChartProps {
   autosize: boolean;
 }
 
 export default defineComponent({
   name: "Heatmap",
   props: {
-    data: {
-      type: Object,
-      default: null
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
     autosize: {
       type: Boolean,
       default: true
-    }
+    },
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
       props.chartConfiguration,
       props.autosize
     );
+    const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
-      watch(
-        () => props.data,
-        () => {
-          if (Object.keys(props.data).length) {
-            Plotly.addTraces(props.graphId, getDataset(props.data));
-            Plotly.deleteTraces(props.graphId, 0);
-          }
-        }
-      );
+      useChartReactivity(props, context, updateDataset, updateLayout);
     });
+
+    function updateDataset(): void {
+      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.deleteTraces(props.graphId, 0);
+    }
   }
 });
+
 function useHeatMapConfiguration(
   chartConfiguration: ChartConfiguration,
   autosize: boolean
@@ -86,7 +65,14 @@ function useHeatMapConfiguration(
       },
       autosize: autosize,
       width: autosize ? 0 : 1400,
-      height: autosize ? 0 : 700
+      height: autosize ? 0 : 700,
+      margin: {
+        l: 80,
+        r: 50,
+        b: 100,
+        t: 50,
+        pad: 10
+      }
     };
   }
 
