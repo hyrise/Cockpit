@@ -54,27 +54,27 @@ class TestWorker:
 
         mocked_task_queue.put.assert_not_called()
 
-    def test_get_formated_parameters_returns_none(self):
-        """Test get_formated_parameters returns None for not present parameters."""
+    def test_get_formatted_parameters_returns_none(self):
+        """Test get_formatted_parameters returns None for not present parameters."""
         assert get_formatted_parameters(None) is None
 
-    def test_get_formated_parameters_returns_parameters_without_protocol(self):
-        """Test get_formated_parameters returns parameters for not present protocols."""
-        not_formated_parameters = ((1, None), (2, None), (3, None))
+    def test_get_formatted_parameters_returns_parameters_without_protocol(self):
+        """Test get_formatted_parameters returns parameters for not present protocols."""
+        not_formatted_parameters = ((1, None), (2, None), (3, None))
 
-        formated_parameters = get_formatted_parameters(not_formated_parameters)
+        formatted_parameters = get_formatted_parameters(not_formatted_parameters)
 
-        for i in range(len(not_formated_parameters)):
-            assert not_formated_parameters[i][0] == formated_parameters[i]
+        for i in range(len(not_formatted_parameters)):
+            assert not_formatted_parameters[i][0] == formatted_parameters[i]
 
-    def test_get_formated_parameters_returns_parameters_with_asis_protocol(self):
-        """Test get_formated_parameters returns parameters for asis protocol."""
-        not_formated_parameters = ((1, "as_is"), (2, "as_is"), (3, "as_is"))
+    def test_get_formatted_parameters_returns_parameters_with_asis_protocol(self):
+        """Test get_formatted_parameters returns parameters for asis protocol."""
+        not_formatted_parameters = ((1, "as_is"), (2, "as_is"), (3, "as_is"))
 
-        formated_parameters = get_formatted_parameters(not_formated_parameters)
-        for i in range(len(not_formated_parameters)):
-            assert type(formated_parameters[i]) == AsIs
-            assert str(not_formated_parameters[i][0]) == formated_parameters[
+        formatted_parameters = get_formatted_parameters(not_formatted_parameters)
+        for i in range(len(not_formatted_parameters)):
+            assert type(formatted_parameters[i]) == AsIs
+            assert str(not_formatted_parameters[i][0]) == formatted_parameters[
                 i
             ].getquoted().decode("utf-8")
 
