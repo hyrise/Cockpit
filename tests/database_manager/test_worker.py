@@ -6,21 +6,13 @@ from pytest import fixture
 
 from hyrisecockpit.database_manager.worker import (
     execute_task,
-    fill_task_queue,
     get_formatted_parameters,
+    handle_published_data,
 )
 
 
 class TestWorker:
     """Tests Worker functions."""
-
-    @fixture
-    def mocked_sub_socket(self):
-        """Mock subscriber socket with pre-defined tasks."""
-        querylist = ["task_1", "task_2", "task_3"]
-        mocked_sub_socket = MagicMock()
-        mocked_sub_socket.recv_json.return_value = {"body": {"querylist": querylist}}
-        return mocked_sub_socket
 
     @fixture
     def mocked_task_queue(self):
@@ -30,28 +22,35 @@ class TestWorker:
         return mocked_task_queue
 
     def test_subsciber_fills_task_queue_when_process_flag_is_unset(
-        self, mocked_sub_socket, mocked_task_queue
+        self, mocked_task_queue
     ):
         """Test filling of the queue."""
         querylist = ["task_1", "task_2", "task_3"]
-
+        mocked_published_data = {"body": {"querylist": querylist}}
         mocked_processing_flag = MagicMock()
         mocked_processing_flag.value = False
 
-        fill_task_queue(mocked_sub_socket, mocked_task_queue, mocked_processing_flag)
+        handle_published_data(
+            mocked_published_data, mocked_task_queue, mocked_processing_flag
+        )
 
         for task in querylist:
             mocked_task_queue.put.assert_any_call(task)
         assert 3 == mocked_task_queue.put.call_count
 
     def test_subsciber_dont_fill_task_queue_when_process_flag_is_set(
-        self, mocked_sub_socket, mocked_task_queue
+        self, mocked_task_queue
     ):
         """Test subscriber should not fill task queue when processing flag is set."""
+        querylist = ["task_1", "task_2", "task_3"]
+        mocked_published_data = {"body": {"querylist": querylist}}
+
         mocked_processing_flag = MagicMock()
         mocked_processing_flag.value = True
 
-        fill_task_queue(mocked_sub_socket, mocked_task_queue, mocked_processing_flag)
+        handle_published_data(
+            mocked_published_data, mocked_task_queue, mocked_processing_flag
+        )
 
         mocked_task_queue.put.assert_not_called()
 
