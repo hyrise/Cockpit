@@ -7,42 +7,22 @@ import {
   defineComponent,
   SetupContext,
   onMounted,
-  computed,
-  Ref,
-  ref,
-  watch
+  watch,
+  inject
 } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
-interface Props {
-  data: any;
-  selectedDatabases: string[];
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
+interface Props extends ChartProps {
   maxValue: number;
   timestamps: Date[];
 }
 
 export default defineComponent({
   props: {
-    data: {
-      type: Object,
-      default: null
-    },
-    selectedDatabases: {
-      type: Array,
-      default: null
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    },
     maxValue: {
       type: Number,
       default: 1
@@ -50,7 +30,8 @@ export default defineComponent({
     timestamps: {
       type: Array,
       default: null
-    }
+    },
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
@@ -58,35 +39,39 @@ export default defineComponent({
       props
     );
     const { databasesUpdated } = context.root.$databaseController;
+    const { updateLayout } = useResizingOnChange(props);
+    const multipleDatabasesAllowed = inject<boolean>(
+      "multipleDatabasesAllowed",
+      true
+    );
 
     onMounted(() => {
-      watch(databasesUpdated, () => {
-        if (databasesUpdated.value) {
-          Plotly.newPlot(
-            props.graphId,
-            getDatasets(),
-            getLayout(props.maxValue),
-            getOptions()
-          );
-        }
-      });
+      Plotly.newPlot(
+        props.graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
+      );
+      useChartReactivity(props, context, updateChartDatasets, updateLayout);
+
       watch(
         () => props.selectedDatabases,
         () => {
-          if (databasesUpdated.value) {
+          if (databasesUpdated.value && multipleDatabasesAllowed) {
             handleDatabaseChange();
           }
         }
       );
-      watch(
-        () => props.data,
-        () => {
-          if (databasesUpdated.value && Object.keys(props.data).length) {
-            updateChartDatasets();
-          }
-        }
-      );
     });
+
+    function handleDatabaseChange(): void {
+      Plotly.react(
+        props.graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
+      );
+    }
 
     function getDatasets(): any[] {
       return props.selectedDatabases.reduce((result, id): any => {
@@ -95,16 +80,6 @@ export default defineComponent({
           getDataset(props.data[id] ? props.data[id] : [], id)
         ];
       }, []);
-    }
-
-    function handleDatabaseChange(): void {
-      Plotly.purge(props.graphId);
-      Plotly.plot(
-        props.graphId,
-        getDatasets(),
-        getLayout(props.maxValue),
-        getOptions()
-      );
     }
 
     function getMaxDatasetLength(): number {
@@ -179,7 +154,9 @@ function useLineChartConfiguration(
         //   color: "#FAFAFA"
         // },
         //linewidth: 2
-      }
+      },
+      autosize: true
+
       // plot_bgcolor: "#424242",
       // paper_bgcolor: "#424242",
       // legend: {

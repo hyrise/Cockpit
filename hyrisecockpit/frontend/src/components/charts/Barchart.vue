@@ -3,70 +3,29 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  SetupContext,
-  onMounted,
-  computed,
-  Ref,
-  ref,
-  watch
-} from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
 import { ChartConfiguration } from "../../types/metrics";
-
-interface Props {
-  data: any;
-  graphId: string;
-  chartConfiguration: ChartConfiguration;
-}
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
 
 export default defineComponent({
-  props: {
-    data: {
-      type: Array,
-      default: null
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Object,
-      default: null
-    }
-  },
-  setup(props: Props, context: SetupContext): void {
+  props: ChartPropsValidation,
+  setup(props: ChartProps, context: SetupContext): void {
     const { getLayout, getOptions } = useBarChartConfiguration(
       context,
       props.chartConfiguration
     );
+    const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
-      Plotly.newPlot(
-        props.graphId,
-        props.data as any,
-        getLayout(),
-        getOptions()
-      );
-
-      watch(
-        () => props.data,
-        () => {
-          if (props.data.length) {
-            updateChartDatasets();
-          }
-        }
-      );
-      function updateChartDatasets(): void {
-        Plotly.react(
-          props.graphId,
-          props.data as any,
-          getLayout(),
-          getOptions()
-        );
-      }
+      Plotly.newPlot(props.graphId, props.data, getLayout(), getOptions());
+      useChartReactivity(props, context, updateChartDatasets, updateLayout);
     });
+
+    function updateChartDatasets(): void {
+      Plotly.react(props.graphId, props.data, getLayout(), getOptions());
+    }
   }
 });
 
@@ -91,7 +50,8 @@ function useBarChartConfiguration(
         },
         rangemode: "tozero"
       },
-      barmode: "stack"
+      barmode: "stack",
+      autosize: true
     };
   }
 
@@ -101,4 +61,3 @@ function useBarChartConfiguration(
   return { getLayout, getOptions };
 }
 </script>
-<style scoped></style>
