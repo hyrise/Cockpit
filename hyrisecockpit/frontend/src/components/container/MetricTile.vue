@@ -35,26 +35,25 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext } from "@vue/composition-api";
-import Throughput from "../metrics/Throughput.vue";
-import CPU from "../metrics/CPU.vue";
-import Latency from "../metrics/Latency.vue";
-import RAM from "../metrics/RAM.vue";
-import QueueLength from "../metrics/QueueLength.vue";
-import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
-import Storage from "../metrics/Storage.vue";
-import Access from "../metrics/Access.vue";
+import Throughput from "@/components/metrics/Throughput.vue";
+import CPU from "@/components/metrics/CPU.vue";
+import Latency from "@/components/metrics/Latency.vue";
+import RAM from "@/components/metrics/RAM.vue";
+import QueueLength from "@/components/metrics/QueueLength.vue";
+import QueryTypeProportion from "@/components/metrics/QueryTypeProportion.vue";
+import Storage from "@/components/metrics/Storage.vue";
+import Access from "@/components/metrics/Access.vue";
 import { getMetricTitle, getMetricComponent } from "../../meta/metrics";
-import { Metric } from "../../types/metrics";
+import {
+  Metric,
+  MetricProps,
+  MetricPropsValidation
+} from "../../types/metrics";
 import { Database } from "../../types/database";
 import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
 
-interface Props {
+interface Props extends MetricProps {
   tileDatabase: string;
-  metric: Metric;
-  selectedDatabases: string[];
-  showDetails: boolean;
-  graphId: string;
-  maxChartWidth: number;
 }
 
 interface Data {
@@ -65,6 +64,7 @@ interface Data {
 
 export default defineComponent({
   components: {
+    MetricDescriptionTooltip,
     Throughput,
     CPU,
     Latency,
@@ -72,34 +72,14 @@ export default defineComponent({
     QueueLength,
     QueryTypeProportion,
     Access,
-    Storage,
-    MetricDescriptionTooltip
+    Storage
   },
   props: {
     tileDatabase: {
       type: String,
       default: null
     },
-    metric: {
-      type: String,
-      default: null
-    },
-    selectedDatabases: {
-      type: Array,
-      default: null
-    },
-    showDetails: {
-      type: Boolean,
-      default: false
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    maxChartWidth: {
-      type: Number,
-      default: 0
-    }
+    ...MetricPropsValidation
   },
   setup(props: Props, context: SetupContext): Data {
     const { getDatabasesByIds } = context.root.$databaseController;
