@@ -1,18 +1,19 @@
-function dragElement(elementId: string, headerId: string) {
-  let element = document.getElementById(elementId);
-  var pos1 = 0,
+export default function dragElement(elementId: string, draggerId: string) {
+  let draggableElement = document.getElementById(elementId); // whole element that moves on drag
+  let dragger = document.getElementById(draggerId); // area for drag and drop action
+  let pos1 = 0,
     pos2 = 0,
     pos3 = 0,
     pos4 = 0;
-  if (document.getElementById(headerId)) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(headerId).onmousedown = dragMouseDown;
-  } else {
+  if (dragger) {
+    // if present, the dragger  is where you move the DIV from:
+    dragger.onmousedown = dragMouseDown;
+  } else if (draggableElement) {
     // otherwise, move the DIV from anywhere inside the DIV:
-    element.onmousedown = dragMouseDown;
+    draggableElement.onmousedown = dragMouseDown;
   }
 
-  function dragMouseDown(e) {
+  function dragMouseDown(e: MouseEvent) {
     e = e || window.event;
     e.preventDefault();
     // get the mouse cursor position at startup:
@@ -23,7 +24,7 @@ function dragElement(elementId: string, headerId: string) {
     document.onmousemove = elementDrag;
   }
 
-  function elementDrag(e) {
+  function elementDrag(e: MouseEvent) {
     e = e || window.event;
     e.preventDefault();
     // calculate the new cursor position:
@@ -32,17 +33,18 @@ function dragElement(elementId: string, headerId: string) {
     pos3 = e.clientX;
     pos4 = e.clientY;
     // set the element's new position:
-    console.log(element.offsetHeight);
-    element.style.top =
-      Math.min(
-        Math.max(element.offsetTop - pos2, 0),
-        window.innerHeight - element.offsetHeight
-      ) + "px";
-    element.style.left =
-      Math.min(
-        Math.max(element.offsetLeft - pos1, 0),
-        window.innerWidth - element.offsetWidth
-      ) + "px";
+    if (draggableElement) {
+      draggableElement.style.top =
+        Math.min(
+          Math.max(draggableElement.offsetTop - pos2, 0),
+          window.innerHeight - draggableElement.offsetHeight
+        ) + "px";
+      draggableElement.style.left =
+        Math.min(
+          Math.max(draggableElement.offsetLeft - pos1, 0),
+          window.innerWidth - draggableElement.offsetWidth
+        ) + "px";
+    }
   }
 
   function closeDragElement() {
