@@ -6,11 +6,7 @@
 import {
   defineComponent,
   SetupContext,
-  onUnmounted,
   onMounted,
-  computed,
-  Ref,
-  ref,
   watch,
   inject
 } from "@vue/composition-api";
