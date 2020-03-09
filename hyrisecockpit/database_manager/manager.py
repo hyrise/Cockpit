@@ -213,7 +213,7 @@ class DatabaseManager(object):
         if self._databases[id].activate_plugin(plugin):
             response = get_response(200)
         else:
-            response = get_response(400)
+            response = get_response(423)
         return response
 
     def _call_deactivate_plugin(self, body: Dict) -> Dict:
@@ -223,7 +223,7 @@ class DatabaseManager(object):
         if database.deactivate_plugin(plugin):
             response = get_response(200)
         else:
-            response = get_response(400)
+            response = get_response(423)
         return response
 
     def _check_if_processing_table(self) -> bool:
