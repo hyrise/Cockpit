@@ -41,8 +41,8 @@
             <v-btn-toggle>
               <v-btn
                 @click="startingWorkload(workload, frequency)"
-                :disabled="waitForStartWorkload"
-                :loading="waitForStartWorkload"
+                :disabled="buttonIsLoading.start"
+                :loading="buttonIsLoading.start"
               >
                 <v-icon>
                   mdi-play
@@ -50,8 +50,8 @@
               </v-btn>
               <v-btn
                 @click="startingWorkload(workload, 0)"
-                :disabled="waitForPauseWorkload"
-                :loading="waitForPauseWorkload"
+                :disabled="buttonIsLoading.pause"
+                :loading="buttonIsLoading.pause"
               >
                 <v-icon>
                   mdi-pause
@@ -59,8 +59,8 @@
               </v-btn>
               <v-btn
                 @click="stoppingWorkload()"
-                :disabled="waitForStopWorkload"
-                :loading="waitForStopWorkload"
+                :disabled="buttonIsLoading.stop"
+                :loading="buttonIsLoading.stop"
               >
                 <v-icon>
                   mdi-stop
@@ -75,13 +75,13 @@
             </p>
             <v-switch
               v-model="workloadData"
-              v-for="(workload, index) in availableWorkloads"
+              v-for="workload in availableWorkloads"
               :key="workload"
               :label="getDisplayedWorkload(workload)"
               :value="workload"
-              @change="checkWorkloadData(workload, index)"
-              :loading="waitForWorkloadData[index].value"
-              :disabled="waitForWorkloadData[index].value"
+              @change="handleWorkloadDataChange(workload)"
+              :loading="buttonIsLoading['load' + workload]"
+              :disabled="buttonIsLoading['load' + workload]"
             >
             </v-switch>
           </v-col>
@@ -92,7 +92,13 @@
 </template>
 
 <script lang="ts">
-import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
+import {
+  SetupContext,
+  defineComponent,
+  ref,
+  Ref,
+  reactive
+} from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import { getDisplayedWorkload } from "../../meta/workloads";
@@ -101,24 +107,20 @@ interface Props {
   open: boolean;
 }
 interface Data {
+  buttonIsLoading: any[];
   availableWorkloads: string[];
+  frequency: Ref<number>;
+  workload: Ref<Workload>;
+  workloadData: Ref<Workload[]>;
   getDisplayedWorkload: (workload: Workload) => string;
   getWorkloadData: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => Promise<void>;
   deleteWorkloadData: (workload: Workload) => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
   stopWorkload: () => Promise<void>;
-  frequency: Ref<number>;
-  workload: Ref<Workload>;
-  workloadData: Ref<Workload[]>;
-  waitForStartWorkload: Ref<boolean>;
-  waitForPauseWorkload: Ref<boolean>;
   startingWorkload: (workload: Workload, frequency: number) => void;
-  waitForStopWorkload: Ref<boolean>;
   stoppingWorkload: () => void;
-  waitForWorkloadDataValue: Ref<boolean>;
-  waitForWorkloadData: Ref<boolean>[];
-  checkWorkloadData: (workload: Workload, index: number) => void;
+  handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
 
@@ -130,19 +132,14 @@ export default defineComponent({
     }
   },
   setup(props: {}, context: SetupContext): Data {
+    const buttonIsLoading = reactive({
+      loadtpch01: false,
+      start: false,
+      pause: false,
+      stop: false
+    });
     const frequency = ref<number>(200);
     const workload = ref<Workload>("tpch01");
-    const waitForStartWorkload = ref<boolean>(false);
-    const waitForPauseWorkload = ref<boolean>(false);
-    const waitForStopWorkload = ref<boolean>(false);
-    const waitForWorkloadDataValue = ref<boolean>(false);
-    const waitForWorkloadData: Ref<boolean>[] = [
-      waitForWorkloadDataValue,
-      waitForWorkloadDataValue,
-      waitForWorkloadDataValue,
-      waitForWorkloadDataValue
-    ];
-
     const {
       getWorkloadData,
       loadWorkloadData,
@@ -154,36 +151,38 @@ export default defineComponent({
     /* getWorkloadData().then((response: any) => {
       workloadData.value = response.data;
     }); */
+
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
-
     function startingWorkload(workload: Workload, frequency: number): void {
       if (frequency != 0) {
-        waitForStartWorkload.value = true;
+        buttonIsLoading["start"] = true;
+        startWorkload(workload, frequency).then(() => {
+          buttonIsLoading["start"] = false;
+        });
       } else {
-        waitForPauseWorkload.value = true;
+        buttonIsLoading["pause"] = true;
+        startWorkload(workload, frequency).then(() => {
+          buttonIsLoading["pause"] = false;
+        });
       }
-      startWorkload(workload, frequency).then(() => {
-        waitForStartWorkload.value = false;
-        waitForPauseWorkload.value = false;
-      });
     }
     function stoppingWorkload(): void {
-      waitForStopWorkload.value = true;
+      buttonIsLoading["stop"] = true;
       stopWorkload().then(() => {
-        waitForStopWorkload.value = false;
+        buttonIsLoading["stop"] = false;
       });
     }
-    function checkWorkloadData(workload: Workload, index: number): void {
-      waitForWorkloadData[index].value = true;
+    function handleWorkloadDataChange(workload: Workload): void {
+      buttonIsLoading["load" + workload] = true;
       if (workloadData.value.includes(workload)) {
         loadWorkloadData(workload).then(() => {
-          waitForWorkloadData[index].value = false;
+          buttonIsLoading["load" + workload] = false;
         });
       } else {
         deleteWorkloadData(workload).then(() => {
-          waitForWorkloadData[index].value = false;
+          buttonIsLoading["load" + workload] = false;
         });
       }
     }
@@ -199,15 +198,11 @@ export default defineComponent({
       frequency,
       workload,
       workloadData,
-      waitForStartWorkload,
-      waitForPauseWorkload,
       startingWorkload,
-      waitForStopWorkload,
       stoppingWorkload,
-      waitForWorkloadDataValue,
-      waitForWorkloadData,
-      checkWorkloadData,
-      closeWorkloadDialog
+      handleWorkloadDataChange,
+      closeWorkloadDialog,
+      buttonIsLoading
     };
   }
 });

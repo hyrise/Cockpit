@@ -3,7 +3,6 @@ import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
 import { controlBackend } from "../../config";
-import { eventBus } from "@/plugins/eventBus";
 
 export function useWorkloadService(): WorkloadService {
   async function getWorkloadData(): Promise<string[]> {
