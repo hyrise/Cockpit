@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div id="metric-comparison-table">
     <database-details-panel :selected-databases="selectedDatabases" />
     <div class="metrics-table">
       <div
         class="metrics-column"
         :style="databaseFlex"
         v-for="database in databases"
-        :key="`${uuid()}-${database.id}`"
+        :key="database.id"
       >
         <v-card
           v-for="metric in selectedMetrics"
@@ -28,6 +28,7 @@
             :metric-meta="getMetricMetadata(metric)"
             :graph-id="`${metric}-${database.id}`"
             :show-details="showDetails"
+            :max-chart-width="maxChartWidth"
           />
         </v-card>
       </div>
@@ -42,7 +43,8 @@ import {
   Ref,
   ref,
   onMounted,
-  computed
+  computed,
+  provide
 } from "@vue/composition-api";
 import Throughput from "../metrics/Throughput.vue";
 import CPU from "../metrics/CPU.vue";
@@ -52,7 +54,6 @@ import QueueLength from "../metrics/QueueLength.vue";
 import Storage from "../metrics/Storage.vue";
 import Access from "../metrics/Access.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
-import { uuid } from "vue-uuid";
 import {
   getMetricMetadata,
   getMetricTitle,
@@ -70,8 +71,8 @@ interface Data {
   getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
-  uuid: () => string;
   databaseFlex: Readonly<Ref<Object>>;
+  maxChartWidth: Readonly<Ref<number>>;
 }
 
 export default defineComponent({
@@ -88,13 +89,26 @@ export default defineComponent({
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
+    const totalViewWidth = ref(0);
+    const maxChartWidth = computed(
+      () =>
+        Math.floor(totalViewWidth.value / props.selectedDatabases.length) - 10
+    );
+    provide("multipleDatabasesAllowed", false);
+
+    onMounted(() => {
+      totalViewWidth.value = document.getElementById(
+        "metric-comparison-table"
+      )!.offsetWidth;
+    });
+
     return {
       ...useUpdatingDatabases(props, context),
-      uuid: uuid.v1,
       getMetricMetadata,
       getMetricComponent,
       getMetricTitle,
-      ...useDatabaseFlex(props)
+      ...useDatabaseFlex(props),
+      maxChartWidth
     };
   }
 });
