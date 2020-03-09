@@ -16,6 +16,10 @@ export function useChartReactivity(
       : Object.keys(props.data).length !== 0 && databasesUpdated.value;
   }
 
+  function isValidLayout(width: number): boolean {
+    return width > 0;
+  }
+
   watch(
     () => props.data,
     () => {
@@ -25,7 +29,7 @@ export function useChartReactivity(
   watch(
     () => props.maxChartWidth,
     () => {
-      if (props.maxChartWidth !== 0) updateLayoutFunction();
+      if (isValidLayout(props.maxChartWidth)) updateLayoutFunction();
     }
   );
 }

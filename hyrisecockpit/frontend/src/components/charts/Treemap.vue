@@ -39,8 +39,8 @@ export default defineComponent({
     });
 
     function updateDatasets(): void {
-      Plotly.deleteTraces(props.graphId, 0);
       Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.deleteTraces(props.graphId, 0);
     }
     function updateLayout(): void {
       Plotly.relayout(props.graphId, {

@@ -72,7 +72,6 @@ interface Data {
   getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   getMetricTitle: (metric: Metric) => string;
-  uuid: () => string;
   databaseFlex: Readonly<Ref<Object>>;
   maxChartWidth: Readonly<Ref<number>>;
 }
@@ -106,7 +105,6 @@ export default defineComponent({
 
     return {
       ...useUpdatingDatabases(props, context),
-      uuid: uuid.v1, //TODO: remove uuid
       getMetricMetadata,
       getMetricComponent,
       getMetricTitle,
