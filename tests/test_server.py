@@ -15,13 +15,9 @@ def call_function(body: dict):
 class TestServer:
     """Tests for Server class."""
 
-    def idle_function(self, *argv) -> None:
-        """Idle function."""
-        return
-
     @fixture
     @patch(
-        "hyrisecockpit.server.Server._init_server", idle_function,
+        "hyrisecockpit.server.Server._init_server", lambda *args: None,
     )
     def isolated_server(self):
         """Instance of Server without binding of sockets."""
@@ -31,7 +27,6 @@ class TestServer:
         """Returns 200 for valid request."""
         isolated_server._calls = {"call": (call_function, None)}
         request = {"header": {"message": "call"}, "body": {}}
-
         assert get_response(200) == isolated_server._handle_request(request)
 
     def test_returns_200_on_valid_request_with_schema(self, isolated_server):
@@ -41,10 +36,8 @@ class TestServer:
             "required": ["data"],
             "properties": {"data": {"type": "string"}},
         }
-
         isolated_server._calls = {"call": (call_function, specific_request_schema)}
         request = {"header": {"message": "call"}, "body": {"data": "info"}}
-
         assert get_response(200) == isolated_server._handle_request(request)
 
     def test_returns_400_on_bad_request(self, isolated_server):
@@ -52,7 +45,6 @@ class TestServer:
         request = {
             "What's the best thing about Switzerland?": "I don't know, but the flag is a big plus."
         }
-
         assert get_response(400) == isolated_server._handle_request(request)
 
     def test_returns_400_on_valid_request_with_wrong_schema(self, isolated_server):
@@ -62,10 +54,8 @@ class TestServer:
             "required": ["data"],
             "properties": {"data": {"type": "string"}},
         }
-
         isolated_server._calls = {"call": (call_function, specific_request_schema)}
         request = {"header": {"message": "call"}, "body": {"wrong_key": "info"}}
-
         assert get_response(400) == isolated_server._handle_request(request)
 
     def test_returns_404_on_call_not_found(self, isolated_server):
