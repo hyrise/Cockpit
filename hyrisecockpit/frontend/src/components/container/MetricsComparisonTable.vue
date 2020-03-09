@@ -54,7 +54,6 @@ import QueueLength from "../metrics/QueueLength.vue";
 import Storage from "../metrics/Storage.vue";
 import Access from "../metrics/Access.vue";
 import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
-import { uuid } from "vue-uuid";
 import {
   getMetricMetadata,
   getMetricTitle,
