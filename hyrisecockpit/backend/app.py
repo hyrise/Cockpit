@@ -368,78 +368,29 @@ model_add_database = control.clone(
     },
 )
 
-model_get_plugins = control.model(
-    fields.List(
-        "Plugins",
-        {
-            "plugins": fields.List(
-                fields.Nested(
-                    control.model(
-                        "List of all activated Plugins",
-                        {
-                            "plugin": fields.String(
-                                title="Plugin",
-                                description="Available Plugin.",
-                                required=True,
-                                example="a",
-                            )
-                        },
-                    )
-                )
-            )
-        },
-    ),
+modelhelper_plugin = fields.String(
+    title="Plugin ID",
+    description="Used to identify a plugin.",
+    required=True,
+    example="clustering-11.08",
+)
+
+model_get_all_plugins = control.model(
+    "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
 )
 
 model_get_activated_plugins = control.clone(
-    "Get Plugins",
+    "Activated Plugins",
     model_database,
-    fields.List(
-        "Plugins",
-        {
-            "plugins": fields.List(
-                fields.Nested(
-                    control.model(
-                        "List of all activated Plugins",
-                        {
-                            "plugin": fields.String(
-                                title="Plugin",
-                                description="Available Plugin.",
-                                required=True,
-                                example="a",
-                            )
-                        },
-                    )
-                )
-            )
-        },
-    ),
+    {"plugins": fields.List(modelhelper_plugin, required=True,)},
 )
 
 model_activate_plugin = control.clone(
-    "Activate Plugin",
-    model_database,
-    {
-        "plugin": fields.String(
-            title="Plugin",
-            description="Plugin that should be activated.",
-            required=True,
-            example="a",
-        )
-    },
+    "Activate Plugin", model_database, {"plugin": modelhelper_plugin},
 )
 
 model_deactivate_plugin = control.clone(
-    "Activate Plugin",
-    model_database,
-    {
-        "plugin": fields.String(
-            title="Plugin",
-            description="Plugin that should be deactivated.",
-            required=True,
-            example="a",
-        )
-    },
+    "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
 )
 
 
@@ -832,7 +783,7 @@ class Data(Resource):
 class ActivatedPlugin(Resource):
     """Get available Plugins."""
 
-    @control.doc(model=model_get_activated_plugins)
+    @control.doc(model=model_get_all_plugins)
     def get(self) -> List:
         """Return available plugins."""
         return ["Clustering", "Compression"]
