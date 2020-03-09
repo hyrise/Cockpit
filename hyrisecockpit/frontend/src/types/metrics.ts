@@ -77,6 +77,7 @@ export interface MetricProps {
   selectedDatabases: string[];
   graphId: string;
   showDetails: boolean;
+  maxChartWidth: number;
 }
 
 export const MetricPropsValidation = {
@@ -99,6 +100,10 @@ export const MetricPropsValidation = {
   graphId: {
     type: String,
     default: null
+  },
+  maxChartWidth: {
+    type: Number,
+    default: 0
   }
 };
 
@@ -106,4 +111,26 @@ export type ChartConfiguration = {
   title: string;
   xaxis?: string;
   yaxis?: string;
+};
+
+export type TreemapDescription = {
+  size: string;
+  encoding: string;
+  dataType: string;
+  percentOfDatabase: string;
+  percentOfTable: string;
+};
+
+export type StorageData = {
+  parents: string[];
+  labels: string[];
+  sizes: number[];
+  descriptions: TreemapDescription[];
+};
+
+export type AccessData = {
+  dataByChunks: number[][];
+  chunks: string[];
+  columns: string[];
+  descriptions: string[][];
 };
