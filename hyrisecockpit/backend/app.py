@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from secrets import choice
 from time import time_ns
-from typing import Dict, List, Sequence, Union
+from typing import Dict, List, Union
 
 from flask import Flask
 from flask_cors import CORS
@@ -843,7 +843,7 @@ class Plugin(Resource):
     """Activate, Deactive Plugins, respectively show which ones are activated."""
 
     @control.doc(model=model_get_activated_plugins)
-    def get(self) -> Union[Dict, List[Dict[str, Sequence[str]]]]:
+    def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
         """Return activated plugins in each database."""
         message = {
             "header": {"message": "get plugins"},

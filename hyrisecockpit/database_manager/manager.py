@@ -1,6 +1,6 @@
 """Module for managing databases."""
 
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple
 
 from hyrisecockpit.message import (
     add_database_request_schema,
@@ -51,8 +51,14 @@ class DatabaseManager(object):
             "process table status": (self._call_process_table_status, None),
             "purge queue": (self._call_purge_queue, None),
             "get plugins": (self._call_get_plugins, None),
-            "activate plugin": (self._call_activate_plugin, None),
-            "deactivate plugin": (self._call_deactivate_plugin, None),
+            "activate plugin": (
+                self._call_activate_plugin,
+                None,
+            ),  # TODO add validation schema
+            "deactivate plugin": (
+                self._call_deactivate_plugin,
+                None,
+            ),  # TODO add validation schema
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
@@ -193,28 +199,27 @@ class DatabaseManager(object):
         return response
 
     def _call_get_plugins(self, body: Dict) -> Dict:
-        activated_plugins = []
-        for id, database in self._databases.items():
-            plugins: Optional[List] = database.get_plugins()
-            activated_plugins.append({"id": id, "plugins": plugins})
+        activated_plugins = [
+            {"id": id, "plugins": database.get_plugins()}
+            for id, database in self._databases.items()
+        ]
         response = get_response(200)
         response["body"]["plugins"] = activated_plugins
         return response
 
     def _call_activate_plugin(self, body: Dict) -> Dict:
-        database_id = body["id"]
-        plugin = body["plugin"]
-        database = self._databases[database_id]
-        if database.activate_plugin(plugin):
+        id: str = body["id"]
+        plugin: str = body["plugin"]
+        if self._databases[id].activate_plugin(plugin):
             response = get_response(200)
         else:
             response = get_response(400)
         return response
 
     def _call_deactivate_plugin(self, body: Dict) -> Dict:
-        database_id = body["id"]
-        plugin = body["plugin"]
-        database = self._databases[database_id]
+        id: str = body["id"]
+        plugin: str = body["plugin"]
+        database = self._databases[id]
         if database.deactivate_plugin(plugin):
             response = get_response(200)
         else:

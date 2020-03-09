@@ -393,9 +393,8 @@ class Database(object):
         """Return all currently activated plugins."""
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute(("SELECT plugin_name FROM meta_plugins"))
-                result = cur.fetchall()
-                return result
+                cur.execute(("SELECT plugin_name FROM meta_plugins;", None))
+                return cur.fetchall()
         else:
             return None
 
