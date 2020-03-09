@@ -8,7 +8,7 @@ from typing import List, Tuple
 
 from psycopg2 import Error, pool
 from psycopg2.extensions import AsIs
-from zmq import SUB, SUBSCRIBE, Context, Socket
+from zmq import SUB, SUBSCRIBE, Context
 
 from hyrisecockpit.settings import (
     STORAGE_HOST,
@@ -24,24 +24,19 @@ def fill_queue(
     workload_publisher_url: str, task_queue: Queue, processing_tables_flag: Value
 ) -> None:
     """Fill the queue."""
-    sub_socket = initialize_sub_socket(workload_publisher_url)
-    while True:
-        fill_task_queue(sub_socket, task_queue, processing_tables_flag)
-
-
-def initialize_sub_socket(publisher_url) -> Socket:
-    """Initialize a socket for subscriber worker."""
     context = Context()
     sub_socket = context.socket(SUB)
-    sub_socket.connect(publisher_url)
+    sub_socket.connect(workload_publisher_url)
     sub_socket.setsockopt_string(SUBSCRIBE, "")
-    return sub_socket
+
+    while True:
+        published_data = sub_socket.recv_json()
+        handle_published_data(published_data, task_queue, processing_tables_flag)
 
 
-def fill_task_queue(sub_socket, task_queue, processing_tables_flag) -> None:
+def handle_published_data(published_data, task_queue, processing_tables_flag) -> None:
     """Fill task queue."""
-    content = sub_socket.recv_json()
-    tasks = content["body"]["querylist"]
+    tasks = published_data["body"]["querylist"]
     if not processing_tables_flag.value:
         for task in tasks:
             task_queue.put(task)
@@ -101,7 +96,7 @@ def execute_queries(
 
 
 def execute_task(cursor, query, formatted_parameters):
-    """Handle given task."""
+    """Execute given task."""
     startts = time_ns()
     cursor.execute(query, formatted_parameters)
     endts = time_ns()
