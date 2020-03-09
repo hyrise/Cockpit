@@ -1,36 +1,21 @@
 <template>
   <div class="mx-10 my-10">
-    <v-dialog v-model="showDialog" hide-overlay>
-      <template v-slot:activator="{ on }">
-        <v-btn color="secondary" small right dark v-on="on">
-          <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
-        </v-btn>
+    <metric-detailed-view>
+      <template #header>
+        Storage
       </template>
-      <v-card>
-        <v-card-title>Storage</v-card-title>
+      <template #content>
         <Treemap
           :graph-id="'1' + graphId || 'storage'"
-          :labels="labels"
-          :parents="parents"
-          :values="sizes"
-          :text="text"
+          :storage-data="storageData"
           :chart-configuration="chartConfiguration"
           :autosize="false"
         />
-        <v-spacer />
-        <v-card-actions>
-          <v-btn block color="primary" @click="showDialog = false">
-            Close detailed view
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      </template>
+    </metric-detailed-view>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
-      :labels="labels"
-      :text="text"
-      :parents="parents"
-      :values="sizes"
+      :storage-data="storageData"
       :chart-configuration="chartConfiguration"
     />
   </div>
@@ -46,62 +31,43 @@ import {
   onMounted
 } from "@vue/composition-api";
 import Treemap from "../charts/Treemap.vue";
+import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
 import {
   MetricProps,
   MetricPropsValidation,
-  ChartConfiguration
+  ChartConfiguration,
+  StorageData
 } from "../../types/metrics";
 import { getMetricChartConfiguration } from "../../meta/metrics";
 
 interface Data {
-  labels: Ref<string[]>;
-  parents: Ref<string[]>;
-  sizes: Ref<number[]>;
+  storageData: Ref<StorageData>;
   chartConfiguration: ChartConfiguration;
-  text: Ref<string[]>;
-  showDialog: Ref<boolean>;
 }
 
 export default defineComponent({
   name: "Storage",
   components: {
-    Treemap
+    Treemap,
+    MetricDetailedView
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
-    const showDialog = ref(false);
-
-    const labels = ref<string[]>([]);
-    const parents = ref<string[]>([]);
-    const sizes = ref<number[]>([]);
-    const text = ref<string[]>([]);
+    const storageData = ref<StorageData>({});
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
-        const {
-          newLabels,
-          newParents,
-          newSizes,
-          newText
-        } = props.metricMeta.transformationService(
+        storageData.value = props.metricMeta.transformationService(
           data.value,
           props.selectedDatabases[0]
         );
-        labels.value = newLabels;
-        parents.value = newParents;
-        sizes.value = newSizes;
-        text.value = newText;
       }
     });
 
     return {
-      labels,
-      parents,
-      sizes,
-      chartConfiguration: getMetricChartConfiguration(props.metric),
-      text,
-      showDialog
+      storageData,
+      chartConfiguration: getMetricChartConfiguration(props.metric)
     };
   }
 });
