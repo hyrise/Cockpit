@@ -45,7 +45,6 @@ def execute_queries(
 ) -> None:
     """Define workers work loop."""
     # Allow exit without flush
-    task_queue.cancel_join_thread()
     failed_task_queue.cancel_join_thread()
 
     with PoolCursor(connection_pool) as cur:
@@ -61,6 +60,8 @@ def execute_queries(
                     if not worker_stay_alive_flag.value:
                         if task == "wake_up_signal_for_worker":
                             task_queue.put("wake_up_signal_for_worker")
+                        else:
+                            task_queue.cancel_join_thread()
                         break
                     else:
                         query_tuple, workload_type, query_type = task
