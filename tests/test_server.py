@@ -34,8 +34,8 @@ class TestServer:
 
         assert get_response(200) == isolated_server._handle_request(request)
 
-    def test_returns_200_on_valid_request_with_shema(self, isolated_server):
-        """Returns 200 for valid request with valid shema."""
+    def test_returns_200_on_valid_request_with_schema(self, isolated_server):
+        """Returns 200 for valid request with valid schema."""
         specific_request_schema = {
             "type": "object",
             "required": ["data"],
@@ -55,8 +55,8 @@ class TestServer:
 
         assert get_response(400) == isolated_server._handle_request(request)
 
-    def test_returns_400_on_valid_request_with_wrong_shema(self, isolated_server):
-        """Returns 400 for valid request with wrong shema."""
+    def test_returns_400_on_valid_request_with_wrong_schema(self, isolated_server):
+        """Returns 400 for valid request with wrong schema."""
         specific_request_schema = {
             "type": "object",
             "required": ["data"],
