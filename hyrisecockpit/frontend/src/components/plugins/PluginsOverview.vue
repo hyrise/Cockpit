@@ -135,8 +135,17 @@ export default defineComponent({
           pos3 = e.clientX;
           pos4 = e.clientY;
           // set the element's new position:
-          elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-          elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+          console.log(elmnt.offsetHeight);
+          elmnt.style.top =
+            Math.min(
+              Math.max(elmnt.offsetTop - pos2, 0),
+              window.innerHeight - elmnt.offsetHeight
+            ) + "px";
+          elmnt.style.left =
+            Math.min(
+              Math.max(elmnt.offsetLeft - pos1, 0),
+              window.innerWidth - elmnt.offsetWidth
+            ) + "px";
         }
 
         function closeDragElement() {
