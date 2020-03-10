@@ -28,6 +28,9 @@ class Server:
         self._calls = calls
         self._host = host
         self._port = port
+        self._init_server(io_threads)
+
+    def _init_server(self, io_threads):
         self._context = Context(io_threads=io_threads)
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:s}".format(self._host, self._port))
@@ -35,23 +38,21 @@ class Server:
     def start(self):
         """Start the server loop."""
         while True:
-            # Get the message
             request = self._socket.recv_json()
+            response = self._handle_request(request)
+            self._socket.send_json(response)
 
-            # Validate the message
-            try:
-                validate(instance=request, schema=request_schema)
-                # Look for the call
-                func, schema = self._calls[request["header"]["message"]]
-                # Handle the call
-                if schema:
-                    validate(request["body"], schema=schema)
-                response = func(request["body"])
-                self._socket.send_json(response)
-            except ValidationError:
-                self._socket.send_json(get_response(400))
-            except KeyError:
-                self._socket.send_json(get_response(404))
+    def _handle_request(self, request):
+        try:
+            validate(instance=request, schema=request_schema)
+            func, schema = self._calls[request["header"]["message"]]
+            if schema:
+                validate(request["body"], schema=schema)
+            return func(request["body"])
+        except ValidationError:
+            return get_response(400)
+        except KeyError:
+            return get_response(404)
 
     def close(self):
         """Close the socket and terminate it."""
