@@ -793,7 +793,7 @@ class ActivatedPlugin(Resource):
 class Plugin(Resource):
     """Activate, Deactive Plugins, respectively show which ones are activated."""
 
-    @control.doc(model=model_get_activated_plugins)
+    @control.doc(model=[model_get_activated_plugins])
     def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
         """Return activated plugins in each database."""
         message = {
