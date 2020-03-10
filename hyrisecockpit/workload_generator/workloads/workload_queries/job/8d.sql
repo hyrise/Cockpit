@@ -1,20 +1,13 @@
-SELECT MIN(an1.name) AS costume_designer_pseudo,
-       MIN(t.title) AS movie_with_costumes
-FROM aka_name AS an1,
-     cast_info AS ci,
-     company_name AS cn,
-     movie_companies AS mc,
-     name AS n1,
-     role_type AS rt,
-     title AS t
-WHERE cn.country_code ='[us]'
-  AND rt.role ='costume designer'
-  AND an1.person_id = n1.id
-  AND n1.id = ci.person_id
-  AND ci.movie_id = t.id
-  AND t.id = mc.movie_id
-  AND mc.company_id = cn.id
-  AND ci.role_id = rt.id
-  AND an1.person_id = ci.person_id
-  AND ci.movie_id = mc.movie_id;
-
+SELECT MIN(AN1.NAME) AS COSTUME_DESIGNER_PSEUDO, MIN(T.TITLE) AS MOVIE_WITH_COSTUMES
+FROM AKA_NAME AS AN1, CAST_INFO AS CI, COMPANY_NAME AS CN, MOVIE_COMPANIES AS MC, NAME AS N1, ROLE_TYPE AS RT,
+	TITLE AS T
+WHERE CN.COUNTRY_CODE = '[us]'
+		AND RT.ROLE = 'costume designer'
+		AND AN1.PERSON_ID = N1.ID
+		AND N1.ID = CI.PERSON_ID
+		AND CI.MOVIE_ID = T.ID
+		AND T.ID = MC.MOVIE_ID
+		AND MC.COMPANY_ID = CN.ID
+		AND CI.ROLE_ID = RT.ID
+		AND AN1.PERSON_ID = CI.PERSON_ID
+		AND CI.MOVIE_ID = MC.MOVIE_ID;

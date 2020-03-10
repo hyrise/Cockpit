@@ -1,17 +1,9 @@
-SELECT MIN(lt.link) AS link_type,
-       MIN(t1.title) AS first_movie,
-       MIN(t2.title) AS second_movie
-FROM keyword AS k,
-     link_type AS lt,
-     movie_keyword AS mk,
-     movie_link AS ml,
-     title AS t1,
-     title AS t2
-WHERE k.keyword ='10,000-mile-club'
-  AND mk.keyword_id = k.id
-  AND t1.id = mk.movie_id
-  AND ml.movie_id = t1.id
-  AND ml.linked_movie_id = t2.id
-  AND lt.id = ml.link_type_id
-  AND mk.movie_id = t1.id;
-
+SELECT MIN(LT.LINK) AS LINK_TYPE, MIN(T1.TITLE) AS FIRST_MOVIE, MIN(T2.TITLE) AS SECOND_MOVIE
+FROM KEYWORD AS K, LINK_TYPE AS LT, MOVIE_KEYWORD AS MK, MOVIE_LINK AS ML, TITLE AS T1, TITLE AS T2
+WHERE K.KEYWORD = '10,000-mile-club'
+		AND MK.KEYWORD_ID = K.ID
+		AND T1.ID = MK.MOVIE_ID
+		AND ML.MOVIE_ID = T1.ID
+		AND ML.LINKED_MOVIE_ID = T2.ID
+		AND LT.ID = ML.LINK_TYPE_ID
+		AND MK.MOVIE_ID = T1.ID;

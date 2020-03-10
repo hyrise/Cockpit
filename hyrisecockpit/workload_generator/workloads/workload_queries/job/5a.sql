@@ -1,24 +1,12 @@
-SELECT MIN(t.title) AS typical_european_movie
-FROM company_type AS ct,
-     info_type AS it,
-     movie_companies AS mc,
-     movie_info AS mi,
-     title AS t
-WHERE ct.kind = 'production companies'
-  AND mc.note LIKE '%(theatrical)%'
-  AND mc.note LIKE '%(France)%'
-  AND mi.info IN ('Sweden',
-                  'Norway',
-                  'Germany',
-                  'Denmark',
-                  'Swedish',
-                  'Denish',
-                  'Norwegian',
-                  'German')
-  AND t.production_year > 2005
-  AND t.id = mi.movie_id
-  AND t.id = mc.movie_id
-  AND mc.movie_id = mi.movie_id
-  AND ct.id = mc.company_type_id
-  AND it.id = mi.info_type_id;
-
+SELECT MIN(T.TITLE) AS TYPICAL_EUROPEAN_MOVIE
+FROM COMPANY_TYPE AS CT, INFO_TYPE AS IT, MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI, TITLE AS T
+WHERE CT.KIND = 'production companies'
+		AND MC.NOTE LIKE '%(theatrical)%'
+		AND MC.NOTE LIKE '%(France)%'
+		AND MI.INFO IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German')
+		AND T.PRODUCTION_YEAR > 2005
+		AND T.ID = MI.MOVIE_ID
+		AND T.ID = MC.MOVIE_ID
+		AND MC.MOVIE_ID = MI.MOVIE_ID
+		AND CT.ID = MC.COMPANY_TYPE_ID
+		AND IT.ID = MI.INFO_TYPE_ID;

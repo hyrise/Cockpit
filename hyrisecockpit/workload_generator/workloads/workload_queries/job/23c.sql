@@ -1,42 +1,28 @@
-SELECT MIN(kt.kind) AS movie_kind,
-       MIN(t.title) AS complete_us_internet_movie
-FROM complete_cast AS cc,
-     comp_cast_type AS cct1,
-     company_name AS cn,
-     company_type AS ct,
-     info_type AS it1,
-     keyword AS k,
-     kind_type AS kt,
-     movie_companies AS mc,
-     movie_info AS mi,
-     movie_keyword AS mk,
-     title AS t
-WHERE cct1.kind = 'complete+verified'
-  AND cn.country_code = '[us]'
-  AND it1.info = 'release dates'
-  AND kt.kind IN ('movie',
-                  'tv movie',
-                  'video movie',
-                  'video game')
-  AND mi.note LIKE '%internet%'
-  AND mi.info IS NOT NULL
-  AND (mi.info LIKE 'USA:% 199%'
-       OR mi.info LIKE 'USA:% 200%')
-  AND t.production_year > 1990
-  AND kt.id = t.kind_id
-  AND t.id = mi.movie_id
-  AND t.id = mk.movie_id
-  AND t.id = mc.movie_id
-  AND t.id = cc.movie_id
-  AND mk.movie_id = mi.movie_id
-  AND mk.movie_id = mc.movie_id
-  AND mk.movie_id = cc.movie_id
-  AND mi.movie_id = mc.movie_id
-  AND mi.movie_id = cc.movie_id
-  AND mc.movie_id = cc.movie_id
-  AND k.id = mk.keyword_id
-  AND it1.id = mi.info_type_id
-  AND cn.id = mc.company_id
-  AND ct.id = mc.company_type_id
-  AND cct1.id = cc.status_id;
-
+SELECT MIN(KT.KIND) AS MOVIE_KIND, MIN(T.TITLE) AS COMPLETE_US_INTERNET_MOVIE
+FROM COMPLETE_CAST AS CC, COMP_CAST_TYPE AS CCT1, COMPANY_NAME AS CN, COMPANY_TYPE AS CT, INFO_TYPE AS IT1,
+	KEYWORD AS K, KIND_TYPE AS KT, MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI, MOVIE_KEYWORD AS MK, TITLE AS T
+WHERE CCT1.KIND = 'complete+verified'
+		AND CN.COUNTRY_CODE = '[us]'
+		AND IT1.INFO = 'release dates'
+		AND KT.KIND IN ('movie', 'tv movie', 'video movie', 'video game')
+		AND MI.NOTE LIKE '%internet%'
+		AND MI.INFO IS NOT NULL
+		AND (MI.INFO LIKE 'USA:% 199%'
+							OR MI.INFO LIKE 'USA:% 200%')
+		AND T.PRODUCTION_YEAR > 1990
+		AND KT.ID = T.KIND_ID
+		AND T.ID = MI.MOVIE_ID
+		AND T.ID = MK.MOVIE_ID
+		AND T.ID = MC.MOVIE_ID
+		AND T.ID = CC.MOVIE_ID
+		AND MK.MOVIE_ID = MI.MOVIE_ID
+		AND MK.MOVIE_ID = MC.MOVIE_ID
+		AND MK.MOVIE_ID = CC.MOVIE_ID
+		AND MI.MOVIE_ID = MC.MOVIE_ID
+		AND MI.MOVIE_ID = CC.MOVIE_ID
+		AND MC.MOVIE_ID = CC.MOVIE_ID
+		AND K.ID = MK.KEYWORD_ID
+		AND IT1.ID = MI.INFO_TYPE_ID
+		AND CN.ID = MC.COMPANY_ID
+		AND CT.ID = MC.COMPANY_TYPE_ID
+		AND CCT1.ID = CC.STATUS_ID;

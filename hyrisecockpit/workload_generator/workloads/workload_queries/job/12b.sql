@@ -1,30 +1,22 @@
-SELECT MIN(mi.info) AS budget,
-       MIN(t.title) AS unsuccsessful_movie
-FROM company_name AS cn,
-     company_type AS ct,
-     info_type AS it1,
-     info_type AS it2,
-     movie_companies AS mc,
-     movie_info AS mi,
-     movie_info_idx AS mi_idx,
-     title AS t
-WHERE cn.country_code ='[us]'
-  AND ct.kind IS NOT NULL
-  AND (ct.kind ='production companies'
-       OR ct.kind = 'distributors')
-  AND it1.info ='budget'
-  AND it2.info ='bottom 10 rank'
-  AND t.production_year >2000
-  AND (t.title LIKE 'Birdemic%'
-       OR t.title LIKE '%Movie%')
-  AND t.id = mi.movie_id
-  AND t.id = mi_idx.movie_id
-  AND mi.info_type_id = it1.id
-  AND mi_idx.info_type_id = it2.id
-  AND t.id = mc.movie_id
-  AND ct.id = mc.company_type_id
-  AND cn.id = mc.company_id
-  AND mc.movie_id = mi.movie_id
-  AND mc.movie_id = mi_idx.movie_id
-  AND mi.movie_id = mi_idx.movie_id;
-
+SELECT MIN(MI.INFO) AS BUDGET, MIN(T.TITLE) AS UNSUCCSESSFUL_MOVIE
+FROM COMPANY_NAME AS CN, COMPANY_TYPE AS CT, INFO_TYPE AS IT1, INFO_TYPE AS IT2, MOVIE_COMPANIES AS MC,
+	MOVIE_INFO AS MI, MOVIE_INFO_IDX AS MI_IDX, TITLE AS T
+WHERE CN.COUNTRY_CODE = '[us]'
+		AND CT.KIND IS NOT NULL
+		AND (CT.KIND = 'production companies'
+							OR CT.KIND = 'distributors')
+		AND IT1.INFO = 'budget'
+		AND IT2.INFO = 'bottom 10 rank'
+		AND T.PRODUCTION_YEAR > 2000
+		AND (T.TITLE LIKE 'Birdemic%'
+							OR T.TITLE LIKE '%Movie%')
+		AND T.ID = MI.MOVIE_ID
+		AND T.ID = MI_IDX.MOVIE_ID
+		AND MI.INFO_TYPE_ID = IT1.ID
+		AND MI_IDX.INFO_TYPE_ID = IT2.ID
+		AND T.ID = MC.MOVIE_ID
+		AND CT.ID = MC.COMPANY_TYPE_ID
+		AND CN.ID = MC.COMPANY_ID
+		AND MC.MOVIE_ID = MI.MOVIE_ID
+		AND MC.MOVIE_ID = MI_IDX.MOVIE_ID
+		AND MI.MOVIE_ID = MI_IDX.MOVIE_ID;

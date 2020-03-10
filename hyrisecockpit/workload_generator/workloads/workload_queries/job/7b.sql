@@ -1,29 +1,21 @@
-SELECT MIN(n.name) AS of_person,
-       MIN(t.title) AS biography_movie
-FROM aka_name AS an,
-     cast_info AS ci,
-     info_type AS it,
-     link_type AS lt,
-     movie_link AS ml,
-     name AS n,
-     person_info AS pi,
-     title AS t
-WHERE an.name LIKE '%a%'
-  AND it.info ='mini biography'
-  AND lt.link ='features'
-  AND n.name_pcode_cf LIKE 'D%'
-  AND n.gender='m'
-  AND pi.note ='Volker Boehm'
-  AND t.production_year BETWEEN 1980 AND 1984
-  AND n.id = an.person_id
-  AND n.id = pi.person_id
-  AND ci.person_id = n.id
-  AND t.id = ci.movie_id
-  AND ml.linked_movie_id = t.id
-  AND lt.id = ml.link_type_id
-  AND it.id = pi.info_type_id
-  AND pi.person_id = an.person_id
-  AND pi.person_id = ci.person_id
-  AND an.person_id = ci.person_id
-  AND ci.movie_id = ml.linked_movie_id;
-
+SELECT MIN(N.NAME) AS OF_PERSON, MIN(T.TITLE) AS BIOGRAPHY_MOVIE
+FROM AKA_NAME AS AN, CAST_INFO AS CI, INFO_TYPE AS IT, LINK_TYPE AS LT, MOVIE_LINK AS ML, NAME AS N,
+	PERSON_INFO AS PI, TITLE AS T
+WHERE AN.NAME LIKE '%a%'
+		AND IT.INFO = 'mini biography'
+		AND LT.LINK = 'features'
+		AND N.NAME_PCODE_CF LIKE 'D%'
+		AND N.GENDER = 'm'
+		AND PI.NOTE = 'Volker Boehm'
+		AND T.PRODUCTION_YEAR BETWEEN 1980 AND 1984
+		AND N.ID = AN.PERSON_ID
+		AND N.ID = PI.PERSON_ID
+		AND CI.PERSON_ID = N.ID
+		AND T.ID = CI.MOVIE_ID
+		AND ML.LINKED_MOVIE_ID = T.ID
+		AND LT.ID = ML.LINK_TYPE_ID
+		AND IT.ID = PI.INFO_TYPE_ID
+		AND PI.PERSON_ID = AN.PERSON_ID
+		AND PI.PERSON_ID = CI.PERSON_ID
+		AND AN.PERSON_ID = CI.PERSON_ID
+		AND CI.MOVIE_ID = ML.LINKED_MOVIE_ID;

@@ -1,50 +1,32 @@
-SELECT MIN(cn1.name) AS first_company,
-       MIN(cn2.name) AS second_company,
-       MIN(mi_idx1.info) AS first_rating,
-       MIN(mi_idx2.info) AS second_rating,
-       MIN(t1.title) AS first_movie,
-       MIN(t2.title) AS second_movie
-FROM company_name AS cn1,
-     company_name AS cn2,
-     info_type AS it1,
-     info_type AS it2,
-     kind_type AS kt1,
-     kind_type AS kt2,
-     link_type AS lt,
-     movie_companies AS mc1,
-     movie_companies AS mc2,
-     movie_info_idx AS mi_idx1,
-     movie_info_idx AS mi_idx2,
-     movie_link AS ml,
-     title AS t1,
-     title AS t2
-WHERE cn1.country_code = '[us]'
-  AND it1.info = 'rating'
-  AND it2.info = 'rating'
-  AND kt1.kind IN ('tv series')
-  AND kt2.kind IN ('tv series')
-  AND lt.link IN ('sequel',
-                  'follows',
-                  'followed by')
-  AND mi_idx2.info < '3.0'
-  AND t2.production_year BETWEEN 2005 AND 2008
-  AND lt.id = ml.link_type_id
-  AND t1.id = ml.movie_id
-  AND t2.id = ml.linked_movie_id
-  AND it1.id = mi_idx1.info_type_id
-  AND t1.id = mi_idx1.movie_id
-  AND kt1.id = t1.kind_id
-  AND cn1.id = mc1.company_id
-  AND t1.id = mc1.movie_id
-  AND ml.movie_id = mi_idx1.movie_id
-  AND ml.movie_id = mc1.movie_id
-  AND mi_idx1.movie_id = mc1.movie_id
-  AND it2.id = mi_idx2.info_type_id
-  AND t2.id = mi_idx2.movie_id
-  AND kt2.id = t2.kind_id
-  AND cn2.id = mc2.company_id
-  AND t2.id = mc2.movie_id
-  AND ml.linked_movie_id = mi_idx2.movie_id
-  AND ml.linked_movie_id = mc2.movie_id
-  AND mi_idx2.movie_id = mc2.movie_id;
-
+SELECT MIN(CN1.NAME) AS FIRST_COMPANY, MIN(CN2.NAME) AS SECOND_COMPANY, MIN(MI_IDX1.INFO) AS FIRST_RATING,
+	MIN(MI_IDX2.INFO) AS SECOND_RATING, MIN(T1.TITLE) AS FIRST_MOVIE, MIN(T2.TITLE) AS SECOND_MOVIE
+FROM COMPANY_NAME AS CN1, COMPANY_NAME AS CN2, INFO_TYPE AS IT1, INFO_TYPE AS IT2, KIND_TYPE AS KT1,
+	KIND_TYPE AS KT2, LINK_TYPE AS LT, MOVIE_COMPANIES AS MC1, MOVIE_COMPANIES AS MC2,
+	MOVIE_INFO_IDX AS MI_IDX1, MOVIE_INFO_IDX AS MI_IDX2, MOVIE_LINK AS ML, TITLE AS T1, TITLE AS T2
+WHERE CN1.COUNTRY_CODE = '[us]'
+		AND IT1.INFO = 'rating'
+		AND IT2.INFO = 'rating'
+		AND KT1.KIND IN ('tv series')
+		AND KT2.KIND IN ('tv series')
+		AND LT.LINK IN ('sequel', 'follows', 'followed by')
+		AND MI_IDX2.INFO < '3.0'
+		AND T2.PRODUCTION_YEAR BETWEEN 2005 AND 2008
+		AND LT.ID = ML.LINK_TYPE_ID
+		AND T1.ID = ML.MOVIE_ID
+		AND T2.ID = ML.LINKED_MOVIE_ID
+		AND IT1.ID = MI_IDX1.INFO_TYPE_ID
+		AND T1.ID = MI_IDX1.MOVIE_ID
+		AND KT1.ID = T1.KIND_ID
+		AND CN1.ID = MC1.COMPANY_ID
+		AND T1.ID = MC1.MOVIE_ID
+		AND ML.MOVIE_ID = MI_IDX1.MOVIE_ID
+		AND ML.MOVIE_ID = MC1.MOVIE_ID
+		AND MI_IDX1.MOVIE_ID = MC1.MOVIE_ID
+		AND IT2.ID = MI_IDX2.INFO_TYPE_ID
+		AND T2.ID = MI_IDX2.MOVIE_ID
+		AND KT2.ID = T2.KIND_ID
+		AND CN2.ID = MC2.COMPANY_ID
+		AND T2.ID = MC2.MOVIE_ID
+		AND ML.LINKED_MOVIE_ID = MI_IDX2.MOVIE_ID
+		AND ML.LINKED_MOVIE_ID = MC2.MOVIE_ID
+		AND MI_IDX2.MOVIE_ID = MC2.MOVIE_ID;

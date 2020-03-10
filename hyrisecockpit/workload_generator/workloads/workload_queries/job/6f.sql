@@ -1,23 +1,10 @@
-SELECT MIN(k.keyword) AS movie_keyword,
-       MIN(n.name) AS actor_name,
-       MIN(t.title) AS hero_movie
-FROM cast_info AS ci,
-     keyword AS k,
-     movie_keyword AS mk,
-     name AS n,
-     title AS t
-WHERE k.keyword IN ('superhero',
-                    'sequel',
-                    'second-part',
-                    'marvel-comics',
-                    'based-on-comic',
-                    'tv-special',
-                    'fight',
-                    'violence')
-  AND t.production_year > 2000
-  AND k.id = mk.keyword_id
-  AND t.id = mk.movie_id
-  AND t.id = ci.movie_id
-  AND ci.movie_id = mk.movie_id
-  AND n.id = ci.person_id;
-
+SELECT MIN(K.KEYWORD) AS MOVIE_KEYWORD, MIN(N.NAME) AS ACTOR_NAME, MIN(T.TITLE) AS HERO_MOVIE
+FROM CAST_INFO AS CI, KEYWORD AS K, MOVIE_KEYWORD AS MK, NAME AS N, TITLE AS T
+WHERE K.KEYWORD IN ('superhero', 'sequel', 'second-part', 'marvel-comics', 'based-on-comic', 'tv-special',
+																					'fight', 'violence')
+		AND T.PRODUCTION_YEAR > 2000
+		AND K.ID = MK.KEYWORD_ID
+		AND T.ID = MK.MOVIE_ID
+		AND T.ID = CI.MOVIE_ID
+		AND CI.MOVIE_ID = MK.MOVIE_ID
+		AND N.ID = CI.PERSON_ID;

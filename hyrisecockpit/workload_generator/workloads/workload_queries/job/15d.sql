@@ -1,30 +1,21 @@
-SELECT MIN(at.title) AS aka_title,
-       MIN(t.title) AS internet_movie_title
-FROM aka_title AS at,
-     company_name AS cn,
-     company_type AS ct,
-     info_type AS it1,
-     keyword AS k,
-     movie_companies AS mc,
-     movie_info AS mi,
-     movie_keyword AS mk,
-     title AS t
-WHERE cn.country_code = '[us]'
-  AND it1.info = 'release dates'
-  AND mi.note LIKE '%internet%'
-  AND t.production_year > 1990
-  AND t.id = at.movie_id
-  AND t.id = mi.movie_id
-  AND t.id = mk.movie_id
-  AND t.id = mc.movie_id
-  AND mk.movie_id = mi.movie_id
-  AND mk.movie_id = mc.movie_id
-  AND mk.movie_id = at.movie_id
-  AND mi.movie_id = mc.movie_id
-  AND mi.movie_id = at.movie_id
-  AND mc.movie_id = at.movie_id
-  AND k.id = mk.keyword_id
-  AND it1.id = mi.info_type_id
-  AND cn.id = mc.company_id
-  AND ct.id = mc.company_type_id;
-
+SELECT MIN(AT.TITLE) AS AKA_TITLE, MIN(T.TITLE) AS INTERNET_MOVIE_TITLE
+FROM AKA_TITLE AS AT, COMPANY_NAME AS CN, COMPANY_TYPE AS CT, INFO_TYPE AS IT1, KEYWORD AS K,
+	MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI, MOVIE_KEYWORD AS MK, TITLE AS T
+WHERE CN.COUNTRY_CODE = '[us]'
+		AND IT1.INFO = 'release dates'
+		AND MI.NOTE LIKE '%internet%'
+		AND T.PRODUCTION_YEAR > 1990
+		AND T.ID = AT.MOVIE_ID
+		AND T.ID = MI.MOVIE_ID
+		AND T.ID = MK.MOVIE_ID
+		AND T.ID = MC.MOVIE_ID
+		AND MK.MOVIE_ID = MI.MOVIE_ID
+		AND MK.MOVIE_ID = MC.MOVIE_ID
+		AND MK.MOVIE_ID = AT.MOVIE_ID
+		AND MI.MOVIE_ID = MC.MOVIE_ID
+		AND MI.MOVIE_ID = AT.MOVIE_ID
+		AND MC.MOVIE_ID = AT.MOVIE_ID
+		AND K.ID = MK.KEYWORD_ID
+		AND IT1.ID = MI.INFO_TYPE_ID
+		AND CN.ID = MC.COMPANY_ID
+		AND CT.ID = MC.COMPANY_TYPE_ID;

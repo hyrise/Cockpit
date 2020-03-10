@@ -1,31 +1,22 @@
-SELECT MIN(an.name) AS alternative_name,
-       MIN(chn.name) AS voiced_character,
-       MIN(n.name) AS voicing_actress,
-       MIN(t.title) AS american_movie
-FROM aka_name AS an,
-     char_name AS chn,
-     cast_info AS ci,
-     company_name AS cn,
-     movie_companies AS mc,
-     name AS n,
-     role_type AS rt,
-     title AS t
-WHERE ci.note = '(voice)'
-  AND cn.country_code ='[us]'
-  AND mc.note LIKE '%(200%)%'
-  AND (mc.note LIKE '%(USA)%'
-       OR mc.note LIKE '%(worldwide)%')
-  AND n.gender ='f'
-  AND n.name LIKE '%Angel%'
-  AND rt.role ='actress'
-  AND t.production_year BETWEEN 2007 AND 2010
-  AND ci.movie_id = t.id
-  AND t.id = mc.movie_id
-  AND ci.movie_id = mc.movie_id
-  AND mc.company_id = cn.id
-  AND ci.role_id = rt.id
-  AND n.id = ci.person_id
-  AND chn.id = ci.person_role_id
-  AND an.person_id = n.id
-  AND an.person_id = ci.person_id;
-
+SELECT MIN(AN.NAME) AS ALTERNATIVE_NAME, MIN(CHN.NAME) AS VOICED_CHARACTER, MIN(N.NAME) AS VOICING_ACTRESS,
+	MIN(T.TITLE) AS AMERICAN_MOVIE
+FROM AKA_NAME AS AN, CHAR_NAME AS CHN, CAST_INFO AS CI, COMPANY_NAME AS CN, MOVIE_COMPANIES AS MC, NAME AS N,
+	ROLE_TYPE AS RT, TITLE AS T
+WHERE CI.NOTE = '(voice)'
+		AND CN.COUNTRY_CODE = '[us]'
+		AND MC.NOTE LIKE '%(200%)%'
+		AND (MC.NOTE LIKE '%(USA)%'
+							OR MC.NOTE LIKE '%(worldwide)%')
+		AND N.GENDER = 'f'
+		AND N.NAME LIKE '%Angel%'
+		AND RT.ROLE = 'actress'
+		AND T.PRODUCTION_YEAR BETWEEN 2007 AND 2010
+		AND CI.MOVIE_ID = T.ID
+		AND T.ID = MC.MOVIE_ID
+		AND CI.MOVIE_ID = MC.MOVIE_ID
+		AND MC.COMPANY_ID = CN.ID
+		AND CI.ROLE_ID = RT.ID
+		AND N.ID = CI.PERSON_ID
+		AND CHN.ID = CI.PERSON_ROLE_ID
+		AND AN.PERSON_ID = N.ID
+		AND AN.PERSON_ID = CI.PERSON_ID;

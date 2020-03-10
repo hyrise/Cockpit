@@ -1,42 +1,22 @@
-SELECT MIN(mi_idx.info) AS rating,
-       MIN(t.title) AS north_european_dark_production
-FROM info_type AS it1,
-     info_type AS it2,
-     keyword AS k,
-     kind_type AS kt,
-     movie_info AS mi,
-     movie_info_idx AS mi_idx,
-     movie_keyword AS mk,
-     title AS t
-WHERE it1.info = 'countries'
-  AND it2.info = 'rating'
-  AND k.keyword IS NOT NULL
-  AND k.keyword IN ('murder',
-                    'murder-in-title',
-                    'blood',
-                    'violence')
-  AND kt.kind IN ('movie',
-                  'episode')
-  AND mi.info IN ('Sweden',
-                  'Norway',
-                  'Germany',
-                  'Denmark',
-                  'Swedish',
-                  'Danish',
-                  'Norwegian',
-                  'German',
-                  'USA',
-                  'American')
-  AND mi_idx.info < '8.5'
-  AND t.production_year > 2005
-  AND kt.id = t.kind_id
-  AND t.id = mi.movie_id
-  AND t.id = mk.movie_id
-  AND t.id = mi_idx.movie_id
-  AND mk.movie_id = mi.movie_id
-  AND mk.movie_id = mi_idx.movie_id
-  AND mi.movie_id = mi_idx.movie_id
-  AND k.id = mk.keyword_id
-  AND it1.id = mi.info_type_id
-  AND it2.id = mi_idx.info_type_id;
-
+SELECT MIN(MI_IDX.INFO) AS RATING, MIN(T.TITLE) AS NORTH_EUROPEAN_DARK_PRODUCTION
+FROM INFO_TYPE AS IT1, INFO_TYPE AS IT2, KEYWORD AS K, KIND_TYPE AS KT, MOVIE_INFO AS MI,
+	MOVIE_INFO_IDX AS MI_IDX, MOVIE_KEYWORD AS MK, TITLE AS T
+WHERE IT1.INFO = 'countries'
+		AND IT2.INFO = 'rating'
+		AND K.KEYWORD IS NOT NULL
+		AND K.KEYWORD IN ('murder', 'murder-in-title', 'blood', 'violence')
+		AND KT.KIND IN ('movie', 'episode')
+		AND MI.INFO IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Danish', 'Norwegian', 'German',
+																			'USA', 'American')
+		AND MI_IDX.INFO < '8.5'
+		AND T.PRODUCTION_YEAR > 2005
+		AND KT.ID = T.KIND_ID
+		AND T.ID = MI.MOVIE_ID
+		AND T.ID = MK.MOVIE_ID
+		AND T.ID = MI_IDX.MOVIE_ID
+		AND MK.MOVIE_ID = MI.MOVIE_ID
+		AND MK.MOVIE_ID = MI_IDX.MOVIE_ID
+		AND MI.MOVIE_ID = MI_IDX.MOVIE_ID
+		AND K.ID = MK.KEYWORD_ID
+		AND IT1.ID = MI.INFO_TYPE_ID
+		AND IT2.ID = MI_IDX.INFO_TYPE_ID;

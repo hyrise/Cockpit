@@ -1,66 +1,47 @@
-SELECT MIN(chn.name) AS voiced_char,
-       MIN(n.name) AS voicing_actress,
-       MIN(t.title) AS voiced_animation
-FROM aka_name AS an,
-     complete_cast AS cc,
-     comp_cast_type AS cct1,
-     comp_cast_type AS cct2,
-     char_name AS chn,
-     cast_info AS ci,
-     company_name AS cn,
-     info_type AS it,
-     info_type AS it3,
-     keyword AS k,
-     movie_companies AS mc,
-     movie_info AS mi,
-     movie_keyword AS mk,
-     name AS n,
-     person_info AS pi,
-     role_type AS rt,
-     title AS t
-WHERE cct1.kind ='cast'
-  AND cct2.kind ='complete+verified'
-  AND ci.note IN ('(voice)',
-                  '(voice: Japanese version)',
-                  '(voice) (uncredited)',
-                  '(voice: English version)')
-  AND cn.country_code ='[us]'
-  AND it.info = 'release dates'
-  AND it3.info = 'trivia'
-  AND k.keyword = 'computer-animation'
-  AND mi.info IS NOT NULL
-  AND (mi.info LIKE 'Japan:%200%'
-       OR mi.info LIKE 'USA:%200%')
-  AND n.gender ='f'
-  AND n.name LIKE '%An%'
-  AND rt.role ='actress'
-  AND t.production_year BETWEEN 2000 AND 2010
-  AND t.id = mi.movie_id
-  AND t.id = mc.movie_id
-  AND t.id = ci.movie_id
-  AND t.id = mk.movie_id
-  AND t.id = cc.movie_id
-  AND mc.movie_id = ci.movie_id
-  AND mc.movie_id = mi.movie_id
-  AND mc.movie_id = mk.movie_id
-  AND mc.movie_id = cc.movie_id
-  AND mi.movie_id = ci.movie_id
-  AND mi.movie_id = mk.movie_id
-  AND mi.movie_id = cc.movie_id
-  AND ci.movie_id = mk.movie_id
-  AND ci.movie_id = cc.movie_id
-  AND mk.movie_id = cc.movie_id
-  AND cn.id = mc.company_id
-  AND it.id = mi.info_type_id
-  AND n.id = ci.person_id
-  AND rt.id = ci.role_id
-  AND n.id = an.person_id
-  AND ci.person_id = an.person_id
-  AND chn.id = ci.person_role_id
-  AND n.id = pi.person_id
-  AND ci.person_id = pi.person_id
-  AND it3.id = pi.info_type_id
-  AND k.id = mk.keyword_id
-  AND cct1.id = cc.subject_id
-  AND cct2.id = cc.status_id;
-
+SELECT MIN(CHN.NAME) AS VOICED_CHAR, MIN(N.NAME) AS VOICING_ACTRESS, MIN(T.TITLE) AS VOICED_ANIMATION
+FROM AKA_NAME AS AN, COMPLETE_CAST AS CC, COMP_CAST_TYPE AS CCT1, COMP_CAST_TYPE AS CCT2, CHAR_NAME AS CHN,
+	CAST_INFO AS CI, COMPANY_NAME AS CN, INFO_TYPE AS IT, INFO_TYPE AS IT3, KEYWORD AS K, MOVIE_COMPANIES AS MC,
+	MOVIE_INFO AS MI, MOVIE_KEYWORD AS MK, NAME AS N, PERSON_INFO AS PI, ROLE_TYPE AS RT, TITLE AS T
+WHERE CCT1.KIND = 'cast'
+		AND CCT2.KIND = 'complete+verified'
+		AND CI.NOTE IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)',
+																			'(voice: English version)')
+		AND CN.COUNTRY_CODE = '[us]'
+		AND IT.INFO = 'release dates'
+		AND IT3.INFO = 'trivia'
+		AND K.KEYWORD = 'computer-animation'
+		AND MI.INFO IS NOT NULL
+		AND (MI.INFO LIKE 'Japan:%200%'
+							OR MI.INFO LIKE 'USA:%200%')
+		AND N.GENDER = 'f'
+		AND N.NAME LIKE '%An%'
+		AND RT.ROLE = 'actress'
+		AND T.PRODUCTION_YEAR BETWEEN 2000 AND 2010
+		AND T.ID = MI.MOVIE_ID
+		AND T.ID = MC.MOVIE_ID
+		AND T.ID = CI.MOVIE_ID
+		AND T.ID = MK.MOVIE_ID
+		AND T.ID = CC.MOVIE_ID
+		AND MC.MOVIE_ID = CI.MOVIE_ID
+		AND MC.MOVIE_ID = MI.MOVIE_ID
+		AND MC.MOVIE_ID = MK.MOVIE_ID
+		AND MC.MOVIE_ID = CC.MOVIE_ID
+		AND MI.MOVIE_ID = CI.MOVIE_ID
+		AND MI.MOVIE_ID = MK.MOVIE_ID
+		AND MI.MOVIE_ID = CC.MOVIE_ID
+		AND CI.MOVIE_ID = MK.MOVIE_ID
+		AND CI.MOVIE_ID = CC.MOVIE_ID
+		AND MK.MOVIE_ID = CC.MOVIE_ID
+		AND CN.ID = MC.COMPANY_ID
+		AND IT.ID = MI.INFO_TYPE_ID
+		AND N.ID = CI.PERSON_ID
+		AND RT.ID = CI.ROLE_ID
+		AND N.ID = AN.PERSON_ID
+		AND CI.PERSON_ID = AN.PERSON_ID
+		AND CHN.ID = CI.PERSON_ROLE_ID
+		AND N.ID = PI.PERSON_ID
+		AND CI.PERSON_ID = PI.PERSON_ID
+		AND IT3.ID = PI.INFO_TYPE_ID
+		AND K.ID = MK.KEYWORD_ID
+		AND CCT1.ID = CC.SUBJECT_ID
+		AND CCT2.ID = CC.STATUS_ID;
