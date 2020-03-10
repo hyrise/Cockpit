@@ -160,7 +160,7 @@ class DatabaseManager(object):
         return response
 
     def _call_load_data(self, body: Dict) -> Dict:
-        folder_name: str = body["folder_name"].lower()  # TODO why .lower?
+        folder_name: str = body["folder_name"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
