@@ -1,711 +1,711 @@
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%blush%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%blush%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%snow%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%snow%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%wheat%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%wheat%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%almond%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%almond%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%bisque%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%bisque%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%papaya%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%papaya%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%coral%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%coral%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%orange%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%orange%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%burnished%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%burnished%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%midnight%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%midnight%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%orchid%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%orchid%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%frosted%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%frosted%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%grey%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%grey%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%orange%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%orange%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%black%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%black%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%thistle%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%thistle%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%dim%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%dim%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%chartreuse%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%chartreuse%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%cornsilk%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%cornsilk%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%chocolate%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%chocolate%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%royal%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%royal%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%aquamarine%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%aquamarine%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%bisque%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%bisque%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%chocolate%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%chocolate%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%metallic%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%metallic%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%khaki%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%khaki%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%tan%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%tan%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%sandy%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%sandy%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%thistle%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%thistle%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%tan%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%tan%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%cornflower%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%cornflower%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%cornsilk%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%cornsilk%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%seashell%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%seashell%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%blanched%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%blanched%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%drab%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%drab%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%royal%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%royal%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%goldenrod%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%goldenrod%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%rosy%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%rosy%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%honeydew%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%honeydew%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%violet%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%violet%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%firebrick%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%firebrick%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;
 
 ---
 
-SELECT NATION, O_YEAR, SUM(AMOUNT) AS SUM_PROFIT
+SELECT nation, o_year, SUM(amount) AS sum_profit
 FROM
-		(SELECT N_NAME AS NATION, SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR,
-				L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY AS AMOUNT
-			FROM PART, SUPPLIER, LINEITEM, PARTSUPP, ORDERS, NATION
-			WHERE S_SUPPKEY = L_SUPPKEY
-					AND PS_SUPPKEY = L_SUPPKEY
-					AND PS_PARTKEY = L_PARTKEY
-					AND P_PARTKEY = L_PARTKEY
-					AND O_ORDERKEY = L_ORDERKEY
-					AND S_NATIONKEY = N_NATIONKEY
-					AND P_NAME like '%blush%') AS PROFIT
-GROUP BY NATION, O_YEAR
-ORDER BY NATION, O_YEAR DESC;
+		(SELECT n_name AS nation, SUBSTR(o_orderdate, 1, 4) AS o_year,
+				l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount
+			FROM part, supplier, lineitem, partsupp, orders, nation
+			WHERE s_suppkey = l_suppkey
+					AND ps_suppkey = l_suppkey
+					AND ps_partkey = l_partkey
+					AND p_partkey = l_partkey
+					AND o_orderkey = l_orderkey
+					AND s_nationkey = n_nationkey
+					AND p_name like '%blush%') AS profit
+GROUP BY nation, o_year
+ORDER BY nation, o_year DESC;

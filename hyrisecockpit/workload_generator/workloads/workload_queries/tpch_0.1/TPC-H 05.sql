@@ -1,509 +1,509 @@
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'MIDDLE EAST'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'MIDDLE EAST'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AFRICA'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AFRICA'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'MIDDLE EAST'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'MIDDLE EAST'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'ASIA'
-		AND O_ORDERDATE >= '1995-01-01'
-		AND O_ORDERDATE < '1996-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'ASIA'
+		AND o_orderdate >= '1995-01-01'
+		AND o_orderdate < '1996-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'MIDDLE EAST'
-		AND O_ORDERDATE >= '1995-01-01'
-		AND O_ORDERDATE < '1996-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'MIDDLE EAST'
+		AND o_orderdate >= '1995-01-01'
+		AND o_orderdate < '1996-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'MIDDLE EAST'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'MIDDLE EAST'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'MIDDLE EAST'
-		AND O_ORDERDATE >= '1994-01-01'
-		AND O_ORDERDATE < '1995-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'MIDDLE EAST'
+		AND o_orderdate >= '1994-01-01'
+		AND o_orderdate < '1995-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'MIDDLE EAST'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'MIDDLE EAST'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1995-01-01'
-		AND O_ORDERDATE < '1996-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1995-01-01'
+		AND o_orderdate < '1996-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'ASIA'
-		AND O_ORDERDATE >= '1994-01-01'
-		AND O_ORDERDATE < '1995-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'ASIA'
+		AND o_orderdate >= '1994-01-01'
+		AND o_orderdate < '1995-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'ASIA'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'ASIA'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1994-01-01'
-		AND O_ORDERDATE < '1995-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1994-01-01'
+		AND o_orderdate < '1995-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1994-01-01'
-		AND O_ORDERDATE < '1995-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1994-01-01'
+		AND o_orderdate < '1995-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'EUROPE'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'EUROPE'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1997-01-01'
-		AND O_ORDERDATE < '1998-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1997-01-01'
+		AND o_orderdate < '1998-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'ASIA'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'ASIA'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AFRICA'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AFRICA'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'ASIA'
-		AND O_ORDERDATE >= '1993-01-01'
-		AND O_ORDERDATE < '1994-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'ASIA'
+		AND o_orderdate >= '1993-01-01'
+		AND o_orderdate < '1994-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;
 
 ---
 
-SELECT N_NAME, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
-FROM CUSTOMER, ORDERS, LINEITEM, SUPPLIER, NATION, REGION
-WHERE C_CUSTKEY = O_CUSTKEY
-		AND L_ORDERKEY = O_ORDERKEY
-		AND L_SUPPKEY = S_SUPPKEY
-		AND C_NATIONKEY = S_NATIONKEY
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_REGIONKEY = R_REGIONKEY
-		AND R_NAME = 'AMERICA'
-		AND O_ORDERDATE >= '1996-01-01'
-		AND O_ORDERDATE < '1997-01-01'
-GROUP BY N_NAME
-ORDER BY REVENUE DESC;
+SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
+FROM customer, orders, lineitem, supplier, nation, region
+WHERE c_custkey = o_custkey
+		AND l_orderkey = o_orderkey
+		AND l_suppkey = s_suppkey
+		AND c_nationkey = s_nationkey
+		AND s_nationkey = n_nationkey
+		AND n_regionkey = r_regionkey
+		AND r_name = 'AMERICA'
+		AND o_orderdate >= '1996-01-01'
+		AND o_orderdate < '1997-01-01'
+GROUP BY n_name
+ORDER BY revenue DESC;

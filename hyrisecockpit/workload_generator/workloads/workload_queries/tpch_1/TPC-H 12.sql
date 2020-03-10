@@ -1,2297 +1,2297 @@
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1996-01-01'
-		AND L_RECEIPTDATE < '1997-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1996-01-01'
+		AND l_receiptdate < '1997-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('FOB', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('FOB', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('RAIL', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('RAIL', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'TRUCK')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1993-01-01'
-		AND L_RECEIPTDATE < '1994-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'TRUCK')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1993-01-01'
+		AND l_receiptdate < '1994-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1997-01-01'
-		AND L_RECEIPTDATE < '1998-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1997-01-01'
+		AND l_receiptdate < '1998-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('MAIL', 'SHIP')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('MAIL', 'SHIP')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('REG AIR', 'MAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('REG AIR', 'MAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('AIR', 'REG AIR')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1995-01-01'
-		AND L_RECEIPTDATE < '1996-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('AIR', 'REG AIR')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1995-01-01'
+		AND l_receiptdate < '1996-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('SHIP', 'FOB')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('SHIP', 'FOB')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;
 
 ---
 
-SELECT L_SHIPMODE,
+SELECT l_shipmode,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY = '1-URGENT'
-														OR O_ORDERPRIORITY = '2-HIGH' THEN 1
+									WHEN o_orderpriority = '1-URGENT'
+														OR o_orderpriority = '2-HIGH' THEN 1
 									ELSE 0
-					END) AS HIGH_LINE_COUNT,
+					END) AS high_line_count,
 	SUM(CASE
-									WHEN O_ORDERPRIORITY <> '1-URGENT'
-														AND O_ORDERPRIORITY <> '2-HIGH' THEN 1
+									WHEN o_orderpriority <> '1-URGENT'
+														AND o_orderpriority <> '2-HIGH' THEN 1
 									ELSE 0
-					END) AS LOW_LINE_COUNT
-FROM ORDERS, LINEITEM
-WHERE O_ORDERKEY = L_ORDERKEY
-		AND L_SHIPMODE IN ('TRUCK', 'RAIL')
-		AND L_COMMITDATE < L_RECEIPTDATE
-		AND L_SHIPDATE < L_COMMITDATE
-		AND L_RECEIPTDATE >= '1994-01-01'
-		AND L_RECEIPTDATE < '1995-01-01'
-GROUP BY L_SHIPMODE
-ORDER BY L_SHIPMODE;
+					END) AS low_line_count
+FROM orders, lineitem
+WHERE o_orderkey = l_orderkey
+		AND l_shipmode IN ('TRUCK', 'RAIL')
+		AND l_commitdate < l_receiptdate
+		AND l_shipdate < l_commitdate
+		AND l_receiptdate >= '1994-01-01'
+		AND l_receiptdate < '1995-01-01'
+GROUP BY l_shipmode
+ORDER BY l_shipmode;

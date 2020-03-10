@@ -1,549 +1,549 @@
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#31'
-		AND P_CONTAINER = 'SM PACK'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#31'
+		AND p_container = 'SM PACK'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#44'
-		AND P_CONTAINER = 'JUMBO PKG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#44'
+		AND p_container = 'JUMBO PKG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#22'
-		AND P_CONTAINER = 'JUMBO PACK'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#22'
+		AND p_container = 'JUMBO PACK'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#35'
-		AND P_CONTAINER = 'JUMBO DRUM'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#35'
+		AND p_container = 'JUMBO DRUM'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#52'
-		AND P_CONTAINER = 'WRAP BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#52'
+		AND p_container = 'WRAP BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#23'
-		AND P_CONTAINER = 'JUMBO DRUM'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#23'
+		AND p_container = 'JUMBO DRUM'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#54'
-		AND P_CONTAINER = 'JUMBO CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#54'
+		AND p_container = 'JUMBO CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#41'
-		AND P_CONTAINER = 'JUMBO CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#41'
+		AND p_container = 'JUMBO CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#32'
-		AND P_CONTAINER = 'SM BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#32'
+		AND p_container = 'SM BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#31'
-		AND P_CONTAINER = 'JUMBO JAR'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#31'
+		AND p_container = 'JUMBO JAR'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#35'
-		AND P_CONTAINER = 'WRAP CAN'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#35'
+		AND p_container = 'WRAP CAN'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#11'
-		AND P_CONTAINER = 'LG PACK'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#11'
+		AND p_container = 'LG PACK'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#55'
-		AND P_CONTAINER = 'JUMBO BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#55'
+		AND p_container = 'JUMBO BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#42'
-		AND P_CONTAINER = 'WRAP BOX'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#42'
+		AND p_container = 'WRAP BOX'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#44'
-		AND P_CONTAINER = 'SM CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#44'
+		AND p_container = 'SM CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#23'
-		AND P_CONTAINER = 'JUMBO PACK'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#23'
+		AND p_container = 'JUMBO PACK'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#44'
-		AND P_CONTAINER = 'LG CAN'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#44'
+		AND p_container = 'LG CAN'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#11'
-		AND P_CONTAINER = 'MED DRUM'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#11'
+		AND p_container = 'MED DRUM'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#14'
-		AND P_CONTAINER = 'JUMBO BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#14'
+		AND p_container = 'JUMBO BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#13'
-		AND P_CONTAINER = 'LG DRUM'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#13'
+		AND p_container = 'LG DRUM'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#23'
-		AND P_CONTAINER = 'JUMBO CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#23'
+		AND p_container = 'JUMBO CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#43'
-		AND P_CONTAINER = 'WRAP DRUM'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#43'
+		AND p_container = 'WRAP DRUM'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#15'
-		AND P_CONTAINER = 'LG PKG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#15'
+		AND p_container = 'LG PKG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#31'
-		AND P_CONTAINER = 'JUMBO BOX'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#31'
+		AND p_container = 'JUMBO BOX'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#55'
-		AND P_CONTAINER = 'WRAP PKG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#55'
+		AND p_container = 'WRAP PKG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#33'
-		AND P_CONTAINER = 'LG CAN'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#33'
+		AND p_container = 'LG CAN'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#24'
-		AND P_CONTAINER = 'MED BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#24'
+		AND p_container = 'MED BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#54'
-		AND P_CONTAINER = 'MED CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#54'
+		AND p_container = 'MED CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#33'
-		AND P_CONTAINER = 'JUMBO JAR'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#33'
+		AND p_container = 'JUMBO JAR'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#13'
-		AND P_CONTAINER = 'SM CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#13'
+		AND p_container = 'SM CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#51'
-		AND P_CONTAINER = 'MED PKG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#51'
+		AND p_container = 'MED PKG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#35'
-		AND P_CONTAINER = 'LG PACK'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#35'
+		AND p_container = 'LG PACK'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#35'
-		AND P_CONTAINER = 'LG PACK'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#35'
+		AND p_container = 'LG PACK'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#31'
-		AND P_CONTAINER = 'SM PKG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#31'
+		AND p_container = 'SM PKG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#45'
-		AND P_CONTAINER = 'SM PKG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#45'
+		AND p_container = 'SM PKG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#45'
-		AND P_CONTAINER = 'WRAP BOX'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#45'
+		AND p_container = 'WRAP BOX'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#14'
-		AND P_CONTAINER = 'JUMBO CAN'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#14'
+		AND p_container = 'JUMBO CAN'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#55'
-		AND P_CONTAINER = 'MED BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#55'
+		AND p_container = 'MED BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#14'
-		AND P_CONTAINER = 'SM BOX'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#14'
+		AND p_container = 'SM BOX'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#55'
-		AND P_CONTAINER = 'MED BAG'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#55'
+		AND p_container = 'MED BAG'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#35'
-		AND P_CONTAINER = 'JUMBO JAR'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#35'
+		AND p_container = 'JUMBO JAR'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#43'
-		AND P_CONTAINER = 'MED CAN'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#43'
+		AND p_container = 'MED CAN'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#41'
-		AND P_CONTAINER = 'WRAP CAN'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#41'
+		AND p_container = 'WRAP CAN'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#33'
-		AND P_CONTAINER = 'MED BOX'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#33'
+		AND p_container = 'MED BOX'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#45'
-		AND P_CONTAINER = 'MED DRUM'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#45'
+		AND p_container = 'MED DRUM'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);
 
 ---
 
-SELECT SUM(L_EXTENDEDPRICE) / 7.0 AS AVG_YEARLY
-FROM LINEITEM, PART
-WHERE P_PARTKEY = L_PARTKEY
-		AND P_BRAND = 'Brand#23'
-		AND P_CONTAINER = 'MED CASE'
-		AND L_QUANTITY <
-				(SELECT 0.2 * AVG(L_QUANTITY)
-					FROM LINEITEM
-					WHERE L_PARTKEY = P_PARTKEY);
+SELECT SUM(l_extendedprice) / 7.0 AS avg_yearly
+FROM lineitem, part
+WHERE p_partkey = l_partkey
+		AND p_brand = 'Brand#23'
+		AND p_container = 'MED CASE'
+		AND l_quantity <
+				(SELECT 0.2 * avg(l_quantity)
+					FROM lineitem
+					WHERE l_partkey = p_partkey);

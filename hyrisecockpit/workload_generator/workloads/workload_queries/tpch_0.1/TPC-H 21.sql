@@ -1,372 +1,372 @@
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'IRAQ'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'IRAQ'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'ROMANIA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'ROMANIA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'JAPAN'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'JAPAN'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'KENYA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'KENYA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'BRAZIL'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'BRAZIL'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'CANADA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'CANADA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'SAUDI ARABIA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'SAUDI ARABIA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'RUSSIA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'RUSSIA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'RUSSIA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'RUSSIA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'VIETNAM'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'VIETNAM'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'GERMANY'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'GERMANY'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'UNITED KINGDOM'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'UNITED KINGDOM'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'CANADA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'CANADA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'GERMANY'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'GERMANY'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
 
 ---
 
-SELECT S_NAME, COUNT(*) AS NUMWAIT
-FROM SUPPLIER, LINEITEM L1, ORDERS, NATION
-WHERE S_SUPPKEY = L1.L_SUPPKEY
-		AND O_ORDERKEY = L1.L_ORDERKEY
-		AND O_ORDERSTATUS = 'F'
-		AND L1.L_RECEIPTDATE > L1.L_COMMITDATE
+SELECT s_name, count(*) AS numwait
+FROM supplier, lineitem l1, orders, nation
+WHERE s_suppkey = l1.l_suppkey
+		AND o_orderkey = l1.l_orderkey
+		AND o_orderstatus = 'F'
+		AND l1.l_receiptdate > l1.l_commitdate
 		AND EXISTS
 				(SELECT *
-					FROM LINEITEM L2
-					WHERE L2.L_ORDERKEY = L1.L_ORDERKEY
-							AND L2.L_SUPPKEY <> L1.L_SUPPKEY)
+					FROM lineitem l2
+					WHERE l2.l_orderkey = l1.l_orderkey
+							AND l2.l_suppkey <> l1.l_suppkey)
 		AND NOT EXISTS
 				(SELECT *
-					FROM LINEITEM L3
-					WHERE L3.L_ORDERKEY = L1.L_ORDERKEY
-							AND L3.L_SUPPKEY <> L1.L_SUPPKEY
-							AND L3.L_RECEIPTDATE > L3.L_COMMITDATE )
-		AND S_NATIONKEY = N_NATIONKEY
-		AND N_NAME = 'CHINA'
-GROUP BY S_NAME
-ORDER BY NUMWAIT DESC, S_NAME
+					FROM lineitem l3
+					WHERE l3.l_orderkey = l1.l_orderkey
+							AND l3.l_suppkey <> l1.l_suppkey
+							AND l3.l_receiptdate > l3.l_commitdate )
+		AND s_nationkey = n_nationkey
+		AND n_name = 'CHINA'
+GROUP BY s_name
+ORDER BY numwait DESC, s_name
 LIMIT 100;
