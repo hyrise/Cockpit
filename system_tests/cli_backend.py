@@ -2,7 +2,7 @@
 import logging
 
 from hyrisecockpit.backend.app import app
-from settings import BACKEND_HOST, BACKEND_PORT
+from system_tests.settings import BACKEND_HOST, BACKEND_PORT
 
 
 def main() -> None:

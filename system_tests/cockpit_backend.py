@@ -6,7 +6,7 @@ from subprocess import Popen  # nosec
 
 from requests import delete, get, post
 
-from settings import BACKEND_HOST, BACKEND_PORT
+from system_tests.settings import BACKEND_HOST, BACKEND_PORT
 
 REQUEST_TIMEOUT = 1.0
 

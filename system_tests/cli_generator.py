@@ -1,6 +1,6 @@
 """CLI used to start the workload generator."""
 from hyrisecockpit.workload_generator.generator import WorkloadGenerator
-from settings import (
+from system_tests.settings import (
     GENERATOR_HOST,
     GENERATOR_PORT,
     WORKLOAD_LOCATION,

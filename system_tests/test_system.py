@@ -4,11 +4,11 @@ from time import sleep
 
 from influxdb import InfluxDBClient
 
-from cockpit_backend import CockpitBackend
-from cockpit_generator import CockpitGenerator
-from cockpit_manager import CockpitManager
 from hyrisecockpit.response import get_response
-from settings import (  # DATABASE2_HOST,
+from system_tests.cockpit_backend import CockpitBackend
+from system_tests.cockpit_generator import CockpitGenerator
+from system_tests.cockpit_manager import CockpitManager
+from system_tests.settings import (  # DATABASE2_HOST,
     DATABASE1_HOST,
     STORAGE_HOST,
     STORAGE_PASSWORD,
