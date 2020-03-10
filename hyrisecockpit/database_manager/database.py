@@ -1,6 +1,6 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Manager, Process, Queue
+from multiprocessing import Process, Queue, Value
 from secrets import randbelow
 from typing import Callable, Dict, List, Optional, Tuple
 
@@ -50,14 +50,13 @@ class Database(object):
 
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
-        self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
 
-        self._worker_stay_alive_flag = self._manager.Value("b", True)
-        self._processing_tables_flag = self._manager.Value("b", False)
+        self._worker_stay_alive_flag = Value("b", True)
+        self._processing_tables_flag = Value("b", False)
         self._worker_pool: pool = self._init_worker_pool()
         self._subscriber_worker = self._init_subscriber_worker()
 
@@ -207,7 +206,8 @@ class Database(object):
         self._flush_queue()
         with PoolCursor(self._connection_pool) as cur:
             for task in table_loading_tasks:
-                query, not_formatted_parameters = task
+                query_tuple, benchmark, query_no = task
+                query, not_formatted_parameters = query_tuple
                 formatted_parameters = (
                     tuple(
                         AsIs(parameter) if protocol == "as_is" else parameter
