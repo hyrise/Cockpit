@@ -85,7 +85,6 @@
               @change="handleWorkloadDataChange(workload)"
               :loading="buttonIsLoading['load' + workload]"
               :disabled="buttonIsLoading['load' + workload]"
-              v-bind:style="{ color: (isActive = 'green') }"
             >
             </v-switch>
           </v-col>
