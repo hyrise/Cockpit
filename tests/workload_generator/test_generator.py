@@ -12,23 +12,26 @@ generator_listening = "generator_listening"
 generator_port = "10000"
 workload_listening = "workload_listening"
 workload_pub_port = "20000"
+default_workload_location = "default_workload_location"
 
 
 fake_workload = [("dummy_query", None, "benchmark", "query_no")]
 
 
+def idle_function(self, *args) -> None:
+    """Idle function."""
+    return
+
+
+def get_fake_workload(*args) -> Any:
+    """Get fake workload."""
+    workload = MagicMock()
+    workload.generate_workload.return_value = fake_workload
+    return workload
+
+
 class TestWorkloadGenerator:
     """Tests for the WorkloadGenerator class."""
-
-    def idle_function(self, *argv) -> None:
-        """Idle function."""
-        return
-
-    def get_fake_workload(self, *argv) -> Any:
-        """Get fake workload."""
-        workload = MagicMock()
-        workload.generate_workload.return_value = fake_workload
-        return workload
 
     @fixture
     @patch(
@@ -49,11 +52,11 @@ class TestWorkloadGenerator:
             generator_port,
             workload_listening,
             workload_pub_port,
-            "default_workload_location",
+            default_workload_location,
         )
 
     def test_initializes_socket_attributes(self, isolated_generator: WorkloadGenerator):
-        """Test initialization of soscket hosts and ports."""
+        """Test initialization of socket hosts and ports."""
         assert isolated_generator._workload_listening == workload_listening
         assert isolated_generator._workload_pub_port == workload_pub_port
 
@@ -65,7 +68,7 @@ class TestWorkloadGenerator:
         assert not isolated_generator._generate_workload_flag
 
     @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    def test_starts_workload(self, isolated_generator: WorkloadGenerator):
+    def test_starts_a_workload(self, isolated_generator: WorkloadGenerator):
         """Test starting of the workload generation."""
         body = {"folder_name": "benchmark_name", "frequency": 100}
 
@@ -77,7 +80,7 @@ class TestWorkloadGenerator:
         assert list(isolated_generator._workloads.keys()) == ["benchmark_name"]
         assert response == get_response(200)
 
-    def test_stops_workload(self, isolated_generator: WorkloadGenerator):
+    def test_stops_a_workload(self, isolated_generator: WorkloadGenerator):
         """Test stopping of the workload generation."""
         response = isolated_generator._call_stop_workload({})
 
@@ -86,7 +89,7 @@ class TestWorkloadGenerator:
 
     @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
     @patch("hyrisecockpit.workload_generator.generator.WorkloadGenerator._publish_data")
-    def test_workload_generation(
+    def test_generates_a_workload(
         self, mocked_publish_data, isolated_generator: WorkloadGenerator
     ):
         """Test workload generation."""
