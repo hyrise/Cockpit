@@ -7,7 +7,7 @@ from hyrisecockpit.database_manager.cursor import StorageCursor
 class TestCursor:
     """Tests Cursor classes."""
 
-    def test_log_queries(self):
+    def test_logs_queries(self):
         """Test queries logging."""
         query_list = [
             (1, 2, "benchmark1", "query_no_1"),
@@ -34,6 +34,6 @@ class TestCursor:
         cursor._connection.write_points.return_value = None
         cursor.log_queries(query_list)
 
-        cursor._connection.write_points.assert_any_call(
+        cursor._connection.write_points.assert_called_once_with(
             expected_points, database="database"
         )
