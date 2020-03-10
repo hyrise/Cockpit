@@ -16,7 +16,6 @@ def format_queries(filename, workload_size=1):
             query,
             reindent=True,
             keyword_case="upper",
-            identifier_case="upper",
             use_space_around_operators=True,
             indent_tabs=True,
             wrap_after=88,
