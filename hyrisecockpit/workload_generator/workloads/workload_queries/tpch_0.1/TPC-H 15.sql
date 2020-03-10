@@ -1,900 +1,1897 @@
-create view revenue0 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-12-01'
-      AND l_shipdate < '1995-03-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue0
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue0) ORDER BY s_suppkey;
-
-      DROP VIEW revenue0;
-create view revenue1 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-08-01'
-      AND l_shipdate < '1995-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue1
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue1) ORDER BY s_suppkey;
-
-      DROP VIEW revenue1;
-create view revenue2 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-07-01'
-      AND l_shipdate < '1995-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue2
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue2) ORDER BY s_suppkey;
-
-      DROP VIEW revenue2;
-create view revenue3 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-08-01'
-      AND l_shipdate < '1997-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue3
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue3) ORDER BY s_suppkey;
-
-      DROP VIEW revenue3;
-create view revenue4 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-04-01'
-      AND l_shipdate < '1994-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue4
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue4) ORDER BY s_suppkey;
-
-      DROP VIEW revenue4;
-create view revenue5 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-03-01'
-      AND l_shipdate < '1995-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue5
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue5) ORDER BY s_suppkey;
-
-      DROP VIEW revenue5;
-create view revenue6 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-07-01'
-      AND l_shipdate < '1995-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue6
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue6) ORDER BY s_suppkey;
-
-      DROP VIEW revenue6;
-create view revenue7 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-06-01'
-      AND l_shipdate < '1996-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue7
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue7) ORDER BY s_suppkey;
-
-      DROP VIEW revenue7;
-create view revenue8 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-07-01'
-      AND l_shipdate < '1997-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue8
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue8) ORDER BY s_suppkey;
-
-      DROP VIEW revenue8;
-create view revenue9 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-08-01'
-      AND l_shipdate < '1995-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue9
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue9) ORDER BY s_suppkey;
-
-      DROP VIEW revenue9;
-create view revenue10 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-04-01'
-      AND l_shipdate < '1996-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue10
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue10) ORDER BY s_suppkey;
-
-      DROP VIEW revenue10;
-create view revenue11 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-08-01'
-      AND l_shipdate < '1994-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue11
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue11) ORDER BY s_suppkey;
-
-      DROP VIEW revenue11;
-create view revenue12 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-08-01'
-      AND l_shipdate < '1996-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue12
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue12) ORDER BY s_suppkey;
-
-      DROP VIEW revenue12;
-create view revenue13 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-09-01'
-      AND l_shipdate < '1997-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue13
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue13) ORDER BY s_suppkey;
-
-      DROP VIEW revenue13;
-create view revenue14 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-01-01'
-      AND l_shipdate < '1994-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue14
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue14) ORDER BY s_suppkey;
-
-      DROP VIEW revenue14;
-create view revenue15 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-08-01'
-      AND l_shipdate < '1994-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue15
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue15) ORDER BY s_suppkey;
-
-      DROP VIEW revenue15;
-create view revenue16 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-05-01'
-      AND l_shipdate < '1993-08-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue16
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue16) ORDER BY s_suppkey;
-
-      DROP VIEW revenue16;
-create view revenue17 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-03-01'
-      AND l_shipdate < '1993-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue17
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue17) ORDER BY s_suppkey;
-
-      DROP VIEW revenue17;
-create view revenue18 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-01-01'
-      AND l_shipdate < '1996-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue18
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue18) ORDER BY s_suppkey;
-
-      DROP VIEW revenue18;
-create view revenue19 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-04-01'
-      AND l_shipdate < '1994-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue19
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue19) ORDER BY s_suppkey;
-
-      DROP VIEW revenue19;
-create view revenue20 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-10-01'
-      AND l_shipdate < '1996-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue20
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue20) ORDER BY s_suppkey;
-
-      DROP VIEW revenue20;
-create view revenue21 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-01-01'
-      AND l_shipdate < '1993-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue21
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue21) ORDER BY s_suppkey;
-
-      DROP VIEW revenue21;
-create view revenue22 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-10-01'
-      AND l_shipdate < '1994-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue22
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue22) ORDER BY s_suppkey;
-
-      DROP VIEW revenue22;
-create view revenue23 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-12-01'
-      AND l_shipdate < '1994-03-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue23
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue23) ORDER BY s_suppkey;
-
-      DROP VIEW revenue23;
-create view revenue24 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-05-01'
-      AND l_shipdate < '1996-08-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue24
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue24) ORDER BY s_suppkey;
-
-      DROP VIEW revenue24;
-create view revenue25 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-08-01'
-      AND l_shipdate < '1994-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue25
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue25) ORDER BY s_suppkey;
-
-      DROP VIEW revenue25;
-create view revenue26 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-02-01'
-      AND l_shipdate < '1997-05-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue26
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue26) ORDER BY s_suppkey;
-
-      DROP VIEW revenue26;
-create view revenue27 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-01-01'
-      AND l_shipdate < '1993-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue27
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue27) ORDER BY s_suppkey;
-
-      DROP VIEW revenue27;
-create view revenue28 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-09-01'
-      AND l_shipdate < '1995-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue28
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue28) ORDER BY s_suppkey;
-
-      DROP VIEW revenue28;
-create view revenue29 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-02-01'
-      AND l_shipdate < '1997-05-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue29
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue29) ORDER BY s_suppkey;
-
-      DROP VIEW revenue29;
-create view revenue30 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-04-01'
-      AND l_shipdate < '1993-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue30
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue30) ORDER BY s_suppkey;
-
-      DROP VIEW revenue30;
-create view revenue31 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-09-01'
-      AND l_shipdate < '1994-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue31
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue31) ORDER BY s_suppkey;
-
-      DROP VIEW revenue31;
-create view revenue32 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-07-01'
-      AND l_shipdate < '1997-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue32
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue32) ORDER BY s_suppkey;
-
-      DROP VIEW revenue32;
-create view revenue33 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-11-01'
-      AND l_shipdate < '1997-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue33
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue33) ORDER BY s_suppkey;
-
-      DROP VIEW revenue33;
-create view revenue34 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-04-01'
-      AND l_shipdate < '1993-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue34
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue34) ORDER BY s_suppkey;
-
-      DROP VIEW revenue34;
-create view revenue35 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-01-01'
-      AND l_shipdate < '1994-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue35
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue35) ORDER BY s_suppkey;
-
-      DROP VIEW revenue35;
-create view revenue36 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-09-01'
-      AND l_shipdate < '1994-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue36
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue36) ORDER BY s_suppkey;
-
-      DROP VIEW revenue36;
-create view revenue37 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-06-01'
-      AND l_shipdate < '1997-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue37
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue37) ORDER BY s_suppkey;
-
-      DROP VIEW revenue37;
-create view revenue38 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-11-01'
-      AND l_shipdate < '1996-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue38
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue38) ORDER BY s_suppkey;
-
-      DROP VIEW revenue38;
-create view revenue39 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-07-01'
-      AND l_shipdate < '1994-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue39
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue39) ORDER BY s_suppkey;
-
-      DROP VIEW revenue39;
-create view revenue40 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-02-01'
-      AND l_shipdate < '1996-05-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue40
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue40) ORDER BY s_suppkey;
-
-      DROP VIEW revenue40;
-create view revenue41 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-03-01'
-      AND l_shipdate < '1997-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue41
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue41) ORDER BY s_suppkey;
-
-      DROP VIEW revenue41;
-create view revenue42 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-08-01'
-      AND l_shipdate < '1996-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue42
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue42) ORDER BY s_suppkey;
-
-      DROP VIEW revenue42;
-create view revenue43 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-01-01'
-      AND l_shipdate < '1993-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue43
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue43) ORDER BY s_suppkey;
-
-      DROP VIEW revenue43;
-create view revenue44 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-04-01'
-      AND l_shipdate < '1996-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue44
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue44) ORDER BY s_suppkey;
-
-      DROP VIEW revenue44;
-create view revenue45 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-12-01'
-      AND l_shipdate < '1995-03-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue45
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue45) ORDER BY s_suppkey;
-
-      DROP VIEW revenue45;
-create view revenue46 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-01-01'
-      AND l_shipdate < '1993-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue46
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue46) ORDER BY s_suppkey;
-
-      DROP VIEW revenue46;
-create view revenue47 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-01-01'
-      AND l_shipdate < '1996-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue47
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue47) ORDER BY s_suppkey;
-
-      DROP VIEW revenue47;
-create view revenue48 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-11-01'
-      AND l_shipdate < '1995-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue48
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue48) ORDER BY s_suppkey;
-
-      DROP VIEW revenue48;
-create view revenue49 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-05-01'
-      AND l_shipdate < '1993-08-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue49
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue49) ORDER BY s_suppkey;
-
-      DROP VIEW revenue49;
-create view revenue50 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-06-01'
-      AND l_shipdate < '1995-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue50
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue50) ORDER BY s_suppkey;
-
-      DROP VIEW revenue50;
-create view revenue51 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-07-01'
-      AND l_shipdate < '1994-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue51
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue51) ORDER BY s_suppkey;
-
-      DROP VIEW revenue51;
-create view revenue52 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-02-01'
-      AND l_shipdate < '1997-05-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue52
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue52) ORDER BY s_suppkey;
-
-      DROP VIEW revenue52;
-create view revenue53 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-04-01'
-      AND l_shipdate < '1993-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue53
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue53) ORDER BY s_suppkey;
-
-      DROP VIEW revenue53;
-create view revenue54 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-02-01'
-      AND l_shipdate < '1997-05-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue54
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue54) ORDER BY s_suppkey;
-
-      DROP VIEW revenue54;
-create view revenue55 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-10-01'
-      AND l_shipdate < '1995-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue55
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue55) ORDER BY s_suppkey;
-
-      DROP VIEW revenue55;
-create view revenue56 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-09-01'
-      AND l_shipdate < '1996-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue56
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue56) ORDER BY s_suppkey;
-
-      DROP VIEW revenue56;
-create view revenue57 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-06-01'
-      AND l_shipdate < '1994-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue57
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue57) ORDER BY s_suppkey;
-
-      DROP VIEW revenue57;
-create view revenue58 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-07-01'
-      AND l_shipdate < '1994-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue58
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue58) ORDER BY s_suppkey;
-
-      DROP VIEW revenue58;
-create view revenue59 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-10-01'
-      AND l_shipdate < '1998-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue59
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue59) ORDER BY s_suppkey;
-
-      DROP VIEW revenue59;
-create view revenue60 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-06-01'
-      AND l_shipdate < '1993-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue60
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue60) ORDER BY s_suppkey;
-
-      DROP VIEW revenue60;
-create view revenue61 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-05-01'
-      AND l_shipdate < '1996-08-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue61
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue61) ORDER BY s_suppkey;
-
-      DROP VIEW revenue61;
-create view revenue62 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-11-01'
-      AND l_shipdate < '1997-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue62
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue62) ORDER BY s_suppkey;
-
-      DROP VIEW revenue62;
-create view revenue63 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-09-01'
-      AND l_shipdate < '1993-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue63
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue63) ORDER BY s_suppkey;
-
-      DROP VIEW revenue63;
-create view revenue64 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-07-01'
-      AND l_shipdate < '1995-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue64
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue64) ORDER BY s_suppkey;
-
-      DROP VIEW revenue64;
-create view revenue65 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-10-01'
-      AND l_shipdate < '1996-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue65
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue65) ORDER BY s_suppkey;
-
-      DROP VIEW revenue65;
-create view revenue66 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-12-01'
-      AND l_shipdate < '1996-03-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue66
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue66) ORDER BY s_suppkey;
-
-      DROP VIEW revenue66;
-create view revenue67 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-08-01'
-      AND l_shipdate < '1996-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue67
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue67) ORDER BY s_suppkey;
-
-      DROP VIEW revenue67;
-create view revenue68 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-01-01'
-      AND l_shipdate < '1997-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue68
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue68) ORDER BY s_suppkey;
-
-      DROP VIEW revenue68;
-create view revenue69 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-06-01'
-      AND l_shipdate < '1997-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue69
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue69) ORDER BY s_suppkey;
-
-      DROP VIEW revenue69;
-create view revenue70 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-01-01'
-      AND l_shipdate < '1997-04-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue70
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue70) ORDER BY s_suppkey;
-
-      DROP VIEW revenue70;
-create view revenue71 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-03-01'
-      AND l_shipdate < '1995-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue71
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue71) ORDER BY s_suppkey;
-
-      DROP VIEW revenue71;
-create view revenue72 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-02-01'
-      AND l_shipdate < '1997-05-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue72
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue72) ORDER BY s_suppkey;
-
-      DROP VIEW revenue72;
-create view revenue73 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-04-01'
-      AND l_shipdate < '1993-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue73
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue73) ORDER BY s_suppkey;
-
-      DROP VIEW revenue73;
-create view revenue74 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-03-01'
-      AND l_shipdate < '1995-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue74
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue74) ORDER BY s_suppkey;
-
-      DROP VIEW revenue74;
-create view revenue75 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-10-01'
-      AND l_shipdate < '1995-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue75
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue75) ORDER BY s_suppkey;
-
-      DROP VIEW revenue75;
-create view revenue76 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-06-01'
-      AND l_shipdate < '1996-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue76
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue76) ORDER BY s_suppkey;
-
-      DROP VIEW revenue76;
-create view revenue77 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-03-01'
-      AND l_shipdate < '1996-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue77
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue77) ORDER BY s_suppkey;
-
-      DROP VIEW revenue77;
-create view revenue78 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-11-01'
-      AND l_shipdate < '1995-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue78
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue78) ORDER BY s_suppkey;
-
-      DROP VIEW revenue78;
-create view revenue79 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-12-01'
-      AND l_shipdate < '1994-03-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue79
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue79) ORDER BY s_suppkey;
-
-      DROP VIEW revenue79;
-create view revenue80 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-05-01'
-      AND l_shipdate < '1995-08-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue80
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue80) ORDER BY s_suppkey;
-
-      DROP VIEW revenue80;
-create view revenue81 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-04-01'
-      AND l_shipdate < '1995-07-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue81
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue81) ORDER BY s_suppkey;
-
-      DROP VIEW revenue81;
-create view revenue82 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-03-01'
-      AND l_shipdate < '1996-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue82
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue82) ORDER BY s_suppkey;
-
-      DROP VIEW revenue82;
-create view revenue83 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-07-01'
-      AND l_shipdate < '1994-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue83
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue83) ORDER BY s_suppkey;
-
-      DROP VIEW revenue83;
-create view revenue84 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-03-01'
-      AND l_shipdate < '1995-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue84
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue84) ORDER BY s_suppkey;
-
-      DROP VIEW revenue84;
-create view revenue85 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-08-01'
-      AND l_shipdate < '1997-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue85
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue85) ORDER BY s_suppkey;
-
-      DROP VIEW revenue85;
-create view revenue86 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-11-01'
-      AND l_shipdate < '1994-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue86
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue86) ORDER BY s_suppkey;
-
-      DROP VIEW revenue86;
-create view revenue87 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-03-01'
-      AND l_shipdate < '1993-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue87
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue87) ORDER BY s_suppkey;
-
-      DROP VIEW revenue87;
-create view revenue88 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-07-01'
-      AND l_shipdate < '1994-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue88
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue88) ORDER BY s_suppkey;
-
-      DROP VIEW revenue88;
-create view revenue89 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-07-01'
-      AND l_shipdate < '1997-10-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue89
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue89) ORDER BY s_suppkey;
-
-      DROP VIEW revenue89;
-create view revenue90 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-12-01'
-      AND l_shipdate < '1995-03-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue90
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue90) ORDER BY s_suppkey;
-
-      DROP VIEW revenue90;
-create view revenue91 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-09-01'
-      AND l_shipdate < '1996-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue91
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue91) ORDER BY s_suppkey;
-
-      DROP VIEW revenue91;
-create view revenue92 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1993-06-01'
-      AND l_shipdate < '1993-09-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue92
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue92) ORDER BY s_suppkey;
-
-      DROP VIEW revenue92;
-create view revenue93 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1995-11-01'
-      AND l_shipdate < '1996-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue93
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue93) ORDER BY s_suppkey;
-
-      DROP VIEW revenue93;
-create view revenue94 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-10-01'
-      AND l_shipdate < '1997-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue94
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue94) ORDER BY s_suppkey;
-
-      DROP VIEW revenue94;
-create view revenue95 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1997-10-01'
-      AND l_shipdate < '1998-01-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue95
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue95) ORDER BY s_suppkey;
-
-      DROP VIEW revenue95;
-create view revenue96 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-03-01'
-      AND l_shipdate < '1994-06-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue96
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue96) ORDER BY s_suppkey;
-
-      DROP VIEW revenue96;
-create view revenue97 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1996-08-01'
-      AND l_shipdate < '1996-11-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue97
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue97) ORDER BY s_suppkey;
-
-      DROP VIEW revenue97;
-create view revenue98 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-09-01'
-      AND l_shipdate < '1994-12-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue98
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue98) ORDER BY s_suppkey;
-
-      DROP VIEW revenue98;
-create view revenue99 (supplier_no, total_revenue) as SELECT l_suppkey,
-      SUM(l_extendedprice * (1 - l_discount)) FROM lineitem WHERE l_shipdate >= '1994-11-01'
-      AND l_shipdate < '1995-02-01' GROUP BY l_suppkey;
-
-      SELECT s_suppkey, s_name, s_address, s_phone, total_revenue FROM supplier, revenue99
-      WHERE s_suppkey = supplier_no AND total_revenue = (SELECT max(total_revenue)
-      FROM revenue99) ORDER BY s_suppkey;
-
-      DROP VIEW revenue99;
+CREATE VIEW REVENUE0 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-12-01'
+		AND L_SHIPDATE < '1995-03-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE0
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE0)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE0;
+
+---
+
+CREATE VIEW REVENUE1 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-08-01'
+		AND L_SHIPDATE < '1995-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE1
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE1)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE1;
+
+---
+
+CREATE VIEW REVENUE2 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-07-01'
+		AND L_SHIPDATE < '1995-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE2
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE2)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE2;
+
+---
+
+CREATE VIEW REVENUE3 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-08-01'
+		AND L_SHIPDATE < '1997-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE3
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE3)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE3;
+
+---
+
+CREATE VIEW REVENUE4 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-04-01'
+		AND L_SHIPDATE < '1994-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE4
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE4)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE4;
+
+---
+
+CREATE VIEW REVENUE5 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-03-01'
+		AND L_SHIPDATE < '1995-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE5
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE5)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE5;
+
+---
+
+CREATE VIEW REVENUE6 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-07-01'
+		AND L_SHIPDATE < '1995-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE6
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE6)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE6;
+
+---
+
+CREATE VIEW REVENUE7 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-06-01'
+		AND L_SHIPDATE < '1996-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE7
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE7)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE7;
+
+---
+
+CREATE VIEW REVENUE8 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-07-01'
+		AND L_SHIPDATE < '1997-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE8
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE8)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE8;
+
+---
+
+CREATE VIEW REVENUE9 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-08-01'
+		AND L_SHIPDATE < '1995-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE9
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE9)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE9;
+
+---
+
+CREATE VIEW REVENUE10 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-04-01'
+		AND L_SHIPDATE < '1996-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE10
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE10)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE10;
+
+---
+
+CREATE VIEW REVENUE11 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-08-01'
+		AND L_SHIPDATE < '1994-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE11
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE11)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE11;
+
+---
+
+CREATE VIEW REVENUE12 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-08-01'
+		AND L_SHIPDATE < '1996-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE12
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE12)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE12;
+
+---
+
+CREATE VIEW REVENUE13 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-09-01'
+		AND L_SHIPDATE < '1997-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE13
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE13)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE13;
+
+---
+
+CREATE VIEW REVENUE14 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-01-01'
+		AND L_SHIPDATE < '1994-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE14
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE14)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE14;
+
+---
+
+CREATE VIEW REVENUE15 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-08-01'
+		AND L_SHIPDATE < '1994-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE15
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE15)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE15;
+
+---
+
+CREATE VIEW REVENUE16 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-05-01'
+		AND L_SHIPDATE < '1993-08-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE16
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE16)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE16;
+
+---
+
+CREATE VIEW REVENUE17 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-03-01'
+		AND L_SHIPDATE < '1993-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE17
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE17)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE17;
+
+---
+
+CREATE VIEW REVENUE18 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-01-01'
+		AND L_SHIPDATE < '1996-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE18
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE18)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE18;
+
+---
+
+CREATE VIEW REVENUE19 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-04-01'
+		AND L_SHIPDATE < '1994-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE19
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE19)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE19;
+
+---
+
+CREATE VIEW REVENUE20 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-10-01'
+		AND L_SHIPDATE < '1996-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE20
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE20)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE20;
+
+---
+
+CREATE VIEW REVENUE21 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-01-01'
+		AND L_SHIPDATE < '1993-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE21
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE21)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE21;
+
+---
+
+CREATE VIEW REVENUE22 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-10-01'
+		AND L_SHIPDATE < '1994-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE22
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE22)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE22;
+
+---
+
+CREATE VIEW REVENUE23 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-12-01'
+		AND L_SHIPDATE < '1994-03-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE23
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE23)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE23;
+
+---
+
+CREATE VIEW REVENUE24 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-05-01'
+		AND L_SHIPDATE < '1996-08-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE24
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE24)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE24;
+
+---
+
+CREATE VIEW REVENUE25 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-08-01'
+		AND L_SHIPDATE < '1994-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE25
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE25)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE25;
+
+---
+
+CREATE VIEW REVENUE26 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-02-01'
+		AND L_SHIPDATE < '1997-05-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE26
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE26)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE26;
+
+---
+
+CREATE VIEW REVENUE27 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-01-01'
+		AND L_SHIPDATE < '1993-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE27
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE27)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE27;
+
+---
+
+CREATE VIEW REVENUE28 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-09-01'
+		AND L_SHIPDATE < '1995-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE28
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE28)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE28;
+
+---
+
+CREATE VIEW REVENUE29 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-02-01'
+		AND L_SHIPDATE < '1997-05-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE29
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE29)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE29;
+
+---
+
+CREATE VIEW REVENUE30 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-04-01'
+		AND L_SHIPDATE < '1993-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE30
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE30)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE30;
+
+---
+
+CREATE VIEW REVENUE31 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-09-01'
+		AND L_SHIPDATE < '1994-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE31
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE31)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE31;
+
+---
+
+CREATE VIEW REVENUE32 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-07-01'
+		AND L_SHIPDATE < '1997-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE32
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE32)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE32;
+
+---
+
+CREATE VIEW REVENUE33 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-11-01'
+		AND L_SHIPDATE < '1997-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE33
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE33)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE33;
+
+---
+
+CREATE VIEW REVENUE34 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-04-01'
+		AND L_SHIPDATE < '1993-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE34
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE34)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE34;
+
+---
+
+CREATE VIEW REVENUE35 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-01-01'
+		AND L_SHIPDATE < '1994-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE35
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE35)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE35;
+
+---
+
+CREATE VIEW REVENUE36 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-09-01'
+		AND L_SHIPDATE < '1994-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE36
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE36)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE36;
+
+---
+
+CREATE VIEW REVENUE37 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-06-01'
+		AND L_SHIPDATE < '1997-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE37
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE37)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE37;
+
+---
+
+CREATE VIEW REVENUE38 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-11-01'
+		AND L_SHIPDATE < '1996-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE38
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE38)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE38;
+
+---
+
+CREATE VIEW REVENUE39 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-07-01'
+		AND L_SHIPDATE < '1994-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE39
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE39)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE39;
+
+---
+
+CREATE VIEW REVENUE40 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-02-01'
+		AND L_SHIPDATE < '1996-05-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE40
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE40)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE40;
+
+---
+
+CREATE VIEW REVENUE41 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-03-01'
+		AND L_SHIPDATE < '1997-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE41
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE41)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE41;
+
+---
+
+CREATE VIEW REVENUE42 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-08-01'
+		AND L_SHIPDATE < '1996-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE42
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE42)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE42;
+
+---
+
+CREATE VIEW REVENUE43 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-01-01'
+		AND L_SHIPDATE < '1993-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE43
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE43)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE43;
+
+---
+
+CREATE VIEW REVENUE44 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-04-01'
+		AND L_SHIPDATE < '1996-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE44
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE44)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE44;
+
+---
+
+CREATE VIEW REVENUE45 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-12-01'
+		AND L_SHIPDATE < '1995-03-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE45
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE45)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE45;
+
+---
+
+CREATE VIEW REVENUE46 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-01-01'
+		AND L_SHIPDATE < '1993-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE46
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE46)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE46;
+
+---
+
+CREATE VIEW REVENUE47 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-01-01'
+		AND L_SHIPDATE < '1996-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE47
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE47)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE47;
+
+---
+
+CREATE VIEW REVENUE48 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-11-01'
+		AND L_SHIPDATE < '1995-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE48
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE48)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE48;
+
+---
+
+CREATE VIEW REVENUE49 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-05-01'
+		AND L_SHIPDATE < '1993-08-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE49
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE49)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE49;
+
+---
+
+CREATE VIEW REVENUE50 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-06-01'
+		AND L_SHIPDATE < '1995-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE50
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE50)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE50;
+
+---
+
+CREATE VIEW REVENUE51 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-07-01'
+		AND L_SHIPDATE < '1994-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE51
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE51)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE51;
+
+---
+
+CREATE VIEW REVENUE52 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-02-01'
+		AND L_SHIPDATE < '1997-05-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE52
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE52)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE52;
+
+---
+
+CREATE VIEW REVENUE53 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-04-01'
+		AND L_SHIPDATE < '1993-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE53
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE53)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE53;
+
+---
+
+CREATE VIEW REVENUE54 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-02-01'
+		AND L_SHIPDATE < '1997-05-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE54
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE54)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE54;
+
+---
+
+CREATE VIEW REVENUE55 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-10-01'
+		AND L_SHIPDATE < '1995-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE55
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE55)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE55;
+
+---
+
+CREATE VIEW REVENUE56 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-09-01'
+		AND L_SHIPDATE < '1996-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE56
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE56)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE56;
+
+---
+
+CREATE VIEW REVENUE57 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-06-01'
+		AND L_SHIPDATE < '1994-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE57
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE57)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE57;
+
+---
+
+CREATE VIEW REVENUE58 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-07-01'
+		AND L_SHIPDATE < '1994-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE58
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE58)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE58;
+
+---
+
+CREATE VIEW REVENUE59 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-10-01'
+		AND L_SHIPDATE < '1998-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE59
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE59)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE59;
+
+---
+
+CREATE VIEW REVENUE60 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-06-01'
+		AND L_SHIPDATE < '1993-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE60
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE60)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE60;
+
+---
+
+CREATE VIEW REVENUE61 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-05-01'
+		AND L_SHIPDATE < '1996-08-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE61
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE61)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE61;
+
+---
+
+CREATE VIEW REVENUE62 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-11-01'
+		AND L_SHIPDATE < '1997-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE62
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE62)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE62;
+
+---
+
+CREATE VIEW REVENUE63 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-09-01'
+		AND L_SHIPDATE < '1993-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE63
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE63)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE63;
+
+---
+
+CREATE VIEW REVENUE64 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-07-01'
+		AND L_SHIPDATE < '1995-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE64
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE64)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE64;
+
+---
+
+CREATE VIEW REVENUE65 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-10-01'
+		AND L_SHIPDATE < '1996-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE65
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE65)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE65;
+
+---
+
+CREATE VIEW REVENUE66 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-12-01'
+		AND L_SHIPDATE < '1996-03-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE66
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE66)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE66;
+
+---
+
+CREATE VIEW REVENUE67 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-08-01'
+		AND L_SHIPDATE < '1996-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE67
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE67)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE67;
+
+---
+
+CREATE VIEW REVENUE68 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-01-01'
+		AND L_SHIPDATE < '1997-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE68
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE68)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE68;
+
+---
+
+CREATE VIEW REVENUE69 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-06-01'
+		AND L_SHIPDATE < '1997-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE69
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE69)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE69;
+
+---
+
+CREATE VIEW REVENUE70 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-01-01'
+		AND L_SHIPDATE < '1997-04-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE70
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE70)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE70;
+
+---
+
+CREATE VIEW REVENUE71 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-03-01'
+		AND L_SHIPDATE < '1995-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE71
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE71)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE71;
+
+---
+
+CREATE VIEW REVENUE72 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-02-01'
+		AND L_SHIPDATE < '1997-05-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE72
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE72)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE72;
+
+---
+
+CREATE VIEW REVENUE73 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-04-01'
+		AND L_SHIPDATE < '1993-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE73
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE73)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE73;
+
+---
+
+CREATE VIEW REVENUE74 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-03-01'
+		AND L_SHIPDATE < '1995-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE74
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE74)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE74;
+
+---
+
+CREATE VIEW REVENUE75 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-10-01'
+		AND L_SHIPDATE < '1995-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE75
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE75)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE75;
+
+---
+
+CREATE VIEW REVENUE76 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-06-01'
+		AND L_SHIPDATE < '1996-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE76
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE76)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE76;
+
+---
+
+CREATE VIEW REVENUE77 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-03-01'
+		AND L_SHIPDATE < '1996-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE77
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE77)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE77;
+
+---
+
+CREATE VIEW REVENUE78 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-11-01'
+		AND L_SHIPDATE < '1995-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE78
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE78)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE78;
+
+---
+
+CREATE VIEW REVENUE79 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-12-01'
+		AND L_SHIPDATE < '1994-03-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE79
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE79)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE79;
+
+---
+
+CREATE VIEW REVENUE80 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-05-01'
+		AND L_SHIPDATE < '1995-08-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE80
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE80)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE80;
+
+---
+
+CREATE VIEW REVENUE81 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-04-01'
+		AND L_SHIPDATE < '1995-07-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE81
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE81)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE81;
+
+---
+
+CREATE VIEW REVENUE82 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-03-01'
+		AND L_SHIPDATE < '1996-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE82
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE82)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE82;
+
+---
+
+CREATE VIEW REVENUE83 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-07-01'
+		AND L_SHIPDATE < '1994-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE83
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE83)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE83;
+
+---
+
+CREATE VIEW REVENUE84 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-03-01'
+		AND L_SHIPDATE < '1995-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE84
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE84)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE84;
+
+---
+
+CREATE VIEW REVENUE85 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-08-01'
+		AND L_SHIPDATE < '1997-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE85
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE85)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE85;
+
+---
+
+CREATE VIEW REVENUE86 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-11-01'
+		AND L_SHIPDATE < '1994-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE86
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE86)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE86;
+
+---
+
+CREATE VIEW REVENUE87 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-03-01'
+		AND L_SHIPDATE < '1993-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE87
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE87)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE87;
+
+---
+
+CREATE VIEW REVENUE88 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-07-01'
+		AND L_SHIPDATE < '1994-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE88
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE88)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE88;
+
+---
+
+CREATE VIEW REVENUE89 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-07-01'
+		AND L_SHIPDATE < '1997-10-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE89
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE89)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE89;
+
+---
+
+CREATE VIEW REVENUE90 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-12-01'
+		AND L_SHIPDATE < '1995-03-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE90
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE90)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE90;
+
+---
+
+CREATE VIEW REVENUE91 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-09-01'
+		AND L_SHIPDATE < '1996-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE91
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE91)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE91;
+
+---
+
+CREATE VIEW REVENUE92 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1993-06-01'
+		AND L_SHIPDATE < '1993-09-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE92
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE92)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE92;
+
+---
+
+CREATE VIEW REVENUE93 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1995-11-01'
+		AND L_SHIPDATE < '1996-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE93
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE93)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE93;
+
+---
+
+CREATE VIEW REVENUE94 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-10-01'
+		AND L_SHIPDATE < '1997-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE94
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE94)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE94;
+
+---
+
+CREATE VIEW REVENUE95 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1997-10-01'
+		AND L_SHIPDATE < '1998-01-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE95
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE95)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE95;
+
+---
+
+CREATE VIEW REVENUE96 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-03-01'
+		AND L_SHIPDATE < '1994-06-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE96
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE96)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE96;
+
+---
+
+CREATE VIEW REVENUE97 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1996-08-01'
+		AND L_SHIPDATE < '1996-11-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE97
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE97)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE97;
+
+---
+
+CREATE VIEW REVENUE98 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-09-01'
+		AND L_SHIPDATE < '1994-12-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE98
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE98)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE98;
+
+---
+
+CREATE VIEW REVENUE99 (SUPPLIER_NO, TOTAL_REVENUE) AS
+SELECT L_SUPPKEY, SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT))
+FROM LINEITEM
+WHERE L_SHIPDATE >= '1994-11-01'
+		AND L_SHIPDATE < '1995-02-01'
+GROUP BY L_SUPPKEY;
+
+SELECT S_SUPPKEY, S_NAME, S_ADDRESS, S_PHONE, TOTAL_REVENUE
+FROM SUPPLIER, REVENUE99
+WHERE S_SUPPKEY = SUPPLIER_NO
+		AND TOTAL_REVENUE =
+				(SELECT MAX(TOTAL_REVENUE)
+					FROM REVENUE99)
+ORDER BY S_SUPPKEY;
+
+DROP VIEW REVENUE99;
