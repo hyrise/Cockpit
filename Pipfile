@@ -21,6 +21,7 @@ pytest-cov = "*"
 pipenv-to-requirements = "*"
 flake8-eradicate = "*"
 flake8-comprehensions = "*"
+sqlparse = "*"
 
 [packages]
 pandas = "*"
