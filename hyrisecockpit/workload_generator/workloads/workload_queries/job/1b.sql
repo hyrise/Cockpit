@@ -1,11 +1,11 @@
-SELECT MIN(MC.NOTE) AS PRODUCTION_NOTE, MIN(T.TITLE) AS MOVIE_TITLE, MIN(T.PRODUCTION_YEAR) AS MOVIE_YEAR
-FROM COMPANY_TYPE AS CT, INFO_TYPE AS IT, MOVIE_COMPANIES AS MC, MOVIE_INFO_IDX AS MI_IDX, TITLE AS T
-WHERE CT.KIND = 'production companies'
-		AND IT.INFO = 'bottom 10 rank'
-		AND MC.NOTE NOT LIKE '%(as Metro-Goldwyn-Mayer Pictures)%'
-		AND T.PRODUCTION_YEAR BETWEEN 2005 AND 2010
-		AND CT.ID = MC.COMPANY_TYPE_ID
-		AND T.ID = MC.MOVIE_ID
-		AND T.ID = MI_IDX.MOVIE_ID
-		AND MC.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND IT.ID = MI_IDX.INFO_TYPE_ID;
+SELECT MIN(mc.note) AS production_note, MIN(t.title) AS movie_title, MIN(t.production_year) AS movie_year
+FROM company_type AS ct, info_type AS it, movie_companies AS mc, movie_info_idx AS mi_idx, title AS t
+WHERE ct.kind = 'production companies'
+		AND it.info = 'bottom 10 rank'
+		AND mc.note NOT LIKE '%(as Metro-Goldwyn-Mayer Pictures)%'
+		AND t.production_year BETWEEN 2005 AND 2010
+		AND ct.id = mc.company_type_id
+		AND t.id = mc.movie_id
+		AND t.id = mi_idx.movie_id
+		AND mc.movie_id = mi_idx.movie_id
+		AND it.id = mi_idx.info_type_id;

@@ -1,9 +1,9 @@
-SELECT MIN(T.TITLE) AS MOVIE_TITLE
-FROM COMPANY_NAME AS CN, KEYWORD AS K, MOVIE_COMPANIES AS MC, MOVIE_KEYWORD AS MK, TITLE AS T
-WHERE CN.COUNTRY_CODE = '[nl]'
-		AND K.KEYWORD = 'character-name-in-title'
-		AND CN.ID = MC.COMPANY_ID
-		AND MC.MOVIE_ID = T.ID
-		AND T.ID = MK.MOVIE_ID
-		AND MK.KEYWORD_ID = K.ID
-		AND MC.MOVIE_ID = MK.MOVIE_ID;
+SELECT MIN(t.title) AS movie_title
+FROM company_name AS cn, keyword AS k, movie_companies AS mc, movie_keyword AS mk, title AS t
+WHERE cn.country_code = '[nl]'
+		AND k.keyword = 'character-name-in-title'
+		AND cn.id = mc.company_id
+		AND mc.movie_id = t.id
+		AND t.id = mk.movie_id
+		AND mk.keyword_id = k.id
+		AND mc.movie_id = mk.movie_id;

@@ -1,21 +1,21 @@
-SELECT MIN(CN.NAME) AS FROM_COMPANY, MIN(MC.NOTE) AS PRODUCTION_NOTE, MIN(T.TITLE) AS MOVIE_BASED_ON_BOOK
-FROM COMPANY_NAME AS CN, COMPANY_TYPE AS CT, KEYWORD AS K, LINK_TYPE AS LT, MOVIE_COMPANIES AS MC,
-	MOVIE_KEYWORD AS MK, MOVIE_LINK AS ML, TITLE AS T
-WHERE CN.COUNTRY_CODE != '[pl]'
-		AND (CN.NAME LIKE '20th Century Fox%'
-							OR CN.NAME LIKE 'Twentieth Century Fox%')
-		AND CT.KIND != 'production companies'
-		AND CT.KIND IS NOT NULL
-		AND K.KEYWORD IN ('sequel', 'revenge', 'based-on-novel')
-		AND MC.NOTE IS NOT NULL
-		AND T.PRODUCTION_YEAR > 1950
-		AND LT.ID = ML.LINK_TYPE_ID
-		AND ML.MOVIE_ID = T.ID
-		AND T.ID = MK.MOVIE_ID
-		AND MK.KEYWORD_ID = K.ID
-		AND T.ID = MC.MOVIE_ID
-		AND MC.COMPANY_TYPE_ID = CT.ID
-		AND MC.COMPANY_ID = CN.ID
-		AND ML.MOVIE_ID = MK.MOVIE_ID
-		AND ML.MOVIE_ID = MC.MOVIE_ID
-		AND MK.MOVIE_ID = MC.MOVIE_ID;
+SELECT MIN(cn.name) AS from_company, MIN(mc.note) AS production_note, MIN(t.title) AS movie_based_on_book
+FROM company_name AS cn, company_type AS ct, keyword AS k, link_type AS lt, movie_companies AS mc,
+	movie_keyword AS mk, movie_link AS ml, title AS t
+WHERE cn.country_code != '[pl]'
+		AND (cn.name LIKE '20th Century Fox%'
+							OR cn.name LIKE 'Twentieth Century Fox%')
+		AND ct.kind != 'production companies'
+		AND ct.kind IS NOT NULL
+		AND k.keyword IN ('sequel', 'revenge', 'based-on-novel')
+		AND mc.note IS NOT NULL
+		AND t.production_year > 1950
+		AND lt.id = ml.link_type_id
+		AND ml.movie_id = t.id
+		AND t.id = mk.movie_id
+		AND mk.keyword_id = k.id
+		AND t.id = mc.movie_id
+		AND mc.company_type_id = ct.id
+		AND mc.company_id = cn.id
+		AND ml.movie_id = mk.movie_id
+		AND ml.movie_id = mc.movie_id
+		AND mk.movie_id = mc.movie_id;

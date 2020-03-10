@@ -1,30 +1,30 @@
-SELECT MIN(N.NAME) AS VOICING_ACTRESS, MIN(T.TITLE) AS KUNG_FU_PANDA
-FROM AKA_NAME AS AN, CHAR_NAME AS CHN, CAST_INFO AS CI, COMPANY_NAME AS CN, INFO_TYPE AS IT,
-	MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI, NAME AS N, ROLE_TYPE AS RT, TITLE AS T
-WHERE CI.NOTE = '(voice)'
-		AND CN.COUNTRY_CODE = '[us]'
-		AND IT.INFO = 'release dates'
-		AND MC.NOTE LIKE '%(200%)%'
-		AND (MC.NOTE LIKE '%(USA)%'
-							OR MC.NOTE LIKE '%(worldwide)%')
-		AND MI.INFO IS NOT NULL
-		AND (MI.INFO LIKE 'Japan:%2007%'
-							OR MI.INFO LIKE 'USA:%2008%')
-		AND N.GENDER = 'f'
-		AND N.NAME LIKE '%Angel%'
-		AND RT.ROLE = 'actress'
-		AND T.PRODUCTION_YEAR BETWEEN 2007 AND 2008
-		AND T.TITLE LIKE '%Kung%Fu%Panda%'
-		AND T.ID = MI.MOVIE_ID
-		AND T.ID = MC.MOVIE_ID
-		AND T.ID = CI.MOVIE_ID
-		AND MC.MOVIE_ID = CI.MOVIE_ID
-		AND MC.MOVIE_ID = MI.MOVIE_ID
-		AND MI.MOVIE_ID = CI.MOVIE_ID
-		AND CN.ID = MC.COMPANY_ID
-		AND IT.ID = MI.INFO_TYPE_ID
-		AND N.ID = CI.PERSON_ID
-		AND RT.ID = CI.ROLE_ID
-		AND N.ID = AN.PERSON_ID
-		AND CI.PERSON_ID = AN.PERSON_ID
-		AND CHN.ID = CI.PERSON_ROLE_ID;
+SELECT MIN(n.name) AS voicing_actress, MIN(t.title) AS kung_fu_panda
+FROM aka_name AS an, char_name AS chn, cast_info AS ci, company_name AS cn, info_type AS it,
+	movie_companies AS mc, movie_info AS mi, name AS n, role_type AS rt, title AS t
+WHERE ci.note = '(voice)'
+		AND cn.country_code = '[us]'
+		AND it.info = 'release dates'
+		AND mc.note LIKE '%(200%)%'
+		AND (mc.note LIKE '%(USA)%'
+							OR mc.note LIKE '%(worldwide)%')
+		AND mi.info IS NOT NULL
+		AND (mi.info LIKE 'Japan:%2007%'
+							OR mi.info LIKE 'USA:%2008%')
+		AND n.gender = 'f'
+		AND n.name LIKE '%Angel%'
+		AND rt.role = 'actress'
+		AND t.production_year BETWEEN 2007 AND 2008
+		AND t.title LIKE '%Kung%Fu%Panda%'
+		AND t.id = mi.movie_id
+		AND t.id = mc.movie_id
+		AND t.id = ci.movie_id
+		AND mc.movie_id = ci.movie_id
+		AND mc.movie_id = mi.movie_id
+		AND mi.movie_id = ci.movie_id
+		AND cn.id = mc.company_id
+		AND it.id = mi.info_type_id
+		AND n.id = ci.person_id
+		AND rt.id = ci.role_id
+		AND n.id = an.person_id
+		AND ci.person_id = an.person_id
+		AND chn.id = ci.person_role_id;

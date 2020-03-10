@@ -1,25 +1,25 @@
-SELECT MIN(N.NAME) AS CAST_MEMBER_NAME, MIN(PI.INFO) AS CAST_MEMBER_INFO
-FROM AKA_NAME AS AN, CAST_INFO AS CI, INFO_TYPE AS IT, LINK_TYPE AS LT, MOVIE_LINK AS ML, NAME AS N,
-	PERSON_INFO AS PI, TITLE AS T
-WHERE AN.NAME IS NOT NULL
-		AND (AN.NAME LIKE '%a%'
-							OR AN.NAME LIKE 'A%')
-		AND IT.INFO = 'mini biography'
-		AND LT.LINK IN ('references', 'referenced in', 'features', 'featured in')
-		AND N.NAME_PCODE_CF BETWEEN 'A' AND 'F'
-		AND (N.GENDER = 'm'
-							OR (N.GENDER = 'f'
-											AND N.NAME LIKE 'A%'))
-		AND PI.NOTE IS NOT NULL
-		AND T.PRODUCTION_YEAR BETWEEN 1980 AND 2010
-		AND N.ID = AN.PERSON_ID
-		AND N.ID = PI.PERSON_ID
-		AND CI.PERSON_ID = N.ID
-		AND T.ID = CI.MOVIE_ID
-		AND ML.LINKED_MOVIE_ID = T.ID
-		AND LT.ID = ML.LINK_TYPE_ID
-		AND IT.ID = PI.INFO_TYPE_ID
-		AND PI.PERSON_ID = AN.PERSON_ID
-		AND PI.PERSON_ID = CI.PERSON_ID
-		AND AN.PERSON_ID = CI.PERSON_ID
-		AND CI.MOVIE_ID = ML.LINKED_MOVIE_ID;
+SELECT MIN(n.name) AS cast_member_name, MIN(pi.info) AS cast_member_info
+FROM aka_name AS an, cast_info AS ci, info_type AS it, link_type AS lt, movie_link AS ml, name AS n,
+	person_info AS pi, title AS t
+WHERE an.name IS NOT NULL
+		AND (an.name LIKE '%a%'
+							OR an.name LIKE 'A%')
+		AND it.info = 'mini biography'
+		AND lt.link IN ('references', 'referenced in', 'features', 'featured in')
+		AND n.name_pcode_cf BETWEEN 'A' AND 'F'
+		AND (n.gender = 'm'
+							OR (n.gender = 'f'
+											AND n.name LIKE 'A%'))
+		AND pi.note IS NOT NULL
+		AND t.production_year BETWEEN 1980 AND 2010
+		AND n.id = an.person_id
+		AND n.id = pi.person_id
+		AND ci.person_id = n.id
+		AND t.id = ci.movie_id
+		AND ml.linked_movie_id = t.id
+		AND lt.id = ml.link_type_id
+		AND it.id = pi.info_type_id
+		AND pi.person_id = an.person_id
+		AND pi.person_id = ci.person_id
+		AND an.person_id = ci.person_id
+		AND ci.movie_id = ml.linked_movie_id;

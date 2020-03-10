@@ -1,22 +1,22 @@
-SELECT MIN(CN.NAME) AS FROM_COMPANY, MIN(LT.LINK) AS MOVIE_LINK_TYPE, MIN(T.TITLE) AS SEQUEL_MOVIE
-FROM COMPANY_NAME AS CN, COMPANY_TYPE AS CT, KEYWORD AS K, LINK_TYPE AS LT, MOVIE_COMPANIES AS MC,
-	MOVIE_KEYWORD AS MK, MOVIE_LINK AS ML, TITLE AS T
-WHERE CN.COUNTRY_CODE != '[pl]'
-		AND (CN.NAME LIKE '%Film%'
-							OR CN.NAME LIKE '%Warner%')
-		AND CT.KIND = 'production companies'
-		AND K.KEYWORD = 'sequel'
-		AND LT.LINK LIKE '%follows%'
-		AND MC.NOTE IS NULL
-		AND T.PRODUCTION_YEAR = 1998
-		AND T.TITLE LIKE '%Money%'
-		AND LT.ID = ML.LINK_TYPE_ID
-		AND ML.MOVIE_ID = T.ID
-		AND T.ID = MK.MOVIE_ID
-		AND MK.KEYWORD_ID = K.ID
-		AND T.ID = MC.MOVIE_ID
-		AND MC.COMPANY_TYPE_ID = CT.ID
-		AND MC.COMPANY_ID = CN.ID
-		AND ML.MOVIE_ID = MK.MOVIE_ID
-		AND ML.MOVIE_ID = MC.MOVIE_ID
-		AND MK.MOVIE_ID = MC.MOVIE_ID;
+SELECT MIN(cn.name) AS from_company, MIN(lt.link) AS movie_link_type, MIN(t.title) AS sequel_movie
+FROM company_name AS cn, company_type AS ct, keyword AS k, link_type AS lt, movie_companies AS mc,
+	movie_keyword AS mk, movie_link AS ml, title AS t
+WHERE cn.country_code != '[pl]'
+		AND (cn.name LIKE '%Film%'
+							OR cn.name LIKE '%Warner%')
+		AND ct.kind = 'production companies'
+		AND k.keyword = 'sequel'
+		AND lt.link LIKE '%follows%'
+		AND mc.note IS NULL
+		AND t.production_year = 1998
+		AND t.title LIKE '%Money%'
+		AND lt.id = ml.link_type_id
+		AND ml.movie_id = t.id
+		AND t.id = mk.movie_id
+		AND mk.keyword_id = k.id
+		AND t.id = mc.movie_id
+		AND mc.company_type_id = ct.id
+		AND mc.company_id = cn.id
+		AND ml.movie_id = mk.movie_id
+		AND ml.movie_id = mc.movie_id
+		AND mk.movie_id = mc.movie_id;

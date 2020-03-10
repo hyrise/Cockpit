@@ -1,13 +1,13 @@
-SELECT MIN(T.TITLE) AS AMERICAN_MOVIE
-FROM COMPANY_TYPE AS CT, INFO_TYPE AS IT, MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI, TITLE AS T
-WHERE CT.KIND = 'production companies'
-		AND MC.NOTE NOT LIKE '%(TV)%'
-		AND MC.NOTE LIKE '%(USA)%'
-		AND MI.INFO IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German',
+SELECT MIN(t.title) AS american_movie
+FROM company_type AS ct, info_type AS it, movie_companies AS mc, movie_info AS mi, title AS t
+WHERE ct.kind = 'production companies'
+		AND mc.note NOT LIKE '%(TV)%'
+		AND mc.note LIKE '%(USA)%'
+		AND mi.info IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German',
 																			'USA', 'American')
-		AND T.PRODUCTION_YEAR > 1990
-		AND T.ID = MI.MOVIE_ID
-		AND T.ID = MC.MOVIE_ID
-		AND MC.MOVIE_ID = MI.MOVIE_ID
-		AND CT.ID = MC.COMPANY_TYPE_ID
-		AND IT.ID = MI.INFO_TYPE_ID;
+		AND t.production_year > 1990
+		AND t.id = mi.movie_id
+		AND t.id = mc.movie_id
+		AND mc.movie_id = mi.movie_id
+		AND ct.id = mc.company_type_id
+		AND it.id = mi.info_type_id;

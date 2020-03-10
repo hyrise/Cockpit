@@ -1,11 +1,11 @@
-SELECT MIN(MI_IDX.INFO) AS RATING, MIN(T.TITLE) AS MOVIE_TITLE
-FROM INFO_TYPE AS IT, KEYWORD AS K, MOVIE_INFO_IDX AS MI_IDX, MOVIE_KEYWORD AS MK, TITLE AS T
-WHERE IT.INFO = 'rating'
-		AND K.KEYWORD LIKE '%sequel%'
-		AND MI_IDX.INFO > '9.0'
-		AND T.PRODUCTION_YEAR > 2010
-		AND T.ID = MI_IDX.MOVIE_ID
-		AND T.ID = MK.MOVIE_ID
-		AND MK.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND K.ID = MK.KEYWORD_ID
-		AND IT.ID = MI_IDX.INFO_TYPE_ID;
+SELECT MIN(mi_idx.info) AS rating, MIN(t.title) AS movie_title
+FROM info_type AS it, keyword AS k, movie_info_idx AS mi_idx, movie_keyword AS mk, title AS t
+WHERE it.info = 'rating'
+		AND k.keyword LIKE '%sequel%'
+		AND mi_idx.info > '9.0'
+		AND t.production_year > 2010
+		AND t.id = mi_idx.movie_id
+		AND t.id = mk.movie_id
+		AND mk.movie_id = mi_idx.movie_id
+		AND k.id = mk.keyword_id
+		AND it.id = mi_idx.info_type_id;

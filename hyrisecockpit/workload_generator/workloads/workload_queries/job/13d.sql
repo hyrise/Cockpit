@@ -1,19 +1,19 @@
-SELECT MIN(CN.NAME) AS PRODUCING_COMPANY, MIN(MIIDX.INFO) AS RATING, MIN(T.TITLE) AS MOVIE
-FROM COMPANY_NAME AS CN, COMPANY_TYPE AS CT, INFO_TYPE AS IT, INFO_TYPE AS IT2, KIND_TYPE AS KT,
-	MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI, MOVIE_INFO_IDX AS MIIDX, TITLE AS T
-WHERE CN.COUNTRY_CODE = '[us]'
-		AND CT.KIND = 'production companies'
-		AND IT.INFO = 'rating'
-		AND IT2.INFO = 'release dates'
-		AND KT.KIND = 'movie'
-		AND MI.MOVIE_ID = T.ID
-		AND IT2.ID = MI.INFO_TYPE_ID
-		AND KT.ID = T.KIND_ID
-		AND MC.MOVIE_ID = T.ID
-		AND CN.ID = MC.COMPANY_ID
-		AND CT.ID = MC.COMPANY_TYPE_ID
-		AND MIIDX.MOVIE_ID = T.ID
-		AND IT.ID = MIIDX.INFO_TYPE_ID
-		AND MI.MOVIE_ID = MIIDX.MOVIE_ID
-		AND MI.MOVIE_ID = MC.MOVIE_ID
-		AND MIIDX.MOVIE_ID = MC.MOVIE_ID;
+SELECT MIN(cn.name) AS producing_company, MIN(miidx.info) AS rating, MIN(t.title) AS movie
+FROM company_name AS cn, company_type AS ct, info_type AS it, info_type AS it2, kind_type AS kt,
+	movie_companies AS mc, movie_info AS mi, movie_info_idx AS miidx, title AS t
+WHERE cn.country_code = '[us]'
+		AND ct.kind = 'production companies'
+		AND it.info = 'rating'
+		AND it2.info = 'release dates'
+		AND kt.kind = 'movie'
+		AND mi.movie_id = t.id
+		AND it2.id = mi.info_type_id
+		AND kt.id = t.kind_id
+		AND mc.movie_id = t.id
+		AND cn.id = mc.company_id
+		AND ct.id = mc.company_type_id
+		AND miidx.movie_id = t.id
+		AND it.id = miidx.info_type_id
+		AND mi.movie_id = miidx.movie_id
+		AND mi.movie_id = mc.movie_id
+		AND miidx.movie_id = mc.movie_id;

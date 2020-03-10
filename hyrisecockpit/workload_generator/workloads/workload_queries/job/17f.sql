@@ -1,14 +1,14 @@
-SELECT MIN(N.NAME) AS MEMBER_IN_CHARNAMED_MOVIE
-FROM CAST_INFO AS CI, COMPANY_NAME AS CN, KEYWORD AS K, MOVIE_COMPANIES AS MC, MOVIE_KEYWORD AS MK, NAME AS N,
-	TITLE AS T
-WHERE K.KEYWORD = 'character-name-in-title'
-		AND N.NAME LIKE '%B%'
-		AND N.ID = CI.PERSON_ID
-		AND CI.MOVIE_ID = T.ID
-		AND T.ID = MK.MOVIE_ID
-		AND MK.KEYWORD_ID = K.ID
-		AND T.ID = MC.MOVIE_ID
-		AND MC.COMPANY_ID = CN.ID
-		AND CI.MOVIE_ID = MC.MOVIE_ID
-		AND CI.MOVIE_ID = MK.MOVIE_ID
-		AND MC.MOVIE_ID = MK.MOVIE_ID;
+SELECT MIN(n.name) AS member_in_charnamed_movie
+FROM cast_info AS ci, company_name AS cn, keyword AS k, movie_companies AS mc, movie_keyword AS mk, name AS n,
+	title AS t
+WHERE k.keyword = 'character-name-in-title'
+		AND n.name LIKE '%B%'
+		AND n.id = ci.person_id
+		AND ci.movie_id = t.id
+		AND t.id = mk.movie_id
+		AND mk.keyword_id = k.id
+		AND t.id = mc.movie_id
+		AND mc.company_id = cn.id
+		AND ci.movie_id = mc.movie_id
+		AND ci.movie_id = mk.movie_id
+		AND mc.movie_id = mk.movie_id;

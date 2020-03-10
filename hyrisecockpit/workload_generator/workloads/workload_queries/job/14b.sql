@@ -1,24 +1,24 @@
-SELECT MIN(MI_IDX.INFO) AS RATING, MIN(T.TITLE) AS WESTERN_DARK_PRODUCTION
-FROM INFO_TYPE AS IT1, INFO_TYPE AS IT2, KEYWORD AS K, KIND_TYPE AS KT, MOVIE_INFO AS MI,
-	MOVIE_INFO_IDX AS MI_IDX, MOVIE_KEYWORD AS MK, TITLE AS T
-WHERE IT1.INFO = 'countries'
-		AND IT2.INFO = 'rating'
-		AND K.KEYWORD IN ('murder', 'murder-in-title')
-		AND KT.KIND = 'movie'
-		AND MI.INFO IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German',
+SELECT MIN(mi_idx.info) AS rating, MIN(t.title) AS western_dark_production
+FROM info_type AS it1, info_type AS it2, keyword AS k, kind_type AS kt, movie_info AS mi,
+	movie_info_idx AS mi_idx, movie_keyword AS mk, title AS t
+WHERE it1.info = 'countries'
+		AND it2.info = 'rating'
+		AND k.keyword IN ('murder', 'murder-in-title')
+		AND kt.kind = 'movie'
+		AND mi.info IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German',
 																			'USA', 'American')
-		AND MI_IDX.INFO > '6.0'
-		AND T.PRODUCTION_YEAR > 2010
-		AND (T.TITLE LIKE '%murder%'
-							OR T.TITLE LIKE '%Murder%'
-							OR T.TITLE LIKE '%Mord%')
-		AND KT.ID = T.KIND_ID
-		AND T.ID = MI.MOVIE_ID
-		AND T.ID = MK.MOVIE_ID
-		AND T.ID = MI_IDX.MOVIE_ID
-		AND MK.MOVIE_ID = MI.MOVIE_ID
-		AND MK.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND MI.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND K.ID = MK.KEYWORD_ID
-		AND IT1.ID = MI.INFO_TYPE_ID
-		AND IT2.ID = MI_IDX.INFO_TYPE_ID;
+		AND mi_idx.info > '6.0'
+		AND t.production_year > 2010
+		AND (t.title LIKE '%murder%'
+							OR t.title LIKE '%Murder%'
+							OR t.title LIKE '%Mord%')
+		AND kt.id = t.kind_id
+		AND t.id = mi.movie_id
+		AND t.id = mk.movie_id
+		AND t.id = mi_idx.movie_id
+		AND mk.movie_id = mi.movie_id
+		AND mk.movie_id = mi_idx.movie_id
+		AND mi.movie_id = mi_idx.movie_id
+		AND k.id = mk.keyword_id
+		AND it1.id = mi.info_type_id
+		AND it2.id = mi_idx.info_type_id;

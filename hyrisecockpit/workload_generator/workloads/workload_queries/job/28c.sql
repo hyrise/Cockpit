@@ -1,40 +1,40 @@
-SELECT MIN(CN.NAME) AS MOVIE_COMPANY, MIN(MI_IDX.INFO) AS RATING, MIN(T.TITLE) AS COMPLETE_EURO_DARK_MOVIE
-FROM COMPLETE_CAST AS CC, COMP_CAST_TYPE AS CCT1, COMP_CAST_TYPE AS CCT2, COMPANY_NAME AS CN, COMPANY_TYPE AS CT,
-	INFO_TYPE AS IT1, INFO_TYPE AS IT2, KEYWORD AS K, KIND_TYPE AS KT, MOVIE_COMPANIES AS MC, MOVIE_INFO AS MI,
-	MOVIE_INFO_IDX AS MI_IDX, MOVIE_KEYWORD AS MK, TITLE AS T
-WHERE CCT1.KIND = 'cast'
-		AND CCT2.KIND = 'complete'
-		AND CN.COUNTRY_CODE != '[us]'
-		AND IT1.INFO = 'countries'
-		AND IT2.INFO = 'rating'
-		AND K.KEYWORD IN ('murder', 'murder-in-title', 'blood', 'violence')
-		AND KT.KIND IN ('movie', 'episode')
-		AND MC.NOTE NOT LIKE '%(USA)%'
-		AND MC.NOTE LIKE '%(200%)%'
-		AND MI.INFO IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Danish', 'Norwegian', 'German',
+SELECT MIN(cn.name) AS movie_company, MIN(mi_idx.info) AS rating, MIN(t.title) AS complete_euro_dark_movie
+FROM complete_cast AS cc, comp_cast_type AS cct1, comp_cast_type AS cct2, company_name AS cn, company_type AS ct,
+	info_type AS it1, info_type AS it2, keyword AS k, kind_type AS kt, movie_companies AS mc, movie_info AS mi,
+	movie_info_idx AS mi_idx, movie_keyword AS mk, title AS t
+WHERE cct1.kind = 'cast'
+		AND cct2.kind = 'complete'
+		AND cn.country_code != '[us]'
+		AND it1.info = 'countries'
+		AND it2.info = 'rating'
+		AND k.keyword IN ('murder', 'murder-in-title', 'blood', 'violence')
+		AND kt.kind IN ('movie', 'episode')
+		AND mc.note NOT LIKE '%(USA)%'
+		AND mc.note LIKE '%(200%)%'
+		AND mi.info IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Danish', 'Norwegian', 'German',
 																			'USA', 'American')
-		AND MI_IDX.INFO < '8.5'
-		AND T.PRODUCTION_YEAR > 2005
-		AND KT.ID = T.KIND_ID
-		AND T.ID = MI.MOVIE_ID
-		AND T.ID = MK.MOVIE_ID
-		AND T.ID = MI_IDX.MOVIE_ID
-		AND T.ID = MC.MOVIE_ID
-		AND T.ID = CC.MOVIE_ID
-		AND MK.MOVIE_ID = MI.MOVIE_ID
-		AND MK.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND MK.MOVIE_ID = MC.MOVIE_ID
-		AND MK.MOVIE_ID = CC.MOVIE_ID
-		AND MI.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND MI.MOVIE_ID = MC.MOVIE_ID
-		AND MI.MOVIE_ID = CC.MOVIE_ID
-		AND MC.MOVIE_ID = MI_IDX.MOVIE_ID
-		AND MC.MOVIE_ID = CC.MOVIE_ID
-		AND MI_IDX.MOVIE_ID = CC.MOVIE_ID
-		AND K.ID = MK.KEYWORD_ID
-		AND IT1.ID = MI.INFO_TYPE_ID
-		AND IT2.ID = MI_IDX.INFO_TYPE_ID
-		AND CT.ID = MC.COMPANY_TYPE_ID
-		AND CN.ID = MC.COMPANY_ID
-		AND CCT1.ID = CC.SUBJECT_ID
-		AND CCT2.ID = CC.STATUS_ID;
+		AND mi_idx.info < '8.5'
+		AND t.production_year > 2005
+		AND kt.id = t.kind_id
+		AND t.id = mi.movie_id
+		AND t.id = mk.movie_id
+		AND t.id = mi_idx.movie_id
+		AND t.id = mc.movie_id
+		AND t.id = cc.movie_id
+		AND mk.movie_id = mi.movie_id
+		AND mk.movie_id = mi_idx.movie_id
+		AND mk.movie_id = mc.movie_id
+		AND mk.movie_id = cc.movie_id
+		AND mi.movie_id = mi_idx.movie_id
+		AND mi.movie_id = mc.movie_id
+		AND mi.movie_id = cc.movie_id
+		AND mc.movie_id = mi_idx.movie_id
+		AND mc.movie_id = cc.movie_id
+		AND mi_idx.movie_id = cc.movie_id
+		AND k.id = mk.keyword_id
+		AND it1.id = mi.info_type_id
+		AND it2.id = mi_idx.info_type_id
+		AND ct.id = mc.company_type_id
+		AND cn.id = mc.company_id
+		AND cct1.id = cc.subject_id
+		AND cct2.id = cc.status_id;

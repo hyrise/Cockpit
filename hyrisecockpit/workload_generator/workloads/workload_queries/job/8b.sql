@@ -1,23 +1,23 @@
-SELECT MIN(AN.NAME) AS ACRESS_PSEUDONYM, MIN(T.TITLE) AS JAPANESE_ANIME_MOVIE
-FROM AKA_NAME AS AN, CAST_INFO AS CI, COMPANY_NAME AS CN, MOVIE_COMPANIES AS MC, NAME AS N, ROLE_TYPE AS RT,
-	TITLE AS T
-WHERE CI.NOTE = '(voice: English version)'
-		AND CN.COUNTRY_CODE = '[jp]'
-		AND MC.NOTE LIKE '%(Japan)%'
-		AND MC.NOTE NOT LIKE '%(USA)%'
-		AND (MC.NOTE LIKE '%(2006)%'
-							OR MC.NOTE LIKE '%(2007)%')
-		AND N.NAME LIKE '%Yo%'
-		AND N.NAME NOT LIKE '%Yu%'
-		AND RT.ROLE = 'actress'
-		AND T.PRODUCTION_YEAR BETWEEN 2006 AND 2007
-		AND (T.TITLE LIKE 'One Piece%'
-							OR T.TITLE LIKE 'Dragon Ball Z%')
-		AND AN.PERSON_ID = N.ID
-		AND N.ID = CI.PERSON_ID
-		AND CI.MOVIE_ID = T.ID
-		AND T.ID = MC.MOVIE_ID
-		AND MC.COMPANY_ID = CN.ID
-		AND CI.ROLE_ID = RT.ID
-		AND AN.PERSON_ID = CI.PERSON_ID
-		AND CI.MOVIE_ID = MC.MOVIE_ID;
+SELECT MIN(an.name) AS acress_pseudonym, MIN(t.title) AS japanese_anime_movie
+FROM aka_name AS an, cast_info AS ci, company_name AS cn, movie_companies AS mc, name AS n, role_type AS rt,
+	title AS t
+WHERE ci.note = '(voice: English version)'
+		AND cn.country_code = '[jp]'
+		AND mc.note LIKE '%(Japan)%'
+		AND mc.note NOT LIKE '%(USA)%'
+		AND (mc.note LIKE '%(2006)%'
+							OR mc.note LIKE '%(2007)%')
+		AND n.name LIKE '%Yo%'
+		AND n.name NOT LIKE '%Yu%'
+		AND rt.role = 'actress'
+		AND t.production_year BETWEEN 2006 AND 2007
+		AND (t.title LIKE 'One Piece%'
+							OR t.title LIKE 'Dragon Ball Z%')
+		AND an.person_id = n.id
+		AND n.id = ci.person_id
+		AND ci.movie_id = t.id
+		AND t.id = mc.movie_id
+		AND mc.company_id = cn.id
+		AND ci.role_id = rt.id
+		AND an.person_id = ci.person_id
+		AND ci.movie_id = mc.movie_id;
