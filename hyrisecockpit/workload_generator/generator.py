@@ -6,7 +6,7 @@ Includes the main WorkloadGenerator.
 from typing import Any, Callable, Dict, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from zmq import PUB, REP, Context
+from zmq import PUB, Context
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
@@ -51,6 +51,9 @@ class WorkloadGenerator(object):
         self._frequency = 0
         self._workloads: Dict[str, Any] = {}
         self._init_server()
+        self._init_scheduler()
+
+    def _init_scheduler(self):
         self._scheduler = BackgroundScheduler()
         self._generate_workload_job = self._scheduler.add_job(
             func=self._generate_workload, trigger="interval", seconds=1,
@@ -67,7 +70,6 @@ class WorkloadGenerator(object):
 
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
-        self._rep_socket = self._context.socket(REP)
         self._pub_socket = self._context.socket(PUB)
         self._pub_socket.bind(
             "tcp://{:s}:{:s}".format(self._workload_listening, self._workload_pub_port)
@@ -126,6 +128,5 @@ class WorkloadGenerator(object):
         """Close the socket and context."""
         self._generate_workload_job.remove()
         self._scheduler.shutdown()
-        self._rep_socket.close()
         self._pub_socket.close()
         self._context.term()
