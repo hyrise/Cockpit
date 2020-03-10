@@ -1,1425 +1,1425 @@
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;
 
 ---
 
-WITH SSCI AS
-		(SELECT SS_CUSTOMER_SK CUSTOMER_SK, SS_ITEM_SK ITEM_SK
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY SS_CUSTOMER_SK, SS_ITEM_SK),
-	CSCI AS
-		(SELECT CS_BILL_CUSTOMER_SK CUSTOMER_SK,CS_ITEM_SK ITEM_SK
-			FROM CATALOG_SALES,DATE_DIM
-			WHERE CS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-			GROUP BY CS_BILL_CUSTOMER_SK,CS_ITEM_SK)
-SELECT SUM(CASE
-															WHEN SSCI.CUSTOMER_SK IS NOT NULL
-																				AND CSCI.CUSTOMER_SK IS NULL THEN 1
+WITH ssci AS
+		(SELECT ss_customer_sk customer_sk, ss_item_sk item_sk
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY ss_customer_sk, ss_item_sk),
+	csci AS
+		(SELECT cs_bill_customer_sk customer_sk,cs_item_sk item_sk
+			FROM catalog_sales,date_dim
+			WHERE cs_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1200 AND 1200 + 11
+			GROUP BY cs_bill_customer_sk,cs_item_sk)
+SELECT sum(CASE
+															WHEN ssci.customer_sk IS NOT NULL
+																				AND csci.customer_sk IS NULL THEN 1
 															ELSE 0
-											END) STORE_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+											END) store_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) CATALOG_ONLY,
-	SUM(CASE
-									WHEN SSCI.CUSTOMER_SK IS NOT NULL
-														AND CSCI.CUSTOMER_SK IS NOT NULL THEN 1
+					END) catalog_only,
+	sum(CASE
+									WHEN ssci.customer_sk IS NOT NULL
+														AND csci.customer_sk IS NOT NULL THEN 1
 									ELSE 0
-					END) STORE_AND_CATALOG
-FROM SSCI
-FULL OUTER JOIN CSCI ON (SSCI.CUSTOMER_SK = CSCI.CUSTOMER_SK
-																									AND SSCI.ITEM_SK = CSCI.ITEM_SK)
+					END) store_and_catalog
+FROM ssci
+FULL OUTER JOIN csci ON (ssci.customer_sk = csci.customer_sk
+																									AND ssci.item_sk = csci.item_sk)
 LIMIT 100;

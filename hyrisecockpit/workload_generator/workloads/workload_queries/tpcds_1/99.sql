@@ -1,3897 +1,3897 @@
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;
 
 ---
 
-SELECT W_SUBSTR, SM_TYPE, CC_NAME,
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 30) THEN 1
+SELECT w_substr, sm_type, cc_name,
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk <= 30) THEN 1
 									ELSE 0
 					END) AS "30 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 30)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 60) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 30)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 60) THEN 1
 									ELSE 0
 					END) AS "31-60 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 60)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 90) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 60)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 90) THEN 1
 									ELSE 0
 					END) AS "61-90 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 90)
-														AND (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK <= 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 90)
+														AND (cs_ship_date_sk - cs_sold_date_sk <= 120) THEN 1
 									ELSE 0
 					END) AS "91-120 days",
-	SUM(CASE
-									WHEN (CS_SHIP_DATE_SK - CS_SOLD_DATE_SK > 120) THEN 1
+	sum(CASE
+									WHEN (cs_ship_date_sk - cs_sold_date_sk > 120) THEN 1
 									ELSE 0
 					END) AS ">120 days"
-FROM CATALOG_SALES,
-		(SELECT SUBSTR(W_WAREHOUSE_NAME, 1, 20) W_SUBSTR, *
-			FROM WAREHOUSE) AS SQ1, SHIP_MODE,
-	CALL_CENTER, DATE_DIM
-WHERE D_MONTH_SEQ BETWEEN 1200 AND 1200 + 11
-		AND CS_SHIP_DATE_SK = D_DATE_SK
-		AND CS_WAREHOUSE_SK = W_WAREHOUSE_SK
-		AND CS_SHIP_MODE_SK = SM_SHIP_MODE_SK
-		AND CS_CALL_CENTER_SK = CC_CALL_CENTER_SK
-GROUP BY W_SUBSTR, SM_TYPE, CC_NAME
-ORDER BY W_SUBSTR, SM_TYPE, CC_NAME
+FROM catalog_sales,
+		(SELECT SUBSTR(w_warehouse_name, 1, 20) w_substr, *
+			FROM warehouse) AS sq1, ship_mode,
+	call_center, date_dim
+WHERE d_month_seq BETWEEN 1200 AND 1200 + 11
+		AND cs_ship_date_sk = d_date_sk
+		AND cs_warehouse_sk = w_warehouse_sk
+		AND cs_ship_mode_sk = sm_ship_mode_sk
+		AND cs_call_center_sk = cc_call_center_sk
+GROUP BY w_substr, sm_type, cc_name
+ORDER BY w_substr, sm_type, cc_name
 LIMIT 100;

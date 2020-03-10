@@ -1,2597 +1,2597 @@
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
-
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, I_ITEM_DESC, SC.REVENUE, I_CURRENT_PRICE, I_WHOLESALE_COST, I_BRAND
-FROM STORE, ITEM,
+SELECT s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand
+FROM store, item,
 
-		(SELECT SS_STORE_SK, AVG(REVENUE) AS AVE
+		(SELECT ss_store_sk, avg(revenue) AS ave
 			FROM
-					(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-						FROM STORE_SALES, DATE_DIM
-						WHERE SS_SOLD_DATE_SK = D_DATE_SK
-								AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-						GROUP BY SS_STORE_SK, SS_ITEM_SK) SA
-			GROUP BY SS_STORE_SK) SB,
+					(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+						FROM store_sales, date_dim
+						WHERE ss_sold_date_sk = d_date_sk
+								AND d_month_seq BETWEEN 1176 AND 1176 + 11
+						GROUP BY ss_store_sk, ss_item_sk) sa
+			GROUP BY ss_store_sk) sb,
 
-		(SELECT SS_STORE_SK, SS_ITEM_SK, SUM(SS_SALES_PRICE) AS REVENUE
-			FROM STORE_SALES, DATE_DIM
-			WHERE SS_SOLD_DATE_SK = D_DATE_SK
-					AND D_MONTH_SEQ BETWEEN 1176 AND 1176 + 11
-			GROUP BY SS_STORE_SK, SS_ITEM_SK) SC
-WHERE SB.SS_STORE_SK = SC.SS_STORE_SK
-		AND SC.REVENUE <= 0.1 * SB.AVE
-		AND S_STORE_SK = SC.SS_STORE_SK
-		AND I_ITEM_SK = SC.SS_ITEM_SK
-ORDER BY S_STORE_NAME, I_ITEM_DESC
+		(SELECT ss_store_sk, ss_item_sk, sum(ss_sales_price) AS revenue
+			FROM store_sales, date_dim
+			WHERE ss_sold_date_sk = d_date_sk
+					AND d_month_seq BETWEEN 1176 AND 1176 + 11
+			GROUP BY ss_store_sk, ss_item_sk) sc
+WHERE sb.ss_store_sk = sc.ss_store_sk
+		AND sc.revenue <= 0.1 * sb.ave
+		AND s_store_sk = sc.ss_store_sk
+		AND i_item_sk = sc.ss_item_sk
+ORDER BY s_store_name, i_item_desc
 LIMIT 100;

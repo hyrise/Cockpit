@@ -1,3397 +1,3397 @@
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, COUNT(*) CNT1, MIN(CD_DEP_COUNT),
-	MAX(CD_DEP_COUNT), AVG(CD_DEP_COUNT), CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT2, MIN(CD_DEP_EMPLOYED_COUNT),
-	MAX(CD_DEP_EMPLOYED_COUNT), AVG(CD_DEP_EMPLOYED_COUNT), CD_DEP_COLLEGE_COUNT, COUNT(*) CNT3,
-	MIN(CD_DEP_COLLEGE_COUNT), MAX(CD_DEP_COLLEGE_COUNT), AVG(CD_DEP_COLLEGE_COUNT)
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+SELECT ca_state, cd_gender, cd_marital_status, cd_dep_count, count(*) cnt1, min(cd_dep_count),
+	max(cd_dep_count), avg(cd_dep_count), cd_dep_employed_count, count(*) cnt2, min(cd_dep_employed_count),
+	max(cd_dep_employed_count), avg(cd_dep_employed_count), cd_dep_college_count, count(*) cnt3,
+	min(cd_dep_college_count), max(cd_dep_college_count), avg(cd_dep_college_count)
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_QOY < 4)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_qoy < 4)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_QOY < 4))
-GROUP BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CA_STATE, CD_GENDER, CD_MARITAL_STATUS, CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_qoy < 4))
+GROUP BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY ca_state, cd_gender, cd_marital_status, cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;

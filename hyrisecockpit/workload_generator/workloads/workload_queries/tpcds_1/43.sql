@@ -1,2837 +1,2837 @@
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;
 
 ---
 
-SELECT S_STORE_NAME, S_STORE_ID,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Sunday') THEN SS_SALES_PRICE
+SELECT s_store_name, s_store_id,
+	sum(CASE
+									WHEN (d_day_name = 'Sunday') THEN ss_sales_price
 									ELSE NULL
-					END) SUN_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Monday') THEN SS_SALES_PRICE
+					END) sun_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Monday') THEN ss_sales_price
 									ELSE NULL
-					END) MON_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Tuesday') THEN SS_SALES_PRICE
+					END) mon_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Tuesday') THEN ss_sales_price
 									ELSE NULL
-					END) TUE_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Wednesday') THEN SS_SALES_PRICE
+					END) tue_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Wednesday') THEN ss_sales_price
 									ELSE NULL
-					END) WED_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Thursday') THEN SS_SALES_PRICE
+					END) wed_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Thursday') THEN ss_sales_price
 									ELSE NULL
-					END) THU_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Friday') THEN SS_SALES_PRICE
+					END) thu_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Friday') THEN ss_sales_price
 									ELSE NULL
-					END) FRI_SALES,
-	SUM(CASE
-									WHEN (D_DAY_NAME = 'Saturday') THEN SS_SALES_PRICE
+					END) fri_sales,
+	sum(CASE
+									WHEN (d_day_name = 'Saturday') THEN ss_sales_price
 									ELSE NULL
-					END) SAT_SALES
-FROM DATE_DIM, STORE_SALES, STORE
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND S_STORE_SK = SS_STORE_SK
-		AND S_GMT_OFFSET = -5
-		AND D_YEAR = 2000
-GROUP BY S_STORE_NAME, S_STORE_ID
-ORDER BY S_STORE_NAME, S_STORE_ID, SUN_SALES, MON_SALES, TUE_SALES, WED_SALES, THU_SALES, FRI_SALES, SAT_SALES
+					END) sat_sales
+FROM date_dim, store_sales, store
+WHERE d_date_sk = ss_sold_date_sk
+		AND s_store_sk = ss_store_sk
+		AND s_gmt_offset = -5
+		AND d_year = 2000
+GROUP BY s_store_name, s_store_id
+ORDER BY s_store_name, s_store_id, sun_sales, mon_sales, tue_sales, wed_sales, thu_sales, fri_sales, sat_sales
 LIMIT 100;

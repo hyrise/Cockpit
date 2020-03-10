@@ -1,1297 +1,1297 @@
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;
 
 ---
 
-SELECT I_BRAND_ID BRAND_ID, I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) EXT_PRICE
-FROM DATE_DIM, STORE_SALES, ITEM
-WHERE D_DATE_SK = SS_SOLD_DATE_SK
-		AND SS_ITEM_SK = I_ITEM_SK
-		AND I_MANAGER_ID = 28
-		AND D_MOY = 11
-		AND D_YEAR = 1999
-GROUP BY I_BRAND, I_BRAND_ID
-ORDER BY EXT_PRICE DESC, I_BRAND_ID
+SELECT i_brand_id brand_id, i_brand brand, sum(ss_ext_sales_price) ext_price
+FROM date_dim, store_sales, item
+WHERE d_date_sk = ss_sold_date_sk
+		AND ss_item_sk = i_item_sk
+		AND i_manager_id = 28
+		AND d_moy = 11
+		AND d_year = 1999
+GROUP BY i_brand, i_brand_id
+ORDER BY ext_price DESC, i_brand_id
 LIMIT 100 ;

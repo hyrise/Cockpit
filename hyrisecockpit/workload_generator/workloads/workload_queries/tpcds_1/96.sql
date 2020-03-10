@@ -1,1397 +1,1397 @@
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;
 
 ---
 
-SELECT COUNT(*)
-FROM STORE_SALES, HOUSEHOLD_DEMOGRAPHICS, TIME_DIM, STORE
-WHERE SS_SOLD_TIME_SK = TIME_DIM.T_TIME_SK
-		AND SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-		AND SS_STORE_SK = S_STORE_SK
-		AND TIME_DIM.T_HOUR = 20
-		AND TIME_DIM.T_MINUTE >= 30
-		AND HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 7
-		AND STORE.S_STORE_NAME = 'ese'
-ORDER BY COUNT(*)
+SELECT count(*)
+FROM store_sales, household_demographics, time_dim, store
+WHERE ss_sold_time_sk = time_dim.t_time_sk
+		AND ss_hdemo_sk = household_demographics.hd_demo_sk
+		AND ss_store_sk = s_store_sk
+		AND time_dim.t_hour = 20
+		AND time_dim.t_minute >= 30
+		AND household_demographics.hd_dep_count = 7
+		AND store.s_store_name = 'ese'
+ORDER BY count(*)
 LIMIT 100;

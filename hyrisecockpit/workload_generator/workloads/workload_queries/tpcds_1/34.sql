@@ -1,2497 +1,2497 @@
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;
 
 ---
 
-SELECT C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG, SS_TICKET_NUMBER, CNT
+SELECT c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number, cnt
 FROM
-		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, COUNT(*) CNT
-			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
-			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
-					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
-					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
-					AND (DATE_DIM.D_DOM BETWEEN 1 AND 3
-										OR DATE_DIM.D_DOM BETWEEN 25 AND 28)
-					AND (HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = '>10000'
-										OR HOUSEHOLD_DEMOGRAPHICS.HD_BUY_POTENTIAL = 'Unknown')
-					AND HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0
+		(SELECT ss_ticket_number, ss_customer_sk, count(*) cnt
+			FROM store_sales, date_dim, store, household_demographics
+			WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
+					AND store_sales.ss_store_sk = store.s_store_sk
+					AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
+					AND (date_dim.d_dom BETWEEN 1 AND 3
+										OR date_dim.d_dom BETWEEN 25 AND 28)
+					AND (household_demographics.hd_buy_potential = '>10000'
+										OR household_demographics.hd_buy_potential = 'Unknown')
+					AND household_demographics.hd_vehicle_count > 0
 					AND (CASE
-														WHEN HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 0 THEN HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT / HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT
+														WHEN household_demographics.hd_vehicle_count > 0 THEN household_demographics.hd_dep_count / household_demographics.hd_vehicle_count
 														ELSE NULL
 										END) > 1.2
-					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
-					AND STORE.S_COUNTY = 'Williamson County'
-			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK) DN, CUSTOMER
-WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
-		AND CNT BETWEEN 15 AND 20
-ORDER BY C_LAST_NAME, C_FIRST_NAME, C_SALUTATION, C_PREFERRED_CUST_FLAG DESC, SS_TICKET_NUMBER;
+					AND date_dim.d_year IN (1999, 1999 + 1, 1999 + 2)
+					AND store.s_county = 'Williamson County'
+			GROUP BY ss_ticket_number, ss_customer_sk) dn, customer
+WHERE ss_customer_sk = c_customer_sk
+		AND cnt BETWEEN 15 AND 20
+ORDER BY c_last_name, c_first_name, c_salutation, c_preferred_cust_flag DESC, ss_ticket_number;

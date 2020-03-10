@@ -1,1197 +1,1197 @@
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;
 
 ---
 
-SELECT DT.D_YEAR, ITEM.I_BRAND_ID BRAND_ID, ITEM.I_BRAND BRAND, SUM(SS_EXT_SALES_PRICE) SUM_AGG
-FROM DATE_DIM DT, STORE_SALES, ITEM
-WHERE DT.D_DATE_SK = STORE_SALES.SS_SOLD_DATE_SK
-		AND STORE_SALES.SS_ITEM_SK = ITEM.I_ITEM_SK
-		AND ITEM.I_MANUFACT_ID = 128
-		AND DT.D_MOY = 11
-GROUP BY DT.D_YEAR, ITEM.I_BRAND, ITEM.I_BRAND_ID
-ORDER BY DT.D_YEAR, SUM_AGG DESC, BRAND_ID
+SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand, sum(ss_ext_sales_price) sum_agg
+FROM date_dim dt, store_sales, item
+WHERE dt.d_date_sk = store_sales.ss_sold_date_sk
+		AND store_sales.ss_item_sk = item.i_item_sk
+		AND item.i_manufact_id = 128
+		AND dt.d_moy = 11
+GROUP BY dt.d_year, item.i_brand, item.i_brand_id
+ORDER BY dt.d_year, sum_agg DESC, brand_id
 LIMIT 100;

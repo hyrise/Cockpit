@@ -1,6997 +1,6997 @@
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
-	CASE
-					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
-	CASE
-					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
-	CASE
-					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
-	CASE
-					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
-
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+											ELSE
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
+	CASE
+					WHEN
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+					ELSE
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
+	CASE
+					WHEN
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+					ELSE
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
+	CASE
+					WHEN
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+					ELSE
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
+	CASE
+					WHEN
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+					ELSE
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
+
 ---
 
 SELECT CASE
-											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
-	CASE
-					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
-	CASE
-					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+											WHEN
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+											ELSE
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
+	CASE
+					WHEN
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+					ELSE
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
+	CASE
+					WHEN
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+					ELSE
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;
 
 ---
 
 SELECT CASE
 											WHEN
-																		(SELECT COUNT(*)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20) > 74129 THEN
-																		(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
+																		(SELECT count(*)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20) > 74129 THEN
+																		(SELECT avg(ss_ext_discount_amt)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
 											ELSE
-																		(SELECT AVG(SS_NET_PAID)
-																			FROM STORE_SALES
-																			WHERE SS_QUANTITY BETWEEN 1 AND 20)
-							END BUCKET1,
+																		(SELECT avg(ss_net_paid)
+																			FROM store_sales
+																			WHERE ss_quantity BETWEEN 1 AND 20)
+							END bucket1,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40) > 122840 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40) > 122840 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 21 AND 40)
-	END BUCKET2,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 21 AND 40)
+	END bucket2,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60) > 56580 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60) > 56580 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 41 AND 60)
-	END BUCKET3,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 41 AND 60)
+	END bucket3,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80) > 10097 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80) > 10097 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 61 AND 80)
-	END BUCKET4,
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 61 AND 80)
+	END bucket4,
 	CASE
 					WHEN
-												(SELECT COUNT(*)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100) > 165306 THEN
-												(SELECT AVG(SS_EXT_DISCOUNT_AMT)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
+												(SELECT count(*)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100) > 165306 THEN
+												(SELECT avg(ss_ext_discount_amt)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
 					ELSE
-												(SELECT AVG(SS_NET_PAID)
-													FROM STORE_SALES
-													WHERE SS_QUANTITY BETWEEN 81 AND 100)
-	END BUCKET5
-FROM REASON
-WHERE R_REASON_SK = 1 ;
+												(SELECT avg(ss_net_paid)
+													FROM store_sales
+													WHERE ss_quantity BETWEEN 81 AND 100)
+	END bucket5
+FROM reason
+WHERE r_reason_sk = 1 ;

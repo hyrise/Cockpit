@@ -1,3697 +1,3697 @@
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
 
 ---
 
-SELECT CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, COUNT(*) CNT1, CD_PURCHASE_ESTIMATE, COUNT(*) CNT2,
-	CD_CREDIT_RATING, COUNT(*) CNT3, CD_DEP_COUNT, COUNT(*) CNT4, CD_DEP_EMPLOYED_COUNT, COUNT(*) CNT5,
-	CD_DEP_COLLEGE_COUNT, COUNT(*) CNT6
-FROM CUSTOMER C, CUSTOMER_ADDRESS CA, CUSTOMER_DEMOGRAPHICS
-WHERE C.C_CURRENT_ADDR_SK = CA.CA_ADDRESS_SK
-		AND CA_COUNTY IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
+SELECT cd_gender, cd_marital_status, cd_education_status, count(*) cnt1, cd_purchase_estimate, count(*) cnt2,
+	cd_credit_rating, count(*) cnt3, cd_dep_count, count(*) cnt4, cd_dep_employed_count, count(*) cnt5,
+	cd_dep_college_count, count(*) cnt6
+FROM customer c, customer_address ca, customer_demographics
+WHERE c.c_current_addr_sk = ca.ca_address_sk
+		AND ca_county IN ('Rush County', 'Toole County', 'Jefferson County', 'Dona Ana County',
 																					'La Porte County')
-		AND CD_DEMO_SK = C.C_CURRENT_CDEMO_SK
+		AND cd_demo_sk = c.c_current_cdemo_sk
 		AND EXISTS
 				(SELECT *
-					FROM STORE_SALES, DATE_DIM
-					WHERE C.C_CUSTOMER_SK = SS_CUSTOMER_SK
-							AND SS_SOLD_DATE_SK = D_DATE_SK
-							AND D_YEAR = 2002
-							AND D_MOY BETWEEN 1 AND 1 + 3)
+					FROM store_sales, date_dim
+					WHERE c.c_customer_sk = ss_customer_sk
+							AND ss_sold_date_sk = d_date_sk
+							AND d_year = 2002
+							AND d_moy BETWEEN 1 AND 1 + 3)
 		AND (EXISTS
 									(SELECT *
-										FROM WEB_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = WS_BILL_CUSTOMER_SK
-												AND WS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3)
+										FROM web_sales, date_dim
+										WHERE c.c_customer_sk = ws_bill_customer_sk
+												AND ws_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3)
 							OR EXISTS
 									(SELECT *
-										FROM CATALOG_SALES, DATE_DIM
-										WHERE C.C_CUSTOMER_SK = CS_SHIP_CUSTOMER_SK
-												AND CS_SOLD_DATE_SK = D_DATE_SK
-												AND D_YEAR = 2002
-												AND D_MOY BETWEEN 1 AND 1 + 3))
-GROUP BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
-ORDER BY CD_GENDER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS, CD_PURCHASE_ESTIMATE, CD_CREDIT_RATING,
-	CD_DEP_COUNT, CD_DEP_EMPLOYED_COUNT, CD_DEP_COLLEGE_COUNT
+										FROM catalog_sales, date_dim
+										WHERE c.c_customer_sk = cs_ship_customer_sk
+												AND cs_sold_date_sk = d_date_sk
+												AND d_year = 2002
+												AND d_moy BETWEEN 1 AND 1 + 3))
+GROUP BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
+ORDER BY cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
+	cd_dep_count, cd_dep_employed_count, cd_dep_college_count
 LIMIT 100;
