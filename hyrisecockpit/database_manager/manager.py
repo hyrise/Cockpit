@@ -210,7 +210,9 @@ class DatabaseManager(object):
     def _call_activate_plugin(self, body: Dict) -> Dict:
         id: str = body["id"]
         plugin: str = body["plugin"]
-        if self._databases[id].activate_plugin(plugin):
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].activate_plugin(plugin):
             response = get_response(200)
         else:
             response = get_response(423)
@@ -219,8 +221,9 @@ class DatabaseManager(object):
     def _call_deactivate_plugin(self, body: Dict) -> Dict:
         id: str = body["id"]
         plugin: str = body["plugin"]
-        database = self._databases[id]
-        if database.deactivate_plugin(plugin):
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].deactivate_plugin(plugin):
             response = get_response(200)
         else:
             response = get_response(423)
