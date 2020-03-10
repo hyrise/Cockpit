@@ -1,8 +1,8 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Manager, Process, Queue
+from multiprocessing import Process, Queue, Value
 from secrets import randbelow
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -50,14 +50,13 @@ class Database(object):
 
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
-        self._manager = Manager()
 
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
 
-        self._worker_stay_alive_flag = self._manager.Value("b", True)
-        self._processing_tables_flag = self._manager.Value("b", False)
+        self._worker_stay_alive_flag = Value("b", True)
+        self._processing_tables_flag = Value("b", False)
         self._worker_pool: pool = self._init_worker_pool()
         self._subscriber_worker = self._init_subscriber_worker()
 
@@ -159,15 +158,13 @@ class Database(object):
 
     def _generate_table_loading_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[Tuple[str, Any], str, str]]:
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
             (
-                (
-                    "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                    ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
-                ),
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
                 "system",
                 "generate table query",
             )
@@ -176,11 +173,11 @@ class Database(object):
 
     def _generate_table_drop_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[Tuple[str, Any], str, str]]:
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
-            (("DROP TABLE %s;", ((name, "as_is"),)), "system", "drop table query")
+            ("DROP TABLE %s;", ((name, "as_is"),), "system", "drop table query")
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
@@ -209,7 +206,8 @@ class Database(object):
         self._flush_queue()
         with PoolCursor(self._connection_pool) as cur:
             for task in table_loading_tasks:
-                query, not_formatted_parameters = task
+                query_tuple, benchmark, query_no = task
+                query, not_formatted_parameters = query_tuple
                 formatted_parameters = (
                     tuple(
                         AsIs(parameter) if protocol == "as_is" else parameter
