@@ -43,6 +43,7 @@
                 @click="startingWorkload(workload, frequency)"
                 :disabled="buttonIsLoading.start"
                 :loading="buttonIsLoading.start"
+                v-bind:style="{ color: (isActive = 'green') }"
               >
                 <v-icon>
                   mdi-play
@@ -52,6 +53,7 @@
                 @click="pauseWorkload(workload)"
                 :disabled="buttonIsLoading.pause"
                 :loading="buttonIsLoading.pause"
+                v-bind:style="{ color: (isActive = 'blue') }"
               >
                 <v-icon>
                   mdi-pause
@@ -61,6 +63,7 @@
                 @click="stoppingWorkload()"
                 :disabled="buttonIsLoading.stop"
                 :loading="buttonIsLoading.stop"
+                v-bind:style="{ color: (isActive = 'red') }"
               >
                 <v-icon>
                   mdi-stop
@@ -82,6 +85,7 @@
               @change="handleWorkloadDataChange(workload)"
               :loading="buttonIsLoading['load' + workload]"
               :disabled="buttonIsLoading['load' + workload]"
+              v-bind:style="{ color: (isActive = 'green') }"
             >
             </v-switch>
           </v-col>
@@ -107,6 +111,7 @@ interface Props {
   open: boolean;
 }
 interface Data {
+  isActive: any[];
   buttonIsLoading: any[];
   availableWorkloads: string[];
   frequency: Ref<number>;
@@ -132,6 +137,7 @@ export default defineComponent({
     }
   },
   setup(props: {}, context: SetupContext): Data {
+    const isActive = reactive({ color: false });
     const buttonIsLoading = reactive({
       loadtpch01: false,
       loadtpch1: false,
@@ -161,18 +167,21 @@ export default defineComponent({
       buttonIsLoading["start"] = true;
       startWorkload(workload, frequency).then(() => {
         buttonIsLoading["start"] = false;
+        isActive.color = true;
       });
     }
     function pauseWorkload(workload: Workload): void {
       buttonIsLoading["pause"] = true;
       startWorkload(workload, 0).then(() => {
         buttonIsLoading["pause"] = false;
+        isActive.color = true;
       });
     }
     function stoppingWorkload(): void {
       buttonIsLoading["stop"] = true;
       stopWorkload().then(() => {
         buttonIsLoading["stop"] = false;
+        isActive.color = true;
       });
     }
     function handleWorkloadDataChange(workload: Workload): void {
