@@ -2,6 +2,7 @@
 
 from multiprocessing import Process, Queue, Value
 from secrets import randbelow
+from time import time_ns
 from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -10,7 +11,14 @@ from pandas.io.sql import read_sql_query
 from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
-from .cursor import PoolCursor
+from hyrisecockpit.settings import (
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
+)
+
+from .cursor import PoolCursor, StorageCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
 from .worker import execute_queries, fill_queue
@@ -69,6 +77,9 @@ class Database(object):
         )
         self._update_chunks_data_job = self._scheduler.add_job(
             func=self._update_chunks_data, trigger="interval", seconds=5,
+        )
+        self._update_storage_data_job = self._scheduler.add_job(
+            func=self.get_storage_data, trigger="interval", seconds=5,
         )
         self._scheduler.start()
 
@@ -307,21 +318,32 @@ class Database(object):
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
 
-    def get_storage_data(self) -> Dict:
+    def get_storage_data(self) -> None:
         """Get storage data from the database."""
+        time_stamp = time_ns()
+        meta_segments = self._read_storage_meta_segments()
+
+        with StorageCursor(
+            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, self._id
+        ) as log:
+            output = {}
+            if not meta_segments.empty:
+                result = self._create_storage_data_dataframe(meta_segments)
+                output = self._create_storage_data_dictionary(result)
+            log.log_meta_information("storage", output, time_stamp)
+
+    def _read_storage_meta_segments(self) -> DataFrame:
         if self._processing_tables_flag.value:
-            return {}
+            return DataFrame({"foo": []})
+        else:
+            connection = self._connection_pool.getconn()
+            connection.set_session(autocommit=True)
+            sql = "SELECT * FROM meta_segments;"
+            meta_segments = read_sql_query(sql, connection)
+            self._connection_pool.putconn(connection)
+            return meta_segments
 
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-        sql = "SELECT * FROM meta_segments;"
-
-        meta_segments = read_sql_query(sql, connection)
-        self._connection_pool.putconn(connection)
-
-        if meta_segments.empty:
-            return {}
-
+    def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
             inplace=True,
@@ -344,7 +366,7 @@ class Database(object):
         )[["column_data_type"]]
 
         result: DataFrame = size.join(encoding).join(datatype)
-        return self._create_storage_data_dictionary(result)
+        return result
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
         """Sort storage data to dictionary."""
@@ -392,6 +414,7 @@ class Database(object):
         # Remove jobs
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
+        self._update_storage_data_job.remove()
 
         # Close the scheduler
         self._scheduler.shutdown()

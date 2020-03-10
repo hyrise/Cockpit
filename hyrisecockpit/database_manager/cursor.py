@@ -1,4 +1,6 @@
 """Utility custom cursors."""
+from json import dumps
+
 from influxdb import InfluxDBClient
 from psycopg2 import pool
 
@@ -59,7 +61,7 @@ class StorageCursor:
         point = [
             {
                 "measurement": measurement,
-                "fields": {"meta_information": meta_information},
+                "fields": {"meta_information": dumps(meta_information)},
                 "time": time_stamp,
             }
         ]

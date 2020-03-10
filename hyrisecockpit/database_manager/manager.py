@@ -36,7 +36,6 @@ class DatabaseManager(object):
             str, Tuple[Callable[[Dict[str, Any]], Dict[str, Any]], Optional[Dict]]
         ] = {
             "add database": (self._call_add_database, add_database_request_schema),
-            "storage": (self._call_storage, None),
             "system data": (self._call_system_data, None),
             "delete database": (
                 self._call_delete_database,
@@ -106,14 +105,6 @@ class DatabaseManager(object):
         ]
         response = get_response(200)
         response["body"]["databases"] = databases
-        return response
-
-    def _call_storage(self, body: Dict) -> Dict:
-        storage = {}
-        for id, database in self._databases.items():
-            storage[id] = database.get_storage_data()
-        response = get_response(200)
-        response["body"]["storage"] = storage
         return response
 
     def _call_system_data(self, body: Dict) -> Dict:
