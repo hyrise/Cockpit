@@ -23,7 +23,7 @@ class ArgumentValidation:
         self._endpoints_control = ["database", "data"]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
         self._databases = ["db1", "db2"]
-        self._plugins = ["wrk"]
+        self._plugins = ["wrk", "displayMonitor"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
             "workloads": self._validate_workloads,
@@ -319,7 +319,7 @@ class ArgumentParser:
             type=str,
             nargs="?",
             metavar="",
-            default=["Y"],
+            default="Y",
             help="start components as subprocesses [Y/N]",
         )
 
