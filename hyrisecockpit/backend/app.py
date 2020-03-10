@@ -4,6 +4,7 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
+from json import loads
 from secrets import choice
 from time import time_ns
 from typing import Dict, List, Union
@@ -576,11 +577,23 @@ class Storage(Resource):
     """Storage information of all databases."""
 
     # @control.doc(body=[model_storage]) # noqa
-    def get(self) -> Dict:
+    def get(self) -> Union[int, Dict[str, Dict]]:
         """Return storage metadata from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "storage"}, "body": {}}
-        )
+        storage: Dict[str, Dict] = {}
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("meta_information") FROM storage', database=database,
+            )
+            storage_value = list(result["storage", None])
+            if len(storage_value) > 0:
+                storage[database] = loads(list(result["storage", None])[0]["last"])
+            else:
+                storage[database] = {}
+        return storage
 
 
 @monitor.route("/krueger_data", methods=["GET"])
