@@ -2,7 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -159,7 +159,7 @@ class Database(object):
 
     def _generate_table_loading_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[str, Any, str, str]]:
+    ) -> List[Tuple[str, Tuple[Tuple[str, str], ...], str, str]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
@@ -174,7 +174,7 @@ class Database(object):
 
     def _generate_table_drop_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[str, Any, str, str]]:
+    ) -> List[Tuple[str, Tuple[Tuple[str, str], ...], str, str]]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
