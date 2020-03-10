@@ -49,7 +49,7 @@
                 </v-icon>
               </v-btn>
               <v-btn
-                @click="startingWorkload(workload, 0)"
+                @click="pauseWorkload(workload)"
                 :disabled="buttonIsLoading.pause"
                 :loading="buttonIsLoading.pause"
               >
@@ -117,13 +117,13 @@ interface Data {
   loadWorkloadData: (workload: Workload) => Promise<void>;
   deleteWorkloadData: (workload: Workload) => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
+  pauseWorkload: (workload: Workload) => void;
   stopWorkload: () => Promise<void>;
   startingWorkload: (workload: Workload, frequency: number) => void;
   stoppingWorkload: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
-
 export default defineComponent({
   props: {
     open: {
@@ -134,6 +134,9 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): Data {
     const buttonIsLoading = reactive({
       loadtpch01: false,
+      loadtpch1: false,
+      loadtpcds: false,
+      loadjob: false,
       start: false,
       pause: false,
       stop: false
@@ -151,22 +154,20 @@ export default defineComponent({
     /* getWorkloadData().then((response: any) => {
       workloadData.value = response.data;
     }); */
-
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
     function startingWorkload(workload: Workload, frequency: number): void {
-      if (frequency != 0) {
-        buttonIsLoading["start"] = true;
-        startWorkload(workload, frequency).then(() => {
-          buttonIsLoading["start"] = false;
-        });
-      } else {
-        buttonIsLoading["pause"] = true;
-        startWorkload(workload, frequency).then(() => {
-          buttonIsLoading["pause"] = false;
-        });
-      }
+      buttonIsLoading["start"] = true;
+      startWorkload(workload, frequency).then(() => {
+        buttonIsLoading["start"] = false;
+      });
+    }
+    function pauseWorkload(workload: Workload): void {
+      buttonIsLoading["pause"] = true;
+      startWorkload(workload, 0).then(() => {
+        buttonIsLoading["pause"] = false;
+      });
     }
     function stoppingWorkload(): void {
       buttonIsLoading["stop"] = true;
@@ -186,7 +187,6 @@ export default defineComponent({
         });
       }
     }
-
     return {
       availableWorkloads,
       getDisplayedWorkload,
@@ -194,6 +194,7 @@ export default defineComponent({
       loadWorkloadData,
       deleteWorkloadData,
       startWorkload,
+      pauseWorkload,
       stopWorkload,
       frequency,
       workload,
