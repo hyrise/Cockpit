@@ -42,6 +42,6 @@ class TestWorker:
 
         endts, latency = execute_task(mocked_cursor, mocked_query, formatted_params)
 
-        mocked_cursor.execute.assert_any_call("SELECT 1;", None)
+        mocked_cursor.execute.assert_called_once_with("SELECT 1;", None)
         assert endts == 10
         assert latency == 0
