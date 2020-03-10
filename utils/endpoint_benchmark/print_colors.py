@@ -19,3 +19,8 @@ def print_red(value):
 def print_cyan(value):
     """Print cyan colored text."""
     print("\033[96m{}\033[00m".format(value))
+
+
+def print_purple(value):
+    """Print purple colored text."""
+    print("\033[94m{}\033[00m".format(value))
