@@ -99,15 +99,6 @@ class TestDatabaseManager:
         assert call_delete("test_db2") == 404
         assert database_manager._databases.keys() == set()
 
-    def test_call_storage_returns_storage(
-        self, database_manager: DatabaseManager, mock_database: Database
-    ):
-        """Returns storage of previously added databases."""
-        call: Callable = lambda: database_manager._call_storage({})["body"]["storage"]
-        mock_data = {"Tables": 21}
-        mock_database.get_storage_data.return_value = mock_data  # type: ignore
-        self.convenience_data_call(database_manager, mock_database, call, mock_data)
-
     def test_call_chunks_returns_chunks(
         self, database_manager: DatabaseManager, mock_database: Database
     ):
