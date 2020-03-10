@@ -1,3000 +1,2097 @@
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
-SELECT cc_call_center_id Call_Center,
-       cc_name Call_Center_Name,
-       cc_manager Manager,
-       sum(cr_net_loss) Returns_Loss
-FROM call_center,
-     catalog_returns,
-     date_dim,
-     customer,
-     customer_address,
-     customer_demographics,
-     household_demographics
-WHERE cr_call_center_sk = cc_call_center_sk
-  AND cr_returned_date_sk = d_date_sk
-  AND cr_returning_customer_sk= c_customer_sk
-  AND cd_demo_sk = c_current_cdemo_sk
-  AND hd_demo_sk = c_current_hdemo_sk
-  AND ca_address_sk = c_current_addr_sk
-  AND d_year = 1998
-  AND d_moy = 11
-  AND ((cd_marital_status = 'M'
-        AND cd_education_status = 'Unknown') or(cd_marital_status = 'W'
-                                                AND cd_education_status = 'Advanced Degree'))
-  AND hd_buy_potential LIKE 'Unknown%'
-  AND ca_gmt_offset = -7
-GROUP BY cc_call_center_id,
-         cc_name,
-         cc_manager,
-         cd_marital_status,
-         cd_education_status
-ORDER BY sum(cr_net_loss) DESC;
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;
+
+---
+
+SELECT CC_CALL_CENTER_ID CALL_CENTER, CC_NAME CALL_CENTER_NAME, CC_MANAGER MANAGER, SUM(CR_NET_LOSS) RETURNS_LOSS
+FROM CALL_CENTER, CATALOG_RETURNS, DATE_DIM, CUSTOMER, CUSTOMER_ADDRESS, CUSTOMER_DEMOGRAPHICS,
+	HOUSEHOLD_DEMOGRAPHICS
+WHERE CR_CALL_CENTER_SK = CC_CALL_CENTER_SK
+		AND CR_RETURNED_DATE_SK = D_DATE_SK
+		AND CR_RETURNING_CUSTOMER_SK = C_CUSTOMER_SK
+		AND CD_DEMO_SK = C_CURRENT_CDEMO_SK
+		AND HD_DEMO_SK = C_CURRENT_HDEMO_SK
+		AND CA_ADDRESS_SK = C_CURRENT_ADDR_SK
+		AND D_YEAR = 1998
+		AND D_MOY = 11
+		AND ((CD_MARITAL_STATUS = 'M'
+								AND CD_EDUCATION_STATUS = 'Unknown') OR(CD_MARITAL_STATUS = 'W'
+																																																AND CD_EDUCATION_STATUS = 'Advanced Degree'))
+		AND HD_BUY_POTENTIAL LIKE 'Unknown%'
+		AND CA_GMT_OFFSET = -7
+GROUP BY CC_CALL_CENTER_ID, CC_NAME, CC_MANAGER, CD_MARITAL_STATUS, CD_EDUCATION_STATUS
+ORDER BY SUM(CR_NET_LOSS) DESC;

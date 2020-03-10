@@ -1,4100 +1,1997 @@
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
-LIMIT 100;
-SELECT ca_zip,
-       ca_city,
-       sum(ws_sales_price)
-FROM web_sales,
-     customer,
-     customer_address,
-     date_dim,
-     item
-WHERE ws_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND ws_item_sk = i_item_sk
-  AND (SUBSTR(ca_zip,1,5) IN ('85669',
-                              '86197',
-                              '88274',
-                              '83405',
-                              '86475',
-                              '85392',
-                              '85460',
-                              '80348',
-                              '81792')
-       OR i_item_id IN
-         (SELECT i_item_id
-          FROM item
-          WHERE i_item_sk IN (2,
-                              3,
-                              5,
-                              7,
-                              11,
-                              13,
-                              17,
-                              19,
-                              23,
-                              29) ))
-  AND ws_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip,
-         ca_city
-ORDER BY ca_zip,
-         ca_city
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, CA_CITY, SUM(WS_SALES_PRICE)
+FROM WEB_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM, ITEM
+WHERE WS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND WS_ITEM_SK = I_ITEM_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR I_ITEM_ID IN
+									(SELECT I_ITEM_ID
+										FROM ITEM
+										WHERE I_ITEM_SK IN (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) ))
+		AND WS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP, CA_CITY
+ORDER BY CA_ZIP, CA_CITY
 LIMIT 100;

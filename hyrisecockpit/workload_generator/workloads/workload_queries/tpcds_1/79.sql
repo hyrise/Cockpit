@@ -1,3700 +1,1997 @@
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
-LIMIT 100;
-SELECT c_last_name,
-       c_first_name,
-       SUBSTR(s_city,1,30),
-       ss_ticket_number,
-       amt,
-       profit
-FROM
-  (SELECT ss_ticket_number ,
-          ss_customer_sk ,
-          store.s_city ,
-          sum(ss_coupon_amt) amt ,
-          sum(ss_net_profit) profit
-   FROM store_sales,
-        date_dim,
-        store,
-        household_demographics
-   WHERE store_sales.ss_sold_date_sk = date_dim.d_date_sk
-     AND store_sales.ss_store_sk = store.s_store_sk
-     AND store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk
-     AND (household_demographics.hd_dep_count = 6
-          OR household_demographics.hd_vehicle_count > 2)
-     AND date_dim.d_dow = 1
-     AND date_dim.d_year IN (1999,
-                             1999+1,
-                             1999+2)
-     AND store.s_number_employees BETWEEN 200 AND 295
-   GROUP BY ss_ticket_number,
-            ss_customer_sk,
-            ss_addr_sk,
-            store.s_city) ms,
-     customer
-WHERE ss_customer_sk = c_customer_sk
-ORDER BY c_last_name,
-         c_first_name,
-         SUBSTR(s_city,1,30),
-         profit
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
+LIMIT 100;
+
+---
+
+SELECT C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY, 1, 30), SS_TICKET_NUMBER, AMT, PROFIT
+FROM
+		(SELECT SS_TICKET_NUMBER, SS_CUSTOMER_SK, STORE.S_CITY, SUM(SS_COUPON_AMT) AMT, SUM(SS_NET_PROFIT) PROFIT
+			FROM STORE_SALES, DATE_DIM, STORE, HOUSEHOLD_DEMOGRAPHICS
+			WHERE STORE_SALES.SS_SOLD_DATE_SK = DATE_DIM.D_DATE_SK
+					AND STORE_SALES.SS_STORE_SK = STORE.S_STORE_SK
+					AND STORE_SALES.SS_HDEMO_SK = HOUSEHOLD_DEMOGRAPHICS.HD_DEMO_SK
+					AND (HOUSEHOLD_DEMOGRAPHICS.HD_DEP_COUNT = 6
+										OR HOUSEHOLD_DEMOGRAPHICS.HD_VEHICLE_COUNT > 2)
+					AND DATE_DIM.D_DOW = 1
+					AND DATE_DIM.D_YEAR IN (1999, 1999 + 1, 1999 + 2)
+					AND STORE.S_NUMBER_EMPLOYEES BETWEEN 200 AND 295
+			GROUP BY SS_TICKET_NUMBER, SS_CUSTOMER_SK, SS_ADDR_SK, STORE.S_CITY) MS, CUSTOMER
+WHERE SS_CUSTOMER_SK = C_CUSTOMER_SK
+ORDER BY C_LAST_NAME, C_FIRST_NAME, SUBSTR(S_CITY,
+																																						1, 30), PROFIT
 LIMIT 100;

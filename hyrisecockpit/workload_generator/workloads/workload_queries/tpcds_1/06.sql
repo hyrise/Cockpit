@@ -1,2500 +1,2197 @@
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
-LIMIT 100;
-SELECT a.ca_state state,
-       count(*) cnt
-FROM customer_address a ,
-     customer c ,
-     store_sales s ,
-     date_dim d ,
-     item i
-WHERE a.ca_address_sk = c.c_current_addr_sk
-  AND c.c_customer_sk = s.ss_customer_sk
-  AND s.ss_sold_date_sk = d.d_date_sk
-  AND s.ss_item_sk = i.i_item_sk
-  AND d.d_month_seq =
-    (SELECT DISTINCT (d_month_seq)
-     FROM date_dim
-     WHERE d_year = 2001
-       AND d_moy = 1 )
-  AND i.i_current_price > 1.2 *
-    (SELECT avg(j.i_current_price)
-     FROM item j
-     WHERE j.i_category = i.i_category)
-GROUP BY a.ca_state
-HAVING count(*) >= 10
-ORDER BY cnt,
-         a.ca_state
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
+LIMIT 100;
+
+---
+
+SELECT A.CA_STATE STATE, COUNT(*) CNT
+FROM CUSTOMER_ADDRESS A, CUSTOMER C, STORE_SALES S, DATE_DIM D, ITEM I
+WHERE A.CA_ADDRESS_SK = C.C_CURRENT_ADDR_SK
+		AND C.C_CUSTOMER_SK = S.SS_CUSTOMER_SK
+		AND S.SS_SOLD_DATE_SK = D.D_DATE_SK
+		AND S.SS_ITEM_SK = I.I_ITEM_SK
+		AND D.D_MONTH_SEQ =
+				(SELECT DISTINCT (D_MONTH_SEQ)
+					FROM DATE_DIM
+					WHERE D_YEAR = 2001
+							AND D_MOY = 1 )
+		AND I.I_CURRENT_PRICE > 1.2 *
+				(SELECT AVG(J.I_CURRENT_PRICE)
+					FROM ITEM J
+					WHERE J.I_CATEGORY = I.I_CATEGORY)
+GROUP BY A.CA_STATE
+HAVING COUNT(*) >= 10
+ORDER BY CNT, A.CA_STATE
 LIMIT 100;

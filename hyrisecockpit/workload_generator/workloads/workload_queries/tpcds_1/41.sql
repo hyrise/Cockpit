@@ -1,6600 +1,6897 @@
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
-LIMIT 100;
-SELECT distinct(i_product_name)
-FROM item i1
-WHERE i_manufact_id BETWEEN 738 AND 738+40
-  AND
-    (SELECT count(*) AS item_cnt
-     FROM item
-     WHERE (i_manufact = i1.i_manufact
-            AND ((i_category = 'Women'
-                  AND (i_color = 'powder'
-                       OR i_color = 'khaki')
-                  AND (i_units = 'Ounce'
-                       OR i_units = 'Oz')
-                  AND (i_size = 'medium'
-                       OR i_size = 'extra large'))
-                 OR (i_category = 'Women'
-                     AND (i_color = 'brown'
-                          OR i_color = 'honeydew')
-                     AND (i_units = 'Bunch'
-                          OR i_units = 'Ton')
-                     AND (i_size = 'N/A'
-                          OR i_size = 'small'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'floral'
-                          OR i_color = 'deep')
-                     AND (i_units = 'N/A'
-                          OR i_units = 'Dozen')
-                     AND (i_size = 'petite'
-                          OR i_size = 'petite'))
-                 OR (i_category = 'Men'
-                     AND (i_color = 'light'
-                          OR i_color = 'cornflower')
-                     AND (i_units = 'Box'
-                          OR i_units = 'Pound')
-                     AND (i_size = 'medium'
-                          OR i_size = 'extra large'))))
-       OR (i_manufact = i1.i_manufact
-           AND ((i_category = 'Women'
-                 AND (i_color = 'midnight'
-                      OR i_color = 'snow')
-                 AND (i_units = 'Pallet'
-                      OR i_units = 'Gross')
-                 AND (i_size = 'medium'
-                      OR i_size = 'extra large'))
-                OR (i_category = 'Women'
-                    AND (i_color = 'cyan'
-                         OR i_color = 'papaya')
-                    AND (i_units = 'Cup'
-                         OR i_units = 'Dram')
-                    AND (i_size = 'N/A'
-                         OR i_size = 'small'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'orange'
-                         OR i_color = 'frosted')
-                    AND (i_units = 'Each'
-                         OR i_units = 'Tbl')
-                    AND (i_size = 'petite'
-                         OR i_size = 'petite'))
-                OR (i_category = 'Men'
-                    AND (i_color = 'forest'
-                         OR i_color = 'ghost')
-                    AND (i_units = 'Lb'
-                         OR i_units = 'Bundle')
-                    AND (i_size = 'medium'
-                         OR i_size = 'extra large'))))) > 0
-ORDER BY i_product_name
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
+LIMIT 100;
+
+---
+
+SELECT DISTINCT(I_PRODUCT_NAME)
+FROM ITEM I1
+WHERE I_MANUFACT_ID BETWEEN 738 AND 738 + 40
+		AND
+				(SELECT COUNT(*) AS ITEM_CNT
+					FROM ITEM
+					WHERE (I_MANUFACT = I1.I_MANUFACT
+												AND ((I_CATEGORY = 'Women'
+																		AND (I_COLOR = 'powder'
+																							OR I_COLOR = 'khaki')
+																		AND (I_UNITS = 'Ounce'
+																							OR I_UNITS = 'Oz')
+																		AND (I_SIZE = 'medium'
+																							OR I_SIZE = 'extra large'))
+																	OR (I_CATEGORY = 'Women'
+																					AND (I_COLOR = 'brown'
+																										OR I_COLOR = 'honeydew')
+																					AND (I_UNITS = 'Bunch'
+																										OR I_UNITS = 'Ton')
+																					AND (I_SIZE = 'N/A'
+																										OR I_SIZE = 'small'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'floral'
+																										OR I_COLOR = 'deep')
+																					AND (I_UNITS = 'N/A'
+																										OR I_UNITS = 'Dozen')
+																					AND (I_SIZE = 'petite'
+																										OR I_SIZE = 'petite'))
+																	OR (I_CATEGORY = 'Men'
+																					AND (I_COLOR = 'light'
+																										OR I_COLOR = 'cornflower')
+																					AND (I_UNITS = 'Box'
+																										OR I_UNITS = 'Pound')
+																					AND (I_SIZE = 'medium'
+																										OR I_SIZE = 'extra large'))))
+							OR (I_MANUFACT = I1.I_MANUFACT
+											AND ((I_CATEGORY = 'Women'
+																	AND (I_COLOR = 'midnight'
+																						OR I_COLOR = 'snow')
+																	AND (I_UNITS = 'Pallet'
+																						OR I_UNITS = 'Gross')
+																	AND (I_SIZE = 'medium'
+																						OR I_SIZE = 'extra large'))
+																OR (I_CATEGORY = 'Women'
+																				AND (I_COLOR = 'cyan'
+																									OR I_COLOR = 'papaya')
+																				AND (I_UNITS = 'Cup'
+																									OR I_UNITS = 'Dram')
+																				AND (I_SIZE = 'N/A'
+																									OR I_SIZE = 'small'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'orange'
+																									OR I_COLOR = 'frosted')
+																				AND (I_UNITS = 'Each'
+																									OR I_UNITS = 'Tbl')
+																				AND (I_SIZE = 'petite'
+																									OR I_SIZE = 'petite'))
+																OR (I_CATEGORY = 'Men'
+																				AND (I_COLOR = 'forest'
+																									OR I_COLOR = 'ghost')
+																				AND (I_UNITS = 'Lb'
+																									OR I_UNITS = 'Bundle')
+																				AND (I_SIZE = 'medium'
+																									OR I_SIZE = 'extra large'))))) > 0
+ORDER BY I_PRODUCT_NAME
 LIMIT 100;

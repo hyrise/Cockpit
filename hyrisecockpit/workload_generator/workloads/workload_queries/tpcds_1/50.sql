@@ -1,6700 +1,4197 @@
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-LIMIT 100;
-SELECT s_store_name,
-       s_company_id,
-       s_street_number,
-       s_street_name,
-       s_street_type,
-       s_suite_number,
-       s_city,
-       s_county,
-       s_state,
-       s_zip,
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk <= 30) THEN 1
-               ELSE 0
-           END) AS "30 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 30)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 60) THEN 1
-               ELSE 0
-           END) AS "31-60 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 60)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 90) THEN 1
-               ELSE 0
-           END) AS "61-90 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 90)
-                    AND (sr_returned_date_sk - ss_sold_date_sk <= 120) THEN 1
-               ELSE 0
-           END) AS "91-120 days",
-       sum(CASE
-               WHEN (sr_returned_date_sk - ss_sold_date_sk > 120) THEN 1
-               ELSE 0
-           END) AS ">120 days"
-FROM store_sales,
-     store_returns,
-     store,
-     date_dim d1,
-     date_dim d2
-WHERE d2.d_year = 2001
-  AND d2.d_moy = 8
-  AND ss_ticket_number = sr_ticket_number
-  AND ss_item_sk = sr_item_sk
-  AND ss_sold_date_sk = d1.d_date_sk
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_store_sk = s_store_sk
-GROUP BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
-ORDER BY s_store_name,
-         s_company_id,
-         s_street_number,
-         s_street_name,
-         s_street_type,
-         s_suite_number,
-         s_city,
-         s_county,
-         s_state,
-         s_zip
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+LIMIT 100;
+
+---
+
+SELECT S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP,
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 30) THEN 1
+									ELSE 0
+					END) AS "30 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 30)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 60) THEN 1
+									ELSE 0
+					END) AS "31-60 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 60)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 90) THEN 1
+									ELSE 0
+					END) AS "61-90 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 90)
+														AND (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK <= 120) THEN 1
+									ELSE 0
+					END) AS "91-120 days",
+	SUM(CASE
+									WHEN (SR_RETURNED_DATE_SK - SS_SOLD_DATE_SK > 120) THEN 1
+									ELSE 0
+					END) AS ">120 days"
+FROM STORE_SALES, STORE_RETURNS, STORE, DATE_DIM D1, DATE_DIM D2
+WHERE D2.D_YEAR = 2001
+		AND D2.D_MOY = 8
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_SOLD_DATE_SK = D1.D_DATE_SK
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_STORE_SK = S_STORE_SK
+GROUP BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
+ORDER BY S_STORE_NAME, S_COMPANY_ID, S_STREET_NUMBER, S_STREET_NAME, S_STREET_TYPE, S_SUITE_NUMBER, S_CITY,
+	S_COUNTY, S_STATE, S_ZIP
 LIMIT 100;

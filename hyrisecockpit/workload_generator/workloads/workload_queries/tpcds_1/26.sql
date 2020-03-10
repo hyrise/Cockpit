@@ -1,2300 +1,1897 @@
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
-LIMIT 100;
-SELECT i_item_id,
-       avg(cs_quantity) agg1,
-       avg(cs_list_price) agg2,
-       avg(cs_coupon_amt) agg3,
-       avg(cs_sales_price) agg4
-FROM catalog_sales,
-     customer_demographics,
-     date_dim,
-     item,
-     promotion
-WHERE cs_sold_date_sk = d_date_sk
-  AND cs_item_sk = i_item_sk
-  AND cs_bill_cdemo_sk = cd_demo_sk
-  AND cs_promo_sk = p_promo_sk
-  AND cd_gender = 'M'
-  AND cd_marital_status = 'S'
-  AND cd_education_status = 'College'
-  AND (p_channel_email = 'N'
-       OR p_channel_event = 'N')
-  AND d_year = 2000
-GROUP BY i_item_id
-ORDER BY i_item_id
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, AVG(CS_QUANTITY) AGG1, AVG(CS_LIST_PRICE) AGG2, AVG(CS_COUPON_AMT) AGG3,
+	AVG(CS_SALES_PRICE) AGG4
+FROM CATALOG_SALES, CUSTOMER_DEMOGRAPHICS, DATE_DIM, ITEM, PROMOTION
+WHERE CS_SOLD_DATE_SK = D_DATE_SK
+		AND CS_ITEM_SK = I_ITEM_SK
+		AND CS_BILL_CDEMO_SK = CD_DEMO_SK
+		AND CS_PROMO_SK = P_PROMO_SK
+		AND CD_GENDER = 'M'
+		AND CD_MARITAL_STATUS = 'S'
+		AND CD_EDUCATION_STATUS = 'College'
+		AND (P_CHANNEL_EMAIL = 'N'
+							OR P_CHANNEL_EVENT = 'N')
+		AND D_YEAR = 2000
+GROUP BY I_ITEM_ID
+ORDER BY I_ITEM_ID
 LIMIT 100;

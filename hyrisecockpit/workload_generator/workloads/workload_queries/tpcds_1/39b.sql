@@ -1,3422 +1,1795 @@
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
-WITH inv AS
-  (SELECT w_warehouse_name,
-          w_warehouse_sk,
-          i_item_sk,
-          d_moy,
-          stdev,
-          mean,
-          CASE mean
-              WHEN 0 THEN NULL
-              ELSE stdev/mean
-          END cov
-   FROM
-     (SELECT w_warehouse_name,
-             w_warehouse_sk,
-             i_item_sk,
-             d_moy,
-             stddev_samp(inv_quantity_on_hand) stdev,
-             avg(inv_quantity_on_hand) mean
-      FROM inventory,
-           item,
-           warehouse,
-           date_dim
-      WHERE inv_item_sk = i_item_sk
-        AND inv_warehouse_sk = w_warehouse_sk
-        AND inv_date_sk = d_date_sk
-        AND d_year =2001
-      GROUP BY w_warehouse_name,
-               w_warehouse_sk,
-               i_item_sk,
-               d_moy) foo
-   WHERE CASE mean
-             WHEN 0 THEN 0
-             ELSE stdev/mean
-         END > 1)
-SELECT inv1.w_warehouse_sk,
-       inv1.i_item_sk,
-       inv1.d_moy,
-       inv1.mean,
-       inv1.cov,
-       inv2.w_warehouse_sk,
-       inv2.i_item_sk,
-       inv2.d_moy,
-       inv2.mean,
-       inv2.cov
-FROM inv inv1,
-     inv inv2
-WHERE inv1.i_item_sk = inv2.i_item_sk
-  AND inv1.w_warehouse_sk = inv2.w_warehouse_sk
-  AND inv1.d_moy=1
-  AND inv2.d_moy=1+1
-  AND inv1.cov > 1.5
-ORDER BY inv1.w_warehouse_sk,
-         inv1.i_item_sk,
-         inv1.d_moy,
-         inv1.mean,
-         inv1.cov,
-         inv2.d_moy,
-         inv2.mean,
-         inv2.cov ;
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;
+
+---
+
+WITH INV AS
+		(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDEV, MEAN,
+				CASE MEAN
+								WHEN 0 THEN NULL
+								ELSE STDEV / MEAN
+				END COV
+			FROM
+					(SELECT W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY, STDDEV_SAMP(INV_QUANTITY_ON_HAND) STDEV,
+							AVG(INV_QUANTITY_ON_HAND) MEAN
+						FROM INVENTORY, ITEM, WAREHOUSE, DATE_DIM
+						WHERE INV_ITEM_SK = I_ITEM_SK
+								AND INV_WAREHOUSE_SK = W_WAREHOUSE_SK
+								AND INV_DATE_SK = D_DATE_SK
+								AND D_YEAR = 2001
+						GROUP BY W_WAREHOUSE_NAME, W_WAREHOUSE_SK, I_ITEM_SK, D_MOY) FOO
+			WHERE CASE MEAN
+													WHEN 0 THEN 0
+													ELSE STDEV / MEAN
+									END > 1)
+SELECT INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.W_WAREHOUSE_SK, INV2.I_ITEM_SK,
+	INV2.D_MOY, INV2.MEAN, INV2.COV
+FROM INV INV1, INV INV2
+WHERE INV1.I_ITEM_SK = INV2.I_ITEM_SK
+		AND INV1.W_WAREHOUSE_SK = INV2.W_WAREHOUSE_SK
+		AND INV1.D_MOY = 1
+		AND INV2.D_MOY = 1 + 1
+		AND INV1.COV > 1.5
+ORDER BY INV1.W_WAREHOUSE_SK, INV1.I_ITEM_SK, INV1.D_MOY, INV1.MEAN, INV1.COV, INV2.D_MOY, INV2.MEAN, INV2.COV ;

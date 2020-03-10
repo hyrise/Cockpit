@@ -1,2700 +1,1697 @@
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
-LIMIT 100;
-SELECT ca_zip,
-       sum(cs_sales_price)
-FROM catalog_sales,
-     customer,
-     customer_address,
-     date_dim
-WHERE cs_bill_customer_sk = c_customer_sk
-  AND c_current_addr_sk = ca_address_sk
-  AND (SUBSTR(ca_zip, 1, 5) IN ('85669',
-                                '86197',
-                                '88274',
-                                '83405',
-                                '86475',
-                                '85392',
-                                '85460',
-                                '80348',
-                                '81792')
-       OR ca_state IN ('CA',
-                       'WA',
-                       'GA')
-       OR cs_sales_price > 500)
-  AND cs_sold_date_sk = d_date_sk
-  AND d_qoy = 2
-  AND d_year = 2001
-GROUP BY ca_zip
-ORDER BY ca_zip
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
+LIMIT 100;
+
+---
+
+SELECT CA_ZIP, SUM(CS_SALES_PRICE)
+FROM CATALOG_SALES, CUSTOMER, CUSTOMER_ADDRESS, DATE_DIM
+WHERE CS_BILL_CUSTOMER_SK = C_CUSTOMER_SK
+		AND C_CURRENT_ADDR_SK = CA_ADDRESS_SK
+		AND (SUBSTR(CA_ZIP, 1, 5) IN ('85669', '86197', '88274', '83405', '86475', '85392', '85460', '80348',
+																																	'81792')
+							OR CA_STATE IN ('CA', 'WA', 'GA')
+							OR CS_SALES_PRICE > 500)
+		AND CS_SOLD_DATE_SK = D_DATE_SK
+		AND D_QOY = 2
+		AND D_YEAR = 2001
+GROUP BY CA_ZIP
+ORDER BY CA_ZIP
 LIMIT 100;

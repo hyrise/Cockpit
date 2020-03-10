@@ -1,4000 +1,2497 @@
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-LIMIT 100;
-SELECT i_item_id ,
-       i_item_desc ,
-       s_store_id ,
-       s_store_name ,
-       sum(ss_net_profit) AS store_sales_profit ,
-       sum(sr_net_loss) AS store_returns_loss ,
-       sum(cs_net_profit) AS catalog_sales_profit
-FROM store_sales ,
-     store_returns ,
-     catalog_sales ,
-     date_dim d1 ,
-     date_dim d2 ,
-     date_dim d3 ,
-     store ,
-     item
-WHERE d1.d_moy = 4
-  AND d1.d_year = 2001
-  AND d1.d_date_sk = ss_sold_date_sk
-  AND i_item_sk = ss_item_sk
-  AND s_store_sk = ss_store_sk
-  AND ss_customer_sk = sr_customer_sk
-  AND ss_item_sk = sr_item_sk
-  AND ss_ticket_number = sr_ticket_number
-  AND sr_returned_date_sk = d2.d_date_sk
-  AND d2.d_moy BETWEEN 4 AND 10
-  AND d2.d_year = 2001
-  AND sr_customer_sk = cs_bill_customer_sk
-  AND sr_item_sk = cs_item_sk
-  AND cs_sold_date_sk = d3.d_date_sk
-  AND d3.d_moy BETWEEN 4 AND 10
-  AND d3.d_year = 2001
-GROUP BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
-ORDER BY i_item_id ,
-         i_item_desc ,
-         s_store_id ,
-         s_store_name
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+LIMIT 100;
+
+---
+
+SELECT I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME, SUM(SS_NET_PROFIT) AS STORE_SALES_PROFIT,
+	SUM(SR_NET_LOSS) AS STORE_RETURNS_LOSS, SUM(CS_NET_PROFIT) AS CATALOG_SALES_PROFIT
+FROM STORE_SALES, STORE_RETURNS, CATALOG_SALES, DATE_DIM D1, DATE_DIM D2, DATE_DIM D3, STORE, ITEM
+WHERE D1.D_MOY = 4
+		AND D1.D_YEAR = 2001
+		AND D1.D_DATE_SK = SS_SOLD_DATE_SK
+		AND I_ITEM_SK = SS_ITEM_SK
+		AND S_STORE_SK = SS_STORE_SK
+		AND SS_CUSTOMER_SK = SR_CUSTOMER_SK
+		AND SS_ITEM_SK = SR_ITEM_SK
+		AND SS_TICKET_NUMBER = SR_TICKET_NUMBER
+		AND SR_RETURNED_DATE_SK = D2.D_DATE_SK
+		AND D2.D_MOY BETWEEN 4 AND 10
+		AND D2.D_YEAR = 2001
+		AND SR_CUSTOMER_SK = CS_BILL_CUSTOMER_SK
+		AND SR_ITEM_SK = CS_ITEM_SK
+		AND CS_SOLD_DATE_SK = D3.D_DATE_SK
+		AND D3.D_MOY BETWEEN 4 AND 10
+		AND D3.D_YEAR = 2001
+GROUP BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
+ORDER BY I_ITEM_ID, I_ITEM_DESC, S_STORE_ID, S_STORE_NAME
 LIMIT 100;
