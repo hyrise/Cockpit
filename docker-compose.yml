@@ -38,7 +38,7 @@ services:
       - "8086:8086"
   
   hyrise:
-    image: udopigorsch/hyrise:hyrise_19.10
+    image: udopigorsch/hyrise:bensk1_multithreaded
     working_dir: "/usr/local/hyrise"
     command: "cmake-build-release/hyriseServer"
     volumes:
