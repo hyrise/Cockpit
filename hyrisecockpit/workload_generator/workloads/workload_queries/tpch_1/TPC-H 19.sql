@@ -1,800 +1,2897 @@
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#43' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#23' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#43' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#54' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 9 AND l_quantity
-      <= 9 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#25' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#35' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#54' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 9 AND l_quantity
-      <= 9 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#35' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#34' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#42' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#55' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#24' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 26 AND l_quantity <= 26 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#34' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#33' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#43' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#55' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 18 AND l_quantity <= 18 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#34' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#54' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#32' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#24' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#44' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#13' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#25' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#35' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 26 AND l_quantity <= 26 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#53' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#11' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#22' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#41' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#32' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 18 AND l_quantity <= 18 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#12' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#43' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#52' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#32' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#33' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#14' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#44' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#31' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#55' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#35' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#14' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#52' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 26 AND l_quantity <= 26 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#55' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 9 AND l_quantity
-      <= 9 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#44' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#55' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#13' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#41' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#23' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#35' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#34' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#33' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#32' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#43' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 18 AND l_quantity <= 18 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#32' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#45' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#43' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#53' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#21' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#34' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#14' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 18 AND l_quantity <= 18 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#32' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#54' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#53' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#55' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#43' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 26 AND l_quantity <= 26 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#43' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#35' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#52' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#25' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#44' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#11' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#42' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#43' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#11' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#24' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#24' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#45' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#43' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#55' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#34' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#25' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#42' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#23' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#12' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 12 AND l_quantity <= 12 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#43' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#42' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#34' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#33' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#24' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#33' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#44' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#21' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#44' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#32' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#21' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#42' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#25' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#21' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#51' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#21' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#25' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#32' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 27 AND l_quantity <= 27 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#23' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#33' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#11' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#15' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 11 AND l_quantity <= 11 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#24' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 5 AND l_quantity
-      <= 5 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#54' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#25' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#35' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#54' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#41' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 23 AND l_quantity <= 23 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#55' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#33' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#34' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 10 AND l_quantity
-      <= 10 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#22' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#14' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#21' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#12' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 10 AND l_quantity <= 10 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 29 AND l_quantity <= 29 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#31' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 18 AND l_quantity <= 18 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#41' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 4 AND l_quantity
-      <= 4 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#32' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#22' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#34' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 19 AND l_quantity <= 19 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 25 AND l_quantity <= 25 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#23' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#54' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#13' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 28 AND l_quantity <= 28 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#35' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 2 AND l_quantity
-      <= 2 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#25' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#33' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 24 AND l_quantity <= 24 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#14' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 1 AND l_quantity
-      <= 1 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#31' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 17 AND l_quantity <= 17 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#34' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#45' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 7 AND l_quantity
-      <= 7 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 13 AND l_quantity <= 13 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#21' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 21 AND l_quantity <= 21 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#45' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 9 AND l_quantity
-      <= 9 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#42' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 22 AND l_quantity <= 22 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#45' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 8 AND l_quantity
-      <= 8 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#24' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 16 AND l_quantity <= 16 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#51' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#13' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 6 AND l_quantity
-      <= 6 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#23' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 14 AND l_quantity <= 14 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#53' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 20 AND l_quantity <= 20 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
-SELECT SUM(l_extendedprice * (1 - l_discount) ) as revenue FROM lineitem, part WHERE (( p_partkey = l_partkey AND
-      p_brand = 'Brand#31' AND p_container in ( 'SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND l_quantity >= 3 AND l_quantity
-      <= 3 + 10 AND p_size between 1 AND 5 AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON') or
-      (p_partkey = l_partkey AND p_brand = 'Brand#55' AND p_container in ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND
-      l_quantity >= 15 AND l_quantity <= 15 + 10 AND p_size between 1 AND 10 AND l_shipmode in ('AIR', 'AIR REG') AND
-      l_shipinstruct = 'DELIVER IN PERSON') or (p_partkey = l_partkey AND p_brand = 'Brand#35' AND p_container in (
-      'LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND l_quantity >= 30 AND l_quantity <= 30 + 10 AND p_size between 1 AND 15
-      AND l_shipmode in ('AIR', 'AIR REG') AND l_shipinstruct = 'DELIVER IN PERSON'));
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#43'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#23'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#43'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#54'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 9
+								AND L_QUANTITY <= 9 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#25'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#35'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#54'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 9
+								AND L_QUANTITY <= 9 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#35'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#34'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#42'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#55'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#24'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 26
+											AND L_QUANTITY <= 26 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#34'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#33'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#12'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#43'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#55'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 18
+											AND L_QUANTITY <= 18 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#34'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#54'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#32'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#24'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#44'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#13'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#25'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#35'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 26
+											AND L_QUANTITY <= 26 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#53'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#11'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#22'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#41'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#32'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 18
+											AND L_QUANTITY <= 18 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#12'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#43'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#52'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#32'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#33'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#14'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#44'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#31'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#12'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#55'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#35'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#14'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#52'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 26
+											AND L_QUANTITY <= 26 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#55'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 9
+								AND L_QUANTITY <= 9 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#44'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#55'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#13'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#41'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#23'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#35'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#34'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#33'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#32'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#43'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 18
+											AND L_QUANTITY <= 18 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#32'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#45'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#43'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#53'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#21'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#34'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#14'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 18
+											AND L_QUANTITY <= 18 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#32'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#54'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#12'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#53'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#55'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#43'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 26
+											AND L_QUANTITY <= 26 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#43'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#35'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#52'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#25'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#44'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#11'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#42'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#43'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#11'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#24'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#24'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#45'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#43'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#55'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#34'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#25'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#42'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#23'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#12'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 12
+											AND L_QUANTITY <= 12 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#12'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#43'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#42'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#34'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#33'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#24'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#33'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#44'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#21'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#44'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#32'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#21'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#42'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#25'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#21'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#51'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#21'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#25'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#32'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 27
+											AND L_QUANTITY <= 27 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#23'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#33'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#12'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#11'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#15'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 11
+											AND L_QUANTITY <= 11 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#24'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 5
+								AND L_QUANTITY <= 5 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#54'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#25'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#35'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#54'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#41'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 23
+											AND L_QUANTITY <= 23 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#55'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#33'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#34'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 10
+								AND L_QUANTITY <= 10 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#22'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#14'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#21'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#12'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 10
+											AND L_QUANTITY <= 10 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 29
+											AND L_QUANTITY <= 29 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#31'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 18
+											AND L_QUANTITY <= 18 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#41'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 4
+								AND L_QUANTITY <= 4 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#32'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#22'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#34'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 19
+											AND L_QUANTITY <= 19 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 25
+											AND L_QUANTITY <= 25 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#23'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#54'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#13'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 28
+											AND L_QUANTITY <= 28 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#35'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 2
+								AND L_QUANTITY <= 2 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#25'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#33'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 24
+											AND L_QUANTITY <= 24 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#14'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 1
+								AND L_QUANTITY <= 1 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#31'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 17
+											AND L_QUANTITY <= 17 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#34'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#45'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 7
+								AND L_QUANTITY <= 7 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 13
+											AND L_QUANTITY <= 13 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#21'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 21
+											AND L_QUANTITY <= 21 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#45'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 9
+								AND L_QUANTITY <= 9 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#42'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 22
+											AND L_QUANTITY <= 22 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#45'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 8
+								AND L_QUANTITY <= 8 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#24'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 16
+											AND L_QUANTITY <= 16 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#51'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#13'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 6
+								AND L_QUANTITY <= 6 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#23'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 14
+											AND L_QUANTITY <= 14 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#53'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 20
+											AND L_QUANTITY <= 20 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));
+
+---
+
+SELECT SUM(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) AS REVENUE
+FROM LINEITEM, PART
+WHERE ((P_PARTKEY = L_PARTKEY
+								AND P_BRAND = 'Brand#31'
+								AND P_CONTAINER IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')
+								AND L_QUANTITY >= 3
+								AND L_QUANTITY <= 3 + 10
+								AND P_SIZE BETWEEN 1 AND 5
+								AND L_SHIPMODE IN ('AIR', 'AIR REG')
+								AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#55'
+											AND P_CONTAINER IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')
+											AND L_QUANTITY >= 15
+											AND L_QUANTITY <= 15 + 10
+											AND P_SIZE BETWEEN 1 AND 10
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON')
+							OR (P_PARTKEY = L_PARTKEY
+											AND P_BRAND = 'Brand#35'
+											AND P_CONTAINER IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')
+											AND L_QUANTITY >= 30
+											AND L_QUANTITY <= 30 + 10
+											AND P_SIZE BETWEEN 1 AND 15
+											AND L_SHIPMODE IN ('AIR', 'AIR REG')
+											AND L_SHIPINSTRUCT = 'DELIVER IN PERSON'));

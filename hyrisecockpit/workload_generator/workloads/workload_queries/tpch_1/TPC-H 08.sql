@@ -1,700 +1,2209 @@
-SELECT o_year, SUM(case when nation = 'SAUDI ARABIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL BURNISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ALGERIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ARGENTINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL PLATED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD PLATED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BURNISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ALGERIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'PERU' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE BRUSHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAQ' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BURNISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED STATES' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE BRUSHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'BRAZIL' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOROCCO' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD BRUSHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ETHIOPIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'INDIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'KENYA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO ANODIZED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JORDAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM POLISHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JAPAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'BRAZIL' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO POLISHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'BRAZIL' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM ANODIZED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'INDIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY POLISHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'SAUDI ARABIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY POLISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL PLATED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'PERU' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY ANODIZED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'VIETNAM' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ETHIOPIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BURNISHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD ANODIZED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE ANODIZED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED KINGDOM' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL BRUSHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JAPAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL ANODIZED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD ANODIZED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'FRANCE' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY BRUSHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'INDIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE ANODIZED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAQ' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO ANODIZED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'BRAZIL' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE BURNISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'INDONESIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD POLISHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'GERMANY' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY POLISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY POLISHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ALGERIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO POLISHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BRUSHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'INDIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD POLISHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'BRAZIL' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM ANODIZED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE BRUSHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED KINGDOM' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE BURNISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'INDONESIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY BURNISHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'GERMANY' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BURNISHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JORDAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY ANODIZED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JORDAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BURNISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOZAMBIQUE' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ARGENTINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY BRUSHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JAPAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD ANODIZED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED STATES' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'SAUDI ARABIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM POLISHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY PLATED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ETHIOPIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD ANODIZED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JORDAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY PLATED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOROCCO' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'CHINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'KENYA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BURNISHED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'GERMANY' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD PLATED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD BURNISHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOROCCO' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY ANODIZED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ETHIOPIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO ANODIZED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ETHIOPIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'FRANCE' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL POLISHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'FRANCE' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BRUSHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOROCCO' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAQ' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE PLATED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'VIETNAM' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY BRUSHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED STATES' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'PERU' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BRUSHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ALGERIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE PLATED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'CHINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL ANODIZED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY BRUSHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ARGENTINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO ANODIZED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD BRUSHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOROCCO' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD BURNISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'CHINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'ECONOMY BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BRUSHED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JAPAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM ANODIZED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'SAUDI ARABIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM PLATED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'CHINA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'ASIA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BURNISHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO PLATED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'RUSSIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE ANODIZED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'SAUDI ARABIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE ANODIZED NICKEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED STATES' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO ANODIZED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'EGYPT' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAQ' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL ANODIZED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'UNITED KINGDOM' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'LARGE PLATED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'MOROCCO' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AFRICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BRUSHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL BRUSHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JORDAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO PLATED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'JORDAN' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'MEDIUM BRUSHED TIN') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'ROMANIA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'EUROPE' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'SMALL PLATED STEEL') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'CANADA' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'AMERICA' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'STANDARD POLISHED BRASS') as all_nations GROUP BY o_year ORDER BY o_year;
-SELECT o_year, SUM(case when nation = 'IRAQ' then volume else 0 end) / SUM(volume) as mkt_share
-     FROM (SELECT SUBSTR(o_orderdate, 1, 4) as o_year, l_extendedprice * (1-l_discount) as volume,
-     n2.n_name as nation FROM part, supplier, lineitem, orders, customer, nation n1, nation n2, region
-     WHERE p_partkey = l_partkey AND s_suppkey = l_suppkey AND l_orderkey = o_orderkey AND
-     o_custkey = c_custkey AND c_nationkey = n1.n_nationkey AND n1.n_regionkey = r_regionkey AND
-     r_name = 'MIDDLE EAST' AND s_nationkey = n2.n_nationkey AND o_orderdate between '1995-01-01'
-     AND '1996-12-31' AND p_type = 'PROMO BRUSHED COPPER') as all_nations GROUP BY o_year ORDER BY o_year;
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'SAUDI ARABIA' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL BURNISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ALGERIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ARGENTINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL PLATED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD PLATED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BURNISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ALGERIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'PERU' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE BRUSHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAQ' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BURNISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED STATES' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE BRUSHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'BRAZIL' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOROCCO' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD BRUSHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ETHIOPIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'INDIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'KENYA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO ANODIZED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JORDAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM POLISHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JAPAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'BRAZIL' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO POLISHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'BRAZIL' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM ANODIZED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'INDIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY POLISHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'SAUDI ARABIA' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY POLISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL PLATED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'PERU' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY ANODIZED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'VIETNAM' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ETHIOPIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BURNISHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD ANODIZED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE ANODIZED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED KINGDOM' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL BRUSHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JAPAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL ANODIZED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD ANODIZED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'FRANCE' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY BRUSHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'INDIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE ANODIZED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAQ' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO ANODIZED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'BRAZIL' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE BURNISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'INDONESIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD POLISHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'GERMANY' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY POLISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY POLISHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ALGERIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO POLISHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BRUSHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'INDIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD POLISHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'BRAZIL' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM ANODIZED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE BRUSHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED KINGDOM' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE BURNISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'INDONESIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY BURNISHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'GERMANY' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BURNISHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JORDAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY ANODIZED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JORDAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BURNISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOZAMBIQUE' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ARGENTINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY BRUSHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JAPAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD ANODIZED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED STATES' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'SAUDI ARABIA' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM POLISHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY PLATED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ETHIOPIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD ANODIZED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JORDAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY PLATED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOROCCO' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'CHINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'KENYA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BURNISHED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'GERMANY' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD PLATED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD BURNISHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOROCCO' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY ANODIZED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ETHIOPIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO ANODIZED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ETHIOPIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'FRANCE' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL POLISHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'FRANCE' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BRUSHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOROCCO' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAQ' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE PLATED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'VIETNAM' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY BRUSHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED STATES' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'PERU' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BRUSHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ALGERIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE PLATED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'CHINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL ANODIZED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY BRUSHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ARGENTINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO ANODIZED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD BRUSHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOROCCO' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD BURNISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'CHINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'ECONOMY BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BRUSHED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JAPAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM ANODIZED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'SAUDI ARABIA' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM PLATED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'CHINA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'ASIA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BURNISHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO PLATED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'RUSSIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE ANODIZED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'SAUDI ARABIA' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE ANODIZED NICKEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED STATES' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO ANODIZED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'EGYPT' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAQ' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL ANODIZED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR,
+	SUM(CASE
+									WHEN NATION = 'UNITED KINGDOM' THEN VOLUME
+									ELSE 0
+					END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'LARGE PLATED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'MOROCCO' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AFRICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BRUSHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL BRUSHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JORDAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO PLATED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'JORDAN' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'MEDIUM BRUSHED TIN') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'ROMANIA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'EUROPE'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'SMALL PLATED STEEL') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'CANADA' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'AMERICA'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'STANDARD POLISHED BRASS') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
+
+---
+
+SELECT O_YEAR, SUM(CASE
+																							WHEN NATION = 'IRAQ' THEN VOLUME
+																							ELSE 0
+																			END) / SUM(VOLUME) AS MKT_SHARE
+FROM
+		(SELECT SUBSTR(O_ORDERDATE, 1, 4) AS O_YEAR, L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME, N2.N_NAME AS NATION
+			FROM PART, SUPPLIER, LINEITEM, ORDERS, CUSTOMER, NATION N1, NATION N2, REGION
+			WHERE P_PARTKEY = L_PARTKEY
+					AND S_SUPPKEY = L_SUPPKEY
+					AND L_ORDERKEY = O_ORDERKEY
+					AND O_CUSTKEY = C_CUSTKEY
+					AND C_NATIONKEY = N1.N_NATIONKEY
+					AND N1.N_REGIONKEY = R_REGIONKEY
+					AND R_NAME = 'MIDDLE EAST'
+					AND S_NATIONKEY = N2.N_NATIONKEY
+					AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+					AND P_TYPE = 'PROMO BRUSHED COPPER') AS ALL_NATIONS
+GROUP BY O_YEAR
+ORDER BY O_YEAR;
