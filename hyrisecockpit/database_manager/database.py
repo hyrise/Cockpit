@@ -2,7 +2,7 @@
 
 from multiprocessing import Process, Queue, Value
 from secrets import randbelow
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -158,15 +158,13 @@ class Database(object):
 
     def _generate_table_loading_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[Tuple[str, Any], str, str]]:
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
             (
-                (
-                    "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                    ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
-                ),
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
                 "system",
                 "generate table query",
             )
@@ -175,11 +173,11 @@ class Database(object):
 
     def _generate_table_drop_queries(
         self, table_names, folder_name: str
-    ) -> List[Tuple[Tuple[str, Any], str, str]]:
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
-            (("DROP TABLE %s;", ((name, "as_is"),)), "system", "drop table query")
+            ("DROP TABLE %s;", ((name, "as_is"),), "system", "drop table query")
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
