@@ -20,11 +20,14 @@ requirements-dev.txt @caterinamandel98 @cH3n7i @fabianhe
 requirements.txt @caterinamandel98 @cH3n7i @fabianhe
 setup.py @caterinamandel98 @cH3n7i @fabianhe
 
+# Utils
+# @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+/utils/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+
 # Backend
 # @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /hyrisecockpit/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /tests/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
-/debug/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 
 # Frontend
 # @kathwill @MaxSchneider1337 @monasobh @schTi
