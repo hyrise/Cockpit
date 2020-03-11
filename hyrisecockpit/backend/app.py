@@ -571,6 +571,27 @@ class Chunks(Resource):
         )
 
 
+@monitor.route("/access_data")
+class AccessData(Resource):
+    """Access counter of currently available columns."""
+
+    def get(self) -> Dict:
+        """Get current access counters."""
+        currentts = time_ns()
+        endts = currentts - 5_000_000_000
+        access_data = {}
+        for database in _active_databases():
+            result = storage_connection.query(
+                "SELECT table_name, column_name, access_counter FROM access_data WHERE time > $startts AND time <= $endts;",
+                database=database,
+                bind_params={"startts": currentts, "endts": endts},
+            )
+            access_data[database] = result
+        response = get_response(200)
+        response["body"]["access_data"] = access_data
+        return result
+
+
 @monitor.route("/storage")
 class Storage(Resource):
     """Storage information of all databases."""

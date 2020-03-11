@@ -2,6 +2,7 @@
 
 from multiprocessing import Manager, Process, Queue
 from secrets import randbelow
+from time import time_ns
 from typing import Any, Callable, Dict, List, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -10,7 +11,14 @@ from pandas.io.sql import read_sql_query
 from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
-from .cursor import PoolCursor
+from hyrisecockpit.settings import (
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
+)
+
+from .cursor import PoolCursor, StorageCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
 from .worker import execute_queries, fill_queue
@@ -55,6 +63,7 @@ class Database(object):
         self.workload_publisher_url: str = workload_publisher_url
         self._system_data: Dict = {}
         self._chunks_data: Dict = {}
+        self._access_data: Dict = {}
 
         self._worker_stay_alive_flag = self._manager.Value("b", True)
         self._processing_tables_flag = self._manager.Value("b", False)
@@ -70,6 +79,9 @@ class Database(object):
         )
         self._update_chunks_data_job = self._scheduler.add_job(
             func=self._update_chunks_data, trigger="interval", seconds=5,
+        )
+        self._update_access_data_job = self._scheduler.add_job(
+            func=self._update_access_data, trigger="interval", seconds=5,
         )
         self._scheduler.start()
 
@@ -309,6 +321,41 @@ class Database(object):
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
 
+    def _update_access_data(self) -> None:
+        """Get information about the access frequency of columns."""
+        if self._processing_tables_flag:
+            return
+
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+
+        access_data_query = """SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"""
+
+        meta_segments = read_sql_query(access_data_query, connection)
+        if meta_segments.empty:
+            self._access_data = {}
+
+        accesses = meta_segments.reset_index().groupby("table_name", "column_name")
+        access_dict = accesses.to_dict("index")
+        time = time_ns
+
+        for table, column in self._access_data.keys():
+            if (table, column) in access_dict.keys():
+                access_dict[(table, column)] -= self._access_data[(table, column)]
+
+        access_data = [
+            (table_name, column_name, access_counter, time)
+            for table_name, column_name, access_counter in access_dict.items()
+        ]
+
+        with StorageCursor(
+            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, self._id
+        ) as log:
+            log.log_access_data(access_data)
+
+        self._access_data = access_dict
+        self._connection_pool.putconn(connection)
+
     def get_storage_data(self) -> Dict:
         """Get storage data from the database."""
         if self._processing_tables_flag.value:
@@ -377,6 +424,10 @@ class Database(object):
     def get_chunks_data(self) -> Dict:
         """Return chunks data."""
         return self._chunks_data
+
+    def get_access_data(self) -> Dict:
+        """Return access data."""
+        return self._access_data
 
     def get_queue_length(self) -> int:
         """Return queue length."""

@@ -1,4 +1,6 @@
 """Utility custom cursors."""
+from typing import List, Tuple
+
 from influxdb import InfluxDBClient
 from psycopg2 import pool
 
@@ -54,7 +56,7 @@ class StorageCursor:
         """Close the cursor and connection."""
         self._connection.close()
 
-    def log_queries(self, query_list) -> None:
+    def log_queries(self, query_list: List[Tuple[int, int, str, str]]) -> None:
         """Log a couple of succesfully executed queries."""
         points = [
             {
@@ -64,5 +66,23 @@ class StorageCursor:
                 "time": query[0],
             }
             for query in query_list
+        ]
+        self._connection.write_points(points, database=self._database)
+
+    def log_access_data(
+        self, access_counter_list: List[Tuple[str, str, int, int]]
+    ) -> None:
+        """Log access data per column."""
+        points = [
+            {
+                "measurement": "access_data",
+                "tags": {
+                    "table": access_counter_list[0],
+                    "column": access_counter_list[1],
+                },
+                "fields": {"access_counter": access_counter_list[2]},
+                "time": access_counter_list[3],
+            }
+            for access_point in access_counter_list
         ]
         self._connection.write_points(points, database=self._database)
