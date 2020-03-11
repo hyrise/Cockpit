@@ -2,24 +2,15 @@
 
 from multiprocessing import Process, Queue, Value
 from secrets import randbelow
-from time import time_ns
 from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
-from hyrisecockpit.settings import (
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
-
 from .background_scheduler import BackgroundJobManager
-from .cursor import PoolCursor, StorageCursor
+from .cursor import PoolCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
 from .worker import execute_queries, fill_queue
@@ -319,74 +310,6 @@ class Database(object):
                     data.append(current if (current < 100) else 0)
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
-
-    def get_storage_data(self) -> None:
-        """Get storage data from the database."""
-        time_stamp = time_ns()
-        meta_segments = self._read_storage_meta_segments()
-
-        with StorageCursor(
-            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, self._id
-        ) as log:
-            output = {}
-            if not meta_segments.empty:
-                result = self._create_storage_data_dataframe(meta_segments)
-                output = self._create_storage_data_dictionary(result)
-            log.log_meta_information("storage", output, time_stamp)
-
-    def _read_storage_meta_segments(self) -> DataFrame:
-        if self._processing_tables_flag.value:
-            return DataFrame({"foo": []})
-        else:
-            connection = self._connection_pool.getconn()
-            connection.set_session(autocommit=True)
-            sql = "SELECT * FROM meta_segments;"
-            meta_segments = read_sql_query(sql, connection)
-            self._connection_pool.putconn(connection)
-            return meta_segments
-
-    def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
-        meta_segments.set_index(
-            ["table_name", "column_name", "chunk_id"],
-            inplace=True,
-            verify_integrity=True,
-        )
-        size: DataFrame = DataFrame(
-            meta_segments["estimated_size_in_bytes"]
-            .groupby(level=["table_name", "column_name"])
-            .sum()
-        )
-
-        encoding: DataFrame = DataFrame(
-            meta_segments["encoding_type"]
-            .groupby(level=["table_name", "column_name"])
-            .apply(set)
-        )
-        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
-        datatype: DataFrame = meta_segments.reset_index().set_index(
-            ["table_name", "column_name"]
-        )[["column_data_type"]]
-
-        result: DataFrame = size.join(encoding).join(datatype)
-        return result
-
-    def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
-        """Sort storage data to dictionary."""
-        output: Dict = {}
-        grouped = result.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            output[column] = {"size": 0, "number_columns": 0, "data": {}}
-            for _, row in grouped.get_group(column).iterrows():
-                output[column]["number_columns"] = output[column]["number_columns"] + 1
-                output[column]["size"] = (
-                    output[column]["size"] + row["estimated_size_in_bytes"]
-                )
-                output[column]["data"][row["column_name"]] = {
-                    "size": row["estimated_size_in_bytes"],
-                    "data_type": row["column_data_type"],
-                    "encoding": row["encoding_type"],
-                }
-        return output
 
     def get_system_data(self) -> Dict:
         """Return system data."""
