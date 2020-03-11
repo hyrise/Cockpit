@@ -1,71 +1,35 @@
 <template>
   <div class="metrics">
-    <v-card
-      class="metric-chart"
-      v-for="metric in selectedMetrics"
-      :key="metric"
-    >
-      <v-card-title class="metric-title">
-        {{ getMetricTitle(metric) }}
-      </v-card-title>
-      <component
-        class="metric"
-        :is="getMetricComponent(metric)"
-        :selected-databases="selectedDatabases"
+    <div class="metric-chart" v-for="metric in selectedMetrics" :key="metric">
+      <metric-tile
         :metric="metric"
-        :metric-meta="getMetricMetadata(metric)"
-        :graph-id="metric"
+        :selected-databases="selectedDatabases"
         :show-details="showDetails"
+        :graph-id="metric"
       />
-    </v-card>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, SetupContext } from "@vue/composition-api";
-import Throughput from "../metrics/Throughput.vue";
-import CPU from "../metrics/CPU.vue";
-import Latency from "../metrics/Latency.vue";
-import RAM from "../metrics/RAM.vue";
-import QueueLength from "../metrics/QueueLength.vue";
-import QueryTypeProportion from "../metrics/QueryTypeProportion.vue";
-import {
-  getMetricMetadata,
-  getMetricTitle,
-  getMetricComponent
-} from "../../meta/metrics";
-import { Metric, MetricMetadata } from "../../types/metrics";
+import { Metric } from "../../types/metrics";
 import { ContainerProps, ContainerPropsValidation } from "../../types/views";
+import MetricTile from "@/components/container/MetricTile.vue";
 
-interface Data {
-  getMetricMetadata: (metric: Metric) => MetricMetadata;
-  getMetricTitle: (metric: Metric) => string;
-  getMetricComponent: (metric: Metric) => string;
-}
+interface Data {}
 
 export default defineComponent({
   components: {
-    Throughput,
-    CPU,
-    Latency,
-    RAM,
-    QueueLength,
-    QueryTypeProportion
+    MetricTile
   },
   props: ContainerPropsValidation,
   setup(props: ContainerProps, context: SetupContext): Data {
-    return {
-      getMetricMetadata,
-      getMetricTitle,
-      getMetricComponent
-    };
+    return {};
   }
 });
 </script>
 <style scoped>
-.metric {
-  margin-top: -20px;
-}
 .metrics {
   margin-top: 6px;
   display: flex;
@@ -83,11 +47,5 @@ export default defineComponent({
     margin: 0px 3px 6px 3px;
     padding: 0px;
   }
-}
-.metric-title {
-  z-index: 2;
-  position: relative;
-  margin-bottom: -60px;
-  justify-content: center;
 }
 </style>

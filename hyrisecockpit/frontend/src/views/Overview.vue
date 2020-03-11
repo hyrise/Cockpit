@@ -6,15 +6,23 @@
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
-      <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
-        No databases selected.
-      </v-alert>
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
         :handle-scroll="false"
       />
-      <MetricsTileList
+      <v-alert
+        v-if="!selectedDatabases.length"
+        class="alert mt-2"
+        type="warning"
+      >
+        No databases selected.
+      </v-alert>
+      <v-alert v-if="!selectedMetrics.length" class="alert mt-2" type="warning">
+        No metrics selected.
+      </v-alert>
+      <metrics-tile-list
+        v-if="selectedDatabases.length"
         class="list"
         :selected-databases="selectedDatabases"
         :show-details="false"
