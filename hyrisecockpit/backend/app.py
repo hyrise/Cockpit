@@ -857,7 +857,7 @@ class Data(Resource):
         return response
 
 
-@control.route("/plugins")
+@control.route("/available_plugins")
 class ActivatedPlugin(Resource):
     """Get all available Plugins."""
 
