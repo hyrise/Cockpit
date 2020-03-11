@@ -1,7 +1,7 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
 from json import dumps
-from secrets import randbelow
+from secrets import choice, randbelow
 from time import time_ns
 from typing import Dict
 
@@ -38,6 +38,9 @@ class BackgroundJobManager(object):
 
     def _init_jobs(self):
         """Initialize basic background jobs."""
+        self._update_krueger_data_job = self._scheduler.add_job(
+            func=self._update_krueger_data, trigger="interval", seconds=5,
+        )
         self._update_chunks_data_job = self._scheduler.add_job(
             func=self._update_chunks_data, trigger="interval", seconds=5,
         )
@@ -54,10 +57,41 @@ class BackgroundJobManager(object):
 
     def close_scheduler(self):
         """Close background scheduler."""
+        self._update_krueger_data_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
         self._scheduler.shutdown()
+
+    def _update_krueger_data(self):
+        time_stamp = time_ns()
+        executed_mocked_data = {
+            "SELECT": choice(range(241)),
+            "INSERT": choice(range(67)),
+            "UPDATE": choice(range(573)),
+            "DELETE": choice(range(14)),
+        }
+        generated_mocked_data = {
+            "SELECT": choice(range(241)),
+            "INSERT": choice(range(67)),
+            "UPDATE": choice(range(573)),
+            "DELETE": choice(range(14)),
+        }
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_meta_information(
+                "krueger_data",
+                {
+                    "executed": dumps(executed_mocked_data),
+                    "generated": dumps(generated_mocked_data),
+                },
+                time_stamp,
+            )
 
     def _read_meta_segments(self, sql) -> DataFrame:
         if self._processing_tables_flag.value:

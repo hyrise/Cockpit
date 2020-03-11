@@ -5,7 +5,6 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
-from secrets import choice
 from time import time_ns
 from typing import Dict, List, Union
 
@@ -631,27 +630,29 @@ class KruegerData(Resource):
     """Krügergraph data for all workloads."""
 
     @monitor.doc(model=[model_krueger_data])
-    def get(self) -> List[Dict[str, Union[str, Dict[str, int]]]]:
+    def get(self) -> Union[int, List[Dict[str, Dict[str, Dict]]]]:
         """Provide mock data for a Krügergraph."""
-        active_databases = _active_databases()
-        return [
-            {
-                "id": database,
-                "executed": {
-                    "SELECT": choice(range(241)),
-                    "INSERT": choice(range(67)),
-                    "UPDATE": choice(range(573)),
-                    "DELETE": choice(range(14)),
-                },
-                "generated": {
-                    "SELECT": choice(range(241)),
-                    "INSERT": choice(range(67)),
-                    "UPDATE": choice(range(573)),
-                    "DELETE": choice(range(14)),
-                },
-            }
-            for database in active_databases
-        ]
+        krueger_data: List[Dict] = []
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("executed"), * FROM krueger_data', database=database,
+            )
+            krueger_data_value = list(result["krueger_data", None])
+            if len(krueger_data_value) > 0:
+                krueger_data.append(
+                    {
+                        "id": database,
+                        "executed": loads(krueger_data_value[0]["executed"]),
+                        "generated": loads(krueger_data_value[0]["generated"]),
+                    }
+                )
+            else:
+                krueger_data.append({"id": database, "executed": {}, "generated": {}})
+        return krueger_data
 
 
 @monitor.route("/process_table_status", methods=["GET"])
