@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   backend:
-    image: cockpit:buster
+    image: cockpit:3.8.2
     build: .
     working_dir: /usr/local/Cockpit
     command: "cockpit-backend"
@@ -12,7 +12,7 @@ services:
       - "8000:8000"
 
   manager:
-    image: cockpit:buster
+    image: cockpit:3.8.2
     working_dir: /usr/local/Cockpit
     command: "cockpit-manager"
     volumes:
@@ -21,7 +21,7 @@ services:
       - "8001:8001"
 
   generator:
-    image: cockpit:buster
+    image: cockpit:3.8.2
     working_dir: /usr/local/Cockpit
     command: "cockpit-generator"
     volumes:
