@@ -401,7 +401,10 @@ class Database(object):
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
-                    ("INSERT INTO meta_plugins(plugin_name) VALUES %s);", (plugin),)
+                    (
+                        "INSERT INTO meta_plugins(name) VALUES ('usr/local/hyrise/lib/lib%sPlugin.so'));",
+                        (AsIs(plugin)),
+                    )
                 )
             return True
         else:
@@ -411,9 +414,7 @@ class Database(object):
         """Activate Plugin."""
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute(
-                    ("DELETE FROM meta_plugins WHERE plugin_name=%s;", (plugin),)
-                )
+                cur.execute(("DELETE FROM meta_plugins WHERE name=%s;", (plugin),))
             return True
         else:
             return False
