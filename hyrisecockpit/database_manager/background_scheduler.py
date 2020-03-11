@@ -53,24 +53,38 @@ class BackgroundJobManager(object):
         self._update_storage_data_job.remove()
         self._scheduler.shutdown()
 
+    def _read_meta_segments(self, sql) -> DataFrame:
+        if self._processing_tables_flag.value:
+            return DataFrame({"foo": []})
+        else:
+            with PoolCursor(self._connection_pool) as cur:
+                meta_segments = read_sql_query(sql, cur.connection)
+            return meta_segments
+
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
-        if self._processing_tables_flag.value:
-            return
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-
+        time_stamp = time_ns()
         sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
+        meta_segments = self._read_meta_segments(sql)
 
-        meta_segments = read_sql_query(sql, connection)
-        self._connection_pool.putconn(connection)
+        with StorageCursor(
+            STORAGE_HOST,
+            STORAGE_PORT,
+            STORAGE_USER,
+            STORAGE_PASSWORD,
+            self._database_id,
+        ) as log:
+            output = {}
+            if not meta_segments.empty:
+                output = self._read_chunks_data(meta_segments)
+            log.log_meta_information(
+                "chunks_data",
+                {"chunks_data_meta_information": dumps(output)},
+                time_stamp,
+            )
 
-        if meta_segments.empty:
-            self._chunks_data = {}
-            return
-
+    def _read_chunks_data(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
         grouped = meta_segments.reset_index().groupby("table_name")
         for column in grouped.groups:
@@ -81,7 +95,7 @@ class BackgroundJobManager(object):
                     current = randbelow(500)
                     data.append(current if (current < 100) else 0)
                 chunks_data[column][row["column_name"]] = data
-        self._chunks_data = chunks_data
+        return chunks_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
@@ -122,7 +136,7 @@ class BackgroundJobManager(object):
     def get_storage_data(self) -> None:
         """Get storage data from the database."""
         time_stamp = time_ns()
-        meta_segments = self._read_storage_meta_segments()
+        meta_segments = self._read_meta_segments("SELECT * FROM meta_segments;")
 
         with StorageCursor(
             STORAGE_HOST,
@@ -138,15 +152,6 @@ class BackgroundJobManager(object):
             log.log_meta_information(
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
-
-    def _read_storage_meta_segments(self) -> DataFrame:
-        if self._processing_tables_flag.value:
-            return DataFrame({"foo": []})
-        else:
-            with PoolCursor(self._connection_pool) as cur:
-                sql = "SELECT * FROM meta_segments;"
-                meta_segments = read_sql_query(sql, cur.connection)
-            return meta_segments
 
     def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
         meta_segments.set_index(
