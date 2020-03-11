@@ -87,12 +87,9 @@ class StorageCursor:
         points = [
             {
                 "measurement": "access_data",
-                "tags": {
-                    "table": access_counter_list[0],
-                    "column": access_counter_list[1],
-                },
-                "fields": {"access_counter": access_counter_list[2]},
-                "time": access_counter_list[3],
+                "tags": {"table": access_point[0], "column": access_point[1]},
+                "fields": {"access_counter": access_point[2]},
+                "time": access_point[3],
             }
             for access_point in access_counter_list
         ]
