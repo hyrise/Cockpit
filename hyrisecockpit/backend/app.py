@@ -559,7 +559,7 @@ class System(Resource):
         try:
             active_databases = _active_databases()
         except ValidationError:
-            return get_response(500)
+            return 500
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("cpu"), * FROM system_data', database=database,
