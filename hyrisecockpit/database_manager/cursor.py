@@ -1,6 +1,6 @@
 """Utility custom cursors."""
 
-from typing import Any, Dict
+from typing import Any, Dict, List, Tuple
 
 from influxdb import InfluxDBClient
 from psycopg2 import pool
@@ -64,12 +64,16 @@ class StorageCursor:
         points = [{"measurement": measurement, "fields": fields, "time": time_stamp}]
         self._connection.write_points(points, database=self._database)
 
-    def log_queries(self, query_list) -> None:
+    def log_queries(self, query_list: List[Tuple[int, int, str, str, str]]) -> None:
         """Log a couple of succesfully executed queries."""
         points = [
             {
                 "measurement": "successful_queries",
-                "tags": {"benchmark": query[2], "query_no": query[3]},
+                "tags": {
+                    "benchmark": query[2],
+                    "query_no": query[3],
+                    "worker_id": query[4],
+                },
                 "fields": {"latency": query[1]},
                 "time": query[0],
             }
