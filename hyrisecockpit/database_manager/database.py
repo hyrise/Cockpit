@@ -301,6 +301,20 @@ class Database(object):
         else:
             return False
 
+    def set_plugin_setting(self, name: str, value: str, description: str) -> bool:
+        """Adjust setting for given plugin."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    (
+                        "INSERT INTO meta_settings(name, value, description) VALUES %s, %s, %s;",
+                        ((name), (value), (description)),
+                    )
+                )
+            return True
+        else:
+            return False
+
     def close(self) -> None:
         """Close the database."""
         # Remove jobs

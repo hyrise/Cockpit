@@ -369,10 +369,10 @@ model_add_database = control.clone(
 )
 
 modelhelper_plugin = fields.String(
-    title="Plugin ID",
+    title="Plugin name",
     description="Used to identify a plugin.",
     required=True,
-    example="clustering-11.08",
+    example="Clustering",
 )
 
 model_get_all_plugins = control.model(
@@ -391,6 +391,34 @@ model_activate_plugin = control.clone(
 
 model_deactivate_plugin = control.clone(
     "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
+)
+
+model_plugin_setting = control.clone(
+    "Set Plugin Setting",
+    model_database,
+    control.model(
+        "Plugin settings",
+        {
+            "name": fields.String(
+                title="Setting name",
+                description="Name of the setting that shall be set.",
+                required=True,
+                example="CompressionPlugin_MemoryBudget",
+            ),
+            "value": fields.String(
+                title="Setting value",
+                description="Value the setting should have.",
+                required=True,
+                example="5000",
+            ),
+            "description": fields.String(
+                title="Setting description",
+                description="Description of the plugin setting.",
+                required=True,
+                example="The memory budget to target for the Compression...",
+            ),
+        },
+    ),
 )
 
 
@@ -869,6 +897,26 @@ class Plugin(Resource):
         message = {
             "header": {"message": "delete plugin"},
             "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+
+@control.route("/plugin_settings")
+class PluginSettings(Resource):
+    """Set settings for plugins."""
+
+    @control.doc(body=model_plugin_setting)
+    def post(self) -> Dict:
+        """Set settings for pugins."""
+        message = {
+            "header": {"message": "Set plugin setting"},
+            "body": {
+                "id": control.payload["id"],
+                "name": control.payload["name"],
+                "value": control.payload["name"],
+                "description": control.payload["description"],
+            },
         }
         response = _send_message(db_manager_socket, message)
         return response
