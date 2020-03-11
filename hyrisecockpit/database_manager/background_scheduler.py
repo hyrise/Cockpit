@@ -2,7 +2,7 @@
 
 from json import dumps
 from multiprocessing import Value
-from secrets import choice, randbelow
+from secrets import randbelow
 from time import time_ns
 from typing import Dict
 
@@ -68,16 +68,16 @@ class BackgroundJobManager(object):
     def _update_krueger_data(self):
         time_stamp = time_ns()
         executed_mocked_data = {
-            "SELECT": choice(range(241)),
-            "INSERT": choice(range(67)),
-            "UPDATE": choice(range(573)),
-            "DELETE": choice(range(14)),
+            "SELECT": 100,
+            "INSERT": 0,
+            "UPDATE": 0,
+            "DELETE": 0,
         }
         generated_mocked_data = {
-            "SELECT": choice(range(241)),
-            "INSERT": choice(range(67)),
-            "UPDATE": choice(range(573)),
-            "DELETE": choice(range(14)),
+            "SELECT": 100,
+            "INSERT": 0,
+            "UPDATE": 0,
+            "DELETE": 0,
         }
         with StorageCursor(
             self._storage_host,
