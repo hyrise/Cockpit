@@ -331,21 +331,24 @@ class Database(object):
 
         access_data_query = """SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"""
 
-        meta_segments = read_sql_query(access_data_query, connection)
+        meta_segments = read_sql_query(access_data_query, connection).set_index(
+            ["table_name", "column_name"]
+        )
         if meta_segments.empty:
             self._access_data = {}
 
-        accesses = meta_segments.reset_index().groupby("table_name", "column_name")
-        access_dict = accesses.to_dict("index")
-        time = time_ns
+        access_dict = meta_segments.to_dict("index")
+        ts = time_ns()
 
         for table, column in self._access_data.keys():
             if (table, column) in access_dict.keys():
-                access_dict[(table, column)] -= self._access_data[(table, column)]
+                access_dict[table, column]["access_counter"] -= self._access_data[
+                    table, column
+                ]["access_counter"]
 
         access_data = [
-            (table_name, column_name, access_counter, time)
-            for table_name, column_name, access_counter in access_dict.items()
+            (table_name, column_name, access_counter["access_counter"], ts)
+            for (table_name, column_name), access_counter in access_dict.items()
         ]
 
         with StorageCursor(
