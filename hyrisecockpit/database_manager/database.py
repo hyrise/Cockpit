@@ -1,15 +1,13 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Process, Queue, Value
-from secrets import randbelow
 from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from pandas import DataFrame
-from pandas.io.sql import read_sql_query
 from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
+from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
@@ -30,6 +28,10 @@ class Database(object):
         number_workers: int,
         workload_publisher_url: str,
         default_tables: str,
+        storage_host: str,
+        storage_password: str,
+        storage_port: str,
+        storage_user: str,
     ) -> None:
         """Initialize database object."""
         self._id = id
@@ -52,8 +54,6 @@ class Database(object):
         self._failed_task_queue: Queue = Queue(0)
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._system_data: Dict = {}
-        self._chunks_data: Dict = {}
 
         self._worker_stay_alive_flag = Value("b", True)
         self._processing_tables_flag = Value("b", False)
@@ -64,12 +64,16 @@ class Database(object):
 
         self.load_data(self._default_tables)
 
-        self._update_system_data_job = self._scheduler.add_job(
-            func=self._update_system_data, trigger="interval", seconds=1,
+        self._background_scheduler = BackgroundJobManager(
+            self._id,
+            self._processing_tables_flag,
+            self._connection_pool,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
         )
-        self._update_chunks_data_job = self._scheduler.add_job(
-            func=self._update_chunks_data, trigger="interval", seconds=5,
-        )
+        self._background_scheduler.start()
         self._scheduler.start()
 
     def _init_subscriber_worker(self) -> Process:
@@ -250,131 +254,9 @@ class Database(object):
             self._start_table_processing_parallel,
         )
 
-    def _update_system_data(self) -> None:
-        """Update system data for database instance."""
-        # mocked cpu data
-        cpu_data = [randbelow(1001) / 10 for _ in range(16)]
-        # mocked memory data
-        total_memory = 32 * (1024 ** 3)
-        used_memory = randbelow(total_memory)
-        available_memory = total_memory - used_memory
-        memory_data = {
-            "available": available_memory,
-            "used": used_memory,
-            "cached": 4237438976,
-            "percent": used_memory / total_memory,
-            "free": 5536755712,
-            "inactive": 2687451136,
-            "active": 3657117696,
-            "shared": 1149366272,
-            "total": total_memory,
-            "buffers": 169537536,
-        }
-
-        self._system_data = {
-            "cpu": cpu_data,
-            "memory": memory_data,
-            "database_threads": 8,
-        }
-
-    def _update_chunks_data(self) -> None:
-        """Update chunks data for database instance."""
-        # mocking chunks data
-        if self._processing_tables_flag.value:
-            return
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-
-        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-
-        meta_segments = read_sql_query(sql, connection)
-        self._connection_pool.putconn(connection)
-
-        if meta_segments.empty:
-            self._chunks_data = {}
-            return
-
-        chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            chunks_data[column] = {}
-            for _, row in grouped.get_group(column).iterrows():
-                data = []
-                for _ in range(row["n_chunks"]):
-                    current = randbelow(500)
-                    data.append(current if (current < 100) else 0)
-                chunks_data[column][row["column_name"]] = data
-        self._chunks_data = chunks_data
-
-    def get_storage_data(self) -> Dict:
-        """Get storage data from the database."""
-        if self._processing_tables_flag.value:
-            return {}
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-        sql = "SELECT * FROM meta_segments;"
-
-        meta_segments = read_sql_query(sql, connection)
-        self._connection_pool.putconn(connection)
-
-        if meta_segments.empty:
-            return {}
-
-        meta_segments.set_index(
-            ["table_name", "column_name", "chunk_id"],
-            inplace=True,
-            verify_integrity=True,
-        )
-        size: DataFrame = DataFrame(
-            meta_segments["estimated_size_in_bytes"]
-            .groupby(level=["table_name", "column_name"])
-            .sum()
-        )
-
-        encoding: DataFrame = DataFrame(
-            meta_segments["encoding_type"]
-            .groupby(level=["table_name", "column_name"])
-            .apply(set)
-        )
-        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
-        datatype: DataFrame = meta_segments.reset_index().set_index(
-            ["table_name", "column_name"]
-        )[["column_data_type"]]
-
-        result: DataFrame = size.join(encoding).join(datatype)
-        return self._create_storage_data_dictionary(result)
-
-    def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
-        """Sort storage data to dictionary."""
-        output: Dict = {}
-        grouped = result.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            output[column] = {"size": 0, "number_columns": 0, "data": {}}
-            for _, row in grouped.get_group(column).iterrows():
-                output[column]["number_columns"] = output[column]["number_columns"] + 1
-                output[column]["size"] = (
-                    output[column]["size"] + row["estimated_size_in_bytes"]
-                )
-                output[column]["data"][row["column_name"]] = {
-                    "size": row["estimated_size_in_bytes"],
-                    "data_type": row["column_data_type"],
-                    "encoding": row["encoding_type"],
-                }
-        return output
-
-    def get_system_data(self) -> Dict:
-        """Return system data."""
-        return self._system_data
-
     def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
         return self._processing_tables_flag.value
-
-    def get_chunks_data(self) -> Dict:
-        """Return chunks data."""
-        return self._chunks_data
 
     def get_queue_length(self) -> int:
         """Return queue length."""
@@ -390,8 +272,7 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._update_system_data_job.remove()
-        self._update_chunks_data_job.remove()
+        self._background_scheduler.close()
 
         # Close the scheduler
         self._scheduler.shutdown()

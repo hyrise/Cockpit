@@ -58,7 +58,7 @@ def execute_queries(
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
-            succesful_queries: List[Tuple[int, int, str, str]] = []
+            succesful_queries: List[Tuple[int, int, str, str, str]] = []
             last_batched = time_ns()
             while True:
                 # If Queue is emty go to wait status
@@ -83,7 +83,7 @@ def execute_queries(
 
                         endts, latency = execute_task(cur, query, formatted_parameters)
                         succesful_queries.append(
-                            (endts, latency, workload_type, query_type)
+                            (endts, latency, workload_type, query_type, worker_id)
                         )
 
                         if last_batched < time_ns() - 1_000_000_000:
