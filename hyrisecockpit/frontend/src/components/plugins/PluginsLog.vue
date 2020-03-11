@@ -6,7 +6,7 @@
           log
         </div>
       </v-expansion-panel-header>
-      <v-expansion-panel-content>
+      <v-expansion-panel-content class="content">
         <v-textarea
           class="log-text"
           readonly
@@ -67,7 +67,11 @@ export default defineComponent({
 .log {
   text-align: right;
 }
+.content {
+  margin: 0px -26px 0px -26px;
+}
 .log-text {
   margin-bottom: -40px !important;
+  font-size: 14px;
 }
 </style>
