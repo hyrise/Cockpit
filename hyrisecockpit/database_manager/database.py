@@ -18,6 +18,7 @@ from hyrisecockpit.settings import (
     STORAGE_USER,
 )
 
+from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor, StorageCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
@@ -78,9 +79,10 @@ class Database(object):
         self._update_chunks_data_job = self._scheduler.add_job(
             func=self._update_chunks_data, trigger="interval", seconds=5,
         )
-        self._update_storage_data_job = self._scheduler.add_job(
-            func=self.get_storage_data, trigger="interval", seconds=5,
+        self._background_scheduler = BackgroundJobManager(
+            self._id, self._processing_tables_flag, self._connection_pool
         )
+        self._background_scheduler.start_scheduler()
         self._scheduler.start()
 
     def _init_subscriber_worker(self) -> Process:
@@ -414,7 +416,6 @@ class Database(object):
         # Remove jobs
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
-        self._update_storage_data_job.remove()
 
         # Close the scheduler
         self._scheduler.shutdown()
