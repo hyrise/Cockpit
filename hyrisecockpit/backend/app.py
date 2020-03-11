@@ -565,11 +565,24 @@ class System(Resource):
 class Chunks(Resource):
     """Chunks data information of all databases."""
 
-    def get(self) -> Dict:
+    def get(self) -> Union[int, Dict[str, Dict]]:
         """Return chunks data information for every database."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
-        )
+        chunks: Dict[str, Dict] = {}
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("chunks_data_meta_information") FROM chunks_data',
+                database=database,
+            )
+            chunks_value = list(result["chunks_data", None])
+            if len(chunks_value) > 0:
+                chunks[database] = loads(chunks_value[0]["last"])
+            else:
+                chunks[database] = {}
+        return chunks
 
 
 @monitor.route("/storage")
