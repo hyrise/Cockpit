@@ -1,6 +1,6 @@
 <template>
-  <div id="plugin-overview" class="plugin-overview">
-    <v-card id="plugin-card" class="card" color="primary" dark>
+  <div :id="pluginDraggableId" class="plugin-overview">
+    <v-card :id="pluginDraggerId" class="card" color="primary" dark>
       <v-card-title>
         Plugins
         <v-icon class="close-icon" @click="onClose()">
@@ -49,7 +49,7 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
-import dragElement from "../../meta/draggable";
+import useDragElement from "../../meta/draggable";
 
 interface Props {
   onClose: () => void;
@@ -64,6 +64,8 @@ interface Data {
   onClickPluginSwitch: (databaseId: string, plugin: string) => void;
   isLoading: Ref<any>;
   disableAll: Ref<boolean>;
+  pluginDraggableId: string;
+  pluginDraggerId: string;
 }
 
 export default defineComponent({
@@ -96,7 +98,7 @@ export default defineComponent({
 
     onMounted(() => {
       // Make the DIV element draggable:
-      dragElement(pluginDraggableId, pluginDraggerId);
+      useDragElement(pluginDraggableId, pluginDraggerId);
     });
 
     function onClickPluginSwitch(databaseId: string, plugin: string): void {
@@ -116,7 +118,9 @@ export default defineComponent({
       onClickPluginSwitch,
       activePlugins,
       isLoading,
-      disableAll
+      disableAll,
+      pluginDraggableId,
+      pluginDraggerId
     };
   }
 });

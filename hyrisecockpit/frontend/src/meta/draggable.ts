@@ -1,4 +1,4 @@
-export default function dragElement(elementId: string, draggerId: string) {
+export default function useDragElement(elementId: string, draggerId: string) {
   let draggableElement = document.getElementById(elementId); // whole element that moves on drag
   let dragger = document.getElementById(draggerId); // area for drag and drop action
   let pos1 = 0,
@@ -13,7 +13,7 @@ export default function dragElement(elementId: string, draggerId: string) {
     draggableElement.onmousedown = dragMouseDown;
   }
 
-  function dragMouseDown(e: MouseEvent) {
+  function dragMouseDown(e: MouseEvent): void {
     e = e || window.event;
     e.preventDefault();
     // get the mouse cursor position at startup:
@@ -24,7 +24,7 @@ export default function dragElement(elementId: string, draggerId: string) {
     document.onmousemove = elementDrag;
   }
 
-  function elementDrag(e: MouseEvent) {
+  function elementDrag(e: MouseEvent): void {
     e = e || window.event;
     e.preventDefault();
     // calculate the new cursor position:
@@ -47,7 +47,7 @@ export default function dragElement(elementId: string, draggerId: string) {
     }
   }
 
-  function closeDragElement() {
+  function closeDragElement(): void {
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
