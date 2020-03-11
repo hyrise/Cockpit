@@ -73,7 +73,7 @@ class Database(object):
             storage_port,
             storage_user,
         )
-        self._background_scheduler.start_scheduler()
+        self._background_scheduler.start()
         self._scheduler.start()
 
     def _init_subscriber_worker(self) -> Process:
@@ -272,7 +272,7 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._background_scheduler.close_scheduler()
+        self._background_scheduler.close()
 
         # Close the scheduler
         self._scheduler.shutdown()

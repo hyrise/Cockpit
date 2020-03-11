@@ -1,6 +1,7 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
 from json import dumps
+from multiprocessing import Value
 from secrets import choice, randbelow
 from time import time_ns
 from typing import Dict
@@ -8,6 +9,7 @@ from typing import Dict
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
+from psycopg2 import pool
 
 from .cursor import PoolCursor, StorageCursor
 
@@ -18,8 +20,8 @@ class BackgroundJobManager(object):
     def __init__(
         self,
         database_id: str,
-        processing_tables_flag,
-        connection_pool,
+        processing_tables_flag: Value,
+        connection_pool: pool,
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -51,11 +53,11 @@ class BackgroundJobManager(object):
             func=self._update_storage_data, trigger="interval", seconds=5,
         )
 
-    def start_scheduler(self):
+    def start(self):
         """Start background scheduler."""
         self._scheduler.start()
 
-    def close_scheduler(self):
+    def close(self):
         """Close background scheduler."""
         self._update_krueger_data_job.remove()
         self._update_system_data_job.remove()
@@ -95,7 +97,7 @@ class BackgroundJobManager(object):
 
     def _read_meta_segments(self, sql) -> DataFrame:
         if self._processing_tables_flag.value:
-            return DataFrame({"foo": []})
+            return DataFrame({"foo": []})  # TODO remove foo
         else:
             with PoolCursor(self._connection_pool) as cur:
                 meta_segments = read_sql_query(sql, cur.connection)
@@ -173,26 +175,6 @@ class BackgroundJobManager(object):
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
-    def _update_storage_data(self) -> None:
-        """Get storage data from the database."""
-        time_stamp = time_ns()
-        meta_segments = self._read_meta_segments("SELECT * FROM meta_segments;")
-
-        with StorageCursor(
-            self._storage_host,
-            self._storage_port,
-            self._storage_user,
-            self._storage_password,
-            self._database_id,
-        ) as log:
-            output = {}
-            if not meta_segments.empty:
-                result = self._create_storage_data_dataframe(meta_segments)
-                output = self._create_storage_data_dictionary(result)
-            log.log_meta_information(
-                "storage", {"storage_meta_information": dumps(output)}, time_stamp
-            )
-
     def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
@@ -235,3 +217,23 @@ class BackgroundJobManager(object):
                     "encoding": row["encoding_type"],
                 }
         return output
+
+    def _update_storage_data(self) -> None:
+        """Get storage data from the database."""
+        time_stamp = time_ns()
+        meta_segments = self._read_meta_segments("SELECT * FROM meta_segments;")
+
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            output = {}
+            if not meta_segments.empty:
+                result = self._create_storage_data_dataframe(meta_segments)
+                output = self._create_storage_data_dictionary(result)
+            log.log_meta_information(
+                "storage", {"storage_meta_information": dumps(output)}, time_stamp
+            )
