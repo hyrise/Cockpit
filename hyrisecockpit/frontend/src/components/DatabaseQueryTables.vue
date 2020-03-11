@@ -2,7 +2,7 @@
   <div>
     <v-card color="primary">
       <v-card-title class="white--text">
-        Query Details
+        Query details
       </v-card-title>
     </v-card>
     <v-container
@@ -48,7 +48,7 @@ export default defineComponent({
     function updateQueryInformation(): void {
       loading.value = true;
       queries.value = {
-        york: [
+        added_by_postman: [
           {
             queryName: "TPC-H-5",
             workloadType: "TPC-H",
@@ -86,7 +86,7 @@ export default defineComponent({
     setInterval(updateQueryInformation, 1000);
 
     return {
-      databases: ref(["york", "citadelle", "c"]), // context.root.$databaseController.availableDatabasesById,
+      databases: context.root.$databaseController.availableDatabasesById,
       queries,
       loading
     };

@@ -41,7 +41,7 @@ export function useDatabaseService(): DatabaseService {
     let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
     await axios.get(monitorBackend + "system").then(response => {
       databasesWithCPUInformation = getCPUInformation(
-        response.data.body.system_data
+        response.data.body.system
       );
     });
     return databasesWithCPUInformation;

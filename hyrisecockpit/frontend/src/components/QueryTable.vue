@@ -1,12 +1,12 @@
 <template>
   <v-card>
     <v-card-title>
-      <database-chip :database="database" />
-      <v-spacer></v-spacer>
+      <database-chip :database-id="databaseId" />
+      <v-spacer />
       <v-text-field
         v-model="searchQueries"
         append-icon="mdi-magnify"
-        label="Search Queries"
+        label="Search queries"
         single-line
         hide-details
       ></v-text-field>
@@ -31,7 +31,6 @@ import {
 } from "@vue/composition-api";
 import { DetailedQueryInformation } from "@/types/queries";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
-import { Database } from "@/types/database";
 
 interface Props {
   databaseId: string;
@@ -43,7 +42,6 @@ interface Data {
   searchQueries: Ref<string>;
   headers: Object[];
   sortedQueries: Ref<readonly DetailedQueryInformation[]>;
-  database: Ref<Database>;
 }
 
 export default defineComponent({
@@ -78,16 +76,10 @@ export default defineComponent({
       { text: "Throughput (in s)", value: "throughput" }
     ];
 
-    const sortedQueries = computed(() => sortQueries(props.queries));
     return {
       searchQueries: ref(""),
       headers,
-      sortedQueries,
-      database: ref(
-        context.root.$databaseController.getDatabasesByIds([
-          props.databaseId
-        ])[0] //TODO: refactor this: add reutn of just one database in controller
-      )
+      sortedQueries: computed(() => sortQueries(props.queries))
     };
   }
 });

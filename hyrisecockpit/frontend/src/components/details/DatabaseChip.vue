@@ -5,24 +5,30 @@
 </template>
 <script lang="ts">
 import { defineComponent, SetupContext, Ref, ref } from "@vue/composition-api";
-import { Database } from "../../types/database";
+import { Database } from "@/types/database";
 
-interface Data {}
+interface Data {
+  database: Database;
+}
 
 interface Props {
-  database: Database;
+  databaseId: string;
 }
 
 export default defineComponent({
   name: "DatabaseChip",
   props: {
-    database: {
+    databaseId: {
       type: String,
       default: null
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    return {};
+    return {
+      database: context.root.$databaseController.getDatabaseById(
+        props.databaseId
+      )
+    };
   }
 });
 </script>
