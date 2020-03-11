@@ -71,12 +71,13 @@
           </v-btn>
         </v-btn-toggle>
       </v-col>
-      <MetricsTileList
+      <!-- <metrics-tile-list
         v-if="$databaseController.databasesUpdated.value"
         :selected-databases="watchedInstances"
         :show-details="false"
         :selected-metrics="workloadMetrics"
-      />
+      /> -->
+      <database-query-tables />
     </div>
   </div>
 </template>
@@ -98,6 +99,7 @@ import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import LinearLoader from "../components/loading/linearLoader.vue";
+import DatabaseQueryTables from "@/components/DatabaseQueryTables.vue";
 
 interface Props {}
 interface Data {
@@ -116,7 +118,8 @@ export default defineComponent({
   name: "WorkloadScreen",
   components: {
     MetricsTileList,
-    LinearLoader
+    LinearLoader,
+    DatabaseQueryTables
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
