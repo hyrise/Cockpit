@@ -586,7 +586,8 @@ class Storage(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT LAST("meta_information") FROM storage', database=database,
+                'SELECT LAST("storage_meta_information") FROM storage',
+                database=database,
             )
             storage_value = list(result["storage", None])
             if len(storage_value) > 0:

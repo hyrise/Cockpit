@@ -52,7 +52,6 @@ class Database(object):
         self._failed_task_queue: Queue = Queue(0)
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._system_data: Dict = {}
         self._chunks_data: Dict = {}
 
         self._worker_stay_alive_flag = Value("b", True)
@@ -64,9 +63,6 @@ class Database(object):
 
         self.load_data(self._default_tables)
 
-        self._update_system_data_job = self._scheduler.add_job(
-            func=self._update_system_data, trigger="interval", seconds=1,
-        )
         self._update_chunks_data_job = self._scheduler.add_job(
             func=self._update_chunks_data, trigger="interval", seconds=5,
         )
@@ -254,33 +250,6 @@ class Database(object):
             self._start_table_processing_parallel,
         )
 
-    def _update_system_data(self) -> None:
-        """Update system data for database instance."""
-        # mocked cpu data
-        cpu_data = [randbelow(1001) / 10 for _ in range(16)]
-        # mocked memory data
-        total_memory = 32 * (1024 ** 3)
-        used_memory = randbelow(total_memory)
-        available_memory = total_memory - used_memory
-        memory_data = {
-            "available": available_memory,
-            "used": used_memory,
-            "cached": 4237438976,
-            "percent": used_memory / total_memory,
-            "free": 5536755712,
-            "inactive": 2687451136,
-            "active": 3657117696,
-            "shared": 1149366272,
-            "total": total_memory,
-            "buffers": 169537536,
-        }
-
-        self._system_data = {
-            "cpu": cpu_data,
-            "memory": memory_data,
-            "database_threads": 8,
-        }
-
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         # mocking chunks data
@@ -311,10 +280,6 @@ class Database(object):
                 chunks_data[column][row["column_name"]] = data
         self._chunks_data = chunks_data
 
-    def get_system_data(self) -> Dict:
-        """Return system data."""
-        return self._system_data
-
     def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
         return self._processing_tables_flag.value
@@ -337,7 +302,6 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
 
         # Close the scheduler

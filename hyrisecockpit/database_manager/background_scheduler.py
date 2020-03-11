@@ -1,5 +1,7 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
+from json import dumps
+from secrets import randbelow
 from time import time_ns
 from typing import Dict
 
@@ -30,6 +32,9 @@ class BackgroundJobManager(object):
 
     def _init_jobs(self):
         """Initialize basic background jobs."""
+        self._update_system_data_job = self._scheduler.add_job(
+            func=self._update_system_data, trigger="interval", seconds=1,
+        )
         self._update_storage_data_job = self._scheduler.add_job(
             func=self.get_storage_data, trigger="interval", seconds=5,
         )
@@ -42,6 +47,42 @@ class BackgroundJobManager(object):
         """Close background scheduler."""
         self._update_storage_data_job.remove()
         self._scheduler.shutdown()
+
+    def _update_system_data(self) -> None:
+        """Update system data for database instance."""
+        time_stamp = time_ns()
+        # mocked cpu data
+        cpu_data = [randbelow(1001) / 10 for _ in range(16)]
+        # mocked memory data
+        total_memory = 32 * (1024 ** 3)
+        used_memory = randbelow(total_memory)
+        available_memory = total_memory - used_memory
+        memory_data = {
+            "available": available_memory,
+            "used": used_memory,
+            "cached": 4237438976,
+            "percent": used_memory / total_memory,
+            "free": 5536755712,
+            "inactive": 2687451136,
+            "active": 3657117696,
+            "shared": 1149366272,
+            "total": total_memory,
+            "buffers": 169537536,
+        }
+
+        with StorageCursor(
+            STORAGE_HOST,
+            STORAGE_PORT,
+            STORAGE_USER,
+            STORAGE_PASSWORD,
+            self._database_id,
+        ) as log:
+            system_data = {
+                "cpu": dumps(cpu_data),
+                "memory": dumps(memory_data),
+                "database_threads": 8,
+            }
+            log.log_meta_information("system_data", system_data, time_stamp)
 
     def get_storage_data(self) -> None:
         """Get storage data from the database."""
@@ -59,7 +100,9 @@ class BackgroundJobManager(object):
             if not meta_segments.empty:
                 result = self._create_storage_data_dataframe(meta_segments)
                 output = self._create_storage_data_dictionary(result)
-            log.log_meta_information("storage", output, time_stamp)
+            log.log_meta_information(
+                "storage", {"storage_meta_information": dumps(output)}, time_stamp
+            )
 
     def _read_storage_meta_segments(self) -> DataFrame:
         if self._processing_tables_flag.value:

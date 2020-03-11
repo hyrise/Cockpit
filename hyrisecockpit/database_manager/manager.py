@@ -36,7 +36,6 @@ class DatabaseManager(object):
             str, Tuple[Callable[[Dict[str, Any]], Dict[str, Any]], Optional[Dict]]
         ] = {
             "add database": (self._call_add_database, add_database_request_schema),
-            "system data": (self._call_system_data, None),
             "delete database": (
                 self._call_delete_database,
                 delete_database_request_schema,
@@ -105,14 +104,6 @@ class DatabaseManager(object):
         ]
         response = get_response(200)
         response["body"]["databases"] = databases
-        return response
-
-    def _call_system_data(self, body: Dict) -> Dict:
-        system_data = {}
-        for id, database in self._databases.items():
-            system_data[id] = database.get_system_data()
-        response = get_response(200)
-        response["body"]["system_data"] = system_data
         return response
 
     def _call_queue_length(self, body: Dict) -> Dict:
