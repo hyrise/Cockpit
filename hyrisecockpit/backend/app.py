@@ -368,6 +368,31 @@ model_add_database = control.clone(
     },
 )
 
+modelhelper_plugin = fields.String(
+    title="Plugin ID",
+    description="Used to identify a plugin.",
+    required=True,
+    example="clustering-11.08",
+)
+
+model_get_all_plugins = control.model(
+    "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
+)
+
+model_get_activated_plugins = control.clone(
+    "Activated Plugins",
+    model_database,
+    {"plugins": fields.List(modelhelper_plugin, required=True,)},
+)
+
+model_activate_plugin = control.clone(
+    "Activate Plugin", model_database, {"plugin": modelhelper_plugin},
+)
+
+model_deactivate_plugin = control.clone(
+    "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -799,6 +824,51 @@ class Data(Resource):
         message = {
             "header": {"message": "delete data"},
             "body": {"folder_name": control.payload["folder_name"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+
+@control.route("/plugins")
+class ActivatedPlugin(Resource):
+    """Get all available Plugins."""
+
+    @control.doc(model=model_get_all_plugins)
+    def get(self) -> List:
+        """Return available plugins."""
+        return ["Clustering", "Compression"]
+
+
+@control.route("/plugin")
+class Plugin(Resource):
+    """Activate, Deactive Plugins, respectively show which ones are activated."""
+
+    @control.doc(model=[model_get_activated_plugins])
+    def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
+        """Return activated plugins in each database."""
+        message = {
+            "header": {"message": "get plugins"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response["body"]["plugins"]
+
+    @control.doc(body=model_activate_plugin)
+    def post(self) -> Dict:
+        """Activate a plugin in a database."""
+        message = {
+            "header": {"message": "activate plugin"},
+            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+    @control.doc(body=model_deactivate_plugin)
+    def delete(self) -> Dict:
+        """Deactivate a plugin in a database."""
+        message = {
+            "header": {"message": "delete plugin"},
+            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
         }
         response = _send_message(db_manager_socket, message)
         return response

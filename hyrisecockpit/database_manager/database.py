@@ -269,6 +269,38 @@ class Database(object):
             failed_task.append(self._failed_task_queue.get())
         return failed_task
 
+    def get_plugins(self) -> Optional[List]:
+        """Return all currently activated plugins."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(("SELECT plugin_name FROM meta_plugins;", None))
+                return cur.fetchall()
+        else:
+            return None
+
+    def activate_plugin(self, plugin: str) -> bool:
+        """Activate Plugin."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    (
+                        "INSERT INTO meta_plugins(name) VALUES ('usr/local/hyrise/lib/lib%sPlugin.so'));",
+                        (AsIs(plugin)),
+                    )
+                )
+            return True
+        else:
+            return False
+
+    def deactivate_plugin(self, plugin: str) -> bool:
+        """Activate Plugin."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(("DELETE FROM meta_plugins WHERE name=%s;", (plugin),))
+            return True
+        else:
+            return False
+
     def close(self) -> None:
         """Close the database."""
         # Remove jobs

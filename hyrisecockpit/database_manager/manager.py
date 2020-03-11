@@ -55,6 +55,15 @@ class DatabaseManager(object):
             "delete data": (self._call_delete_data, delete_data_request_schema),
             "process table status": (self._call_process_table_status, None),
             "purge queue": (self._call_purge_queue, None),
+            "get plugins": (self._call_get_plugins, None),
+            "activate plugin": (
+                self._call_activate_plugin,
+                None,
+            ),  # TODO add validation schema
+            "deactivate plugin": (
+                self._call_deactivate_plugin,
+                None,
+            ),  # TODO add validation schema
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
@@ -171,6 +180,37 @@ class DatabaseManager(object):
         ]
         response = get_response(200)
         response["body"]["process_table_status"] = process_table_status
+        return response
+
+    def _call_get_plugins(self, body: Dict) -> Dict:
+        activated_plugins = [
+            {"id": id, "plugins": database.get_plugins()}
+            for id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["plugins"] = activated_plugins
+        return response
+
+    def _call_activate_plugin(self, body: Dict) -> Dict:
+        id: str = body["id"]
+        plugin: str = body["plugin"]
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].activate_plugin(plugin):
+            response = get_response(200)
+        else:
+            response = get_response(423)
+        return response
+
+    def _call_deactivate_plugin(self, body: Dict) -> Dict:
+        id: str = body["id"]
+        plugin: str = body["plugin"]
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].deactivate_plugin(plugin):
+            response = get_response(200)
+        else:
+            response = get_response(423)
         return response
 
     def _check_if_processing_table(self) -> bool:
