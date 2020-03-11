@@ -665,15 +665,21 @@ class AccessData(Resource):
                 database=database,
                 bind_params={"startts": currentts, "endts": endts},
             )
-            for table_name, column_name in list(result.keys()):
-                accesses = {
-                    "table_name": table_name,
-                    "column_name": column_name,
-                    "access_counter": list(result[table_name, column_name])[0][
-                        "access_counter"
+            access_data.append(
+                {
+                    "id": database,
+                    "access_data": [
+                        {
+                            "table_name": table_name,
+                            "column_name": column_name,
+                            "access_counter": list(result[table_name, column_name])[0][
+                                "access_counter"
+                            ],
+                        }
+                        for table_name, column_name in list(result.keys())
                     ],
                 }
-            access_data.append({"id": database, "access_data": accesses})
+            )
         return access_data
 
 
