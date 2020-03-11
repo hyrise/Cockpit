@@ -244,7 +244,7 @@ class BackgroundJobManager(object):
 
     def _update_access_data(self) -> None:
         """Get information about the access frequency of columns."""
-        if self._processing_tables_flag:
+        if self._processing_tables_flag.value:
             return
 
         connection = self._connection_pool.getconn()
