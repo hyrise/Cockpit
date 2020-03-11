@@ -69,7 +69,7 @@ function useDatabaseChangeAnimation(): DatabaseChangeAnimation {
     databasesLoading.value = true;
     setTimeout(() => {
       databasesLoading.value = false;
-    }, Math.floor(1000 + 100 * databases.length));
+    }, Math.floor(500 + 100 * databases.length));
   });
   return { databasesLoading };
 }
@@ -84,7 +84,7 @@ function useMetricChangeAnimation(): MetricChangeAnimation {
     metricsLoading.value = true;
     setTimeout(() => {
       metricsLoading.value = false;
-    }, Math.floor(500 + 50 * metrics.length));
+    }, Math.floor(300 + 50 * metrics.length));
   });
   return { metricsLoading };
 }

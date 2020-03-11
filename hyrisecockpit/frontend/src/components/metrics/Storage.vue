@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-10 my-10">
+  <div>
     <metric-detailed-view>
       <template #header>
         Storage
@@ -7,16 +7,19 @@
       <template #content>
         <Treemap
           :graph-id="'1' + graphId || 'storage'"
-          :storage-data="storageData"
+          :data="storageData"
           :chart-configuration="chartConfiguration"
-          :autosize="false"
+          :selected-databases="selectedDatabases"
+          :max-chart-width="1600"
         />
       </template>
     </metric-detailed-view>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
-      :storage-data="storageData"
+      :data="storageData"
       :chart-configuration="chartConfiguration"
+      :autosize="false"
+      :max-chart-width="maxChartWidth"
     />
   </div>
 </template>
