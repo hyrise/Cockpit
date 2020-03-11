@@ -73,7 +73,6 @@ export interface ComparisonMetricData {
 
 export interface MetricProps {
   metric: Metric;
-  metricMeta: MetricMetadata;
   selectedDatabases: string[];
   graphId: string;
   showDetails: boolean;
@@ -83,10 +82,6 @@ export interface MetricProps {
 export const MetricPropsValidation = {
   metric: {
     type: String,
-    default: null
-  },
-  metricMeta: {
-    type: Object,
     default: null
   },
   selectedDatabases: {
