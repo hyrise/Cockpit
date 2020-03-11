@@ -559,7 +559,7 @@ class System(Resource):
         try:
             active_databases = _active_databases()
         except ValidationError:
-            return 500
+            return get_response(500)
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("cpu"), * FROM system_data', database=database,
@@ -573,7 +573,9 @@ class System(Resource):
                 }
             else:
                 system[database] = {}
-        return system
+        response = get_response(200)
+        response["body"]["system"] = system
+        return response
 
 
 @monitor.route("/chunks")
@@ -597,7 +599,9 @@ class Chunks(Resource):
                 chunks[database] = loads(chunks_value[0]["last"])
             else:
                 chunks[database] = {}
-        return chunks
+        response = get_response(200)
+        response["body"]["chunks"] = chunks
+        return response
 
 
 @monitor.route("/storage")
@@ -622,7 +626,9 @@ class Storage(Resource):
                 storage[database] = loads(storage_value[0]["last"])
             else:
                 storage[database] = {}
-        return storage
+        response = get_response(200)
+        response["body"]["storage"] = storage
+        return response
 
 
 @monitor.route("/krueger_data", methods=["GET"])
