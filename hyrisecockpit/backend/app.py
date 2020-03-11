@@ -599,7 +599,7 @@ class System(Resource):
             else:
                 system[database] = {}
         response = get_response(200)
-        response["body"]["system"] = system
+        response["body"]["system_data"] = system
         return response
 
 
@@ -625,7 +625,7 @@ class Chunks(Resource):
             else:
                 chunks[database] = {}
         response = get_response(200)
-        response["body"]["chunks"] = chunks
+        response["body"]["chunks_data"] = chunks
         return response
 
 
