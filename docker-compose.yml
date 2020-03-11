@@ -38,9 +38,12 @@ services:
       - "8086:8086"
   
   hyrise:
-    image: udopigorsch/hyrise:bensk1_multithreaded
-    working_dir: "/usr/local/hyrise"
-    command: "cmake-build-release/hyriseServer"
+    image: hyrise:bensk1_multithreaded
+    build: 
+      context: .
+      dockerfile: ./hyrise/Dockerfile
+    working_dir: "/usr/local/hyrise/cmake-build-release"
+    command: "./hyriseServer"
     volumes:
       - ./cached_tables:/usr/local/hyrise/cached_tables
     ports:
