@@ -30,8 +30,7 @@ import {
   SetupContext,
   watch,
   Ref,
-  ref,
-  onMounted
+  ref
 } from "@vue/composition-api";
 import Treemap from "../charts/Treemap.vue";
 import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
@@ -41,7 +40,10 @@ import {
   ChartConfiguration,
   StorageData
 } from "../../types/metrics";
-import { getMetricChartConfiguration } from "../../meta/metrics";
+import {
+  getMetricChartConfiguration,
+  getMetricMetadata
+} from "../../meta/metrics";
 
 interface Data {
   storageData: Ref<StorageData>;
@@ -58,10 +60,11 @@ export default defineComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
     const storageData = ref<StorageData>({});
+    const metricMeta = getMetricMetadata(props.metric);
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
-        storageData.value = props.metricMeta.transformationService(
+        storageData.value = metricMeta.transformationService(
           data.value,
           props.selectedDatabases[0]
         );

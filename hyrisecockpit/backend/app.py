@@ -4,7 +4,7 @@ Includes routes for throughput, storage_data, and runtime_information.
 If run as a module, a flask server application will be started.
 """
 
-from secrets import choice
+from json import loads
 from time import time_ns
 from typing import Dict, List, Union
 
@@ -368,6 +368,31 @@ model_add_database = control.clone(
     },
 )
 
+modelhelper_plugin = fields.String(
+    title="Plugin ID",
+    description="Used to identify a plugin.",
+    required=True,
+    example="clustering-11.08",
+)
+
+model_get_all_plugins = control.model(
+    "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
+)
+
+model_get_activated_plugins = control.clone(
+    "Activated Plugins",
+    model_database,
+    {"plugins": fields.List(modelhelper_plugin, required=True,)},
+)
+
+model_activate_plugin = control.clone(
+    "Activate Plugin", model_database, {"plugin": modelhelper_plugin},
+)
+
+model_deactivate_plugin = control.clone(
+    "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
+)
+
 
 def get_all_databases(client: InfluxDBClient):
     """Return a list of all databases with measurements."""
@@ -553,22 +578,55 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    def get(self) -> Dict:
+    def get(self) -> Union[int, Dict[str, Dict]]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "system data"}, "body": {}}
-        )
+        system: Dict[str, Dict] = {}
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("cpu"), * FROM system_data', database=database,
+            )
+            system_value = list(result["system_data", None])
+            if len(system_value) > 0:
+                system[database] = {
+                    "cpu": loads(system_value[0]["cpu"]),
+                    "memory": loads(system_value[0]["memory"]),
+                    "database_threads": loads(system_value[0]["database_threads"]),
+                }
+            else:
+                system[database] = {}
+        response = get_response(200)
+        response["body"]["system"] = system
+        return response
 
 
 @monitor.route("/chunks")
 class Chunks(Resource):
     """Chunks data information of all databases."""
 
-    def get(self) -> Dict:
+    def get(self) -> Union[int, Dict[str, Dict]]:
         """Return chunks data information for every database."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "chunks data"}, "body": {}}
-        )
+        chunks: Dict[str, Dict] = {}
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("chunks_data_meta_information") FROM chunks_data',
+                database=database,
+            )
+            chunks_value = list(result["chunks_data", None])
+            if len(chunks_value) > 0:
+                chunks[database] = loads(chunks_value[0]["last"])
+            else:
+                chunks[database] = {}
+        response = get_response(200)
+        response["body"]["chunks"] = chunks
+        return response
 
 
 @monitor.route("/storage")
@@ -576,11 +634,26 @@ class Storage(Resource):
     """Storage information of all databases."""
 
     # @control.doc(body=[model_storage]) # noqa
-    def get(self) -> Dict:
+    def get(self) -> Union[int, Dict[str, Dict]]:
         """Return storage metadata from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "storage"}, "body": {}}
-        )
+        storage: Dict[str, Dict] = {}
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("storage_meta_information") FROM storage',
+                database=database,
+            )
+            storage_value = list(result["storage", None])
+            if len(storage_value) > 0:
+                storage[database] = loads(storage_value[0]["last"])
+            else:
+                storage[database] = {}
+        response = get_response(200)
+        response["body"]["storage"] = storage
+        return response
 
 
 @monitor.route("/krueger_data", methods=["GET"])
@@ -588,27 +661,29 @@ class KruegerData(Resource):
     """Krügergraph data for all workloads."""
 
     @monitor.doc(model=[model_krueger_data])
-    def get(self) -> List[Dict[str, Union[str, Dict[str, int]]]]:
+    def get(self) -> Union[int, List[Dict[str, Dict[str, Dict]]]]:
         """Provide mock data for a Krügergraph."""
-        active_databases = _active_databases()
-        return [
-            {
-                "id": database,
-                "executed": {
-                    "SELECT": choice(range(241)),
-                    "INSERT": choice(range(67)),
-                    "UPDATE": choice(range(573)),
-                    "DELETE": choice(range(14)),
-                },
-                "generated": {
-                    "SELECT": choice(range(241)),
-                    "INSERT": choice(range(67)),
-                    "UPDATE": choice(range(573)),
-                    "DELETE": choice(range(14)),
-                },
-            }
-            for database in active_databases
-        ]
+        krueger_data: List[Dict] = []
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("executed"), * FROM krueger_data', database=database,
+            )
+            krueger_data_value = list(result["krueger_data", None])
+            if len(krueger_data_value) > 0:
+                krueger_data.append(
+                    {
+                        "id": database,
+                        "executed": loads(krueger_data_value[0]["executed"]),
+                        "generated": loads(krueger_data_value[0]["generated"]),
+                    }
+                )
+            else:
+                krueger_data.append({"id": database, "executed": {}, "generated": {}})
+        return krueger_data
 
 
 @monitor.route("/process_table_status", methods=["GET"])
@@ -749,6 +824,51 @@ class Data(Resource):
         message = {
             "header": {"message": "delete data"},
             "body": {"folder_name": control.payload["folder_name"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+
+@control.route("/plugins")
+class ActivatedPlugin(Resource):
+    """Get all available Plugins."""
+
+    @control.doc(model=model_get_all_plugins)
+    def get(self) -> List:
+        """Return available plugins."""
+        return ["Clustering", "Compression"]
+
+
+@control.route("/plugin")
+class Plugin(Resource):
+    """Activate, Deactive Plugins, respectively show which ones are activated."""
+
+    @control.doc(model=[model_get_activated_plugins])
+    def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
+        """Return activated plugins in each database."""
+        message = {
+            "header": {"message": "get plugins"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response["body"]["plugins"]
+
+    @control.doc(body=model_activate_plugin)
+    def post(self) -> Dict:
+        """Activate a plugin in a database."""
+        message = {
+            "header": {"message": "activate plugin"},
+            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+    @control.doc(body=model_deactivate_plugin)
+    def delete(self) -> Dict:
+        """Deactivate a plugin in a database."""
+        message = {
+            "header": {"message": "delete plugin"},
+            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
