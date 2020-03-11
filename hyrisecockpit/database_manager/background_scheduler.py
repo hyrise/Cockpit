@@ -9,25 +9,31 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 
-from hyrisecockpit.settings import (
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
-
 from .cursor import PoolCursor, StorageCursor
 
 
 class BackgroundJobManager(object):
     """Manage background scheduling jobs."""
 
-    def __init__(self, database_id, processing_tables_flag, connection_pool):
+    def __init__(
+        self,
+        database_id: str,
+        processing_tables_flag,
+        connection_pool,
+        storage_host: str,
+        storage_password: str,
+        storage_port: str,
+        storage_user: str,
+    ):
         """Initialize BackgroundJobManager object."""
         self._database_id = database_id
         self._processing_tables_flag = processing_tables_flag
-        self._scheduler = BackgroundScheduler()
         self._connection_pool = connection_pool
+        self._storage_host = storage_host
+        self._storage_password = storage_password
+        self._storage_port = storage_port
+        self._storage_user = storage_user
+        self._scheduler = BackgroundScheduler()
         self._init_jobs()
 
     def _init_jobs(self):
@@ -39,7 +45,7 @@ class BackgroundJobManager(object):
             func=self._update_system_data, trigger="interval", seconds=1,
         )
         self._update_storage_data_job = self._scheduler.add_job(
-            func=self.get_storage_data, trigger="interval", seconds=5,
+            func=self._update_storage_data, trigger="interval", seconds=5,
         )
 
     def start_scheduler(self):
@@ -69,10 +75,10 @@ class BackgroundJobManager(object):
         meta_segments = self._read_meta_segments(sql)
 
         with StorageCursor(
-            STORAGE_HOST,
-            STORAGE_PORT,
-            STORAGE_USER,
-            STORAGE_PASSWORD,
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
             self._database_id,
         ) as log:
             output = {}
@@ -120,10 +126,10 @@ class BackgroundJobManager(object):
         }
 
         with StorageCursor(
-            STORAGE_HOST,
-            STORAGE_PORT,
-            STORAGE_USER,
-            STORAGE_PASSWORD,
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
             self._database_id,
         ) as log:
             system_data = {
@@ -133,16 +139,16 @@ class BackgroundJobManager(object):
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
-    def get_storage_data(self) -> None:
+    def _update_storage_data(self) -> None:
         """Get storage data from the database."""
         time_stamp = time_ns()
         meta_segments = self._read_meta_segments("SELECT * FROM meta_segments;")
 
         with StorageCursor(
-            STORAGE_HOST,
-            STORAGE_PORT,
-            STORAGE_USER,
-            STORAGE_PASSWORD,
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
             self._database_id,
         ) as log:
             output = {}

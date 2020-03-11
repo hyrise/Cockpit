@@ -57,8 +57,8 @@ class StorageCursor:
 
     def log_meta_information(self, measurement, fields, time_stamp):
         """Log meta information in table."""
-        point = [{"measurement": measurement, "fields": fields, "time": time_stamp}]
-        self._connection.write_points(point, database=self._database)
+        points = [{"measurement": measurement, "fields": fields, "time": time_stamp}]
+        self._connection.write_points(points, database=self._database)
 
     def log_queries(self, query_list) -> None:
         """Log a couple of succesfully executed queries."""

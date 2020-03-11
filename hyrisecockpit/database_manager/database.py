@@ -28,6 +28,10 @@ class Database(object):
         number_workers: int,
         workload_publisher_url: str,
         default_tables: str,
+        storage_host: str,
+        storage_password: str,
+        storage_port: str,
+        storage_user: str,
     ) -> None:
         """Initialize database object."""
         self._id = id
@@ -61,7 +65,13 @@ class Database(object):
         self.load_data(self._default_tables)
 
         self._background_scheduler = BackgroundJobManager(
-            self._id, self._processing_tables_flag, self._connection_pool
+            self._id,
+            self._processing_tables_flag,
+            self._connection_pool,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
         )
         self._background_scheduler.start_scheduler()
         self._scheduler.start()

@@ -591,7 +591,7 @@ class Storage(Resource):
             )
             storage_value = list(result["storage", None])
             if len(storage_value) > 0:
-                storage[database] = loads(list(result["storage", None])[0]["last"])
+                storage[database] = loads(storage_value[0]["last"])
             else:
                 storage[database] = {}
         return storage
