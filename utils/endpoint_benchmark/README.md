@@ -36,23 +36,7 @@ python benchmark.py
 
 All default values are used. That means we are running the wrk benchmark on two databases, on all endpoints of the backend (for one second), while executing the `tpch_0.1` workload. 
 
-The command `python benchmark.py --show enpoints` will display all available endpoints: 
 
-```
-Endpoints:
--> endpoints_monitor: ['throughput', 'latency', 'queue_length', 'failed_tasks', 'system', 'chunks', 'storage', 'krueger_data']
--> endpoints_control: ['database', 'data']
-```
-
-The command `python benchmark.py --show all` will display all information needed: 
-
-```
-Endpoints:
--> endpoints_monitor: ['throughput', 'latency', 'queue_length', 'failed_tasks', 'system', 'chunks', 'storage', 'krueger_data']
--> endpoints_control: ['database', 'data']
-Databases: ['db1', 'db2']
-Workloads: ['tpch_0.1', 'tpch_1', 'tpcds_1', 'job']
-```
 
 ## Command Line Options
 
@@ -60,21 +44,23 @@ Workloads: ['tpch_0.1', 'tpch_1', 'tpcds_1', 'job']
 optional arguments:
   -h, --help            show this help message and exit
   --endpoint  [ ...], -ep  [ ...]
-                        endpoints to run the benchmark on (default: ['all'])
-  --show  [ ...]        show available endpoints, workloads, databases, plug-ins and exit (default: None)
+                        endpoints to run the benchmark on. Allowed values are throughput, latency, queue_length, failed_tasks, system, chunks, storage,
+                        krueger_data, all (default: ['all'])
   --database  [ ...], -db  [ ...]
-                        databases to use in benchmark (default: ['all'])
+                        databases to use in benchmark. Allowed values are db1, db2, all (default: ['all'])
   --workload  [ ...], -w  [ ...]
-                        workloads to run on databases (default: ['tpch_0.1'])
+                        workloads to run on databases. . Allowed values are tpch_0.1, tpch_1, tpcds_1, job, no-ops (default: ['tpch_0.1'])
   --time [], -t []      duration of the benchmark per endpoint in seconds (default: 1)
   --run [], -r []       number of runs (default: 1)
-  --url [], -u []       back-end URL (default: ['http://0.0.0.0:8000'])
+  --url [], -u []       back-end URL (default: ['http://127.0.0.1:8000'])
   --worker_number [], -wn []
                         number of workers per database (default: 10)
-  --workload_frequence , -wf
+  --workload_frequence [], -wf []
                         frequency of workload (default: 200)
   --plugin  [ ...], -p  [ ...]
-                        benchmark plug-ins to use (default: ['wrk'])
+                        benchmark plug-ins to use. Allowed values are wrk, displayMonitor (default: ['wrk'])
+  --start_components [], -sc []
+                        start components as subprocesses [Y/N] (default: Y)
 ```
 
 ## Setup
