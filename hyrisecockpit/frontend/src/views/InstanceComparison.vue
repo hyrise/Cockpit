@@ -6,18 +6,26 @@
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
       <database-metric-selection class="select" :metrics="watchedMetrics" />
-      <MetricsComparisonTable
+      <database-details-panel
+        v-if="selectedDatabases.length"
+        :selected-databases="selectedDatabases"
+      />
+      <v-alert
+        v-if="!selectedDatabases.length"
+        class="alert mt-2"
+        type="warning"
+      >
+        No databases selected.
+      </v-alert>
+      <v-alert v-if="!selectedMetrics.length" class="alert mt-2" type="warning">
+        No metrics selected.
+      </v-alert>
+      <metrics-comparison-table
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
         :selected-metrics="selectedMetrics"
         :show-details="true"
       />
-      <v-alert v-if="!selectedDatabases.length" class="alert" type="warning">
-        No databases selected.
-      </v-alert>
-      <v-alert v-if="!selectedMetrics.length" class="alert" type="warning">
-        No metrics selected.
-      </v-alert>
     </div>
   </div>
 </template>
@@ -39,11 +47,13 @@ import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
 import LinearLoader from "../components/loading/linearLoader.vue";
+import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 
 export default defineComponent({
   components: {
     MetricsComparisonTable,
     DatabaseMetricSelection,
+    DatabaseDetailsPanel,
     LinearLoader
   },
   setup(props: {}, context: SetupContext): MetricViewData {

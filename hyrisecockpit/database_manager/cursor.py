@@ -1,4 +1,7 @@
 """Utility custom cursors."""
+
+from typing import Any, Dict
+
 from influxdb import InfluxDBClient
 from psycopg2 import pool
 
@@ -53,6 +56,13 @@ class StorageCursor:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Close the cursor and connection."""
         self._connection.close()
+
+    def log_meta_information(
+        self, measurement: str, fields: Dict[str, Any], time_stamp: int
+    ):
+        """Log meta information in table."""
+        points = [{"measurement": measurement, "fields": fields, "time": time_stamp}]
+        self._connection.write_points(points, database=self._database)
 
     def log_queries(self, query_list) -> None:
         """Log a couple of succesfully executed queries."""

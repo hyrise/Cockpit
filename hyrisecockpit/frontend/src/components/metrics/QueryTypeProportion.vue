@@ -24,7 +24,10 @@ import {
   MetricPropsValidation,
   ChartConfiguration
 } from "../../types/metrics";
-import { getMetricChartConfiguration } from "../../meta/metrics";
+import {
+  getMetricChartConfiguration,
+  getMetricMetadata
+} from "../../meta/metrics";
 
 interface Data {
   transformedData: Ref<any>;
@@ -38,10 +41,11 @@ export default defineComponent({
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
     const transformedData = ref<any>([]);
+    const metricMeta = getMetricMetadata(props.metric);
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
-        transformedData.value = props.metricMeta.transformationService(
+        transformedData.value = metricMeta.transformationService(
           data.value,
           props.selectedDatabases[0]
         );
