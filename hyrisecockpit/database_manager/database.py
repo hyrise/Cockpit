@@ -1,23 +1,14 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Process, Queue, Value
-from time import time_ns
 from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from pandas.io.sql import read_sql_query
 from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
-from hyrisecockpit.settings import (
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
-
 from .background_scheduler import BackgroundJobManager
-from .cursor import PoolCursor, StorageCursor
+from .cursor import PoolCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
 from .worker import execute_queries, fill_queue
@@ -63,7 +54,6 @@ class Database(object):
         self._failed_task_queue: Queue = Queue(0)
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._access_data: Dict = {}  # TODO move this to background scheduler
 
         self._worker_stay_alive_flag = Value("b", True)
         self._processing_tables_flag = Value("b", False)
@@ -83,10 +73,6 @@ class Database(object):
             storage_port,
             storage_user,
         )
-        self._update_access_data_job = self._scheduler.add_job(
-            func=self._update_access_data, trigger="interval", seconds=5,
-        )
-        # TODO move this to background scheduler
         self._background_scheduler.start()
         self._scheduler.start()
 
@@ -267,44 +253,6 @@ class Database(object):
             folder_name,
             self._start_table_processing_parallel,
         )
-
-    def _update_access_data(self) -> None:
-        """Get information about the access frequency of columns."""
-        if self._processing_tables_flag:
-            return
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-
-        access_data_query = """SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"""
-
-        meta_segments = read_sql_query(access_data_query, connection).set_index(
-            ["table_name", "column_name"]
-        )
-        if meta_segments.empty:
-            self._access_data = {}
-
-        access_dict = meta_segments.to_dict("index")
-        ts = time_ns()
-
-        for table, column in self._access_data.keys():
-            if (table, column) in access_dict.keys():
-                access_dict[table, column]["access_counter"] -= self._access_data[
-                    table, column
-                ]["access_counter"]
-
-        access_data = [
-            (table_name, column_name, access_counter["access_counter"], ts)
-            for (table_name, column_name), access_counter in access_dict.items()
-        ]
-
-        with StorageCursor(
-            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, self._id
-        ) as log:
-            log.log_access_data(access_data)
-
-        self._access_data = access_dict
-        self._connection_pool.putconn(connection)
 
     def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
