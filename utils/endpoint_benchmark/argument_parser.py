@@ -19,6 +19,9 @@ class ArgumentValidation:
             "chunks",
             "storage",
             "krueger_data",
+            "detailed_latency",
+            "detailed_throughput",
+            "process_table_status",
         ]
         self._endpoints_control = ["database", "data"]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
