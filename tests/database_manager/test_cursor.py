@@ -10,20 +10,28 @@ class TestCursor:
     def test_logs_queries(self):
         """Test queries logging."""
         query_list = [
-            (1, 2, "benchmark1", "query_no_1"),
-            (3, 4, "benchmark2", "query_no_2"),
+            (1, 2, "benchmark1", "query_no_1", "worker1"),
+            (3, 4, "benchmark2", "query_no_2", "worker2"),
         ]
 
         expected_points = [
             {
                 "measurement": "successful_queries",
-                "tags": {"benchmark": "benchmark1", "query_no": "query_no_1"},
+                "tags": {
+                    "benchmark": "benchmark1",
+                    "query_no": "query_no_1",
+                    "worker_id": "worker1",
+                },
                 "fields": {"latency": 2},
                 "time": 1,
             },
             {
                 "measurement": "successful_queries",
-                "tags": {"benchmark": "benchmark2", "query_no": "query_no_2"},
+                "tags": {
+                    "benchmark": "benchmark2",
+                    "query_no": "query_no_2",
+                    "worker_id": "worker2",
+                },
                 "fields": {"latency": 4},
                 "time": 3,
             },
