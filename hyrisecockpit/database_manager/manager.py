@@ -41,7 +41,6 @@ class DatabaseManager(object):
                 delete_database_request_schema,
             ),
             "queue length": (self._call_queue_length, None),
-            "chunks data": (self._call_chunks_data, None),
             "failed tasks": (self._call_failed_tasks, None),
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
@@ -112,15 +111,6 @@ class DatabaseManager(object):
             queue_length[id] = database.get_queue_length()
         response = get_response(200)
         response["body"]["queue_length"] = queue_length
-        return response
-
-    def _call_chunks_data(self, body: Dict) -> Dict:
-        """Get chunks data of all databases."""
-        chunks_data = {}
-        for id, database in self._databases.items():
-            chunks_data[id] = database.get_chunks_data()
-        response = get_response(200)
-        response["body"]["chunks_data"] = chunks_data
         return response
 
     def _call_delete_database(self, body: Dict) -> Dict:

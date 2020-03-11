@@ -32,6 +32,9 @@ class BackgroundJobManager(object):
 
     def _init_jobs(self):
         """Initialize basic background jobs."""
+        self._update_chunks_data_job = self._scheduler.add_job(
+            func=self._update_chunks_data, trigger="interval", seconds=5,
+        )
         self._update_system_data_job = self._scheduler.add_job(
             func=self._update_system_data, trigger="interval", seconds=1,
         )
@@ -45,8 +48,40 @@ class BackgroundJobManager(object):
 
     def close_scheduler(self):
         """Close background scheduler."""
+        self._update_system_data_job.remove()
+        self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
         self._scheduler.shutdown()
+
+    def _update_chunks_data(self) -> None:
+        """Update chunks data for database instance."""
+        # mocking chunks data
+        if self._processing_tables_flag.value:
+            return
+
+        connection = self._connection_pool.getconn()
+        connection.set_session(autocommit=True)
+
+        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
+
+        meta_segments = read_sql_query(sql, connection)
+        self._connection_pool.putconn(connection)
+
+        if meta_segments.empty:
+            self._chunks_data = {}
+            return
+
+        chunks_data: Dict = {}
+        grouped = meta_segments.reset_index().groupby("table_name")
+        for column in grouped.groups:
+            chunks_data[column] = {}
+            for _, row in grouped.get_group(column).iterrows():
+                data = []
+                for _ in range(row["n_chunks"]):
+                    current = randbelow(500)
+                    data.append(current if (current < 100) else 0)
+                chunks_data[column][row["column_name"]] = data
+        self._chunks_data = chunks_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""

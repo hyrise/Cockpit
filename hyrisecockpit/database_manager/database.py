@@ -1,11 +1,9 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Process, Queue, Value
-from secrets import randbelow
 from typing import Callable, Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from pandas.io.sql import read_sql_query
 from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
@@ -52,7 +50,6 @@ class Database(object):
         self._failed_task_queue: Queue = Queue(0)
 
         self.workload_publisher_url: str = workload_publisher_url
-        self._chunks_data: Dict = {}
 
         self._worker_stay_alive_flag = Value("b", True)
         self._processing_tables_flag = Value("b", False)
@@ -63,9 +60,6 @@ class Database(object):
 
         self.load_data(self._default_tables)
 
-        self._update_chunks_data_job = self._scheduler.add_job(
-            func=self._update_chunks_data, trigger="interval", seconds=5,
-        )
         self._background_scheduler = BackgroundJobManager(
             self._id, self._processing_tables_flag, self._connection_pool
         )
@@ -250,43 +244,9 @@ class Database(object):
             self._start_table_processing_parallel,
         )
 
-    def _update_chunks_data(self) -> None:
-        """Update chunks data for database instance."""
-        # mocking chunks data
-        if self._processing_tables_flag.value:
-            return
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-
-        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
-
-        meta_segments = read_sql_query(sql, connection)
-        self._connection_pool.putconn(connection)
-
-        if meta_segments.empty:
-            self._chunks_data = {}
-            return
-
-        chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            chunks_data[column] = {}
-            for _, row in grouped.get_group(column).iterrows():
-                data = []
-                for _ in range(row["n_chunks"]):
-                    current = randbelow(500)
-                    data.append(current if (current < 100) else 0)
-                chunks_data[column][row["column_name"]] = data
-        self._chunks_data = chunks_data
-
     def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
         return self._processing_tables_flag.value
-
-    def get_chunks_data(self) -> Dict:
-        """Return chunks data."""
-        return self._chunks_data
 
     def get_queue_length(self) -> int:
         """Return queue length."""
@@ -302,7 +262,7 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._update_chunks_data_job.remove()
+        self._background_scheduler.close_scheduler()
 
         # Close the scheduler
         self._scheduler.shutdown()
