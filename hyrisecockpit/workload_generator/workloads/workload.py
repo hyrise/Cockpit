@@ -1,7 +1,7 @@
 """This module represents a workload."""
 
 from secrets import choice
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from hyrisecockpit.exception import QueryTypeNotFoundException
 from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
@@ -14,7 +14,7 @@ class Workload(object):
         self,
         workload_type: str,
         queries_location: str,
-        delimiter: str = ";",
+        delimiter: str = "---",
         file_type: str = "sql",
     ) -> None:
         """Initialize a Workload."""
@@ -35,15 +35,18 @@ class Workload(object):
 
     def generate_workload(
         self, number_queries: int
-    ) -> List[Tuple[Tuple[str, Any], str, str]]:
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         """Chose random one query from every type."""
-        workload_queries: List[Tuple[Tuple[str, Any], str, str]] = []
+        workload_queries: List[
+            Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]
+        ] = []
         query_types = list(self._queries.keys())
         for _ in range(number_queries):
             query_type = query_types[self._query_pointer]
             workload_queries.append(
                 (
-                    (choice(self._queries[query_type]), None),
+                    choice(self._queries[query_type]),
+                    None,
                     self.workload_type,
                     query_type,
                 )

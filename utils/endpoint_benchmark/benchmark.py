@@ -3,6 +3,7 @@
 from utils.endpoint_benchmark.argument_parser import ArgumentParser
 from utils.endpoint_benchmark.cockpit_manager import CockpitManager
 from utils.endpoint_benchmark.plugins import PluginManager
+from utils.endpoint_benchmark.print_colors import print_cyan, print_red
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser()
@@ -17,12 +18,9 @@ if __name__ == "__main__":
     ) as cockpit_manager:
         try:
             for plugin in plugins:
-                print(
-                    "......................................................................"
-                )
-                print(f"Run {type(plugin).__name__}: \n")
+                print_red(f"Run {type(plugin).__name__}: \n")
                 for workload in configuration["workloads"]:
-                    print(f"Run workload {workload}: \n")
+                    print_cyan(f"Run workload {workload}: \n")
                     cockpit_manager.start_components()
                     cockpit_manager.add_databases(
                         configuration["databases"], configuration["number_workers"]

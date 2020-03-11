@@ -10,6 +10,10 @@ from hyrisecockpit.settings import (
     DB_MANAGER_LISTENING,
     DB_MANAGER_PORT,
     DEFAULT_TABLES,
+    STORAGE_HOST,
+    STORAGE_PASSWORD,
+    STORAGE_PORT,
+    STORAGE_USER,
     WORKLOAD_PUBSUB_PORT,
     WORKLOAD_SUB_HOST,
 )
@@ -27,6 +31,10 @@ class TestDatabaseManager:
             WORKLOAD_SUB_HOST,
             WORKLOAD_PUBSUB_PORT,
             DEFAULT_TABLES,
+            STORAGE_HOST,
+            STORAGE_PASSWORD,
+            STORAGE_PORT,
+            STORAGE_USER,
         ) as database_manager:
             return database_manager
 
@@ -99,26 +107,6 @@ class TestDatabaseManager:
         assert call_delete("test_db2") == 404
         assert database_manager._databases.keys() == set()
 
-    def test_call_storage_returns_storage(
-        self, database_manager: DatabaseManager, mock_database: Database
-    ):
-        """Returns storage of previously added databases."""
-        call: Callable = lambda: database_manager._call_storage({})["body"]["storage"]
-        mock_data = {"Tables": 21}
-        mock_database.get_storage_data.return_value = mock_data  # type: ignore
-        self.convenience_data_call(database_manager, mock_database, call, mock_data)
-
-    def test_call_chunks_returns_chunks(
-        self, database_manager: DatabaseManager, mock_database: Database
-    ):
-        """Returns chunks data of previously added databases."""
-        call: Callable = lambda: database_manager._call_chunks_data({})["body"][
-            "chunks_data"
-        ]
-        mock_data = {"Chunk": 84}
-        mock_database.get_chunks_data.return_value = mock_data  # type: ignore
-        self.convenience_data_call(database_manager, mock_database, call, mock_data)
-
     def test_call_queue_length_returns_queue_length(
         self, database_manager: DatabaseManager, mock_database: Database
     ):
@@ -128,15 +116,4 @@ class TestDatabaseManager:
         ]
         mock_data = {"queue length": 21}
         mock_database.get_queue_length.return_value = mock_data  # type: ignore
-        self.convenience_data_call(database_manager, mock_database, call, mock_data)
-
-    def test_call_system_data_returns_system_data(
-        self, database_manager: DatabaseManager, mock_database: Database
-    ):
-        """Returns system data of previously added databases."""
-        call: Callable = lambda: database_manager._call_system_data({})["body"][
-            "system_data"
-        ]
-        mock_data = {"system data": {"cpu": 84.1, "ram": 23.7}}
-        mock_database.get_system_data.return_value = mock_data  # type: ignore
         self.convenience_data_call(database_manager, mock_database, call, mock_data)
