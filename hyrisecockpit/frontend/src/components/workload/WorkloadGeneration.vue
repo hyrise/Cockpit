@@ -110,20 +110,15 @@ interface Props {
   open: boolean;
 }
 interface Data {
-  isActive: any[];
+  isActive: Ref<boolean>;
   buttonIsLoading: any[];
   availableWorkloads: string[];
   frequency: Ref<number>;
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
   getDisplayedWorkload: (workload: Workload) => string;
-  getWorkloadData: () => Promise<string[]>;
-  loadWorkloadData: (workload: Workload) => Promise<void>;
-  deleteWorkloadData: (workload: Workload) => Promise<void>;
-  startWorkload: (workload: Workload, frequency: number) => Promise<void>;
-  pauseWorkload: (workload: Workload) => void;
-  stopWorkload: () => Promise<void>;
   startingWorkload: (workload: Workload, frequency: number) => void;
+  pauseWorkload: (workload: Workload) => void;
   stoppingWorkload: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
@@ -136,7 +131,7 @@ export default defineComponent({
     }
   },
   setup(props: {}, context: SetupContext): Data {
-    const isActive = reactive({ color: false });
+    const isActive = ref<boolean>(false);
     const buttonIsLoading = reactive({
       loadtpch01: false,
       loadtpch1: false,
@@ -166,21 +161,21 @@ export default defineComponent({
       buttonIsLoading["start"] = true;
       startWorkload(workload, frequency).then(() => {
         buttonIsLoading["start"] = false;
-        isActive.color = true;
+        isActive.value = true;
       });
     }
     function pauseWorkload(workload: Workload): void {
       buttonIsLoading["pause"] = true;
       startWorkload(workload, 0).then(() => {
         buttonIsLoading["pause"] = false;
-        isActive.color = true;
+        isActive.value = true;
       });
     }
     function stoppingWorkload(): void {
       buttonIsLoading["stop"] = true;
       stopWorkload().then(() => {
         buttonIsLoading["stop"] = false;
-        isActive.color = true;
+        isActive.value = true;
       });
     }
     function handleWorkloadDataChange(workload: Workload): void {
@@ -198,16 +193,11 @@ export default defineComponent({
     return {
       availableWorkloads,
       getDisplayedWorkload,
-      getWorkloadData,
-      loadWorkloadData,
-      deleteWorkloadData,
-      startWorkload,
-      pauseWorkload,
-      stopWorkload,
       frequency,
       workload,
       workloadData,
       startingWorkload,
+      pauseWorkload,
       stoppingWorkload,
       handleWorkloadDataChange,
       closeWorkloadDialog,
