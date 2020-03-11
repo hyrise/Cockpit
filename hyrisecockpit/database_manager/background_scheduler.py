@@ -111,7 +111,7 @@ class BackgroundJobManager(object):
         """Update chunks data for database instance."""
         # mocking chunks data
         time_stamp = time_ns()
-        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
+        sql = "SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"
         meta_segments = self._read_meta_segments(sql)
 
         with StorageCursor(
@@ -250,7 +250,7 @@ class BackgroundJobManager(object):
         connection = self._connection_pool.getconn()
         connection.set_session(autocommit=True)
 
-        access_data_query = """SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"""
+        access_data_query = "SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"
 
         meta_segments = read_sql_query(access_data_query, connection).set_index(
             ["table_name", "column_name"]
