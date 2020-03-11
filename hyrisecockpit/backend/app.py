@@ -661,7 +661,7 @@ class AccessData(Resource):
         access_data = []
         for database in _active_databases():
             result = storage_connection.query(
-                "SELECT table_name, column_name, access_counter FROM access_data WHERE time > $startts AND time <= $endts;",
+                "SELECT table, column, access_counter FROM access_data WHERE time > $startts AND time <= $endts;",
                 database=database,
                 bind_params={"startts": currentts, "endts": endts},
             )
