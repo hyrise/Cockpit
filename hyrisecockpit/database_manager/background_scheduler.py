@@ -14,7 +14,7 @@ from hyrisecockpit.settings import (
     STORAGE_USER,
 )
 
-from .cursor import StorageCursor
+from .cursor import PoolCursor, StorageCursor
 
 
 class BackgroundJobManager(object):
@@ -65,11 +65,9 @@ class BackgroundJobManager(object):
         if self._processing_tables_flag.value:
             return DataFrame({"foo": []})
         else:
-            connection = self._connection_pool.getconn()
-            connection.set_session(autocommit=True)
-            sql = "SELECT * FROM meta_segments;"
-            meta_segments = read_sql_query(sql, connection)
-            self._connection_pool.putconn(connection)
+            with PoolCursor(self._connection_pool) as cur:
+                sql = "SELECT * FROM meta_segments;"
+                meta_segments = read_sql_query(sql, cur.connection)
             return meta_segments
 
     def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
