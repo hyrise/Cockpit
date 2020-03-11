@@ -554,11 +554,27 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    def get(self) -> Dict:
+    def get(self) -> Union[int, Dict[str, Dict]]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "system data"}, "body": {}}
-        )
+        system: Dict[str, Dict] = {}
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT LAST("cpu"), * FROM system_data', database=database,
+            )
+            system_value = list(result["system_data", None])
+            if len(system_value) > 0:
+                system[database] = {
+                    "cpu": loads(system_value[0]["cpu"]),
+                    "memory": loads(system_value[0]["memory"]),
+                    "database_threads": loads(system_value[0]["database_threads"]),
+                }
+            else:
+                system[database] = {}
+        return system
 
 
 @monitor.route("/chunks")

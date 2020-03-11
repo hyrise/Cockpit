@@ -135,7 +135,7 @@ class BackgroundJobManager(object):
             system_data = {
                 "cpu": dumps(cpu_data),
                 "memory": dumps(memory_data),
-                "database_threads": 8,
+                "database_threads": "8",
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
