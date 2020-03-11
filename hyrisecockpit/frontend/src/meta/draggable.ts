@@ -1,4 +1,7 @@
-export default function useDragElement(elementId: string, draggerId: string) {
+export default function useDragElement(
+  elementId: string,
+  draggerId: string
+): void {
   let draggableElement = document.getElementById(elementId); // whole element that moves on drag
   let dragger = document.getElementById(draggerId); // area for drag and drop action
   let pos1 = 0,
