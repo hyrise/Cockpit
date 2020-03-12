@@ -3,9 +3,10 @@
     <h4>Add database<h4/>
     <p>
         <h5>Add Default</h5>
-        <button id="add_db_citadelle">Add default citadelle</button>
-        <button id="add_db_york">Add default york</button>
-        <button id="add_db_aurora">Add default aurora</button>            
+        <button id="add_db_1">Add default db1</button>
+        <button id="add_db_2">Add default db2</button>
+        <button id="add_db_3">Add default db3</button>
+        <button id="add_db_4">Add default db4</button>             
     </p>
     <p>
         <h5>Add Custom</h5>
@@ -19,10 +20,9 @@
         <button id="add_db_button">Add database</button>
     <p/>
     <h4>Load workload tables</h4>
-    (tpch (0.1, 1.0), tpcds (1.0), job (1.0))
+    (tpch_1, tpch_0.1 tpcds_1, job_1, no-ops)
     <p id="load_workload_tables">
         <p><input type="text" id="workload_tables_type" value="">(Tables type)</p>
-        <p><input type="text" id="workload_tables_scale_factor" value="">(scale factor)</p>
         <button id="load_workload_tables_button">Load Tables</button>
     </p>
     <h4>Delete workload tables</h4>
@@ -31,10 +31,16 @@
         <button id="delete_workload_tables_button">Delete Tables</button>        
     </p>
     <h4>Start Workload</h4>
-    (MIXED, NO-OPS, TPCH_0.1, TPCH_1.0, JOB)
+    (tpch_1, tpch_0.1 tpcds_1, job_1, no-ops)
     <p>
         <p><input type="text" id="workload_type" value=""> (Workload Type)</p>
+        <p><input type="text" id="workload_frequency" value=""> (frequency)</p>
         <button id="execute_workload_button">Execute Workload</button>             
+    </p>
+    <h4>Stop Workload</h4>
+    <p>
+        <p><input type="text" id="stop_workload_type" value=""> (Workload Type)</p>
+        <button id="stop_workload_button">Stop Workload</button>   
     </p>
 
     <h4>Databases</h4>
@@ -110,8 +116,8 @@
         function checkForNewDatabases(database_ids){
             let active_datases = Array.from(active_databases.keys());
             for (let i = 0; i < database_ids.length; i++){
-                if(!(active_datases.includes(database_ids[i]))){
-                    addNewDatabases(database_ids[i]);
+                if(!(active_datases.includes(database_ids[i]["id"]))){
+                    addNewDatabases(database_ids[i]["id"]);
                 } 
             }                    
         }
@@ -134,13 +140,13 @@
         async function updateDatabases(url){
             const response = await fetch(url);
             let data = await response.json();
-            let database_ids = data["body"]["databases"];
+            let database_ids = data;
             checkForNewDatabases(database_ids);
             removeOldDatabases(database_ids);
         }
 
         async function registerNewDatabase(json) {
-            const response = await postData(MONITOR_URL + '/database', json);
+            const response = await postData(MONITOR_URL + '/control/database', json);
 
             if (response["header"]["status"] != 200) {
                 window.alert(response["body"]);
@@ -150,7 +156,7 @@
         }
 
         async function deregisterDatabase(json){
-            const response = await postData(MONITOR_URL + '/database', json, 'DELETE');
+            const response = await postData(MONITOR_URL + '/control/database', json, 'DELETE');
 
             if (response["header"]["status"] != 200) {
                 window.alert(response["header"]["message"]);
@@ -188,7 +194,15 @@
         }      
 
         async function execute_workload(json){
-            const response = await postData(MONITOR_URL + '/workload', json, 'POST');
+            const response = await postData(MONITOR_URL + '/control/workload', json, 'POST');
+            if (response["header"]["status"] != 200) {
+                window.alert(response["body"]["error"]);
+                return 0;  
+            }
+        }
+
+        async function stop_workload(json){
+            const response = await postData(MONITOR_URL + '/control/workload', json, 'DELETE');
             if (response["header"]["status"] != 200) {
                 window.alert(response["body"]["error"]);
                 return 0;  
@@ -202,7 +216,7 @@
             loading_bar.style.backgroundColor = 'red';
             let parent_node = document.getElementById("load_workload_tables");
             parent_node.appendChild(loading_bar);
-            const response = await postData(MONITOR_URL + '/data/' + workload_tables_type, json, 'POST');
+            const response = await postData(MONITOR_URL + '/control/data', json, 'POST');
             loading_bar.remove();
             if (response["header"]["status"] != 200) {
                 window.alert(response["body"]["error"]);
@@ -210,14 +224,13 @@
             }
         }
 
-        async function execute_delete_workload_tables(){
-            let workload_tables_type = document.getElementById('workload_tables_to_delete').value
+        async function execute_delete_workload_tables(json){
             let loading_bar = document.createElement("div");
             loading_bar.innerHTML = "Loading ...";
             loading_bar.style.backgroundColor = 'red';
             let parent_node = document.getElementById("delete_workload_tables");
             parent_node.appendChild(loading_bar);
-            const response = await postData(MONITOR_URL + '/data/' + workload_tables_type, {}, 'DELETE');
+            const response = await postData(MONITOR_URL + '/control/data', json, 'DELETE');
             loading_bar.remove();
             if (response["header"]["status"] != 200) {
                 window.alert(response["body"]["error"]);
@@ -227,27 +240,32 @@
 
         function getFormValuesWorkload(){
             let json = {
-                "header": {
-                    "message": "workload"
-                },
-                "body": {
-                    "type": document.getElementById('workload_type').value,
-                    // "factor": Number(document.getElementById('workload_factor').value)
+                    "folder_name": document.getElementById('workload_type').value,
+                    "frequency": Number(document.getElementById('workload_frequency').value),
                 }
-            }
+            return json;
+        }
+
+        function getFormValuesStopWorkload(){
+            let json = {
+                    "folder_name": document.getElementById('stop_workload_type').value,
+                }
             return json;
         }
 
         function getFormValuesWorkloadTables(){
             let json = {
-                "header": {
-                    "message": "load data"
-                },
-                "body": {
-                    "sf": document.getElementById('workload_tables_scale_factor').value,
+                    "folder_name": document.getElementById('workload_tables_type').value
                 }
-            }
+
             return json;
+        }
+
+        function getFormValuesDeleteWorkloadTables(){
+            let json = {
+                 "folder_name": document.getElementById('workload_tables_to_delete').value
+            }
+            return json
         }
 
         function getFormValuesDatabase(){
@@ -263,43 +281,56 @@
             return json;
         }                     
 
-        document.getElementById("add_db_citadelle").addEventListener("click", () => {
-            let citadelle = {
-                "number_workers" : "8",
-                "id": "citadelle",
+        document.getElementById("add_db_1").addEventListener("click", () => {
+            let db = {
+                "number_workers" : ,
+                "id": "",
                 "user": "",
                 "password": "",
                 "host": "",
                 "port": "",
-                "dbname": "postgres"
+                "dbname": ""
             }
-            registerNewDatabase(citadelle)       
+            registerNewDatabase(db)       
         });
 
-        document.getElementById("add_db_york").addEventListener("click", () => {
-            let york = {
-                "number_workers" : "8",
-                "id": "york",
+        document.getElementById("add_db_2").addEventListener("click", () => {
+            let db = {
+                "number_workers" : ,
+                "id": "",
                 "user": "",
                 "password": "",
                 "host": "",
                 "port": "",
-                "dbname": "postgres"
+                "dbname": ""
             }   
-            registerNewDatabase(york);       
+            registerNewDatabase(db);       
         });
 
-        document.getElementById("add_db_aurora").addEventListener("click", () => {
-            let aurora = {
-                "number_workers" : "8",
-                "id": "aurora",
+        document.getElementById("add_db_3").addEventListener("click", () => {
+            let db = {
+                "number_workers" : ,
+                "id": "",
                 "user": "",
                 "password": "",
                 "host": "",
                 "port": "",
-                "dbname": "postgres"
+                "dbname": ""
             }   
-            registerNewDatabase(aurora);       
+            registerNewDatabase(db);       
+        });    
+
+        document.getElementById("add_db_4").addEventListener("click", () => {
+            let db = {
+                "number_workers" : ,
+                "id": "",
+                "user": "",
+                "password": "",
+                "host": "",
+                "port": "",
+                "dbname": ""
+            }   
+            registerNewDatabase(db);       
         });    
 
         document.getElementById("add_db_button").addEventListener("click", () => {
@@ -310,18 +341,22 @@
             execute_workload(getFormValuesWorkload());
         });
 
+        document.getElementById("stop_workload_button").addEventListener("click", () => {
+            stop_workload(getFormValuesStopWorkload());
+        });
+
         document.getElementById("load_workload_tables_button").addEventListener("click", () => {
             execute_load_workload_tables(getFormValuesWorkloadTables());
         });
 
         document.getElementById("delete_workload_tables_button").addEventListener("click", () => {
-            execute_delete_workload_tables();
+            execute_delete_workload_tables(getFormValuesDeleteWorkloadTables());
         });
 
         setInterval(() => {
-            updateQueueLength(MONITOR_URL + "/queue_length");
-            updateDatabases(MONITOR_URL + "/database");
-            updateThroughput(MONITOR_URL + "/throughput");
+            updateQueueLength(MONITOR_URL + "/monitor/queue_length");
+            updateDatabases(MONITOR_URL + "/control/database");
+            updateThroughput(MONITOR_URL + "/monitor/throughput");
         }, 500);
 
     </script>    

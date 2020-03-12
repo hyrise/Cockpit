@@ -19,7 +19,7 @@
     </v-card>
     <v-card class="text-center" :to="{ name: 'workload' }">
       <v-icon class="mt-2" size="100">
-        mdi-worker
+        mdi-account-hard-hat
       </v-icon>
       <v-card-title class="justify-center">
         Workload
@@ -27,7 +27,7 @@
     </v-card>
     <v-card class="text-center" :to="{ name: 'databases' }">
       <v-icon class="mt-2" size="100">
-        mdi-settings
+        mdi-cog
       </v-icon>
       <v-card-title class="justify-center">
         Plugins

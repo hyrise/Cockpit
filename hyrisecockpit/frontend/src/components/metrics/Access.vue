@@ -49,7 +49,6 @@
 import {
   defineComponent,
   SetupContext,
-  onMounted,
   computed,
   Ref,
   ref,
@@ -64,7 +63,10 @@ import {
   AccessData
 } from "../../types/metrics";
 import { useUpdatingDatabases } from "../../meta/databases";
-import { getMetricChartConfiguration } from "../../meta/metrics";
+import {
+  getMetricChartConfiguration,
+  getMetricMetadata
+} from "../../meta/metrics";
 
 interface Data {
   tables: Ref<readonly string[]>;
@@ -81,6 +83,7 @@ export default defineComponent({
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
+    const metricMeta = getMetricMetadata(props.metric);
     const selectedTable = ref<string>("");
     const data = context.root.$metricController.data[props.metric];
     const watchedDatabase = useUpdatingDatabases(props, context).databases
@@ -90,7 +93,7 @@ export default defineComponent({
 
     watch([data, selectedTable], () => {
       if (Object.keys(data.value).length && selectedTable.value != "") {
-        accessData.value = props.metricMeta.transformationService(
+        accessData.value = metricMeta.transformationService(
           data.value,
           watchedDatabase.id,
           selectedTable.value
