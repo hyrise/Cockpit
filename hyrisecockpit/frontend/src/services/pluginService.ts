@@ -1,6 +1,6 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
-import { monitorBackend } from "../../config";
+import { controlBackend } from "../../config";
 
 export function usePluginService(): any {
   const plugins = ref<string[]>([]);
@@ -9,14 +9,44 @@ export function usePluginService(): any {
   getPlugins();
 
   function getPlugins(): void {
-    axios.get(monitorBackend + "queue_length").then(response => {});
-    plugins.value = ["auto-index", "ki-stuff", "no-more-problems"];
+    axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
+      plugins.value = allPluginsResponse.data;
+      axios.get(controlBackend + "plugin").then(activePluginsResponse => {
+        activePlugins.value = activePluginsResponse.data.reduce(
+          (result: string[], currentDatabase: any) => {
+            return (result = [
+              ...result,
+              ...currentDatabase.plugins.map(
+                (plugin: string) =>
+                  currentDatabase.id + "_" + plugin[0].replace("Plugin", "")
+              )
+            ]);
+          },
+          []
+        );
+      });
+    });
   }
 
-  function updatePlugins(activePlugins: any): Promise<void> {
-    return axios.get(monitorBackend + "queue_length").then(response => {
-      activePlugins.value = activePlugins;
-    });
+  function updatePlugins(databaseId: string, plugin: string): Promise<void> {
+    const isActivated = !!activePlugins.value.find(
+      (pluginId: string) => pluginId === databaseId + "_" + plugin
+    );
+    if (isActivated) {
+      return axios
+        .post(controlBackend + "plugin", { id: databaseId, plugin: plugin })
+        .then(response => {
+          getPlugins();
+        });
+    } else {
+      return axios
+        .delete(controlBackend + "plugin", {
+          data: { id: databaseId, plugin: plugin }
+        })
+        .then(response => {
+          getPlugins();
+        });
+    }
   }
 
   return {
