@@ -872,3 +872,31 @@ class Plugin(Resource):
         }
         response = _send_message(db_manager_socket, message)
         return response
+
+
+@control.route("/plugin_log")
+class PluginLog(Resource):
+    """Activate, Deactive Plugins, respectively show which ones are activated."""
+
+    def get(self) -> List[Dict[str, List]]:
+        """Return activated plugins in each database."""
+        plugin_log = []
+        for database in _active_databases():
+            result = storage_connection.query(
+                "SELECT timestamp, reporter, message from plugin_log;",
+                database=database,
+            )
+            plugin_log.append(
+                {
+                    "id": database,
+                    "access_data": [
+                        {
+                            "timestamp": row["timestamp"],
+                            "reporter": row["reporter"],
+                            "message": row["message"],
+                        }
+                        for row in list(result["plugin_log", None])
+                    ],
+                }
+            )
+        return plugin_log

@@ -52,6 +52,9 @@ class BackgroundJobManager(object):
         self._update_storage_data_job = self._scheduler.add_job(
             func=self._update_storage_data, trigger="interval", seconds=5,
         )
+        self._update_plugin_log_job = self._scheduler.add_job(
+            func=self._update_plugin_log, trigger="interval", seconds=1,
+        )
 
     def start(self):
         """Start background scheduler."""
@@ -63,6 +66,7 @@ class BackgroundJobManager(object):
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
+        self._update_plugin_log_job.remove()
         self._scheduler.shutdown()
 
     def _update_krueger_data(self):
@@ -125,6 +129,35 @@ class BackgroundJobManager(object):
                 {"chunks_data_meta_information": dumps(output)},
                 time_stamp,
             )
+
+    def _update_plugin_log(self) -> None:
+        """Update plugin log."""
+        if self._processing_tables_flag.value:
+            return
+
+        log_df = DataFrame
+
+        with PoolCursor(self._connection_pool) as cur:
+            plugin_log_query = "SELECT * FROM meta_log;"
+            log_df = read_sql_query(plugin_log_query, cur.connection).set_index(
+                ["timestamp", "reporter"]
+            )
+
+        log_dict = log_df.to_dict("index")
+
+        plugin_log = [
+            (timestamp, reporter, message["message"])
+            for (timestamp, reporter), message in log_dict.items()
+        ]
+
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_plugin_log(plugin_log)
 
     def _read_chunks_data(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
