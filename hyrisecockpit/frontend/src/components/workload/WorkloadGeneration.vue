@@ -12,23 +12,24 @@
         <v-row>
           <v-col max-width="300px">
             <p class="subtitle-1 font-weight-medium">
-              Start, pause and stop workload
+              Start, pause and stop a workload
             </p>
+            <v-slider
+              v-model="frequency"
+              class="mt-10"
+              thumb-label="always"
+              min="0"
+              max="1000"
+              step="10"
+              @end="handleFrequencyChange(workload, frequency)"
+            ></v-slider>
             <v-text-field
-              class="mt-5"
               v-model="frequency"
               label="Number of queries per second"
               outlined
               dense
             ></v-text-field>
-            <v-slider
-              v-model="frequency"
-              class="mt-5"
-              thumb-label="always"
-              min="0"
-              max="1000"
-              step="10"
-            ></v-slider>
+
             <v-radio-group v-model="workload" class="mt-0">
               <v-radio
                 v-for="workload in availableWorkloads"
@@ -114,10 +115,12 @@ interface Data {
   buttonIsLoading: any[];
   availableWorkloads: string[];
   frequency: Ref<number>;
+  startedWorkload: Ref<boolean>;
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
   getDisplayedWorkload: (workload: Workload) => string;
   startingWorkload: (workload: Workload, frequency: number) => void;
+  handleFrequencyChange: (workload: Workload, frequency: number) => void;
   pauseWorkload: (workload: Workload) => void;
   stoppingWorkload: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
@@ -132,6 +135,7 @@ export default defineComponent({
   },
   setup(props: {}, context: SetupContext): Data {
     const isActive = ref<boolean>(false);
+    const startedWorkload = ref<boolean>(false);
     const buttonIsLoading = reactive({
       loadtpch01: false,
       loadtpch1: false,
@@ -161,11 +165,13 @@ export default defineComponent({
       buttonIsLoading["start"] = true;
       startWorkload(workload, frequency).then(() => {
         buttonIsLoading["start"] = false;
+        startedWorkload.value = true;
         isActive.value = true;
       });
     }
     function pauseWorkload(workload: Workload): void {
       buttonIsLoading["pause"] = true;
+      startedWorkload.value = false;
       startWorkload(workload, 0).then(() => {
         buttonIsLoading["pause"] = false;
         isActive.value = true;
@@ -173,10 +179,19 @@ export default defineComponent({
     }
     function stoppingWorkload(): void {
       buttonIsLoading["stop"] = true;
+      startedWorkload.value = false;
       stopWorkload().then(() => {
         buttonIsLoading["stop"] = false;
         isActive.value = true;
       });
+    }
+    function handleFrequencyChange(
+      workload: Workload,
+      frequency: number
+    ): void {
+      if (startedWorkload.value == true) {
+        startingWorkload(workload, frequency);
+      }
     }
     function handleWorkloadDataChange(workload: Workload): void {
       buttonIsLoading["load" + workload] = true;
@@ -199,6 +214,8 @@ export default defineComponent({
       startingWorkload,
       pauseWorkload,
       stoppingWorkload,
+      startedWorkload,
+      handleFrequencyChange,
       handleWorkloadDataChange,
       closeWorkloadDialog,
       buttonIsLoading
