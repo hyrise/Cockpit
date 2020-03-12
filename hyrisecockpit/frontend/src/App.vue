@@ -5,6 +5,7 @@
       <v-app-bar-nav-icon @click="toggleNavigationDrawer()">
       </v-app-bar-nav-icon>
       <b> Hyrise Cockpit </b>
+      <selection />
     </v-app-bar>
     <v-content>
       <router-view />
@@ -15,6 +16,7 @@
 <script lang="ts">
 import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
+import Selection from "./views/Selection.vue";
 
 interface Data {
   toggleNavigationDrawer: () => void;
@@ -22,7 +24,7 @@ interface Data {
 }
 
 export default defineComponent({
-  components: { AppDrawer },
+  components: { AppDrawer, Selection },
   setup(props: {}, context: SetupContext): Data {
     const showNavigationDrawer = ref<boolean>(true);
 
