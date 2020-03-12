@@ -143,31 +143,34 @@ class BackgroundJobManager(object):
         """Update system data for database instance."""
         time_stamp = time_ns()
 
+        system_utilization_sql = """SELECT * FROM meta_system_utilization;"""
+        utilization_segments = self._read_meta_segments(system_utilization_sql)
+
+        system_information_sql = """SELECT * FROM meta_system_information;"""
+        system_segments = self._read_meta_segments(system_information_sql)
+
+        if utilization_segments.empty or system_segments.empty:
+            return
+
         cpu_data = {}
         memory_data: Dict[str, Any] = {}
         database_threads = "8"
 
-        system_utilization_sql = """SELECT * FROM meta_system_utilization;"""
-        meta_segments = self._read_meta_segments(system_utilization_sql)
+        cpu_data["cpu_system_usage"] = float(
+            utilization_segments["cpu_system_usage"][0]
+        )
+        cpu_data["cpu_process_usage"] = float(
+            utilization_segments["cpu_process_usage"][0]
+        )
+        cpu_data["cpu_count"] = int(system_segments["cpu_count"][0])
+        cpu_data["cpu_clock_speed"] = int(system_segments["cpu_clock_speed"][0])
 
-        if not meta_segments.empty:
-            cpu_data["cpu_system_usage"] = float(meta_segments["cpu_system_usage"][0])
-            cpu_data["cpu_process_usage"] = float(meta_segments["cpu_process_usage"][0])
-            memory_data["free"] = int(meta_segments["system_memory_free_bytes"][0])
-            memory_data["used"] = int(meta_segments["process_physical_memory_bytes"][0])
-
-        system_information_sql = """SELECT * FROM meta_system_information;"""
-        meta_segments = self._read_meta_segments(system_information_sql)
-
-        if not meta_segments.empty:
-            cpu_data["cpu_count"] = int(meta_segments["cpu_count"][0])
-            cpu_data["cpu_clock_speed"] = int(meta_segments["cpu_clock_speed"][0])
-            memory_data["total"] = int(meta_segments["system_memory_total_bytes"][0])
-
-        if memory_data.get("used") and memory_data.get("total"):
-            memory_data["percent"] = memory_data["used"] / memory_data["total"]
-        else:
-            memory_data["percent"] = 0.0
+        memory_data["free"] = int(utilization_segments["system_memory_free_bytes"][0])
+        memory_data["used"] = int(
+            utilization_segments["process_physical_memory_bytes"][0]
+        )
+        memory_data["total"] = int(system_segments["system_memory_total_bytes"][0])
+        memory_data["percent"] = memory_data["used"] / memory_data["total"]
 
         with StorageCursor(
             self._storage_host,
