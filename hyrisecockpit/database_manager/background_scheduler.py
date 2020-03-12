@@ -152,25 +152,21 @@ class BackgroundJobManager(object):
         if utilization_segments.empty or system_segments.empty:
             return
 
-        cpu_data = {}
-        memory_data: Dict[str, Any] = {}
-        database_threads = "8"
+        cpu_data = {
+            "cpu_system_usage": float(utilization_segments["cpu_system_usage"][0]),
+            "cpu_process_usage": float(utilization_segments["cpu_process_usage"][0]),
+            "cpu_count": int(system_segments["cpu_count"][0]),
+            "cpu_clock_speed": int(system_segments["cpu_clock_speed"][0]),
+        }
+        memory_data: Dict[str, Any] = {
+            "free": int(utilization_segments["system_memory_free_bytes"][0]),
+            "used": int(utilization_segments["process_physical_memory_bytes"][0]),
+            "total": int(system_segments["system_memory_total_bytes"][0]),
+        }
 
-        cpu_data["cpu_system_usage"] = float(
-            utilization_segments["cpu_system_usage"][0]
-        )
-        cpu_data["cpu_process_usage"] = float(
-            utilization_segments["cpu_process_usage"][0]
-        )
-        cpu_data["cpu_count"] = int(system_segments["cpu_count"][0])
-        cpu_data["cpu_clock_speed"] = int(system_segments["cpu_clock_speed"][0])
-
-        memory_data["free"] = int(utilization_segments["system_memory_free_bytes"][0])
-        memory_data["used"] = int(
-            utilization_segments["process_physical_memory_bytes"][0]
-        )
-        memory_data["total"] = int(system_segments["system_memory_total_bytes"][0])
         memory_data["percent"] = memory_data["used"] / memory_data["total"]
+
+        database_threads = "8"
 
         with StorageCursor(
             self._storage_host,
