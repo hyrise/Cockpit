@@ -19,11 +19,14 @@ class ArgumentValidation:
             "chunks",
             "storage",
             "krueger_data",
+            "detailed_latency",
+            "detailed_throughput",
+            "process_table_status",
         ]
         self._endpoints_control = ["database", "data"]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
         self._databases = ["db1", "db2"]
-        self._plugins = ["wrk"]
+        self._plugins = ["wrk", "displayReply"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
             "workloads": self._validate_workloads,
@@ -172,44 +175,9 @@ class ArgumentParser:
         self.parser = argparse.ArgumentParser(
             formatter_class=argparse.ArgumentDefaultsHelpFormatter
         )
-        self._FUNCTION_MAP = {
-            "endpoints": self._show_enpoints,
-            "databases": self._show_databases,
-            "workloads": self._show_workloads,
-            "plugins": self._show_plugins,
-            "all": self._show_all,
-        }
+        self._argument_validation = ArgumentValidation()
         self._add_arguments()
         self._arguments = self.parser.parse_args()
-        self._argument_validation = ArgumentValidation()
-
-    def _show_enpoints(self):
-        """Show which endpoints are available."""
-        endpoints = self._argument_validation.get_endpoints()
-        print("Endpoints: ")
-        for key, value in endpoints.items():
-            print(f"-> {key}: {value}")
-
-    def _show_databases(self):
-        """Show which databases are available."""
-        databases = self._argument_validation.get_databases()
-        print(f"Databases: {databases}")
-
-    def _show_workloads(self):
-        """Show which workloads are available."""
-        workloads = self._argument_validation.get_workloads()
-        print(f"Workloads: {workloads}")
-
-    def _show_plugins(self):
-        """Show which plug-ins are available."""
-        plugins = self._argument_validation.get_plugins()
-        print(f"Plug-ins: {plugins}")
-
-    def _show_all(self):
-        self._show_enpoints()
-        self._show_databases()
-        self._show_workloads()
-        self._show_plugins()
 
     def _add_arguments(self):
         """Add arguments to the parser."""
@@ -221,16 +189,9 @@ class ArgumentParser:
             nargs="+",
             default=["all"],
             metavar="",
-            help="endpoints to run the benchmark on",
-        )
-        self.parser.add_argument(
-            "--show",
-            choices=self._FUNCTION_MAP.keys(),
-            dest="show",
-            type=str,
-            nargs="+",
-            metavar="",
-            help="show available endpoints, workloads, databases, plug-ins and exit",
+            help="endpoints to run the benchmark on. Allowed values are "
+            + ", ".join(self._argument_validation._endpoints_monitor)
+            + ", all",
         )
         self.parser.add_argument(
             "--database",
@@ -240,7 +201,9 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["all"],
-            help="databases to use in benchmark",
+            help="databases to use in benchmark. Allowed values are "
+            + ", ".join(self._argument_validation._databases)
+            + ", all",
         )
         self.parser.add_argument(
             "--workload",
@@ -250,7 +213,8 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["tpch_0.1"],
-            help="workloads to run on databases",
+            help="workloads to run on databases. . Allowed values are "
+            + ", ".join(self._argument_validation._workloads),
         )
         self.parser.add_argument(
             "--time",
@@ -310,7 +274,8 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["wrk"],
-            help="benchmark plug-ins to use",
+            help="benchmark plug-ins to use. Allowed values are "
+            + ", ".join(self._argument_validation._plugins),
         )
         self.parser.add_argument(
             "--start_components",
@@ -319,20 +284,12 @@ class ArgumentParser:
             type=str,
             nargs="?",
             metavar="",
-            default=["Y"],
+            default="Y",
             help="start components as subprocesses [Y/N]",
         )
 
-    def _show_info(self):
-        if self._arguments.show:
-            for to_show in self._arguments.show:
-                func = self._FUNCTION_MAP[to_show]
-                func()
-            exit()
-
     def get_configuration(self):
         """Return validated arguments from command line."""
-        self._show_info()
         configuration = {}
         types = [
             "end_points",

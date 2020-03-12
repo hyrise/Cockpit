@@ -55,10 +55,13 @@ class WorkloadReader(object):
             filename: str = fsdecode(file)
             if filename.endswith(f".{file_type}"):
                 with open(f"{absolute_workload_path}/{filename}", "r") as f:
-                    sub_queries: List = f.read().split(delimiter)
-                    del sub_queries[-1]
-                    self._append_delimiter(sub_queries, delimiter)
-                    queries[splitext(filename)[0]] = sub_queries
+                    raw_queries: str = f.read()
+                transactions = [
+                    transaction
+                    for transaction in raw_queries.split(delimiter)
+                    if transaction != ""
+                ]
+                queries[splitext(filename)[0]] = transactions
         return queries
 
     def read_workload(
