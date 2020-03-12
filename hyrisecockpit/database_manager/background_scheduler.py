@@ -111,7 +111,12 @@ class BackgroundJobManager(object):
         """Update chunks data for database instance."""
         # mocking chunks data
         time_stamp = time_ns()
-        sql = "SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"
+        sql = """SELECT
+                table_name,
+                column_name,
+                COUNT(chunk_id) as n_chunks
+                FROM meta_segments
+                GROUP BY table_name, column_name;"""
         meta_segments = self._read_meta_segments(sql)
 
         with StorageCursor(
@@ -244,23 +249,21 @@ class BackgroundJobManager(object):
 
     def _update_access_data(self) -> None:
         """Get information about the access frequency of columns."""
-        if self._processing_tables_flag.value:
-            return
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-
-        access_data_query = "SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"
-
-        meta_segments = read_sql_query(access_data_query, connection).set_index(
+        time_stamp = time_ns()
+        sql = """SELECT
+                table_name,
+                column_name,
+                SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter
+                FROM meta_segments
+                GROUP BY table_name, column_name;"""
+        meta_segments = self._read_meta_segments(sql).set_index(
             ["table_name", "column_name"]
         )
+
         if meta_segments.empty:
             self._access_data = {}
 
         access_dict = meta_segments.to_dict("index")
-        ts = time_ns()
-
         for table, column in self._access_data.keys():
             if (table, column) in access_dict.keys():
                 access_dict[table, column]["access_counter"] -= self._access_data[
@@ -268,7 +271,7 @@ class BackgroundJobManager(object):
                 ]["access_counter"]
 
         access_data = [
-            (table_name, column_name, access_counter["access_counter"], ts)
+            (table_name, column_name, access_counter["access_counter"], time_stamp)
             for (table_name, column_name), access_counter in access_dict.items()
         ]
 
@@ -282,4 +285,3 @@ class BackgroundJobManager(object):
             log.log_access_data(access_data)
 
         self._access_data = access_dict
-        self._connection_pool.putconn(connection)
