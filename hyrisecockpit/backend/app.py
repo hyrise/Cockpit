@@ -656,27 +656,22 @@ class AccessData(Resource):
     @monitor.doc(model=[model_access_data])
     def get(self) -> List[Dict[str, Union[str, Dict]]]:
         """Get current access counters."""
-        currentts = time_ns()
-        endts = currentts - 5_000_000_000
         access_data = []
         for database in _active_databases():
             result = storage_connection.query(
-                "SELECT table, column, access_counter FROM access_data WHERE time > $startts AND time <= $endts;",
+                "SELECT access_counter, column, table from access_data where time > now() - 9000000000;",
                 database=database,
-                bind_params={"startts": currentts, "endts": endts},
             )
             access_data.append(
                 {
                     "id": database,
                     "access_data": [
                         {
-                            "table_name": table_name,
-                            "column_name": column_name,
-                            "access_counter": list(result[table_name, column_name])[0][
-                                "access_counter"
-                            ],
+                            "table_name": row["table"],
+                            "column_name": row["column"],
+                            "access_counter": row["access_counter"],
                         }
-                        for table_name, column_name in list(result.keys())
+                        for row in list(result["access_data", None])
                     ],
                 }
             )
