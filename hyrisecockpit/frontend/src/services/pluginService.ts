@@ -14,13 +14,15 @@ export function usePluginService(): any {
       axios.get(controlBackend + "plugin").then(activePluginsResponse => {
         activePlugins.value = activePluginsResponse.data.reduce(
           (result: string[], currentDatabase: any) => {
-            return (result = [
-              ...result,
-              ...currentDatabase.plugins.map(
-                (plugin: string) =>
-                  currentDatabase.id + "_" + plugin[0].replace("Plugin", "")
-              )
-            ]);
+            return currentDatabase.plugins
+              ? [
+                  ...result,
+                  ...currentDatabase.plugins.map(
+                    (plugin: string) =>
+                      currentDatabase.id + "_" + plugin[0].replace("Plugin", "")
+                  )
+                ]
+              : result;
           },
           []
         );
