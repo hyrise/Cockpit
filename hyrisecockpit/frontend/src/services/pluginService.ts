@@ -1,8 +1,9 @@
 import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
+import { PluginService } from "../types/services";
 
-export function usePluginService(): any {
+export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
 

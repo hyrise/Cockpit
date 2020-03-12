@@ -14,6 +14,12 @@ export type TransformationService = (
   secondaryKey?: string
 ) => any;
 
+export interface PluginService {
+  plugins: Ref<string[]>;
+  activePlugins: Ref<string[]>;
+  updatePlugins: (databaseId: string, plugin: string) => Promise<void>;
+}
+
 export interface WorkloadService {
   loadWorkloadData: (workload: Workload) => void;
   deleteWorkloadData: (workload: Workload) => void;
