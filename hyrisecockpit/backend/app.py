@@ -369,10 +369,10 @@ model_add_database = control.clone(
 )
 
 modelhelper_plugin = fields.String(
-    title="Plugin ID",
+    title="Plugin name",
     description="Used to identify a plugin.",
     required=True,
-    example="clustering-11.08",
+    example="Clustering",
 )
 
 model_get_all_plugins = control.model(
@@ -829,7 +829,7 @@ class Data(Resource):
         return response
 
 
-@control.route("/plugins")
+@control.route("/available_plugins")
 class ActivatedPlugin(Resource):
     """Get all available Plugins."""
 
@@ -867,7 +867,7 @@ class Plugin(Resource):
     def delete(self) -> Dict:
         """Deactivate a plugin in a database."""
         message = {
-            "header": {"message": "delete plugin"},
+            "header": {"message": "deactivate plugin"},
             "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
         }
         response = _send_message(db_manager_socket, message)
