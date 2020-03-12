@@ -369,10 +369,10 @@ model_add_database = control.clone(
 )
 
 modelhelper_plugin = fields.String(
-    title="Plugin ID",
+    title="Plugin name",
     description="Used to identify a plugin.",
     required=True,
-    example="clustering-11.08",
+    example="Clustering",
 )
 
 model_get_all_plugins = control.model(
