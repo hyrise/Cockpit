@@ -239,27 +239,6 @@ model_process_table_status = monitor.clone(
     },
 )
 
-
-model_access_data = monitor.clone(
-    "Access Data",
-    model_database,
-    {
-        "access_data": fields.List(
-            fields.Nested(
-                monitor.model(
-                    "Access Counter",
-                    {
-                        "table_name": fields.String(),
-                        "column_name": fields.String(),
-                        "access_counter": fields.Integer(),
-                    },
-                )
-            )
-        )
-    },
-)
-
-
 model_data = control.model(
     "Data",
     {
@@ -645,34 +624,6 @@ class Chunks(Resource):
         response = get_response(200)
         response["body"]["chunks_data"] = chunks
         return response
-
-
-@monitor.route("/access_data")
-class AccessData(Resource):
-    """Access counter of currently available columns."""
-
-    @monitor.doc(model=[model_access_data])
-    def get(self) -> List[Dict[str, Union[str, List[Dict[str, Union[str, int]]]]]]:
-        """Get current access counters."""
-        return [
-            {
-                "id": database,
-                "access_data": [
-                    {
-                        "table_name": row["table"],
-                        "column_name": row["column"],
-                        "access_counter": row["access_counter"],
-                    }
-                    for row in list(
-                        storage_connection.query(
-                            "select last(access_counter) as access_counter, column, table from access_data group by column, table",
-                            database=database,
-                        )["access_data", None]
-                    )
-                ],
-            }
-            for database in _active_databases()
-        ]
 
 
 @monitor.route("/storage")
