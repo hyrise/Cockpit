@@ -43,8 +43,8 @@ class WorkerPool(object):
                     self._failed_task_queue,
                     self._continue_execution_flag,
                     self._database_id,
-                    self._worker_wait_event,
                     self._execute_task_worker_done_event[i],
+                    self._worker_continue_event,
                 ),
             )
             workers.append(p)
@@ -56,7 +56,9 @@ class WorkerPool(object):
             args=(
                 self.workload_publisher_url,
                 self._task_queue,
+                self._continue_execution_flag,
                 self._fill_task_worker_done_event,
+                self._worker_continue_event,
             ),
         )
         return subscriber_process

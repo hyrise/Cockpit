@@ -21,7 +21,11 @@ from .cursor import PoolCursor, StorageCursor
 
 
 def fill_queue(
-    workload_publisher_url: str, task_queue: Queue, processing_tables_flag: Value
+    workload_publisher_url: str,
+    task_queue: Queue,
+    continue_execution_flag: Value,
+    i_am_done_event,
+    continue_event,
 ) -> None:
     """Fill the queue."""
     context = Context()
@@ -31,8 +35,11 @@ def fill_queue(
 
     while True:
         published_data = sub_socket.recv_json()
-        if not processing_tables_flag.value:
+        if not continue_execution_flag.value:
             handle_published_data(published_data, task_queue)
+        else:
+            i_am_done_event.set()
+            continue_event.wait()
 
 
 def handle_published_data(published_data, task_queue) -> None:
@@ -47,8 +54,10 @@ def execute_queries(
     task_queue: Queue,
     connection_pool: pool,
     failed_task_queue: Queue,
-    worker_stay_alive_flag: Value,
+    continue_execution_flag: Value,
     database_id: str,
+    i_am_done_event,
+    continue_event,
 ) -> None:
     """Define workers work loop."""
     # Allow exit without flush
@@ -61,35 +70,27 @@ def execute_queries(
             succesful_queries: List[Tuple[int, int, str, str, str]] = []
             last_batched = time_ns()
             while True:
-                # If Queue is emty go to wait status
+                if not continue_execution_flag.value:
+                    i_am_done_event.set()
+                    continue_event.wait()
                 try:
-                    task = task_queue.get(block=True)
-                    if not worker_stay_alive_flag.value:
-                        if task == "wake_up_signal_for_worker":
-                            task_queue.put("wake_up_signal_for_worker")
-                        else:
-                            task_queue.cancel_join_thread()
-                        break
-                    else:
-                        (
-                            query,
-                            not_formatted_parameters,
-                            workload_type,
-                            query_type,
-                        ) = task
-                        formatted_parameters = get_formatted_parameters(
-                            not_formatted_parameters
-                        )
+                    task = task_queue.get(block=False)
+                    (query, not_formatted_parameters, workload_type, query_type,) = task
+                    formatted_parameters = get_formatted_parameters(
+                        not_formatted_parameters
+                    )
 
-                        endts, latency = execute_task(cur, query, formatted_parameters)
-                        succesful_queries.append(
-                            (endts, latency, workload_type, query_type, worker_id)
-                        )
+                    endts, latency = execute_task(cur, query, formatted_parameters)
+                    succesful_queries.append(
+                        (endts, latency, workload_type, query_type, worker_id)
+                    )
 
-                        if last_batched < time_ns() - 1_000_000_000:
-                            last_batched = time_ns()
-                            log.log_queries(succesful_queries)
-                            succesful_queries = []
+                    if last_batched < time_ns() - 1_000_000_000:
+                        last_batched = time_ns()
+                        log.log_queries(succesful_queries)
+                        succesful_queries = []
+                except Queue.Empty:  # type: ignore
+                    pass
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
                         {"worker_id": worker_id, "task": task, "Error": str(e)}
