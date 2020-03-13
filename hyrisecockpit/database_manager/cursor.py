@@ -89,7 +89,7 @@ class StorageCursor:
         """Log a couple of succesfully executed queries."""
         points = [
             {
-                "measurement": "plugin:log",
+                "measurement": "plugin_log",
                 "tags": {"timestamp": plugin_log[0], "reporter": plugin_log[1]},
                 "fields": {"message": plugin_log[2]},
                 "time": plugin_log[0],
