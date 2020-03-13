@@ -85,13 +85,11 @@ class Database(object):
 
     def start_worker(self):
         """Start worker."""
-        self._worker_pool.start()
-        return True
+        return self._worker_pool.start()
 
     def close_worker(self):
         """Close worker."""
-        self._worker_pool.close()
-        return True
+        return self._worker_pool.close()
 
     def get_plugins(self) -> Optional[List]:
         """Return all currently activated plugins."""

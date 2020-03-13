@@ -126,13 +126,11 @@ class WorkerPool(object):
         self._database_blocked.value = False
 
     def _stop_job(self):
-        """Stop worker."""
         self._database_blocked.value = True
         self._wait_for_worker()
         self._database_blocked.value = False
 
     def _close_job(self):
-        """Close worker."""
         self._database_blocked.value = True
         if self._status == "stopped":
             self._terminate_worker()
@@ -142,26 +140,42 @@ class WorkerPool(object):
             self._status == "closed"
         self._database_blocked.value = False
 
-    def start(self):
+    def start(self) -> bool:
         """Start worker."""
-        self._scheduler.add_job(func=self._start_job)
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._start_job)
+            return True
+        else:
+            return False
 
-    def stop(self):
+    def stop(self) -> bool:
         """Stop worker."""
-        self._scheduler.add_job(func=self._stop_job)
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._stop_job)
+            return True
+        else:
+            return False
 
-    def close(self):
+    def close(self) -> bool:
         """Close worker."""
-        self._scheduler.add_job(func=self._close_job)
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._close_job)
+            return True
+        else:
+            return False
 
     def terminate(self):
         """Terminates worker."""
-        self._database_blocked.value = True
-        self._terminate_worker()
-        self._task_queue.close()
-        self._failed_task_queue.close()
-        self._status == "closed"
-        self._database_blocked.value = False
+        if not self._database_blocked.value:
+            self._database_blocked.value = True
+            self._terminate_worker()
+            self._task_queue.close()
+            self._failed_task_queue.close()
+            self._status == "closed"
+            self._database_blocked.value = False
+            return True
+        else:
+            return False
 
     def get_status(self):
         """Return status of pool."""
