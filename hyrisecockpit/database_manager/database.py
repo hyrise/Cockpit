@@ -3,7 +3,6 @@
 from multiprocessing import Value
 from typing import List, Optional
 
-from apscheduler.schedulers.background import BackgroundScheduler
 from psycopg2.extensions import AsIs
 
 from .background_scheduler import BackgroundJobManager
@@ -44,8 +43,8 @@ class Database(object):
             self.number_workers + self._number_additional_connections,
         )
         self._connection_pool = self.driver.get_connection_pool()
-        self._scheduler = BackgroundScheduler()
         self._processing_tables_flag = Value("b", False)
+        self._database_blocked = Value("b", False)
         self._background_scheduler = BackgroundJobManager(
             self._id,
             self._processing_tables_flag,
@@ -60,7 +59,9 @@ class Database(object):
             self.number_workers,
             self._id,
             workload_publisher_url,
+            self._database_blocked,
         )
+        self._worker_pool.start()
 
     def get_queue_length(self) -> int:
         """Return queue length."""

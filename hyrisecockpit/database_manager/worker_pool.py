@@ -1,6 +1,8 @@
 """The WorkerPool object represents the workers."""
 from multiprocessing import Event, Process, Queue, Value
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
 from .worker import execute_queries, fill_queue
 
 
@@ -8,12 +10,18 @@ class WorkerPool(object):
     """Represents WorkerPool."""
 
     def __init__(
-        self, connection_pool, number_worker, database_id, workload_publisher_url
+        self,
+        connection_pool,
+        number_worker,
+        database_id,
+        workload_publisher_url,
+        database_blocked,
     ):
         """Initialize WorkerPool object."""
         self._connection_pool = connection_pool
         self._number_worker = number_worker
         self._database_id = database_id
+        self._database_blocked = database_blocked
         self._workload_publisher_url = workload_publisher_url
         self._status = "closed"
         self._continue_execution_flag = Value("b", True)
@@ -24,6 +32,8 @@ class WorkerPool(object):
         self._worker_continue_event = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
+        self._scheduler = BackgroundScheduler()
+        self._scheduler.start()
 
     def _generate_execute_task_worker_done_events(self):
         worker_done_event = []
@@ -103,8 +113,8 @@ class WorkerPool(object):
         for i in range(self._number_worker):
             self._execute_task_workers[i].start()
 
-    def start(self):
-        """Start worker."""
+    def _start_job(self):
+        self._database_blocked.value = True
         if self._status == "closed":
             self._init_workers()
             self._start_worker()
@@ -113,26 +123,45 @@ class WorkerPool(object):
             self._continue_execution_flag.value = True
             self._worker_continue_event.set()
             self._status = "running"
+        self._database_blocked.value = False
 
-    def stop(self):
+    def _stop_job(self):
         """Stop worker."""
+        self._database_blocked.value = True
         self._wait_for_worker()
+        self._database_blocked.value = False
 
-    def close(self):
+    def _close_job(self):
         """Close worker."""
+        self._database_blocked.value = True
         if self._status == "stopped":
             self._terminate_worker()
         else:
             self._wait_for_execute_task_worker()
             self._terminate_worker()
             self._status == "closed"
+        self._database_blocked.value = False
+
+    def start(self):
+        """Start worker."""
+        self._scheduler.add_job(func=self._start_job)
+
+    def stop(self):
+        """Stop worker."""
+        self._scheduler.add_job(func=self._stop_job)
+
+    def close(self):
+        """Close worker."""
+        self._scheduler.add_job(func=self._close_job)
 
     def terminate(self):
         """Terminates worker."""
+        self._database_blocked.value = True
         self._terminate_worker()
         self._task_queue.close()
         self._failed_task_queue.close()
         self._status == "closed"
+        self._database_blocked.value = False
 
     def get_status(self):
         """Return status of pool."""
