@@ -876,25 +876,24 @@ class Plugin(Resource):
 class PluginLog(Resource):
     """Activate, Deactive Plugins, respectively show which ones are activated."""
 
-    def get(self) -> List[Dict[str, List]]:
+    def get(self) -> List[Dict[str, Union[str, List[Dict[str, Union[str, int]]]]]]:
         """Return activated plugins in each database."""
-        plugin_log = []
-        for database in _active_databases():
-            result = storage_connection.query(
-                "SELECT timestamp, reporter, message from plugin_log;",
-                database=database,
-            )
-            plugin_log.append(
-                {
-                    "id": database,
-                    "access_data": [
-                        {
-                            "timestamp": row["timestamp"],
-                            "reporter": row["reporter"],
-                            "message": row["message"],
-                        }
-                        for row in list(result["plugin_log", None])
-                    ],
-                }
-            )
-        return plugin_log
+        return [
+            {
+                "id": database,
+                "access_data": [
+                    {
+                        "timestamp": row["timestamp"],
+                        "reporter": row["reporter"],
+                        "message": row["message"],
+                    }
+                    for row in list(
+                        storage_connection.query(
+                            "SELECT timestamp, reporter, message from plugin_log;",
+                            database=database,
+                        )["plugin_log", None]
+                    )
+                ],
+            }
+            for database in _active_databases()
+        ]
