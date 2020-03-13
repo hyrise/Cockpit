@@ -7,6 +7,7 @@ from hyrisecockpit.message import (
     delete_data_request_schema,
     delete_database_request_schema,
     load_data_request_schema,
+    set_plugin_request_schema,
 )
 from hyrisecockpit.response import get_error_response, get_response
 from hyrisecockpit.server import Server
@@ -60,11 +61,11 @@ class DatabaseManager(object):
                 self._call_activate_plugin,
                 None,
             ),  # TODO add validation schema
-            "deactivate plugin": (
-                self._call_deactivate_plugin,
-                None,
-            ),  # TODO add validation schema
-            "set plugin setting": (self._call_plugin_setting, None),
+            "deactivate plugin": (self._call_deactivate_plugin, None,),
+            "set plugin setting": (
+                self._call_plugin_setting,
+                set_plugin_request_schema,
+            ),
             "get plugin setting": (self._call_read_plugin_setting, None),
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
