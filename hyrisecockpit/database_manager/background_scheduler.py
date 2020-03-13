@@ -270,7 +270,7 @@ class BackgroundJobManager(object):
                 )
                 cur.execute(query, formatted_parameters)
 
-    def _load_tables(self, table_names, folder_name):
+    def _load_tables_in_background(self, table_names, folder_name):
         self._database_blocked.value = True
         table_loading_queries = self.generate_table_loading_queries(
             table_names, folder_name
@@ -290,7 +290,56 @@ class BackgroundJobManager(object):
         table_names = _table_names.get(folder_name.split("_")[0])
         if not self._database_blocked.value:
             self._load_tables_job = self._scheduler.add_job(
-                func=self._load_tables, args=(table_names, folder_name)
+                func=self._load_tables_in_background, args=(table_names, folder_name)
+            )
+            return True
+        else:
+            return False
+
+    def _get_existing_tables(self, table_names) -> Dict:
+        """Check wich tables exists and which not."""
+        existing_tables = []
+        not_existing_tables = []
+        with PoolCursor(self._connection_pool) as cur:
+            for name in table_names:
+                cur.execute(
+                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
+                )
+                if cur.fetchone():
+                    existing_tables.append(name)
+                    continue
+                not_existing_tables.append(name)
+        return {"existing": existing_tables, "not_existing": not_existing_tables}
+
+    def _generate_table_drop_queries(
+        self, table_names, folder_name: str
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
+        # TODO folder_name is unused? This deletes all tables
+        """Generate queries in tuple form that drop tables."""
+        return [
+            ("DROP TABLE %s;", ((name, "as_is"),), "system", "drop table query")
+            for name in self._get_existing_tables(table_names)["existing"]
+        ]
+
+    def _delete_tables_in_background(self, table_names, folder_name):
+        self._database_blocked.value = True
+        table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
+        processes = []
+        for i in range(len(table_drop_queries)):
+            p = Process(target=self._execute_queries, args=(table_drop_queries[i]))
+            processes.append(p)
+            p.start()
+        for process in processes:
+            process.join()
+            process.terminate()
+        self._database_blocked.value = False
+
+    def delete_tables(self, folder_name) -> bool:
+        """Load tables."""
+        table_names = _table_names.get(folder_name.split("_")[0])
+        if not self._database_blocked.value:
+            self._delete_tables_job = self._scheduler.add_job(
+                func=self._delete_tables_in_background, args=(table_names, folder_name)
             )
             return True
         else:
