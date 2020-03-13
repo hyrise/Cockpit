@@ -745,6 +745,18 @@ class Workload(Resource):
 
     def post(self) -> Dict:
         """Start the workload generator."""
+        start_worker_message = {
+            "header": {"message": "start worker"},
+            "body": {"folder_name": control.payload["folder_name"]},
+        }
+
+        response = _send_message(db_manager_socket, start_worker_message)
+
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during starting of worker")
+            )
+
         workload_message = {
             "header": {"message": "start workload"},
             "body": {
@@ -774,13 +786,13 @@ class Workload(Resource):
             )
 
         message = {
-            "header": {"message": "purge queue"},
+            "header": {"message": "close worker"},
             "body": {},
         }
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
-                400, response["body"].get("error", "Error during purging of the queues")
+                400, response["body"].get("error", "Error during closing of worker")
             )
 
         return response

@@ -48,13 +48,14 @@ class DatabaseManager(object):
                 self._call_delete_database,
                 delete_database_request_schema,
             ),
+            "start worker": (self._call_start_worker, None),
+            "close worker": (self._call_close_worker, None),
             "queue length": (self._call_queue_length, None),
             "failed tasks": (self._call_failed_tasks, None),
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
             "process table status": (self._call_process_table_status, None),
-            "purge queue": (self._call_purge_queue, None),
             "get plugins": (self._call_get_plugins, None),
             "activate plugin": (
                 self._call_activate_plugin,
@@ -221,9 +222,15 @@ class DatabaseManager(object):
             )
         return processing_table_data
 
-    def _call_purge_queue(self, body: Dict) -> Dict:
+    def _call_start_worker(self, body: Dict) -> Dict:
         for database in self._databases.values():
-            if not database.disable_workload_execution():
+            if not database.start_worker():
+                return get_response(400)
+        return get_response(200)
+
+    def _call_close_worker(self, body: Dict) -> Dict:
+        for database in self._databases.values():
+            if not database.close_worker():
                 return get_response(400)
         return get_response(200)
 

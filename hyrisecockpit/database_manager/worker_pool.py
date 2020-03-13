@@ -51,7 +51,7 @@ class WorkerPool(object):
         return workers
 
     def _generate_fill_task_worker(self):
-        subscriber_process = Process(
+        fill_task_worker = Process(
             target=fill_queue,
             args=(
                 self._workload_publisher_url,
@@ -61,7 +61,7 @@ class WorkerPool(object):
                 self._worker_continue_event,
             ),
         )
-        return subscriber_process
+        return fill_task_worker
 
     def _init_workers(self):
         if len(self._execute_task_workers) == 0:
@@ -84,12 +84,18 @@ class WorkerPool(object):
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
 
-    def _wait_for_worker(self):
+    def _wait_for_execute_task_worker(self):
+        self._worker_continue_event.clear()
+        self._continue_execution_flag.value = False
+        for i in range(self._number_worker):
+            self._execute_task_worker_done_event[i].wait()
+
+    def _wait_for_all_worker(self):
         self._worker_continue_event.clear()
         self._continue_execution_flag.value = False
         self._fill_task_worker_done_event.wait()
         for i in range(self._number_worker):
-            self._fill_task_worker_done_event[i].wait()
+            self._execute_task_worker_done_event[i].wait()
 
     def _start_worker(self):
         self._continue_execution_flag.value = True
@@ -117,7 +123,7 @@ class WorkerPool(object):
         if self._status == "stopped":
             self._terminate_worker()
         else:
-            self._wait_for_worker()
+            self._wait_for_execute_task_worker()
             self._terminate_worker()
             self._status == "closed"
 
@@ -131,3 +137,14 @@ class WorkerPool(object):
     def get_status(self):
         """Return status of pool."""
         return self._status
+
+    def get_queue_length(self):
+        """Return queue length."""
+        return self._task_queue.qsize()
+
+    def get_failed_tasks(self):
+        """Return failed tasks."""
+        failed_task = []
+        while not self._failed_task_queue.empty():
+            failed_task.append(self._failed_task_queue.get())
+        return failed_task

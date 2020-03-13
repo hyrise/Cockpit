@@ -61,9 +61,6 @@ def execute_queries(
     continue_event,
 ) -> None:
     """Define workers work loop."""
-    # Allow exit without flush
-    failed_task_queue.cancel_join_thread()
-
     with PoolCursor(connection_pool) as cur:
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
@@ -74,6 +71,7 @@ def execute_queries(
                 if not continue_execution_flag.value:
                     i_am_done_event.set()
                     continue_event.wait()
+
                 try:
                     task = task_queue.get(block=False)
                     (query, not_formatted_parameters, workload_type, query_type,) = task

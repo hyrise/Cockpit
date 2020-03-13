@@ -33,7 +33,6 @@ class Database(object):
     ) -> None:
         """Initialize database object."""
         self._id = id
-        self._default_tables = default_tables
         self.number_workers = number_workers
         self._number_additional_connections = 1
         self.driver = Driver(
@@ -44,13 +43,9 @@ class Database(object):
             dbname,
             self.number_workers + self._number_additional_connections,
         )
-
         self._connection_pool = self.driver.get_connection_pool()
         self._scheduler = BackgroundScheduler()
         self._processing_tables_flag = Value("b", False)
-
-        self.workload_publisher_url: str = workload_publisher_url
-
         self._background_scheduler = BackgroundJobManager(
             self._id,
             self._processing_tables_flag,
@@ -60,19 +55,42 @@ class Database(object):
             storage_port,
             storage_user,
         )
-        self._background_scheduler.start()
-        self._scheduler.start()
         self._worker_pool = WorkerPool(
             self._connection_pool,
             self.number_workers,
             self._id,
-            self.workload_publisher_url,
+            workload_publisher_url,
         )
-        self._worker_pool.start()
 
     def get_queue_length(self) -> int:
         """Return queue length."""
-        return 100
+        return self._worker_pool.get_queue_length()
+
+    def get_failed_tasks(self):
+        """Return failed tasks."""
+        return self._worker_pool.get_failed_tasks()
+
+    def load_data(self, folder_name: str):
+        """Load pregenerated tables."""
+        return True
+
+    def delete_data(self, folder_name: str):
+        """Delete tables."""
+        return True
+
+    def get_processing_tables_flag(self):
+        """Return tables loading flag."""
+        return False
+
+    def start_worker(self):
+        """Start worker."""
+        self._worker_pool.start()
+        return True
+
+    def close_worker(self):
+        """Close worker."""
+        self._worker_pool.close()
+        return True
 
     def get_plugins(self) -> Optional[List]:
         """Return all currently activated plugins."""
@@ -113,11 +131,8 @@ class Database(object):
     def close(self) -> None:
         """Close the database."""
         # Remove jobs
-        self._background_scheduler.close()
-
         # Close the scheduler
         self._worker_pool.terminate()
-        self._scheduler.shutdown()
         # Close subscriber worker
         # Close worker pool
         # Close connections
