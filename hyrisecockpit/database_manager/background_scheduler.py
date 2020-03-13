@@ -1,5 +1,6 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
+from copy import deepcopy
 from json import dumps
 from multiprocessing import Value
 from secrets import randbelow
@@ -37,6 +38,7 @@ class BackgroundJobManager(object):
         self._storage_user = storage_user
         self._scheduler = BackgroundScheduler()
         self._access_data: Dict = {}
+        self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
     def _init_jobs(self):
@@ -115,6 +117,23 @@ class BackgroundJobManager(object):
 
         meta_segments = self._read_meta_segments(sql)
 
+        chunks_data = {}
+        if not meta_segments.empty:
+            new_chunks_data = self._create_chunks_dictionary(meta_segments)
+            chunks_data = deepcopy(new_chunks_data)
+            for table_name in chunks_data.keys():
+                if table_name in self._previous_chunks_data.keys():
+                    for column_name in chunks_data[table_name].keys():
+                        if column_name in self._previous_chunks_data[table_name].keys():
+                            chunks_data[table_name][column_name] = [
+                                chunks_data[table_name][column_name][i]
+                                - self._previous_chunks_data[table_name][column_name][i]
+                                for i in range(
+                                    len(chunks_data[table_name][column_name])
+                                )
+                            ]
+            self._previous_chunks_data = new_chunks_data
+
         with StorageCursor(
             self._storage_host,
             self._storage_port,
@@ -122,16 +141,13 @@ class BackgroundJobManager(object):
             self._storage_password,
             self._database_id,
         ) as log:
-            output = {}
-            if not meta_segments.empty:
-                output = self._read_chunks_data(meta_segments)
             log.log_meta_information(
                 "chunks_data",
-                {"chunks_data_meta_information": dumps(output)},
+                {"chunks_data_meta_information": dumps(chunks_data)},
                 time_stamp,
             )
 
-    def _read_chunks_data(self, meta_segments) -> Dict:
+    def _create_chunks_dictionary(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
         grouped_tables = meta_segments.reset_index().groupby("table_name")
 
