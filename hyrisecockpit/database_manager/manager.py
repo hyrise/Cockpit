@@ -1,6 +1,6 @@
 """Module for managing databases."""
 
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Callable, Dict, Optional, Tuple
 
 from hyrisecockpit.message import (
     add_database_request_schema,
@@ -8,7 +8,7 @@ from hyrisecockpit.message import (
     delete_database_request_schema,
     load_data_request_schema,
 )
-from hyrisecockpit.response import get_error_response, get_response
+from hyrisecockpit.response import Body, Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
 from .database import Database
@@ -40,9 +40,7 @@ class DatabaseManager(object):
         self._storage_user = storage_user
 
         self._databases: Dict[str, Database] = {}
-        server_calls: Dict[
-            str, Tuple[Callable[[Dict[str, Any]], Dict[str, Any]], Optional[Dict]]
-        ] = {
+        server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
             "add database": (self._call_add_database, add_database_request_schema),
             "delete database": (
                 self._call_delete_database,
@@ -75,7 +73,7 @@ class DatabaseManager(object):
         """Call close with a context manager."""
         self.close()
 
-    def _call_add_database(self, body: Dict) -> Dict:
+    def _call_add_database(self, body: Body) -> Response:
         """Add database and initialize driver for it."""
         user = body["user"]
         password = body["password"]
@@ -110,7 +108,7 @@ class DatabaseManager(object):
         self._databases[body["id"]] = db_instance
         return get_response(200)
 
-    def _call_get_databases(self, body: Dict) -> Dict:
+    def _call_get_databases(self, body: Body) -> Response:
         """Get list of all databases."""
         databases = [
             {
@@ -126,7 +124,7 @@ class DatabaseManager(object):
         response["body"]["databases"] = databases
         return response
 
-    def _call_queue_length(self, body: Dict) -> Dict:
+    def _call_queue_length(self, body: Body) -> Response:
         queue_length = {}
         for id, database in self._databases.items():
             queue_length[id] = database.get_queue_length()
@@ -134,7 +132,7 @@ class DatabaseManager(object):
         response["body"]["queue_length"] = queue_length
         return response
 
-    def _call_delete_database(self, body: Dict) -> Dict:
+    def _call_delete_database(self, body: Body) -> Response:
         id: str = body["id"]
         database: Optional[Database] = self._databases.pop(id, None)
         if database:
@@ -144,7 +142,7 @@ class DatabaseManager(object):
         else:
             return get_response(404)
 
-    def _call_failed_tasks(self, body: Dict) -> Dict:
+    def _call_failed_tasks(self, body: Body) -> Response:
         failed_tasks = {}
         for id, database in self._databases.items():
             failed_tasks[id] = database.get_failed_tasks()
@@ -152,7 +150,7 @@ class DatabaseManager(object):
         response["body"]["failed_tasks"] = failed_tasks
         return response
 
-    def _call_load_data(self, body: Dict) -> Dict:
+    def _call_load_data(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
@@ -161,7 +159,7 @@ class DatabaseManager(object):
                 return get_response(400)  # TODO return which DB couldn't import
         return get_response(200)
 
-    def _call_delete_data(self, body: Dict) -> Dict:
+    def _call_delete_data(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]
         if self._check_if_processing_table():
             return get_error_response(400, "Already loading data")
@@ -170,7 +168,7 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def _call_process_table_status(self, body: Dict) -> Dict:
+    def _call_process_table_status(self, body: Body) -> Response:
         process_table_status = [
             {
                 "id": database_id,
@@ -182,7 +180,7 @@ class DatabaseManager(object):
         response["body"]["process_table_status"] = process_table_status
         return response
 
-    def _call_get_plugins(self, body: Dict) -> Dict:
+    def _call_get_plugins(self, body: Body) -> Response:
         activated_plugins = [
             {"id": id, "plugins": database.get_plugins()}
             for id, database in self._databases.items()
@@ -191,7 +189,7 @@ class DatabaseManager(object):
         response["body"]["plugins"] = activated_plugins
         return response
 
-    def _call_activate_plugin(self, body: Dict) -> Dict:
+    def _call_activate_plugin(self, body: Body) -> Response:
         id: str = body["id"]
         plugin: str = body["plugin"]
         if id not in self._databases.keys():
@@ -202,7 +200,7 @@ class DatabaseManager(object):
             response = get_response(423)
         return response
 
-    def _call_deactivate_plugin(self, body: Dict) -> Dict:
+    def _call_deactivate_plugin(self, body: Body) -> Response:
         id: str = body["id"]
         plugin: str = body["plugin"]
         if id not in self._databases.keys():
@@ -221,7 +219,7 @@ class DatabaseManager(object):
             )
         return processing_table_data
 
-    def _call_purge_queue(self, body: Dict) -> Dict:
+    def _call_purge_queue(self, body: Body) -> Response:
         for database in self._databases.values():
             if not database.disable_workload_execution():
                 return get_response(400)
