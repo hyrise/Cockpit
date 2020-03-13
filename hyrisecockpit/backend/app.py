@@ -659,7 +659,7 @@ class AccessData(Resource):
         access_data = []
         for database in _active_databases():
             result = storage_connection.query(
-                "SELECT access_counter, column, table from access_data where time > now() - 9000000000;",
+                "select last(access_counter) as access_counter, column, table from access_data group by column, table",
                 database=database,
             )
             access_data.append(
