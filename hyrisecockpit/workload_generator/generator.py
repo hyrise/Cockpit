@@ -16,7 +16,7 @@ from hyrisecockpit.exception import (
     QueryTypesNotSpecifiedException,
 )
 from hyrisecockpit.message import start_workload_request_schema
-from hyrisecockpit.response import Response, get_error_response, get_response
+from hyrisecockpit.response import Body, Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
@@ -36,9 +36,7 @@ class WorkloadGenerator(object):
         self._workload_listening = workload_listening
         self._workload_pub_port = workload_pub_port
         self._default_workload_location = default_workload_location
-        server_calls: Dict[
-            str, Tuple[Callable[[Dict[str, Any]], Response], Optional[Dict]]
-        ] = {
+        server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
             "start workload": (
                 self._call_start_workload,
                 start_workload_request_schema,
@@ -85,7 +83,7 @@ class WorkloadGenerator(object):
             self._workloads[workload_type] = workload
         return workload
 
-    def _call_start_workload(self, body: Dict) -> Response:
+    def _call_start_workload(self, body: Body) -> Response:
         frequency: int = body["frequency"]
         workload_type: str = body["folder_name"]
         try:
@@ -105,7 +103,7 @@ class WorkloadGenerator(object):
 
         return get_response(200)
 
-    def _call_stop_workload(self, body: Dict) -> Response:
+    def _call_stop_workload(self, body: Body) -> Response:
         self._generate_workload_flag = False
         return get_response(200)
 

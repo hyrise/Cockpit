@@ -1,6 +1,8 @@
 """Predefined responses for IPC."""
 
-from typing import Dict, TypedDict
+from typing import Any, Dict, TypedDict
+
+Body = Dict[str, Any]
 
 
 class Header(TypedDict):
@@ -19,7 +21,7 @@ class ResponseBase(TypedDict):
 class Response(ResponseBase, total=False):
     """Response Type."""
 
-    body: Dict
+    body: Body
 
 
 _responses: Dict[int, str] = {
