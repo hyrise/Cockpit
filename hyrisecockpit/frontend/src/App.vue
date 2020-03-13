@@ -16,13 +16,12 @@ import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
 import addDatabase from "./meta/addDatabase.vue";
 
-interface Data {
-}
+interface Data {}
 
 export default defineComponent({
   components: { AppDrawer, addDatabase },
   setup(props: {}, context: SetupContext): Data {
-    return { };
+    return {};
   }
 });
 </script>
