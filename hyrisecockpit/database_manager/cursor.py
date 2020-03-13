@@ -83,18 +83,3 @@ class StorageCursor:
             for query in query_list
         ]
         self._connection.write_points(points, database=self._database)
-
-    def log_access_data(
-        self, access_counter_list: List[Tuple[str, str, int, int]]
-    ) -> None:
-        """Log access data per column."""
-        points = [
-            {
-                "measurement": "access_data",
-                "tags": {"table": access_point[0], "column": access_point[1]},
-                "fields": {"access_counter": access_point[2]},
-                "time": access_point[3],
-            }
-            for access_point in access_counter_list
-        ]
-        self._connection.write_points(points, database=self._database)
