@@ -109,14 +109,10 @@ class BackgroundJobManager(object):
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
-        # mocking chunks data
         time_stamp = time_ns()
-        sql = """SELECT
-                table_name,
-                column_name,
-                COUNT(chunk_id) as n_chunks
-                FROM meta_segments
-                GROUP BY table_name, column_name;"""
+        sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
+            FROM meta_segments;"""
+
         meta_segments = self._read_meta_segments(sql)
 
         with StorageCursor(
@@ -137,15 +133,19 @@ class BackgroundJobManager(object):
 
     def _read_chunks_data(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            chunks_data[column] = {}
-            for _, row in grouped.get_group(column).iterrows():
-                data = []
-                for _ in range(row["n_chunks"]):
-                    current = randbelow(500)
-                    data.append(current if (current < 100) else 0)
-                chunks_data[column][row["column_name"]] = data
+        grouped_tables = meta_segments.reset_index().groupby("table_name")
+
+        for table_name in grouped_tables.groups:
+            chunks_data[table_name] = {}
+            table = grouped_tables.get_group(table_name)
+            grouped_columns = table.reset_index().groupby("column_name")
+
+            for column_name in grouped_columns.groups:
+                column = grouped_columns.get_group(column_name)
+                access_data = []
+                for _, row in column.iterrows():
+                    access_data.append(row["access_count"])
+                chunks_data[table_name][column_name] = access_data
         return chunks_data
 
     def _update_system_data(self) -> None:
