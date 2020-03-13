@@ -21,7 +21,7 @@
               min="0"
               max="1000"
               step="10"
-              @end="handleFrequencyChange(workload, frequency)"
+              @end="handleChange(workload, frequency)"
             ></v-slider>
             <v-text-field
               v-model="frequency"
@@ -29,7 +29,11 @@
               outlined
               dense
             ></v-text-field>
-            <v-radio-group v-model="workload" class="mt-0">
+            <v-radio-group
+              v-model="workload"
+              class="mt-0"
+              @change="handleChange(workload, frequency)"
+            >
               <v-radio
                 v-for="workload in availableWorkloads"
                 :key="workload"
@@ -62,7 +66,7 @@
               </v-btn>
               <v-btn
                 @click="stoppingWorkload()"
-                :disabled="buttonIsLoading.stop || !isLoaded(workload)"
+                :disabled="buttonIsLoading.stop"
                 :loading="buttonIsLoading.stop"
                 v-bind:style="{ color: (isActive = 'red') }"
               >
@@ -121,7 +125,7 @@ interface Data {
   pauseWorkload: (workload: Workload) => void;
   stoppingWorkload: () => void;
   isLoaded: (workload: Workload) => boolean;
-  handleFrequencyChange: (workload: Workload, frequency: number) => void;
+  handleChange: (workload: Workload, frequency: number) => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
@@ -187,10 +191,7 @@ export default defineComponent({
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
     }
-    function handleFrequencyChange(
-      workload: Workload,
-      frequency: number
-    ): void {
+    function handleChange(workload: Workload, frequency: number): void {
       if (startedWorkload.value == true) {
         startingWorkload(workload, frequency);
       }
@@ -218,7 +219,7 @@ export default defineComponent({
       pauseWorkload,
       stoppingWorkload,
       isLoaded,
-      handleFrequencyChange,
+      handleChange,
       handleWorkloadDataChange,
       closeWorkloadDialog
     };
