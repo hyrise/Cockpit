@@ -4,7 +4,7 @@ from json import dumps
 from multiprocessing import Value
 from secrets import randbelow
 from time import time_ns
-from typing import Any, Dict
+from typing import Dict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -158,7 +158,7 @@ class BackgroundJobManager(object):
             "cpu_count": int(system_segments["cpu_count"][0]),
             "cpu_clock_speed": int(system_segments["cpu_clock_speed"][0]),
         }
-        memory_data: Dict[str, Any] = {
+        memory_data: Dict[str, Union[int, float]] = {
             "free": int(utilization_segments["system_memory_free_bytes"][0]),
             "used": int(utilization_segments["process_physical_memory_bytes"][0]),
             "total": int(system_segments["system_memory_total_bytes"][0]),
