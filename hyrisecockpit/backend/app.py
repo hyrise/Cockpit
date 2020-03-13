@@ -652,28 +652,27 @@ class AccessData(Resource):
     """Access counter of currently available columns."""
 
     @monitor.doc(model=[model_access_data])
-    def get(self) -> List[Dict[str, Union[str, Dict]]]:
+    def get(self) -> List[Dict[str, Union[str, List[Dict[str, Union[str, int]]]]]]:
         """Get current access counters."""
-        access_data = []
-        for database in _active_databases():
-            result = storage_connection.query(
-                "select last(access_counter) as access_counter, column, table from access_data group by column, table",
-                database=database,
-            )
-            access_data.append(
-                {
-                    "id": database,
-                    "access_data": [
-                        {
-                            "table_name": row["table"],
-                            "column_name": row["column"],
-                            "access_counter": row["access_counter"],
-                        }
-                        for row in list(result["access_data", None])
-                    ],
-                }
-            )
-        return access_data
+        return [
+            {
+                "id": database,
+                "access_data": [
+                    {
+                        "table_name": row["table"],
+                        "column_name": row["column"],
+                        "access_counter": row["access_counter"],
+                    }
+                    for row in list(
+                        storage_connection.query(
+                            "select last(access_counter) as access_counter, column, table from access_data group by column, table",
+                            database=database,
+                        )["access_data", None]
+                    )
+                ],
+            }
+            for database in _active_databases()
+        ]
 
 
 @monitor.route("/storage")
