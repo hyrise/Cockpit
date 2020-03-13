@@ -46,32 +46,6 @@ class TestCursor:
         )
 
     @mark.parametrize(
-        "queries",
-        [
-            [("table1", "column1", 9000, 123)],
-            [("table1", "column1", 9000, 123), ("table2", "column2", 0, 456)],
-        ],
-    )
-    def test_logs_access_data(self, queries: List[Tuple[str, str, int, int]]):
-        """Test access data logging."""
-        expected_points = [
-            {
-                "measurement": "access_data",
-                "tags": {"table": query[0], "column": query[1]},
-                "fields": {"access_counter": query[2]},
-                "time": query[3],
-            }
-            for query in queries
-        ]
-        cursor = StorageCursor("host", "port", "user", "password", "database")
-        cursor._connection = MagicMock()
-        cursor._connection.write_points.return_value = None
-        cursor.log_access_data(queries)
-        cursor._connection.write_points.assert_called_once_with(
-            expected_points, database="database"
-        )
-
-    @mark.parametrize(
         "measurement", ["storage_something", "some_chunks"],
     )
     @mark.parametrize(
