@@ -49,10 +49,10 @@ class TestCursor:
         "measurement", ["storage_something", "some_chunks"],
     )
     @mark.parametrize(
-        "fields", [{"field1": "some_value"}, {"field2": 9000}],
+        "fields", [{"field1": "some_value"}, {"field1": "some_value", "field2": 9000}],
     )
     @mark.parametrize(
-        "time_stamp", [123, 456],
+        "time_stamp", [123, 456789],
     )
     def test_logs_plugin_log(
         self, measurement: str, fields: Dict[str, Any], time_stamp: int
