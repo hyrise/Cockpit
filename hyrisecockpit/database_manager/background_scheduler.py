@@ -37,7 +37,6 @@ class BackgroundJobManager(object):
         self._storage_port = storage_port
         self._storage_user = storage_user
         self._scheduler = BackgroundScheduler()
-        self._access_data: Dict = {}
         self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
@@ -54,9 +53,6 @@ class BackgroundJobManager(object):
         )
         self._update_storage_data_job = self._scheduler.add_job(
             func=self._update_storage_data, trigger="interval", seconds=5,
-        )
-        self._update_access_data_job = self._scheduler.add_job(
-            func=self._update_access_data, trigger="interval", seconds=5,
         )
 
     def start(self):
@@ -266,42 +262,3 @@ class BackgroundJobManager(object):
             log.log_meta_information(
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
-
-    def _update_access_data(self) -> None:
-        """Get information about the access frequency of columns."""
-        time_stamp = time_ns()
-        sql = """SELECT
-                table_name,
-                column_name,
-                SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter
-                FROM meta_segments
-                GROUP BY table_name, column_name;"""
-        meta_segments = self._read_meta_segments(sql)
-
-        if meta_segments.empty:
-            self._access_data = {}
-        else:
-            meta_segments = meta_segments.set_index(["table_name", "column_name"])
-
-        access_dict = meta_segments.to_dict("index")
-        for table, column in self._access_data.keys():
-            if (table, column) in access_dict.keys():
-                access_dict[table, column]["access_counter"] -= self._access_data[
-                    table, column
-                ]["access_counter"]
-
-        access_data = [
-            (table_name, column_name, access_counter["access_counter"], time_stamp)
-            for (table_name, column_name), access_counter in access_dict.items()
-        ]
-
-        with StorageCursor(
-            self._storage_host,
-            self._storage_port,
-            self._storage_user,
-            self._storage_password,
-            self._database_id,
-        ) as log:
-            log.log_access_data(access_data)
-
-        self._access_data = access_dict
