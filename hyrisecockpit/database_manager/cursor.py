@@ -65,8 +65,10 @@ class StorageCursor:
         self, measurement: str, fields: Dict[str, Any], time_stamp: int
     ):
         """Log meta information in table."""
-        point = {"measurement": measurement, "fields": fields, "time": time_stamp}
-        self._connection.write_point(point, database=self._database)
+        self._connection.write_point(
+            {"measurement": measurement, "fields": fields, "time": time_stamp},
+            database=self._database,
+        )
 
     def log_queries(self, query_list: List[Tuple[int, int, str, str, str]]) -> None:
         """Log a couple of succesfully executed queries."""
