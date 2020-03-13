@@ -16,7 +16,7 @@ from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
-from hyrisecockpit.response import get_error_response, get_response
+from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
@@ -421,7 +421,7 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
+    def get(self) -> Union[int, Response]:
         """Return throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
@@ -523,7 +523,7 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
+    def get(self) -> Union[int, Response]:
         """Return latency information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
@@ -578,7 +578,7 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    def get(self) -> Union[int, Dict[str, Dict]]:
+    def get(self) -> Union[int, Response]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
         system: Dict[str, Dict] = {}
         try:
@@ -607,7 +607,7 @@ class System(Resource):
 class Chunks(Resource):
     """Chunks data information of all databases."""
 
-    def get(self) -> Union[int, Dict[str, Dict]]:
+    def get(self) -> Union[int, Response]:
         """Return chunks data information for every database."""
         chunks: Dict[str, Dict] = {}
         try:
@@ -634,7 +634,7 @@ class Storage(Resource):
     """Storage information of all databases."""
 
     # @control.doc(body=[model_storage]) # noqa
-    def get(self) -> Union[int, Dict[str, Dict]]:
+    def get(self) -> Union[int, Response]:
         """Return storage metadata from database manager."""
         storage: Dict[str, Dict] = {}
         try:
@@ -743,7 +743,7 @@ class Database(Resource):
 class Workload(Resource):
     """Manages workload generation."""
 
-    def post(self) -> Dict:
+    def post(self) -> Response:
         """Start the workload generator."""
         load_data_message = {
             "header": {"message": "load data"},
@@ -773,7 +773,7 @@ class Workload(Resource):
 
         return get_response(200)
 
-    def delete(self) -> Dict:
+    def delete(self) -> Response:
         """Stop the workload generator and empty database queues."""
         message = {
             "header": {"message": "stop workload"},
