@@ -78,7 +78,7 @@ class Database(object):
 
     def delete_data(self, folder_name: str):
         """Delete tables."""
-        return True
+        return self._background_scheduler.delete_tables(folder_name)
 
     def get_processing_tables_flag(self):
         """Return tables loading flag."""
@@ -98,7 +98,6 @@ class Database(object):
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(("SELECT name FROM meta_plugins;"), (None,))
                 result = cur.fetchall()
-                print(result)
                 return result
         else:
             return None

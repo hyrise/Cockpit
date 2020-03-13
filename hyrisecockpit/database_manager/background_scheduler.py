@@ -254,7 +254,6 @@ class BackgroundJobManager(object):
     def _execute_queries(self, queries):
         with PoolCursor(self._connection_pool) as cur:
             for query in queries:
-                print(query)
                 query, not_formatted_parameters = query
                 formatted_parameters = (
                     tuple(
