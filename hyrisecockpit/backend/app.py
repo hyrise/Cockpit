@@ -389,10 +389,10 @@ model_add_database = control.clone(
 )
 
 modelhelper_plugin = fields.String(
-    title="Plugin ID",
+    title="Plugin name",
     description="Used to identify a plugin.",
     required=True,
-    example="clustering-11.08",
+    example="Clustering",
 )
 
 model_get_all_plugins = control.model(
@@ -619,7 +619,7 @@ class System(Resource):
             else:
                 system[database] = {}
         response = get_response(200)
-        response["body"]["system"] = system
+        response["body"]["system_data"] = system
         return response
 
 
@@ -645,7 +645,7 @@ class Chunks(Resource):
             else:
                 chunks[database] = {}
         response = get_response(200)
-        response["body"]["chunks"] = chunks
+        response["body"]["chunks_data"] = chunks
         return response
 
 
@@ -656,27 +656,22 @@ class AccessData(Resource):
     @monitor.doc(model=[model_access_data])
     def get(self) -> List[Dict[str, Union[str, Dict]]]:
         """Get current access counters."""
-        currentts = time_ns()
-        endts = currentts - 5_000_000_000
         access_data = []
         for database in _active_databases():
             result = storage_connection.query(
-                "SELECT table, column, access_counter FROM access_data WHERE time > $startts AND time <= $endts;",
+                "select last(access_counter) as access_counter, column, table from access_data group by column, table",
                 database=database,
-                bind_params={"startts": currentts, "endts": endts},
             )
             access_data.append(
                 {
                     "id": database,
                     "access_data": [
                         {
-                            "table_name": table_name,
-                            "column_name": column_name,
-                            "access_counter": list(result[table_name, column_name])[0][
-                                "access_counter"
-                            ],
+                            "table_name": row["table"],
+                            "column_name": row["column"],
+                            "access_counter": row["access_counter"],
                         }
-                        for table_name, column_name in list(result.keys())
+                        for row in list(result["access_data", None])
                     ],
                 }
             )
@@ -883,7 +878,7 @@ class Data(Resource):
         return response
 
 
-@control.route("/plugins")
+@control.route("/available_plugins")
 class ActivatedPlugin(Resource):
     """Get all available Plugins."""
 
@@ -921,7 +916,7 @@ class Plugin(Resource):
     def delete(self) -> Dict:
         """Deactivate a plugin in a database."""
         message = {
-            "header": {"message": "delete plugin"},
+            "header": {"message": "deactivate plugin"},
             "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
         }
         response = _send_message(db_manager_socket, message)

@@ -1,5 +1,6 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
+from copy import deepcopy
 from json import dumps
 from multiprocessing import Value
 from secrets import randbelow
@@ -37,6 +38,7 @@ class BackgroundJobManager(object):
         self._storage_user = storage_user
         self._scheduler = BackgroundScheduler()
         self._access_data: Dict = {}
+        self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
     def _init_jobs(self):
@@ -109,10 +111,28 @@ class BackgroundJobManager(object):
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
-        # mocking chunks data
         time_stamp = time_ns()
-        sql = "SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"
+        sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
+            FROM meta_segments;"""
+
         meta_segments = self._read_meta_segments(sql)
+
+        chunks_data = {}
+        if not meta_segments.empty:
+            new_chunks_data = self._create_chunks_dictionary(meta_segments)
+            chunks_data = deepcopy(new_chunks_data)
+            for table_name in chunks_data.keys():
+                if table_name in self._previous_chunks_data.keys():
+                    for column_name in chunks_data[table_name].keys():
+                        if column_name in self._previous_chunks_data[table_name].keys():
+                            chunks_data[table_name][column_name] = [
+                                chunks_data[table_name][column_name][i]
+                                - self._previous_chunks_data[table_name][column_name][i]
+                                for i in range(
+                                    len(chunks_data[table_name][column_name])
+                                )
+                            ]
+            self._previous_chunks_data = new_chunks_data
 
         with StorageCursor(
             self._storage_host,
@@ -121,26 +141,27 @@ class BackgroundJobManager(object):
             self._storage_password,
             self._database_id,
         ) as log:
-            output = {}
-            if not meta_segments.empty:
-                output = self._read_chunks_data(meta_segments)
             log.log_meta_information(
                 "chunks_data",
-                {"chunks_data_meta_information": dumps(output)},
+                {"chunks_data_meta_information": dumps(chunks_data)},
                 time_stamp,
             )
 
-    def _read_chunks_data(self, meta_segments) -> Dict:
+    def _create_chunks_dictionary(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            chunks_data[column] = {}
-            for _, row in grouped.get_group(column).iterrows():
-                data = []
-                for _ in range(row["n_chunks"]):
-                    current = randbelow(500)
-                    data.append(current if (current < 100) else 0)
-                chunks_data[column][row["column_name"]] = data
+        grouped_tables = meta_segments.reset_index().groupby("table_name")
+
+        for table_name in grouped_tables.groups:
+            chunks_data[table_name] = {}
+            table = grouped_tables.get_group(table_name)
+            grouped_columns = table.reset_index().groupby("column_name")
+
+            for column_name in grouped_columns.groups:
+                column = grouped_columns.get_group(column_name)
+                access_data = []
+                for _, row in column.iterrows():
+                    access_data.append(row["access_count"])
+                chunks_data[table_name][column_name] = access_data
         return chunks_data
 
     def _update_system_data(self) -> None:
@@ -244,23 +265,21 @@ class BackgroundJobManager(object):
 
     def _update_access_data(self) -> None:
         """Get information about the access frequency of columns."""
-        if self._processing_tables_flag.value:
-            return
-
-        connection = self._connection_pool.getconn()
-        connection.set_session(autocommit=True)
-
-        access_data_query = "SELECT table_name, column_name, SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter FROM meta_segments GROUP BY table_name, column_name;"
-
-        meta_segments = read_sql_query(access_data_query, connection).set_index(
+        time_stamp = time_ns()
+        sql = """SELECT
+                table_name,
+                column_name,
+                SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter
+                FROM meta_segments
+                GROUP BY table_name, column_name;"""
+        meta_segments = self._read_meta_segments(sql).set_index(
             ["table_name", "column_name"]
         )
+
         if meta_segments.empty:
             self._access_data = {}
 
         access_dict = meta_segments.to_dict("index")
-        ts = time_ns()
-
         for table, column in self._access_data.keys():
             if (table, column) in access_dict.keys():
                 access_dict[table, column]["access_counter"] -= self._access_data[
@@ -268,7 +287,7 @@ class BackgroundJobManager(object):
                 ]["access_counter"]
 
         access_data = [
-            (table_name, column_name, access_counter["access_counter"], ts)
+            (table_name, column_name, access_counter["access_counter"], time_stamp)
             for (table_name, column_name), access_counter in access_dict.items()
         ]
 
@@ -282,4 +301,3 @@ class BackgroundJobManager(object):
             log.log_access_data(access_data)
 
         self._access_data = access_dict
-        self._connection_pool.putconn(connection)
