@@ -65,6 +65,7 @@ class DatabaseManager(object):
                 None,
             ),  # TODO add validation schema
             "set plugin setting": (self._call_plugin_setting, None),
+            "get plugin setting": (self._call_read_plugin_setting, None),
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
@@ -218,14 +219,16 @@ class DatabaseManager(object):
         id: str = body["id"]
         name: str = body["name"]
         value: str = body["value"]
-        description: str = body["description"]
         if id not in self._databases.keys():
             response = get_response(400)
-        elif self._databases[id].set_plugin_setting(name, value, description):
+        elif self._databases[id].set_plugin_setting(name, value):
             response = get_response(200)
         else:
             response = get_response(423)
         return response
+
+    def _call_read_plugin_setting(self, body: Dict) -> Dict:
+        pass
 
     def _check_if_processing_table(self) -> bool:
         processing_table_data = False

@@ -396,29 +396,33 @@ model_deactivate_plugin = control.clone(
 model_plugin_setting = control.clone(
     "Set Plugin Setting",
     model_database,
-    control.model(
-        "Plugin settings",
-        {
-            "name": fields.String(
-                title="Setting name",
-                description="Name of the setting that shall be set.",
-                required=True,
-                example="CompressionPlugin_MemoryBudget",
-            ),
-            "value": fields.String(
-                title="Setting value",
-                description="Value the setting should have.",
-                required=True,
-                example="5000",
-            ),
-            "description": fields.String(
-                title="Setting description",
-                description="Description of the plugin setting.",
-                required=True,
-                example="The memory budget to target for the Compression...",
-            ),
-        },
-    ),
+    {
+        "name": fields.String(
+            title="Setting name",
+            description="Name of the setting that shall be set.",
+            required=True,
+            example="CompressionPlugin_MemoryBudget",
+        ),
+        "value": fields.String(
+            title="Setting value",
+            description="Value the setting should have.",
+            required=True,
+            example="5000",
+        ),
+    },
+)
+
+model_get_plugin_setting = control.clone(
+    "Get Plugin Setting",
+    model_plugin_setting,
+    {
+        "description": fields.String(
+            title="Setting description",
+            description="Description of the plugin setting.",
+            required=True,
+            example="The memory budget to target for the Compression...",
+        ),
+    },
 )
 
 
@@ -906,11 +910,21 @@ class Plugin(Resource):
 class PluginSettings(Resource):
     """Set settings for plugins."""
 
+    @control.doc(model=model_get_plugin_setting)
+    def get(self) -> Dict:
+        """Read settings for plugins."""
+        message = {
+            "header": {"message": "get plugin setting"},
+            "body": {},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
     @control.doc(body=model_plugin_setting)
     def post(self) -> Dict:
-        """Set settings for pugins."""
+        """Set settings for plugins."""
         message = {
-            "header": {"message": "Set plugin setting"},
+            "header": {"message": "set plugin setting"},
             "body": {
                 "id": control.payload["id"],
                 "name": control.payload["name"],
