@@ -93,6 +93,6 @@ class TestCursor:
         cursor._connection = MagicMock()
         cursor._connection.write_points.return_value = None
         cursor.log_meta_information(measurement, fields, time_stamp)
-        cursor._connection.write_point.assert_called_once_with(
-            expected_point, database="database"
+        cursor._connection.write_points.assert_called_once_with(
+            [expected_point], database="database"
         )
