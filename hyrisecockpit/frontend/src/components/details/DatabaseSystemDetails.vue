@@ -56,7 +56,7 @@
         </v-row>
         <v-row no-gutters>
           <v-col class="entry">
-            <v-icon left> mdi-worker</v-icon>
+            <v-icon left> mdi-account-hard-hat </v-icon>
             <b>Number of workers:</b>
           </v-col>
           <v-col class="entry">

@@ -42,7 +42,7 @@ table_names: Dict[str, List[str]] = {
         "aka_name",
         "char_name",
         "comp_cast_type",
-        "keyword.bin",
+        "keyword",
         "movie_companies",
         "movie_keyword",
         "person_info",
@@ -62,14 +62,4 @@ table_names: Dict[str, List[str]] = {
         "title",
     ],
     "no-ops": [],
-    "mixed": [
-        "customer",
-        "lineitem",
-        "nation",
-        "orders",
-        "part",
-        "partsupp",
-        "region",
-        "supplier",
-    ],
 }
