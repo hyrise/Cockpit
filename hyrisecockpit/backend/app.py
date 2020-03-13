@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from json import loads
 from time import time_ns
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Union
 
 from flask import Flask
 from flask_cors import CORS
@@ -407,7 +407,7 @@ def _send_message(socket: Socket, message: Dict) -> Response:
     return response
 
 
-def _active_databases():
+def _active_databases() -> List[str]:
     """Get a list of active databases."""
     response: Response = _send_message(
         db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
@@ -455,24 +455,23 @@ class DetailedThroughput(Resource):
     """Detailed throughput information of all databases."""
 
     @monitor.doc(model=[model_detailed_throughput])
-    def get(self) -> Union[int, List[Dict[str, List]]]:
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        throughput: List[Dict[str, int]]
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
-        response = []
+        response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
-            throughput = [
+            throughput: List[Dict[str, int]] = [
                 {
                     "benchmark": tags["benchmark"],
                     "query_number": tags["query_no"],
@@ -489,24 +488,23 @@ class DetailedLatency(Resource):
     """Detailed throughput information of all databases."""
 
     @monitor.doc(model=[model_detailed_latency])
-    def get(self) -> Union[int, List[Dict[str, List]]]:
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        latency: List[Dict[str, int]]
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
-        response = []
+        response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
-            latency = [
+            latency: List[Dict[str, int]] = [
                 {
                     "benchmark": tags["benchmark"],
                     "query_number": tags["query_no"],
