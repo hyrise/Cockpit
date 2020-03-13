@@ -33,7 +33,7 @@ class Database(object):
         """Initialize database object."""
         self._id = id
         self.number_workers = number_workers
-        self._number_additional_connections = 1
+        self._number_additional_connections = 50
         self.driver = Driver(
             user,
             password,
@@ -61,6 +61,7 @@ class Database(object):
             workload_publisher_url,
             self._database_blocked,
         )
+        self._background_scheduler.start()
         self._worker_pool.start()
 
     def get_queue_length(self) -> int:

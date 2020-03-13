@@ -4,7 +4,7 @@ from json import dumps
 from multiprocessing import Process, Value
 from secrets import randbelow
 from time import time_ns
-from typing import Dict, List, Optional, Tuple
+from typing import Dict
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -240,17 +240,13 @@ class BackgroundJobManager(object):
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
 
-    def _generate_table_loading_queries(
-        self, table_names, folder_name: str
-    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
+    def _generate_table_loading_queries(self, table_names, folder_name: str):
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
-                "system",
-                "generate table query",
             )
             for name in table_names
         ]
@@ -258,8 +254,8 @@ class BackgroundJobManager(object):
     def _execute_queries(self, queries):
         with PoolCursor(self._connection_pool) as cur:
             for query in queries:
-                query_tuple, benchmark, query_no = query
-                query, not_formatted_parameters = query_tuple
+                print(query)
+                query, not_formatted_parameters = query
                 formatted_parameters = (
                     tuple(
                         AsIs(parameter) if protocol == "as_is" else parameter
@@ -272,12 +268,14 @@ class BackgroundJobManager(object):
 
     def _load_tables_job(self, table_names, folder_name):
         self._database_blocked.value = True
-        table_loading_queries = self.generate_table_loading_queries(
+        table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
         )
         processes = []
         for i in range(len(table_loading_queries)):
-            p = Process(target=self._execute_queries, args=(table_loading_queries[i]))
+            p = Process(
+                target=self._execute_queries, args=([table_loading_queries[i]],)
+            )
             processes.append(p)
             p.start()
         for process in processes:
@@ -288,6 +286,7 @@ class BackgroundJobManager(object):
     def load_tables(self, folder_name) -> bool:
         """Load tables."""
         table_names = _table_names.get(folder_name.split("_")[0])
+
         if not self._database_blocked.value:
             self._scheduler.add_job(
                 func=self._load_tables_job, args=(table_names, folder_name)
@@ -311,13 +310,11 @@ class BackgroundJobManager(object):
                 not_existing_tables.append(name)
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_drop_queries(
-        self, table_names, folder_name: str
-    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
+    def _generate_table_drop_queries(self, table_names, folder_name: str):
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
-            ("DROP TABLE %s;", ((name, "as_is"),), "system", "drop table query")
+            ("DROP TABLE %s;", ((name, "as_is"),),)
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
@@ -326,7 +323,7 @@ class BackgroundJobManager(object):
         table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
         processes = []
         for i in range(len(table_drop_queries)):
-            p = Process(target=self._execute_queries, args=(table_drop_queries[i]))
+            p = Process(target=self._execute_queries, args=([table_drop_queries[i]],))
             processes.append(p)
             p.start()
         for process in processes:
