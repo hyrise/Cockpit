@@ -3,6 +3,7 @@
 Workers run in pools and are started by other components.
 """
 from multiprocessing import Queue, Value
+from queue import Empty
 from time import time_ns
 from typing import List, Tuple
 
@@ -36,10 +37,10 @@ def fill_queue(
     while True:
         published_data = sub_socket.recv_json()
         if not continue_execution_flag.value:
-            handle_published_data(published_data, task_queue)
-        else:
             i_am_done_event.set()
             continue_event.wait()
+        else:
+            handle_published_data(published_data, task_queue)
 
 
 def handle_published_data(published_data, task_queue) -> None:
@@ -89,7 +90,7 @@ def execute_queries(
                         last_batched = time_ns()
                         log.log_queries(succesful_queries)
                         succesful_queries = []
-                except Queue.Empty:  # type: ignore
+                except Empty:
                     pass
                 except (ValueError, Error) as e:
                     failed_task_queue.put(

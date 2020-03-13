@@ -27,13 +27,13 @@ class WorkerPool(object):
 
     def _generate_execute_task_worker_done_events(self):
         worker_done_event = []
-        for _ in range(self.number_workers):
+        for _ in range(self._number_worker):
             worker_done_event.append(Event())
         return worker_done_event
 
     def _generate_execute_task_worker(self):
         workers = []
-        for i in range(self.number_workers):
+        for i in range(self._number_worker):
             p = Process(
                 target=execute_queries,
                 args=(
@@ -54,7 +54,7 @@ class WorkerPool(object):
         subscriber_process = Process(
             target=fill_queue,
             args=(
-                self.workload_publisher_url,
+                self._workload_publisher_url,
                 self._task_queue,
                 self._continue_execution_flag,
                 self._fill_task_worker_done_event,
