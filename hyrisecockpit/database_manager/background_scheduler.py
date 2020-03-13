@@ -120,18 +120,9 @@ class BackgroundJobManager(object):
         chunks_data = {}
         if not meta_segments.empty:
             new_chunks_data = self._create_chunks_dictionary(meta_segments)
-            chunks_data = deepcopy(new_chunks_data)
-            for table_name in chunks_data.keys():
-                if table_name in self._previous_chunks_data.keys():
-                    for column_name in chunks_data[table_name].keys():
-                        if column_name in self._previous_chunks_data[table_name].keys():
-                            chunks_data[table_name][column_name] = [
-                                chunks_data[table_name][column_name][i]
-                                - self._previous_chunks_data[table_name][column_name][i]
-                                for i in range(
-                                    len(chunks_data[table_name][column_name])
-                                )
-                            ]
+            chunks_data = self._calculate_chunks_difference(
+                deepcopy(new_chunks_data), self._previous_chunks_data
+            )
             self._previous_chunks_data = new_chunks_data
 
         with StorageCursor(
@@ -146,6 +137,19 @@ class BackgroundJobManager(object):
                 {"chunks_data_meta_information": dumps(chunks_data)},
                 time_stamp,
             )
+
+    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
+        """Calculate difference base - substractor."""
+        for table_name in base.keys():
+            if table_name in substractor.keys():
+                for column_name in base[table_name].keys():
+                    if column_name in substractor[table_name].keys():
+                        base[table_name][column_name] = [
+                            base[table_name][column_name][i]
+                            - substractor[table_name][column_name][i]
+                            for i in range(len(base[table_name][column_name]))
+                        ]
+        return base
 
     def _create_chunks_dictionary(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
@@ -272,12 +276,12 @@ class BackgroundJobManager(object):
                 SUM(point_accesses) + SUM(sequential_accesses) + SUM(monotonic_accesses) + SUM(random_accesses) as access_counter
                 FROM meta_segments
                 GROUP BY table_name, column_name;"""
-        meta_segments = self._read_meta_segments(sql).set_index(
-            ["table_name", "column_name"]
-        )
+        meta_segments = self._read_meta_segments(sql)
 
         if meta_segments.empty:
             self._access_data = {}
+        else:
+            meta_segments = meta_segments.set_index(["table_name", "column_name"])
 
         access_dict = meta_segments.to_dict("index")
         for table, column in self._access_data.keys():
