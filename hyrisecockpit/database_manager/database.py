@@ -309,13 +309,23 @@ class Database(object):
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     (
-                        "UPDATE meta_settings SET value=%s WHERE name=%s;",
+                        ("UPDATE meta_settings SET value=%s WHERE name=%s;"),
                         ((value), (name)),
                     )
                 )
             return True
         else:
             return False
+
+    def get_plugin_setting(self) -> Optional[Dict]:
+        """Read currently set plugin settings."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(("SELECT * FROM meta_settings",), ())
+                result = cur.fetchall()
+            return result
+        else:
+            return None
 
     def close(self) -> None:
         """Close the database."""

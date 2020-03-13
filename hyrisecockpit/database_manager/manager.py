@@ -229,7 +229,17 @@ class DatabaseManager(object):
         return response
 
     def _call_read_plugin_setting(self, body: Dict) -> Dict:
-        pass
+        id: str = body["id"]
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].get_plugin_setting():
+            response = get_response(200)
+            response["body"]["plugin_settings"] = self._databases[
+                id
+            ].get_plugin_setting()
+        else:
+            response = get_response(423)
+        return response
 
     def _check_if_processing_table(self) -> bool:
         processing_table_data = False

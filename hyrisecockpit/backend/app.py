@@ -915,7 +915,7 @@ class PluginSettings(Resource):
         """Read settings for plugins."""
         message = {
             "header": {"message": "get plugin setting"},
-            "body": {},
+            "body": {"id": control.payload["id"]},
         }
         response = _send_message(db_manager_socket, message)
         return response
