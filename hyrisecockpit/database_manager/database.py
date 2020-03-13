@@ -303,14 +303,14 @@ class Database(object):
         else:
             return False
 
-    def set_plugin_setting(self, name: str, value: str, description: str) -> bool:
+    def set_plugin_setting(self, name: str, value: str) -> bool:
         """Adjust setting for given plugin."""
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     (
-                        "INSERT INTO meta_settings(name, value, description) VALUES %s, %s, %s;",
-                        ((name), (value), (description)),
+                        "UPDATE meta_settings SET value=%s WHERE name=%s;",
+                        ((value), (name)),
                     )
                 )
             return True
