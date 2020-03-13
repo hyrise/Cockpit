@@ -90,9 +90,9 @@ class StorageCursor:
         points = [
             {
                 "measurement": "plugin_log",
-                "tags": {"timestamp": plugin_log[0], "reporter": plugin_log[1]},
-                "fields": {"message": plugin_log[2]},
-                "time": plugin_log[0],
+                "tags": {"timestamp": row[0], "reporter": row[1]},
+                "fields": {"message": row[2]},
+                "time": row[0],
             }
             for row in plugin_log
         ]
