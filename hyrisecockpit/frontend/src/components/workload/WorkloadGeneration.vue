@@ -29,20 +29,20 @@
               outlined
               dense
             ></v-text-field>
-
             <v-radio-group v-model="workload" class="mt-0">
               <v-radio
                 v-for="workload in availableWorkloads"
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
+                :disabled="!isLoaded(workload)"
               >
               </v-radio>
             </v-radio-group>
             <v-btn-toggle>
               <v-btn
                 @click="startingWorkload(workload, frequency)"
-                :disabled="buttonIsLoading.start"
+                :disabled="buttonIsLoading.start || !isLoaded(workload)"
                 :loading="buttonIsLoading.start"
                 v-bind:style="{ color: (isActive = 'green') }"
               >
@@ -52,7 +52,7 @@
               </v-btn>
               <v-btn
                 @click="pauseWorkload(workload)"
-                :disabled="buttonIsLoading.pause"
+                :disabled="buttonIsLoading.pause || !isLoaded(workload)"
                 :loading="buttonIsLoading.pause"
                 v-bind:style="{ color: (isActive = 'blue') }"
               >
@@ -62,7 +62,7 @@
               </v-btn>
               <v-btn
                 @click="stoppingWorkload()"
-                :disabled="buttonIsLoading.stop"
+                :disabled="buttonIsLoading.stop || !isLoaded(workload)"
                 :loading="buttonIsLoading.stop"
                 v-bind:style="{ color: (isActive = 'red') }"
               >
@@ -111,18 +111,17 @@ interface Props {
   open: boolean;
 }
 interface Data {
-  isActive: Ref<boolean>;
-  buttonIsLoading: any[];
   availableWorkloads: string[];
   frequency: Ref<number>;
-  startedWorkload: Ref<boolean>;
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
+  buttonIsLoading: any[];
   getDisplayedWorkload: (workload: Workload) => string;
   startingWorkload: (workload: Workload, frequency: number) => void;
-  handleFrequencyChange: (workload: Workload, frequency: number) => void;
   pauseWorkload: (workload: Workload) => void;
   stoppingWorkload: () => void;
+  isLoaded: (workload: Workload) => boolean;
+  handleFrequencyChange: (workload: Workload, frequency: number) => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
@@ -146,7 +145,7 @@ export default defineComponent({
       stop: false
     });
     const frequency = ref<number>(200);
-    const workload = ref<Workload>("tpch01");
+    const workload = ref<Workload>("");
     const {
       getWorkloadData,
       loadWorkloadData,
@@ -185,6 +184,9 @@ export default defineComponent({
         isActive.value = true;
       });
     }
+    function isLoaded(workload: Workload): boolean {
+      return workloadData.value.includes(workload);
+    }
     function handleFrequencyChange(
       workload: Workload,
       frequency: number
@@ -195,7 +197,7 @@ export default defineComponent({
     }
     function handleWorkloadDataChange(workload: Workload): void {
       buttonIsLoading["load" + workload] = true;
-      if (workloadData.value.includes(workload)) {
+      if (isLoaded(workload)) {
         loadWorkloadData(workload).then(() => {
           buttonIsLoading["load" + workload] = false;
         });
@@ -207,18 +209,18 @@ export default defineComponent({
     }
     return {
       availableWorkloads,
-      getDisplayedWorkload,
       frequency,
       workload,
       workloadData,
+      buttonIsLoading,
+      getDisplayedWorkload,
       startingWorkload,
       pauseWorkload,
       stoppingWorkload,
-      startedWorkload,
+      isLoaded,
       handleFrequencyChange,
       handleWorkloadDataChange,
-      closeWorkloadDialog,
-      buttonIsLoading
+      closeWorkloadDialog
     };
   }
 });
