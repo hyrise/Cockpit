@@ -318,7 +318,7 @@ class Database(object):
         """Read currently set plugin settings."""
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute(("SELECT * FROM meta_settings",), ())
+                cur.execute("SELECT * FROM meta_settings", None)
                 result = cur.fetchall()
             return result
         else:
