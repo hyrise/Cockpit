@@ -47,7 +47,7 @@ class Database(object):
         self._database_blocked = Value("b", False)
         self._background_scheduler = BackgroundJobManager(
             self._id,
-            self._processing_tables_flag,
+            self._database_blocked,
             self._connection_pool,
             storage_host,
             storage_password,
@@ -73,7 +73,7 @@ class Database(object):
 
     def load_data(self, folder_name: str):
         """Load pregenerated tables."""
-        return True
+        return self._background_scheduler.load_tables(folder_name)
 
     def delete_data(self, folder_name: str):
         """Delete tables."""

@@ -1,17 +1,19 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
 from json import dumps
-from multiprocessing import Value
+from multiprocessing import Process, Value
 from secrets import randbelow
 from time import time_ns
-from typing import Dict
+from typing import Dict, List, Optional, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 from psycopg2 import pool
+from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
+from .table_names import table_names as _table_names
 
 
 class BackgroundJobManager(object):
@@ -20,7 +22,7 @@ class BackgroundJobManager(object):
     def __init__(
         self,
         database_id: str,
-        processing_tables_flag: Value,
+        database_blocked: Value,
         connection_pool: pool,
         storage_host: str,
         storage_password: str,
@@ -29,7 +31,7 @@ class BackgroundJobManager(object):
     ):
         """Initialize BackgroundJobManager object."""
         self._database_id = database_id
-        self._processing_tables_flag = processing_tables_flag
+        self._database_blocked = database_blocked
         self._connection_pool = connection_pool
         self._storage_host = storage_host
         self._storage_password = storage_password
@@ -96,7 +98,7 @@ class BackgroundJobManager(object):
             )
 
     def _read_meta_segments(self, sql) -> DataFrame:
-        if self._processing_tables_flag.value:
+        if self._database_blocked.value:
             return DataFrame({"foo": []})  # TODO remove foo
         else:
             with PoolCursor(self._connection_pool) as cur:
@@ -237,3 +239,59 @@ class BackgroundJobManager(object):
             log.log_meta_information(
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
+
+    def _generate_table_loading_queries(
+        self, table_names, folder_name: str
+    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
+        """Generate queries in tuple form that load tables."""
+        # TODO change absolute to relative path
+        return [
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+                "system",
+                "generate table query",
+            )
+            for name in table_names
+        ]
+
+    def _execute_queries(self, queries):
+        with PoolCursor(self._connection_pool) as cur:
+            for query in queries:
+                query_tuple, benchmark, query_no = query
+                query, not_formatted_parameters = query_tuple
+                formatted_parameters = (
+                    tuple(
+                        AsIs(parameter) if protocol == "as_is" else parameter
+                        for parameter, protocol in not_formatted_parameters
+                    )
+                    if not_formatted_parameters is not None
+                    else None
+                )
+                cur.execute(query, formatted_parameters)
+
+    def _load_tables(self, table_names, folder_name):
+        self._database_blocked.value = True
+        table_loading_queries = self.generate_table_loading_queries(
+            table_names, folder_name
+        )
+        processes = []
+        for i in range(len(table_loading_queries)):
+            p = Process(target=self._execute_queries, args=(table_loading_queries[i]))
+            processes.append(p)
+            p.start()
+        for process in processes:
+            process.join()
+            process.terminate()
+        self._database_blocked.value = False
+
+    def load_tables(self, folder_name) -> bool:
+        """Load tables."""
+        table_names = _table_names.get(folder_name.split("_")[0])
+        if not self._database_blocked.value:
+            self._load_tables_job = self._scheduler.add_job(
+                func=self._load_tables, args=(table_names, folder_name)
+            )
+            return True
+        else:
+            return False
