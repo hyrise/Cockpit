@@ -143,10 +143,10 @@ class BackgroundJobManager(object):
         """Update system data for database instance."""
         time_stamp = time_ns()
 
-        system_utilization_sql = """SELECT * FROM meta_system_utilization;"""
+        system_utilization_sql = "SELECT * FROM meta_system_utilization;"
         utilization_segments = self._read_meta_segments(system_utilization_sql)
 
-        system_information_sql = """SELECT * FROM meta_system_information;"""
+        system_information_sql = "SELECT * FROM meta_system_information;"
         system_segments = self._read_meta_segments(system_information_sql)
 
         if utilization_segments.empty or system_segments.empty:
