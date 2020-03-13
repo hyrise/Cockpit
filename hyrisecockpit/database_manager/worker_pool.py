@@ -7,11 +7,14 @@ from .worker import execute_queries, fill_queue
 class WorkerPool(object):
     """Represents WorkerPool."""
 
-    def __init__(self, connection_pool, number_worker, database_id):
+    def __init__(
+        self, connection_pool, number_worker, database_id, workload_publisher_url
+    ):
         """Initialize WorkerPool object."""
         self._connection_pool = connection_pool
         self._number_worker = number_worker
         self._database_id = database_id
+        self._workload_publisher_url = workload_publisher_url
         self._status = "closed"
         self._continue_execution_flag = Value("b", True)
         self._execute_task_workers = []
@@ -115,6 +118,13 @@ class WorkerPool(object):
             self._wait_for_worker()
             self._terminate_worker()
             self._status == "closed"
+
+    def terminate(self):
+        """Terminates worker."""
+        self._terminate_worker()
+        self._task_queue.close()
+        self._failed_task_queue.close()
+        self._status == "closed"
 
     def get_status(self):
         """Return status of pool."""

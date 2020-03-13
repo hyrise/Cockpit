@@ -1,17 +1,15 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Process, Queue, Value
-from typing import Callable, Dict, List, Optional, Tuple
+from multiprocessing import Value
+from typing import List, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor
 from .driver import Driver
-from .table_names import table_names as _table_names
-from .worker import execute_queries, fill_queue
+from .worker_pool import WorkerPool
 
 
 class Database(object):
@@ -49,20 +47,9 @@ class Database(object):
 
         self._connection_pool = self.driver.get_connection_pool()
         self._scheduler = BackgroundScheduler()
-
-        self._task_queue: Queue = Queue(0)
-        self._failed_task_queue: Queue = Queue(0)
+        self._processing_tables_flag = Value("b", False)
 
         self.workload_publisher_url: str = workload_publisher_url
-
-        self._worker_stay_alive_flag = Value("b", True)
-        self._processing_tables_flag = Value("b", False)
-        self._worker_pool: pool = self._init_worker_pool()
-        self._subscriber_worker = self._init_subscriber_worker()
-
-        self._start_workers()
-
-        self.load_data(self._default_tables)
 
         self._background_scheduler = BackgroundJobManager(
             self._id,
@@ -75,199 +62,17 @@ class Database(object):
         )
         self._background_scheduler.start()
         self._scheduler.start()
-
-    def _init_subscriber_worker(self) -> Process:
-        subscriber_process = Process(
-            target=fill_queue,
-            args=(
-                self.workload_publisher_url,
-                self._task_queue,
-                self._processing_tables_flag,
-            ),
+        self._worker_pool = WorkerPool(
+            self._connection_pool,
+            self.number_workers,
+            self._id,
+            self.workload_publisher_url,
         )
-        return subscriber_process
-
-    def _init_worker_pool(self) -> pool:
-        """Initialize a pool of workers."""
-        self._worker_stay_alive_flag.value = True
-        worker_pool = []
-        for i in range(self.number_workers):
-            p = Process(
-                target=execute_queries,
-                args=(
-                    i,
-                    self._task_queue,
-                    self._connection_pool,
-                    self._failed_task_queue,
-                    self._worker_stay_alive_flag,
-                    self._id,
-                ),
-            )
-            worker_pool.append(p)
-        return worker_pool
-
-    def disable_workload_execution(self) -> bool:
-        """Disable execution of the workload."""
-        if not self._processing_tables_flag.value:
-            self._processing_tables_flag.value = True
-            self._flush_queue()
-            self._processing_tables_flag.value = False
-            return True
-        else:
-            return False
-
-    def _start_workers(self) -> None:
-        """Start all workers in pool."""
-        self._worker_stay_alive_flag.value = True
-        self._subscriber_worker.start()
-        for i in range(len(self._worker_pool)):
-            self._worker_pool[i].start()
-
-    def _shutdown_workers(self) -> None:
-        """Shutdown all task execution workers."""
-        self._worker_stay_alive_flag.value = False
-        # If the queue is empty we need to wake up the workers
-        self._subscriber_worker.terminate()
-        self._task_queue.put("wake_up_signal_for_worker")
-        for worker in self._worker_pool:
-            worker.join()
-            worker.terminate()
-        self._worker_pool[:] = []
-
-    def _flush_queue(self, default_init_tasks=None) -> None:
-        """Flush queue."""
-        self._shutdown_workers()
-        self._task_queue = Queue(0)
-        if default_init_tasks is not None:
-            for task in default_init_tasks:
-                self._task_queue.put(task)
-        self._subscriber_worker = self._init_subscriber_worker()
-        self._worker_pool = self._init_worker_pool()
-        self._start_workers()
-
-    def _get_existing_tables(self, table_names) -> Dict:
-        """Check wich tables exists and which not."""
-        existing_tables = []
-        not_existing_tables = []
-        with PoolCursor(self._connection_pool) as cur:
-            for name in table_names:
-                cur.execute(
-                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
-                )
-                if cur.fetchone():
-                    existing_tables.append(name)
-                    continue
-                not_existing_tables.append(name)
-        return {"existing": existing_tables, "not_existing": not_existing_tables}
-
-    def _generate_table_loading_queries(
-        self, table_names, folder_name: str
-    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
-        """Generate queries in tuple form that load tables."""
-        # TODO change absolute to relative path
-        return [
-            (
-                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
-                "system",
-                "generate table query",
-            )
-            for name in table_names
-        ]
-
-    def _generate_table_drop_queries(
-        self, table_names, folder_name: str
-    ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
-        # TODO folder_name is unused? This deletes all tables
-        """Generate queries in tuple form that drop tables."""
-        return [
-            ("DROP TABLE %s;", ((name, "as_is"),), "system", "drop table query")
-            for name in self._get_existing_tables(table_names)["existing"]
-        ]
-
-    def _check_if_tables_processed(self, table_loading_tasks) -> None:
-        """Check if all table processing task are taken from the queue and if so flushes it."""
-        if not self._processing_tables_flag.value:
-            self._processing_tables_flag.value = True
-            self._flush_queue(table_loading_tasks)
-        if self._task_queue.empty():
-            self._flush_queue()
-            self._processing_tables_flag.value = False
-            self._check_if_tables_processed_job.remove()
-
-    def _start_table_processing_parallel(self, table_loading_tasks) -> None:
-        """Flush queue and initialize it with table processing queries."""
-        self._check_if_tables_processed_job = self._scheduler.add_job(
-            func=self._check_if_tables_processed,
-            args=(table_loading_tasks,),
-            trigger="interval",
-            seconds=0.2,
-        )
-
-    def _start_table_processing_sequential(self, table_loading_tasks) -> None:
-        """Flush queue and initialize it with table processing queries."""
-        self._processing_tables_flag.value = True
-        self._flush_queue()
-        with PoolCursor(self._connection_pool) as cur:
-            for task in table_loading_tasks:
-                query_tuple, benchmark, query_no = task
-                query, not_formatted_parameters = query_tuple
-                formatted_parameters = (
-                    tuple(
-                        AsIs(parameter) if protocol == "as_is" else parameter
-                        for parameter, protocol in not_formatted_parameters
-                    )
-                    if not_formatted_parameters is not None
-                    else None
-                )
-                cur.execute(query, formatted_parameters)
-        self._flush_queue()
-        self._processing_tables_flag.value = False
-
-    def _process_tables(
-        self, table_action: Callable, folder_name: str, processing_action: Callable
-    ) -> bool:
-        """Process changes on tables by taking a generic function which creates table processing queries."""
-        table_names = _table_names.get(folder_name.split("_")[0])
-        if table_names is None:
-            return False
-
-        table_loading_tasks = table_action(table_names, folder_name)
-        if len(table_loading_tasks) == 0:
-            return True
-        processing_action(table_loading_tasks)
-        return True
-
-    def load_data(self, folder_name: str) -> bool:
-        """Load pregenerated tables."""
-        return self._process_tables(
-            self._generate_table_loading_queries,
-            folder_name,
-            self._start_table_processing_parallel,
-        )
-
-    def delete_data(self, folder_name: str) -> bool:
-        """Delete tables."""
-        return self._process_tables(
-            self._generate_table_drop_queries,
-            folder_name,
-            self._start_table_processing_parallel,
-        )
-
-    def get_processing_tables_flag(self) -> bool:
-        """Return tables loading flag."""
-        return self._processing_tables_flag.value
+        self._worker_pool.start()
 
     def get_queue_length(self) -> int:
         """Return queue length."""
-        return self._task_queue.qsize()
-
-    def get_failed_tasks(self) -> List:
-        """Return faild tasks."""
-        failed_task = []
-        while not self._failed_task_queue.empty():
-            failed_task.append(self._failed_task_queue.get())
-        return failed_task
+        return 100
 
     def get_plugins(self) -> Optional[List]:
         """Return all currently activated plugins."""
@@ -311,15 +116,11 @@ class Database(object):
         self._background_scheduler.close()
 
         # Close the scheduler
+        self._worker_pool.terminate()
         self._scheduler.shutdown()
         # Close subscriber worker
-        self._subscriber_worker.terminate()
         # Close worker pool
-        for i in range(len(self._worker_pool)):
-            self._worker_pool[i].terminate()
-
         # Close connections
         self._connection_pool.closeall()
 
         # Close queue
-        self._task_queue.close()
