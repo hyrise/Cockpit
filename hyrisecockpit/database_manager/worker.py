@@ -25,7 +25,6 @@ def fill_queue(
     workload_publisher_url: str,
     task_queue: Queue,
     continue_execution_flag: Value,
-    i_am_done_event,
     continue_event,
 ) -> None:
     """Fill the queue."""
@@ -37,7 +36,6 @@ def fill_queue(
     while True:
         published_data = sub_socket.recv_json()
         if not continue_execution_flag.value:
-            i_am_done_event.set()
             continue_event.wait()
         else:
             handle_published_data(published_data, task_queue)

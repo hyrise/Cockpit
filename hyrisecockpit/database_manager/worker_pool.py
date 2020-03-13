@@ -28,7 +28,6 @@ class WorkerPool(object):
         self._execute_task_workers = []
         self._execute_task_worker_done_event = []
         self._fill_task_worker = None
-        self._fill_task_worker_done_event = None
         self._worker_continue_event = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
@@ -67,7 +66,6 @@ class WorkerPool(object):
                 self._workload_publisher_url,
                 self._task_queue,
                 self._continue_execution_flag,
-                self._fill_task_worker_done_event,
                 self._worker_continue_event,
             ),
         )
@@ -80,7 +78,6 @@ class WorkerPool(object):
             )
             self._execute_task_workers = self._generate_execute_task_worker()
         if not self._fill_task_worker:
-            self._fill_task_worker_done_event = Event()
             self._fill_task_worker = self._generate_fill_task_worker()
 
     def _terminate_worker(self):
@@ -89,7 +86,6 @@ class WorkerPool(object):
         for i in range(self._number_worker):
             self._execute_task_workers[i].terminate()
         self._execute_task_workers = []
-        self._fill_task_worker_done_event = []
         self._worker_continue_event = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
@@ -103,7 +99,6 @@ class WorkerPool(object):
     def _wait_for_all_worker(self):
         self._worker_continue_event.clear()
         self._continue_execution_flag.value = False
-        self._fill_task_worker_done_event.wait()
         for i in range(self._number_worker):
             self._execute_task_worker_done_event[i].wait()
 
