@@ -375,6 +375,41 @@ modelhelper_plugin = fields.String(
     example="Clustering",
 )
 
+model_plugin_log = control.clone(
+    "Plugin Log",
+    model_database,
+    {
+        "plugin_log": fields.List(
+            fields.Nested(
+                control.model(
+                    "Plugin Log Entry",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds.",
+                            required=True,
+                            example=1583847966784,
+                        ),
+                        "reporter": fields.String(
+                            title="Reporter",
+                            description="Plugin reporting to the log.",
+                            required=True,
+                            example="CompressionPlugin",
+                        ),
+                        "message": fields.String(
+                            title="Message",
+                            description="Message logged.",
+                            required=True,
+                            example="No optimization possible with given parameters!",
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_get_all_plugins = control.model(
     "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
 )
@@ -876,12 +911,13 @@ class Plugin(Resource):
 class PluginLog(Resource):
     """Activate, Deactive Plugins, respectively show which ones are activated."""
 
+    @api.doc(model=[model_plugin_log])
     def get(self) -> List[Dict[str, Union[str, List[Dict[str, Union[str, int]]]]]]:
         """Return activated plugins in each database."""
         return [
             {
                 "id": database,
-                "access_data": [
+                "plugin_log": [
                     {
                         "timestamp": row["timestamp"],
                         "reporter": row["reporter"],
