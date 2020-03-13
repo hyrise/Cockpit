@@ -33,6 +33,10 @@ class PoolCursor:
         """Fetch one."""
         return self.cur.fetchone()
 
+    def fetchall(self):
+        """Fetch all."""
+        return self.cur.fetchall()
+
 
 class StorageCursor:
     """Context Manager for a connection to log queries persistently."""
