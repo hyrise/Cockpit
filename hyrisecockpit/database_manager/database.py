@@ -284,7 +284,7 @@ class Database(object):
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     (
-                        "INSERT INTO meta_plugins(name) VALUES ('usr/local/hyrise/lib/lib%sPlugin.so');"
+                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
                     ),
                     (AsIs(plugin),),
                 )
