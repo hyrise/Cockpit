@@ -926,7 +926,7 @@ class PluginSettings(Resource):
             "body": {
                 "id": control.payload["id"],
                 "name": control.payload["name"],
-                "value": control.payload["name"],
+                "value": control.payload["value"],
             },
         }
         response = _send_message(db_manager_socket, message)
