@@ -9,7 +9,7 @@ from jsonschema import ValidationError, validate
 from zmq import REP, Context
 
 from hyrisecockpit.message import request_schema
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import Response, get_response
 
 
 class Server:
@@ -19,9 +19,7 @@ class Server:
         self,
         host: str,
         port: str,
-        calls: Dict[
-            str, Tuple[Callable[[Dict[str, Any]], Dict[str, Any]], Optional[Dict]]
-        ],
+        calls: Dict[str, Tuple[Callable[[Dict[str, Any]], Response], Optional[Dict]]],
         io_threads: int = 1,
     ):
         """Initialize a Server with a host, port and calls."""
