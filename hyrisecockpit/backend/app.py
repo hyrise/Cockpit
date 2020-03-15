@@ -239,7 +239,6 @@ model_process_table_status = monitor.clone(
     },
 )
 
-
 model_data = control.model(
     "Data",
     {
