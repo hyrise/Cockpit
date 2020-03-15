@@ -4,7 +4,7 @@ from json import dumps
 from multiprocessing import Value
 from secrets import randbelow
 from time import time_ns
-from typing import Dict
+from typing import Dict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -142,24 +142,31 @@ class BackgroundJobManager(object):
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
         time_stamp = time_ns()
-        # mocked cpu data
-        cpu_data = [randbelow(1001) / 10 for _ in range(16)]
-        # mocked memory data
-        total_memory = 32 * (1024 ** 3)
-        used_memory = randbelow(total_memory)
-        available_memory = total_memory - used_memory
-        memory_data = {
-            "available": available_memory,
-            "used": used_memory,
-            "cached": 4237438976,
-            "percent": used_memory / total_memory,
-            "free": 5536755712,
-            "inactive": 2687451136,
-            "active": 3657117696,
-            "shared": 1149366272,
-            "total": total_memory,
-            "buffers": 169537536,
+
+        system_utilization_sql = "SELECT * FROM meta_system_utilization;"
+        utilization_segments = self._read_meta_segments(system_utilization_sql)
+
+        system_information_sql = "SELECT * FROM meta_system_information;"
+        system_segments = self._read_meta_segments(system_information_sql)
+
+        if utilization_segments.empty or system_segments.empty:
+            return
+
+        cpu_data = {
+            "cpu_system_usage": float(utilization_segments["cpu_system_usage"][0]),
+            "cpu_process_usage": float(utilization_segments["cpu_process_usage"][0]),
+            "cpu_count": int(system_segments["cpu_count"][0]),
+            "cpu_clock_speed": int(system_segments["cpu_clock_speed"][0]),
         }
+        memory_data: Dict[str, Union[int, float]] = {
+            "free": int(utilization_segments["system_memory_free_bytes"][0]),
+            "used": int(utilization_segments["process_physical_memory_bytes"][0]),
+            "total": int(system_segments["system_memory_total_bytes"][0]),
+        }
+
+        memory_data["percent"] = memory_data["used"] / memory_data["total"]
+
+        database_threads = "8"
 
         with StorageCursor(
             self._storage_host,
@@ -171,7 +178,7 @@ class BackgroundJobManager(object):
             system_data = {
                 "cpu": dumps(cpu_data),
                 "memory": dumps(memory_data),
-                "database_threads": "8",
+                "database_threads": database_threads,
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
