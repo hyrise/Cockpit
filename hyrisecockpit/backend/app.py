@@ -6,7 +6,7 @@ If run as a module, a flask server application will be started.
 
 from json import loads
 from time import time_ns
-from typing import Dict, List, Union
+from typing import Any, Dict, List, Union
 
 from flask import Flask
 from flask_cors import CORS
@@ -16,7 +16,7 @@ from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
-from hyrisecockpit.response import get_error_response, get_response
+from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
     DB_MANAGER_PORT,
@@ -399,17 +399,17 @@ def get_all_databases(client: InfluxDBClient):
     return [d["name"] for d in client.get_list_database()]
 
 
-def _send_message(socket: Socket, message: Dict):
+def _send_message(socket: Socket, message: Dict) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
-    response = socket.recv_json()
+    response: Response = socket.recv_json()
     validate(instance=response, schema=response_schema)
     return response
 
 
-def _active_databases():
+def _active_databases() -> List[str]:
     """Get a list of active databases."""
-    response = _send_message(
+    response: Response = _send_message(
         db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
     )
     validate(instance=response["body"], schema=get_databases_response_schema)
@@ -421,7 +421,7 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    def get(self) -> Union[int, Dict[str, Dict[str, int]]]:
+    def get(self) -> Union[int, Response]:
         """Return throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
@@ -455,24 +455,23 @@ class DetailedThroughput(Resource):
     """Detailed throughput information of all databases."""
 
     @monitor.doc(model=[model_detailed_throughput])
-    def get(self) -> Union[int, List[Dict[str, List]]]:
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        throughput: List[Dict[str, int]]
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
-        response = []
+        response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
-            throughput = [
+            throughput: List[Dict[str, int]] = [
                 {
                     "benchmark": tags["benchmark"],
                     "query_number": tags["query_no"],
@@ -489,24 +488,23 @@ class DetailedLatency(Resource):
     """Detailed throughput information of all databases."""
 
     @monitor.doc(model=[model_detailed_latency])
-    def get(self) -> Union[int, List[Dict[str, List]]]:
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
         """Return detailed throughput information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        latency: List[Dict[str, int]]
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
-        response = []
+        response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
-            latency = [
+            latency: List[Dict[str, int]] = [
                 {
                     "benchmark": tags["benchmark"],
                     "query_number": tags["query_no"],
@@ -523,7 +521,7 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    def get(self) -> Union[int, Dict[str, Dict[str, float]]]:
+    def get(self) -> Union[int, Response]:
         """Return latency information from the stored queries."""
         currentts = time_ns()
         startts = currentts - 2_000_000_000
@@ -556,7 +554,7 @@ class QueueLength(Resource):
     """Queue length information of all databases."""
 
     @monitor.doc(model=[model_queue_length])
-    def get(self) -> Dict:
+    def get(self) -> Response:
         """Return queue length information from database manager."""
         return _send_message(
             db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
@@ -567,7 +565,7 @@ class QueueLength(Resource):
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
 
-    def get(self) -> Dict:
+    def get(self) -> Response:
         """Return queue length information from database manager."""
         return _send_message(
             db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
@@ -578,7 +576,7 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    def get(self) -> Union[int, Dict[str, Dict]]:
+    def get(self) -> Union[int, Response]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
         system: Dict[str, Dict] = {}
         try:
@@ -607,7 +605,7 @@ class System(Resource):
 class Chunks(Resource):
     """Chunks data information of all databases."""
 
-    def get(self) -> Union[int, Dict[str, Dict]]:
+    def get(self) -> Union[int, Response]:
         """Return chunks data information for every database."""
         chunks: Dict[str, Dict] = {}
         try:
@@ -634,7 +632,7 @@ class Storage(Resource):
     """Storage information of all databases."""
 
     # @control.doc(body=[model_storage]) # noqa
-    def get(self) -> Union[int, Dict[str, Dict]]:
+    def get(self) -> Union[int, Response]:
         """Return storage metadata from database manager."""
         storage: Dict[str, Dict] = {}
         try:
@@ -691,7 +689,7 @@ class ProcessTableStatus(Resource):
     """Process table status information of all databases."""
 
     @monitor.doc(model=[model_process_table_status])
-    def get(self) -> Dict:
+    def get(self) -> Response:
         """Return process table status for databases."""
         return _send_message(
             db_manager_socket,
@@ -704,14 +702,14 @@ class Database(Resource):
     """Manages databases."""
 
     @control.doc(model=[model_get_database])
-    def get(self) -> Dict:
+    def get(self) -> Response:
         """Get all databases."""
         message = {"header": {"message": "get databases"}, "body": {}}
         response = _send_message(db_manager_socket, message)
         return response["body"]["databases"]
 
     @control.doc(body=model_add_database)
-    def post(self) -> Dict:
+    def post(self) -> Response:
         """Add a database."""
         message = {
             "header": {"message": "add database"},
@@ -729,7 +727,7 @@ class Database(Resource):
         return response
 
     @control.doc(body=model_control_database)
-    def delete(self) -> Dict:
+    def delete(self) -> Response:
         """Delete a database."""
         message = {
             "header": {"message": "delete database"},
@@ -743,7 +741,7 @@ class Database(Resource):
 class Workload(Resource):
     """Manages workload generation."""
 
-    def post(self) -> Dict:
+    def post(self) -> Response:
         """Start the workload generator."""
         load_data_message = {
             "header": {"message": "load data"},
@@ -773,7 +771,7 @@ class Workload(Resource):
 
         return get_response(200)
 
-    def delete(self) -> Dict:
+    def delete(self) -> Response:
         """Stop the workload generator and empty database queues."""
         message = {
             "header": {"message": "stop workload"},
@@ -808,7 +806,7 @@ class Data(Resource):
         return ["tpch_0.1", "tpch_1", "tpcds_1", "job"]
 
     # @control.doc(body=model_data)
-    def post(self) -> Dict:
+    def post(self) -> Response:
         """Load pregenerated tables for all databases."""
         print(control.payload)
         message = {
@@ -819,7 +817,7 @@ class Data(Resource):
         return response
 
     @control.doc(body=model_data)
-    def delete(self) -> Dict:
+    def delete(self) -> Response:
         """Delete pregenerated tables from all databases."""
         message = {
             "header": {"message": "delete data"},
@@ -854,7 +852,7 @@ class Plugin(Resource):
         return response["body"]["plugins"]
 
     @control.doc(body=model_activate_plugin)
-    def post(self) -> Dict:
+    def post(self) -> Response:
         """Activate a plugin in a database."""
         message = {
             "header": {"message": "activate plugin"},
@@ -864,7 +862,7 @@ class Plugin(Resource):
         return response
 
     @control.doc(body=model_deactivate_plugin)
-    def delete(self) -> Dict:
+    def delete(self) -> Response:
         """Deactivate a plugin in a database."""
         message = {
             "header": {"message": "deactivate plugin"},
