@@ -22,7 +22,6 @@ class ArgumentValidation:
             "detailed_latency",
             "detailed_throughput",
             "process_table_status",
-            "access_data",
         ]
         self._endpoints_control = ["database", "data"]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
