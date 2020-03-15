@@ -255,7 +255,7 @@ class Database(object):
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     (
-                        "INSERT INTO meta_plugins(name) VALUES ('usr/local/hyrise/lib/lib%sPlugin.so');"
+                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
                     ),
                     (AsIs(plugin),),
                 )
@@ -273,6 +273,27 @@ class Database(object):
             return True
         else:
             return False
+
+    def set_plugin_setting(self, name: str, value: str) -> bool:
+        """Adjust setting for given plugin."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    "UPDATE meta_settings SET value=%s WHERE name=%s;", (value, name),
+                )
+            return True
+        else:
+            return False
+
+    def get_plugin_setting(self) -> Optional[Dict]:
+        """Read currently set plugin settings."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute("SELECT * FROM meta_settings", None)
+                result = cur.fetchall()
+            return result
+        else:
+            return None
 
     def close(self) -> None:
         """Close the database."""

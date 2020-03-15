@@ -7,6 +7,7 @@ from hyrisecockpit.message import (
     delete_data_request_schema,
     delete_database_request_schema,
     load_data_request_schema,
+    set_plugin_request_schema,
 )
 from hyrisecockpit.response import Body, Response, get_error_response, get_response
 from hyrisecockpit.server import Server
@@ -58,10 +59,12 @@ class DatabaseManager(object):
                 self._call_activate_plugin,
                 None,
             ),  # TODO add validation schema
-            "deactivate plugin": (
-                self._call_deactivate_plugin,
-                None,
-            ),  # TODO add validation schema
+            "deactivate plugin": (self._call_deactivate_plugin, None,),
+            "set plugin setting": (
+                self._call_plugin_setting,
+                set_plugin_request_schema,
+            ),
+            "get plugin setting": (self._call_read_plugin_setting, None),
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
@@ -207,6 +210,31 @@ class DatabaseManager(object):
             response = get_response(400)
         elif self._databases[id].deactivate_plugin(plugin):
             response = get_response(200)
+        else:
+            response = get_response(423)
+        return response
+
+    def _call_plugin_setting(self, body: Body) -> Response:
+        id: str = body["id"]
+        name: str = body["name"]
+        value: str = body["value"]
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].set_plugin_setting(name, value):
+            response = get_response(200)
+        else:
+            response = get_response(423)
+        return response
+
+    def _call_read_plugin_setting(self, body: Body) -> Response:
+        id: str = body["id"]
+        if id not in self._databases.keys():
+            response = get_response(400)
+        elif self._databases[id].get_plugin_setting():
+            response = get_response(200)
+            response["body"]["plugin_settings"] = self._databases[
+                id
+            ].get_plugin_setting()
         else:
             response = get_response(423)
         return response
