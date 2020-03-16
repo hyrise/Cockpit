@@ -281,7 +281,8 @@ class Database(object):
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
-                    "UPDATE meta_settings SET value=%s WHERE name=%s;", (value, name),
+                    "UPDATE meta_settings SET value=%s WHERE name=%s;",
+                    (AsIs(value), name),
                 )
             return True
         else:
