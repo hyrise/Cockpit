@@ -15,7 +15,7 @@
           <slot name="content" />
         </v-card-text>
         <v-card-actions>
-          <v-btn block color="primary" @click="showDialog = false">
+          <v-btn block color="grey darken-3" @click="showDialog = false">
             Close detailed view
           </v-btn>
         </v-card-actions>

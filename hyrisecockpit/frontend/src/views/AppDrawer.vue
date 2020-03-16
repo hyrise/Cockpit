@@ -1,6 +1,14 @@
 <template>
   <v-navigation-drawer v-model="open" app class="elevation-2" width="200">
-    <v-toolbar color="primary darken-1"> </v-toolbar>
+    <v-toolbar color="grey darken-3" class="text-center">
+      <spacer />
+      <v-img
+        src="../../src/components/images/hpi_logo_transparent.png"
+        max-width="40"
+        max-height="40"
+      >
+      </v-img>
+    </v-toolbar>
     <v-card class="text-center" :to="{ name: 'overview' }">
       <v-icon class="mt-2" size="100">
         mdi-speedometer
@@ -33,6 +41,7 @@
         Plugins
       </v-card-title>
     </v-card>
+    <v-card class="text-center"> </v-card>
   </v-navigation-drawer>
 </template>
 

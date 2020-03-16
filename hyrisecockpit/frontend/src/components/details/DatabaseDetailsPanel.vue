@@ -18,7 +18,11 @@
       :show-panels="showDatabasePanels"
     >
       <template #optionalHeader>
-        <v-card color="primary" width="100%" @click="toggleDatabasePanels()">
+        <v-card
+          color="grey darken-3"
+          width="100%"
+          @click="toggleDatabasePanels()"
+        >
           <v-card-title class="white--text">
             Databases
             <v-spacer />

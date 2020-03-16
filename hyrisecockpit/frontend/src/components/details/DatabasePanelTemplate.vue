@@ -60,7 +60,7 @@ export default defineComponent({
     },
     headerColor: {
       type: String,
-      default: "primary"
+      default: "grey darken-3"
     },
     showPanels: {
       type: Boolean,
@@ -72,7 +72,7 @@ export default defineComponent({
     return {
       panels: ref<number[]>([]),
       iconColor: computed(() =>
-        props.headerColor === "primary" ? "white" : ""
+        props.headerColor === "grey darken-3" ? "white" : ""
       )
     };
   }

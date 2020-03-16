@@ -1,6 +1,6 @@
 <template>
   <div :id="pluginDraggableId" class="plugin-overview">
-    <v-card :id="pluginDraggerId" class="card" color="primary" dark>
+    <v-card :id="pluginDraggerId" class="card" color="grey darken-3" dark>
       <v-card-title>
         Plugins
         <v-icon class="close-icon" @click="onClose()">

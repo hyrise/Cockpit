@@ -1,10 +1,23 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes['light'].background }">
     <AppDrawer :open="showNavigationDrawer" />
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="grey darken-3" dark>
       <v-app-bar-nav-icon @click="toggleNavigationDrawer()">
       </v-app-bar-nav-icon>
-      <b> Hyrise Cockpit </b>
+      <v-img
+        src="../src/components/images/hyrise_logo.png"
+        class="mr-2 mb-2"
+        max-width="55"
+        max-height="55"
+      >
+      </v-img>
+      <v-img
+        src="../src/components/images/cockpit_logo.png"
+        class="mb-1 mt-1"
+        max-width="55"
+        max-height="55"
+      >
+      </v-img>
       <v-icon class="plugin-icon" @click="togglePluginEditor()">
         mdi-widgets
       </v-icon>
@@ -12,7 +25,7 @@
         :open="showWorkloadDialog"
         @close="showWorkloadDialog = false"
       />
-      <v-btn class=" white--text mr-5" @click="openWorkloadDialog()"
+      <v-btn color="#02789d" @click="openWorkloadDialog()"
         >Generate Workload</v-btn
       >
     </v-app-bar>
