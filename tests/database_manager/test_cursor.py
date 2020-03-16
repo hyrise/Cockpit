@@ -46,6 +46,39 @@ class TestCursor:
         )
 
     @mark.parametrize(
+        "queries",
+        [
+            [(123, "CompressionPlugin", "Initialized!")],
+            [
+                (123, "CompressionPlugin", "Initialized!"),
+                (
+                    456,
+                    "CompressionPlugin",
+                    "No optimization possible with given parameters!",
+                ),
+            ],
+        ],
+    )
+    def test_logs_plugin_log(self, queries: List[Tuple[int, str, str]]):
+        """Test queries logging."""
+        expected_points = [
+            {
+                "measurement": "plugin_log",
+                "tags": {"timestamp": query[0], "reporter": query[1]},
+                "fields": {"message": query[2]},
+                "time": query[0],
+            }
+            for query in queries
+        ]
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._connection = MagicMock()
+        cursor._connection.write_points.return_value = None
+        cursor.log_plugin_log(queries)
+        cursor._connection.write_points.assert_called_once_with(
+            expected_points, database="database"
+        )
+
+    @mark.parametrize(
         "measurement", ["storage_something", "some_chunks"],
     )
     @mark.parametrize(
@@ -54,7 +87,7 @@ class TestCursor:
     @mark.parametrize(
         "time_stamp", [123, 456789],
     )
-    def test_logs_plugin_log(
+    def test_logs_meta_information(
         self, measurement: str, fields: Dict[str, Any], time_stamp: int
     ):
         """Test meta_information logging."""

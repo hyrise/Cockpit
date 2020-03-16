@@ -83,3 +83,16 @@ class StorageCursor:
             for query in query_list
         ]
         self._connection.write_points(points, database=self._database)
+
+    def log_plugin_log(self, plugin_log: List[Tuple[int, str, str]]) -> None:
+        """Log a couple of succesfully executed queries."""
+        points = [
+            {
+                "measurement": "plugin_log",
+                "tags": {"timestamp": row[0], "reporter": row[1]},
+                "fields": {"message": row[2]},
+                "time": row[0],
+            }
+            for row in plugin_log
+        ]
+        self._connection.write_points(points, database=self._database)

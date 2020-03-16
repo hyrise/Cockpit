@@ -234,7 +234,7 @@ class Database(object):
         return self._task_queue.qsize()
 
     def get_failed_tasks(self) -> List:
-        """Return faild tasks."""
+        """Return failed tasks."""
         failed_task = []
         while not self._failed_task_queue.empty():
             failed_task.append(self._failed_task_queue.get())
