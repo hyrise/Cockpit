@@ -426,11 +426,6 @@ model_get_plugin_setting = control.clone(
 )
 
 
-def get_all_databases(client: InfluxDBClient) -> List[str]:
-    """Return a list of all databases with measurements."""
-    return [d["name"] for d in client.get_list_database()]
-
-
 def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
