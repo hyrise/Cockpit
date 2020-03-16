@@ -11,7 +11,7 @@
         top: idx * 5 + 12.5 + '%'
       }"
     >
-      {{ currentValue[database] }} {{ unit }}
+      {{ formatNumberWithCommas(currentValue[database]) }} {{ unit }}
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ import {
   getMetricValueStateOrder
 } from "../../meta/metrics";
 import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
+import { useFormatting } from "@/meta/formatting";
 
 interface Props {
   data: any;
@@ -41,6 +42,7 @@ interface Props {
 interface Data {
   currentValue: Ref<Record<string, number>>;
   valueColor: Ref<Record<string, string>>;
+  formatNumberWithCommas: (data: number) => string;
 }
 
 export default defineComponent({
@@ -69,7 +71,13 @@ export default defineComponent({
   },
   setup(props: Props, context: SetupContext): Data {
     const { currentValue } = useMetricValues(props);
-    return { currentValue, ...useMetricColors(props, currentValue) };
+    const { formatNumberWithCommas } = useFormatting();
+
+    return {
+      currentValue,
+      ...useMetricColors(props, currentValue),
+      formatNumberWithCommas
+    };
   }
 });
 
