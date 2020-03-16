@@ -4,16 +4,26 @@
     <v-app-bar app color="primary" dark>
       <b> Hyrise Cockpit </b>
       <add-database />
-      <v-icon class="plugin-icon" @click="togglePluginEditor()">
-        mdi-widgets
-      </v-icon>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-icon class="plugin-icon" v-on="on" @click="togglePluginEditor()">
+            mdi-widgets
+          </v-icon>
+        </template>
+        <span>Manage Plugins</span>
+      </v-tooltip>
+      <v-tooltip bottom right>
+        <template v-slot:activator="{ on }">
+          <v-icon v-on="on" @click="openWorkloadDialog()">
+            mdi-speedometer
+          </v-icon>
+        </template>
+        <span>Generate Workload</span>
+      </v-tooltip>
       <workload-generation
         :open="showWorkloadDialog"
         @close="showWorkloadDialog = false"
       />
-      <v-btn class=" white--text mr-5" @click="openWorkloadDialog()"
-        >Generate Workload</v-btn
-      >
     </v-app-bar>
     <v-content>
       <PluginsOverview v-if="showPluginEditor" :onClose="togglePluginEditor" />
