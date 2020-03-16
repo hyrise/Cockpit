@@ -53,7 +53,6 @@ repos:
       entry: pipenv run mypy
       language: system
       types: [python]
-      args: ["--ignore-missing-imports", "--scripts-are-modules"]
       require_serial: true
       additional_dependencies: []
     - id: pydocstyle
