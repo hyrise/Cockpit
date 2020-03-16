@@ -230,7 +230,7 @@ class DatabaseManager(object):
         id: str = body["id"]
         if id not in self._databases.keys():
             response = get_response(400)
-        elif self._databases[id].get_plugin_setting():
+        elif self._databases[id].get_plugin_setting() is not None:
             response = get_response(200)
             response["body"]["plugin_settings"] = self._databases[
                 id
