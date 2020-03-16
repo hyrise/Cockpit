@@ -92,9 +92,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import axios from "axios";
-import { Database } from "../types/database";
-import { useMetricEvents } from "../meta/events";
 import { useDatabaseService } from "../services/databaseService";
 
 interface Props {}
@@ -135,7 +132,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
 
   function resetValues(): void {
     number_workers.value = 8;
-    id.value= "";
+    id.value = "";
     user.value = "serviceuser";
     password.value = "";
     host.value = "vm-";
