@@ -10,5 +10,4 @@ RUN cd /usr/local/ && git clone https://github.com/hyrise/hyrise.git hyrise\
     && mkdir cmake-build-release \
     && cd cmake-build-release \
     && CXXFLAGS=-fdiagnostics-color=always cmake -DENABLE_NUMA_SUPPORT=Off -DCMAKE_BUILD_TYPE=Release .. \
-    && make hyriseConsole hyriseServer CompressionPlugin ClusteringPlugin
-
+    && make hyriseConsole hyriseServer ClusteringPlugin CompressionPlugin
