@@ -204,29 +204,7 @@ class Database(object):
             seconds=0.2,
         )
 
-    def _start_table_processing_sequential(self, table_loading_tasks) -> None:
-        """Flush queue and initialize it with table processing queries."""
-        self._processing_tables_flag.value = True
-        self._flush_queue()
-        with PoolCursor(self._connection_pool) as cur:
-            for task in table_loading_tasks:
-                query_tuple, benchmark, query_no = task
-                query, not_formatted_parameters = query_tuple
-                formatted_parameters = (
-                    tuple(
-                        AsIs(parameter) if protocol == "as_is" else parameter
-                        for parameter, protocol in not_formatted_parameters
-                    )
-                    if not_formatted_parameters is not None
-                    else None
-                )
-                cur.execute(query, formatted_parameters)
-        self._flush_queue()
-        self._processing_tables_flag.value = False
-
-    def _process_tables(
-        self, table_action: Callable, folder_name: str, processing_action: Callable
-    ) -> bool:
+    def _process_tables(self, table_action: Callable, folder_name: str) -> bool:
         """Process changes on tables by taking a generic function which creates table processing queries."""
         table_names = _table_names.get(folder_name.split("_")[0])
         if table_names is None:
@@ -234,25 +212,18 @@ class Database(object):
 
         table_loading_tasks = table_action(table_names, folder_name)
         if len(table_loading_tasks) == 0:
+            self._start_table_processing_parallel(None)
             return True
-        processing_action(table_loading_tasks)
+        self._start_table_processing_parallel(table_loading_tasks)
         return True
 
     def load_data(self, folder_name: str) -> bool:
         """Load pregenerated tables."""
-        return self._process_tables(
-            self._generate_table_loading_queries,
-            folder_name,
-            self._start_table_processing_parallel,
-        )
+        return self._process_tables(self._generate_table_loading_queries, folder_name,)
 
     def delete_data(self, folder_name: str) -> bool:
         """Delete tables."""
-        return self._process_tables(
-            self._generate_table_drop_queries,
-            folder_name,
-            self._start_table_processing_parallel,
-        )
+        return self._process_tables(self._generate_table_drop_queries, folder_name,)
 
     def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
@@ -274,7 +245,9 @@ class Database(object):
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(("SELECT name FROM meta_plugins;"), (None,))
-                return cur.fetchall()
+                rows = cur.fetchall()
+                result = [row[0] for row in rows] if rows else []
+                return result
         else:
             return None
 
@@ -284,7 +257,7 @@ class Database(object):
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     (
-                        "INSERT INTO meta_plugins(name) VALUES ('usr/local/hyrise/lib/lib%sPlugin.so');"
+                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
                     ),
                     (AsIs(plugin),),
                 )
@@ -302,6 +275,27 @@ class Database(object):
             return True
         else:
             return False
+
+    def set_plugin_setting(self, name: str, value: str) -> bool:
+        """Adjust setting for given plugin."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    "UPDATE meta_settings SET value=%s WHERE name=%s;", (value, name),
+                )
+            return True
+        else:
+            return False
+
+    def get_plugin_setting(self) -> Optional[Dict]:
+        """Read currently set plugin settings."""
+        if not self._processing_tables_flag.value:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute("SELECT * FROM meta_settings", None)
+                result = cur.fetchall()
+            return result
+        else:
+            return None
 
     def close(self) -> None:
         """Close the database."""
