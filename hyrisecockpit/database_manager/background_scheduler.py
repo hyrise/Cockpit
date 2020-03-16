@@ -53,6 +53,9 @@ class BackgroundJobManager(object):
         self._update_storage_data_job = self._scheduler.add_job(
             func=self._update_storage_data, trigger="interval", seconds=5,
         )
+        self._update_plugin_log_job = self._scheduler.add_job(
+            func=self._update_plugin_log, trigger="interval", seconds=1,
+        )
 
     def start(self) -> None:
         """Start background scheduler."""
@@ -64,6 +67,7 @@ class BackgroundJobManager(object):
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
+        self._update_plugin_log_job.remove()
         self._scheduler.shutdown()
 
     def _update_krueger_data(self) -> None:
@@ -132,6 +136,28 @@ class BackgroundJobManager(object):
                 {"chunks_data_meta_information": dumps(chunks_data)},
                 time_stamp,
             )
+
+    def _update_plugin_log(self) -> None:
+        """Update plugin log."""
+        log_df = self._read_meta_segments("SELECT * FROM meta_log;")
+
+        if log_df.empty:
+            return
+
+        log_dict = log_df.set_index(["timestamp", "reporter"]).to_dict("index")
+        plugin_log = [
+            (timestamp, reporter, message["message"])
+            for (timestamp, reporter), message in log_dict.items()
+        ]
+
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_plugin_log(plugin_log)
 
     def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
         """Calculate difference base - substractor."""
