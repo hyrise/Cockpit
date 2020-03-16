@@ -8,11 +8,8 @@ import {
   defineComponent,
   SetupContext,
   computed,
-  Ref,
-  ref,
-  watch
+  Ref
 } from "@vue/composition-api";
-import { eventBus } from "../../plugins/eventBus";
 
 interface Data {
   show: Ref<boolean>;
