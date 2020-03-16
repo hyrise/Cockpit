@@ -2,7 +2,7 @@
   <v-row justify="end">
     <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-icon class="" v-on="on">mdi-database-plus</v-icon>
+        <v-icon class="icon" v-on="on">mdi-database-plus</v-icon>
       </template>
       <v-card>
         <v-card-title>
@@ -166,4 +166,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   };
 }
 </script>
-<style scoped></style>
+<style scoped>
+.icon {
+  margin-right: 16px;
+}
+</style>
