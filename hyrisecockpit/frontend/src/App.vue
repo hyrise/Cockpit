@@ -14,7 +14,7 @@
 <script lang="ts">
 import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
-import addDatabase from "./meta/addDatabase.vue";
+import addDatabase from "./components/addDatabase.vue";
 
 interface Data {}
 
