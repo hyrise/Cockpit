@@ -16,6 +16,7 @@ from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -460,12 +461,7 @@ model_get_plugin_setting = control.clone(
 )
 
 
-def get_all_databases(client: InfluxDBClient):
-    """Return a list of all databases with measurements."""
-    return [d["name"] for d in client.get_list_database()]
-
-
-def _send_message(socket: Socket, message: Dict) -> Response:
+def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
     response: Response = socket.recv_json()
@@ -770,16 +766,16 @@ class Database(Resource):
     @control.doc(model=[model_get_database])
     def get(self) -> Response:
         """Get all databases."""
-        message = {"header": {"message": "get databases"}, "body": {}}
+        message = Request(header=Header(message="get databases"), body={})
         response = _send_message(db_manager_socket, message)
         return response["body"]["databases"]
 
     @control.doc(body=model_add_database)
     def post(self) -> Response:
         """Add a database."""
-        message = {
-            "header": {"message": "add database"},
-            "body": {
+        message = Request(
+            header=Header(message="add database"),
+            body={
                 "number_workers": control.payload["number_workers"],
                 "id": control.payload["id"],
                 "user": control.payload["user"],
@@ -788,17 +784,17 @@ class Database(Resource):
                 "port": control.payload["port"],
                 "dbname": control.payload["dbname"],
             },
-        }
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_control_database)
     def delete(self) -> Response:
         """Delete a database."""
-        message = {
-            "header": {"message": "delete database"},
-            "body": {"id": control.payload["id"]},
-        }
+        message = Request(
+            header=Header(message="delete database"),
+            body={"id": control.payload["id"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
@@ -809,14 +805,14 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
-        workload_message = {
-            "header": {"message": "start workload"},
-            "body": {
+        message = Request(
+            header=Header(message="start workload"),
+            body={
                 "folder_name": control.payload["folder_name"],
                 "frequency": control.payload.get("frequency", 200),
             },
-        }
-        response = _send_message(generator_socket, workload_message)
+        )
+        response = _send_message(generator_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
                 400,
@@ -827,20 +823,14 @@ class Workload(Resource):
 
     def delete(self) -> Response:
         """Stop the workload generator and empty database queues."""
-        message = {
-            "header": {"message": "stop workload"},
-            "body": {},
-        }
+        message = Request(header=Header(message="stop workload"), body={})
         response = _send_message(generator_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
                 400, response["body"].get("error", "Error during stopping of generator")
             )
 
-        message = {
-            "header": {"message": "purge queue"},
-            "body": {},
-        }
+        message = Request(header=Header(message="purge queue"), body={})
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
@@ -862,21 +852,20 @@ class Data(Resource):
     # @control.doc(body=model_data)
     def post(self) -> Response:
         """Load pregenerated tables for all databases."""
-        print(control.payload)
-        message = {
-            "header": {"message": "load data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
+        message = Request(
+            header=Header(message="load data"),
+            body={"folder_name": control.payload["folder_name"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_data)
     def delete(self) -> Response:
         """Delete pregenerated tables from all databases."""
-        message = {
-            "header": {"message": "delete data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
+        message = Request(
+            header=Header(message="delete data"),
+            body={"folder_name": control.payload["folder_name"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
@@ -898,30 +887,27 @@ class Plugin(Resource):
     @control.doc(model=[model_get_activated_plugins])
     def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
         """Return activated plugins in each database."""
-        message = {
-            "header": {"message": "get plugins"},
-            "body": {},
-        }
+        message = Request(header=Header(message="get plugins"), body={})
         response = _send_message(db_manager_socket, message)
         return response["body"]["plugins"]
 
     @control.doc(body=model_activate_plugin)
     def post(self) -> Response:
         """Activate a plugin in a database."""
-        message = {
-            "header": {"message": "activate plugin"},
-            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
-        }
+        message = Request(
+            header=Header(message="activate plugin"),
+            body={"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_deactivate_plugin)
     def delete(self) -> Response:
         """Deactivate a plugin in a database."""
-        message = {
-            "header": {"message": "deactivate plugin"},
-            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
-        }
+        message = Request(
+            header=Header(message="deactivate plugin"),
+            body={"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
@@ -961,23 +947,23 @@ class PluginSettings(Resource):
     @control.doc(model=model_get_plugin_setting)
     def get(self) -> Response:
         """Read settings for plugins."""
-        message = {
-            "header": {"message": "get plugin setting"},
-            "body": {"id": control.payload["id"]},
-        }
+        message = Request(
+            header=Header(message="get plugin setting"),
+            body={"id": control.payload["id"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_plugin_setting)
     def post(self) -> Response:
         """Set settings for plugins."""
-        message = {
-            "header": {"message": "set plugin setting"},
-            "body": {
+        message = Request(
+            header=Header(message="set plugin setting"),
+            body={
                 "id": control.payload["id"],
                 "name": control.payload["name"],
                 "value": control.payload["value"],
             },
-        }
+        )
         response = _send_message(db_manager_socket, message)
         return response

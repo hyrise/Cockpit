@@ -39,7 +39,7 @@ class BackgroundJobManager(object):
         self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
-    def _init_jobs(self):
+    def _init_jobs(self) -> None:
         """Initialize basic background jobs."""
         self._update_krueger_data_job = self._scheduler.add_job(
             func=self._update_krueger_data, trigger="interval", seconds=5,
@@ -57,11 +57,11 @@ class BackgroundJobManager(object):
             func=self._update_plugin_log, trigger="interval", seconds=1,
         )
 
-    def start(self):
+    def start(self) -> None:
         """Start background scheduler."""
         self._scheduler.start()
 
-    def close(self):
+    def close(self) -> None:
         """Close background scheduler."""
         self._update_krueger_data_job.remove()
         self._update_system_data_job.remove()
@@ -70,7 +70,7 @@ class BackgroundJobManager(object):
         self._update_plugin_log_job.remove()
         self._scheduler.shutdown()
 
-    def _update_krueger_data(self):
+    def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
         executed_mocked_data = {
             "SELECT": 100,
@@ -100,7 +100,7 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _read_meta_segments(self, sql) -> DataFrame:
+    def _read_meta_segments(self, sql: str) -> DataFrame:
         if self._processing_tables_flag.value:
             return DataFrame({"foo": []})  # TODO remove foo
         else:
@@ -172,7 +172,7 @@ class BackgroundJobManager(object):
                         ]
         return base
 
-    def _create_chunks_dictionary(self, meta_segments) -> Dict:
+    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
         chunks_data: Dict = {}
         grouped_tables = meta_segments.reset_index().groupby("table_name")
 
@@ -232,7 +232,7 @@ class BackgroundJobManager(object):
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
-    def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
+    def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
             inplace=True,
