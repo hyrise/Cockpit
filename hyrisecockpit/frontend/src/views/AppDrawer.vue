@@ -5,7 +5,7 @@
       <v-icon class="mt-2" size="70">
         mdi-speedometer
       </v-icon>
-      <v-card-title class="justify-center card_title">
+      <v-card-title class="justify-center card-title">
         Overview
       </v-card-title>
     </v-card>
@@ -13,7 +13,7 @@
       <v-icon class="mt-2" size="70">
         mdi-database-search
       </v-icon>
-      <v-card-title class="justify-center card_title">
+      <v-card-title class="justify-center card-title">
         Comparison
       </v-card-title>
     </v-card>
@@ -21,7 +21,7 @@
       <v-icon class="mt-2" size="70">
         mdi-account-hard-hat
       </v-icon>
-      <v-card-title class="justify-center card_title">
+      <v-card-title class="justify-center card-title">
         Workload
       </v-card-title>
     </v-card>
@@ -45,7 +45,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.card_title {
+.card-title {
   padding: 16px 0px 16px 0px;
   font-size: 16px;
 }
