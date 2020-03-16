@@ -20,7 +20,7 @@ export function usePluginService(): PluginService {
                   ...result,
                   ...currentDatabase.plugins.map(
                     (plugin: string) =>
-                      currentDatabase.id + "_" + plugin[0].replace("Plugin", "")
+                      currentDatabase.id + "_" + plugin.replace("Plugin", "")
                   )
                 ]
               : result;
