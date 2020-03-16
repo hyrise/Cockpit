@@ -1,10 +1,10 @@
 """The BackgroundJobManager is managing the background jobs for the apscheduler."""
 
+from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
-from secrets import randbelow
 from time import time_ns
-from typing import Dict
+from typing import Dict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -38,6 +38,7 @@ class BackgroundJobManager(object):
         self._storage_port = storage_port
         self._storage_user = storage_user
         self._scheduler = BackgroundScheduler()
+        self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
     def _init_jobs(self):
@@ -107,10 +108,19 @@ class BackgroundJobManager(object):
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
-        # mocking chunks data
         time_stamp = time_ns()
-        sql = """SELECT table_name, column_name, COUNT(chunk_id) as n_chunks FROM meta_segments GROUP BY table_name, column_name;"""
+        sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
+            FROM meta_segments;"""
+
         meta_segments = self._read_meta_segments(sql)
+
+        chunks_data = {}
+        if not meta_segments.empty:
+            new_chunks_data = self._create_chunks_dictionary(meta_segments)
+            chunks_data = self._calculate_chunks_difference(
+                deepcopy(new_chunks_data), self._previous_chunks_data
+            )
+            self._previous_chunks_data = new_chunks_data
 
         with StorageCursor(
             self._storage_host,
@@ -119,49 +129,70 @@ class BackgroundJobManager(object):
             self._storage_password,
             self._database_id,
         ) as log:
-            output = {}
-            if not meta_segments.empty:
-                output = self._read_chunks_data(meta_segments)
             log.log_meta_information(
                 "chunks_data",
-                {"chunks_data_meta_information": dumps(output)},
+                {"chunks_data_meta_information": dumps(chunks_data)},
                 time_stamp,
             )
 
-    def _read_chunks_data(self, meta_segments) -> Dict:
+    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
+        """Calculate difference base - substractor."""
+        for table_name in base.keys():
+            if table_name in substractor.keys():
+                for column_name in base[table_name].keys():
+                    if column_name in substractor[table_name].keys():
+                        base[table_name][column_name] = [
+                            base[table_name][column_name][i]
+                            - substractor[table_name][column_name][i]
+                            for i in range(len(base[table_name][column_name]))
+                        ]
+        return base
+
+    def _create_chunks_dictionary(self, meta_segments) -> Dict:
         chunks_data: Dict = {}
-        grouped = meta_segments.reset_index().groupby("table_name")
-        for column in grouped.groups:
-            chunks_data[column] = {}
-            for _, row in grouped.get_group(column).iterrows():
-                data = []
-                for _ in range(row["n_chunks"]):
-                    current = randbelow(500)
-                    data.append(current if (current < 100) else 0)
-                chunks_data[column][row["column_name"]] = data
+        grouped_tables = meta_segments.reset_index().groupby("table_name")
+
+        for table_name in grouped_tables.groups:
+            chunks_data[table_name] = {}
+            table = grouped_tables.get_group(table_name)
+            grouped_columns = table.reset_index().groupby("column_name")
+
+            for column_name in grouped_columns.groups:
+                column = grouped_columns.get_group(column_name)
+                access_data = []
+                for _, row in column.iterrows():
+                    access_data.append(row["access_count"])
+                chunks_data[table_name][column_name] = access_data
         return chunks_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
         time_stamp = time_ns()
-        # mocked cpu data
-        cpu_data = [randbelow(1001) / 10 for _ in range(16)]
-        # mocked memory data
-        total_memory = 32 * (1024 ** 3)
-        used_memory = randbelow(total_memory)
-        available_memory = total_memory - used_memory
-        memory_data = {
-            "available": available_memory,
-            "used": used_memory,
-            "cached": 4237438976,
-            "percent": used_memory / total_memory,
-            "free": 5536755712,
-            "inactive": 2687451136,
-            "active": 3657117696,
-            "shared": 1149366272,
-            "total": total_memory,
-            "buffers": 169537536,
+
+        system_utilization_sql = "SELECT * FROM meta_system_utilization;"
+        utilization_segments = self._read_meta_segments(system_utilization_sql)
+
+        system_information_sql = "SELECT * FROM meta_system_information;"
+        system_segments = self._read_meta_segments(system_information_sql)
+
+        if utilization_segments.empty or system_segments.empty:
+            return
+
+        cpu_data = {
+            "cpu_system_usage": float(utilization_segments["cpu_system_usage"][0]),
+            "cpu_process_usage": float(utilization_segments["cpu_process_usage"][0]),
+            "cpu_count": int(system_segments["cpu_count"][0]),
+            "cpu_clock_speed": int(system_segments["cpu_clock_speed"][0]),
         }
+        memory_data: Dict[str, Union[int, float]] = {
+            "free": int(utilization_segments["system_memory_free_bytes"][0]),
+            "used": int(utilization_segments["process_physical_memory_bytes"][0]),
+            "total": int(system_segments["system_memory_total_bytes"][0]),
+        }
+
+        memory_data["percent"] = memory_data["used"] / memory_data["total"]
+
+        database_threads = "8"
 
         with StorageCursor(
             self._storage_host,
@@ -173,7 +204,7 @@ class BackgroundJobManager(object):
             system_data = {
                 "cpu": dumps(cpu_data),
                 "memory": dumps(memory_data),
-                "database_threads": "8",
+                "database_threads": database_threads,
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
