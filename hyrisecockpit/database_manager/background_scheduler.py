@@ -39,7 +39,7 @@ class BackgroundJobManager(object):
         self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
-    def _init_jobs(self):
+    def _init_jobs(self) -> None:
         """Initialize basic background jobs."""
         self._update_krueger_data_job = self._scheduler.add_job(
             func=self._update_krueger_data, trigger="interval", seconds=5,
@@ -53,20 +53,24 @@ class BackgroundJobManager(object):
         self._update_storage_data_job = self._scheduler.add_job(
             func=self._update_storage_data, trigger="interval", seconds=5,
         )
+        self._update_plugin_log_job = self._scheduler.add_job(
+            func=self._update_plugin_log, trigger="interval", seconds=1,
+        )
 
-    def start(self):
+    def start(self) -> None:
         """Start background scheduler."""
         self._scheduler.start()
 
-    def close(self):
+    def close(self) -> None:
         """Close background scheduler."""
         self._update_krueger_data_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
+        self._update_plugin_log_job.remove()
         self._scheduler.shutdown()
 
-    def _update_krueger_data(self):
+    def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
         executed_mocked_data = {
             "SELECT": 100,
@@ -96,7 +100,7 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _read_meta_segments(self, sql) -> DataFrame:
+    def _read_meta_segments(self, sql: str) -> DataFrame:
         if self._processing_tables_flag.value:
             return DataFrame({"foo": []})  # TODO remove foo
         else:
@@ -133,6 +137,28 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
+    def _update_plugin_log(self) -> None:
+        """Update plugin log."""
+        log_df = self._read_meta_segments("SELECT * FROM meta_log;")
+
+        if log_df.empty:
+            return
+
+        log_dict = log_df.set_index(["timestamp", "reporter"]).to_dict("index")
+        plugin_log = [
+            (timestamp, reporter, message["message"])
+            for (timestamp, reporter), message in log_dict.items()
+        ]
+
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_plugin_log(plugin_log)
+
     def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
         """Calculate difference base - substractor."""
         for table_name in base.keys():
@@ -146,7 +172,7 @@ class BackgroundJobManager(object):
                         ]
         return base
 
-    def _create_chunks_dictionary(self, meta_segments) -> Dict:
+    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
         chunks_data: Dict = {}
         grouped_tables = meta_segments.reset_index().groupby("table_name")
 
@@ -206,7 +232,7 @@ class BackgroundJobManager(object):
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
-    def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
+    def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
             inplace=True,

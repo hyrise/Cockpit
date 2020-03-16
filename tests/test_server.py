@@ -3,7 +3,8 @@ from unittest.mock import patch
 
 from pytest import fixture
 
-from hyrisecockpit.response import Body, get_response
+from hyrisecockpit.request import Body
+from hyrisecockpit.response import get_response
 from hyrisecockpit.server import Server
 
 

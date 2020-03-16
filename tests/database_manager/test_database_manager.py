@@ -1,5 +1,5 @@
 """Tests for the database_manager module."""
-from typing import Callable
+from typing import Callable, Dict
 from unittest.mock import patch
 
 from pytest import fixture
@@ -51,8 +51,8 @@ class TestDatabaseManager:
         database_manager: DatabaseManager,
         mock_database: Database,
         call: Callable,
-        mock_data,
-    ):
+        mock_data: Dict[str, int],
+    ) -> None:
         """Check whether a data call works."""
         assert call() == {}
         database_manager._databases["test_db1"] = mock_database
@@ -60,17 +60,17 @@ class TestDatabaseManager:
         database_manager._databases["test_db2"] = mock_database
         assert call() == {"test_db1": mock_data, "test_db2": mock_data}
 
-    def test_initializes(self, database_manager: DatabaseManager):
+    def test_initializes(self, database_manager: DatabaseManager) -> None:
         """A DatabaseManager initializes."""
         assert isinstance(database_manager, DatabaseManager)
 
-    def test_has_no_databases(self, database_manager: DatabaseManager):
+    def test_has_no_databases(self, database_manager: DatabaseManager) -> None:
         """A DatabaseManager has no databases."""
         assert database_manager._databases == {}
 
     def test_get_databases_returns_databases(
         self, database_manager: DatabaseManager, mock_database: Database
-    ):
+    ) -> None:
         """Returns previously added databases."""
         assert database_manager._databases == {}
         database_manager._databases["test_db1"] = mock_database
@@ -90,26 +90,43 @@ class TestDatabaseManager:
 
     def test_delete_database_deletes_databases(
         self, database_manager: DatabaseManager, mock_database: Database
-    ):
+    ) -> None:
         """Deletes previously added databases."""
         assert database_manager._databases == {}
         database_manager._databases["test_db1"] = mock_database
         database_manager._databases["test_db2"] = mock_database
-        call_delete = lambda id: database_manager._call_delete_database(  # noqa: E731
-            {"id": id}
-        )["header"]["status"]
-        assert call_delete("test_db1") == 200
+        assert (
+            database_manager._call_delete_database({"id": "test_db1"})["header"][
+                "status"
+            ]
+            == 200
+        )
         assert database_manager._databases.keys() == {"test_db2"}
-        assert call_delete("test_db1") == 404
+        assert (
+            database_manager._call_delete_database({"id": "test_db1"})["header"][
+                "status"
+            ]
+            == 404
+        )
         assert database_manager._databases.keys() == {"test_db2"}
-        assert call_delete("test_db2") == 200
+        assert (
+            database_manager._call_delete_database({"id": "test_db2"})["header"][
+                "status"
+            ]
+            == 200
+        )
         assert database_manager._databases.keys() == set()
-        assert call_delete("test_db2") == 404
+        assert (
+            database_manager._call_delete_database({"id": "test_db2"})["header"][
+                "status"
+            ]
+            == 404
+        )
         assert database_manager._databases.keys() == set()
 
     def test_call_queue_length_returns_queue_length(
         self, database_manager: DatabaseManager, mock_database: Database
-    ):
+    ) -> None:
         """Returns queue length of previously added databases."""
         call: Callable = lambda: database_manager._call_queue_length({})["body"][
             "queue_length"
