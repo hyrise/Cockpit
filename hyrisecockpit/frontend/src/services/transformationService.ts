@@ -9,7 +9,7 @@ import { TransformationService } from "@/types/services";
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
-  latency: getReadOnlyData,
+  latency: getLatencyData,
   executedQueryTypeProportion: getExecutedQueryTypeProportionData,
   generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
   queueLength: getReadOnlyData,
@@ -83,6 +83,10 @@ function getRAMData(data: any, primaryKey: string = ""): number {
 
 function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
+}
+
+function getLatencyData(data: any, primaryKey: string = ""): number {
+  return Math.floor(getReadOnlyData(data, primaryKey) / Math.pow(10, 3));
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
