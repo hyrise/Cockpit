@@ -81,14 +81,15 @@ class WorkerPool(object):
             self._fill_task_worker = self._generate_fill_task_worker()
 
     def _terminate_worker(self):
-        self._fill_task_worker.terminate()
-        self._fill_task_worker = None
-        for i in range(self._number_worker):
-            self._execute_task_workers[i].terminate()
-        self._execute_task_workers = []
-        self._worker_continue_event = Event()
-        self._task_queue: Queue = Queue(0)
-        self._failed_task_queue: Queue = Queue(0)
+        if not self._status == "closed":
+            self._fill_task_worker.terminate()
+            self._fill_task_worker = None
+            for i in range(self._number_worker):
+                self._execute_task_workers[i].terminate()
+            self._execute_task_workers = []
+            self._worker_continue_event = Event()
+            self._task_queue: Queue = Queue(0)
+            self._failed_task_queue: Queue = Queue(0)
 
     def _wait_for_execute_task_worker(self):
         self._worker_continue_event.clear()
