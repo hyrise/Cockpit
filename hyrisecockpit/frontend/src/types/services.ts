@@ -1,5 +1,5 @@
 import { Ref } from "@vue/composition-api";
-import { Workload } from "./workloads";
+import { Workload, WorkloadMetaData } from "./workloads";
 
 export interface MetricService {
   data: Ref<any>;
@@ -24,7 +24,7 @@ export interface WorkloadService {
 export type FetchType = "read" | "modify";
 
 export type Base =
-  | "system_data"
+  | "system"
   | "throughput"
   | "storage"
   | "chunks_data"

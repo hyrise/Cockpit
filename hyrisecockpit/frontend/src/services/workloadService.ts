@@ -4,6 +4,8 @@ import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
 import { controlBackend } from "../../config";
 
+import { monitorBackend, controlBackend } from "../../config";
+
 export function useWorkloadService(): WorkloadService {
   function loadWorkloadData(workload: Workload): void {
     axios.post(`${controlBackend}data/${getTransferredWorkload(workload)}`);
