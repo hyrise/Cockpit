@@ -15,10 +15,11 @@ export type TransformationService = (
 ) => any;
 
 export interface WorkloadService {
-  loadWorkloadData: (workload: Workload) => void;
-  deleteWorkloadData: (workload: Workload) => void;
-  startWorkload: (workload: Workload, frequency: number) => void;
-  stopWorkload: () => void;
+  getWorkloadData: () => Promise<string[]>;
+  loadWorkloadData: (workload: Workload) => Promise<void>;
+  deleteWorkloadData: (workload: Workload) => Promise<void>;
+  startWorkload: (workload: Workload, frequency: number) => Promise<void>;
+  stopWorkload: () => Promise<void>;
 }
 
 export type FetchType = "read" | "modify";
