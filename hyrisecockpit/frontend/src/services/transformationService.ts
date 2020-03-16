@@ -74,9 +74,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].cpu.reduce(
-    (accumulator: any, currentValue: any) => accumulator + currentValue
-  );
+  return data[primaryKey].cpu.cpu_system_usage;
 }
 
 function getRAMData(data: any, primaryKey: string = ""): number {
