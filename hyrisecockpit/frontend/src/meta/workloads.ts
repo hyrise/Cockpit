@@ -15,7 +15,7 @@ const workloadProjectionData: Record<Workload, WorkloadProjectionData> = {
   },
   job: {
     transferred: "job",
-    displayed: "JOB"
+    displayed: "Join Order Benchmark"
   }
 };
 

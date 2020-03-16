@@ -5,6 +5,14 @@
       <v-app-bar-nav-icon @click="toggleNavigationDrawer()">
       </v-app-bar-nav-icon>
       <b> Hyrise Cockpit </b>
+      <v-spacer />
+      <workload-generation
+        :open="showWorkloadDialog"
+        @close="showWorkloadDialog = false"
+      />
+      <v-btn class=" white--text mr-5" @click="openWorkloadDialog()"
+        >Generate Workload</v-btn
+      >
     </v-app-bar>
     <v-content>
       <router-view />
@@ -15,21 +23,33 @@
 <script lang="ts">
 import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
+import WorkloadGeneration from "./components/workload/WorkloadGeneration.vue";
 
 interface Data {
-  toggleNavigationDrawer: () => void;
   showNavigationDrawer: Ref<boolean>;
+  toggleNavigationDrawer: () => void;
+  showWorkloadDialog: Ref<boolean>;
+  openWorkloadDialog: () => void;
 }
 
 export default defineComponent({
-  components: { AppDrawer },
+  components: { AppDrawer, WorkloadGeneration },
   setup(props: {}, context: SetupContext): Data {
     const showNavigationDrawer = ref<boolean>(true);
-
+    const showWorkloadDialog = ref<boolean>(false);
     function toggleNavigationDrawer(): void {
       showNavigationDrawer.value = !showNavigationDrawer.value;
     }
-    return { showNavigationDrawer, toggleNavigationDrawer };
+    function openWorkloadDialog(): void {
+      showWorkloadDialog.value = true;
+    }
+
+    return {
+      showNavigationDrawer,
+      toggleNavigationDrawer,
+      showWorkloadDialog,
+      openWorkloadDialog
+    };
   }
 });
 </script>
