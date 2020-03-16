@@ -12,7 +12,7 @@ export function useFormatting(): {
       formatted = parts[0][index] + formatted;
       index--;
     }
-    return parts[1] ? formatted + "." + parts[1] : formatted; //data.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return parts[1] ? formatted + "." + parts[1] : formatted;
   }
 
   return { formatNumberWithCommas };
