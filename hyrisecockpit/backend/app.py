@@ -239,7 +239,6 @@ model_process_table_status = monitor.clone(
     },
 )
 
-
 model_data = control.model(
     "Data",
     {
@@ -391,6 +390,38 @@ model_activate_plugin = control.clone(
 
 model_deactivate_plugin = control.clone(
     "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
+)
+
+model_plugin_setting = control.clone(
+    "Set Plugin Setting",
+    model_database,
+    {
+        "name": fields.String(
+            title="Setting name",
+            description="Name of the setting that shall be set.",
+            required=True,
+            example="CompressionPlugin_MemoryBudget",
+        ),
+        "value": fields.String(
+            title="Setting value",
+            description="Value the setting should have.",
+            required=True,
+            example="5000",
+        ),
+    },
+)
+
+model_get_plugin_setting = control.clone(
+    "Get Plugin Setting",
+    model_plugin_setting,
+    {
+        "description": fields.String(
+            title="Setting description",
+            description="Description of the plugin setting.",
+            required=True,
+            example="The memory budget to target for the Compression...",
+        ),
+    },
 )
 
 
@@ -743,18 +774,6 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
-        load_data_message = {
-            "header": {"message": "load data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
-
-        response = _send_message(db_manager_socket, load_data_message)
-
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during loading of the tables")
-            )
-
         workload_message = {
             "header": {"message": "start workload"},
             "body": {
@@ -867,6 +886,35 @@ class Plugin(Resource):
         message = {
             "header": {"message": "deactivate plugin"},
             "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+
+@control.route("/plugin_settings")
+class PluginSettings(Resource):
+    """Set settings for plugins."""
+
+    @control.doc(model=model_get_plugin_setting)
+    def get(self) -> Response:
+        """Read settings for plugins."""
+        message = {
+            "header": {"message": "get plugin setting"},
+            "body": {"id": control.payload["id"]},
+        }
+        response = _send_message(db_manager_socket, message)
+        return response
+
+    @control.doc(body=model_plugin_setting)
+    def post(self) -> Response:
+        """Set settings for plugins."""
+        message = {
+            "header": {"message": "set plugin setting"},
+            "body": {
+                "id": control.payload["id"],
+                "name": control.payload["name"],
+                "value": control.payload["value"],
+            },
         }
         response = _send_message(db_manager_socket, message)
         return response

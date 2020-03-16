@@ -25,7 +25,7 @@ class TestWorkloadReader:
         reader = WorkloadReader()
         with raises(NotExistingWorkloadFolderException) as e:
             reader._get_workload_folder("absolute_path", "tpch")
-        assert str(e.value) == """Workload tpch not found: directory doesn't exist"""
+        assert str(e.value) == "Workload tpch not found: directory doesn't exist"
 
     @patch("hyrisecockpit.workload_generator.workload_reader.exists",)
     @patch("hyrisecockpit.workload_generator.workload_reader.listdir",)
@@ -38,7 +38,7 @@ class TestWorkloadReader:
         reader = WorkloadReader()
         with raises(EmptyWorkloadFolderException) as e:
             reader._get_workload_folder("absolute_path", "tpch")
-        assert str(e.value) == """Workload tpch directory is empty"""
+        assert str(e.value) == "Workload tpch directory is empty"
 
     @patch("hyrisecockpit.workload_generator.workload_reader.exists",)
     @patch("hyrisecockpit.workload_generator.workload_reader.listdir",)

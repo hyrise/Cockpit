@@ -1,5 +1,4 @@
 """Utility custom cursors."""
-
 from typing import Any, Dict, List, Tuple
 
 from influxdb import InfluxDBClient
