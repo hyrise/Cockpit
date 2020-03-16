@@ -21,26 +21,26 @@ class Server:
         port: str,
         calls: Dict[str, Tuple[Callable[[Dict[str, Any]], Response], Optional[Dict]]],
         io_threads: int = 1,
-    ):
+    ) -> None:
         """Initialize a Server with a host, port and calls."""
         self._calls = calls
         self._host = host
         self._port = port
         self._init_server(io_threads)
 
-    def _init_server(self, io_threads):
+    def _init_server(self, io_threads) -> None:
         self._context = Context(io_threads=io_threads)
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:s}".format(self._host, self._port))
 
-    def start(self):
+    def start(self) -> None:
         """Start the server loop."""
         while True:
             request = self._socket.recv_json()
             response = self._handle_request(request)
             self._socket.send_json(response)
 
-    def _handle_request(self, request):
+    def _handle_request(self, request) -> Response:
         try:
             validate(instance=request, schema=request_schema)
             func, schema = self._calls[request["header"]["message"]]
@@ -52,7 +52,7 @@ class Server:
         except KeyError:
             return get_response(404)
 
-    def close(self):
+    def close(self) -> None:
         """Close the socket and terminate it."""
         self._socket.close()
         self._context.term()

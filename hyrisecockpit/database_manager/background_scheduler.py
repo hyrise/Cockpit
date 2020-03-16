@@ -39,7 +39,7 @@ class BackgroundJobManager(object):
         self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
-    def _init_jobs(self):
+    def _init_jobs(self) -> None:
         """Initialize basic background jobs."""
         self._update_krueger_data_job = self._scheduler.add_job(
             func=self._update_krueger_data, trigger="interval", seconds=5,
@@ -54,11 +54,11 @@ class BackgroundJobManager(object):
             func=self._update_storage_data, trigger="interval", seconds=5,
         )
 
-    def start(self):
+    def start(self) -> None:
         """Start background scheduler."""
         self._scheduler.start()
 
-    def close(self):
+    def close(self) -> None:
         """Close background scheduler."""
         self._update_krueger_data_job.remove()
         self._update_system_data_job.remove()

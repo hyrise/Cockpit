@@ -287,7 +287,7 @@ class Database(object):
         else:
             return False
 
-    def get_plugin_setting(self) -> Optional[Dict]:
+    def get_plugin_setting(self) -> Optional[List]:
         """Read currently set plugin settings."""
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:

@@ -51,7 +51,7 @@ class WorkloadGenerator(object):
         self._init_server()
         self._init_scheduler()
 
-    def _init_scheduler(self):
+    def _init_scheduler(self) -> None:
         self._scheduler = BackgroundScheduler()
         self._generate_workload_job = self._scheduler.add_job(
             func=self._generate_workload, trigger="interval", seconds=1,
@@ -73,7 +73,7 @@ class WorkloadGenerator(object):
             "tcp://{:s}:{:s}".format(self._workload_listening, self._workload_pub_port)
         )
 
-    def _get_default_workload_location(self):
+    def _get_default_workload_location(self) -> str:
         return self._default_workload_location
 
     def _get_workload(self, workload_type: str):
@@ -107,10 +107,10 @@ class WorkloadGenerator(object):
         self._generate_workload_flag = False
         return get_response(200)
 
-    def _publish_data(self, data: Dict):
+    def _publish_data(self, data: Response):
         self._pub_socket.send_json(data)
 
-    def _generate_workload(self):
+    def _generate_workload(self) -> None:
         if self._generate_workload_flag:
             workload = self._get_workload(self._workload_type)
             queries = workload.generate_workload(self._frequency)

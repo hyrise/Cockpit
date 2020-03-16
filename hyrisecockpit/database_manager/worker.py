@@ -4,7 +4,7 @@ Workers run in pools and are started by other components.
 """
 from multiprocessing import Queue, Value
 from time import time_ns
-from typing import List, Tuple
+from typing import List, Optional, Tuple, Union
 
 from psycopg2 import Error, pool
 from psycopg2.extensions import AsIs
@@ -96,7 +96,7 @@ def execute_queries(
                     )
 
 
-def execute_task(cursor, query, formatted_parameters):
+def execute_task(cursor, query, formatted_parameters) -> Tuple[int, int]:
     """Execute given task."""
     startts = time_ns()
     cursor.execute(query, formatted_parameters)
@@ -105,7 +105,9 @@ def execute_task(cursor, query, formatted_parameters):
     return endts, endts - startts
 
 
-def get_formatted_parameters(not_formatted_parameters):
+def get_formatted_parameters(
+    not_formatted_parameters,
+) -> Optional[Tuple[Union[AsIs, str], ...]]:
     """Create formatted parameters."""
     return (
         tuple(

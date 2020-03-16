@@ -95,16 +95,33 @@ class TestDatabaseManager:
         assert database_manager._databases == {}
         database_manager._databases["test_db1"] = mock_database
         database_manager._databases["test_db2"] = mock_database
-        call_delete = lambda id: database_manager._call_delete_database(  # noqa: E731
-            {"id": id}
-        )["header"]["status"]
-        assert call_delete("test_db1") == 200
+        assert (
+            database_manager._call_delete_database({"id": "test_db1"})["header"][
+                "status"
+            ]
+            == 200
+        )
         assert database_manager._databases.keys() == {"test_db2"}
-        assert call_delete("test_db1") == 404
+        assert (
+            database_manager._call_delete_database({"id": "test_db1"})["header"][
+                "status"
+            ]
+            == 404
+        )
         assert database_manager._databases.keys() == {"test_db2"}
-        assert call_delete("test_db2") == 200
+        assert (
+            database_manager._call_delete_database({"id": "test_db2"})["header"][
+                "status"
+            ]
+            == 200
+        )
         assert database_manager._databases.keys() == set()
-        assert call_delete("test_db2") == 404
+        assert (
+            database_manager._call_delete_database({"id": "test_db2"})["header"][
+                "status"
+            ]
+            == 404
+        )
         assert database_manager._databases.keys() == set()
 
     def test_call_queue_length_returns_queue_length(
