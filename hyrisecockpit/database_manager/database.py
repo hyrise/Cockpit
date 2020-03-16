@@ -245,7 +245,9 @@ class Database(object):
         if not self._processing_tables_flag.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(("SELECT name FROM meta_plugins;"), (None,))
-                return cur.fetchall()
+                rows = cur.fetchall()
+                result = [row[0] for row in rows] if rows else []
+                return result
         else:
             return None
 

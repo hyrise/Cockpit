@@ -809,18 +809,6 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
-        load_data_message = {
-            "header": {"message": "load data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
-
-        response = _send_message(db_manager_socket, load_data_message)
-
-        if response["header"]["status"] != 200:
-            return get_error_response(
-                400, response["body"].get("error", "Error during loading of the tables")
-            )
-
         workload_message = {
             "header": {"message": "start workload"},
             "body": {
