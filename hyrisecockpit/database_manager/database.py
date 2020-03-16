@@ -62,8 +62,6 @@ class Database(object):
 
         self._start_workers()
 
-        self.load_data(self._default_tables)
-
         self._background_scheduler = BackgroundJobManager(
             self._id,
             self._processing_tables_flag,
