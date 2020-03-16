@@ -133,6 +133,16 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
 
   const showDatabaseDialog = ref(false);
 
+  function resetValues(): void {
+    number_workers.value = 8;
+    id.value= "";
+    user.value = "serviceuser";
+    password.value = "";
+    host.value = "vm-";
+    port.value = "5432";
+    dbname.value = "postgres";
+  }
+
   function createNewDatabase(): void {
     addDatabase({
       number_workers: parseInt(number_workers.value.toString(), 10),
@@ -143,6 +153,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
       port: port.value,
       dbname: dbname.value
     });
+    resetValues();
   }
 
   return {
