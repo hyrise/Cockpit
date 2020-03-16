@@ -139,14 +139,12 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        log_df = self._read_meta_segments("SELECT * FROM meta_log;").set_index(
-            ["timestamp", "reporter"]
-        )
+        log_df = self._read_meta_segments("SELECT * FROM meta_log;")
 
         if log_df.empty:
             return
 
-        log_dict = log_df.to_dict("index")
+        log_dict = log_df.set_index(["timestamp", "reporter"]).to_dict("index")
         plugin_log = [
             (timestamp, reporter, message["message"])
             for (timestamp, reporter), message in log_dict.items()
