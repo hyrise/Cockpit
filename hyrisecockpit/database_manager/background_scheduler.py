@@ -139,19 +139,14 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        if self._processing_tables_flag.value:
+        log_df = self._read_meta_segments("SELECT * FROM meta_log;").set_index(
+            ["timestamp", "reporter"]
+        )
+
+        if log_df.empty:
             return
 
-        log_df = DataFrame
-
-        with PoolCursor(self._connection_pool) as cur:
-            plugin_log_query = "SELECT * FROM meta_log;"
-            log_df = read_sql_query(plugin_log_query, cur.connection).set_index(
-                ["timestamp", "reporter"]
-            )
-
         log_dict = log_df.to_dict("index")
-
         plugin_log = [
             (timestamp, reporter, message["message"])
             for (timestamp, reporter), message in log_dict.items()
