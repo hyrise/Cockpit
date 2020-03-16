@@ -1,9 +1,7 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes['light'].background }">
-    <AppDrawer :open="showNavigationDrawer" />
+    <AppDrawer />
     <v-app-bar app color="grey darken-3" dark>
-      <v-app-bar-nav-icon @click="toggleNavigationDrawer()">
-      </v-app-bar-nav-icon>
       <v-img
         src="../src/components/images/hyrise_logo.png"
         class="mr-2 mb-2"
@@ -18,6 +16,7 @@
         max-height="55"
       >
       </v-img>
+      <add-database />
       <v-icon class="plugin-icon" @click="togglePluginEditor()">
         mdi-widgets
       </v-icon>
@@ -39,6 +38,7 @@
 <script lang="ts">
 import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
+import addDatabase from "./components/addDatabase.vue";
 import PluginsOverview from "./components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "./components/workload/WorkloadGeneration.vue";
 
@@ -52,7 +52,7 @@ interface Data {
 }
 
 export default defineComponent({
-  components: { AppDrawer, PluginsOverview, WorkloadGeneration },
+  components: { AppDrawer, PluginsOverview, WorkloadGeneration, addDatabase },
   setup(props: {}, context: SetupContext): Data {
     const showNavigationDrawer = ref<boolean>(true);
     const showPluginEditor = ref<boolean>(false);
@@ -82,7 +82,6 @@ export default defineComponent({
 </script>
 <style scoped>
 .plugin-icon {
-  margin-left: auto;
   margin-right: 10px;
 }
 </style>

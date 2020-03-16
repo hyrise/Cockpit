@@ -37,8 +37,7 @@ _responses: Dict[int, str] = {
 def get_response(code: int,) -> Response:
     """Get a predefined response with a code."""
     code = code if code in _responses else 500
-    message = _responses[code]
-    return {"header": {"status": code, "message": message}, "body": {}}
+    return Response(header=Header(status=code, message=_responses[code]), body={})
 
 
 def get_error_response(code: int, message: str) -> Response:
