@@ -119,7 +119,7 @@ interface Data {
   frequency: Ref<number>;
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
-  buttonIsLoading: any[];
+  buttonIsLoading: any;
   getDisplayedWorkload: (workload: Workload) => string;
   startingWorkload: (workload: Workload) => void;
   pauseWorkload: (workload: Workload) => void;
@@ -128,6 +128,7 @@ interface Data {
   handleChange: (workload: Workload) => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
+  isActive: Ref<boolean>;
 }
 export default defineComponent({
   props: {
@@ -139,7 +140,7 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): Data {
     const isActive = ref<boolean>(false);
     const startedWorkload = ref<boolean>(false);
-    const buttonIsLoading = reactive({
+    const buttonIsLoading: any = reactive({
       loadtpch01: false,
       loadtpch1: false,
       loadtpcds: false,
@@ -221,7 +222,8 @@ export default defineComponent({
       isLoaded,
       handleChange,
       handleWorkloadDataChange,
-      closeWorkloadDialog
+      closeWorkloadDialog,
+      isActive
     };
   }
 });
