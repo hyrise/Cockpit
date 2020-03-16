@@ -28,7 +28,7 @@ class Server:
         self._port = port
         self._init_server(io_threads)
 
-    def _init_server(self, io_threads) -> None:
+    def _init_server(self, io_threads: int) -> None:
         self._context = Context(io_threads=io_threads)
         self._socket = self._context.socket(REP)
         self._socket.bind("tcp://{:s}:{:s}".format(self._host, self._port))
@@ -40,7 +40,7 @@ class Server:
             response = self._handle_request(request)
             self._socket.send_json(response)
 
-    def _handle_request(self, request) -> Response:
+    def _handle_request(self, request: Dict) -> Response:
         try:
             validate(instance=request, schema=request_schema)
             func, schema = self._calls[request["header"]["message"]]

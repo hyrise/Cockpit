@@ -1,5 +1,6 @@
 """Utility custom cursors."""
-from typing import Any, Dict, List, Tuple
+from types import TracebackType
+from typing import Any, Dict, List, Optional, Tuple, Type
 
 from influxdb import InfluxDBClient
 from psycopg2 import pool
@@ -19,12 +20,18 @@ class PoolCursor:
         """Return self for a context manager."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Close the cursor and connection."""
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Call close with a context manager."""
         self.cur.close()
         self.pool.putconn(self.connection)
+        return None
 
-    def execute(self, query, parameters) -> None:
+    def execute(self, query: str, parameters: Optional[Tuple]) -> None:
         """Execute a query."""
         return self.cur.execute(query, parameters)
 
@@ -40,7 +47,9 @@ class PoolCursor:
 class StorageCursor:
     """Context Manager for a connection to log queries persistently."""
 
-    def __init__(self, host, port, user, password, database) -> None:
+    def __init__(
+        self, host: str, port: str, user: str, password: str, database: str
+    ) -> None:
         """Initialize a StorageCursor."""
         self._host = host
         self._port = port
@@ -56,9 +65,15 @@ class StorageCursor:
         self._connection.create_database(self._database)
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Close the cursor and connection."""
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Call close with a context manager."""
         self._connection.close()
+        return None
 
     def log_meta_information(
         self, measurement: str, fields: Dict[str, Any], time_stamp: int

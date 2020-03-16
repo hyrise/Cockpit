@@ -425,7 +425,7 @@ model_get_plugin_setting = control.clone(
 )
 
 
-def get_all_databases(client: InfluxDBClient):
+def get_all_databases(client: InfluxDBClient) -> List[str]:
     """Return a list of all databases with measurements."""
     return [d["name"] for d in client.get_list_database()]
 

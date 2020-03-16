@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Process, Queue, Value
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from psycopg2 import pool
@@ -35,9 +35,9 @@ class Database(object):
     ) -> None:
         """Initialize database object."""
         self._id = id
-        self._default_tables = default_tables
-        self.number_workers = number_workers
-        self._number_additional_connections = 1
+        self._default_tables: str = default_tables
+        self.number_workers: int = number_workers
+        self._number_additional_connections: int = 1
         self.driver = Driver(
             user,
             password,
@@ -134,7 +134,7 @@ class Database(object):
             worker.terminate()
         self._worker_pool[:] = []
 
-    def _flush_queue(self, default_init_tasks=None) -> None:
+    def _flush_queue(self, default_init_tasks: Optional[Sequence] = None) -> None:
         """Flush queue."""
         self._shutdown_workers()
         self._task_queue = Queue(0)
@@ -145,7 +145,7 @@ class Database(object):
         self._worker_pool = self._init_worker_pool()
         self._start_workers()
 
-    def _get_existing_tables(self, table_names) -> Dict:
+    def _get_existing_tables(self, table_names: Sequence) -> Dict:
         """Check wich tables exists and which not."""
         existing_tables = []
         not_existing_tables = []
@@ -161,7 +161,7 @@ class Database(object):
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
     def _generate_table_loading_queries(
-        self, table_names, folder_name: str
+        self, table_names: Sequence, folder_name: str
     ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
@@ -176,7 +176,7 @@ class Database(object):
         ]
 
     def _generate_table_drop_queries(
-        self, table_names, folder_name: str
+        self, table_names: Sequence, folder_name: str
     ) -> List[Tuple[str, Optional[Tuple[Tuple[str, str], ...]], str, str]]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
@@ -185,7 +185,9 @@ class Database(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _check_if_tables_processed(self, table_loading_tasks) -> None:
+    def _check_if_tables_processed(
+        self, table_loading_tasks: Optional[Sequence]
+    ) -> None:
         """Check if all table processing task are taken from the queue and if so flushes it."""
         if not self._processing_tables_flag.value:
             self._processing_tables_flag.value = True
@@ -195,7 +197,9 @@ class Database(object):
             self._processing_tables_flag.value = False
             self._check_if_tables_processed_job.remove()
 
-    def _start_table_processing_parallel(self, table_loading_tasks) -> None:
+    def _start_table_processing_parallel(
+        self, table_loading_tasks: Optional[Sequence]
+    ) -> None:
         """Flush queue and initialize it with table processing queries."""
         self._check_if_tables_processed_job = self._scheduler.add_job(
             func=self._check_if_tables_processed,

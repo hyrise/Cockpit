@@ -1,6 +1,7 @@
 """Module for managing databases."""
 
-from typing import Callable, Dict, Optional, Tuple
+from types import TracebackType
+from typing import Callable, Dict, Optional, Tuple, Type
 
 from hyrisecockpit.message import (
     add_database_request_schema,
@@ -68,13 +69,19 @@ class DatabaseManager(object):
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
-    def __enter__(self):
+    def __enter__(self) -> "DatabaseManager":
         """Return self for a context manager."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
         """Call close with a context manager."""
         self.close()
+        return None
 
     def _call_add_database(self, body: Body) -> Response:
         """Add database and initialize driver for it."""
@@ -253,7 +260,7 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def start(self):
+    def start(self) -> None:
         """Start the manager by starting the server."""
         self._server.start()
 

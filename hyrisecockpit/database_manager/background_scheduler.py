@@ -66,7 +66,7 @@ class BackgroundJobManager(object):
         self._update_storage_data_job.remove()
         self._scheduler.shutdown()
 
-    def _update_krueger_data(self):
+    def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
         executed_mocked_data = {
             "SELECT": 100,
@@ -96,7 +96,7 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _read_meta_segments(self, sql) -> DataFrame:
+    def _read_meta_segments(self, sql: str) -> DataFrame:
         if self._processing_tables_flag.value:
             return DataFrame({"foo": []})  # TODO remove foo
         else:
@@ -146,7 +146,7 @@ class BackgroundJobManager(object):
                         ]
         return base
 
-    def _create_chunks_dictionary(self, meta_segments) -> Dict:
+    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
         chunks_data: Dict = {}
         grouped_tables = meta_segments.reset_index().groupby("table_name")
 
@@ -206,7 +206,7 @@ class BackgroundJobManager(object):
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
-    def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
+    def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
             inplace=True,

@@ -3,7 +3,8 @@
 Includes the main WorkloadGenerator.
 """
 
-from typing import Any, Callable, Dict, Optional, Tuple
+from types import TracebackType
+from typing import Any, Callable, Dict, Optional, Tuple, Type
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, Context
@@ -58,13 +59,19 @@ class WorkloadGenerator(object):
         )
         self._scheduler.start()
 
-    def __enter__(self):
+    def __enter__(self) -> "WorkloadGenerator":
         """Return self for a context manager."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
         """Call close with a context manager."""
         self.close()
+        return None
 
     def _init_server(self) -> None:
         self._context = Context(io_threads=1)
@@ -76,7 +83,7 @@ class WorkloadGenerator(object):
     def _get_default_workload_location(self) -> str:
         return self._default_workload_location
 
-    def _get_workload(self, workload_type: str):
+    def _get_workload(self, workload_type: str) -> Workload:
         workload = self._workloads.get(workload_type)
         if not workload:
             workload = Workload(workload_type, self._get_default_workload_location())
@@ -107,7 +114,7 @@ class WorkloadGenerator(object):
         self._generate_workload_flag = False
         return get_response(200)
 
-    def _publish_data(self, data: Response):
+    def _publish_data(self, data: Response) -> None:
         self._pub_socket.send_json(data)
 
     def _generate_workload(self) -> None:

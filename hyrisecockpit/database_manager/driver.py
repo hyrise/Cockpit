@@ -8,7 +8,13 @@ class Driver(object):
     """Interface to database."""
 
     def __init__(
-        self, user: str, password: str, host: str, port: str, dbname: str, n_connections
+        self,
+        user: str,
+        password: str,
+        host: str,
+        port: str,
+        dbname: str,
+        n_connections: int,
     ):
         """Initialize the connection."""
         self._user: str = user
