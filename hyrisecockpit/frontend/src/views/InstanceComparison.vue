@@ -10,16 +10,16 @@
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
       />
-      <v-alert
-        v-if="!selectedDatabases.length"
-        class="alert mt-2"
-        type="warning"
-      >
-        No databases selected.
-      </v-alert>
-      <v-alert v-if="!selectedMetrics.length" class="alert mt-2" type="warning">
-        No metrics selected.
-      </v-alert>
+      <unselected-warning :condition="selectedDatabases">
+        <template #message>
+          No databases selected.
+        </template>
+      </unselected-warning>
+      <unselected-warning :condition="selectedMetrics">
+        <template #message>
+          No metrics selected.
+        </template>
+      </unselected-warning>
       <metrics-comparison-table
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -46,7 +46,8 @@ import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useSelectionHandling } from "../meta/views";
-import LinearLoader from "../components/loading/linearLoader.vue";
+import LinearLoader from "../components/alerts/linearLoader.vue";
+import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 
 export default defineComponent({
@@ -54,7 +55,8 @@ export default defineComponent({
     MetricsComparisonTable,
     DatabaseMetricSelection,
     DatabaseDetailsPanel,
-    LinearLoader
+    LinearLoader,
+    UnselectedWarning
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
@@ -68,8 +70,5 @@ export default defineComponent({
 .select {
   margin-top: 0.5%;
   margin-bottom: 0.5%;
-}
-.alert {
-  margin-top: 1%;
 }
 </style>

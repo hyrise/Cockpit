@@ -44,7 +44,7 @@ import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
-import LinearLoader from "../components/loading/linearLoader.vue";
+import LinearLoader from "../components/alerts/linearLoader.vue";
 
 interface Data {
   getMetricMetadata: (metric: Metric) => MetricMetadata;
