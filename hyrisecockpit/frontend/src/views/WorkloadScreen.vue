@@ -32,7 +32,7 @@ import { Metric, workloadMetrics } from "../types/metrics";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
-import LinearLoader from "../components/loading/linearLoader.vue";
+import LinearLoader from "../components/alerts/linearLoader.vue";
 
 interface Props {}
 interface Data {

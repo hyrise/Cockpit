@@ -11,16 +11,16 @@
         :selected-databases="selectedDatabases"
         :handle-scroll="false"
       />
-      <v-alert
-        v-if="!selectedDatabases.length"
-        class="alert mt-2"
-        type="warning"
-      >
-        No databases selected.
-      </v-alert>
-      <v-alert v-if="!selectedMetrics.length" class="alert mt-2" type="warning">
-        No metrics selected.
-      </v-alert>
+      <unselected-warning :condition="selectedDatabases">
+        <template #message>
+          No databases selected.
+        </template>
+      </unselected-warning>
+      <unselected-warning :condition="selectedMetrics">
+        <template #message>
+          No metrics selected.
+        </template>
+      </unselected-warning>
       <metrics-tile-list
         v-if="selectedDatabases.length"
         class="list"
@@ -48,14 +48,16 @@ import { Metric, overviewMetrics } from "../types/metrics";
 import { useSelectionHandling } from "../meta/views";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
-import LinearLoader from "../components/loading/linearLoader.vue";
+import LinearLoader from "../components/alerts/linearLoader.vue";
+import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 
 export default defineComponent({
   components: {
     MetricsTileList,
     DatabaseDetailsPanel,
     DatabaseMetricSelection,
-    LinearLoader
+    LinearLoader,
+    UnselectedWarning
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
