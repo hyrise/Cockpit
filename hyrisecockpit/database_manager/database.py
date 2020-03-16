@@ -151,12 +151,6 @@ class Database(object):
 
     def close(self) -> None:
         """Close the database."""
-        # Remove jobs
-        # Close the scheduler
         self._worker_pool.terminate()
-        # Close subscriber worker
-        # Close worker pool
-        # Close connections
+        self._background_scheduler.close()
         self._connection_pool.closeall()
-
-        # Close queue
