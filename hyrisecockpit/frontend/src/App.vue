@@ -3,7 +3,21 @@
     <AppDrawer />
     <v-app-bar app color="primary" dark>
       <b> Hyrise Cockpit </b>
-      <add-database />
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-icon
+            class="database-icon"
+            v-on="on"
+            @click="showAddDatabaseDialog = true"
+            >mdi-database-plus</v-icon
+          >
+        </template>
+        <span>Add Database</span>
+      </v-tooltip>
+      <add-database
+        :open="showAddDatabaseDialog"
+        @close="showAddDatabaseDialog = false"
+      />
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-icon class="plugin-icon" v-on="on" @click="togglePluginEditor()">
@@ -45,6 +59,7 @@ interface Data {
   showPluginEditor: Ref<boolean>;
   toggleNavigationDrawer: () => void;
   showWorkloadDialog: Ref<boolean>;
+  showAddDatabaseDialog: Ref<boolean>;
   openWorkloadDialog: () => void;
 }
 
@@ -54,6 +69,7 @@ export default defineComponent({
     const showNavigationDrawer = ref<boolean>(true);
     const showPluginEditor = ref<boolean>(false);
     const showWorkloadDialog = ref<boolean>(false);
+    const showAddDatabaseDialog = ref<boolean>(false);
 
     function toggleNavigationDrawer(): void {
       showNavigationDrawer.value = !showNavigationDrawer.value;
@@ -72,7 +88,8 @@ export default defineComponent({
       togglePluginEditor,
       showPluginEditor,
       showWorkloadDialog,
-      openWorkloadDialog
+      openWorkloadDialog,
+      showAddDatabaseDialog
     };
   }
 });
@@ -80,5 +97,9 @@ export default defineComponent({
 <style scoped>
 .plugin-icon {
   margin-right: 10px;
+}
+.database-icon {
+  margin-right: 10px;
+  margin-left: auto;
 }
 </style>

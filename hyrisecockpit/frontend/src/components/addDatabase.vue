@@ -1,10 +1,5 @@
 <template>
-  <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
-    <template v-slot:activator="{ on }">
-      <v-icon class="icon" v-on="on" @click="showDatabaseDialog = true"
-        >mdi-database-plus</v-icon
-      >
-    </template>
+  <v-dialog v-model="open" persistent max-width="600px">
     <v-card>
       <v-card-title>
         <span class="headline">Add new database</span>
@@ -65,15 +60,13 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="showDatabaseDialog = false"
-          >Close</v-btn
-        >
+        <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
         <v-btn
           color="primary"
           text
           @click="
             createNewDatabase();
-            showDatabaseDialog = false;
+            closeDialog();
           "
           >Save</v-btn
         >
@@ -94,10 +87,18 @@ import {
 } from "@vue/composition-api";
 import { useDatabaseService } from "../services/databaseService";
 
-interface Props {}
+interface Props {
+  open: boolean;
+}
 interface Data extends DatabaseCreationData {}
 
 export default defineComponent({
+  props: {
+    open: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup(props: Props, context: SetupContext): Data {
     return {
       ...useDatabaseCreation(context)
@@ -114,7 +115,7 @@ interface DatabaseCreationData {
   port: Ref<string>;
   dbname: Ref<string>;
   createNewDatabase: () => void;
-  showDatabaseDialog: Ref<boolean>;
+  closeDialog: () => void;
 }
 
 function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
@@ -153,6 +154,10 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     resetValues();
   }
 
+  function closeDialog(): void {
+    context.emit("close");
+  }
+
   return {
     number_workers,
     id,
@@ -162,13 +167,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     port,
     dbname,
     createNewDatabase,
-    showDatabaseDialog
+    closeDialog
   };
 }
 </script>
-<style scoped>
-.icon {
-  margin-right: 10px;
-  margin-left: auto;
-}
-</style>
+<style scoped></style>
