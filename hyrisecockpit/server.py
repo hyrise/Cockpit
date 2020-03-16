@@ -3,12 +3,13 @@
 Used by Database Manager and Workload Generator.
 """
 
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Callable, Dict, Optional, Tuple
 
 from jsonschema import ValidationError, validate
 from zmq import REP, Context
 
 from hyrisecockpit.message import request_schema
+from hyrisecockpit.request import Body, Request
 from hyrisecockpit.response import Response, get_response
 
 
@@ -19,7 +20,7 @@ class Server:
         self,
         host: str,
         port: str,
-        calls: Dict[str, Tuple[Callable[[Dict[str, Any]], Response], Optional[Dict]]],
+        calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]],
         io_threads: int = 1,
     ) -> None:
         """Initialize a Server with a host, port and calls."""
@@ -36,11 +37,11 @@ class Server:
     def start(self) -> None:
         """Start the server loop."""
         while True:
-            request = self._socket.recv_json()
-            response = self._handle_request(request)
+            request: Request = self._socket.recv_json()
+            response: Response = self._handle_request(request)
             self._socket.send_json(response)
 
-    def _handle_request(self, request: Dict) -> Response:
+    def _handle_request(self, request: Request) -> Response:
         try:
             validate(instance=request, schema=request_schema)
             func, schema = self._calls[request["header"]["message"]]

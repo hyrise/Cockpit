@@ -17,7 +17,8 @@ from hyrisecockpit.exception import (
     QueryTypesNotSpecifiedException,
 )
 from hyrisecockpit.message import start_workload_request_schema
-from hyrisecockpit.response import Body, Response, get_error_response, get_response
+from hyrisecockpit.request import Body
+from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 

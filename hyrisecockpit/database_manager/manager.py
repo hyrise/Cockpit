@@ -10,7 +10,8 @@ from hyrisecockpit.message import (
     load_data_request_schema,
     set_plugin_request_schema,
 )
-from hyrisecockpit.response import Body, Response, get_error_response, get_response
+from hyrisecockpit.request import Body
+from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
 from .database import Database
