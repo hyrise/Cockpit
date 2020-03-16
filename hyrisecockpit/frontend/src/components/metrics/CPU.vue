@@ -4,8 +4,8 @@
       v-if="showDetails"
       :data="data"
       :databases="selectedDatabases"
-      :border="1200"
-      state-order="desc"
+      :border="100"
+      state-order="asc"
       unit="%"
     />
     <Linechart
