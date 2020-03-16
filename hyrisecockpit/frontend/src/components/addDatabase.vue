@@ -98,20 +98,11 @@ import { useMetricEvents } from "../meta/events";
 import { useDatabaseService } from "../services/databaseService";
 
 interface Props {}
-interface Data extends DatabaseCreationData {
-  databases: Ref<readonly string[]>;
-}
+interface Data extends DatabaseCreationData {}
 
 export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
-    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
-
-    onMounted(() => {
-      emitWatchedMetricsChangedEvent();
-    });
-
     return {
-      databases: context.root.$databaseController.availableDatabasesById,
       ...useDatabaseCreation(context)
     };
   }
