@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer v-model="open" app class="elevation-2" width="200">
-    <v-toolbar color="grey darken-3" class="text-center">
+    <v-toolbar color="primary" class="text-center">
       <v-img
         src="../../src/components/images/hpi_logo_transparent.png"
         max-width="40"

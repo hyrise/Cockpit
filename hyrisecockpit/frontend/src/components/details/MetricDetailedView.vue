@@ -2,7 +2,7 @@
   <div class="mx-10 my-10">
     <v-dialog v-model="showDialog" hide-overlay>
       <template v-slot:activator="{ on }">
-        <v-btn color="secondary" small right dark v-on="on">
+        <v-btn color="primary" small right dark v-on="on">
           <v-icon left>mdi-arrow-expand</v-icon> Open detailed view
         </v-btn>
       </template>
@@ -15,7 +15,7 @@
           <slot name="content" />
         </v-card-text>
         <v-card-actions>
-          <v-btn block color="grey darken-3" @click="showDialog = false">
+          <v-btn block color="primary" @click="showDialog = false">
             Close detailed view
           </v-btn>
         </v-card-actions>

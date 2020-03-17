@@ -1,7 +1,7 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes['light'].background }">
     <AppDrawer />
-    <v-app-bar app color="grey darken-3" dark>
+    <v-app-bar app color="primary" dark>
       <v-img
         src="../src/components/images/hyrise_logo.png"
         class="mr-2 mb-2"
@@ -17,16 +17,14 @@
       >
       </v-img>
       <add-database />
-      <v-icon class="plugin-icon" @click="togglePluginEditor()">
-        mdi-widgets
-      </v-icon>
+      <v-btn color="secondary" class="ml-1 mr-2" @click="togglePluginEditor()">
+        Plugins
+      </v-btn>
       <workload-generation
         :open="showWorkloadDialog"
         @close="showWorkloadDialog = false"
       />
-      <v-btn color="#02789d" @click="openWorkloadDialog()"
-        >Generate Workload</v-btn
-      >
+      <v-btn color="secondary" @click="openWorkloadDialog()">Workload</v-btn>
     </v-app-bar>
     <v-content>
       <PluginsOverview v-if="showPluginEditor" :onClose="togglePluginEditor" />

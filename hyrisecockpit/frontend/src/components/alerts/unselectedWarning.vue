@@ -1,5 +1,5 @@
 <template>
-  <v-alert v-if="show" class="alert mt-2" type="warning">
+  <v-alert v-if="show" class="alert mt-2" type="warning" color="secondary">
     <slot name="message" />
   </v-alert>
 </template>
