@@ -9,7 +9,7 @@ export function usePluginService(): PluginService {
   const pluginLogs = ref<any>({});
 
   getPlugins();
-  getPluginLogs();
+  setInterval(() => getPluginLogs(), 1000);
 
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {

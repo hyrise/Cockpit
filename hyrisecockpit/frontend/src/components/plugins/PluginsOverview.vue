@@ -94,8 +94,6 @@ export default defineComponent({
       pluginLogs
     } = context.root.$pluginService;
 
-    console.log(pluginLogs.value);
-
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
