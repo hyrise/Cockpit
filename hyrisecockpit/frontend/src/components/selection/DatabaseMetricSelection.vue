@@ -24,6 +24,7 @@
             />
             <v-select
               class="select-box"
+              v-if="selectedMetrics.length"
               v-model="selectedMetrics"
               v-on:input="handleMetricsChanged"
               :items="availableMetrics"

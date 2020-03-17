@@ -4,13 +4,7 @@
       <v-container fluid>
         <v-row no-gutters>
           <v-col>
-            <v-chip
-              v-if="!!selectedDatabase.id"
-              :color="selectedDatabase.color"
-              class="white--text"
-            >
-              {{ selectedDatabase.id }}
-            </v-chip>
+            <database-chip v-if="!!tileDatabase" :database-id="tileDatabase" />
           </v-col>
           <v-col class="metric-title">
             {{ getMetricTitle(metric) }}
@@ -51,6 +45,7 @@ import {
 } from "../../types/metrics";
 import { Database } from "../../types/database";
 import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
+import DatabaseChip from "@/components/details/DatabaseChip.vue";
 
 interface Props extends MetricProps {
   tileDatabase: string;
@@ -59,12 +54,12 @@ interface Props extends MetricProps {
 interface Data {
   getMetricTitle: (metric: Metric) => string;
   getMetricComponent: (metric: Metric) => string;
-  selectedDatabase: Database | { id: string; color: string };
 }
 
 export default defineComponent({
   components: {
     MetricDescriptionTooltip,
+    DatabaseChip,
     Throughput,
     CPU,
     Latency,
@@ -85,10 +80,7 @@ export default defineComponent({
     const { getDatabasesByIds } = context.root.$databaseController;
     return {
       getMetricTitle,
-      getMetricComponent,
-      selectedDatabase: props.tileDatabase
-        ? getDatabasesByIds([props.tileDatabase])[0]
-        : { id: "", color: "" }
+      getMetricComponent
     };
   }
 });

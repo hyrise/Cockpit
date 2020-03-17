@@ -18,6 +18,7 @@ export interface PluginService {
   plugins: Ref<string[]>;
   activePlugins: Ref<string[]>;
   updatePlugins: (databaseId: string, plugin: string) => Promise<void>;
+  pluginLogs: Ref<any>;
 }
 
 export interface WorkloadService {

@@ -88,17 +88,17 @@ export function useDatabaseController(): DatabaseController {
     } as Database);
   }
 
-  function getDatabaseById(id: string): Database | undefined {
-    return databases.value.find(database => database.id === id);
+  function getDatabaseById(id: string): Database {
+    return databases.value.find(database => database.id === id)!;
   }
 
   function getDatabasesByIds(ids: string[]): Database[] {
-    return ids.map(id => getDatabaseById(id)!);
+    return ids.map(id => getDatabaseById(id));
   }
 
   function updateDatabaseCPUInformation(data: any): void {
     databaseService.getCPUInformation(data).forEach(cpuInfo => {
-      const database = getDatabaseById(cpuInfo.id)!;
+      const database = getDatabaseById(cpuInfo.id);
       if (database.systemDetails.memoryCapacity !== cpuInfo.memoryCapacity)
         database.systemDetails.memoryCapacity = cpuInfo.memoryCapacity;
 
@@ -109,7 +109,7 @@ export function useDatabaseController(): DatabaseController {
 
   function updateDatabaseStorageInformation(data: any): void {
     databaseService.getStorageInformation(data).forEach(storageInfo => {
-      const database = getDatabaseById(storageInfo.id)!;
+      const database = getDatabaseById(storageInfo.id);
       if (
         database.systemDetails.memoryFootprint !== storageInfo.memoryFootprint
       )
@@ -133,6 +133,7 @@ export function useDatabaseController(): DatabaseController {
     availableDatabasesById: computed(() =>
       databases.value.map(database => database.id)
     ),
-    getDatabasesByIds
+    getDatabasesByIds,
+    getDatabaseById
   };
 }
