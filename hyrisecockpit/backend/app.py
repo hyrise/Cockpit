@@ -146,7 +146,7 @@ model_query_information = monitor.clone(
                         ),
                         "latency": fields.Float(
                             title="Latency",
-                            description="Average query latency (ms) of a given time interval.",
+                            description="Average query latency (ns) of a given time interval.",
                             required=True,
                             example=923.263,
                         ),
@@ -164,7 +164,7 @@ model_latency = monitor.clone(
     {
         "latency": fields.Float(
             title="Latency",
-            description="Average query latency (ms) of a given time interval.",
+            description="Average query latency (ns) of a given time interval.",
             required=True,
             example=923.263,
         )
