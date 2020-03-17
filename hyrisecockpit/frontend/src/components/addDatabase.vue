@@ -1,85 +1,78 @@
 <template>
-  <v-row justify="end">
-    <v-dialog v-model="showDatabaseDialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-icon class="icon" v-on="on">mdi-database-plus</v-icon>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">Add new database</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="host"
-                  label="Host*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="port"
-                  label="Port*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="dbname"
-                  label="Databasename*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="user"
-                  label="User*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="password"
-                  label="Password*"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="number_workers"
-                  label="Number of Workers*"
-                  type="number"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6">
-                <v-text-field v-model="id" label="Id*" required></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="showDatabaseDialog = false"
-            >Close</v-btn
-          >
-          <v-btn
-            color="primary"
-            text
-            @click="
-              createNewDatabase();
-              showDatabaseDialog = false;
-            "
-            >Save</v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
+  <v-dialog v-model="open" persistent max-width="600px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Add new database</span>
+      </v-card-title>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="host"
+                label="Host*"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="port"
+                label="Port*"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="dbname"
+                label="Databasename*"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="user"
+                label="User*"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="password"
+                label="Password*"
+                type="password"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="number_workers"
+                label="Number of Workers*"
+                type="number"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field v-model="id" label="Id*" required></v-text-field>
+            </v-col>
+          </v-row>
+        </v-container>
+        <small>*indicates required field</small>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
+        <v-btn
+          color="primary"
+          text
+          @click="
+            createNewDatabase();
+            closeDialog();
+          "
+          >Save</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
@@ -94,10 +87,18 @@ import {
 } from "@vue/composition-api";
 import { useDatabaseService } from "../services/databaseService";
 
-interface Props {}
+interface Props {
+  open: boolean;
+}
 interface Data extends DatabaseCreationData {}
 
 export default defineComponent({
+  props: {
+    open: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup(props: Props, context: SetupContext): Data {
     return {
       ...useDatabaseCreation(context)
@@ -114,7 +115,7 @@ interface DatabaseCreationData {
   port: Ref<string>;
   dbname: Ref<string>;
   createNewDatabase: () => void;
-  showDatabaseDialog: Ref<boolean>;
+  closeDialog: () => void;
 }
 
 function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
@@ -153,6 +154,10 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     resetValues();
   }
 
+  function closeDialog(): void {
+    context.emit("close");
+  }
+
   return {
     number_workers,
     id,
@@ -162,12 +167,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     port,
     dbname,
     createNewDatabase,
-    showDatabaseDialog
+    closeDialog
   };
 }
 </script>
-<style scoped>
-.icon {
-  margin-right: 16px;
-}
-</style>
+<style scoped></style>
