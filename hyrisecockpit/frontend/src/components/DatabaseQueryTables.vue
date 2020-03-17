@@ -2,7 +2,7 @@
   <div>
     <v-card color="primary">
       <v-card-title class="white--text">
-        Query details
+        Detailed query information
       </v-card-title>
     </v-card>
     <v-container
@@ -11,7 +11,11 @@
       justify="center"
       align="center"
     >
-      <div v-for="database in databases" :key="database" class="flex-item">
+      <div
+        v-for="database in selectedDatabases"
+        :key="database"
+        class="flex-item"
+      >
         <query-table
           :database-id="database"
           :queries="queries[database]"
@@ -28,10 +32,11 @@ import { DetailedQueryInformation } from "@/types/queries";
 import QueryTable from "@/components/QueryTable.vue";
 import { useQueryService } from "@/services/queryService";
 
-interface Props {}
+interface Props {
+  selectedDatabases: string[];
+}
 
 interface Data {
-  databases: Ref<readonly string[]>;
   queries: Ref<Record<string, DetailedQueryInformation[]>>;
   loading: Ref<boolean>;
 }
@@ -40,6 +45,12 @@ export default defineComponent({
   components: {
     QueryTable
   },
+  props: {
+    selectedDatabases: {
+      type: Array,
+      default: () => []
+    }
+  },
   setup(props: Props, context: SetupContext): Data {
     const queryService = useQueryService();
     const queries = ref({});
@@ -47,46 +58,15 @@ export default defineComponent({
 
     function updateQueryInformation(): void {
       loading.value = true;
-      queries.value = {
-        added_by_postman: [
-          {
-            queryName: "TPC-H-5",
-            workloadType: "TPC-H",
-            latency: 1,
-            throughput: 10101
-          },
-          {
-            queryName: "TPC-H-4",
-            workloadType: "TPC-H",
-            latency: 2,
-            throughput: 20202
-          }
-        ],
-        citadelle: [
-          {
-            queryName: "TPC-H-5",
-            workloadType: "TPC-H",
-            latency: 1,
-            throughput: 10101
-          },
-          {
-            queryName: "TPC-H-4",
-            workloadType: "TPC-H",
-            latency: 2,
-            throughput: 20202
-          }
-        ]
-      };
-      loading.value = false;
-      //   queryService.getDetailedQueryInformation().then(queryInfo => {
-      //     queries.value = queryInfo;
-      //   });
+      queryService.getDetailedQueryInformation().then(queryInfo => {
+        queries.value = queryInfo;
+        loading.value = false;
+      });
     }
 
-    setInterval(updateQueryInformation, 1000);
+    setInterval(updateQueryInformation, 5000);
 
     return {
-      databases: context.root.$databaseController.availableDatabasesById,
       queries,
       loading
     };

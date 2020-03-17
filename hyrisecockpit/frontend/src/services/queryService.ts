@@ -15,17 +15,16 @@ export function useQueryService(): {
       DetailedQueryInformation[]
     > = {};
     await axios
-      .get(`${monitorBackend}detailed_latency/`)
+      .get(`${monitorBackend}detailed_query_information`)
       .then((response: any) => {
-        detailedQueryInformation = response.reduce(
+        detailedQueryInformation = response.data.reduce(
           (
             queryInformation: Record<string, DetailedQueryInformation[]>,
             entry: any
           ) => {
             const database: string = entry.id;
-            //TODO: add correct property
             queryInformation[database] = [];
-            entry.detailed.forEach((query: any) => {
+            entry.query_information.forEach((query: any) => {
               queryInformation[database].push({
                 queryName: query.workload_type + "-" + query.query_number,
                 workloadType: query.workload_type,
@@ -33,10 +32,13 @@ export function useQueryService(): {
                 throughput: query.throughput
               });
             });
+            console.log(queryInformation);
+            return queryInformation;
           },
           {} as Record<string, DetailedQueryInformation[]>
         );
       });
+
     return detailedQueryInformation;
   }
 

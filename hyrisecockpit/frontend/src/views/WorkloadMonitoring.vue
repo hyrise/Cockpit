@@ -4,19 +4,20 @@
       :conditions="[$databaseController.databasesUpdated]"
       :evaluations="[false]"
     />
-    <div class="mx-12">
-      <div class="mt-6 mb-2">
-        <b> Workload Monitoring </b>
-      </div>
-      <v-divider />
-      <MetricsTileList
+    <div class="mx-6">
+      <database-metric-selection class="select" :metrics="[]" />
+      <database-query-tables :selected-databases="selectedDatabases" />
+      <v-card color="primary">
+        <v-card-title class="white--text">
+          Workload metrics
+        </v-card-title>
+      </v-card>
+      <metrics-tile-list
         v-if="$databaseController.databasesUpdated.value"
         :selected-databases="watchedInstances"
         :show-details="false"
-        :selected-metrics="workloadMetrics"
+        :selected-metrics="watchedMetrics"
       />
-      -->
-      <database-query-tables />
     </div>
   </div>
 </template>
@@ -36,19 +37,22 @@ import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/linearLoader.vue";
 import DatabaseQueryTables from "@/components/DatabaseQueryTables.vue";
+import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
+import { MetricViewData } from "../types/views";
+import { useSelectionHandling } from "../meta/views";
 
 interface Props {}
-interface Data {
-  workloadMetrics: Metric[];
+interface Data extends MetricViewData {
   watchedInstances: Ref<string[]>;
 }
 
 export default defineComponent({
-  name: "WorkloadScreen",
+  name: "WorkloadMonitoring",
   components: {
     MetricsTileList,
     LinearLoader,
-    DatabaseQueryTables
+    DatabaseQueryTables,
+    DatabaseMetricSelection
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
@@ -69,9 +73,15 @@ export default defineComponent({
 
     return {
       watchedInstances,
-      workloadMetrics
+      watchedMetrics: workloadMetrics,
+      ...useSelectionHandling()
     };
   }
 });
 </script>
-<style scoped></style>
+<style scoped>
+.select {
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+</style>
