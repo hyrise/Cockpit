@@ -101,6 +101,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 .metric-description {
   display: flex;

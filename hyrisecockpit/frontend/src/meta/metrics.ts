@@ -126,7 +126,7 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   latency: {
     title: "Latency",
     xaxis: timeLabel,
-    yaxis: "Latency in ns"
+    yaxis: "Latency in ms"
   },
   queueLength: {
     title: "Queue Length",
