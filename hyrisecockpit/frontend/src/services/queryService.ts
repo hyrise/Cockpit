@@ -23,15 +23,16 @@ export function useQueryService(): {
             entry: any
           ) => {
             const database: string = entry.id;
-            queryInformation[database] = [];
-            entry.query_information.forEach((query: any) => {
-              queryInformation[database].push({
-                queryName: query.benchmark + "-" + query.query_number,
-                workloadType: query.benchmark,
-                latency: query.latency,
-                throughput: query.throughput
-              });
-            });
+            queryInformation[database] = entry.query_information.map(
+              (query: any) => {
+                return {
+                  queryName: query.benchmark + "-" + query.query_number,
+                  workloadType: query.benchmark,
+                  latency: query.latency,
+                  throughput: query.throughput
+                };
+              }
+            );
             return queryInformation;
           },
           {} as Record<string, DetailedQueryInformation[]>

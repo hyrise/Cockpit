@@ -72,7 +72,7 @@ export default defineComponent({
         value: "queryName"
       },
       { text: "Workload type", value: "workloadType" },
-      { text: "Latency (in ns)", value: "latency" },
+      { text: "Latency (in ms)", value: "latency" },
       { text: "Throughput (in s)", value: "throughput" }
     ];
 
