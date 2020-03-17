@@ -14,7 +14,7 @@ class Workload(object):
         self,
         workload_type: str,
         queries_location: str,
-        delimiter: str = ";",
+        delimiter: str = "---",
         file_type: str = "sql",
     ) -> None:
         """Initialize a Workload."""

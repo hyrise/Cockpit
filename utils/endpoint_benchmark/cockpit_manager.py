@@ -3,6 +3,8 @@
 import signal
 import subprocess  # nosec
 import time
+from types import TracebackType
+from typing import Optional, Type
 
 import requests
 
@@ -52,9 +54,15 @@ class CockpitManager:
         """Return self for a context manager."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
         """Call close with a context manager."""
         self.close_components()
+        return None
 
     def start_components(self):
         """Start main cockpit components as sub-processes."""
@@ -81,7 +89,7 @@ class CockpitManager:
             self._subprocesses.append(generator_process)
             time.sleep(0.5)
 
-    def close_components(self):
+    def close_components(self) -> None:
         """Close main cockpit components."""
         for i in range(len(self._subprocesses)):
             self._subprocesses[i].send_signal(signal.SIGINT)

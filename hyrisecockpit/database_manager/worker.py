@@ -4,7 +4,7 @@ Workers run in pools and are started by other components.
 """
 from multiprocessing import Queue, Value
 from time import time_ns
-from typing import List, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 from psycopg2 import Error, pool
 from psycopg2.extensions import AsIs
@@ -30,12 +30,12 @@ def fill_queue(
     sub_socket.setsockopt_string(SUBSCRIBE, "")
 
     while True:
-        published_data = sub_socket.recv_json()
+        published_data: Dict = sub_socket.recv_json()
         if not processing_tables_flag.value:
             handle_published_data(published_data, task_queue)
 
 
-def handle_published_data(published_data, task_queue) -> None:
+def handle_published_data(published_data: Dict, task_queue: Queue) -> None:
     """Fill task queue."""
     tasks = published_data["body"]["querylist"]
     for task in tasks:
@@ -58,7 +58,7 @@ def execute_queries(
         with StorageCursor(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
-            succesful_queries: List[Tuple[int, int, str, str]] = []
+            succesful_queries: List[Tuple[int, int, str, str, str]] = []
             last_batched = time_ns()
             while True:
                 # If Queue is emty go to wait status
@@ -77,13 +77,15 @@ def execute_queries(
                             workload_type,
                             query_type,
                         ) = task
-                        formatted_parameters = get_formatted_parameters(
-                            not_formatted_parameters
+                        formatted_parameters = (
+                            get_formatted_parameters(not_formatted_parameters)
+                            if not_formatted_parameters is not None
+                            else None
                         )
 
                         endts, latency = execute_task(cur, query, formatted_parameters)
                         succesful_queries.append(
-                            (endts, latency, workload_type, query_type)
+                            (endts, latency, workload_type, query_type, worker_id)
                         )
 
                         if last_batched < time_ns() - 1_000_000_000:
@@ -96,7 +98,9 @@ def execute_queries(
                     )
 
 
-def execute_task(cursor, query, formatted_parameters):
+def execute_task(
+    cursor: PoolCursor, query: str, formatted_parameters: Optional[Tuple[str, ...]]
+) -> Tuple[int, int]:
     """Execute given task."""
     startts = time_ns()
     cursor.execute(query, formatted_parameters)
@@ -105,13 +109,11 @@ def execute_task(cursor, query, formatted_parameters):
     return endts, endts - startts
 
 
-def get_formatted_parameters(not_formatted_parameters):
+def get_formatted_parameters(
+    not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
+) -> Tuple[Union[AsIs, str], ...]:
     """Create formatted parameters."""
-    return (
-        tuple(
-            AsIs(parameter) if protocol == "as_is" else parameter
-            for parameter, protocol in not_formatted_parameters
-        )
-        if not_formatted_parameters is not None
-        else None
+    return tuple(
+        AsIs(parameter) if protocol == "as_is" else parameter
+        for parameter, protocol in not_formatted_parameters
     )

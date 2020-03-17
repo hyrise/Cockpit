@@ -74,3 +74,13 @@ start_workload_request_schema = {
         "frequency": {"type": "integer"},
     },
 }
+
+set_plugin_request_schema = {
+    "type": "object",
+    "required": ["id", "name", "value"],
+    "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "value": {"type": "string"},
+    },
+}

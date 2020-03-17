@@ -3,11 +3,12 @@ from unittest.mock import patch
 
 from pytest import fixture
 
+from hyrisecockpit.request import Body
 from hyrisecockpit.response import get_response
 from hyrisecockpit.server import Server
 
 
-def call_function(body: dict):
+def call_function(body: Body):
     """Execute request."""
     return get_response(200)
 
