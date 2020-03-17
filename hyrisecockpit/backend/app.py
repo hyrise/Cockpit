@@ -117,13 +117,54 @@ model_detailed_throughput = monitor.clone(
     },
 )
 
+model_query_information = monitor.clone(
+    "Detailed Throughput and Latency",
+    model_database,
+    {
+        "detailed_query_information": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput and latency per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "throughput": fields.Integer(
+                            title="throughput",
+                            description="Number of successfully executed queries in given time interval.",
+                            required=True,
+                            example=55,
+                        ),
+                        "latency": fields.Float(
+                            title="Latency",
+                            description="Average query latency (ns) of a given time interval.",
+                            required=True,
+                            example=923.263,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_latency = monitor.clone(
     "Latency",
     model_database,
     {
         "latency": fields.Float(
             title="Latency",
-            description="Average query latency (ms) of a given time interval.",
+            description="Average query latency (ns) of a given time interval.",
             required=True,
             example=923.263,
         )
@@ -608,6 +649,41 @@ class Latency(Resource):
                 latency[database] = 0
         response = get_response(200)
         response["body"]["latency"] = latency
+        return response
+
+
+@monitor.route("/detailed_query_information")
+class DetailedQueryInformation(Resource):
+    """Detailed throughput and latency information of all databases."""
+
+    @monitor.doc(model=[model_query_information])
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
+        """Return detailed throughput and latency information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response: List[Dict] = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            query_information: List[Dict[str, int]] = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "throughput": list(result[table, tags])[0]["throughput"],
+                    "latency": list(result[table, tags])[0]["latency"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "query_information": query_information})
+
         return response
 
 
