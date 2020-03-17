@@ -297,7 +297,6 @@ class BackgroundJobManager(object):
                 cur.execute(query, formatted_parameters)
 
     def _load_tables_job(self, table_names, folder_name):
-        self._database_blocked.value = True
         table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
         )
@@ -318,6 +317,7 @@ class BackgroundJobManager(object):
         table_names = _table_names.get(folder_name.split("_")[0])
 
         if not self._database_blocked.value:
+            self._database_blocked.value = True
             self._scheduler.add_job(
                 func=self._load_tables_job, args=(table_names, folder_name)
             )
@@ -349,7 +349,6 @@ class BackgroundJobManager(object):
         ]
 
     def _delete_tables_job(self, table_names, folder_name):
-        self._database_blocked.value = True
         table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
         processes = []
         for i in range(len(table_drop_queries)):
@@ -365,6 +364,7 @@ class BackgroundJobManager(object):
         """Load tables."""
         table_names = _table_names.get(folder_name.split("_")[0])
         if not self._database_blocked.value:
+            self._database_blocked.value = True
             self._scheduler.add_job(
                 func=self._delete_tables_job, args=(table_names, folder_name)
             )

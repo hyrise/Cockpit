@@ -33,6 +33,7 @@ class Database(object):
         """Initialize database object."""
         self._id = id
         self.number_workers = number_workers
+        self._default_tables: str = default_tables
         self._number_additional_connections = 50
         self.driver = Driver(
             user,
@@ -63,6 +64,7 @@ class Database(object):
         )
         self._background_scheduler.start()
         self._worker_pool.start()
+        self._background_scheduler.load_tables(self._default_tables)
 
     def get_queue_length(self) -> int:
         """Return queue length."""
@@ -82,7 +84,7 @@ class Database(object):
 
     def get_processing_tables_flag(self):
         """Return tables loading flag."""
-        return False
+        return self._database_blocked.value
 
     def start_worker(self):
         """Start worker."""
@@ -94,7 +96,7 @@ class Database(object):
 
     def get_plugins(self) -> Optional[List]:
         """Return all currently activated plugins."""
-        if not self._processing_tables_flag.value:
+        if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(("SELECT name FROM meta_plugins;"), (None,))
                 rows = cur.fetchall()
@@ -105,7 +107,7 @@ class Database(object):
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate Plugin."""
-        if not self._processing_tables_flag.value:
+        if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     (
@@ -119,7 +121,7 @@ class Database(object):
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Activate Plugin."""
-        if not self._processing_tables_flag.value:
+        if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
                     ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
@@ -130,10 +132,10 @@ class Database(object):
 
     def set_plugin_setting(self, name: str, value: str) -> bool:
         """Adjust setting for given plugin."""
-        if not self._processing_tables_flag.value:
+        if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute(
-                    "UPDATE meta_settings SET value=%s WHERE name=%s;", (value, name),
+                    "UPDATE meta_settings SET value=%s WHERE name=%s;", (value, name,),
                 )
             return True
         else:
@@ -141,7 +143,7 @@ class Database(object):
 
     def get_plugin_setting(self) -> Optional[Dict]:
         """Read currently set plugin settings."""
-        if not self._processing_tables_flag.value:
+        if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute("SELECT * FROM meta_settings", None)
                 result = cur.fetchall()

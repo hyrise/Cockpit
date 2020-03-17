@@ -110,7 +110,6 @@ class WorkerPool(object):
             self._execute_task_workers[i].start()
 
     def _start_job(self):
-        self._database_blocked.value = True
         if self._status == "closed":
             self._init_workers()
             self._start_worker()
@@ -122,12 +121,10 @@ class WorkerPool(object):
         self._database_blocked.value = False
 
     def _stop_job(self):
-        self._database_blocked.value = True
         self._wait_for_worker()
         self._database_blocked.value = False
 
     def _close_job(self):
-        self._database_blocked.value = True
         if self._status == "stopped":
             self._terminate_worker()
         else:
@@ -139,6 +136,7 @@ class WorkerPool(object):
     def start(self) -> bool:
         """Start worker."""
         if not self._database_blocked.value:
+            self._database_blocked.value = True
             self._scheduler.add_job(func=self._start_job)
             return True
         else:
@@ -147,6 +145,7 @@ class WorkerPool(object):
     def stop(self) -> bool:
         """Stop worker."""
         if not self._database_blocked.value:
+            self._database_blocked.value = True
             self._scheduler.add_job(func=self._stop_job)
             return True
         else:
@@ -155,6 +154,7 @@ class WorkerPool(object):
     def close(self) -> bool:
         """Close worker."""
         if not self._database_blocked.value:
+            self._database_blocked.value = True
             self._scheduler.add_job(func=self._close_job)
             return True
         else:
