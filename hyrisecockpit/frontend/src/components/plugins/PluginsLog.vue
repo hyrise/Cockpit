@@ -43,7 +43,6 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    onMounted(() => {});
     return {};
   }
 });
