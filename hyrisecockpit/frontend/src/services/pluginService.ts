@@ -6,8 +6,10 @@ import { PluginService } from "../types/services";
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
+  const pluginLogs = ref<any>({});
 
   getPlugins();
+  setInterval(() => getPluginLogs(), 1000);
 
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
@@ -52,9 +54,32 @@ export function usePluginService(): PluginService {
     }
   }
 
+  function getPluginLogs(): Promise<void> {
+    return axios.get(controlBackend + "plugin_log").then(response => {
+      pluginLogs.value = response.data.reduce(
+        (result: any, currentDatabase: any) => {
+          result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+            (databaseLog: string, currentLog: any) => {
+              return (
+                databaseLog +
+                `${currentLog.reporter} [${new Date(
+                  parseInt(currentLog.timestamp)
+                ).toLocaleTimeString()}]: ${currentLog.message}\n`
+              );
+            },
+            ""
+          );
+          return result;
+        },
+        {}
+      );
+    });
+  }
+
   return {
     plugins,
     activePlugins,
-    updatePlugins
+    updatePlugins,
+    pluginLogs
   };
 }
