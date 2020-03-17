@@ -26,13 +26,12 @@ export function useQueryService(): {
             queryInformation[database] = [];
             entry.query_information.forEach((query: any) => {
               queryInformation[database].push({
-                queryName: query.workload_type + "-" + query.query_number,
-                workloadType: query.workload_type,
+                queryName: query.benchmark + "-" + query.query_number,
+                workloadType: query.benchmark,
                 latency: query.latency,
                 throughput: query.throughput
               });
             });
-            console.log(queryInformation);
             return queryInformation;
           },
           {} as Record<string, DetailedQueryInformation[]>
