@@ -310,19 +310,18 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_queries(self, queries):
+    def _execute_queries(self, query):
         with PoolCursor(self._connection_pool) as cur:
-            for query in queries:
-                query, not_formatted_parameters = query
-                formatted_parameters = (
-                    tuple(
-                        AsIs(parameter) if protocol == "as_is" else parameter
-                        for parameter, protocol in not_formatted_parameters
-                    )
-                    if not_formatted_parameters is not None
-                    else None
+            query, not_formatted_parameters = query
+            formatted_parameters = (
+                tuple(
+                    AsIs(parameter) if protocol == "as_is" else parameter
+                    for parameter, protocol in not_formatted_parameters
                 )
-                cur.execute(query, formatted_parameters)
+                if not_formatted_parameters is not None
+                else None
+            )
+            cur.execute(query, formatted_parameters)
 
     def _load_tables_job(self, table_names, folder_name):
         table_loading_queries = self._generate_table_loading_queries(
@@ -330,9 +329,7 @@ class BackgroundJobManager(object):
         )
         processes = []
         for i in range(len(table_loading_queries)):
-            p = Process(
-                target=self._execute_queries, args=([table_loading_queries[i]],)
-            )
+            p = Process(target=self._execute_queries, args=(table_loading_queries[i],))
             processes.append(p)
             p.start()
         for process in processes:
@@ -379,7 +376,7 @@ class BackgroundJobManager(object):
         table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
         processes = []
         for i in range(len(table_drop_queries)):
-            p = Process(target=self._execute_queries, args=([table_drop_queries[i]],))
+            p = Process(target=self._execute_queries, args=(table_drop_queries[i],))
             processes.append(p)
             p.start()
         for process in processes:
