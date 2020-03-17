@@ -165,11 +165,14 @@ class BackgroundJobManager(object):
             if table_name in substractor.keys():
                 for column_name in base[table_name].keys():
                     if column_name in substractor[table_name].keys():
-                        base[table_name][column_name] = [
-                            base[table_name][column_name][i]
-                            - substractor[table_name][column_name][i]
-                            for i in range(len(base[table_name][column_name]))
-                        ]
+                        if len(base[table_name][column_name]) == len(
+                            substractor[table_name][column_name]
+                        ):
+                            base[table_name][column_name] = [
+                                base[table_name][column_name][i]
+                                - substractor[table_name][column_name][i]
+                                for i in range(len(base[table_name][column_name]))
+                            ]
         return base
 
     def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
