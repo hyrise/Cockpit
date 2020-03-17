@@ -4,7 +4,6 @@
     <v-app-bar app color="primary" dark>
       <b> Hyrise Cockpit </b>
       <v-spacer />
-
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-icon class="icon" v-on="on" @click="showAddDatabaseDialog = true"
