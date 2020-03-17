@@ -4,19 +4,11 @@
     <v-app-bar app color="primary" dark>
       <b> Hyrise Cockpit </b>
       <v-spacer />
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-icon class="icon" v-on="on" @click="showAddDatabaseDialog = true"
-            >mdi-database-plus</v-icon
-          >
-        </template>
-        <span>Add Database</span>
-      </v-tooltip>
       <add-database
         :open="showAddDatabaseDialog"
         @close="showAddDatabaseDialog = false"
       />
-      <v-tooltip bottom>
+      <v-tooltip class="tooltip" bottom>
         <template v-slot:activator="{ on }">
           <v-icon class="icon" v-on="on" @click="togglePluginEditor()">
             mdi-widgets
@@ -24,7 +16,7 @@
         </template>
         <span>Manage Plugins</span>
       </v-tooltip>
-      <v-tooltip bottom right>
+      <v-tooltip class="tooltip" bottom right>
         <template v-slot:activator="{ on }">
           <v-icon class="icon" v-on="on" @click="openWorkloadDialog()">
             mdi-speedometer
@@ -38,7 +30,7 @@
       />
       <v-menu bottom offset-y>
         <template v-slot:activator="{ on: menu }">
-          <v-tooltip bottom>
+          <v-tooltip class="tooltip" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <v-badge class="icon" color="secondary" :content="databaseCount">
                 <v-icon v-on="{ ...tooltip, ...menu }">mdi-database</v-icon>
@@ -47,7 +39,7 @@
             <span>Available Databases</span>
           </v-tooltip>
         </template>
-        <available-databases-list />
+        <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
       </v-menu>
     </v-app-bar>
     <v-content>
@@ -77,7 +69,7 @@ interface Data {
   showWorkloadDialog: Ref<boolean>;
   showAddDatabaseDialog: Ref<boolean>;
   openWorkloadDialog: () => void;
-  databaseCount: Ref<number>;
+  databaseCount: Ref<string>;
 }
 
 export default defineComponent({
@@ -106,9 +98,8 @@ export default defineComponent({
       showWorkloadDialog,
       openWorkloadDialog,
       showAddDatabaseDialog,
-      databaseCount: computed(
-        () =>
-          context.root.$databaseController.availableDatabasesById.value.length
+      databaseCount: computed(() =>
+        context.root.$databaseController.availableDatabasesById.value.length.toString()
       )
     };
   }
@@ -117,5 +108,8 @@ export default defineComponent({
 <style scoped>
 .icon {
   margin-right: 10px;
+}
+.tooltip {
+  z-index: 10;
 }
 </style>

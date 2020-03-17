@@ -1,6 +1,25 @@
 <template>
-  <v-list>
-    <v-subheader>DATABASES</v-subheader>
+  <v-list class="list">
+    <v-card flat>
+      <v-card-title class="header">
+        <v-subheader> DATABASES</v-subheader>
+        <v-spacer />
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              text
+              icon
+              class="button"
+              v-on="on"
+              @click="$emit('addDatabase')"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>Add Database</span>
+        </v-tooltip>
+      </v-card-title>
+    </v-card>
     <v-list-item v-for="database in databases" :key="database.id">
       <v-list-item-icon>
         <v-icon :color="database.color">mdi-database</v-icon>
@@ -38,3 +57,14 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+.list {
+  z-index: 10;
+}
+.button {
+  margin-right: 10px;
+}
+.header {
+  padding: 5px !important;
+}
+</style>
