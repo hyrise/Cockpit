@@ -100,13 +100,13 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _read_meta_segments(self, sql: str) -> DataFrame:
+    def _sql_to_data_frame(self, sql: str) -> DataFrame:
         if self._processing_tables_flag.value:
-            return DataFrame({"foo": []})  # TODO remove foo
+            return DataFrame({"data": []})
         else:
             with PoolCursor(self._connection_pool) as cur:
-                meta_segments = read_sql_query(sql, cur.connection)
-            return meta_segments
+                data = read_sql_query(sql, cur.connection)
+            return data
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
@@ -114,7 +114,7 @@ class BackgroundJobManager(object):
         sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
             FROM meta_segments;"""
 
-        meta_segments = self._read_meta_segments(sql)
+        meta_segments = self._sql_to_data_frame(sql)
 
         chunks_data = {}
         if not meta_segments.empty:
@@ -139,7 +139,7 @@ class BackgroundJobManager(object):
 
     def _update_plugin_log(self) -> None:
         """Update plugin log."""
-        log_df = self._read_meta_segments("SELECT * FROM meta_log;")
+        log_df = self._sql_to_data_frame("SELECT * FROM meta_log;")
 
         if log_df.empty:
             return
@@ -197,10 +197,10 @@ class BackgroundJobManager(object):
         time_stamp = time_ns()
 
         system_utilization_sql = "SELECT * FROM meta_system_utilization;"
-        utilization_segments = self._read_meta_segments(system_utilization_sql)
+        utilization_segments = self._sql_to_data_frame(system_utilization_sql)
 
         system_information_sql = "SELECT * FROM meta_system_information;"
-        system_segments = self._read_meta_segments(system_information_sql)
+        system_segments = self._sql_to_data_frame(system_information_sql)
 
         if utilization_segments.empty or system_segments.empty:
             return
@@ -281,7 +281,7 @@ class BackgroundJobManager(object):
     def _update_storage_data(self) -> None:
         """Get storage data from the database."""
         time_stamp = time_ns()
-        meta_segments = self._read_meta_segments("SELECT * FROM meta_segments;")
+        meta_segments = self._sql_to_data_frame("SELECT * FROM meta_segments;")
 
         with StorageCursor(
             self._storage_host,
