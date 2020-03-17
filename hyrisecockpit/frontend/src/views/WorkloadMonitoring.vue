@@ -7,6 +7,11 @@
     <div class="mx-6">
       <database-metric-selection class="select" :metrics="[]" />
       <database-query-tables :selected-databases="selectedDatabases" />
+      <unselected-warning :condition="selectedDatabases">
+        <template #message>
+          No databases selected.
+        </template>
+      </unselected-warning>
       <v-card color="primary">
         <v-card-title class="white--text">
           Workload metrics
@@ -36,10 +41,11 @@ import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/linearLoader.vue";
-import DatabaseQueryTables from "@/components/DatabaseQueryTables.vue";
+import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "../meta/views";
+import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 
 interface Props {}
 interface Data extends MetricViewData {
@@ -52,7 +58,8 @@ export default defineComponent({
     MetricsTileList,
     LinearLoader,
     DatabaseQueryTables,
-    DatabaseMetricSelection
+    DatabaseMetricSelection,
+    UnselectedWarning
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();

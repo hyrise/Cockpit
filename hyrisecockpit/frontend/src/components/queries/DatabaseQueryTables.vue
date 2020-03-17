@@ -11,17 +11,14 @@
       justify="center"
       align="center"
     >
-      <div
+      <query-table
         v-for="database in selectedDatabases"
         :key="database"
         class="flex-item"
-      >
-        <query-table
-          :database-id="database"
-          :queries="queries[database]"
-          :loading="loading"
-        />
-      </div>
+        :database-id="database"
+        :queries="queries[database]"
+        :loading="loading"
+      />
     </v-container>
   </div>
 </template>
@@ -29,7 +26,7 @@
 <script lang="ts">
 import { defineComponent, SetupContext, Ref, ref } from "@vue/composition-api";
 import { DetailedQueryInformation } from "@/types/queries";
-import QueryTable from "@/components/QueryTable.vue";
+import QueryTable from "@/components/queries/QueryTable.vue";
 import { useQueryService } from "@/services/queryService";
 
 interface Props {

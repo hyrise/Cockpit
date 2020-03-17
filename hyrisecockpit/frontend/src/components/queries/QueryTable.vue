@@ -9,7 +9,7 @@
         label="Search queries"
         single-line
         hide-details
-      ></v-text-field>
+      />
     </v-card-title>
     <v-data-table
       :loading="loading"
@@ -17,7 +17,7 @@
       :items="sortedQueries"
       :search="searchQueries"
       item-key="queryName"
-    ></v-data-table>
+    />
   </v-card>
 </template>
 
