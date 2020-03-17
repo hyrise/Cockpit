@@ -31,7 +31,7 @@
               @change="onClickPluginSwitch(database, plugin)"
             />
           </div>
-          <PluginsLog />
+          <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -66,6 +66,7 @@ interface Data {
   disableAll: Ref<boolean>;
   pluginDraggableId: string;
   pluginDraggerId: string;
+  pluginLogs: Ref<any>;
 }
 
 export default defineComponent({
@@ -89,8 +90,11 @@ export default defineComponent({
     const {
       plugins,
       activePlugins,
-      updatePlugins
+      updatePlugins,
+      pluginLogs
     } = context.root.$pluginService;
+
+    console.log(pluginLogs.value);
 
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
@@ -120,7 +124,8 @@ export default defineComponent({
       isLoading,
       disableAll,
       pluginDraggableId,
-      pluginDraggerId
+      pluginDraggerId,
+      pluginLogs
     };
   }
 });
