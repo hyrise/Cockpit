@@ -58,7 +58,7 @@ export function usePluginService(): PluginService {
     return axios.get(controlBackend + "plugin_log").then(response => {
       pluginLogs.value = response.data.reduce(
         (result: any, currentDatabase: any) => {
-          const log = currentDatabase.plugin_log.reduce(
+          result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
             (databaseLog: string, currentLog: any) => {
               return (
                 databaseLog +
@@ -69,7 +69,6 @@ export function usePluginService(): PluginService {
             },
             ""
           );
-          result[currentDatabase.id] = log;
           return result;
         },
         {}
