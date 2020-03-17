@@ -63,7 +63,7 @@ export function usePluginService(): PluginService {
               return (
                 databaseLog +
                 `${currentLog.reporter} [${new Date(
-                  currentLog.timestamp * 1000
+                  parseInt(currentLog.timestamp)
                 ).toLocaleTimeString()}]: ${currentLog.message}\n`
               );
             },
