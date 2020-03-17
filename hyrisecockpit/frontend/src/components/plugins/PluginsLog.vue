@@ -12,21 +12,7 @@
           readonly
           solo
           label="log"
-          value="ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table
-ClusterPlugin [20:15:35]: Checked, no changes needed
-IndexPlugin.   [20:16:12]: Created index on lineitem.l_shopdate
-ClusterPlugin [20:16:31]: Reclustered orders table"
+          :value="logText"
         ></v-textarea>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -57,8 +43,6 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    onMounted(() => {});
-
     return {};
   }
 });
