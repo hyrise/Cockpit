@@ -1,6 +1,7 @@
 """Module for managing databases."""
 
-from typing import Callable, Dict, Optional, Tuple
+from types import TracebackType
+from typing import Callable, Dict, Optional, Tuple, Type
 
 from hyrisecockpit.message import (
     add_database_request_schema,
@@ -9,7 +10,8 @@ from hyrisecockpit.message import (
     load_data_request_schema,
     set_plugin_request_schema,
 )
-from hyrisecockpit.response import Body, Response, get_error_response, get_response
+from hyrisecockpit.request import Body
+from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.server import Server
 
 from .database import Database
@@ -69,13 +71,19 @@ class DatabaseManager(object):
         }
         self._server = Server(db_manager_listening, db_manager_port, server_calls)
 
-    def __enter__(self):
+    def __enter__(self) -> "DatabaseManager":
         """Return self for a context manager."""
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
         """Call close with a context manager."""
         self.close()
+        return None
 
     def _call_add_database(self, body: Body) -> Response:
         """Add database and initialize driver for it."""
@@ -231,7 +239,7 @@ class DatabaseManager(object):
         id: str = body["id"]
         if id not in self._databases.keys():
             response = get_response(400)
-        elif self._databases[id].get_plugin_setting():
+        elif self._databases[id].get_plugin_setting() is not None:
             response = get_response(200)
             response["body"]["plugin_settings"] = self._databases[
                 id
@@ -260,7 +268,7 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def start(self):
+    def start(self) -> None:
         """Start the manager by starting the server."""
         self._server.start()
 

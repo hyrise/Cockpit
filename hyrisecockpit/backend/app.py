@@ -16,6 +16,7 @@ from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.settings import (
     DB_MANAGER_HOST,
@@ -116,13 +117,54 @@ model_detailed_throughput = monitor.clone(
     },
 )
 
+model_query_information = monitor.clone(
+    "Detailed Throughput and Latency",
+    model_database,
+    {
+        "detailed_query_information": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput and latency per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "throughput": fields.Integer(
+                            title="throughput",
+                            description="Number of successfully executed queries in given time interval.",
+                            required=True,
+                            example=55,
+                        ),
+                        "latency": fields.Float(
+                            title="Latency",
+                            description="Average query latency (ns) of a given time interval.",
+                            required=True,
+                            example=923.263,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_latency = monitor.clone(
     "Latency",
     model_database,
     {
         "latency": fields.Float(
             title="Latency",
-            description="Average query latency (ms) of a given time interval.",
+            description="Average query latency (ns) of a given time interval.",
             required=True,
             example=923.263,
         )
@@ -374,6 +416,41 @@ modelhelper_plugin = fields.String(
     example="Clustering",
 )
 
+model_plugin_log = control.clone(
+    "Plugin Log",
+    model_database,
+    {
+        "plugin_log": fields.List(
+            fields.Nested(
+                control.model(
+                    "Plugin Log Entry",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds.",
+                            required=True,
+                            example=1583847966784,
+                        ),
+                        "reporter": fields.String(
+                            title="Reporter",
+                            description="Plugin reporting to the log.",
+                            required=True,
+                            example="CompressionPlugin",
+                        ),
+                        "message": fields.String(
+                            title="Message",
+                            description="Message logged.",
+                            required=True,
+                            example="No optimization possible with given parameters!",
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_get_all_plugins = control.model(
     "Available Plugins", {"plugins": fields.List(modelhelper_plugin, required=True,)},
 )
@@ -425,12 +502,7 @@ model_get_plugin_setting = control.clone(
 )
 
 
-def get_all_databases(client: InfluxDBClient):
-    """Return a list of all databases with measurements."""
-    return [d["name"] for d in client.get_list_database()]
-
-
-def _send_message(socket: Socket, message: Dict) -> Response:
+def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
     response: Response = socket.recv_json()
@@ -577,6 +649,41 @@ class Latency(Resource):
                 latency[database] = 0
         response = get_response(200)
         response["body"]["latency"] = latency
+        return response
+
+
+@monitor.route("/detailed_query_information")
+class DetailedQueryInformation(Resource):
+    """Detailed throughput and latency information of all databases."""
+
+    @monitor.doc(model=[model_query_information])
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
+        """Return detailed throughput and latency information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response: List[Dict] = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            query_information: List[Dict[str, int]] = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "throughput": list(result[table, tags])[0]["throughput"],
+                    "latency": list(result[table, tags])[0]["latency"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "query_information": query_information})
+
         return response
 
 
@@ -735,16 +842,16 @@ class Database(Resource):
     @control.doc(model=[model_get_database])
     def get(self) -> Response:
         """Get all databases."""
-        message = {"header": {"message": "get databases"}, "body": {}}
+        message = Request(header=Header(message="get databases"), body={})
         response = _send_message(db_manager_socket, message)
         return response["body"]["databases"]
 
     @control.doc(body=model_add_database)
     def post(self) -> Response:
         """Add a database."""
-        message = {
-            "header": {"message": "add database"},
-            "body": {
+        message = Request(
+            header=Header(message="add database"),
+            body={
                 "number_workers": control.payload["number_workers"],
                 "id": control.payload["id"],
                 "user": control.payload["user"],
@@ -753,17 +860,17 @@ class Database(Resource):
                 "port": control.payload["port"],
                 "dbname": control.payload["dbname"],
             },
-        }
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_control_database)
     def delete(self) -> Response:
         """Delete a database."""
-        message = {
-            "header": {"message": "delete database"},
-            "body": {"id": control.payload["id"]},
-        }
+        message = Request(
+            header=Header(message="delete database"),
+            body={"id": control.payload["id"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
@@ -774,26 +881,21 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
-        start_worker_message = {
-            "header": {"message": "start worker"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
-
-        response = _send_message(db_manager_socket, start_worker_message)
-
+        message = Request(header=Header(message="start worker"), body={})
+        response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
                 400, response["body"].get("error", "Error during starting of worker")
             )
 
-        workload_message = {
-            "header": {"message": "start workload"},
-            "body": {
+        message = Request(
+            header=Header(message="start workload"),
+            body={
                 "folder_name": control.payload["folder_name"],
                 "frequency": control.payload.get("frequency", 200),
             },
-        }
-        response = _send_message(generator_socket, workload_message)
+        )
+        response = _send_message(generator_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
                 400,
@@ -804,20 +906,14 @@ class Workload(Resource):
 
     def delete(self) -> Response:
         """Stop the workload generator and empty database queues."""
-        message = {
-            "header": {"message": "stop workload"},
-            "body": {},
-        }
+        message = Request(header=Header(message="stop workload"), body={})
         response = _send_message(generator_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
                 400, response["body"].get("error", "Error during stopping of generator")
             )
 
-        message = {
-            "header": {"message": "close worker"},
-            "body": {},
-        }
+        message = Request(header=Header(message="close worker"), body={})
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
@@ -839,21 +935,20 @@ class Data(Resource):
     # @control.doc(body=model_data)
     def post(self) -> Response:
         """Load pregenerated tables for all databases."""
-        print(control.payload)
-        message = {
-            "header": {"message": "load data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
+        message = Request(
+            header=Header(message="load data"),
+            body={"folder_name": control.payload["folder_name"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_data)
     def delete(self) -> Response:
         """Delete pregenerated tables from all databases."""
-        message = {
-            "header": {"message": "delete data"},
-            "body": {"folder_name": control.payload["folder_name"]},
-        }
+        message = Request(
+            header=Header(message="delete data"),
+            body={"folder_name": control.payload["folder_name"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
@@ -875,32 +970,57 @@ class Plugin(Resource):
     @control.doc(model=[model_get_activated_plugins])
     def get(self) -> Union[Dict, List[Dict[str, List[str]]]]:
         """Return activated plugins in each database."""
-        message = {
-            "header": {"message": "get plugins"},
-            "body": {},
-        }
+        message = Request(header=Header(message="get plugins"), body={})
         response = _send_message(db_manager_socket, message)
         return response["body"]["plugins"]
 
     @control.doc(body=model_activate_plugin)
     def post(self) -> Response:
         """Activate a plugin in a database."""
-        message = {
-            "header": {"message": "activate plugin"},
-            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
-        }
+        message = Request(
+            header=Header(message="activate plugin"),
+            body={"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_deactivate_plugin)
     def delete(self) -> Response:
         """Deactivate a plugin in a database."""
-        message = {
-            "header": {"message": "deactivate plugin"},
-            "body": {"id": control.payload["id"], "plugin": control.payload["plugin"]},
-        }
+        message = Request(
+            header=Header(message="deactivate plugin"),
+            body={"id": control.payload["id"], "plugin": control.payload["plugin"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
+
+
+@control.route("/plugin_log")
+class PluginLog(Resource):
+    """Activate, Deactive Plugins, respectively show which ones are activated."""
+
+    @api.doc(model=[model_plugin_log])
+    def get(self) -> List[Dict[str, Union[str, List[Dict[str, Union[str, int]]]]]]:
+        """Return activated plugins in each database."""
+        return [
+            {
+                "id": database,
+                "plugin_log": [
+                    {
+                        "timestamp": row["timestamp"],
+                        "reporter": row["reporter"],
+                        "message": row["message"],
+                    }
+                    for row in list(
+                        storage_connection.query(
+                            "SELECT timestamp, reporter, message from plugin_log;",
+                            database=database,
+                        )["plugin_log", None]
+                    )
+                ],
+            }
+            for database in _active_databases()
+        ]
 
 
 @control.route("/plugin_settings")
@@ -910,23 +1030,23 @@ class PluginSettings(Resource):
     @control.doc(model=model_get_plugin_setting)
     def get(self) -> Response:
         """Read settings for plugins."""
-        message = {
-            "header": {"message": "get plugin setting"},
-            "body": {"id": control.payload["id"]},
-        }
+        message = Request(
+            header=Header(message="get plugin setting"),
+            body={"id": control.payload["id"]},
+        )
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_plugin_setting)
     def post(self) -> Response:
         """Set settings for plugins."""
-        message = {
-            "header": {"message": "set plugin setting"},
-            "body": {
+        message = Request(
+            header=Header(message="set plugin setting"),
+            body={
                 "id": control.payload["id"],
                 "name": control.payload["name"],
                 "value": control.payload["value"],
             },
-        }
+        )
         response = _send_message(db_manager_socket, message)
         return response

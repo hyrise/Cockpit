@@ -41,7 +41,7 @@ class BackgroundJobManager(object):
         self._previous_chunks_data: Dict = {}
         self._init_jobs()
 
-    def _init_jobs(self):
+    def _init_jobs(self) -> None:
         """Initialize basic background jobs."""
         self._update_krueger_data_job = self._scheduler.add_job(
             func=self._update_krueger_data, trigger="interval", seconds=5,
@@ -55,20 +55,24 @@ class BackgroundJobManager(object):
         self._update_storage_data_job = self._scheduler.add_job(
             func=self._update_storage_data, trigger="interval", seconds=5,
         )
+        self._update_plugin_log_job = self._scheduler.add_job(
+            func=self._update_plugin_log, trigger="interval", seconds=1,
+        )
 
-    def start(self):
+    def start(self) -> None:
         """Start background scheduler."""
         self._scheduler.start()
 
-    def close(self):
+    def close(self) -> None:
         """Close background scheduler."""
         self._update_krueger_data_job.remove()
         self._update_system_data_job.remove()
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
+        self._update_plugin_log_job.remove()
         self._scheduler.shutdown()
 
-    def _update_krueger_data(self):
+    def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
         executed_mocked_data = {
             "SELECT": 100,
@@ -98,13 +102,12 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
-    def _read_meta_segments(self, sql) -> DataFrame:
+    def _sql_to_data_frame(self, sql: str) -> DataFrame:
         if self._database_blocked.value:
-            return DataFrame({"foo": []})  # TODO remove foo
+            return DataFrame()
         else:
             with PoolCursor(self._connection_pool) as cur:
-                meta_segments = read_sql_query(sql, cur.connection)
-            return meta_segments
+                return read_sql_query(sql, cur.connection)
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
@@ -112,7 +115,7 @@ class BackgroundJobManager(object):
         sql = """SELECT table_name, column_name, chunk_id, (point_accesses + sequential_accesses + monotonic_accesses + random_accesses) as access_count
             FROM meta_segments;"""
 
-        meta_segments = self._read_meta_segments(sql)
+        meta_segments = self._sql_to_data_frame(sql)
 
         chunks_data = {}
         if not meta_segments.empty:
@@ -135,20 +138,45 @@ class BackgroundJobManager(object):
                 time_stamp,
             )
 
+    def _update_plugin_log(self) -> None:
+        """Update plugin log."""
+        log_df = self._sql_to_data_frame("SELECT * FROM meta_log;")
+
+        if log_df.empty:
+            return
+
+        log_dict = log_df.set_index(["timestamp", "reporter"]).to_dict("index")
+        plugin_log = [
+            (timestamp, reporter, message["message"])
+            for (timestamp, reporter), message in log_dict.items()
+        ]
+
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_plugin_log(plugin_log)
+
     def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
         """Calculate difference base - substractor."""
         for table_name in base.keys():
             if table_name in substractor.keys():
                 for column_name in base[table_name].keys():
                     if column_name in substractor[table_name].keys():
-                        base[table_name][column_name] = [
-                            base[table_name][column_name][i]
-                            - substractor[table_name][column_name][i]
-                            for i in range(len(base[table_name][column_name]))
-                        ]
+                        if len(base[table_name][column_name]) == len(
+                            substractor[table_name][column_name]
+                        ):
+                            base[table_name][column_name] = [
+                                base[table_name][column_name][i]
+                                - substractor[table_name][column_name][i]
+                                for i in range(len(base[table_name][column_name]))
+                            ]
         return base
 
-    def _create_chunks_dictionary(self, meta_segments) -> Dict:
+    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
         chunks_data: Dict = {}
         grouped_tables = meta_segments.reset_index().groupby("table_name")
 
@@ -170,10 +198,10 @@ class BackgroundJobManager(object):
         time_stamp = time_ns()
 
         system_utilization_sql = "SELECT * FROM meta_system_utilization;"
-        utilization_segments = self._read_meta_segments(system_utilization_sql)
+        utilization_segments = self._sql_to_data_frame(system_utilization_sql)
 
         system_information_sql = "SELECT * FROM meta_system_information;"
-        system_segments = self._read_meta_segments(system_information_sql)
+        system_segments = self._sql_to_data_frame(system_information_sql)
 
         if utilization_segments.empty or system_segments.empty:
             return
@@ -208,7 +236,7 @@ class BackgroundJobManager(object):
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
-    def _create_storage_data_dataframe(self, meta_segments) -> DataFrame:
+    def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
             ["table_name", "column_name", "chunk_id"],
             inplace=True,
@@ -254,7 +282,7 @@ class BackgroundJobManager(object):
     def _update_storage_data(self) -> None:
         """Get storage data from the database."""
         time_stamp = time_ns()
-        meta_segments = self._read_meta_segments("SELECT * FROM meta_segments;")
+        meta_segments = self._sql_to_data_frame("SELECT * FROM meta_segments;")
 
         with StorageCursor(
             self._storage_host,
@@ -315,7 +343,6 @@ class BackgroundJobManager(object):
     def load_tables(self, folder_name) -> bool:
         """Load tables."""
         table_names = _table_names.get(folder_name.split("_")[0])
-
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(

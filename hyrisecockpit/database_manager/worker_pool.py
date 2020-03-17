@@ -1,7 +1,9 @@
 """The WorkerPool object represents the workers."""
 from multiprocessing import Event, Process, Queue, Value
+from typing import Any, Dict, List
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from psycopg2 import pool
 
 from .worker import execute_queries, fill_queue
 
@@ -16,31 +18,31 @@ class WorkerPool(object):
         database_id,
         workload_publisher_url,
         database_blocked,
-    ):
+    ) -> None:
         """Initialize WorkerPool object."""
-        self._connection_pool = connection_pool
-        self._number_worker = number_worker
-        self._database_id = database_id
-        self._database_blocked = database_blocked
-        self._workload_publisher_url = workload_publisher_url
-        self._status = "closed"
-        self._continue_execution_flag = Value("b", True)
-        self._execute_task_workers = []
-        self._execute_task_worker_done_event = []
-        self._fill_task_worker = None
-        self._worker_continue_event = Event()
+        self._connection_pool: pool = connection_pool
+        self._number_worker: int = number_worker
+        self._database_id: str = database_id
+        self._database_blocked: Value = database_blocked
+        self._workload_publisher_url: str = workload_publisher_url
+        self._status: str = "closed"
+        self._continue_execution_flag: Value = Value("b", True)
+        self._execute_task_workers: List[Process] = []
+        self._execute_task_worker_done_event: List = []
+        self._fill_task_worker: Any = None
+        self._worker_continue_event: Any = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
         self._scheduler = BackgroundScheduler()
         self._scheduler.start()
 
-    def _generate_execute_task_worker_done_events(self):
+    def _generate_execute_task_worker_done_events(self) -> List:
         worker_done_event = []
         for _ in range(self._number_worker):
             worker_done_event.append(Event())
         return worker_done_event
 
-    def _generate_execute_task_worker(self):
+    def _generate_execute_task_worker(self) -> List[Process]:
         workers = []
         for i in range(self._number_worker):
             p = Process(
@@ -59,7 +61,7 @@ class WorkerPool(object):
             workers.append(p)
         return workers
 
-    def _generate_fill_task_worker(self):
+    def _generate_fill_task_worker(self) -> Process:
         fill_task_worker = Process(
             target=fill_queue,
             args=(
@@ -71,7 +73,7 @@ class WorkerPool(object):
         )
         return fill_task_worker
 
-    def _init_workers(self):
+    def _init_workers(self) -> None:
         if len(self._execute_task_workers) == 0:
             self._execute_task_worker_done_event = (
                 self._generate_execute_task_worker_done_events()
@@ -80,7 +82,7 @@ class WorkerPool(object):
         if not self._fill_task_worker:
             self._fill_task_worker = self._generate_fill_task_worker()
 
-    def _terminate_worker(self):
+    def _terminate_worker(self) -> None:
         if not self._status == "closed":
             self._fill_task_worker.terminate()
             self._fill_task_worker = None
@@ -88,29 +90,31 @@ class WorkerPool(object):
                 self._execute_task_workers[i].terminate()
             self._execute_task_workers = []
             self._worker_continue_event = Event()
-            self._task_queue: Queue = Queue(0)
-            self._failed_task_queue: Queue = Queue(0)
+            self._task_queue = Queue(0)
+            self._failed_task_queue = Queue(0)
+            self._status = "closed"
 
-    def _wait_for_execute_task_worker(self):
+    def _wait_for_execute_task_worker(self) -> None:
         self._worker_continue_event.clear()
         self._continue_execution_flag.value = False
         for i in range(self._number_worker):
             self._execute_task_worker_done_event[i].wait()
 
-    def _wait_for_all_worker(self):
+    def _wait_for_all_worker(self) -> None:
         self._worker_continue_event.clear()
         self._continue_execution_flag.value = False
         for i in range(self._number_worker):
             self._execute_task_worker_done_event[i].wait()
 
-    def _start_worker(self):
+    def _start_worker(self) -> None:
         self._continue_execution_flag.value = True
         self._fill_task_worker.start()
         for i in range(self._number_worker):
             self._execute_task_workers[i].start()
 
-    def _start_job(self):
+    def _start_job(self) -> None:
         if self._status == "closed":
+            self._worker_continue_event.set()
             self._init_workers()
             self._start_worker()
             self._status = "running"
@@ -120,17 +124,19 @@ class WorkerPool(object):
             self._status = "running"
         self._database_blocked.value = False
 
-    def _stop_job(self):
-        self._wait_for_worker()
+    def _stop_job(self) -> None:
+        if self._status == "running":
+            self._wait_for_all_worker()
+            self._status = "stopped"
         self._database_blocked.value = False
 
-    def _close_job(self):
+    def _close_job(self) -> None:
         if self._status == "stopped":
             self._terminate_worker()
         else:
             self._wait_for_execute_task_worker()
             self._terminate_worker()
-            self._status == "closed"
+        self._status == "closed"
         self._database_blocked.value = False
 
     def start(self) -> bool:
@@ -160,7 +166,7 @@ class WorkerPool(object):
         else:
             return False
 
-    def terminate(self):
+    def terminate(self) -> bool:
         """Terminates worker."""
         if not self._database_blocked.value:
             self._database_blocked.value = True
@@ -173,15 +179,15 @@ class WorkerPool(object):
         else:
             return False
 
-    def get_status(self):
+    def get_status(self) -> str:
         """Return status of pool."""
         return self._status
 
-    def get_queue_length(self):
+    def get_queue_length(self) -> int:
         """Return queue length."""
         return self._task_queue.qsize()
 
-    def get_failed_tasks(self):
+    def get_failed_tasks(self) -> List[Dict[str, str]]:
         """Return failed tasks."""
         failed_task = []
         while not self._failed_task_queue.empty():

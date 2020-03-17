@@ -55,7 +55,7 @@ class Database(object):
             storage_port,
             storage_user,
         )
-        self._worker_pool = WorkerPool(
+        self._worker_pool: WorkerPool = WorkerPool(
             self._connection_pool,
             self.number_workers,
             self._id,
@@ -63,34 +63,33 @@ class Database(object):
             self._database_blocked,
         )
         self._background_scheduler.start()
-        self._worker_pool.start()
         self._background_scheduler.load_tables(self._default_tables)
 
     def get_queue_length(self) -> int:
         """Return queue length."""
         return self._worker_pool.get_queue_length()
 
-    def get_failed_tasks(self):
+    def get_failed_tasks(self) -> List[Dict[str, str]]:
         """Return failed tasks."""
         return self._worker_pool.get_failed_tasks()
 
-    def load_data(self, folder_name: str):
+    def load_data(self, folder_name: str) -> bool:
         """Load pregenerated tables."""
         return self._background_scheduler.load_tables(folder_name)
 
-    def delete_data(self, folder_name: str):
+    def delete_data(self, folder_name: str) -> bool:
         """Delete tables."""
         return self._background_scheduler.delete_tables(folder_name)
 
-    def get_processing_tables_flag(self):
+    def get_processing_tables_flag(self) -> bool:
         """Return tables loading flag."""
         return self._database_blocked.value
 
-    def start_worker(self):
+    def start_worker(self) -> bool:
         """Start worker."""
         return self._worker_pool.start()
 
-    def close_worker(self):
+    def close_worker(self) -> bool:
         """Close worker."""
         return self._worker_pool.close()
 
@@ -141,7 +140,7 @@ class Database(object):
         else:
             return False
 
-    def get_plugin_setting(self) -> Optional[Dict]:
+    def get_plugin_setting(self) -> Optional[List]:
         """Read currently set plugin settings."""
         if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
