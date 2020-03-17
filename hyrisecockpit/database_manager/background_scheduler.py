@@ -102,7 +102,7 @@ class BackgroundJobManager(object):
 
     def _sql_to_data_frame(self, sql: str) -> DataFrame:
         if self._processing_tables_flag.value:
-            return DataFrame({"data": []})
+            return DataFrame()
         else:
             with PoolCursor(self._connection_pool) as cur:
                 data = read_sql_query(sql, cur.connection)
