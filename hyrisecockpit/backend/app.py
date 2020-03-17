@@ -668,13 +668,8 @@ class DetailedQueryInformation(Resource):
             return 500
         response: List[Dict] = []
         for database in active_databases:
-            throughput_result = storage_connection.query(
-                'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
-                database=database,
-                bind_params={"startts": startts, "endts": endts},
-            )
-            latency_result = storage_connection.query(
-                'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+            result = storage_connection.query(
+                'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
@@ -682,10 +677,10 @@ class DetailedQueryInformation(Resource):
                 {
                     "benchmark": tags["benchmark"],
                     "query_number": tags["query_no"],
-                    "throughput": list(throughput_result[table, tags])[0]["count"],
-                    "latency": list(latency_result[table, tags])[0]["latency"],
+                    "throughput": list(result[table, tags])[0]["throughput"],
+                    "latency": list(result[table, tags])[0]["latency"],
                 }
-                for table, tags in list(throughput_result.keys())
+                for table, tags in list(result.keys())
             ]
             response.append({"id": database, "query_information": query_information})
 
