@@ -132,7 +132,7 @@ class CockpitManager:
 
     def start_workload(self, workload_type, frequency):
         """Start workload in cockpit."""
+        self._check_if_tables_processed()
         data = {"folder_name": workload_type, "frequency": frequency}
         # TODO add time out and check response
         _ = requests.post(f"{self._backend_url}/control/workload", json=data)
-        self._check_if_tables_processed()
