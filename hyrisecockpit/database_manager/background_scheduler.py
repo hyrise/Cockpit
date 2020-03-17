@@ -105,8 +105,7 @@ class BackgroundJobManager(object):
             return DataFrame()
         else:
             with PoolCursor(self._connection_pool) as cur:
-                data = read_sql_query(sql, cur.connection)
-            return data
+                return read_sql_query(sql, cur.connection)
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
