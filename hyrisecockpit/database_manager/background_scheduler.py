@@ -9,7 +9,7 @@ from typing import Dict, List, Tuple, Union
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from psycopg2 import pool
+from psycopg2 import ProgrammingError, pool
 from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
@@ -347,6 +347,45 @@ class BackgroundJobManager(object):
             self._scheduler.add_job(
                 func=self._load_tables_job, args=(table_names, folder_name)
             )
+            return True
+        else:
+            return False
+
+    def _activate_plugin_job(self, plugin: str) -> bool:
+        try:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    (
+                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+                    ),
+                    (AsIs(plugin),),
+                )
+            return True
+        except ProgrammingError:
+            return False
+
+    def activate_plugin(self, plugin: str) -> bool:
+        """Activate plugin."""
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._activate_plugin_job, args=(plugin))
+            return True
+        else:
+            return False
+
+    def _deactivate_plugin_job(self, plugin: str) -> bool:
+        try:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
+                )
+            return True
+        except ProgrammingError:
+            return False
+
+    def deactivate_plugin(self, plugin: str) -> bool:
+        """Dectivate plugin."""
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._deactivate_plugin_job, args=(plugin))
             return True
         else:
             return False

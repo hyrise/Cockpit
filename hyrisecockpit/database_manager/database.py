@@ -3,8 +3,6 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional
 
-from psycopg2.extensions import AsIs
-
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor
 from .driver import Driver
@@ -80,6 +78,14 @@ class Database(object):
         """Delete tables."""
         return self._background_scheduler.delete_tables(folder_name)
 
+    def activate_plugins(self, plugin: str) -> bool:
+        """Activate plugin."""
+        return self._background_scheduler.activate_plugin(plugin)
+
+    def deactivate_plugins(self, plugin: str) -> bool:
+        """Deactivate plugin."""
+        return self._background_scheduler.deactivate_plugin(plugin)
+
     def get_database_blocked(self) -> bool:
         """Return tables loading flag."""
         return self._database_blocked.value
@@ -102,31 +108,6 @@ class Database(object):
                 return result
         else:
             return None
-
-    def activate_plugin(self, plugin: str) -> bool:
-        """Activate Plugin."""
-        if not self._database_blocked.value:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute(
-                    (
-                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
-                    ),
-                    (AsIs(plugin),),
-                )
-            return True
-        else:
-            return False
-
-    def deactivate_plugin(self, plugin: str) -> bool:
-        """Activate Plugin."""
-        if not self._database_blocked.value:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute(
-                    ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
-                )
-            return True
-        else:
-            return False
 
     def set_plugin_setting(self, name: str, value: str) -> bool:
         """Adjust setting for given plugin."""
