@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -24,6 +24,7 @@ class BackgroundJobManager(object):
         database_id: str,
         database_blocked: Value,
         connection_pool: pool,
+        loaded_tables: Dict[str, Optional[str]],
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -39,6 +40,7 @@ class BackgroundJobManager(object):
         self._storage_user = storage_user
         self._scheduler = BackgroundScheduler()
         self._previous_chunks_data: Dict = {}
+        self._loaded_tables = loaded_tables
         self._init_jobs()
 
     def _init_jobs(self) -> None:
@@ -337,19 +339,36 @@ class BackgroundJobManager(object):
         for process in processes:
             process.join()
             process.terminate()
+        for table_name in table_names:
+            self._loaded_tables[table_name] = folder_name
+
         self._database_blocked.value = False
 
     def load_tables(self, folder_name: str) -> bool:
         """Load tables."""
-        table_names = _table_names.get(folder_name.split("_")[0])
-        if not self._database_blocked.value:
-            self._database_blocked.value = True
-            self._scheduler.add_job(
-                func=self._load_tables_job, args=(table_names, folder_name)
-            )
-            return True
-        else:
+        if self._database_blocked.value:
             return False
+
+        full_table_names = _table_names.get(folder_name.split("_")[0])
+        if full_table_names is None:
+            return False
+
+        table_names = [
+            table_name
+            for table_name in full_table_names
+            if self._loaded_tables[table_name] != folder_name
+        ]
+        print("TABLES TO BE LOADED: ")
+        print(table_names)
+
+        if not table_names:
+            return True
+
+        self._database_blocked.value = True
+        self._scheduler.add_job(
+            func=self._load_tables_job, args=(table_names, folder_name)
+        )
+        return True
 
     def _get_existing_tables(self, table_names: List[str]) -> Dict:
         """Check wich tables exists and which not."""
@@ -386,16 +405,23 @@ class BackgroundJobManager(object):
         for process in processes:
             process.join()
             process.terminate()
+        for table_name in table_names:
+            self._loaded_tables[table_name] = None
         self._database_blocked.value = False
 
     def delete_tables(self, folder_name: str) -> bool:
         """Load tables."""
-        table_names = _table_names.get(folder_name.split("_")[0])
-        if not self._database_blocked.value:
-            self._database_blocked.value = True
-            self._scheduler.add_job(
-                func=self._delete_tables_job, args=(table_names, folder_name)
-            )
-            return True
-        else:
+        if self._database_blocked.value:
             return False
+
+        table_names = _table_names.get(folder_name.split("_")[0])
+        if table_names is None:
+            return False
+        if len(table_names) == 0:
+            return True
+
+        self._database_blocked.value = True
+        self._scheduler.add_job(
+            func=self._delete_tables_job, args=(table_names, folder_name)
+        )
+        return True

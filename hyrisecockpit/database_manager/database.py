@@ -8,6 +8,7 @@ from psycopg2.extensions import AsIs
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor
 from .driver import Driver
+from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
 
@@ -45,10 +46,12 @@ class Database(object):
         )
         self._connection_pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
+        self._loaded_tables = self.create_empty_loaded_tables()
         self._background_scheduler = BackgroundJobManager(
             self._id,
             self._database_blocked,
             self._connection_pool,
+            self._loaded_tables,
             storage_host,
             storage_password,
             storage_port,
@@ -63,6 +66,14 @@ class Database(object):
         )
         self._background_scheduler.start()
         self._background_scheduler.load_tables(self._default_tables)
+
+    def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
+        """Create loaded_tables dictionary without information about already loaded tables."""
+        loaded_tables: Dict[str, Optional[str]] = {}
+        for tables in list(_table_names.values()):
+            for table in tables:
+                loaded_tables[table] = None
+        return loaded_tables
 
     def get_queue_length(self) -> int:
         """Return queue length."""
