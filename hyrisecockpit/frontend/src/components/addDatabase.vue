@@ -129,8 +129,6 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
 
-  const showDatabaseDialog = ref(false);
-
   function resetValues(): void {
     number_workers.value = 8;
     id.value = "";
