@@ -18,7 +18,7 @@ class WorkerPool:
         number_worker: int,
         database_id: str,
         workload_publisher_url: str,
-        database_blocked,
+        database_blocked: Value,
     ) -> None:
         """Initialize WorkerPool object."""
         self._connection_pool: pool = connection_pool

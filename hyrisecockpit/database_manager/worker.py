@@ -3,6 +3,7 @@
 Workers run in pools and are started by other components.
 """
 from multiprocessing import Queue, Value
+from multiprocessing.synchronize import Event as EventType
 from queue import Empty
 from time import time_ns
 from typing import Dict, List, Optional, Tuple, Union
@@ -25,7 +26,7 @@ def fill_queue(
     workload_publisher_url: str,
     task_queue: Queue,
     continue_execution_flag: Value,
-    continue_event,
+    continue_event: EventType,
 ) -> None:
     """Fill the queue."""
     context = Context()
@@ -55,8 +56,8 @@ def execute_queries(
     failed_task_queue: Queue,
     continue_execution_flag: Value,
     database_id: str,
-    i_am_done_event,
-    continue_event,
+    i_am_done_event: EventType,
+    continue_event: EventType,
 ) -> None:
     """Define workers work loop."""
     with PoolCursor(connection_pool) as cur:

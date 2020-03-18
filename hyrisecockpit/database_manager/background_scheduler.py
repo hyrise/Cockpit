@@ -300,7 +300,7 @@ class BackgroundJobManager(object):
             )
 
     def _generate_table_loading_queries(
-        self, table_names, folder_name: str
+        self, table_names: List[str], folder_name: str
     ) -> List[Tuple]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
@@ -325,7 +325,7 @@ class BackgroundJobManager(object):
             )
             cur.execute(query, formatted_parameters)
 
-    def _load_tables_job(self, table_names, folder_name: str) -> None:
+    def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
         table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
         )
