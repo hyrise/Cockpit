@@ -44,8 +44,9 @@ class ArgumentValidation:
             "number_workers": self._validate_number_workers,
             "workload_frequence": self._validate_workload_frequence,
             "plugins": self._validate_plugin,
-            "start_components": self._validate_start_components,
+            "start_components": self._basic_validate,
             "close": self._validate_close,
+            "load_tables": self._basic_validate,
         }
 
     def get_endpoints(self):
@@ -162,11 +163,11 @@ class ArgumentValidation:
                 print(f"{plugin} plugin not found")
         return plugins
 
-    def _validate_start_components(self, start_components_arguments):
-        if start_components_arguments.upper() in ["Y", "N"]:
-            return start_components_arguments.upper()
+    def _basic_validate(self, _basic_validate_arguments):
+        if _basic_validate_arguments.upper() in ["Y", "N"]:
+            return _basic_validate_arguments.upper()
         else:
-            print(f"{start_components_arguments} not Y/N. Default Y is used.")
+            print(f"{_basic_validate_arguments} not Y/N. Default Y is used.")
             return "Y"
 
     def _validate_close(self, close_arguments):
@@ -307,6 +308,16 @@ class ArgumentParser:
             default=["workload", "database"],
             help="Close database or workload. To keep workload and database running after benchmark use none. Allowed values are",
         )
+        self.parser.add_argument(
+            "--load_tables",
+            "-lt",
+            dest="load_tables",
+            type=str,
+            nargs="?",
+            metavar="",
+            default="Y",
+            help="Load tables from workload [Y/N]",
+        )
 
     def get_configuration(self):
         """Return validated arguments from command line."""
@@ -323,6 +334,7 @@ class ArgumentParser:
             "plugins",
             "start_components",
             "close",
+            "load_tables",
         ]
         for argument_type in types:
             configuration[argument_type] = self._argument_validation.validate(

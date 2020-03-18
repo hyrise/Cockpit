@@ -150,12 +150,13 @@ class CockpitManager:
         """Stop workload execution."""
         _ = requests.delete(f"{self._backend_url}/control/workload", json={})
 
-    def start_workload(self, workload_type, frequency):
+    def start_workload(self, workload_type, frequency, load_tables):
         """Start workload in cockpit."""
         if workload_type == "none":
             return
         self._check_if_database_blocked()
-        self._load_tables(workload_type)
+        if load_tables == "Y":
+            self._load_tables(workload_type)
         data = {"folder_name": workload_type, "frequency": frequency}
         # TODO add time out and check response
         _ = requests.post(f"{self._backend_url}/control/workload", json=data)

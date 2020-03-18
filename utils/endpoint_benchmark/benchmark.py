@@ -25,7 +25,9 @@ if __name__ == "__main__":  # noqa
                     configuration["databases"], configuration["number_workers"]
                 )
                 cockpit_manager.start_workload(
-                    configuration["workload"], configuration["workload_frequence"]
+                    configuration["workload"],
+                    configuration["workload_frequence"],
+                    configuration["load_tables"],
                 )
                 plugin.run_benchmark()
                 if "database" in configuration["close"]:
