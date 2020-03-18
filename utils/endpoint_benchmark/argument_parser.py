@@ -30,7 +30,7 @@ class ArgumentValidation:
             "plugin",
             "available_plugins",
         ]
-        self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
+        self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops", "none"]
         self._databases = ["db1", "db2", "none"]
         self._plugins = ["wrk", "displayReply"]
         self._validate_calls = {
@@ -219,7 +219,7 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["tpch_0.1"],
-            help="workloads to run on databases. . Allowed values are "
+            help="workloads to run on databases. For no workload use none. Allowed values are "
             + ", ".join(self._argument_validation._workloads),
         )
         self.parser.add_argument(

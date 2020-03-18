@@ -142,6 +142,8 @@ class CockpitManager:
 
     def start_workload(self, workload_type, frequency):
         """Start workload in cockpit."""
+        if workload_type == "none":
+            return
         self._check_if_database_blocked()
         self._load_tables(workload_type)
         data = {"folder_name": workload_type, "frequency": frequency}
