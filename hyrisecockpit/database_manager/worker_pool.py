@@ -1,6 +1,7 @@
 """The WorkerPool object represents the workers."""
 from multiprocessing import Event, Process, Queue, Value
-from typing import Any, Dict, List
+from multiprocessing.synchronize import Event as EventType
+from typing import Dict, List, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from psycopg2 import pool
@@ -13,10 +14,10 @@ class WorkerPool:
 
     def __init__(
         self,
-        connection_pool,
-        number_worker,
-        database_id,
-        workload_publisher_url,
+        connection_pool: pool,
+        number_worker: int,
+        database_id: str,
+        workload_publisher_url: str,
         database_blocked,
     ) -> None:
         """Initialize WorkerPool object."""
@@ -28,15 +29,15 @@ class WorkerPool:
         self._status: str = "closed"
         self._continue_execution_flag: Value = Value("b", True)
         self._execute_task_workers: List[Process] = []
-        self._execute_task_worker_done_event: List = []
-        self._fill_task_worker: Any = None
-        self._worker_continue_event: Any = Event()
+        self._execute_task_worker_done_event: List[EventType] = []
+        self._fill_task_worker: Optional[Process] = None
+        self._worker_continue_event: EventType = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._scheduler.start()
 
-    def _generate_execute_task_worker_done_events(self) -> List:
+    def _generate_execute_task_worker_done_events(self) -> List[EventType]:
         return [Event() for _ in range(self._number_worker)]
 
     def _generate_execute_task_worker(self) -> List[Process]:
