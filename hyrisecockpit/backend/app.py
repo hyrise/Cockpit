@@ -269,7 +269,7 @@ model_krueger_data = monitor.clone(
 )
 
 model_database_blocked_status = monitor.clone(
-    "Process table status",
+    "Database blocked status",
     model_database,
     {
         "database_blocked_status": fields.Boolean(
