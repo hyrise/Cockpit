@@ -95,6 +95,18 @@ class Database(object):
         """Return tables loading flag."""
         return self._database_blocked.value
 
+    def get_worker_pool_status(self) -> str:
+        """Return worker pool status."""
+        return self._worker_pool.get_status()
+
+    def get_loaded_tables(self) -> Dict[str, Optional[str]]:
+        """Return already loaded tables."""
+        loaded_tables: Dict[str, Optional[str]] = {}
+        for table_name in list(self._loaded_tables.keys()):
+            if self._loaded_tables[table_name] is not None:
+                loaded_tables[table_name] = self._loaded_tables[table_name]
+        return loaded_tables
+
     def start_worker(self) -> bool:
         """Start worker."""
         return self._worker_pool.start()
