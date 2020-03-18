@@ -1,20 +1,19 @@
 <template>
   <v-list class="list">
     <v-card flat>
-      <v-card-title class="header">
-        <v-subheader> DATABASES</v-subheader>
+      <v-card-title class="header subtitle-1">
+        DATABASES
         <v-spacer />
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn
-              text
-              icon
+            <v-chip
               class="button"
+              color="primary"
               v-on="on"
               @click="$emit('addDatabase')"
             >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
+              <v-icon dark size="20">mdi-plus</v-icon>
+            </v-chip>
           </template>
           <span>Add Database</span>
         </v-tooltip>
@@ -59,12 +58,16 @@ export default defineComponent({
 </script>
 <style scoped>
 .list {
-  z-index: 10;
+  z-index: 9;
 }
 .button {
   margin-right: 10px;
+  margin-left: 10px;
 }
 .header {
   padding: 5px !important;
+  margin-left: 10px !important;
+  align-content: center;
+  justify-content: center;
 }
 </style>

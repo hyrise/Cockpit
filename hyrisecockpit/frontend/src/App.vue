@@ -30,13 +30,13 @@
       />
       <v-menu bottom offset-y>
         <template v-slot:activator="{ on: menu }">
-          <v-tooltip class="tooltip" bottom>
+          <v-tooltip class="db-tooltip" bottom>
             <template v-slot:activator="{ on: tooltip }">
               <v-badge class="icon" color="secondary" :content="databaseCount">
                 <v-icon v-on="{ ...tooltip, ...menu }">mdi-database</v-icon>
               </v-badge>
             </template>
-            <span>Available Databases</span>
+            <span>Manage Databases</span>
           </v-tooltip>
         </template>
         <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
@@ -111,5 +111,8 @@ export default defineComponent({
 }
 .tooltip {
   z-index: 10;
+}
+.db-tooltip {
+  z-index: 1;
 }
 </style>
