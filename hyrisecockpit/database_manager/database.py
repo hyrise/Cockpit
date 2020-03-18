@@ -73,12 +73,18 @@ class Database(object):
         return self._worker_pool.get_failed_tasks()
 
     def load_data(self, folder_name: str) -> bool:
-        """Load pregenerated tables."""
-        return self._background_scheduler.load_tables(folder_name)
+        """Load pre-generated tables."""
+        if self._worker_pool.get_status() != "closed":
+            return False
+        else:
+            return self._background_scheduler.load_tables(folder_name)
 
     def delete_data(self, folder_name: str) -> bool:
         """Delete tables."""
-        return self._background_scheduler.delete_tables(folder_name)
+        if self._worker_pool.get_status() != "closed":
+            return False
+        else:
+            return self._background_scheduler.delete_tables(folder_name)
 
     def get_database_blocked(self) -> bool:
         """Return tables loading flag."""
