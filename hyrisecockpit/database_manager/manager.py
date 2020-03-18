@@ -56,7 +56,7 @@ class DatabaseManager(object):
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
-            "database blocked status": (self._call_database_blocked_status, None),
+            "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
             "activate plugin": (
                 self._call_activate_plugin,
@@ -180,16 +180,18 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def _call_database_blocked_status(self, body: Body) -> Response:
-        database_blocked_status = [
+    def _call_status(self, body: Body) -> Response:
+        status = [
             {
                 "id": database_id,
                 "database_blocked_status": database.get_database_blocked(),
+                "worker_pool_status": database.get_worker_pool_status(),
+                "loaded_tables": database.get_loaded_tables(),
             }
             for database_id, database in self._databases.items()
         ]
         response = get_response(200)
-        response["body"]["database_blocked_status"] = database_blocked_status
+        response["body"]["status"] = status
         return response
 
     def _call_get_plugins(self, body: Body) -> Response:
