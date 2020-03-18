@@ -268,13 +268,13 @@ model_krueger_data = monitor.clone(
     },
 )
 
-model_process_table_status = monitor.clone(
+model_database_blocked_status = monitor.clone(
     "Process table status",
     model_database,
     {
-        "process_table_status": fields.Boolean(
-            title="Process table status",
-            description="Process table status of databases.",
+        "database_blocked_status": fields.Boolean(
+            title="Database blocked status",
+            description="Database blocked status of databases.",
             required=True,
             example=True,
         )
@@ -826,7 +826,7 @@ class KruegerData(Resource):
 class ProcessTableStatus(Resource):
     """Database blocked status information of all databases."""
 
-    @monitor.doc(model=[model_process_table_status])
+    @monitor.doc(model=[model_database_blocked_status])
     def get(self) -> Response:
         """Return Database blocked status for databases."""
         return _send_message(
