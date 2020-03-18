@@ -116,7 +116,7 @@ class CockpitManager:
             data["number_workers"] = number_worker
             # TODO add time out and check response
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
-            self._check_if_database_added(database)
+        self._check_if_database_added(database)
 
     def _check_if_database_blocked(self):
         """Check if database is blocked in cockpit."""
@@ -134,9 +134,16 @@ class CockpitManager:
             if not check_blocked:
                 break
 
+    def _load_tables(self, workload_type):
+        data = {"folder_name": workload_type}
+        # TODO add time out and check response
+        _ = requests.post(f"{self._backend_url}/control/data", json=data)
+        self._check_if_database_blocked()
+
     def start_workload(self, workload_type, frequency):
         """Start workload in cockpit."""
         self._check_if_database_blocked()
+        self._load_tables(workload_type)
         data = {"folder_name": workload_type, "frequency": frequency}
         # TODO add time out and check response
         _ = requests.post(f"{self._backend_url}/control/workload", json=data)
