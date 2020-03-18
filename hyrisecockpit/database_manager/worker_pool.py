@@ -41,9 +41,8 @@ class WorkerPool:
         return [Event() for _ in range(self._number_worker)]
 
     def _generate_execute_task_worker(self) -> List[Process]:
-        workers = []
-        for i in range(self._number_worker):
-            p = Process(
+        return [
+            Process(
                 target=execute_queries,
                 args=(
                     i,
@@ -56,8 +55,8 @@ class WorkerPool:
                     self._worker_continue_event,
                 ),
             )
-            workers.append(p)
-        return workers
+            for i in range(self._number_worker)
+        ]
 
     def _generate_fill_task_worker(self) -> Process:
         return Process(
