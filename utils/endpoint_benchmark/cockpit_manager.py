@@ -109,6 +109,8 @@ class CockpitManager:
 
     def add_databases(self, databases, number_worker):
         """Add databases in cockpit."""
+        if "none" in databases:
+            return
         for database in databases:
             data = DATABASES.get(database)
             data["number_workers"] = number_worker

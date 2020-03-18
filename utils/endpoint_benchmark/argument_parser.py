@@ -31,7 +31,7 @@ class ArgumentValidation:
             "available_plugins",
         ]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
-        self._databases = ["db1", "db2"]
+        self._databases = ["db1", "db2", "none"]
         self._plugins = ["wrk", "displayReply"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
@@ -207,7 +207,7 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["all"],
-            help="databases to use in benchmark. Allowed values are "
+            help="databases to use in benchmark. For no database to add use none. Allowed values are "
             + ", ".join(self._argument_validation._databases)
             + ", all",
         )
