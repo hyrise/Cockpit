@@ -34,7 +34,7 @@ def fill_queue(
     sub_socket.setsockopt_string(SUBSCRIBE, "")
 
     while True:
-        published_data = sub_socket.recv_json()
+        published_data: Dict = sub_socket.recv_json()
         if not continue_execution_flag.value:
             continue_event.wait()
         else:
@@ -72,7 +72,7 @@ def execute_queries(
 
                 try:
                     task = task_queue.get(block=False)
-                    (query, not_formatted_parameters, workload_type, query_type,) = task
+                    query, not_formatted_parameters, workload_type, query_type = task
                     formatted_parameters = get_formatted_parameters(
                         not_formatted_parameters
                     )
@@ -86,7 +86,7 @@ def execute_queries(
                         log.log_queries(succesful_queries)
                         succesful_queries = []
                 except Empty:
-                    pass
+                    continue
                 except (ValueError, Error) as e:
                     failed_task_queue.put(
                         {"worker_id": worker_id, "task": task, "Error": str(e)}
@@ -106,7 +106,7 @@ def execute_task(
 
 def get_formatted_parameters(
     not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
-) -> Union[Tuple[Union[AsIs, str], ...], None]:
+) -> Optional[Tuple[Union[AsIs, str], ...]]:
     """Create formatted parameters."""
     if not_formatted_parameters:
         return tuple(

@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, Union
+from typing import Dict, List, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -299,7 +299,9 @@ class BackgroundJobManager(object):
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
 
-    def _generate_table_loading_queries(self, table_names, folder_name: str):
+    def _generate_table_loading_queries(
+        self, table_names, folder_name: str
+    ) -> List[Tuple]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
@@ -310,9 +312,9 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_queries(self, query):
+    def _execute_queries(self, execute_query: Tuple) -> None:
         with PoolCursor(self._connection_pool) as cur:
-            query, not_formatted_parameters = query
+            query, not_formatted_parameters = execute_query
             formatted_parameters = (
                 tuple(
                     AsIs(parameter) if protocol == "as_is" else parameter
@@ -323,7 +325,7 @@ class BackgroundJobManager(object):
             )
             cur.execute(query, formatted_parameters)
 
-    def _load_tables_job(self, table_names, folder_name):
+    def _load_tables_job(self, table_names, folder_name: str) -> None:
         table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
         )
@@ -337,7 +339,7 @@ class BackgroundJobManager(object):
             process.terminate()
         self._database_blocked.value = False
 
-    def load_tables(self, folder_name) -> bool:
+    def load_tables(self, folder_name: str) -> bool:
         """Load tables."""
         table_names = _table_names.get(folder_name.split("_")[0])
         if not self._database_blocked.value:
@@ -349,7 +351,7 @@ class BackgroundJobManager(object):
         else:
             return False
 
-    def _get_existing_tables(self, table_names) -> Dict:
+    def _get_existing_tables(self, table_names: List[str]) -> Dict:
         """Check wich tables exists and which not."""
         existing_tables = []
         not_existing_tables = []
@@ -364,7 +366,9 @@ class BackgroundJobManager(object):
                 not_existing_tables.append(name)
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_drop_queries(self, table_names, folder_name: str):
+    def _generate_table_drop_queries(
+        self, table_names: List[str], folder_name: str
+    ) -> List[Tuple]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
@@ -372,7 +376,7 @@ class BackgroundJobManager(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _delete_tables_job(self, table_names, folder_name):
+    def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
         table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
         processes = []
         for i in range(len(table_drop_queries)):
@@ -384,7 +388,7 @@ class BackgroundJobManager(object):
             process.terminate()
         self._database_blocked.value = False
 
-    def delete_tables(self, folder_name) -> bool:
+    def delete_tables(self, folder_name: str) -> bool:
         """Load tables."""
         table_names = _table_names.get(folder_name.split("_")[0])
         if not self._database_blocked.value:

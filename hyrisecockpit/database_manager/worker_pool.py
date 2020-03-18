@@ -8,7 +8,7 @@ from psycopg2 import pool
 from .worker import execute_queries, fill_queue
 
 
-class WorkerPool(object):
+class WorkerPool:
     """Represents WorkerPool."""
 
     def __init__(
@@ -33,14 +33,11 @@ class WorkerPool(object):
         self._worker_continue_event: Any = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
-        self._scheduler = BackgroundScheduler()
+        self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._scheduler.start()
 
     def _generate_execute_task_worker_done_events(self) -> List:
-        worker_done_event = []
-        for _ in range(self._number_worker):
-            worker_done_event.append(Event())
-        return worker_done_event
+        return [Event() for _ in range(self._number_worker)]
 
     def _generate_execute_task_worker(self) -> List[Process]:
         workers = []
@@ -62,7 +59,7 @@ class WorkerPool(object):
         return workers
 
     def _generate_fill_task_worker(self) -> Process:
-        fill_task_worker = Process(
+        return Process(
             target=fill_queue,
             args=(
                 self._workload_publisher_url,
@@ -71,7 +68,6 @@ class WorkerPool(object):
                 self._worker_continue_event,
             ),
         )
-        return fill_task_worker
 
     def _init_workers(self) -> None:
         if len(self._execute_task_workers) == 0:

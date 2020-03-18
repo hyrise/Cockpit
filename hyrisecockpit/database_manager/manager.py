@@ -256,13 +256,13 @@ class DatabaseManager(object):
             )
         return database_blocked_status
 
-    def _call_start_worker(self, body: Dict):
+    def _call_start_worker(self, body: Body) -> Response:
         for database in self._databases.values():
             if not database.start_worker():
                 return get_response(400)
         return get_response(200)
 
-    def _call_close_worker(self, body: Dict):
+    def _call_close_worker(self, body: Body) -> Response:
         for database in self._databases.values():
             if not database.close_worker():
                 return get_response(400)

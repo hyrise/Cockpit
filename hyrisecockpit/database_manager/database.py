@@ -32,9 +32,9 @@ class Database(object):
     ) -> None:
         """Initialize database object."""
         self._id = id
-        self.number_workers = number_workers
+        self.number_workers: int = number_workers
         self._default_tables: str = default_tables
-        self._number_additional_connections = 50
+        self._number_additional_connections: int = 50
         self.driver = Driver(
             user,
             password,
@@ -44,8 +44,7 @@ class Database(object):
             self.number_workers + self._number_additional_connections,
         )
         self._connection_pool = self.driver.get_connection_pool()
-        self._processing_tables_flag = Value("b", False)
-        self._database_blocked = Value("b", False)
+        self._database_blocked: Value = Value("b", False)
         self._background_scheduler = BackgroundJobManager(
             self._id,
             self._database_blocked,

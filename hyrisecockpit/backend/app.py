@@ -827,7 +827,7 @@ class ProcessTableStatus(Resource):
     """Database blocked status information of all databases."""
 
     @monitor.doc(model=[model_database_blocked_status])
-    def get(self) -> Response:
+    def get(self) -> List[Dict]:
         """Return Database blocked status for databases."""
         return _send_message(
             db_manager_socket,
