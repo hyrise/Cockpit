@@ -1,5 +1,6 @@
 export function useFormatting(): {
   formatNumberWithCommas: (data: number) => string;
+  formatDateWithoutMilliSec: (date: Date) => Date;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -15,5 +16,10 @@ export function useFormatting(): {
     return parts[1] ? formatted + "." + parts[1] : formatted;
   }
 
-  return { formatNumberWithCommas };
+  function formatDateWithoutMilliSec(date: Date): Date {
+    date.setMilliseconds(0);
+    return date;
+  }
+
+  return { formatNumberWithCommas, formatDateWithoutMilliSec };
 }

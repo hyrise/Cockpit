@@ -268,13 +268,13 @@ model_krueger_data = monitor.clone(
     },
 )
 
-model_process_table_status = monitor.clone(
-    "Process table status",
+model_database_blocked_status = monitor.clone(
+    "Database blocked status",
     model_database,
     {
-        "process_table_status": fields.Boolean(
-            title="Process table status",
-            description="Process table status of databases.",
+        "database_blocked_status": fields.Boolean(
+            title="Database blocked status",
+            description="Database blocked status of databases.",
             required=True,
             example=True,
         )
@@ -822,17 +822,17 @@ class KruegerData(Resource):
         return krueger_data
 
 
-@monitor.route("/process_table_status", methods=["GET"])
+@monitor.route("/database_blocked_status", methods=["GET"])
 class ProcessTableStatus(Resource):
-    """Process table status information of all databases."""
+    """Database blocked status information of all databases."""
 
-    @monitor.doc(model=[model_process_table_status])
-    def get(self) -> Response:
-        """Return process table status for databases."""
+    @monitor.doc(model=[model_database_blocked_status])
+    def get(self) -> List[Dict]:
+        """Return Database blocked status for databases."""
         return _send_message(
             db_manager_socket,
-            {"header": {"message": "process table status"}, "body": {}},
-        )["body"]["process_table_status"]
+            {"header": {"message": "database blocked status"}, "body": {}},
+        )["body"]["database_blocked_status"]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
@@ -881,6 +881,13 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
+        message = Request(header=Header(message="start worker"), body={})
+        response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during starting of worker")
+            )
+
         message = Request(
             header=Header(message="start workload"),
             body={
@@ -906,11 +913,11 @@ class Workload(Resource):
                 400, response["body"].get("error", "Error during stopping of generator")
             )
 
-        message = Request(header=Header(message="purge queue"), body={})
+        message = Request(header=Header(message="close worker"), body={})
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
-                400, response["body"].get("error", "Error during purging of the queues")
+                400, response["body"].get("error", "Error during closing of worker")
             )
 
         return response
