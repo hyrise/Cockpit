@@ -9,7 +9,7 @@ from typing import Dict, List, Tuple, Union
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from psycopg2 import ProgrammingError, pool
+from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
@@ -351,18 +351,14 @@ class BackgroundJobManager(object):
         else:
             return False
 
-    def _activate_plugin_job(self, plugin: str) -> bool:
-        try:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute(
-                    (
-                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
-                    ),
-                    (AsIs(plugin),),
-                )
-            return True
-        except ProgrammingError:
-            return False
+    def _activate_plugin_job(self, plugin: str) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            cur.execute(
+                (
+                    "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+                ),
+                (AsIs(plugin),),
+            )
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
@@ -372,15 +368,11 @@ class BackgroundJobManager(object):
         else:
             return False
 
-    def _deactivate_plugin_job(self, plugin: str) -> bool:
-        try:
-            with PoolCursor(self._connection_pool) as cur:
-                cur.execute(
-                    ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
-                )
-            return True
-        except ProgrammingError:
-            return False
+    def _deactivate_plugin_job(self, plugin: str) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            cur.execute(
+                ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
+            )
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Dectivate plugin."""
