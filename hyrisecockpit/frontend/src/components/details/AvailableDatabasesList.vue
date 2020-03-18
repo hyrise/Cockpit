@@ -8,7 +8,7 @@
           <template v-slot:activator="{ on }">
             <v-chip
               class="button"
-              color="primary"
+              color="secondary"
               v-on="on"
               @click="$emit('addDatabase')"
             >
