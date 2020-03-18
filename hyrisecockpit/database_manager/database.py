@@ -81,7 +81,7 @@ class Database(object):
         """Delete tables."""
         return self._background_scheduler.delete_tables(folder_name)
 
-    def get_processing_tables_flag(self) -> bool:
+    def get_database_blocked(self) -> bool:
         """Return tables loading flag."""
         return self._database_blocked.value
 

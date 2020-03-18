@@ -822,17 +822,17 @@ class KruegerData(Resource):
         return krueger_data
 
 
-@monitor.route("/process_table_status", methods=["GET"])
+@monitor.route("/database_blocked_status", methods=["GET"])
 class ProcessTableStatus(Resource):
-    """Process table status information of all databases."""
+    """Database blocked status information of all databases."""
 
     @monitor.doc(model=[model_process_table_status])
     def get(self) -> Response:
-        """Return process table status for databases."""
+        """Return Database blocked status for databases."""
         return _send_message(
             db_manager_socket,
-            {"header": {"message": "process table status"}, "body": {}},
-        )["body"]["process_table_status"]
+            {"header": {"message": "database blocked status"}, "body": {}},
+        )["body"]["database_blocked_status"]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
