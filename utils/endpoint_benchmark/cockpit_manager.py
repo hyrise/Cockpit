@@ -140,6 +140,16 @@ class CockpitManager:
         _ = requests.post(f"{self._backend_url}/control/data", json=data)
         self._check_if_database_blocked()
 
+    def close_database(self, databases):
+        """Close databases."""
+        for database in databases:
+            data = {"id": database}
+            _ = requests.delete(f"{self._backend_url}/control/database", json=data)
+
+    def stop_workload(self):
+        """Stop workload execution."""
+        _ = requests.delete(f"{self._backend_url}/control/workload", json={})
+
     def start_workload(self, workload_type, frequency):
         """Start workload in cockpit."""
         if workload_type == "none":
