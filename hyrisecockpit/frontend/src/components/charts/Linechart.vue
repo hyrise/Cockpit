@@ -15,6 +15,7 @@ import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useFormatting } from "@/meta/formatting";
 
 interface Props extends ChartProps {
   maxValue: number;
@@ -114,8 +115,10 @@ function useLineChartConfiguration(
   getOptions: () => Object;
 } {
   const { databases } = useUpdatingDatabases(props, context);
+  const { formatDateWithoutMilliSec } = useFormatting();
+
   function getLayout(yMax: number, xMin: number = 1): Object {
-    const currentDate = Date.now();
+    const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
     return {
       xaxis: {
         title: {
@@ -127,7 +130,7 @@ function useLineChartConfiguration(
         },
         type: "date",
         tickformat: "%H:%M:%S",
-        range: [currentDate - xMin * 1000, currentDate]
+        range: [currentTime - (xMin - 1) * 1000, currentTime]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",
@@ -145,7 +148,7 @@ function useLineChartConfiguration(
             //color: "#FAFAFA"
           }
         },
-        range: [0, yMax * 1.05]
+        range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",

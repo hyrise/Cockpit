@@ -1,16 +1,23 @@
-import { ref } from "@vue/composition-api";
+import { ref, computed } from "@vue/composition-api";
 import axios from "axios";
 import { Metric } from "@/types/metrics";
 import { MetricService } from "@/types/services";
 import { useUpdatingData } from "../meta/components";
 import { getMetricMetadata } from "../meta/metrics";
+import { useFormatting } from "@/meta/formatting";
 
 export function useMetricService(metric: Metric): MetricService {
   const queryReadyState = ref(true);
   const data = ref<any>({});
-  const maxValue = ref(0);
   const timestamps = ref<Date[]>([]);
+  const maxValue = computed(() =>
+    Object.values(data.value).reduce(
+      (max: number, dataSet: any) => Math.max(...dataSet, max),
+      0
+    )
+  );
   const metricMetaData = getMetricMetadata(metric);
+  const { formatDateWithoutMilliSec } = useFormatting();
 
   function getData(): void {
     queryReadyState.value = false;
@@ -18,30 +25,18 @@ export function useMetricService(metric: Metric): MetricService {
       useUpdatingData(result, metric);
       if (metricMetaData.fetchType === "modify") {
         Object.keys(result).forEach(key => {
-          addData(key, metricMetaData.transformationService(result, key));
+          handleDataChange(
+            key,
+            metricMetaData.transformationService(result, key)
+          );
         });
       } else if (metricMetaData.fetchType === "read") {
         data.value = result;
       }
+      handleTimestamps();
+      const dataCopy = JSON.parse(JSON.stringify(data.value));
+      data.value = dataCopy;
       queryReadyState.value = true;
-    });
-  }
-
-  function addData(dataBaseId: string, newData: number): void {
-    if (!data.value[dataBaseId]) {
-      data.value[dataBaseId] = [];
-    }
-    data.value[dataBaseId].push(newData);
-    const dataCopy = JSON.parse(JSON.stringify(data.value));
-    data.value = dataCopy;
-  }
-
-  function updateMaxValue() {
-    Object.values(data.value).forEach((dataSet: any) => {
-      const currentValue = dataSet[dataSet.length - 1];
-      if (currentValue > maxValue.value) {
-        maxValue.value = currentValue;
-      }
     });
   }
 
@@ -64,11 +59,32 @@ export function useMetricService(metric: Metric): MetricService {
     });
   }
 
+  function handleDataChange(databaseId: string, newData: number): void {
+    if (!data.value[databaseId]) {
+      data.value[databaseId] = [];
+    }
+    data.value[databaseId] = handleDataPoints(data.value[databaseId], newData);
+  }
+
+  function handleTimestamps(): void {
+    timestamps.value = handleDataPoints(
+      timestamps.value,
+      formatDateWithoutMilliSec(new Date())
+    );
+  }
+
+  function handleDataPoints<T>(data: T[], newData: T): T[] {
+    const dataCopy = data;
+    if (dataCopy.length > 29) {
+      dataCopy.shift();
+    }
+    dataCopy.push(newData);
+    return dataCopy;
+  }
+
   function getDataIfReady(): void {
     if (queryReadyState.value) {
       getData();
-      updateMaxValue();
-      timestamps.value.push(new Date());
     }
   }
 
