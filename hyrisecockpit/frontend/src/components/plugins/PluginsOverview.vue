@@ -19,17 +19,31 @@
           {{ database }}
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div class="plugin" v-for="plugin in plugins" :key="plugin">
-            <div class="plugin-name">
-              {{ plugin }}
+          <div v-for="plugin in plugins" :key="plugin">
+            <div class="plugin">
+              <div class="plugin-name">
+                {{ plugin }}
+              </div>
+              <v-switch
+                :disabled="disableAll"
+                :loading="isLoading[database + '_' + plugin]"
+                v-model="activePlugins"
+                :value="database + '_' + plugin"
+                @change="onClickPluginSwitch(database, plugin)"
+              />
+              <v-icon
+                @click="
+                  showSettings[database + '_' + plugin] = !showSettings[
+                    database + '_' + plugin
+                  ]
+                "
+              >
+                mdi-cog
+              </v-icon>
             </div>
-            <v-switch
-              :disabled="disableAll"
-              :loading="isLoading[database + '_' + plugin]"
-              v-model="activePlugins"
-              :value="database + '_' + plugin"
-              @change="onClickPluginSwitch(database, plugin)"
-            />
+            <div v-show="showSettings[database + '_' + plugin]">
+              test
+            </div>
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
@@ -45,7 +59,8 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
+  reactive
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
@@ -67,6 +82,7 @@ interface Data {
   pluginDraggableId: string;
   pluginDraggerId: string;
   pluginLogs: Ref<any>;
+  showSettings: any;
 }
 
 export default defineComponent({
@@ -93,6 +109,7 @@ export default defineComponent({
       updatePlugins,
       pluginLogs
     } = context.root.$pluginService;
+    const showSettings: any = reactive([]);
 
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
@@ -123,7 +140,8 @@ export default defineComponent({
       disableAll,
       pluginDraggableId,
       pluginDraggerId,
-      pluginLogs
+      pluginLogs,
+      showSettings
     };
   }
 });
