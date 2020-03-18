@@ -2,16 +2,18 @@
 
 from copy import deepcopy
 from json import dumps
-from multiprocessing import Value
+from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, Union
+from typing import Dict, List, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
 from psycopg2 import pool
+from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
+from .table_names import table_names as _table_names
 
 
 class BackgroundJobManager(object):
@@ -20,7 +22,7 @@ class BackgroundJobManager(object):
     def __init__(
         self,
         database_id: str,
-        processing_tables_flag: Value,
+        database_blocked: Value,
         connection_pool: pool,
         storage_host: str,
         storage_password: str,
@@ -29,7 +31,7 @@ class BackgroundJobManager(object):
     ):
         """Initialize BackgroundJobManager object."""
         self._database_id = database_id
-        self._processing_tables_flag = processing_tables_flag
+        self._database_blocked = database_blocked
         self._connection_pool = connection_pool
         self._storage_host = storage_host
         self._storage_password = storage_password
@@ -101,7 +103,7 @@ class BackgroundJobManager(object):
             )
 
     def _sql_to_data_frame(self, sql: str) -> DataFrame:
-        if self._processing_tables_flag.value:
+        if self._database_blocked.value:
             return DataFrame()
         else:
             with PoolCursor(self._connection_pool) as cur:
@@ -296,3 +298,104 @@ class BackgroundJobManager(object):
             log.log_meta_information(
                 "storage", {"storage_meta_information": dumps(output)}, time_stamp
             )
+
+    def _generate_table_loading_queries(
+        self, table_names: List[str], folder_name: str
+    ) -> List[Tuple]:
+        """Generate queries in tuple form that load tables."""
+        # TODO change absolute to relative path
+        return [
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                ((name, "as_is"), (folder_name, "as_is"), (name, "as_is"),),
+            )
+            for name in table_names
+        ]
+
+    def _execute_queries(self, execute_query: Tuple) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            query, not_formatted_parameters = execute_query
+            formatted_parameters = (
+                tuple(
+                    AsIs(parameter) if protocol == "as_is" else parameter
+                    for parameter, protocol in not_formatted_parameters
+                )
+                if not_formatted_parameters is not None
+                else None
+            )
+            cur.execute(query, formatted_parameters)
+
+    def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
+        table_loading_queries = self._generate_table_loading_queries(
+            table_names, folder_name
+        )
+        processes = []
+        for i in range(len(table_loading_queries)):
+            p = Process(target=self._execute_queries, args=(table_loading_queries[i],))
+            processes.append(p)
+            p.start()
+        for process in processes:
+            process.join()
+            process.terminate()
+        self._database_blocked.value = False
+
+    def load_tables(self, folder_name: str) -> bool:
+        """Load tables."""
+        table_names = _table_names.get(folder_name.split("_")[0])
+        if not self._database_blocked.value:
+            self._database_blocked.value = True
+            self._scheduler.add_job(
+                func=self._load_tables_job, args=(table_names, folder_name)
+            )
+            return True
+        else:
+            return False
+
+    def _get_existing_tables(self, table_names: List[str]) -> Dict:
+        """Check wich tables exists and which not."""
+        existing_tables = []
+        not_existing_tables = []
+        with PoolCursor(self._connection_pool) as cur:
+            for name in table_names:
+                cur.execute(
+                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
+                )
+                if cur.fetchone():
+                    existing_tables.append(name)
+                    continue
+                not_existing_tables.append(name)
+        return {"existing": existing_tables, "not_existing": not_existing_tables}
+
+    def _generate_table_drop_queries(
+        self, table_names: List[str], folder_name: str
+    ) -> List[Tuple]:
+        # TODO folder_name is unused? This deletes all tables
+        """Generate queries in tuple form that drop tables."""
+        return [
+            ("DROP TABLE %s;", ((name, "as_is"),),)
+            for name in self._get_existing_tables(table_names)["existing"]
+        ]
+
+    def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
+        table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
+        processes = []
+        for i in range(len(table_drop_queries)):
+            p = Process(target=self._execute_queries, args=(table_drop_queries[i],))
+            processes.append(p)
+            p.start()
+        for process in processes:
+            process.join()
+            process.terminate()
+        self._database_blocked.value = False
+
+    def delete_tables(self, folder_name: str) -> bool:
+        """Load tables."""
+        table_names = _table_names.get(folder_name.split("_")[0])
+        if not self._database_blocked.value:
+            self._database_blocked.value = True
+            self._scheduler.add_job(
+                func=self._delete_tables_job, args=(table_names, folder_name)
+            )
+            return True
+        else:
+            return False
