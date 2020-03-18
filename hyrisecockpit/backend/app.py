@@ -117,13 +117,54 @@ model_detailed_throughput = monitor.clone(
     },
 )
 
+model_query_information = monitor.clone(
+    "Detailed Throughput and Latency",
+    model_database,
+    {
+        "detailed_query_information": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput and latency per query",
+                    {
+                        "workload_type": fields.String(
+                            title="workload_type",
+                            description="Type of the executed query.",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                        "query_number": fields.Integer(
+                            title="query_number",
+                            description="Number of the executed query",
+                            required=True,
+                            example=5,
+                        ),
+                        "throughput": fields.Integer(
+                            title="throughput",
+                            description="Number of successfully executed queries in given time interval.",
+                            required=True,
+                            example=55,
+                        ),
+                        "latency": fields.Float(
+                            title="Latency",
+                            description="Average query latency (ns) of a given time interval.",
+                            required=True,
+                            example=923.263,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        )
+    },
+)
+
 model_latency = monitor.clone(
     "Latency",
     model_database,
     {
         "latency": fields.Float(
             title="Latency",
-            description="Average query latency (ms) of a given time interval.",
+            description="Average query latency (ns) of a given time interval.",
             required=True,
             example=923.263,
         )
@@ -227,13 +268,13 @@ model_krueger_data = monitor.clone(
     },
 )
 
-model_process_table_status = monitor.clone(
-    "Process table status",
+model_database_blocked_status = monitor.clone(
+    "Database blocked status",
     model_database,
     {
-        "process_table_status": fields.Boolean(
-            title="Process table status",
-            description="Process table status of databases.",
+        "database_blocked_status": fields.Boolean(
+            title="Database blocked status",
+            description="Database blocked status of databases.",
             required=True,
             example=True,
         )
@@ -611,6 +652,41 @@ class Latency(Resource):
         return response
 
 
+@monitor.route("/detailed_query_information")
+class DetailedQueryInformation(Resource):
+    """Detailed throughput and latency information of all databases."""
+
+    @monitor.doc(model=[model_query_information])
+    def get(self) -> Union[int, List[Dict[str, Any]]]:
+        """Return detailed throughput and latency information from the stored queries."""
+        currentts = time_ns()
+        startts = currentts - 2_000_000_000
+        endts = currentts - 1_000_000_000
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        response: List[Dict] = []
+        for database in active_databases:
+            result = storage_connection.query(
+                'SELECT COUNT("latency") as "throughput", MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts GROUP BY benchmark, query_no;',
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            query_information: List[Dict[str, int]] = [
+                {
+                    "benchmark": tags["benchmark"],
+                    "query_number": tags["query_no"],
+                    "throughput": list(result[table, tags])[0]["throughput"],
+                    "latency": list(result[table, tags])[0]["latency"],
+                }
+                for table, tags in list(result.keys())
+            ]
+            response.append({"id": database, "query_information": query_information})
+
+        return response
+
+
 @monitor.route("/queue_length")
 class QueueLength(Resource):
     """Queue length information of all databases."""
@@ -746,17 +822,17 @@ class KruegerData(Resource):
         return krueger_data
 
 
-@monitor.route("/process_table_status", methods=["GET"])
+@monitor.route("/database_blocked_status", methods=["GET"])
 class ProcessTableStatus(Resource):
-    """Process table status information of all databases."""
+    """Database blocked status information of all databases."""
 
-    @monitor.doc(model=[model_process_table_status])
-    def get(self) -> Response:
-        """Return process table status for databases."""
+    @monitor.doc(model=[model_database_blocked_status])
+    def get(self) -> List[Dict]:
+        """Return Database blocked status for databases."""
         return _send_message(
             db_manager_socket,
-            {"header": {"message": "process table status"}, "body": {}},
-        )["body"]["process_table_status"]
+            {"header": {"message": "database blocked status"}, "body": {}},
+        )["body"]["database_blocked_status"]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
@@ -805,6 +881,13 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
+        message = Request(header=Header(message="start worker"), body={})
+        response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during starting of worker")
+            )
+
         message = Request(
             header=Header(message="start workload"),
             body={
@@ -830,11 +913,11 @@ class Workload(Resource):
                 400, response["body"].get("error", "Error during stopping of generator")
             )
 
-        message = Request(header=Header(message="purge queue"), body={})
+        message = Request(header=Header(message="close worker"), body={})
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
-                400, response["body"].get("error", "Error during purging of the queues")
+                400, response["body"].get("error", "Error during closing of worker")
             )
 
         return response

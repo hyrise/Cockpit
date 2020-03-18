@@ -3,17 +3,44 @@
     <AppDrawer />
     <v-app-bar app color="primary" dark>
       <b> Hyrise Cockpit </b>
-      <add-database />
-      <v-icon class="plugin-icon" @click="togglePluginEditor()">
-        mdi-widgets
-      </v-icon>
+      <v-spacer />
+      <add-database
+        :open="showAddDatabaseDialog"
+        @close="showAddDatabaseDialog = false"
+      />
+      <v-tooltip class="tooltip" bottom>
+        <template v-slot:activator="{ on }">
+          <v-icon class="icon" v-on="on" @click="togglePluginEditor()">
+            mdi-widgets
+          </v-icon>
+        </template>
+        <span>Manage Plugins</span>
+      </v-tooltip>
+      <v-tooltip class="tooltip" bottom right>
+        <template v-slot:activator="{ on }">
+          <v-icon class="icon" v-on="on" @click="openWorkloadDialog()">
+            mdi-speedometer
+          </v-icon>
+        </template>
+        <span>Generate Workload</span>
+      </v-tooltip>
       <workload-generation
         :open="showWorkloadDialog"
         @close="showWorkloadDialog = false"
       />
-      <v-btn class=" white--text mr-5" @click="openWorkloadDialog()"
-        >Generate Workload</v-btn
-      >
+      <v-menu bottom offset-y>
+        <template v-slot:activator="{ on: menu }">
+          <v-tooltip class="db-tooltip" bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-badge class="icon" color="secondary" :content="databaseCount">
+                <v-icon v-on="{ ...tooltip, ...menu }">mdi-database</v-icon>
+              </v-badge>
+            </template>
+            <span>Manage Databases</span>
+          </v-tooltip>
+        </template>
+        <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
+      </v-menu>
     </v-app-bar>
     <v-content>
       <PluginsOverview v-if="showPluginEditor" :onClose="togglePluginEditor" />
@@ -23,31 +50,40 @@
 </template>
 
 <script lang="ts">
-import { SetupContext, defineComponent, ref, Ref } from "@vue/composition-api";
+import {
+  SetupContext,
+  defineComponent,
+  ref,
+  Ref,
+  computed
+} from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
 import addDatabase from "./components/addDatabase.vue";
 import PluginsOverview from "./components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "./components/workload/WorkloadGeneration.vue";
+import AvailableDatabasesList from "@/components/details/AvailableDatabasesList.vue";
 
 interface Data {
-  showNavigationDrawer: Ref<boolean>;
   togglePluginEditor: () => void;
   showPluginEditor: Ref<boolean>;
-  toggleNavigationDrawer: () => void;
   showWorkloadDialog: Ref<boolean>;
+  showAddDatabaseDialog: Ref<boolean>;
   openWorkloadDialog: () => void;
+  databaseCount: Ref<string>;
 }
 
 export default defineComponent({
-  components: { AppDrawer, PluginsOverview, WorkloadGeneration, addDatabase },
+  components: {
+    AppDrawer,
+    PluginsOverview,
+    WorkloadGeneration,
+    addDatabase,
+    AvailableDatabasesList
+  },
   setup(props: {}, context: SetupContext): Data {
-    const showNavigationDrawer = ref<boolean>(true);
     const showPluginEditor = ref<boolean>(false);
     const showWorkloadDialog = ref<boolean>(false);
-
-    function toggleNavigationDrawer(): void {
-      showNavigationDrawer.value = !showNavigationDrawer.value;
-    }
+    const showAddDatabaseDialog = ref<boolean>(false);
 
     function togglePluginEditor(): void {
       showPluginEditor.value = !showPluginEditor.value;
@@ -57,18 +93,26 @@ export default defineComponent({
       showWorkloadDialog.value = true;
     }
     return {
-      showNavigationDrawer,
-      toggleNavigationDrawer,
       togglePluginEditor,
       showPluginEditor,
       showWorkloadDialog,
-      openWorkloadDialog
+      openWorkloadDialog,
+      showAddDatabaseDialog,
+      databaseCount: computed(() =>
+        context.root.$databaseController.availableDatabasesById.value.length.toString()
+      )
     };
   }
 });
 </script>
 <style scoped>
-.plugin-icon {
+.icon {
   margin-right: 10px;
+}
+.tooltip {
+  z-index: 10;
+}
+.db-tooltip {
+  z-index: 1;
 }
 </style>
