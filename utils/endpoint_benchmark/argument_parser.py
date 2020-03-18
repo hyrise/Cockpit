@@ -21,9 +21,15 @@ class ArgumentValidation:
             "krueger_data",
             "detailed_latency",
             "detailed_throughput",
-            "process_table_status",
+            "database_blocked_status",
         ]
-        self._endpoints_control = ["database", "data"]
+        self._endpoints_control = [
+            "database",
+            "data",
+            "plugin_log",
+            "plugin",
+            "available_plugins",
+        ]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
         self._databases = ["db1", "db2"]
         self._plugins = ["wrk", "displayReply"]

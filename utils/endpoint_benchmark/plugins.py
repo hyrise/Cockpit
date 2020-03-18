@@ -60,6 +60,8 @@ class DisplayReply:
             endpoint_output[end_point] = requests.get(
                 f"{self._backend_url}/{endpoint_type}/{end_point}"
             ).json()
+        if not endpoint_output[end_point]:
+            endpoint_output[end_point] = {}
         return endpoint_output
 
     def _display_endpoint_output(self, output):
