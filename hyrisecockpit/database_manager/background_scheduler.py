@@ -358,8 +358,6 @@ class BackgroundJobManager(object):
             for table_name in full_table_names
             if self._loaded_tables[table_name] != folder_name
         ]
-        print("TABLES TO BE LOADED: ")
-        print(table_names)
 
         if not table_names:
             return True
