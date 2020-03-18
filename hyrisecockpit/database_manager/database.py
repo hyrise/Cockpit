@@ -78,11 +78,11 @@ class Database(object):
         """Delete tables."""
         return self._background_scheduler.delete_tables(folder_name)
 
-    def activate_plugins(self, plugin: str) -> bool:
+    def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
         return self._background_scheduler.activate_plugin(plugin)
 
-    def deactivate_plugins(self, plugin: str) -> bool:
+    def deactivate_plugin(self, plugin: str) -> bool:
         """Deactivate plugin."""
         return self._background_scheduler.deactivate_plugin(plugin)
 
