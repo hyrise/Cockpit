@@ -26,9 +26,9 @@ export function useQueryService(): {
             queryInformation[database] = entry.query_information.map(
               (query: any) => {
                 return {
-                  queryName: query.benchmark + "-" + query.query_number,
+                  queryName: query.query_number,
                   workloadType: query.benchmark,
-                  latency: query.latency,
+                  latency: Math.floor(query.latency / Math.pow(10, 3)),
                   throughput: query.throughput
                 };
               }
