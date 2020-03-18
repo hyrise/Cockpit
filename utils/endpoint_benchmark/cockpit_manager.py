@@ -116,23 +116,25 @@ class CockpitManager:
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
             self._check_if_database_added(database)
 
-    def _check_if_tables_processed(self):
-        """Check if tables are processed in cockpit."""
+    def _check_if_database_blocked(self):
+        """Check if database is blocked in cockpit."""
         while True:
             time.sleep(0.2)
             response = requests.get(
-                f"{self._backend_url}/monitor/process_table_status"
+                f"{self._backend_url}/monitor/database_blocked_status"
             ).json()
-            status_flags = [database["process_table_status"] for database in response]
-            check_processed = False
+            status_flags = [
+                database["database_blocked_status"] for database in response
+            ]
+            check_blocked = False
             for flag in status_flags:
-                check_processed = check_processed or flag
-            if not check_processed:
+                check_blocked = check_blocked or flag
+            if not check_blocked:
                 break
 
     def start_workload(self, workload_type, frequency):
         """Start workload in cockpit."""
+        self._check_if_database_blocked()
         data = {"folder_name": workload_type, "frequency": frequency}
         # TODO add time out and check response
         _ = requests.post(f"{self._backend_url}/control/workload", json=data)
-        self._check_if_tables_processed()
