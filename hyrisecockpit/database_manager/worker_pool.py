@@ -94,7 +94,7 @@ class WorkerPool(object):
             self._failed_task_queue = Queue(0)
             self._status = "closed"
 
-    def _wait_worker(self) -> None:
+    def _wait_for_worker(self) -> None:
         self._worker_continue_event.clear()
         self._continue_execution_flag.value = False
         for i in range(self._number_worker):
@@ -120,7 +120,7 @@ class WorkerPool(object):
 
     def _stop_job(self) -> None:
         if self._status == "running":
-            self._wait_worker()
+            self._wait_for_worker()
             self._status = "stopped"
         self._database_blocked.value = False
 
@@ -128,7 +128,7 @@ class WorkerPool(object):
         if self._status == "stopped":
             self._terminate_worker()
         else:
-            self._wait_worker()
+            self._wait_for_worker()
             self._terminate_worker()
         self._status == "closed"
         self._database_blocked.value = False
