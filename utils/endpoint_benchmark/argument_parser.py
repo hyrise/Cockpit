@@ -295,7 +295,7 @@ class ArgumentParser:
             type=str,
             nargs="?",
             metavar="",
-            default="Y",
+            default="N",
             help="start components as subprocesses [Y/N]",
         )
         self.parser.add_argument(
