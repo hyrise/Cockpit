@@ -80,6 +80,7 @@ class WorkerPool:
 
     def _terminate_worker(self) -> None:
         if not self._status == "closed":
+            assert self._fill_task_worker is not None  # nosec
             self._fill_task_worker.terminate()
             self._fill_task_worker = None
             for i in range(self._number_worker):
@@ -97,6 +98,7 @@ class WorkerPool:
             self._execute_task_worker_done_event[i].wait()
 
     def _start_worker(self) -> None:
+        assert self._fill_task_worker is not None  # nosec
         self._continue_execution_flag.value = True
         self._fill_task_worker.start()
         for i in range(self._number_worker):
