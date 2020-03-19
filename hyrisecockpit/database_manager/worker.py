@@ -53,7 +53,6 @@ def execute_queries(
     worker_id: str,
     task_queue: Queue,
     connection_pool: pool,
-    failed_task_queue: Queue,
     continue_execution_flag: Value,
     database_id: str,
     i_am_done_event: EventType,
@@ -65,6 +64,7 @@ def execute_queries(
             STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
         ) as log:
             succesful_queries: List[Tuple[int, int, str, str, str]] = []
+            failed_queries: List[Tuple[int, str, str, str]] = []
             last_batched = time_ns()
             while True:
                 if not continue_execution_flag.value:
@@ -86,12 +86,12 @@ def execute_queries(
                         last_batched = time_ns()
                         log.log_queries(succesful_queries)
                         succesful_queries = []
+                        log.log_failed_queries(failed_queries)
+                        failed_queries = []
                 except Empty:
                     continue
                 except (ValueError, Error) as e:
-                    failed_task_queue.put(
-                        {"worker_id": worker_id, "task": task, "Error": str(e)}
-                    )
+                    failed_queries.append((time_ns(), worker_id, str(task), str(e)))
 
 
 def execute_task(

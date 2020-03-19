@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from psycopg2.extensions import AsIs
 
@@ -67,10 +67,6 @@ class Database(object):
     def get_queue_length(self) -> int:
         """Return queue length."""
         return self._worker_pool.get_queue_length()
-
-    def get_failed_tasks(self) -> List[Dict[str, str]]:
-        """Return failed tasks."""
-        return self._worker_pool.get_failed_tasks()
 
     def load_data(self, folder_name: str) -> bool:
         """Load pre-generated tables."""
