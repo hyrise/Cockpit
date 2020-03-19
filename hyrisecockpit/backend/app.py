@@ -469,9 +469,8 @@ model_deactivate_plugin = control.clone(
     "Deactivate Plugin", model_database, {"plugin": modelhelper_plugin},
 )
 
-model_plugin_setting = control.clone(
+model_plugin_setting = control.model(
     "Set Plugin Setting",
-    model_database,
     {
         "name": fields.String(
             title="Setting name",
@@ -1023,27 +1022,24 @@ class PluginLog(Resource):
         ]
 
 
-@control.route("/plugin_settings")
+@control.route("/plugin_settings/<str:id>")
 class PluginSettings(Resource):
     """Set settings for plugins."""
 
-    @control.doc(model=model_get_plugin_setting, body=model_database)
-    def get(self) -> Response:
+    @control.doc(model=model_get_plugin_setting)
+    def get(self, id: str) -> Response:
         """Read settings for plugins."""
-        message = Request(
-            header=Header(message="get plugin setting"),
-            body={"id": control.payload["id"]},
-        )
+        message = Request(header=Header(message="get plugin setting"), body={"id": id},)
         response = _send_message(db_manager_socket, message)
         return response
 
     @control.doc(body=model_plugin_setting)
-    def post(self) -> Response:
+    def post(self, id: str) -> Response:
         """Set settings for plugins."""
         message = Request(
             header=Header(message="set plugin setting"),
             body={
-                "id": control.payload["id"],
+                "id": id,
                 "name": control.payload["name"],
                 "value": control.payload["value"],
             },
