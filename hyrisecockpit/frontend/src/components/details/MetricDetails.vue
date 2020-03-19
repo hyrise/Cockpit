@@ -86,15 +86,19 @@ interface MetricValueData {
 }
 
 function useMetricValues(props: Props): MetricValueData {
+  const { roundNumber } = useFormatting();
   return {
     currentValue: computed(() => {
       if (!props.databases.length) return {};
       return props.databases.reduce(
         (valueMap: Record<string, number>, database: string) => {
           valueMap[database] = Object.keys(props.data).length
-            ? Math.floor(
-                props.data[database][props.data[database].length - 1] * 100
-              ) / 100
+            ? roundNumber(
+                props.data[database][props.data[database].length - 1],
+                100,
+                100,
+                false
+              )
             : 0;
           return valueMap;
         },
