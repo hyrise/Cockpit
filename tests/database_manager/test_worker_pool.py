@@ -1,5 +1,5 @@
 """Tests for the worker_pool module."""
-from multiprocessing import Value
+from multiprocessing import Event, Value
 from multiprocessing.context import Process as ProcessType
 from multiprocessing.queues import Queue as QueueType
 from multiprocessing.sharedctypes import Synchronized as ValueType
@@ -7,7 +7,7 @@ from multiprocessing.synchronize import Event as EventType
 from typing import Dict
 from unittest.mock import MagicMock, patch
 
-from pytest import fixture
+from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
@@ -146,13 +146,10 @@ class TestWorkerPool(object):
     ) -> None:
         """Check if nothing get changed while both types of worker exists."""
         self.mock_suurounding_init_worker_functions(worker_pool)
-
         worker_pool._execute_task_workers = ["current_worker"]
         worker_pool._fill_task_worker = "current_fill_worker"
         worker_pool._execute_task_worker_done_event = ["current_event"]
-
         worker_pool._init_workers()
-
         results = self.get_worker_and_event(worker_pool)
 
         assert results["event"][:] == ["current_event"][:]
@@ -164,13 +161,10 @@ class TestWorkerPool(object):
     ) -> None:
         """Check if that new task fill worker is created."""
         self.mock_suurounding_init_worker_functions(worker_pool)
-
         worker_pool._execute_task_workers = ["current_worker"]
         worker_pool._fill_task_worker = None
         worker_pool._execute_task_worker_done_event = ["current_event"]
-
         worker_pool._init_workers()
-
         results = self.get_worker_and_event(worker_pool)
 
         assert results["event"][:] == ["current_event"][:]
@@ -182,13 +176,10 @@ class TestWorkerPool(object):
     ) -> None:
         """Check if that new task fill worker and execute task worker are created."""
         self.mock_suurounding_init_worker_functions(worker_pool)
-
         worker_pool._execute_task_workers = []
         worker_pool._fill_task_worker = None
         worker_pool._execute_task_worker_done_event = ["current_event"]
-
         worker_pool._init_workers()
-
         results = self.get_worker_and_event(worker_pool)
 
         assert results["event"][:] == ["new_event"][:]
@@ -200,15 +191,55 @@ class TestWorkerPool(object):
     ) -> None:
         """Check if that new execute task worker are created."""
         self.mock_suurounding_init_worker_functions(worker_pool)
-
         worker_pool._execute_task_workers = []
         worker_pool._fill_task_worker = "current_fill_worker"
         worker_pool._execute_task_worker_done_event = ["current_event"]
-
         worker_pool._init_workers()
-
         results = self.get_worker_and_event(worker_pool)
 
         assert results["event"][:] == ["new_event"][:]
         assert results["execute_workers"][:] == ["new_worker"][:]
         assert results["fill_worker"] == "current_fill_worker"
+
+    def test_termination_of_worker_for_running_pool(self, worker_pool) -> None:
+        """Check if pool is closed."""
+        worker_pool._fill_task_worker = MagicMock()
+        worker_pool._execute_task_workers = [
+            MagicMock() for _ in range(self.get_number_worker())
+        ]
+        worker_pool._status = "running"
+        worker_pool._terminate_worker()
+
+        assert worker_pool._fill_task_worker is None
+        assert type(worker_pool._execute_task_workers) is list
+        assert len(worker_pool._execute_task_workers) == 0
+        assert type(worker_pool._worker_continue_event) is EventType
+        assert type(worker_pool._task_queue) is QueueType
+        assert type(worker_pool._failed_task_queue) is QueueType
+        assert worker_pool._status == "closed"
+
+    def test_termination_of_worker_for_no_running_pool(self, worker_pool) -> None:
+        """Check handling of termination with closed pool."""
+        worker_pool._status = "closed"
+        worker_pool._terminate_worker()
+
+        assert worker_pool._fill_task_worker is None
+        assert type(worker_pool._execute_task_workers) is list
+        assert len(worker_pool._execute_task_workers) == 0
+        assert type(worker_pool._worker_continue_event) is EventType
+        assert type(worker_pool._task_queue) is QueueType
+        assert type(worker_pool._failed_task_queue) is QueueType
+        assert worker_pool._status == "closed"
+
+    @mark.timeout(10)
+    def test_waiting_for_workers(self, worker_pool) -> None:
+        """Test waiting for event."""
+        events = [Event() for _ in range(self.get_number_worker())]
+        for event in events:
+            event.set()
+
+        worker_pool._execute_task_worker_done_event = events
+        worker_pool._wait_for_worker()
+
+        assert not worker_pool._worker_continue_event.is_set()
+        assert not worker_pool._continue_execution_flag.value
