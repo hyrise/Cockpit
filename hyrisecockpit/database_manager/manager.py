@@ -186,6 +186,7 @@ class DatabaseManager(object):
                 "id": database_id,
                 "database_blocked_status": database.get_database_blocked(),
                 "worker_pool_status": database.get_worker_pool_status(),
+                "valid_benchmarks": database.get_valid_benchmarks(),
                 "loaded_tables": database.get_loaded_tables(),
             }
             for database_id, database in self._databases.items()

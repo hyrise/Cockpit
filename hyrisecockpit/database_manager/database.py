@@ -114,6 +114,27 @@ class Database(object):
             if value is not None
         ]
 
+    def get_valid_benchmarks(self) -> List[str]:
+        """Get list of all benchmarks which are completely loaded."""
+        valid_benchmarks: List[str] = []
+        present_benchmarks = [
+            benchmark
+            for benchmark in set(self._loaded_tables.values())
+            if benchmark is not None
+        ]
+
+        for benchmark in present_benchmarks:
+            required_tables = _table_names[benchmark.split("_")[0]]
+            valid_flag: bool = True
+            for table_name in required_tables:
+                if self._loaded_tables[table_name] != benchmark:
+                    valid_flag = False
+                    break
+            if valid_flag:
+                valid_benchmarks.append(benchmark)
+
+        return valid_benchmarks
+
     def start_worker(self) -> bool:
         """Start worker."""
         return self._worker_pool.start()
