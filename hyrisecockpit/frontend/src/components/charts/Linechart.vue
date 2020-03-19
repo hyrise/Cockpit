@@ -35,15 +35,17 @@ export default defineComponent({
     ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
-    const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
-      context,
-      props
-    );
     const { databasesUpdated } = context.root.$databaseController;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(
       "multipleDatabasesAllowed",
       true
+    );
+
+    const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
+      context,
+      props,
+      multipleDatabasesAllowed
     );
 
     onMounted(() => {
@@ -108,7 +110,8 @@ export default defineComponent({
 
 function useLineChartConfiguration(
   context: SetupContext,
-  props: Props
+  props: Props,
+  multipleDatabasesAllowed: boolean
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (yMax: number, xMin?: number) => Object;
@@ -158,7 +161,9 @@ function useLineChartConfiguration(
         // },
         //linewidth: 2
       },
-      autosize: true
+      autosize: true,
+      showlegend: multipleDatabasesAllowed,
+      legend: { x: 0, y: 1.5 }
 
       // plot_bgcolor: "#424242",
       // paper_bgcolor: "#424242",
