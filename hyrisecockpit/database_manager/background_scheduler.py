@@ -303,7 +303,7 @@ class BackgroundJobManager(object):
 
     def _generate_table_loading_queries(
         self, table_names: List[str], folder_name: str
-    ) -> List[Tuple]:
+    ) -> List[Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
@@ -331,11 +331,12 @@ class BackgroundJobManager(object):
         table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
         )
-        processes = []
-        for i in range(len(table_loading_queries)):
-            p = Process(target=self._execute_queries, args=(table_loading_queries[i],))
-            processes.append(p)
-            p.start()
+        processes: List[Process] = [
+            Process(target=self._execute_queries, args=(query,))
+            for query in table_loading_queries
+        ]
+        for process in processes:
+            process.start()
         for process in processes:
             process.join()
             process.terminate()
