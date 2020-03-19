@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Tuple, Union
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from psycopg2 import pool
+from psycopg2 import Error, pool
 from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
@@ -314,35 +314,45 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_queries(self, execute_query: Tuple) -> None:
-        with PoolCursor(self._connection_pool) as cur:
-            query, not_formatted_parameters = execute_query
-            formatted_parameters = (
-                tuple(
-                    AsIs(parameter) if protocol == "as_is" else parameter
-                    for parameter, protocol in not_formatted_parameters
-                )
-                if not_formatted_parameters is not None
-                else None
+    def _execute_table_query(
+        self,
+        query_tuple: Tuple,
+        loaded_tables: Dict[str, Optional[str]],
+        table_name: str,
+        benchmark: Optional[str],
+    ) -> None:
+        query, not_formatted_parameters = query_tuple
+        formatted_parameters = (
+            tuple(
+                AsIs(parameter) if protocol == "as_is" else parameter
+                for parameter, protocol in not_formatted_parameters
             )
-            cur.execute(query, formatted_parameters)
+            if not_formatted_parameters is not None
+            else None
+        )
+        with PoolCursor(self._connection_pool) as cur:
+            try:
+                cur.execute(query, formatted_parameters)
+                loaded_tables[table_name] = benchmark
+            except Error:
+                pass  # TODO: log error
 
     def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
         table_loading_queries = self._generate_table_loading_queries(
             table_names, folder_name
         )
         processes: List[Process] = [
-            Process(target=self._execute_queries, args=(query,))
-            for query in table_loading_queries
+            Process(
+                target=self._execute_table_query,
+                args=(query, self._loaded_tables, table_name, folder_name),
+            )
+            for query, table_name in zip(table_loading_queries, table_names)
         ]
         for process in processes:
             process.start()
         for process in processes:
             process.join()
             process.terminate()
-        for table_name in table_names:
-            self._loaded_tables[table_name] = folder_name
-
         self._database_blocked.value = False
 
     def load_tables(self, folder_name: str) -> bool:
@@ -396,16 +406,18 @@ class BackgroundJobManager(object):
 
     def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
         table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
-        processes = []
-        for i in range(len(table_drop_queries)):
-            p = Process(target=self._execute_queries, args=(table_drop_queries[i],))
-            processes.append(p)
-            p.start()
+        processes: List[Process] = [
+            Process(
+                target=self._execute_table_query,
+                args=(query, self._loaded_tables, table_name, None),
+            )
+            for query, table_name in zip(table_drop_queries, table_names)
+        ]
+        for process in processes:
+            process.start()
         for process in processes:
             process.join()
             process.terminate()
-        for table_name in table_names:
-            self._loaded_tables[table_name] = None
         self._database_blocked.value = False
 
     def delete_tables(self, folder_name: str) -> bool:
