@@ -284,11 +284,27 @@ model_database_status = monitor.clone(
             required=True,
             example="running",
         ),
-        "loaded_tables": fields.String(
-            title="Loaded tables",
-            description="Already loaded tables.",
+        "loaded_tables": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Loaded tables",
+                    {
+                        "table_name": fields.String(
+                            title="Table name",
+                            description="Name of loaded table",
+                            required=True,
+                            example="customer",
+                        ),
+                        "benchmark": fields.String(
+                            title="Benchmark",
+                            description="Name of the benchmark",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                    },
+                )
+            ),
             required=True,
-            example="tpch_0.1",
         ),
     },
 )
