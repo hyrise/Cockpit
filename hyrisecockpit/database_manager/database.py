@@ -1,6 +1,6 @@
 """The database object represents the instance of a database."""
 
-from multiprocessing import Value
+from multiprocessing import Manager, Value
 from typing import Dict, List, Optional
 
 from psycopg2 import pool
@@ -47,6 +47,7 @@ class Database(object):
         )
         self._connection_pool: pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
+        self._manager = Manager()
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
@@ -72,7 +73,12 @@ class Database(object):
 
     def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
         """Create loaded_tables dictionary without information about already loaded tables."""
-        return {table: None for tables in _table_names.values() for table in tables}
+        loaded_tables: Dict[str, Optional[str]] = self._manager.dict()
+        for tables in _table_names.values():
+            for table in tables:
+                loaded_tables[table] = None
+
+        return loaded_tables
 
     def get_queue_length(self) -> int:
         """Return queue length."""
