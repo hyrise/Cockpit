@@ -27,7 +27,12 @@
       />
       <v-tooltip class="tooltip" bottom>
         <template v-slot:activator="{ on }">
-          <v-btn color="secondary" class="icon" v-on="on" @click="togglePluginEditor()">
+          <v-btn
+            color="secondary"
+            class="icon"
+            v-on="on"
+            @click="togglePluginEditor()"
+          >
             Plugins
           </v-btn>
         </template>
@@ -35,7 +40,13 @@
       </v-tooltip>
       <v-tooltip class="tooltip" bottom right>
         <template v-slot:activator="{ on }">
-          <v-btn color="secondary" class="icon" v-on="on" @click="openWorkloadDialog()">Workload</v-btn>
+          <v-btn
+            color="secondary"
+            class="icon"
+            v-on="on"
+            @click="openWorkloadDialog()"
+            >Workload</v-btn
+          >
         </template>
         <span>Generate Workload</span>
       </v-tooltip>
