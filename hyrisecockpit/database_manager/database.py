@@ -3,6 +3,7 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional
 
+from psycopg2 import pool
 from psycopg2.extensions import AsIs
 
 from .background_scheduler import BackgroundJobManager
@@ -36,7 +37,7 @@ class Database(object):
         self.number_workers: int = number_workers
         self._default_tables: str = default_tables
         self._number_additional_connections: int = 50
-        self.driver = Driver(
+        self.driver: Driver = Driver(
             user,
             password,
             host,
@@ -44,10 +45,12 @@ class Database(object):
             dbname,
             self.number_workers + self._number_additional_connections,
         )
-        self._connection_pool = self.driver.get_connection_pool()
+        self._connection_pool: pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
-        self._loaded_tables = self.create_empty_loaded_tables()
-        self._background_scheduler = BackgroundJobManager(
+        self._loaded_tables: Dict[
+            str, Optional[str]
+        ] = self.create_empty_loaded_tables()
+        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
             self._id,
             self._database_blocked,
             self._connection_pool,
