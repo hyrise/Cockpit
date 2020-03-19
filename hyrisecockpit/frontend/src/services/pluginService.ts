@@ -2,14 +2,17 @@ import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
+import { useDatabaseController } from "../databaseController";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
   const pluginLogs = ref<any>({});
+  const pluginSettings = ref<any>({});
 
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
+  getPluginSettings();
 
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
@@ -74,6 +77,12 @@ export function usePluginService(): PluginService {
         {}
       );
     });
+  }
+
+  function getPluginSettings(): Promise<void> {
+    axios.get(controlBackend + "plugin_settings", {params: {id: "citadelle"}}).then(response => {
+      console.log(response);
+    })
   }
 
   return {

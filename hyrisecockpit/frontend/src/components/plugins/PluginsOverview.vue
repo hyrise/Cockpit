@@ -41,9 +41,7 @@
                 mdi-cog
               </v-icon>
             </div>
-            <div v-show="showSettings[database + '_' + plugin]">
-              test
-            </div>
+            <PluginSettings :databaseId="database" :pluginId="plugin" v-show="showSettings[database + '_' + plugin]"/>
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
@@ -64,6 +62,7 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
+import PluginSettings from "./PluginSettings.vue";
 import useDragElement from "../../meta/draggable";
 
 interface Props {
@@ -88,7 +87,8 @@ interface Data {
 export default defineComponent({
   name: "PluginOverview",
   components: {
-    PluginsLog
+    PluginsLog,
+    PluginSettings
   },
   props: {
     onClose: {
