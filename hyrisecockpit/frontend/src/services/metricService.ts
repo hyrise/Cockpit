@@ -10,13 +10,16 @@ export function useMetricService(metric: Metric): MetricService {
   const queryReadyState = ref(true);
   const data = ref<any>({});
   const timestamps = ref<Date[]>([]);
-  const maxValue = computed(() =>
-    Object.values(data.value).reduce(
-      (max: number, dataSet: any) => Math.max(...dataSet, max),
-      0
-    )
-  );
   const metricMetaData = getMetricMetadata(metric);
+  const maxValue = computed(
+    () =>
+      metricMetaData.staticAxesRange?.y?.max ||
+      Object.values(data.value).reduce(
+        (max: number, dataSet: any) => Math.max(...dataSet, max),
+        0
+      )
+  );
+
   const { formatDateWithoutMilliSec } = useFormatting();
 
   function getData(): void {
