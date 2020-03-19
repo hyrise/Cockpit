@@ -69,11 +69,7 @@ class Database(object):
 
     def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
         """Create loaded_tables dictionary without information about already loaded tables."""
-        loaded_tables: Dict[str, Optional[str]] = {}
-        for tables in list(_table_names.values()):
-            for table in tables:
-                loaded_tables[table] = None
-        return loaded_tables
+        return {table: None for tables in _table_names.values() for table in tables}
 
     def get_queue_length(self) -> int:
         """Return queue length."""
@@ -99,13 +95,13 @@ class Database(object):
         """Return worker pool status."""
         return self._worker_pool.get_status()
 
-    def get_loaded_tables(self) -> Dict[str, Optional[str]]:
+    def get_loaded_tables(self) -> Dict[str, str]:
         """Return already loaded tables."""
-        loaded_tables: Dict[str, Optional[str]] = {}
-        for table_name in list(self._loaded_tables.keys()):
-            if self._loaded_tables[table_name] is not None:
-                loaded_tables[table_name] = self._loaded_tables[table_name]
-        return loaded_tables
+        return {
+            table: value
+            for table, value in self._loaded_tables.items()
+            if value is not None
+        }
 
     def start_worker(self) -> bool:
         """Start worker."""
