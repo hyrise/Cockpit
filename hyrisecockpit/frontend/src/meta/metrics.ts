@@ -99,14 +99,14 @@ const metricValueStateOrder: Record<
   desc: ["high", "average", "low"]
 };
 
-const timeLabel = "Time in s";
+const timeLabel = "Timestamps";
 const queryLabel = "Number of queries";
 
 const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   access: {
     title: "Access Frequency",
-    xaxis: "columns",
-    yaxis: "chunks"
+    xaxis: "Columns",
+    yaxis: "Chunks"
   },
   cpu: {
     title: "CPU",

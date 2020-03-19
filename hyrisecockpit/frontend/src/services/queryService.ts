@@ -1,12 +1,15 @@
 import axios from "axios";
 import { monitorBackend } from "../../config";
 import { DetailedQueryInformation } from "@/types/queries";
+import { useFormatting } from "@/meta/formatting";
 
 export function useQueryService(): {
   getDetailedQueryInformation: () => Promise<
     Record<string, DetailedQueryInformation[]>
   >;
 } {
+  const { roundNumber } = useFormatting();
+
   async function getDetailedQueryInformation(): Promise<
     Record<string, DetailedQueryInformation[]>
   > {
@@ -26,9 +29,9 @@ export function useQueryService(): {
             queryInformation[database] = entry.query_information.map(
               (query: any) => {
                 return {
-                  queryName: query.benchmark + "-" + query.query_number,
+                  queryName: query.query_number,
                   workloadType: query.benchmark,
-                  latency: query.latency,
+                  latency: roundNumber(query.latency, Math.pow(10, 3)),
                   throughput: query.throughput
                 };
               }
