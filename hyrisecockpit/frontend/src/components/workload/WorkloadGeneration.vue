@@ -20,14 +20,14 @@
               thumb-label="always"
               min="0"
               max="1000"
-              step="10"
-              @end="handleChange(workload)"
+              @click="handleChange(workload)"
             ></v-slider>
             <v-text-field
               v-model="frequency"
               label="Number of queries per second"
               outlined
               dense
+              @change="handleChange(workload)"
             ></v-text-field>
             <v-radio-group
               v-model="workload"
