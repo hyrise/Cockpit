@@ -106,13 +106,13 @@ class Database(object):
         """Return worker pool status."""
         return self._worker_pool.get_status()
 
-    def get_loaded_tables(self) -> Dict[str, str]:
+    def get_loaded_tables(self) -> List[Dict[str, str]]:
         """Return already loaded tables."""
-        return {
-            table: value
+        return [
+            {"table_name": table, "benchmark": value}
             for table, value in self._loaded_tables.items()
             if value is not None
-        }
+        ]
 
     def start_worker(self) -> bool:
         """Start worker."""
