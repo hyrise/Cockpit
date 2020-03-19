@@ -1,0 +1,68 @@
+"""Tests for the worker_pool module."""
+from multiprocessing import Value
+from multiprocessing.queues import Queue as QueueType
+from multiprocessing.sharedctypes import Synchronized as ValueType
+from multiprocessing.synchronize import Event as EventType
+from unittest.mock import MagicMock, patch
+
+from pytest import fixture
+
+from hyrisecockpit.database_manager.worker_pool import WorkerPool
+
+
+class TestWorkerPool(object):
+    """Tests for the WorkerPool class."""
+
+    def get_fake_background_scheduler() -> MagicMock:  # type: ignore
+        """Return mocked background scheduler."""
+        m = MagicMock()
+        m.start.side_effect = None
+        return m
+
+    def get_database_blocked_value(self) -> Value:
+        """Return Value for blocked status."""
+        return Value("b", False)
+
+    def get_number_worker(self) -> int:
+        """Return number of workers."""
+        return 42
+
+    def get_database_id(self) -> str:
+        """Return database id."""
+        return "Proformance"
+
+    def get_workload_publisher_url(self) -> str:
+        """Return workload publisher URL."""
+        return "Lother_du_altes_haus"
+
+    @fixture
+    @patch(
+        "hyrisecockpit.database_manager.worker_pool.BackgroundScheduler",
+        get_fake_background_scheduler,
+    )
+    def worker_pool(self) -> WorkerPool:
+        """Get a new WorkerPool."""
+        return WorkerPool(
+            connection_pool=None,
+            number_worker=self.get_number_worker(),
+            database_id=self.get_database_id(),
+            workload_publisher_url=self.get_workload_publisher_url(),
+            database_blocked=self.get_database_blocked_value(),
+        )
+
+    def test_inintialize_worker_pool(self, worker_pool) -> None:
+        """Test initialization of worker pool attributes."""
+        assert worker_pool._connection_pool is None
+        assert worker_pool._number_worker == self.get_number_worker()
+        assert worker_pool._database_id == self.get_database_id()
+        assert type(worker_pool._database_blocked) is ValueType
+        assert worker_pool._workload_publisher_url == self.get_workload_publisher_url()
+        assert worker_pool._status == "closed"
+        assert type(worker_pool._continue_execution_flag) is ValueType
+        assert worker_pool._continue_execution_flag.value
+        assert type(worker_pool._execute_task_workers) is list
+        assert len(worker_pool._execute_task_workers) == 0
+        assert worker_pool._fill_task_worker is None
+        assert type(worker_pool._worker_continue_event) is EventType
+        assert type(worker_pool._task_queue) is QueueType
+        assert type(worker_pool._failed_task_queue) is QueueType
