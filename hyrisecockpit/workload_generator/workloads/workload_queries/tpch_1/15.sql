@@ -1,4 +1,4 @@
-CREATE VIEW revenue0 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue0 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-07-01'
@@ -17,7 +17,7 @@ DROP VIEW revenue0;
 
 ---
 
-CREATE VIEW revenue1 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue1 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-02-01'
@@ -36,7 +36,7 @@ DROP VIEW revenue1;
 
 ---
 
-CREATE VIEW revenue2 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue2 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-06-01'
@@ -55,7 +55,7 @@ DROP VIEW revenue2;
 
 ---
 
-CREATE VIEW revenue3 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue3 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-04-01'
@@ -74,7 +74,7 @@ DROP VIEW revenue3;
 
 ---
 
-CREATE VIEW revenue4 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue4 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-10-01'
@@ -93,7 +93,7 @@ DROP VIEW revenue4;
 
 ---
 
-CREATE VIEW revenue5 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue5 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-07-01'
@@ -112,7 +112,7 @@ DROP VIEW revenue5;
 
 ---
 
-CREATE VIEW revenue6 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue6 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-04-01'
@@ -131,7 +131,7 @@ DROP VIEW revenue6;
 
 ---
 
-CREATE VIEW revenue7 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue7 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-09-01'
@@ -150,7 +150,7 @@ DROP VIEW revenue7;
 
 ---
 
-CREATE VIEW revenue8 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue8 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-11-01'
@@ -169,7 +169,7 @@ DROP VIEW revenue8;
 
 ---
 
-CREATE VIEW revenue9 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue9 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-07-01'
@@ -188,7 +188,7 @@ DROP VIEW revenue9;
 
 ---
 
-CREATE VIEW revenue10 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue10 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-03-01'
@@ -207,7 +207,7 @@ DROP VIEW revenue10;
 
 ---
 
-CREATE VIEW revenue11 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue11 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-03-01'
@@ -226,7 +226,7 @@ DROP VIEW revenue11;
 
 ---
 
-CREATE VIEW revenue12 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue12 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-08-01'
@@ -245,7 +245,7 @@ DROP VIEW revenue12;
 
 ---
 
-CREATE VIEW revenue13 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue13 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-02-01'
@@ -264,7 +264,7 @@ DROP VIEW revenue13;
 
 ---
 
-CREATE VIEW revenue14 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue14 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-02-01'
@@ -283,7 +283,7 @@ DROP VIEW revenue14;
 
 ---
 
-CREATE VIEW revenue15 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue15 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-10-01'
@@ -302,7 +302,7 @@ DROP VIEW revenue15;
 
 ---
 
-CREATE VIEW revenue16 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue16 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-06-01'
@@ -321,7 +321,7 @@ DROP VIEW revenue16;
 
 ---
 
-CREATE VIEW revenue17 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue17 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-07-01'
@@ -340,7 +340,7 @@ DROP VIEW revenue17;
 
 ---
 
-CREATE VIEW revenue18 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue18 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-07-01'
@@ -359,7 +359,7 @@ DROP VIEW revenue18;
 
 ---
 
-CREATE VIEW revenue19 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue19 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-03-01'
@@ -378,7 +378,7 @@ DROP VIEW revenue19;
 
 ---
 
-CREATE VIEW revenue20 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue20 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-10-01'
@@ -397,7 +397,7 @@ DROP VIEW revenue20;
 
 ---
 
-CREATE VIEW revenue21 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue21 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-03-01'
@@ -416,7 +416,7 @@ DROP VIEW revenue21;
 
 ---
 
-CREATE VIEW revenue22 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue22 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-03-01'
@@ -435,7 +435,7 @@ DROP VIEW revenue22;
 
 ---
 
-CREATE VIEW revenue23 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue23 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-09-01'
@@ -454,7 +454,7 @@ DROP VIEW revenue23;
 
 ---
 
-CREATE VIEW revenue24 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue24 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-10-01'
@@ -473,7 +473,7 @@ DROP VIEW revenue24;
 
 ---
 
-CREATE VIEW revenue25 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue25 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-06-01'
@@ -492,7 +492,7 @@ DROP VIEW revenue25;
 
 ---
 
-CREATE VIEW revenue26 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue26 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-09-01'
@@ -511,7 +511,7 @@ DROP VIEW revenue26;
 
 ---
 
-CREATE VIEW revenue27 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue27 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-03-01'
@@ -530,7 +530,7 @@ DROP VIEW revenue27;
 
 ---
 
-CREATE VIEW revenue28 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue28 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-04-01'
@@ -549,7 +549,7 @@ DROP VIEW revenue28;
 
 ---
 
-CREATE VIEW revenue29 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue29 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-07-01'
@@ -568,7 +568,7 @@ DROP VIEW revenue29;
 
 ---
 
-CREATE VIEW revenue30 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue30 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-10-01'
@@ -587,7 +587,7 @@ DROP VIEW revenue30;
 
 ---
 
-CREATE VIEW revenue31 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue31 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-07-01'
@@ -606,7 +606,7 @@ DROP VIEW revenue31;
 
 ---
 
-CREATE VIEW revenue32 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue32 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-07-01'
@@ -625,7 +625,7 @@ DROP VIEW revenue32;
 
 ---
 
-CREATE VIEW revenue33 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue33 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-07-01'
@@ -644,7 +644,7 @@ DROP VIEW revenue33;
 
 ---
 
-CREATE VIEW revenue34 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue34 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-05-01'
@@ -663,7 +663,7 @@ DROP VIEW revenue34;
 
 ---
 
-CREATE VIEW revenue35 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue35 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-10-01'
@@ -682,7 +682,7 @@ DROP VIEW revenue35;
 
 ---
 
-CREATE VIEW revenue36 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue36 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-06-01'
@@ -701,7 +701,7 @@ DROP VIEW revenue36;
 
 ---
 
-CREATE VIEW revenue37 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue37 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-08-01'
@@ -720,7 +720,7 @@ DROP VIEW revenue37;
 
 ---
 
-CREATE VIEW revenue38 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue38 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-07-01'
@@ -739,7 +739,7 @@ DROP VIEW revenue38;
 
 ---
 
-CREATE VIEW revenue39 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue39 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-07-01'
@@ -758,7 +758,7 @@ DROP VIEW revenue39;
 
 ---
 
-CREATE VIEW revenue40 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue40 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-06-01'
@@ -777,7 +777,7 @@ DROP VIEW revenue40;
 
 ---
 
-CREATE VIEW revenue41 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue41 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-05-01'
@@ -796,7 +796,7 @@ DROP VIEW revenue41;
 
 ---
 
-CREATE VIEW revenue42 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue42 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-01-01'
@@ -815,7 +815,7 @@ DROP VIEW revenue42;
 
 ---
 
-CREATE VIEW revenue43 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue43 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-12-01'
@@ -834,7 +834,7 @@ DROP VIEW revenue43;
 
 ---
 
-CREATE VIEW revenue44 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue44 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-07-01'
@@ -853,7 +853,7 @@ DROP VIEW revenue44;
 
 ---
 
-CREATE VIEW revenue45 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue45 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-04-01'
@@ -872,7 +872,7 @@ DROP VIEW revenue45;
 
 ---
 
-CREATE VIEW revenue46 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue46 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-01-01'
@@ -891,7 +891,7 @@ DROP VIEW revenue46;
 
 ---
 
-CREATE VIEW revenue47 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue47 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-03-01'
@@ -910,7 +910,7 @@ DROP VIEW revenue47;
 
 ---
 
-CREATE VIEW revenue48 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue48 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-01-01'
@@ -929,7 +929,7 @@ DROP VIEW revenue48;
 
 ---
 
-CREATE VIEW revenue49 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue49 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-08-01'
@@ -948,7 +948,7 @@ DROP VIEW revenue49;
 
 ---
 
-CREATE VIEW revenue50 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue50 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-11-01'
@@ -967,7 +967,7 @@ DROP VIEW revenue50;
 
 ---
 
-CREATE VIEW revenue51 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue51 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-03-01'
@@ -986,7 +986,7 @@ DROP VIEW revenue51;
 
 ---
 
-CREATE VIEW revenue52 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue52 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-01-01'
@@ -1005,7 +1005,7 @@ DROP VIEW revenue52;
 
 ---
 
-CREATE VIEW revenue53 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue53 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-02-01'
@@ -1024,7 +1024,7 @@ DROP VIEW revenue53;
 
 ---
 
-CREATE VIEW revenue54 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue54 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-03-01'
@@ -1043,7 +1043,7 @@ DROP VIEW revenue54;
 
 ---
 
-CREATE VIEW revenue55 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue55 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-04-01'
@@ -1062,7 +1062,7 @@ DROP VIEW revenue55;
 
 ---
 
-CREATE VIEW revenue56 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue56 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-06-01'
@@ -1081,7 +1081,7 @@ DROP VIEW revenue56;
 
 ---
 
-CREATE VIEW revenue57 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue57 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-10-01'
@@ -1100,7 +1100,7 @@ DROP VIEW revenue57;
 
 ---
 
-CREATE VIEW revenue58 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue58 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-05-01'
@@ -1119,7 +1119,7 @@ DROP VIEW revenue58;
 
 ---
 
-CREATE VIEW revenue59 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue59 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-06-01'
@@ -1138,7 +1138,7 @@ DROP VIEW revenue59;
 
 ---
 
-CREATE VIEW revenue60 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue60 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-05-01'
@@ -1157,7 +1157,7 @@ DROP VIEW revenue60;
 
 ---
 
-CREATE VIEW revenue61 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue61 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-03-01'
@@ -1176,7 +1176,7 @@ DROP VIEW revenue61;
 
 ---
 
-CREATE VIEW revenue62 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue62 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-07-01'
@@ -1195,7 +1195,7 @@ DROP VIEW revenue62;
 
 ---
 
-CREATE VIEW revenue63 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue63 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-02-01'
@@ -1214,7 +1214,7 @@ DROP VIEW revenue63;
 
 ---
 
-CREATE VIEW revenue64 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue64 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-06-01'
@@ -1233,7 +1233,7 @@ DROP VIEW revenue64;
 
 ---
 
-CREATE VIEW revenue65 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue65 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-06-01'
@@ -1252,7 +1252,7 @@ DROP VIEW revenue65;
 
 ---
 
-CREATE VIEW revenue66 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue66 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-08-01'
@@ -1271,7 +1271,7 @@ DROP VIEW revenue66;
 
 ---
 
-CREATE VIEW revenue67 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue67 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-11-01'
@@ -1290,7 +1290,7 @@ DROP VIEW revenue67;
 
 ---
 
-CREATE VIEW revenue68 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue68 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-11-01'
@@ -1309,7 +1309,7 @@ DROP VIEW revenue68;
 
 ---
 
-CREATE VIEW revenue69 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue69 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-10-01'
@@ -1328,7 +1328,7 @@ DROP VIEW revenue69;
 
 ---
 
-CREATE VIEW revenue70 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue70 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-03-01'
@@ -1347,7 +1347,7 @@ DROP VIEW revenue70;
 
 ---
 
-CREATE VIEW revenue71 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue71 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-11-01'
@@ -1366,7 +1366,7 @@ DROP VIEW revenue71;
 
 ---
 
-CREATE VIEW revenue72 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue72 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-08-01'
@@ -1385,7 +1385,7 @@ DROP VIEW revenue72;
 
 ---
 
-CREATE VIEW revenue73 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue73 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-09-01'
@@ -1404,7 +1404,7 @@ DROP VIEW revenue73;
 
 ---
 
-CREATE VIEW revenue74 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue74 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-08-01'
@@ -1423,7 +1423,7 @@ DROP VIEW revenue74;
 
 ---
 
-CREATE VIEW revenue75 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue75 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-05-01'
@@ -1442,7 +1442,7 @@ DROP VIEW revenue75;
 
 ---
 
-CREATE VIEW revenue76 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue76 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-08-01'
@@ -1461,7 +1461,7 @@ DROP VIEW revenue76;
 
 ---
 
-CREATE VIEW revenue77 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue77 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-12-01'
@@ -1480,7 +1480,7 @@ DROP VIEW revenue77;
 
 ---
 
-CREATE VIEW revenue78 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue78 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-11-01'
@@ -1499,7 +1499,7 @@ DROP VIEW revenue78;
 
 ---
 
-CREATE VIEW revenue79 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue79 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-04-01'
@@ -1518,7 +1518,7 @@ DROP VIEW revenue79;
 
 ---
 
-CREATE VIEW revenue80 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue80 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-03-01'
@@ -1537,7 +1537,7 @@ DROP VIEW revenue80;
 
 ---
 
-CREATE VIEW revenue81 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue81 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-02-01'
@@ -1556,7 +1556,7 @@ DROP VIEW revenue81;
 
 ---
 
-CREATE VIEW revenue82 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue82 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-11-01'
@@ -1575,7 +1575,7 @@ DROP VIEW revenue82;
 
 ---
 
-CREATE VIEW revenue83 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue83 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-12-01'
@@ -1594,7 +1594,7 @@ DROP VIEW revenue83;
 
 ---
 
-CREATE VIEW revenue84 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue84 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-10-01'
@@ -1613,7 +1613,7 @@ DROP VIEW revenue84;
 
 ---
 
-CREATE VIEW revenue85 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue85 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-09-01'
@@ -1632,7 +1632,7 @@ DROP VIEW revenue85;
 
 ---
 
-CREATE VIEW revenue86 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue86 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-03-01'
@@ -1651,7 +1651,7 @@ DROP VIEW revenue86;
 
 ---
 
-CREATE VIEW revenue87 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue87 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-06-01'
@@ -1670,7 +1670,7 @@ DROP VIEW revenue87;
 
 ---
 
-CREATE VIEW revenue88 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue88 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-04-01'
@@ -1689,7 +1689,7 @@ DROP VIEW revenue88;
 
 ---
 
-CREATE VIEW revenue89 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue89 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-05-01'
@@ -1708,7 +1708,7 @@ DROP VIEW revenue89;
 
 ---
 
-CREATE VIEW revenue90 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue90 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-01-01'
@@ -1727,7 +1727,7 @@ DROP VIEW revenue90;
 
 ---
 
-CREATE VIEW revenue91 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue91 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1994-08-01'
@@ -1746,7 +1746,7 @@ DROP VIEW revenue91;
 
 ---
 
-CREATE VIEW revenue92 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue92 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-05-01'
@@ -1765,7 +1765,7 @@ DROP VIEW revenue92;
 
 ---
 
-CREATE VIEW revenue93 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue93 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1997-02-01'
@@ -1784,7 +1784,7 @@ DROP VIEW revenue93;
 
 ---
 
-CREATE VIEW revenue94 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue94 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-11-01'
@@ -1803,7 +1803,7 @@ DROP VIEW revenue94;
 
 ---
 
-CREATE VIEW revenue95 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue95 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-09-01'
@@ -1822,7 +1822,7 @@ DROP VIEW revenue95;
 
 ---
 
-CREATE VIEW revenue96 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue96 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-10-01'
@@ -1841,7 +1841,7 @@ DROP VIEW revenue96;
 
 ---
 
-CREATE VIEW revenue97 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue97 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1995-09-01'
@@ -1860,7 +1860,7 @@ DROP VIEW revenue97;
 
 ---
 
-CREATE VIEW revenue98 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue98 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1996-11-01'
@@ -1879,7 +1879,7 @@ DROP VIEW revenue98;
 
 ---
 
-CREATE VIEW revenue99 (supplier_no, total_revenue) AS
+CREATE VIEW WORKERID-revenue99 (supplier_no, total_revenue) AS
 SELECT l_suppkey, SUM(l_extendedprice * (1 - l_discount))
 FROM lineitem
 WHERE l_shipdate >= '1993-11-01'
