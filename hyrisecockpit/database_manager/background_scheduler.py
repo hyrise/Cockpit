@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -301,7 +301,7 @@ class BackgroundJobManager(object):
 
     def _generate_table_loading_queries(
         self, table_names: List[str], folder_name: str
-    ) -> List[Tuple]:
+    ) -> List[Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
