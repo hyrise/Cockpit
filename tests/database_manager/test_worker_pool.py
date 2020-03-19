@@ -1,5 +1,6 @@
 """Tests for the worker_pool module."""
 from multiprocessing import Value
+from multiprocessing.context import Process as ProcessType
 from multiprocessing.queues import Queue as QueueType
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from multiprocessing.synchronize import Event as EventType
@@ -35,6 +36,19 @@ class TestWorkerPool(object):
         """Return workload publisher URL."""
         return "Lother_du_altes_haus"
 
+    def get_fake_dummy_execute_queries_worker(
+        i,  # noqa
+        task_queue,
+        connection_pool,
+        failed_task_queue,
+        continue_execution_flag,
+        database_id,
+        execute_task_worker_done_event,
+        worker_continue_event,
+    ) -> str:
+        """Return a dummy worker."""
+        return "foo"
+
     @fixture
     @patch(
         "hyrisecockpit.database_manager.worker_pool.BackgroundScheduler",
@@ -66,3 +80,22 @@ class TestWorkerPool(object):
         assert type(worker_pool._worker_continue_event) is EventType
         assert type(worker_pool._task_queue) is QueueType
         assert type(worker_pool._failed_task_queue) is QueueType
+
+    def test_generation_of_execute_task_worker_done_events(self, worker_pool) -> None:
+        """Check if enough events of type events are generated."""
+        events = worker_pool._generate_execute_task_worker_done_events()
+        assert len(events) == self.get_number_worker()
+        assert all(type(event) is EventType for event in events)
+
+    @patch(
+        "hyrisecockpit.database_manager.worker_pool.execute_queries",
+        get_fake_dummy_execute_queries_worker,
+    )
+    def test_generation_of_execute_task_worker(self, worker_pool) -> None:
+        """Check if enough processes of type process are generated."""
+        worker_pool._execute_task_worker_done_event = [
+            "foo" for _ in range(self.get_number_worker())
+        ]
+        processes = worker_pool._generate_execute_task_worker()
+        assert len(processes) == self.get_number_worker()
+        assert all(type(process) is ProcessType for process in processes)
