@@ -9,6 +9,7 @@
           <div class="select">
             <v-select
               class="select-box"
+              v-if="selectDatabases"
               v-model="selectedDatabases"
               v-on:input="handleDatabasesChanged"
               :items="availableDatabases"
@@ -24,6 +25,7 @@
             />
             <v-select
               class="select-box"
+              v-if="selectMetrics"
               v-model="selectedMetrics"
               v-on:input="handleMetricsChanged"
               :items="availableMetrics"
@@ -59,6 +61,8 @@ import { useMetricEvents, useDatabaseEvents } from "../../meta/events";
 
 interface Props {
   metrics: Metric[];
+  selectDatabases: boolean;
+  selectMetrics: boolean;
 }
 
 interface Data {
@@ -72,9 +76,17 @@ interface Data {
 
 export default defineComponent({
   props: {
+    selectDatabases: {
+      type: Boolean,
+      default: true
+    },
+    selectMetrics: {
+      type: Boolean,
+      default: true
+    },
     metrics: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
 

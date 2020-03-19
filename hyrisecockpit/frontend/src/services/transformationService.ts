@@ -5,11 +5,12 @@ import {
   AccessData
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
+import { useFormatting } from "@/meta/formatting";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
   cpu: getCPUData,
-  latency: getReadOnlyData,
+  latency: getLatencyData,
   executedQueryTypeProportion: getExecutedQueryTypeProportionData,
   generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
   queueLength: getReadOnlyData,
@@ -17,6 +18,8 @@ const transformationServiceMap: Record<Metric, TransformationService> = {
   storage: getStorageData,
   throughput: getReadOnlyData
 };
+
+const { roundNumber } = useFormatting();
 
 export function useDataTransformation(metric: Metric): TransformationService {
   return transformationServiceMap[metric];
@@ -74,7 +77,7 @@ function getQueryTypeProportionData(data: any, type: string): any {
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].cpu.cpu_system_usage;
+  return data[primaryKey].cpu.cpu_process_usage;
 }
 
 function getRAMData(data: any, primaryKey: string = ""): number {
@@ -83,6 +86,10 @@ function getRAMData(data: any, primaryKey: string = ""): number {
 
 function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
+}
+
+function getLatencyData(data: any, primaryKey: string = ""): number {
+  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 6));
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
@@ -95,10 +102,12 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       memory.push(getDatabaseMemoryFootprint(tableData.data));
     }
   );
-  const totalDatabaseMemory =
-    Math.floor(
-      memory.reduce((total, tableMemory) => total + tableMemory, 0) * 100
-    ) / 100;
+  const totalDatabaseMemory = roundNumber(
+    memory.reduce((total, tableMemory) => total + tableMemory, 0),
+    100,
+    100,
+    false
+  );
 
   const labels: string[] = [primaryKey];
   const parents: string[] = [""];
@@ -114,11 +123,11 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   ];
 
   function getRoundedData(value: number): number {
-    return Math.floor(value / Math.pow(10, 4)) / 100;
+    return roundNumber(value, 100, 1 / Math.pow(10, 4), false);
   }
 
   function getPercentage(part: number, total: number): number {
-    return Math.floor((part / total) * Math.pow(10, 4)) / 100;
+    return roundNumber(part / total, 100, Math.pow(10, 4), false);
   }
 
   Object.entries(data[primaryKey]).forEach(
@@ -213,17 +222,23 @@ export function useDataTransformationHelpers(): {
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
   function getDatabaseMemoryFootprint(data: any): number {
-    return (
-      Math.floor(
-        (Object.values(data).reduce(
-          (sum1: any, table: any) => sum1 + table.size,
-          0
-        ) as number) / Math.pow(10, 3)
-      ) / 1000
+    return roundNumber(
+      Object.values(data).reduce(
+        (sum1: number, table: any) => sum1 + table.size,
+        0
+      ),
+      Math.pow(10, 3),
+      1 / Math.pow(10, 3),
+      false
     );
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
-    return Math.floor(data.memory.total / Math.pow(10, 6)) / 1000;
+    return roundNumber(
+      data.memory.total,
+      Math.pow(10, 3),
+      1 / Math.pow(10, 6),
+      false
+    );
   }
   return { getDatabaseMemoryFootprint, getDatabaseMainMemoryCapacity };
 }

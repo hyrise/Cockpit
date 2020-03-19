@@ -15,6 +15,7 @@ import { useUpdatingDatabases } from "../../meta/databases";
 import { ChartConfiguration } from "../../types/metrics";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useFormatting } from "@/meta/formatting";
 
 interface Props extends ChartProps {
   maxValue: number;
@@ -34,15 +35,17 @@ export default defineComponent({
     ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
-    const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
-      context,
-      props
-    );
     const { databasesUpdated } = context.root.$databaseController;
     const { updateLayout } = useResizingOnChange(props);
     const multipleDatabasesAllowed = inject<boolean>(
       "multipleDatabasesAllowed",
       true
+    );
+
+    const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
+      context,
+      props,
+      multipleDatabasesAllowed
     );
 
     onMounted(() => {
@@ -107,15 +110,18 @@ export default defineComponent({
 
 function useLineChartConfiguration(
   context: SetupContext,
-  props: Props
+  props: Props,
+  multipleDatabasesAllowed: boolean
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
   getLayout: (yMax: number, xMin?: number) => Object;
   getOptions: () => Object;
 } {
   const { databases } = useUpdatingDatabases(props, context);
+  const { formatDateWithoutMilliSec } = useFormatting();
+
   function getLayout(yMax: number, xMin: number = 1): Object {
-    const currentDate = Date.now();
+    const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
     return {
       xaxis: {
         title: {
@@ -127,7 +133,7 @@ function useLineChartConfiguration(
         },
         type: "date",
         tickformat: "%H:%M:%S",
-        range: [currentDate - xMin * 1000, currentDate]
+        range: [currentTime - (xMin - 1) * 1000, currentTime]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",
@@ -145,7 +151,7 @@ function useLineChartConfiguration(
             //color: "#FAFAFA"
           }
         },
-        range: [0, yMax * 1.05]
+        range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1]
         // linecolor: "#616161",
         // gridcolor: "#616161",
         // tickcolor: "#616161",
@@ -155,7 +161,9 @@ function useLineChartConfiguration(
         // },
         //linewidth: 2
       },
-      autosize: true
+      autosize: true,
+      showlegend: multipleDatabasesAllowed,
+      legend: { x: 0, y: 1.3 }
 
       // plot_bgcolor: "#424242",
       // paper_bgcolor: "#424242",
