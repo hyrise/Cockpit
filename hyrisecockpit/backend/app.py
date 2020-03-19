@@ -1027,7 +1027,7 @@ class PluginLog(Resource):
 class PluginSettings(Resource):
     """Set settings for plugins."""
 
-    @control.doc(model=model_get_plugin_setting)
+    @control.doc(model=model_get_plugin_setting, body=model_database)
     def get(self) -> Response:
         """Read settings for plugins."""
         message = Request(
