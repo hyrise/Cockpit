@@ -21,6 +21,7 @@ export function useMetricService(metric: Metric): MetricService {
 
   function getData(): void {
     queryReadyState.value = false;
+    handleTimestamps();
     fetchData().then(result => {
       useUpdatingData(result, metric);
       if (metricMetaData.fetchType === "modify") {
@@ -33,7 +34,6 @@ export function useMetricService(metric: Metric): MetricService {
       } else if (metricMetaData.fetchType === "read") {
         data.value = result;
       }
-      handleTimestamps();
       const dataCopy = JSON.parse(JSON.stringify(data.value));
       data.value = dataCopy;
       queryReadyState.value = true;
