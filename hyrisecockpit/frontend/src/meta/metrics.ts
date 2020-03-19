@@ -23,7 +23,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: monitorBackend + "system",
     component: "CPU",
-    requestTime: 1000
+    requestTime: 1000,
+    staticAxesRange: {
+      y: { max: 100 }
+    }
   },
   latency: {
     fetchType: "modify",
@@ -65,7 +68,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: monitorBackend + "system",
     component: "RAM",
-    requestTime: 1000
+    requestTime: 1000,
+    staticAxesRange: {
+      y: { max: 100 }
+    }
   },
   storage: {
     fetchType: "read",
