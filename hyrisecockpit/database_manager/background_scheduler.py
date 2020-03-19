@@ -337,22 +337,25 @@ class BackgroundJobManager(object):
             except Error:
                 pass  # TODO: log error
 
-    def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
-        table_loading_queries = self._generate_table_loading_queries(
-            table_names, folder_name
-        )
+    def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         processes: List[Process] = [
             Process(
                 target=self._execute_table_query,
                 args=(query, self._loaded_tables, table_name, folder_name),
             )
-            for query, table_name in zip(table_loading_queries, table_names)
+            for query, table_name in zip(queries, table_names)
         ]
         for process in processes:
             process.start()
         for process in processes:
             process.join()
             process.terminate()
+
+    def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
+        table_loading_queries = self._generate_table_loading_queries(
+            table_names, folder_name
+        )
+        self._execute_queries_parallel(table_names, table_loading_queries, folder_name)
         self._database_blocked.value = False
 
     def load_tables(self, folder_name: str) -> bool:
@@ -405,19 +408,9 @@ class BackgroundJobManager(object):
         ]
 
     def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
+        """Delete tables."""
         table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
-        processes: List[Process] = [
-            Process(
-                target=self._execute_table_query,
-                args=(query, self._loaded_tables, table_name, None),
-            )
-            for query, table_name in zip(table_drop_queries, table_names)
-        ]
-        for process in processes:
-            process.start()
-        for process in processes:
-            process.join()
-            process.terminate()
+        self._execute_queries_parallel(table_names, table_drop_queries, None)
         self._database_blocked.value = False
 
     def delete_tables(self, folder_name: str) -> bool:
