@@ -117,6 +117,7 @@ class CockpitManager:
             # TODO add time out and check response
             _ = requests.post(f"{self._backend_url}/control/database", json=data)
         self._check_if_database_added(database)
+        self._check_if_database_blocked()
 
     def _check_if_database_blocked(self):
         """Check if database is blocked in cockpit."""
@@ -134,8 +135,15 @@ class CockpitManager:
             if not check_blocked:
                 break
 
-    def _load_tables(self, workload_type):
-        data = {"folder_name": workload_type}
+    def load_tables(self, workload_type, load_table):
+        """Load tables into databases."""
+        table_names = load_table
+        if load_table == "none":
+            return
+        elif load_table == "workload":
+            table_names = workload_type
+        self._check_if_database_blocked()
+        data = {"folder_name": table_names}
         # TODO add time out and check response
         _ = requests.post(f"{self._backend_url}/control/data", json=data)
         self._check_if_database_blocked()
@@ -150,13 +158,10 @@ class CockpitManager:
         """Stop workload execution."""
         _ = requests.delete(f"{self._backend_url}/control/workload", json={})
 
-    def start_workload(self, workload_type, frequency, load_tables):
+    def start_workload(self, workload_type, frequency):
         """Start workload in cockpit."""
         if workload_type == "none":
             return
-        self._check_if_database_blocked()
-        if load_tables == "Y":
-            self._load_tables(workload_type)
         data = {"folder_name": workload_type, "frequency": frequency}
         # TODO add time out and check response
         _ = requests.post(f"{self._backend_url}/control/workload", json=data)

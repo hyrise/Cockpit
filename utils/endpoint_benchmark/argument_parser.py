@@ -31,9 +31,10 @@ class ArgumentValidation:
             "available_plugins",
         ]
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops", "none"]
+        self._table_names = ["tpch_0.1", "tpch_1", "tpcds_1", "none", "workload"]
         self._databases = ["db1", "db2", "none"]
         self._plugins = ["wrk", "displayReply"]
-        self._close_argumernts = ["workload", "database"]
+        self._close_argumernts = ["workload", "database", "none"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
             "workload": self._validate_workload,
@@ -46,7 +47,7 @@ class ArgumentValidation:
             "plugins": self._validate_plugin,
             "start_components": self._basic_validate,
             "close": self._validate_close,
-            "load_tables": self._basic_validate,
+            "load_table": self._validate_load_tables,
         }
 
     def get_endpoints(self):
@@ -177,6 +178,13 @@ class ArgumentValidation:
                 return self._close_argumernts
         return close_arguments
 
+    def _validate_load_tables(self, load_tables_arguments):
+        if load_tables_arguments in self._table_names:
+            return load_tables_arguments
+        else:
+            print(f"{load_tables_arguments} workload not found.")
+        return "workload"
+
 
 class ArgumentParser:
     """Parse arguments from command line."""
@@ -306,17 +314,19 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["workload", "database"],
-            help="Close database or workload. To keep workload and database running after benchmark use none. Allowed values are",
+            help="close database or workload. To keep workload and database running after benchmark use none. Allowed values are"
+            + ", ".join(self._argument_validation._close_argumernts),
         )
         self.parser.add_argument(
-            "--load_tables",
+            "--load_table",
             "-lt",
-            dest="load_tables",
+            dest="load_table",
             type=str,
             nargs="?",
             metavar="",
-            default="Y",
-            help="Load tables from workload [Y/N]",
+            default="workload",
+            help="load table. For no table loading use none. For loading workload tables use workload. Allowed values are"
+            + ", ".join(self._argument_validation._table_names),
         )
 
     def get_configuration(self):
@@ -334,7 +344,7 @@ class ArgumentParser:
             "plugins",
             "start_components",
             "close",
-            "load_tables",
+            "load_table",
         ]
         for argument_type in types:
             configuration[argument_type] = self._argument_validation.validate(
