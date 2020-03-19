@@ -842,7 +842,7 @@ class ProcessTableStatus(Resource):
     def get(self) -> List[Dict]:
         """Return status of databases."""
         return _send_message(
-            db_manager_socket, {"header": {"message": "status"}, "body": {}},
+            db_manager_socket, Request(header=Header(message="status"), body={}),
         )["body"]["status"]
 
 
