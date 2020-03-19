@@ -284,6 +284,14 @@ model_database_status = monitor.clone(
             required=True,
             example="running",
         ),
+        "valid_benchmarks": fields.List(
+            fields.String(
+                title="Benchmark",
+                description="Benchmark dataset that is completely loaded.",
+                required=True,
+                example="tpch_1",
+            ),
+        ),
         "loaded_tables": fields.List(
             fields.Nested(
                 monitor.model(
