@@ -89,7 +89,7 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
 }
 
 function getLatencyData(data: any, primaryKey: string = ""): number {
-  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 3));
+  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 6));
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
