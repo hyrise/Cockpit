@@ -14,7 +14,7 @@
     <v-data-table
       :loading="loading"
       :headers="headers"
-      :items="sortedQueries"
+      :items="displayedQueries"
       :search="searchQueries"
       item-key="queryName"
     />
@@ -29,8 +29,12 @@ import {
   ref,
   computed
 } from "@vue/composition-api";
-import { DetailedQueryInformation } from "@/types/queries";
+import {
+  DetailedQueryInformation,
+  DisplayedQueryInformation
+} from "@/types/queries";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
+import { useFormatting } from "@/meta/formatting";
 
 interface Props {
   databaseId: string;
@@ -41,7 +45,7 @@ interface Props {
 interface Data {
   searchQueries: Ref<string>;
   headers: Object[];
-  sortedQueries: Ref<readonly DetailedQueryInformation[]>;
+  displayedQueries: Ref<readonly DisplayedQueryInformation[]>;
 }
 
 export default defineComponent({
@@ -63,7 +67,7 @@ export default defineComponent({
     DatabaseChip
   },
   setup(props: Props, context: SetupContext): Data {
-    const { sortQueries } = useQuerySorting();
+    const { formatDisplayedQueries } = useQueryFormatting();
 
     const headers = [
       {
@@ -73,22 +77,24 @@ export default defineComponent({
       },
       { text: "Workload type", value: "workloadType" },
       { text: "Latency (in ms)", value: "latency" },
-      { text: "Throughput (in s)", value: "throughput" }
+      { text: "Throughput (in q/s)", value: "throughput" }
     ];
 
     return {
       searchQueries: ref(""),
       headers,
-      sortedQueries: computed(() => sortQueries(props.queries))
+      displayedQueries: computed(() => formatDisplayedQueries(props.queries))
     };
   }
 });
 
-function useQuerySorting(): {
-  sortQueries: (
+function useQueryFormatting(): {
+  formatDisplayedQueries: (
     queries: DetailedQueryInformation[]
-  ) => DetailedQueryInformation[];
+  ) => DisplayedQueryInformation[];
 } {
+  const { formatNumberWithCommas } = useFormatting();
+
   function sortQueries(
     queries: DetailedQueryInformation[]
   ): DetailedQueryInformation[] {
@@ -98,7 +104,15 @@ function useQuerySorting(): {
     );
   }
 
-  return { sortQueries };
+  function formatDisplayedQueries(
+    queries: DetailedQueryInformation[]
+  ): DisplayedQueryInformation[] {
+    return sortQueries(queries).map(query => {
+      return { ...query, latency: formatNumberWithCommas(query.latency) };
+    });
+  }
+
+  return { formatDisplayedQueries };
 }
 </script>
 <style scoped></style>
