@@ -5,6 +5,7 @@
       :data="data"
       :databases="selectedDatabases"
       :border="100"
+      :decimal-digits="4"
       state-order="asc"
       unit="%"
     />

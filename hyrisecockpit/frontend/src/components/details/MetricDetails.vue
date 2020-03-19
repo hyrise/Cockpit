@@ -38,6 +38,7 @@ interface Props {
   unit: string;
   border: number;
   stateOrder: MetricValueStateOrder;
+  decimalDigits: number;
 }
 interface Data {
   currentValue: Ref<Record<string, number>>;
@@ -67,6 +68,10 @@ export default defineComponent({
     stateOrder: {
       type: String,
       default: null
+    },
+    decimalDigits: {
+      type: Number,
+      default: 2
     }
   },
   setup(props: Props, context: SetupContext): Data {
@@ -95,8 +100,8 @@ function useMetricValues(props: Props): MetricValueData {
           valueMap[database] = Object.keys(props.data).length
             ? roundNumber(
                 props.data[database][props.data[database].length - 1],
-                100,
-                100,
+                Math.pow(10, props.decimalDigits),
+                Math.pow(10, props.decimalDigits),
                 false
               )
             : 0;
