@@ -125,7 +125,7 @@ class WorkerPool:
     def _close_job(self) -> None:
         if self._status == "stopped":
             self._terminate_worker()
-        else:
+        elif self._status == "running":
             self._wait_for_worker()
             self._terminate_worker()
         self._status == "closed"

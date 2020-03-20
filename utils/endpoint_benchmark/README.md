@@ -45,11 +45,11 @@ optional arguments:
   -h, --help            show this help message and exit
   --endpoint  [ ...], -ep  [ ...]
                         endpoints to run the benchmark on. Allowed values are throughput, latency, queue_length, failed_tasks, system, chunks, storage,
-                        krueger_data, all (default: ['all'])
+                        krueger_data, detailed_latency, detailed_throughput, database_blocked_status, all (default: ['all'])
   --database  [ ...], -db  [ ...]
-                        databases to use in benchmark. Allowed values are db1, db2, all (default: ['all'])
-  --workload  [ ...], -w  [ ...]
-                        workloads to run on databases. . Allowed values are tpch_0.1, tpch_1, tpcds_1, job, no-ops (default: ['tpch_0.1'])
+                        databases to use in benchmark. For no database to add use none. Allowed values are db1, db2, none, all (default: ['all'])
+  --workload [], -w []  workload to run on databases. For no workload use none. Allowed values are tpch_0.1, tpch_1, tpcds_1, job, no-ops, none (default:
+                        tpch_0.1)
   --time [], -t []      duration of the benchmark per endpoint in seconds (default: 1)
   --run [], -r []       number of runs (default: 1)
   --url [], -u []       back-end URL (default: ['http://127.0.0.1:8000'])
@@ -58,9 +58,15 @@ optional arguments:
   --workload_frequence [], -wf []
                         frequency of workload (default: 200)
   --plugin  [ ...], -p  [ ...]
-                        benchmark plug-ins to use. Allowed values are wrk, displayMonitor (default: ['wrk'])
+                        benchmark plug-ins to use. Allowed values are wrk, displayReply (default: ['wrk'])
   --start_components [], -sc []
-                        start components as subprocesses [Y/N] (default: Y)
+                        start components as subprocesses [Y/N] (default: N)
+  --close  [ ...], -c  [ ...]
+                        close database or workload. To keep workload and database running after benchmark use none. Allowed values areworkload, database,
+                        none (default: ['workload', 'database'])
+  --load_table [], -lt []
+                        load table. For no table loading use none. For loading workload tables use workload. Allowed values aretpch_0.1, tpch_1, tpcds_1,
+                        none, workload (default: workload)
 ```
 
 ## Setup
