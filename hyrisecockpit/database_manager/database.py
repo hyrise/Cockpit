@@ -133,7 +133,8 @@ class Database(object):
         if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
                 cur.execute("SELECT * FROM meta_settings", None)
-                result = cur.fetchall()
+                rows = cur.fetchall()
+                result = [row[0] for row in rows] if rows else []
             return result
         else:
             return None

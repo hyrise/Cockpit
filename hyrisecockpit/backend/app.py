@@ -1027,13 +1027,10 @@ class PluginLog(Resource):
 class PluginSettings(Resource):
     """Set settings for plugins."""
 
-    @control.doc(model=model_get_plugin_setting)
+    @control.doc(model=[model_get_plugin_setting])  # TODO: fix model
     def get(self) -> Response:
         """Read settings for plugins."""
-        message = Request(
-            header=Header(message="get plugin setting"),
-            body={"id": control.payload["id"]},
-        )
+        message = Request(header=Header(message="get plugin setting"), body={},)
         response = _send_message(db_manager_socket, message)
         return response
 
