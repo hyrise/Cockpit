@@ -138,7 +138,7 @@ class WorkerPool:
             self._terminate_worker()
             self._task_queue.close()
             self._failed_task_queue.close()
-            self._status == "closed"
+            self._status = "closed"
             self._database_blocked.value = False
             return True
         else:
