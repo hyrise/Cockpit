@@ -94,7 +94,7 @@ class Database(object):
         """Deactivate plugin."""
         return self._background_scheduler.deactivate_plugin(plugin)
 
-    def get_database_blocked(self) -> bool:
+    def get_database_blocked(self) -> int:
         """Return tables loading flag."""
         return self._database_blocked.value
 
