@@ -2,6 +2,7 @@
 
 from multiprocessing import Value
 from typing import Dict, List, Optional
+
 from psycopg2 import pool
 
 from .background_scheduler import BackgroundJobManager

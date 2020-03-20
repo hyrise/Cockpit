@@ -371,7 +371,7 @@ class BackgroundJobManager(object):
         """Load tables."""
         if self._database_blocked.value:
             return False
-          
+
         table_names = self._get_load_table_names(folder_name)
         if not table_names:
             return True
