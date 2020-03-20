@@ -355,21 +355,24 @@ class BackgroundJobManager(object):
         self._execute_queries_parallel(table_names, table_loading_queries, folder_name)
         self._database_blocked.value = False
 
-    def load_tables(self, folder_name: str) -> bool:
-        """Load tables."""
-        if self._database_blocked.value:
-            return False
-
+    def _get_load_table_names(self, folder_name: str):
+        """Get table names to load."""
         full_table_names = _table_names.get(folder_name.split("_")[0])
         if full_table_names is None:
-            return False
+            return []
 
-        table_names = [
+        return [
             table_name
             for table_name in full_table_names
             if self._loaded_tables[table_name] != folder_name
         ]
 
+    def load_tables(self, folder_name: str) -> bool:
+        """Load tables."""
+        if self._database_blocked.value:
+            return False
+
+        table_names = self._get_load_table_names(folder_name)
         if not table_names:
             return True
 
@@ -410,22 +413,26 @@ class BackgroundJobManager(object):
         self._execute_queries_parallel(table_names, table_drop_queries, None)
         self._database_blocked.value = False
 
+    def _get_delete_table_names(self, folder_name: str):
+        """Get table names to delete."""
+        full_table_names = _table_names.get(folder_name.split("_")[0])
+        if full_table_names is None:
+            return []
+
+        return [
+            table_name
+            for table_name in full_table_names
+            if self._loaded_tables[table_name] == folder_name
+        ]
+
     def delete_tables(self, folder_name: str) -> bool:
         """Delete tables."""
         if self._database_blocked.value:
             return False
 
-        table_names = _table_names.get(folder_name.split("_")[0])
-        if table_names is None:
-            return False
-        if len(table_names) == 0:
+        table_names = self._get_delete_table_names(folder_name)
+        if not table_names:
             return True
-
-        table_names = [
-            table_name
-            for table_name in table_names
-            if self._loaded_tables[table_name] == folder_name
-        ]
 
         self._database_blocked.value = True
         self._scheduler.add_job(
