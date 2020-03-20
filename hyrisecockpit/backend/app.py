@@ -284,7 +284,7 @@ model_database_status = monitor.clone(
             required=True,
             example="running",
         ),
-        "valid_benchmarks": fields.List(
+        "loaded_benchmarks": fields.List(
             fields.String(
                 title="Benchmark",
                 description="Benchmark dataset that is completely loaded.",
