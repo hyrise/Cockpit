@@ -314,13 +314,7 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_table_query(
-        self,
-        query_tuple: Tuple,
-        loaded_tables: Dict[str, Optional[str]],
-        table_name: str,
-        benchmark: Optional[str],
-    ) -> None:
+    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
         query, not_formatted_parameters = query_tuple
         formatted_parameters = (
             tuple(
@@ -333,23 +327,26 @@ class BackgroundJobManager(object):
         with PoolCursor(self._connection_pool) as cur:
             try:
                 cur.execute(query, formatted_parameters)
-                loaded_tables[table_name] = benchmark
+                success_flag.value = True
             except Error:
                 pass  # TODO: log error
 
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
+        success_flags: List[Value] = [Value("b", False) for _ in queries]
         processes: List[Process] = [
-            Process(
-                target=self._execute_table_query,
-                args=(query, self._loaded_tables, table_name, folder_name),
-            )
-            for query, table_name in zip(queries, table_names)
+            Process(target=self._execute_table_query, args=(query, success_flag),)
+            for query, success_flag in zip(queries, success_flags)
         ]
+
         for process in processes:
             process.start()
         for process in processes:
             process.join()
             process.terminate()
+
+        for success_flag, table_name in zip(success_flags, table_names):
+            if success_flag.value:
+                self._loaded_tables[table_name] = folder_name
 
     def _load_tables_job(self, table_names: List[str], folder_name: str) -> None:
         table_loading_queries = self._generate_table_loading_queries(
