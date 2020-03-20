@@ -115,3 +115,126 @@ class TestDatabase(object):
         database._background_scheduler.load_tables.assert_called_once_with(
             self.get_default_tables()
         )
+
+    def test_gettting_worker_pool_queue_length(self, database) -> None:
+        """Test return of queue length from worker pool."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_queue_length.return_value = 42
+        database._worker_pool = mocked_worker_pool
+
+        result = database.get_queue_length()
+
+        assert type(result) is int
+        assert result == 42
+
+    def test_loading_data_while_worker_pool_is_closed_and_load_table_is_successful(
+        self, database
+    ) -> None:
+        """Test loading data while worker pool is closed and background scheduler is returning true."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "closed"
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.load_data(self.get_default_tables())
+
+        mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.load_tables.assert_called_once_with(
+            self.get_default_tables()
+        )
+        assert result
+
+    def test_loading_data_while_worker_pool_is_running(self, database) -> None:
+        """Test loading data while worker pool is running."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = True
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.load_data(self.get_default_tables())
+
+        mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.load_tables.assert_not_called()
+        assert not result
+
+    def test_loading_data_while_worker_pool_is_closed_and_load_table_failed(
+        self, database
+    ) -> None:
+        """Test loading data while worker pool is running."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "closed"
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.load_tables.return_value = False
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.load_data(self.get_default_tables())
+
+        mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.load_tables.assert_called_once_with(
+            self.get_default_tables()
+        )
+        assert not result
+
+    def test_delete_data_while_worker_pool_is_closed_and_load_table_is_successful(
+        self, database
+    ) -> None:
+        """Test delete of data while worker pool is closed and background scheduler is returning true."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "closed"
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.delete_tables.return_value = True
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.delete_data(self.get_default_tables())
+
+        mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.delete_tables.assert_called_once_with(
+            self.get_default_tables()
+        )
+        assert result
+
+    def test_delete_data_while_worker_pool_is_running(self, database) -> None:
+        """Test delete of  data while worker pool is running."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.delete_tables.return_value = True
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.delete_data(self.get_default_tables())
+
+        mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.delete_tables.assert_not_called()
+        assert not result
+
+    def test_delete_data_while_worker_pool_is_closed_and_load_table_failed(
+        self, database
+    ) -> None:
+        """Test delete of  data while worker pool is running."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "closed"
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.delete_tables.return_value = False
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.delete_data(self.get_default_tables())
+
+        mocked_worker_pool.get_status.assert_called_once()
+        mocked_background_scheduler.delete_tables.assert_called_once_with(
+            self.get_default_tables()
+        )
+        assert not result
