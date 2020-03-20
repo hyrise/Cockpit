@@ -4,7 +4,8 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, List, Tuple, Union
+from types import TracebackType
+from typing import Dict, List, Optional, Tuple, Type, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -58,6 +59,20 @@ class BackgroundJobManager(object):
         self._update_plugin_log_job = self._scheduler.add_job(
             func=self._update_plugin_log, trigger="interval", seconds=1,
         )
+
+    def __enter__(self) -> "BackgroundJobManager":
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Call close with a context manager."""
+        self.close()
+        return None
 
     def start(self) -> None:
         """Start background scheduler."""
