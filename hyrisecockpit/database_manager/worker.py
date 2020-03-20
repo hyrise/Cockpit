@@ -85,9 +85,9 @@ def execute_queries(
                     if last_batched < time_ns() - 1_000_000_000:
                         last_batched = time_ns()
                         log.log_queries(succesful_queries)
-                        succesful_queries = []
+                        succesful_queries.clear()
                         log.log_failed_queries(failed_queries)
-                        failed_queries = []
+                        failed_queries.clear()
                 except Empty:
                     continue
                 except (ValueError, Error) as e:
