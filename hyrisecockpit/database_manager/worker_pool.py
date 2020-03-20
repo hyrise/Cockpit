@@ -31,7 +31,7 @@ class WorkerPool:
         self._execute_task_workers: List[Process] = []
         self._execute_task_worker_done_event: List[EventType] = []
         self._fill_task_worker: Optional[Process] = None
-        self._worker_continue_event: EventType = Event()
+        self._worker_wait_for_exit_event: EventType = Event()
         self._task_queue: Queue = Queue(0)
         self._failed_task_queue: Queue = Queue(0)
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
@@ -52,7 +52,7 @@ class WorkerPool:
                     self._continue_execution_flag,
                     self._database_id,
                     self._execute_task_worker_done_event[i],
-                    self._worker_continue_event,
+                    self._worker_wait_for_exit_event,
                 ),
             )
             for i in range(self._number_worker)
@@ -65,7 +65,7 @@ class WorkerPool:
                 self._workload_publisher_url,
                 self._task_queue,
                 self._continue_execution_flag,
-                self._worker_continue_event,
+                self._worker_wait_for_exit_event,
             ),
         )
 
@@ -82,12 +82,12 @@ class WorkerPool:
         for i in range(self._number_worker):
             self._execute_task_workers[i].terminate()
         self._execute_task_workers = []
-        self._worker_continue_event = Event()
+        self._worker_wait_for_exit_event = Event()
         self._task_queue = Queue(0)
         self._failed_task_queue = Queue(0)
 
     def _wait_for_worker(self) -> None:
-        self._worker_continue_event.clear()
+        self._worker_wait_for_exit_event.clear()
         self._continue_execution_flag.value = False
         for i in range(self._number_worker):
             self._execute_task_worker_done_event[i].wait()
@@ -100,7 +100,7 @@ class WorkerPool:
 
     def _start_job(self) -> None:
         if self._status == "closed":
-            self._worker_continue_event.set()
+            self._worker_wait_for_exit_event.set()
             self._init_workers()
             self._start_worker()
             self._status = "running"
@@ -133,7 +133,7 @@ class WorkerPool:
 
     def terminate(self) -> bool:
         """Terminates worker."""
-        if not self._database_blocked.value:
+        if not self._database_blocked.value and self._status == "running":
             self._database_blocked.value = True
             self._terminate_worker()
             self._task_queue.close()
