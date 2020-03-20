@@ -328,7 +328,7 @@ class BackgroundJobManager(object):
             try:
                 cur.execute(query, formatted_parameters)
                 success_flag.value = True
-            except Error:
+            except ProgrammingError:
                 pass  # TODO: log error
 
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
