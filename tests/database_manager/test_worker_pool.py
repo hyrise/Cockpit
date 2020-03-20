@@ -330,3 +330,65 @@ class TestWorkerPool(object):
         assert not result
         assert worker_pool._database_blocked.value
         scheduler_mock.add_job.assert_not_called()
+
+    def test_termination_of_worker_if_database_is_not_blocked_and_workerpool_is_running(
+        self, worker_pool
+    ) -> None:
+        """Test termination of worker pool with no database block and running pool."""
+        worker_pool._database_blocked.value = False
+        worker_pool._status = "running"
+        terminate_worker_mock = MagicMock()
+        task_queue_mock = MagicMock()
+        task_queue_mock.close.return_value = None
+        failed_task_queue_mock = MagicMock()
+        failed_task_queue_mock.close.return_value = None
+
+        worker_pool._terminate_worker = terminate_worker_mock
+        worker_pool._task_queue = task_queue_mock
+        worker_pool._failed_task_queue = failed_task_queue_mock
+
+        result = worker_pool.terminate()
+
+        assert result
+        terminate_worker_mock.assert_called_once()
+        task_queue_mock.close.assert_called_once()
+        failed_task_queue_mock.close.assert_called_once()
+        assert worker_pool._status == "closed"
+        assert not worker_pool._database_blocked.value
+
+    def test_termination_of_worker_if_database_is_blocked_and_workerpool_is_running(
+        self, worker_pool
+    ) -> None:
+        """Test termination of worker pool with database block and running pool."""
+        worker_pool._database_blocked.value = True
+        worker_pool._status = "running"
+
+        assert not worker_pool.terminate()
+
+    def test_termination_of_worker_if_database_is_not_blocked_and_workerpool_is_closed(
+        self, worker_pool
+    ) -> None:
+        """Test termination of worker pool with  no database block and closed pool."""
+        worker_pool._database_blocked.value = False
+        worker_pool._status = "closed"
+
+        assert not worker_pool.terminate()
+
+    def test_termination_of_worker_if_database_is_blocked_and_workerpool_is_closed(
+        self, worker_pool
+    ) -> None:
+        """Test termination of worker pool with  database block and closed pool."""
+        worker_pool._database_blocked.value = True
+        worker_pool._status = "closed"
+
+        assert not worker_pool.terminate()
+
+    def test_get_status_while_workerpool_is_running(self, worker_pool) -> None:
+        """Test get status while worker pool is running."""
+        worker_pool._status = "running"
+        assert worker_pool.get_status() == "running"
+
+    def test_get_status_while_workerpool_is_closed(self, worker_pool) -> None:
+        """Test get status while worker pool is closed."""
+        worker_pool._status = "closed"
+        assert worker_pool.get_status() == "closed"
