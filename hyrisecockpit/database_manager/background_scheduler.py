@@ -411,7 +411,7 @@ class BackgroundJobManager(object):
         self._database_blocked.value = False
 
     def delete_tables(self, folder_name: str) -> bool:
-        """Load tables."""
+        """Delete tables."""
         if self._database_blocked.value:
             return False
 
@@ -420,6 +420,12 @@ class BackgroundJobManager(object):
             return False
         if len(table_names) == 0:
             return True
+
+        table_names = [
+            table_name
+            for table_name in table_names
+            if self._loaded_tables[table_name] == folder_name
+        ]
 
         self._database_blocked.value = True
         self._scheduler.add_job(
