@@ -351,6 +351,37 @@ class BackgroundJobManager(object):
         else:
             return False
 
+    def _activate_plugin_job(self, plugin: str) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            cur.execute(
+                (
+                    "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+                ),
+                (AsIs(plugin),),
+            )
+
+    def activate_plugin(self, plugin: str) -> bool:
+        """Activate plugin."""
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._activate_plugin_job, args=(plugin))
+            return True
+        else:
+            return False
+
+    def _deactivate_plugin_job(self, plugin: str) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            cur.execute(
+                ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
+            )
+
+    def deactivate_plugin(self, plugin: str) -> bool:
+        """Dectivate plugin."""
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._deactivate_plugin_job, args=(plugin))
+            return True
+        else:
+            return False
+
     def _get_existing_tables(self, table_names: List[str]) -> Dict:
         """Check wich tables exists and which not."""
         existing_tables = []
