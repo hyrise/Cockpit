@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Tuple, Union
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query
-from psycopg2 import Error, pool
+from psycopg2 import pool, ProgrammingError
 from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
