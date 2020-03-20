@@ -248,7 +248,7 @@ class DatabaseManager(object):
         database_blocked_status = False
         for database in list(self._databases.values()):
             database_blocked_status = (
-                database_blocked_status or database.get_database_blocked()
+                database_blocked_status or database.get_database_blocked()  # type: ignore
             )
         return database_blocked_status
 
