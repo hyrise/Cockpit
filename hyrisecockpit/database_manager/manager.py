@@ -236,16 +236,12 @@ class DatabaseManager(object):
         return response
 
     def _call_read_plugin_setting(self, body: Body) -> Response:
-        id: str = body["id"]
-        if id not in self._databases.keys():
-            response = get_response(400)
-        elif self._databases[id].get_plugin_setting() is not None:
-            response = get_response(200)
-            response["body"]["plugin_settings"] = self._databases[
-                id
-            ].get_plugin_setting()
-        else:
-            response = get_response(423)
+        plugin_settings = [
+            {"id": id, "plugin_settings": database.get_plugin_setting()}
+            for id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["plugin_settings"] = plugin_settings
         return response
 
     def _check_if_database_blocked(self) -> bool:
