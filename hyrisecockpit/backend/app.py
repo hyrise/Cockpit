@@ -959,7 +959,7 @@ class ActivatedPlugin(Resource):
     """Get all available Plugins."""
 
     @control.doc(model=model_get_all_plugins)
-    def get(self) -> List:
+    def get(self) -> List[str]:
         """Return available plugins."""
         return available_plugins
 
