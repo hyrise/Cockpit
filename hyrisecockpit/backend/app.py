@@ -16,6 +16,7 @@ from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.settings import (
@@ -960,7 +961,7 @@ class ActivatedPlugin(Resource):
     @control.doc(model=model_get_all_plugins)
     def get(self) -> List:
         """Return available plugins."""
-        return ["Clustering", "Compression"]
+        return available_plugins
 
 
 @control.route("/plugin")
