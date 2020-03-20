@@ -145,6 +145,7 @@ class TestDatabase(object):
         mocked_background_scheduler.load_tables.assert_called_once_with(
             self.get_default_tables()
         )
+        assert type(result) is bool
         assert result
 
     def test_loading_data_while_worker_pool_is_running(self, database) -> None:
@@ -161,6 +162,7 @@ class TestDatabase(object):
 
         mocked_worker_pool.get_status.assert_called_once()
         mocked_background_scheduler.load_tables.assert_not_called()
+        assert type(result) is bool
         assert not result
 
     def test_loading_data_while_worker_pool_is_closed_and_load_table_failed(
@@ -181,6 +183,7 @@ class TestDatabase(object):
         mocked_background_scheduler.load_tables.assert_called_once_with(
             self.get_default_tables()
         )
+        assert type(result) is bool
         assert not result
 
     def test_delete_data_while_worker_pool_is_closed_and_load_table_is_successful(
@@ -201,6 +204,7 @@ class TestDatabase(object):
         mocked_background_scheduler.delete_tables.assert_called_once_with(
             self.get_default_tables()
         )
+        assert type(result) is bool
         assert result
 
     def test_delete_data_while_worker_pool_is_running(self, database) -> None:
@@ -217,6 +221,7 @@ class TestDatabase(object):
 
         mocked_worker_pool.get_status.assert_called_once()
         mocked_background_scheduler.delete_tables.assert_not_called()
+        assert type(result) is bool
         assert not result
 
     def test_delete_data_while_worker_pool_is_closed_and_load_table_failed(
@@ -237,4 +242,79 @@ class TestDatabase(object):
         mocked_background_scheduler.delete_tables.assert_called_once_with(
             self.get_default_tables()
         )
+        assert type(result) is bool
         assert not result
+
+    def test_activation_of_plugin_with_success(self, database) -> None:
+        """Test entry point for plug-in activation with success."""
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.activate_plugin.return_value = True
+        fake_plugin = "Coolputer"
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.activate_plugin(fake_plugin)
+
+        mocked_background_scheduler.activate_plugin.assert_called_once_with(fake_plugin)
+        assert type(result) is bool
+        assert result
+
+    def test_activation_of_plugin_with_no_success(self, database) -> None:
+        """Test entry point for plug-in activation with no success."""
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.activate_plugin.return_value = False
+        fake_plugin = "Coolputer"
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.activate_plugin(fake_plugin)
+
+        mocked_background_scheduler.activate_plugin.assert_called_once_with(fake_plugin)
+        assert type(result) is bool
+        assert not result
+
+    def test_deactivation_of_plugin_with_success(self, database) -> None:
+        """Test entry point for plug-in deactivation with success."""
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.deactivate_plugin.return_value = True
+        fake_plugin = "Coolputer"
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.deactivate_plugin(fake_plugin)
+
+        mocked_background_scheduler.deactivate_plugin.assert_called_once_with(
+            fake_plugin
+        )
+        assert type(result) is bool
+        assert result
+
+    def test_deactivation_of_plugin_with_no_success(self, database) -> None:
+        """Test entry point for plug-in deactivation with no success."""
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.deactivate_plugin.return_value = False
+        fake_plugin = "Coolputer"
+        database._background_scheduler = mocked_background_scheduler
+
+        result = database.deactivate_plugin(fake_plugin)
+
+        mocked_background_scheduler.deactivate_plugin.assert_called_once_with(
+            fake_plugin
+        )
+        assert type(result) is bool
+        assert not result
+
+    def test_getting_blocked_database_status(self, database) -> None:
+        """Test return value for blocked database."""
+        database._database_blocked.value = False
+
+        result = database.get_database_blocked()
+
+        assert type(result) is int
+        assert not result
+
+    def test_getting_unblocked_database_status(self, database) -> None:
+        """Test return value for unblocked database."""
+        database._database_blocked.value = True
+
+        result = database.get_database_blocked()
+
+        assert type(result) is int
+        assert result
