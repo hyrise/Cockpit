@@ -446,15 +446,11 @@ class BackgroundJobManager(object):
 
     def _get_delete_table_names(self, folder_name: str):
         """Get table names to delete."""
-        full_table_names = _table_names.get(folder_name.split("_")[0])
-        if full_table_names is None:
+        table_names = _table_names.get(folder_name.split("_")[0])
+        if table_names is None:
             return []
-
-        return [
-            table_name
-            for table_name in full_table_names
-            if self._loaded_tables[table_name] == folder_name
-        ]
+        else:
+            return table_names
 
     def delete_tables(self, folder_name: str) -> bool:
         """Delete tables."""
