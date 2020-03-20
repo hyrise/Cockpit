@@ -184,3 +184,149 @@ class TestWorkerPool(object):
 
         assert not worker_pool._worker_wait_for_exit_event.is_set()
         assert not worker_pool._continue_execution_flag.value
+
+    def test_starting_worker(self, worker_pool) -> None:
+        """Test start of worker."""
+        worker_pool._continue_execution_flag.value = False
+        mocked_fill_worker_process = MagicMock()
+        mocked_fill_worker_process.start.return_value = None
+        mocked_processes = []
+        for _ in range(self.get_number_worker()):
+            mocked_execute_task_worker_process = MagicMock()
+            mocked_execute_task_worker_process.start.return_value = None
+            mocked_processes.append(mocked_execute_task_worker_process)
+
+        worker_pool._execute_task_workers = mocked_processes
+        worker_pool._fill_task_worker = mocked_fill_worker_process
+
+        worker_pool._start_worker()
+
+        mocked_fill_worker_process.start.assert_called_once()
+        for mocked_execute_task_process in mocked_processes:
+            mocked_execute_task_process.start.assert_called_once()
+
+        assert worker_pool._continue_execution_flag.value
+
+    def test_starting_worker_job_if_workerpool_is_closed(self, worker_pool) -> None:
+        """Test start job if the worker pool is closed."""
+        worker_pool._status = "closed"
+        init_workers_mock = MagicMock()
+        start_worker_mock = MagicMock()
+
+        worker_pool._init_workers = init_workers_mock
+        worker_pool._start_worker = start_worker_mock
+
+        worker_pool._start_job()
+
+        init_workers_mock.assert_called_once()
+        start_worker_mock.assert_called_once()
+        assert worker_pool._worker_wait_for_exit_event.is_set()
+        assert not worker_pool._database_blocked.value
+        assert worker_pool._status == "running"
+
+    def test_starting_worker_job_if_workerpool_is_running(self, worker_pool) -> None:
+        """Test start job if the worker pool is running."""
+        worker_pool._status = "running"
+        init_workers_mock = MagicMock()
+        start_worker_mock = MagicMock()
+
+        worker_pool._init_workers = init_workers_mock
+        worker_pool._start_worker = start_worker_mock
+
+        init_workers_mock.assert_not_called()
+        start_worker_mock.assert_not_called()
+        assert not worker_pool._worker_wait_for_exit_event.is_set()
+        assert not worker_pool._database_blocked.value
+        assert worker_pool._status == "running"
+
+    def test_closing_worker_job_if_workerpool_is_running(self, worker_pool) -> None:
+        """Test close job if the worker pool is running."""
+        worker_pool._status = "running"
+        wait_for_worker_mock = MagicMock()
+        terminate_worker_mock = MagicMock()
+
+        worker_pool._wait_for_worker = wait_for_worker_mock
+        worker_pool._terminate_worker = terminate_worker_mock
+
+        worker_pool._close_job()
+
+        wait_for_worker_mock.assert_called_once()
+        terminate_worker_mock.assert_called_once()
+        assert worker_pool._status == "closed"
+        assert not worker_pool._database_blocked.value
+
+    def test_closing_worker_job_if_workerpool_is_not_running(self, worker_pool) -> None:
+        """Test close job if the worker pool is running."""
+        worker_pool._status = "closed"
+        wait_for_worker_mock = MagicMock()
+        terminate_worker_mock = MagicMock()
+
+        worker_pool._wait_for_worker = wait_for_worker_mock
+        worker_pool._terminate_worker = terminate_worker_mock
+
+        worker_pool._close_job()
+
+        wait_for_worker_mock.assert_not_called()
+        terminate_worker_mock.assert_not_called()
+        assert worker_pool._status == "closed"
+        assert not worker_pool._database_blocked.value
+
+    def test_starting_of_start_job_while_databse_is_not_blocked(
+        self, worker_pool
+    ) -> None:
+        """Test starting of start job if database is not blocked."""
+        scheduler_mock = MagicMock()
+        scheduler_mock.add_job.return_value = None
+        worker_pool._scheduler = scheduler_mock
+        worker_pool._start_job = "start_job_function"
+        worker_pool._database_blocked.value = False
+
+        result = worker_pool.start()
+
+        assert result
+        assert worker_pool._database_blocked.value
+        scheduler_mock.add_job.assert_called_once_with(func="start_job_function")
+
+    def test_starting_of_start_job_while_databse_is_blocked(self, worker_pool) -> None:
+        """Test not starting of start job if database is blocked."""
+        scheduler_mock = MagicMock()
+        scheduler_mock.add_job.return_value = None
+        worker_pool._scheduler = scheduler_mock
+        worker_pool._start_job = "start_job_function"
+        worker_pool._database_blocked.value = True
+
+        result = worker_pool.start()
+
+        assert not result
+        assert worker_pool._database_blocked.value
+        scheduler_mock.add_job.assert_not_called()
+
+    def test_starting_of_close_job_while_databse_is_not_blocked(
+        self, worker_pool
+    ) -> None:
+        """Test starting of closed job if database is not blocked."""
+        scheduler_mock = MagicMock()
+        scheduler_mock.add_job.return_value = None
+        worker_pool._scheduler = scheduler_mock
+        worker_pool._close_job = "close_job_function"
+        worker_pool._database_blocked.value = False
+
+        result = worker_pool.close()
+
+        assert result
+        assert worker_pool._database_blocked.value
+        scheduler_mock.add_job.assert_called_once_with(func="close_job_function")
+
+    def test_starting_of_close_job_while_databse_is_blocked(self, worker_pool) -> None:
+        """Test not starting of closed job if database is blocked."""
+        scheduler_mock = MagicMock()
+        scheduler_mock.add_job.return_value = None
+        worker_pool._scheduler = scheduler_mock
+        worker_pool._close_job = "close_job_function"
+        worker_pool._database_blocked.value = True
+
+        result = worker_pool.close()
+
+        assert not result
+        assert worker_pool._database_blocked.value
+        scheduler_mock.add_job.assert_not_called()
