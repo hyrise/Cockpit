@@ -13,7 +13,7 @@ class TestDatabase(object):
 
     def get_id(self) -> str:
         """Return database id."""
-        return "MongoDB Number One"
+        return "MongoDB forever"
 
     def get_user(self) -> str:
         """Return database user."""
@@ -62,6 +62,24 @@ class TestDatabase(object):
     def get_storage_user(self) -> str:
         """Return storage user."""
         return "Käptin Blaubär"
+
+    def get_fake_pool_cursor(connection_pool) -> MagicMock:  # noqa
+        """Return fake PoolCursor."""
+        mocked_context_cur = MagicMock()
+        mocked_cur = MagicMock()
+        mocked_cur.execute.return_value = None
+        mocked_cur.fetchall.return_value = []
+        mocked_context_cur.__enter__.return_value = mocked_cur
+        return mocked_context_cur
+
+    def get_fake_pool_cursor_with_rows_to_return(connection_pool) -> MagicMock:  # noqa
+        """Return fake PoolCursor with return value for fetch all."""
+        mocked_context_cur = MagicMock()
+        mocked_cur = MagicMock()
+        mocked_cur.execute.return_value = None
+        mocked_cur.fetchall.return_value = [("Lindwurm",), ("Wolpertinger",)]
+        mocked_context_cur.__enter__.return_value = mocked_cur
+        return mocked_context_cur
 
     def get_fake_background_job_manager(
         id,  # noqa
@@ -304,7 +322,6 @@ class TestDatabase(object):
     def test_getting_blocked_database_status(self, database) -> None:
         """Test return value for blocked database."""
         database._database_blocked.value = False
-
         result = database.get_database_blocked()
 
         assert type(result) is int
@@ -313,8 +330,168 @@ class TestDatabase(object):
     def test_getting_unblocked_database_status(self, database) -> None:
         """Test return value for unblocked database."""
         database._database_blocked.value = True
-
         result = database.get_database_blocked()
 
         assert type(result) is int
         assert result
+
+    def test_starting_successful_worker(self, database) -> None:
+        """Test start of successful worker."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.start.return_value = True
+        database._worker_pool = mocked_worker_pool
+        result = database.start_worker()
+
+        mocked_worker_pool.start.assert_called_once()
+        assert type(result) is bool
+        assert result
+
+    def test_starting_unsuccessful_worker(self, database) -> None:
+        """Test start of unsuccessful worker."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.start.return_value = False
+        database._worker_pool = mocked_worker_pool
+        result = database.start_worker()
+
+        mocked_worker_pool.start.assert_called_once()
+        assert type(result) is bool
+        assert not result
+
+    def test_closeing_successful_worker(self, database) -> None:
+        """Test successful close of worker."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.close.return_value = True
+        database._worker_pool = mocked_worker_pool
+        result = database.close_worker()
+
+        mocked_worker_pool.close.assert_called_once()
+        assert type(result) is bool
+        assert result
+
+    def test_closeing_unsuccessful_worker(self, database) -> None:
+        """Test unsuccessful close of worker."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.close.return_value = False
+        database._worker_pool = mocked_worker_pool
+        result = database.close_worker()
+
+        mocked_worker_pool.close.assert_called_once()
+        assert type(result) is bool
+        assert not result
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+    )
+    def test_get_plugins_when_database_unblocked_and_no_plugins_exists(
+        self, database
+    ) -> None:
+        """Test get not existing plug-ins."""
+        database._database_blocked.value = False
+        result = database.get_plugins()
+
+        assert type(result) is list
+        assert result == []
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+    )
+    def test_get_plugins_when_database_blocked(self, database) -> None:
+        """Test get plug-ins when database is blocked."""
+        database._database_blocked.value = True
+        result = database.get_plugins()
+
+        assert not result
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor",
+        get_fake_pool_cursor_with_rows_to_return,
+    )
+    def test_get_plugins_when_database_unblocked_and_plugins_exists(
+        self, database
+    ) -> None:
+        """Test get existing plug-ins."""
+        database._database_blocked.value = False
+        expected = ["Lindwurm", "Wolpertinger"]
+        result = database.get_plugins()
+
+        assert type(result) is list
+        assert result[:] == expected[:]
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+    )
+    def test_set_plugin_setting_when_dataabse_is_unblocked(self, database) -> None:
+        """Test set plug-in setting while the database is not blocked."""
+        database._database_blocked.value = False
+        result = database.set_plugin_setting("M. böslich", "Eiskaltius")
+
+        assert type(result) is bool
+        assert result
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+    )
+    def test_set_plugin_settings_when_database_blocked(self, database) -> None:
+        """Test set plug-in setting while the database is blocked."""
+        database._database_blocked.value = True
+        result = database.set_plugin_setting("Eiskaltius", "M. böslich")
+
+        assert type(result) is bool
+        assert not result
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+    )
+    def test_get_plugins_settings_when_database_unblocked_and_no_plugins_exists(
+        self, database
+    ) -> None:
+        """Test get not existing plug-ins settings."""
+        database._database_blocked.value = False
+        result = database.get_plugin_setting()
+
+        assert type(result) is list
+        assert result == []
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+    )
+    def test_get_plugins_settings_when_database_blocked(self, database) -> None:
+        """Test get plug-ins settings when database is blocked."""
+        database._database_blocked.value = True
+        result = database.get_plugin_setting()
+
+        assert not result
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor",
+        get_fake_pool_cursor_with_rows_to_return,
+    )
+    def test_get_plugins_settings_when_database_unblocked_and_plugins_exists(
+        self, database
+    ) -> None:
+        """Test get existing plug-ins settings."""
+        database._database_blocked.value = False
+        expected = ["Lindwurm", "Wolpertinger"]
+        result = database.get_plugin_setting()
+
+        assert type(result) is list
+        assert result[:] == expected[:]
+
+    def test_closing_of_database(self, database) -> None:
+        """Test closing of database."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.terminate.return_value = None
+        mocked_background_scheduler = MagicMock()
+        mocked_background_scheduler.close.return_value = None
+        mocked_connection_pool = MagicMock()
+        mocked_connection_pool.closeall.return_value = None
+
+        database._worker_pool = mocked_worker_pool
+        database._background_scheduler = mocked_background_scheduler
+        database._connection_pool = mocked_connection_pool
+
+        database.close()
+
+        mocked_worker_pool.terminate.assert_called_once()
+        mocked_background_scheduler.close.assert_called_once()
+        mocked_connection_pool.closeall.assert_called_once()
