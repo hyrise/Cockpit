@@ -154,7 +154,7 @@ class Database(object):
         """Return all currently activated plugins."""
         if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute(("SELECT name FROM meta_plugins;"), (None,))
+                cur.execute(("SELECT name FROM meta_plugins;"), None)
                 rows = cur.fetchall()
                 result = [row[0] for row in rows] if rows else []
                 return result
