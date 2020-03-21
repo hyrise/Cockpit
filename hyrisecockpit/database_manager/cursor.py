@@ -1,6 +1,6 @@
 """Utility custom cursors."""
 from types import TracebackType
-from typing import Any, Dict, List, Optional, Tuple, Type
+from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from influxdb import InfluxDBClient
 from psycopg2 import pool
@@ -31,15 +31,17 @@ class PoolCursor:
         self.pool.putconn(self.connection)
         return None
 
-    def execute(self, query: str, parameters: Optional[Tuple]) -> None:
+    def execute(
+        self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
+    ) -> None:
         """Execute a query."""
         return self.cur.execute(query, parameters)
 
-    def fetchone(self) -> Tuple:
+    def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
         return self.cur.fetchone()
 
-    def fetchall(self) -> List:
+    def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
         return self.cur.fetchall()
 
