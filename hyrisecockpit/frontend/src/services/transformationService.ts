@@ -6,7 +6,7 @@ import {
 } from "../types/metrics";
 import { TransformationService } from "@/types/services";
 import { useFormatting } from "@/meta/formatting";
-import { getColor } from '@/meta/colors';
+import { getColor } from "@/meta/colors";
 
 const transformationServiceMap: Record<Metric, TransformationService> = {
   access: getAccessData,
