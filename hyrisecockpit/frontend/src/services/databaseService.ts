@@ -5,14 +5,13 @@ import {
   DatabaseResponse
 } from "../types/database";
 import axios from "axios";
-import colors from "vuetify/lib/util/colors";
+import { getColor } from "../meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "./transformationService";
 import { useDatabaseEvents } from "../meta/events";
 
 export function useDatabaseService(): DatabaseService {
   //TODO: think about how to handle colors now
-  const colorsArray: any = Object.keys(colors);
   let usedColors: any = 0;
   const { emitDatabaseAddedEvent } = useDatabaseEvents();
 
@@ -30,8 +29,8 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function getDatabaseColor(): string {
-    const color: any = (colors as any)[colorsArray[usedColors]].base;
-    usedColors += 2;
+    const color: any = getColor(usedColors);
+    usedColors += 1;
     return color;
   }
 

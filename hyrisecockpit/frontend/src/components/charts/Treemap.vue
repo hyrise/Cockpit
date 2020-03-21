@@ -8,6 +8,7 @@ import * as Plotly from "plotly.js";
 import { ChartConfiguration, StorageData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useChartReactivity } from "../../meta/charts";
+import { getColors } from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
@@ -72,6 +73,7 @@ function useTreemapConfiguration(
       height: props.autosize ? 0 : 700,
       hovermode: "closest",
       hoverlabel: { bgcolor: "#FFF" },
+      treemapcolorway: getColors(),
       margin: {
         l: 0,
         r: 0,
