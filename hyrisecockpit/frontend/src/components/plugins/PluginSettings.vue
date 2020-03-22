@@ -1,5 +1,10 @@
 <template>
-  <v-text-field />
+  <div class="setting-row">
+    <div class="setting-name">
+      test:
+    </div>
+    <v-text-field />
+  </div>
 </template>
 
 <script lang="ts">
@@ -38,4 +43,14 @@ export default defineComponent({
 });
 </script>
 <style>
+.setting-name {
+  margin-right: 5px;
+  flex: 0 0 40%;
+}
+.setting-row {
+  margin-top: -10px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
 </style>

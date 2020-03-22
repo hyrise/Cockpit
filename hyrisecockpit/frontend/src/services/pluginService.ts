@@ -2,7 +2,7 @@ import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
-import { useDatabaseController } from "../databaseController";
+// import { useDatabaseController } from "../databaseController";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
@@ -80,9 +80,36 @@ export function usePluginService(): PluginService {
   }
 
   function getPluginSettings(): Promise<void> {
-    axios.get(controlBackend + "plugin_settings", {params: {id: "citadelle"}}).then(response => {
-      console.log(response);
-    })
+    axios.get(controlBackend + "plugin_settings").then(response => {
+      pluginSettings.value = response.data.body.plugin_settings.reduce(
+        (result: any, currentDatabase: any) => {
+          currentDatabase.plugin_settings.reduce(
+            (allSettings: any, currentSetting: any) => {
+              allSettings[currentSetting.x];
+            },
+            {}
+          );
+        },
+        {}
+      );
+    });
+  }
+
+  function updatePluginSettings(
+    databaseId: string,
+    pluginId: string,
+    settingId: string,
+    settingValue: string
+  ) {
+    axios
+      .post(controlBackend + "plugin_settings", {
+        id: databaseId,
+        name: "stuff",
+        value: settingValue
+      })
+      .then(response => {
+        getPluginSettings();
+      });
   }
 
   return {

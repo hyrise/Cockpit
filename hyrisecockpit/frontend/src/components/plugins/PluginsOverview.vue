@@ -41,7 +41,11 @@
                 mdi-cog
               </v-icon>
             </div>
-            <PluginSettings :databaseId="database" :pluginId="plugin" v-show="showSettings[database + '_' + plugin]"/>
+            <PluginSettings
+              :databaseId="database"
+              :pluginId="plugin"
+              v-show="showSettings[database + '_' + plugin]"
+            />
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
