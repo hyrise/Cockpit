@@ -24,7 +24,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext, Ref, ref } from "@vue/composition-api";
+import {
+  defineComponent,
+  SetupContext,
+  Ref,
+  ref,
+  onUnmounted
+} from "@vue/composition-api";
 import { DetailedQueryInformation } from "@/types/queries";
 import QueryTable from "@/components/queries/QueryTable.vue";
 import { useQueryService } from "@/services/queryService";
@@ -53,6 +59,8 @@ export default defineComponent({
     const queries = ref({});
     const loading = ref(true);
 
+    updateQueryInformation();
+
     function updateQueryInformation(): void {
       loading.value = true;
       queryService.getDetailedQueryInformation().then(queryInfo => {
@@ -61,7 +69,11 @@ export default defineComponent({
       });
     }
 
-    setInterval(updateQueryInformation, 5000);
+    const intervalId = setInterval(updateQueryInformation, 5000);
+
+    onUnmounted(() => {
+      clearInterval(intervalId);
+    });
 
     return {
       queries,
