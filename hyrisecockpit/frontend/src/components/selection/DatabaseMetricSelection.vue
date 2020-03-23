@@ -2,7 +2,7 @@
   <div v-if="$databaseController.databasesUpdated.value">
     <v-expansion-panels>
       <v-expansion-panel>
-        <v-expansion-panel-header class="title grey lighten-1 primary--text">
+        <v-expansion-panel-header class="title secondary primary--text">
           Selection
         </v-expansion-panel-header>
         <v-expansion-panel-content>

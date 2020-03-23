@@ -7,6 +7,7 @@ import {
   ChartConfiguration
 } from "../types/metrics";
 import { useDataTransformation } from "../services/transformationService";
+import { getColor } from "./colors";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
@@ -92,9 +93,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
-  average: "#fb8c00",
-  high: "#4caf50",
-  low: "#ff5252"
+  average: getColor(1),
+  high: getColor(3),
+  low: getColor(2)
 };
 
 const metricValueStateOrder: Record<

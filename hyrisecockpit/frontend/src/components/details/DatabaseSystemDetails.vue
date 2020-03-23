@@ -6,7 +6,7 @@
       v-for="database in databases"
       :key="database.id"
     >
-      <v-container color="secondary" fluid>
+      <v-container fluid>
         <v-row no-gutters>
           <v-col class="entry">
             <v-icon left> mdi-database</v-icon>

@@ -41,7 +41,7 @@ export default defineComponent({
     },
     color: {
       type: String,
-      default: "secondary"
+      default: "primary"
     }
   },
   setup(props: Props, context: SetupContext): Data {
