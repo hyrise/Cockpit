@@ -1,7 +1,7 @@
 """The WorkerPool object represents the workers."""
 from multiprocessing import Event, Process, Queue, Value
 from multiprocessing.synchronize import Event as EventType
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from psycopg2 import pool
@@ -33,7 +33,6 @@ class WorkerPool:
         self._fill_task_worker: Optional[Process] = None
         self._worker_wait_for_exit_event: EventType = Event()
         self._task_queue: Queue = Queue(0)
-        self._failed_task_queue: Queue = Queue(0)
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._scheduler.start()
 
@@ -48,7 +47,6 @@ class WorkerPool:
                     i,
                     self._task_queue,
                     self._connection_pool,
-                    self._failed_task_queue,
                     self._continue_execution_flag,
                     self._database_id,
                     self._execute_task_worker_done_event[i],
@@ -84,7 +82,6 @@ class WorkerPool:
         self._execute_task_workers = []
         self._worker_wait_for_exit_event = Event()
         self._task_queue = Queue(0)
-        self._failed_task_queue = Queue(0)
 
     def _wait_for_worker(self) -> None:
         self._worker_wait_for_exit_event.clear()
@@ -137,7 +134,6 @@ class WorkerPool:
             self._database_blocked.value = True
             self._terminate_worker()
             self._task_queue.close()
-            self._failed_task_queue.close()
             self._status = "closed"
             self._database_blocked.value = False
             return True
@@ -151,10 +147,3 @@ class WorkerPool:
     def get_queue_length(self) -> int:
         """Return queue length."""
         return self._task_queue.qsize()
-
-    def get_failed_tasks(self) -> List[Dict[str, str]]:
-        """Return failed tasks."""
-        failed_task = []
-        while not self._failed_task_queue.empty():
-            failed_task.append(self._failed_task_queue.get())
-        return failed_task
