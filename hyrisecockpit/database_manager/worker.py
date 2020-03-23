@@ -76,7 +76,7 @@ def execute_queries(
                         str, Tuple[Tuple[Union[str, int], Optional[str]], ...], str, str
                     ] = task_queue.get(block=False)
                     query, not_formatted_parameters, workload_type, query_type = task
-                    query = query.replace("[STREAM_ID]", worker_id)
+                    query = query.replace("[STREAM_ID]", str(worker_id))
                     formatted_parameters = get_formatted_parameters(
                         not_formatted_parameters
                     )
