@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from psycopg2 import pool
 
