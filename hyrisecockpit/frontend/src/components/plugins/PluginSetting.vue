@@ -1,13 +1,8 @@
 <template>
   <div class="setting-row">
-    <div class="setting-name">
-      {{ pluginName }}:
-    </div>
+    <div class="setting-name">{{ pluginName }}:</div>
     <v-text-field class="setting-text" v-model="value" />
-    <v-btn
-      text
-      @click="updatePluginSettings(databaseId, setting.name, value)"
-    >
+    <v-btn text @click="updatePluginSettings(databaseId, setting.name, value)">
       save
     </v-btn>
   </div>
@@ -58,7 +53,9 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { updatePluginSettings } = context.root.$pluginService;
     let value = props.setting.value;
-    const pluginName = props.setting.name.substring(props.setting.name.indexOf("_") + 1);
+    const pluginName = props.setting.name.substring(
+      props.setting.name.indexOf("_") + 1
+    );
 
     return { updatePluginSettings, value, pluginName };
   }

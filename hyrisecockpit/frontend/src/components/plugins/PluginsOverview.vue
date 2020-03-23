@@ -129,9 +129,14 @@ export default defineComponent({
       ];
     }
 
-    function canSettingsBeChanged(databseId: string, pluginId: string): boolean {
-      return activePlugins.value.find(x => x === databseId + '_' + pluginId) &&
-      pluginSettings.value[databseId][pluginId]
+    function canSettingsBeChanged(
+      databseId: string,
+      pluginId: string
+    ): boolean {
+      return (
+        activePlugins.value.find(x => x === databseId + "_" + pluginId) &&
+        pluginSettings.value[databseId][pluginId]
+      );
     }
 
     function togglePanelView(): void {
