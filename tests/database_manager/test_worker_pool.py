@@ -4,7 +4,6 @@ from multiprocessing.context import Process as ProcessType
 from multiprocessing.queues import Queue as QueueType
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from multiprocessing.synchronize import Event as EventType
-from typing import Dict
 from unittest.mock import MagicMock, patch
 
 from pytest import fixture, mark
@@ -126,14 +125,6 @@ class TestWorkerPool(object):
         """Check if enough processes of type process are generated."""
         process = worker_pool._generate_fill_task_worker()
         assert type(process) is ProcessType
-
-    def get_worker_and_event(self, worker_pool) -> Dict:
-        """Helper-function for returning results."""
-        return {
-            "event": worker_pool._execute_task_worker_done_event,
-            "execute_workers": worker_pool._execute_task_workers,
-            "fill_worker": worker_pool._fill_task_worker,
-        }
 
     def test_inintialization_of_worker(self, worker_pool) -> None:
         """Check if nothing get changed while both types of worker exists."""
