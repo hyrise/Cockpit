@@ -30,8 +30,8 @@ class TestWorkload:
 
     @fixture
     @patch(
-        "hyrisecockpit.workload_generator.workloads.workload.Workload._initialize",
-        idle_function,
+        "hyrisecockpit.workload_generator.workload_reader.WorkloadReader",
+        get_fake_workload_reader,
     )
     @patch(
         "hyrisecockpit.workload_generator.workloads.workload.WorkloadReader",
@@ -47,11 +47,9 @@ class TestWorkload:
         assert fake_workload._queries_location == f"{queries_location}/TPCH"
         assert fake_workload._delimiter == delimiter
         assert fake_workload._file_type == file_type
-        assert fake_workload._queries == {}
 
     def test_initializes_queries(self, fake_workload):
         """Test initially read queries."""
-        fake_workload._initialize()
         expected_queries = ["dummy_query"]
 
         assert fake_workload._queries[:] == expected_queries[:]
