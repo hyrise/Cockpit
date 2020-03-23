@@ -27,46 +27,37 @@ import {
 } from "@vue/composition-api";
 import {
   getMetricDetailColor,
-  getMetricValueStateOrder
-} from "../../meta/metrics";
-import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
+  getMetricDetailsConfiguration
+} from "@/meta/metrics";
+import {
+  MetricValueState,
+  MetricValueStateOrder,
+  Metric,
+  MetricDetailsConfiguration
+} from "@/types/metrics";
 import { useFormatting } from "@/meta/formatting";
 
 interface Props {
-  data: any;
+  metric: Metric;
   databases: string[];
-  unit: string;
-  border: number;
-  stateOrder: MetricValueStateOrder;
   decimalDigits: number;
 }
 interface Data {
   currentValue: Ref<Record<string, number>>;
   valueColor: Ref<Record<string, string>>;
   formatNumberWithCommas: (data: number) => string;
+  unit: string;
 }
 
 export default defineComponent({
   name: "MetricDetails",
   props: {
-    data: {
-      type: Object,
+    metric: {
+      type: String,
       default: null
     },
     databases: {
       type: Array,
-      default: null
-    },
-    unit: {
-      type: String,
-      default: null
-    },
-    border: {
-      type: Number,
-      default: 0
-    },
-    stateOrder: {
-      type: String,
       default: null
     },
     decimalDigits: {
@@ -75,13 +66,14 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    const { currentValue } = useMetricValues(props);
-    const { formatNumberWithCommas } = useFormatting();
+    const metricDetailsConfig = getMetricDetailsConfiguration(props.metric)!;
+    const { currentValue } = useMetricValues(props, context);
 
     return {
       currentValue,
-      ...useMetricColors(props, currentValue),
-      formatNumberWithCommas
+      ...useMetricColors(currentValue, metricDetailsConfig),
+      formatNumberWithCommas: useFormatting().formatNumberWithCommas,
+      unit: metricDetailsConfig.unit
     };
   }
 });
@@ -90,16 +82,17 @@ interface MetricValueData {
   currentValue: Ref<Record<string, number>>;
 }
 
-function useMetricValues(props: Props): MetricValueData {
+function useMetricValues(props: Props, context: SetupContext): MetricValueData {
   const { roundNumber } = useFormatting();
+  const data = context.root.$metricController.data[props.metric];
   return {
     currentValue: computed(() => {
       if (!props.databases.length) return {};
       return props.databases.reduce(
         (valueMap: Record<string, number>, database: string) => {
-          valueMap[database] = Object.keys(props.data).length
+          valueMap[database] = Object.keys(data.value).length
             ? roundNumber(
-                props.data[database][props.data[database].length - 1],
+                data.value[database][data.value[database].length - 1],
                 Math.pow(10, props.decimalDigits),
                 Math.pow(10, props.decimalDigits),
                 false
@@ -118,17 +111,15 @@ interface MetricColorData {
 }
 
 function useMetricColors(
-  props: Props,
-  currentValue: Ref<Record<string, number>>
+  currentValue: Ref<Record<string, number>>,
+  metricDetailsConfig: MetricDetailsConfiguration
 ): MetricColorData {
-  const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
-
   function getValueState(value: number): MetricValueState {
-    return value > 0.66 * props.border
-      ? valueStateOrder[0]
-      : value > 0.33 * props.border
-      ? valueStateOrder[1]
-      : valueStateOrder[2];
+    return value > 0.66 * metricDetailsConfig.border
+      ? metricDetailsConfig.stateOrder[0]
+      : value > 0.33 * metricDetailsConfig.border
+      ? metricDetailsConfig.stateOrder[1]
+      : metricDetailsConfig.stateOrder[2];
   }
 
   return {
