@@ -345,7 +345,7 @@ class BackgroundJobManager(object):
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
-                func=self._load_tables_job, args=(table_names, folder_name)
+                func=self._load_tables_job, args=(table_names, folder_name,)
             )
             return True
         else:
@@ -363,7 +363,7 @@ class BackgroundJobManager(object):
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
         if not self._database_blocked.value:
-            self._scheduler.add_job(func=self._activate_plugin_job, args=(plugin))
+            self._scheduler.add_job(func=self._activate_plugin_job, args=(plugin,))
             return True
         else:
             return False
@@ -377,7 +377,7 @@ class BackgroundJobManager(object):
     def deactivate_plugin(self, plugin: str) -> bool:
         """Dectivate plugin."""
         if not self._database_blocked.value:
-            self._scheduler.add_job(func=self._deactivate_plugin_job, args=(plugin))
+            self._scheduler.add_job(func=self._deactivate_plugin_job, args=(plugin,))
             return True
         else:
             return False
@@ -425,7 +425,7 @@ class BackgroundJobManager(object):
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
-                func=self._delete_tables_job, args=(table_names, folder_name)
+                func=self._delete_tables_job, args=(table_names, folder_name,)
             )
             return True
         else:
