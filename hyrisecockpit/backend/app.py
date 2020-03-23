@@ -742,17 +742,12 @@ class FailedTasks(Resource):
 
     def get(self) -> List[Dict[str, Union[str, List]]]:
         """Return queue length information from database manager."""
-        currentts = time_ns()
-        startts = currentts - 2_000_000_000
-        endts = currentts - 1_000_000_000
         return [
             {
                 "id": database,
                 "failed_queries": list(
                     storage_connection.query(
-                        "SELECT * FROM failed_queries WHERE time > $startts AND time <= $endts;",
-                        database=database,
-                        bind_params={"startts": startts, "endts": endts},
+                        "SELECT * FROM failed_queries LIMIT 100;", database=database,
                     )["failed_queries", None]
                 ),
             }
