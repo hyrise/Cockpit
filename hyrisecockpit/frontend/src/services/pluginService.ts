@@ -117,7 +117,7 @@ export function usePluginService(): PluginService {
     axios
       .post(controlBackend + "plugin_settings", {
         id: databaseId,
-        name: "stuff",
+        name: settingId,
         value: settingValue
       })
       .then(response => {
@@ -130,6 +130,7 @@ export function usePluginService(): PluginService {
     activePlugins,
     updatePlugins,
     pluginLogs,
-    pluginSettings
+    pluginSettings,
+    updatePluginSettings
   };
 }

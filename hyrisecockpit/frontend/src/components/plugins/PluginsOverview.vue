@@ -42,12 +42,17 @@
                 mdi-cog
               </v-icon>
             </div>
-            <PluginSettings
-              :settings="pluginSettings[database][plugin]"
-              :databaseId="database"
-              :pluginId="plugin"
-              v-show="showSettings[database + '_' + plugin]"
-            />
+            <div
+              v-for="setting in pluginSettings[database][plugin]"
+              :key="setting.name"
+            >
+              <PluginSetting
+                :setting="setting"
+                :databaseId="database"
+                :pluginId="plugin"
+                v-if="showSettings[database + '_' + plugin]"
+              />
+            </div>
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
@@ -68,7 +73,7 @@ import {
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
-import PluginSettings from "./PluginSettings.vue";
+import PluginSetting from "./PluginSetting.vue";
 import useDragElement from "../../meta/draggable";
 
 interface Props {
@@ -95,7 +100,7 @@ export default defineComponent({
   name: "PluginOverview",
   components: {
     PluginsLog,
-    PluginSettings
+    PluginSetting
   },
   props: {
     onClose: {
@@ -117,8 +122,8 @@ export default defineComponent({
       pluginLogs,
       pluginSettings
     } = context.root.$pluginService;
-    console.log(pluginSettings.value);
-    const showSettings: any = reactive([]);
+
+    const showSettings: any = reactive({});
 
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
