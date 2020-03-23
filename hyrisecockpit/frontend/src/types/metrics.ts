@@ -55,6 +55,17 @@ export const overviewMetrics: Metric[] = [
 
 export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
 
+interface AxesRange {
+  x?: {
+    min?: number;
+    max?: number;
+  };
+  y?: {
+    min?: number;
+    max?: number;
+  };
+}
+
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
@@ -62,6 +73,7 @@ export interface MetricMetadata {
   endpoint: string;
   component: string;
   requestTime: number;
+  staticAxesRange?: AxesRange;
 }
 
 export interface ComparisonMetricData {
@@ -128,4 +140,10 @@ export type AccessData = {
   chunks: string[];
   columns: string[];
   descriptions: string[][];
+};
+
+export type MetricDetailsConfiguration = {
+  border: number;
+  unit: string;
+  stateOrder: MetricValueState[];
 };

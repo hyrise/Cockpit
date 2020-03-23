@@ -31,7 +31,7 @@ export function useQueryService(): {
                 return {
                   queryName: query.query_number,
                   workloadType: query.benchmark,
-                  latency: roundNumber(query.latency, Math.pow(10, 3)),
+                  latency: roundNumber(query.latency, Math.pow(10, 6)),
                   throughput: query.throughput
                 };
               }
