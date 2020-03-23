@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <div class="setting-row">
-      <div class="setting-name">
-        {{ setting.name.substring(setting.name.indexOf("_") + 1) }}:
-      </div>
-      <v-text-field class="setting-text" v-model="value" />
-      <v-btn
-        text
-        @click="updatePluginSettings(databaseId, setting.name, value)"
-      >
-        save
-      </v-btn>
+  <div class="setting-row">
+    <div class="setting-name">
+      {{ pluginName }}:
     </div>
+    <v-text-field class="setting-text" v-model="value" />
+    <v-btn
+      text
+      @click="updatePluginSettings(databaseId, setting.name, value)"
+    >
+      save
+    </v-btn>
   </div>
 </template>
 
@@ -38,6 +36,7 @@ interface Data {
     settingValue: string
   ) => void;
   value: string;
+  pluginName: string;
 }
 
 export default defineComponent({
@@ -59,8 +58,9 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { updatePluginSettings } = context.root.$pluginService;
     let value = props.setting.value;
+    const pluginName = props.setting.name.substring(props.setting.name.indexOf("_") + 1);
 
-    return { updatePluginSettings, value };
+    return { updatePluginSettings, value, pluginName };
   }
 });
 </script>

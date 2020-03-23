@@ -32,10 +32,7 @@
                 @change="onClickPluginSwitch(database, plugin)"
               />
               <v-icon
-                v-if="
-                  activePlugins.find(x => x === database + '_' + plugin) &&
-                    pluginSettings[database][plugin]
-                "
+                v-if="canSettingsBeChanged(database, plugin)"
                 @click="toggleSettingsView(database, plugin)"
               >
                 mdi-cog
@@ -46,10 +43,10 @@
               :key="setting.name"
             >
               <PluginSetting
+                v-if="showSettings[database + '_' + plugin]"
                 :setting="setting"
                 :databaseId="database"
                 :pluginId="plugin"
-                v-if="showSettings[database + '_' + plugin]"
               />
             </div>
           </div>
@@ -94,6 +91,7 @@ interface Data {
   showSettings: any;
   toggleSettingsView: (database: string, plugin: string) => void;
   pluginSettings: Ref<any>;
+  canSettingsBeChanged: (databseId: string, pluginId: string) => boolean;
 }
 
 export default defineComponent({
@@ -131,6 +129,11 @@ export default defineComponent({
       ];
     }
 
+    function canSettingsBeChanged(databseId: string, pluginId: string): boolean {
+      return activePlugins.value.find(x => x === databseId + '_' + pluginId) &&
+      pluginSettings.value[databseId][pluginId]
+    }
+
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
     }
@@ -163,7 +166,8 @@ export default defineComponent({
       pluginLogs,
       showSettings,
       toggleSettingsView,
-      pluginSettings
+      pluginSettings,
+      canSettingsBeChanged
     };
   }
 });
