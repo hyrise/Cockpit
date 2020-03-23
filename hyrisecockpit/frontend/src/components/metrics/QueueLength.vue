@@ -2,11 +2,8 @@
   <div>
     <metric-details
       v-if="showDetails"
-      :data="data"
+      :metric="metric"
       :databases="selectedDatabases"
-      :border="1000000"
-      state-order="asc"
-      unit="q"
     />
     <Linechart
       :selected-databases="selectedDatabases"
