@@ -31,16 +31,16 @@ class BackgroundJobManager(object):
         storage_user: str,
     ):
         """Initialize BackgroundJobManager object."""
-        self._database_id = database_id
-        self._database_blocked = database_blocked
-        self._connection_pool = connection_pool
-        self._storage_host = storage_host
-        self._storage_password = storage_password
-        self._storage_port = storage_port
-        self._storage_user = storage_user
-        self._scheduler = BackgroundScheduler()
+        self._database_id: str = database_id
+        self._database_blocked: Value = database_blocked
+        self._connection_pool: pool = connection_pool
+        self._storage_host: str = storage_host
+        self._storage_password: str = storage_password
+        self._storage_port: str = storage_port
+        self._storage_user: str = storage_user
+        self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._previous_chunks_data: Dict = {}
-        self._loaded_tables = loaded_tables
+        self._loaded_tables: Dict[str, Optional[str]] = loaded_tables
         self._init_jobs()
 
     def _init_jobs(self) -> None:
