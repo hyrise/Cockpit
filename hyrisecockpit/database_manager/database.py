@@ -132,7 +132,7 @@ class Database(object):
         """Read currently set plugin settings."""
         if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute("SELECT * FROM meta_settings", None)
+                cur.execute("SELECT * FROM meta_settings;", None)
                 rows = cur.fetchall()
                 result = [row[0] for row in rows] if rows else []
             return result
