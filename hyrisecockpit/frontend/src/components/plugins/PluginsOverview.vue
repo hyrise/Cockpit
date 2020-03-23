@@ -32,6 +32,7 @@
                 @change="onClickPluginSwitch(database, plugin)"
               />
               <v-icon
+                v-if="activePlugins.find(x => x === database + '_' + plugin)"
                 @click="
                   showSettings[database + '_' + plugin] = !showSettings[
                     database + '_' + plugin
@@ -42,6 +43,7 @@
               </v-icon>
             </div>
             <PluginSettings
+              :settings="pluginSettings[database][plugin]"
               :databaseId="database"
               :pluginId="plugin"
               v-show="showSettings[database + '_' + plugin]"
@@ -86,6 +88,7 @@ interface Data {
   pluginDraggerId: string;
   pluginLogs: Ref<any>;
   showSettings: any;
+  pluginSettings: Ref<any>;
 }
 
 export default defineComponent({
@@ -111,8 +114,10 @@ export default defineComponent({
       plugins,
       activePlugins,
       updatePlugins,
-      pluginLogs
+      pluginLogs,
+      pluginSettings
     } = context.root.$pluginService;
+    console.log(pluginSettings.value);
     const showSettings: any = reactive([]);
 
     function togglePanelView(): void {
@@ -145,7 +150,8 @@ export default defineComponent({
       pluginDraggableId,
       pluginDraggerId,
       pluginLogs,
-      showSettings
+      showSettings,
+      pluginSettings
     };
   }
 });

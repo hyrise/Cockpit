@@ -20,7 +20,7 @@ import {
 interface Props {
   databaseId: string;
   pluginId: string;
-  availableSettings: any;
+  settings: any;
 }
 
 interface Data {}
@@ -28,16 +28,21 @@ interface Data {}
 export default defineComponent({
   name: "PluginSettings",
   props: {
-    dataBaseId: {
+    databaseId: {
       type: String,
       default: ""
     },
     pluginId: {
       type: String,
       default: ""
+    },
+    settings: {
+      type: Array,
+      default: null
     }
   },
   setup(props: Props, context: SetupContext): Data {
+    console.log(props);
     return {};
   }
 });

@@ -45,6 +45,7 @@ export function usePluginService(): PluginService {
         .post(controlBackend + "plugin", { id: databaseId, plugin: plugin })
         .then(response => {
           getPlugins();
+          getPluginSettings();
         });
     } else {
       return axios
@@ -53,6 +54,7 @@ export function usePluginService(): PluginService {
         })
         .then(response => {
           getPlugins();
+          getPluginSettings();
         });
     }
   }
@@ -83,12 +85,24 @@ export function usePluginService(): PluginService {
     axios.get(controlBackend + "plugin_settings").then(response => {
       pluginSettings.value = response.data.body.plugin_settings.reduce(
         (result: any, currentDatabase: any) => {
-          currentDatabase.plugin_settings.reduce(
+          const allDatabaseSettings = currentDatabase.plugin_settings.reduce(
             (allSettings: any, currentSetting: any) => {
-              allSettings[currentSetting.x];
+              const pluginName = currentSetting.name.substring(
+                0,
+                currentSetting.name.indexOf("Plugin")
+              );
+              allSettings[pluginName]
+                ? (allSettings[pluginName] = [
+                    ...allSettings[pluginName],
+                    currentSetting
+                  ])
+                : (allSettings[pluginName] = [currentSetting]);
+              return allSettings;
             },
             {}
           );
+          result[currentDatabase.id] = allDatabaseSettings;
+          return result;
         },
         {}
       );
@@ -97,7 +111,6 @@ export function usePluginService(): PluginService {
 
   function updatePluginSettings(
     databaseId: string,
-    pluginId: string,
     settingId: string,
     settingValue: string
   ) {
@@ -116,6 +129,7 @@ export function usePluginService(): PluginService {
     plugins,
     activePlugins,
     updatePlugins,
-    pluginLogs
+    pluginLogs,
+    pluginSettings
   };
 }
