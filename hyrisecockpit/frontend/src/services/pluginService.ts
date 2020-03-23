@@ -2,7 +2,6 @@ import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
-// import { useDatabaseController } from "../databaseController";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
@@ -81,7 +80,7 @@ export function usePluginService(): PluginService {
     });
   }
 
-  function getPluginSettings(): Promise<void> {
+  function getPluginSettings(): void {
     axios.get(controlBackend + "plugin_settings").then(response => {
       pluginSettings.value = response.data.body.plugin_settings.reduce(
         (result: any, currentDatabase: any) => {

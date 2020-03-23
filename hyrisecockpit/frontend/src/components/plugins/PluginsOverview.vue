@@ -32,12 +32,11 @@
                 @change="onClickPluginSwitch(database, plugin)"
               />
               <v-icon
-                v-if="activePlugins.find(x => x === database + '_' + plugin)"
-                @click="
-                  showSettings[database + '_' + plugin] = !showSettings[
-                    database + '_' + plugin
-                  ]
+                v-if="
+                  activePlugins.find(x => x === database + '_' + plugin) &&
+                    pluginSettings[database][plugin]
                 "
+                @click="toggleSettingsView(database, plugin)"
               >
                 mdi-cog
               </v-icon>
@@ -93,6 +92,7 @@ interface Data {
   pluginDraggerId: string;
   pluginLogs: Ref<any>;
   showSettings: any;
+  toggleSettingsView: (database: string, plugin: string) => void;
   pluginSettings: Ref<any>;
 }
 
@@ -123,7 +123,13 @@ export default defineComponent({
       pluginSettings
     } = context.root.$pluginService;
 
-    const showSettings: any = reactive({});
+    const showSettings: any = reactive([]); // this seems to be very slow, using an object makes it even slower
+
+    function toggleSettingsView(database: string, plugin: string): void {
+      showSettings[database + "_" + plugin] = !showSettings[
+        database + "_" + plugin
+      ];
+    }
 
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
@@ -156,6 +162,7 @@ export default defineComponent({
       pluginDraggerId,
       pluginLogs,
       showSettings,
+      toggleSettingsView,
       pluginSettings
     };
   }

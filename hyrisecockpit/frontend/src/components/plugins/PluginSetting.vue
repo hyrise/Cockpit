@@ -37,11 +37,11 @@ interface Data {
     settingId: string,
     settingValue: string
   ) => void;
-  value: any;
+  value: string;
 }
 
 export default defineComponent({
-  name: "PluginSettings",
+  name: "PluginSetting",
   props: {
     databaseId: {
       type: String,
