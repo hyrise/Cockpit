@@ -369,7 +369,6 @@ class BackgroundJobManager(object):
 
     def load_tables(self, folder_name: str) -> bool:
         """Load tables."""
-
         if self._database_blocked.value:
             return False
 
