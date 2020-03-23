@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -301,7 +301,7 @@ class BackgroundJobManager(object):
 
     def _generate_table_loading_queries(
         self, table_names: List[str], folder_name: str
-    ) -> List[Tuple]:
+    ) -> List[Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]]:
         """Generate queries in tuple form that load tables."""
         # TODO change absolute to relative path
         return [
@@ -345,8 +345,39 @@ class BackgroundJobManager(object):
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
-                func=self._load_tables_job, args=(table_names, folder_name)
+                func=self._load_tables_job, args=(table_names, folder_name,)
             )
+            return True
+        else:
+            return False
+
+    def _activate_plugin_job(self, plugin: str) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            cur.execute(
+                (
+                    "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+                ),
+                (AsIs(plugin),),
+            )
+
+    def activate_plugin(self, plugin: str) -> bool:
+        """Activate plugin."""
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._activate_plugin_job, args=(plugin,))
+            return True
+        else:
+            return False
+
+    def _deactivate_plugin_job(self, plugin: str) -> None:
+        with PoolCursor(self._connection_pool) as cur:
+            cur.execute(
+                ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
+            )
+
+    def deactivate_plugin(self, plugin: str) -> bool:
+        """Dectivate plugin."""
+        if not self._database_blocked.value:
+            self._scheduler.add_job(func=self._deactivate_plugin_job, args=(plugin,))
             return True
         else:
             return False
@@ -394,7 +425,7 @@ class BackgroundJobManager(object):
         if not self._database_blocked.value:
             self._database_blocked.value = True
             self._scheduler.add_job(
-                func=self._delete_tables_job, args=(table_names, folder_name)
+                func=self._delete_tables_job, args=(table_names, folder_name,)
             )
             return True
         else:
