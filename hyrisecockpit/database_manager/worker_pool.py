@@ -82,14 +82,14 @@ class WorkerPool:
         if not self._status == "closed":
             if self._fill_task_worker:
                 self._fill_task_worker.terminate()
-            self._fill_task_worker = None
-            for i in range(self._number_worker):
-                self._execute_task_workers[i].terminate()
-            self._execute_task_workers = []
-            self._worker_continue_event = Event()
-            self._task_queue = Queue(0)
-            self._failed_task_queue = Queue(0)
-            self._status = "closed"
+                self._fill_task_worker = None
+                for i in range(self._number_worker):
+                    self._execute_task_workers[i].terminate()
+                self._execute_task_workers = []
+                self._worker_continue_event = Event()
+                self._task_queue = Queue(0)
+                self._failed_task_queue = Queue(0)
+                self._status = "closed"
 
     def _wait_for_worker(self) -> None:
         self._worker_continue_event.clear()
@@ -98,11 +98,11 @@ class WorkerPool:
             self._execute_task_worker_done_event[i].wait()
 
     def _start_worker(self) -> None:
-        self._continue_execution_flag.value = True
         if self._fill_task_worker:
+            self._continue_execution_flag.value = True
             self._fill_task_worker.start()
-        for i in range(self._number_worker):
-            self._execute_task_workers[i].start()
+            for i in range(self._number_worker):
+                self._execute_task_workers[i].start()
 
     def _start_job(self) -> None:
         if self._status == "closed":
