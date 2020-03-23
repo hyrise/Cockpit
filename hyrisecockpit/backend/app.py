@@ -269,8 +269,8 @@ model_krueger_data = monitor.clone(
     },
 )
 
-model_database_blocked_status = monitor.clone(
-    "Database blocked status",
+model_database_status = monitor.clone(
+    "Database status",
     model_database,
     {
         "database_blocked_status": fields.Boolean(
@@ -278,7 +278,43 @@ model_database_blocked_status = monitor.clone(
             description="Database blocked status of databases.",
             required=True,
             example=True,
-        )
+        ),
+        "worker_pool_status": fields.String(
+            title="Worker pool status",
+            description="Status of the worker pools of the databases.",
+            required=True,
+            example="running",
+        ),
+        "loaded_benchmarks": fields.List(
+            fields.String(
+                title="Benchmark",
+                description="Benchmark dataset that is completely loaded.",
+                required=True,
+                example="tpch_1",
+            ),
+        ),
+        "loaded_tables": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Loaded tables",
+                    {
+                        "table_name": fields.String(
+                            title="Table name",
+                            description="Name of loaded table",
+                            required=True,
+                            example="customer",
+                        ),
+                        "benchmark": fields.String(
+                            title="Benchmark",
+                            description="Name of the benchmark",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        ),
     },
 )
 
@@ -836,17 +872,16 @@ class KruegerData(Resource):
         return krueger_data
 
 
-@monitor.route("/database_blocked_status", methods=["GET"])
+@monitor.route("/status", methods=["GET"])
 class ProcessTableStatus(Resource):
     """Database blocked status information of all databases."""
 
-    @monitor.doc(model=[model_database_blocked_status])
+    @monitor.doc(model=[model_database_status])
     def get(self) -> List[Dict]:
-        """Return Database blocked status for databases."""
+        """Return status of databases."""
         return _send_message(
-            db_manager_socket,
-            {"header": {"message": "database blocked status"}, "body": {}},
-        )["body"]["database_blocked_status"]
+            db_manager_socket, Request(header=Header(message="status"), body={}),
+        )["body"]["status"]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
