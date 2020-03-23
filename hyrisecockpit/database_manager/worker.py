@@ -22,6 +22,13 @@ from hyrisecockpit.settings import (
 from .cursor import PoolCursor, StorageCursor
 
 
+def handle_published_data(published_data: Dict, task_queue: Queue) -> None:
+    """Fill task queue."""
+    tasks = published_data["body"]["querylist"]
+    for task in tasks:
+        task_queue.put(task)
+
+
 def fill_queue(
     workload_publisher_url: str,
     task_queue: Queue,
@@ -42,11 +49,43 @@ def fill_queue(
             handle_published_data(published_data, task_queue)
 
 
-def handle_published_data(published_data: Dict, task_queue: Queue) -> None:
-    """Fill task queue."""
-    tasks = published_data["body"]["querylist"]
-    for task in tasks:
-        task_queue.put(task)
+def get_formatted_parameters(
+    not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
+) -> Optional[Tuple[Union[AsIs, str], ...]]:
+    """Create formatted parameters."""
+    if not_formatted_parameters:
+        return tuple(
+            AsIs(parameter) if protocol == "as_is" else parameter
+            for parameter, protocol in not_formatted_parameters
+        )
+    return None
+
+
+def execute_task(
+    cursor: PoolCursor, query: str, formatted_parameters: Optional[Tuple[str, ...]]
+) -> Tuple[int, int]:
+    """Execute given task."""
+    startts = time_ns()
+    cursor.execute(query, formatted_parameters)
+    endts = time_ns()
+
+    return endts, endts - startts
+
+
+def log_results(
+    log: StorageCursor,
+    last_batched: int,
+    succesful_queries: List[Tuple[int, int, str, str, str]],
+    failed_queries: List[Tuple[int, str, str, str]],
+) -> int:
+    """Log results to database."""
+    if last_batched < time_ns() - 1_000_000_000:
+        log.log_queries(succesful_queries)
+        succesful_queries.clear()
+        log.log_failed_queries(failed_queries)
+        failed_queries.clear()
+        return time_ns()
+    return last_batched
 
 
 def execute_queries(
@@ -84,37 +123,11 @@ def execute_queries(
                     succesful_queries.append(
                         (endts, latency, workload_type, query_type, worker_id)
                     )
-
-                    if last_batched < time_ns() - 1_000_000_000:
-                        last_batched = time_ns()
-                        log.log_queries(succesful_queries)
-                        succesful_queries.clear()
-                        log.log_failed_queries(failed_queries)
-                        failed_queries.clear()
                 except Empty:
                     continue
                 except (ValueError, Error) as e:
                     failed_queries.append((time_ns(), worker_id, str(task), str(e)))
 
-
-def execute_task(
-    cursor: PoolCursor, query: str, formatted_parameters: Optional[Tuple[str, ...]]
-) -> Tuple[int, int]:
-    """Execute given task."""
-    startts = time_ns()
-    cursor.execute(query, formatted_parameters)
-    endts = time_ns()
-
-    return endts, endts - startts
-
-
-def get_formatted_parameters(
-    not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
-) -> Optional[Tuple[Union[AsIs, str], ...]]:
-    """Create formatted parameters."""
-    if not_formatted_parameters:
-        return tuple(
-            AsIs(parameter) if protocol == "as_is" else parameter
-            for parameter, protocol in not_formatted_parameters
-        )
-    return None
+                last_batched = log_results(
+                    log, last_batched, succesful_queries, failed_queries
+                )
