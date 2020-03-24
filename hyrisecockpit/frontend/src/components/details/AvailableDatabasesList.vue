@@ -20,10 +20,10 @@
       </v-card-title>
     </v-card>
     <v-list-item v-for="database in databases" :key="database.id">
-      <v-list-item-icon>
-        <v-icon :color="database.color">mdi-database</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title>{{ database.id }}</v-list-item-title>
+      <v-list-item-title>
+        <v-icon left :color="database.color">mdi-database</v-icon
+        >{{ database.id }}</v-list-item-title
+      >
     </v-list-item>
   </v-list>
 </template>

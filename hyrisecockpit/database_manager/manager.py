@@ -52,11 +52,10 @@ class DatabaseManager(object):
             "start worker": (self._call_start_worker, None),
             "close worker": (self._call_close_worker, None),
             "queue length": (self._call_queue_length, None),
-            "failed tasks": (self._call_failed_tasks, None),
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
-            "database blocked status": (self._call_database_blocked_status, None),
+            "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
             "activate plugin": (
                 self._call_activate_plugin,
@@ -154,14 +153,6 @@ class DatabaseManager(object):
         else:
             return get_response(404)
 
-    def _call_failed_tasks(self, body: Body) -> Response:
-        failed_tasks = {}
-        for id, database in self._databases.items():
-            failed_tasks[id] = database.get_failed_tasks()
-        response = get_response(200)
-        response["body"]["failed_tasks"] = failed_tasks
-        return response
-
     def _call_load_data(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]
         if self._check_if_database_blocked():
@@ -180,16 +171,19 @@ class DatabaseManager(object):
                 return get_response(400)
         return get_response(200)
 
-    def _call_database_blocked_status(self, body: Body) -> Response:
-        database_blocked_status = [
+    def _call_status(self, body: Body) -> Response:
+        status = [
             {
                 "id": database_id,
                 "database_blocked_status": database.get_database_blocked(),
+                "worker_pool_status": database.get_worker_pool_status(),
+                "loaded_benchmarks": database.get_loaded_benchmarks(),
+                "loaded_tables": database.get_loaded_tables(),
             }
             for database_id, database in self._databases.items()
         ]
         response = get_response(200)
-        response["body"]["database_blocked_status"] = database_blocked_status
+        response["body"]["status"] = status
         return response
 
     def _call_get_plugins(self, body: Body) -> Response:
@@ -236,16 +230,12 @@ class DatabaseManager(object):
         return response
 
     def _call_read_plugin_setting(self, body: Body) -> Response:
-        id: str = body["id"]
-        if id not in self._databases.keys():
-            response = get_response(400)
-        elif self._databases[id].get_plugin_setting() is not None:
-            response = get_response(200)
-            response["body"]["plugin_settings"] = self._databases[
-                id
-            ].get_plugin_setting()
-        else:
-            response = get_response(423)
+        plugin_settings = [
+            {"id": id, "plugin_settings": database.get_plugin_setting()}
+            for id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["plugin_settings"] = plugin_settings
         return response
 
     def _check_if_database_blocked(self) -> bool:
