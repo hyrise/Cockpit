@@ -88,7 +88,7 @@ class DatabaseManager(object):
                 self._call_plugin_setting,
                 set_plugin_request_schema,
             ),
-            "get plugin setting": (self._call_read_plugin_setting, None),
+            "get plugin setting": (self._call_get_plugin_setting, None),
         }
 
     def _call_add_database(self, body: Body) -> Response:
@@ -236,7 +236,7 @@ class DatabaseManager(object):
             response = get_response(423)
         return response
 
-    def _call_read_plugin_setting(self, body: Body) -> Response:
+    def _call_get_plugin_setting(self, body: Body) -> Response:
         plugin_settings = [
             {"id": id, "plugin_settings": database.get_plugin_setting()}
             for id, database in self._databases.items()
