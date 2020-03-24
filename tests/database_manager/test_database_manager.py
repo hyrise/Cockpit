@@ -578,3 +578,13 @@ class TestDatabaseManager:
         database_manager._databases["db1"] = database
 
         assert not database_manager._check_if_database_blocked()
+
+    def test_call_start_worker_successful(self, database_manager: DatabaseManager):
+        """Test start worker successful."""
+        database = fake_database()
+        database.start_worker.return_value = True
+        database_manager._databases["db1"] = database
+        body: Dict = {}
+        response = database_manager._call_start_worker(body)
+
+        assert get_response(200) == response
