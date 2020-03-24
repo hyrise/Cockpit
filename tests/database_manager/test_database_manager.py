@@ -544,7 +544,6 @@ class TestDatabaseManager:
             }
         ]
         database_manager._databases["db1"] = database
-
         expected_plugin_settings = [
             {
                 "id": "db1",
@@ -561,4 +560,13 @@ class TestDatabaseManager:
         expected_response["body"]["plugin_settings"] = expected_plugin_settings
         body: Dict = {}
         response = database_manager._call_get_plugin_setting(body)
+
         assert expected_response == response
+
+    def test_check_database_blocked(self, database_manager: DatabaseManager):
+        """Test check if database blocked."""
+        database = fake_database()
+        database.get_database_blocked.return_value = True
+        database_manager._databases["db1"] = database
+
+        assert database_manager._check_if_database_blocked()
