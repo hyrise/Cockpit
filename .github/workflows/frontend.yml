@@ -15,7 +15,7 @@ jobs:
         run: npm install
         working-directory: ./hyrisecockpit/frontend
       - name: Run e2e tests
-        run: npm run test:e2e --headless
+        run: npm run test:e2e:headless
         working-directory: ./hyrisecockpit/frontend
       - name: Check lint errors
         run: npm run lint > lint-output.txt
