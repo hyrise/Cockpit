@@ -1,12 +1,12 @@
 {
-  "fixturesFolder": "tests/e2e/fixtures",
-  "integrationFolder": "tests/e2e/specs",
-  "nodeVersion": "system",
-  "pluginsFile": "tests/e2e/plugins/index.js",
-  "screenshotsFolder": "tests/e2e/screenshots",
-  "supportFile": "tests/e2e/support/index.js",
-  "testFiles": "*/*spec.ts",
-  "video": false,
-  "videoUploadOnPasses": false,
-  "videosFolder": "tests/e2e/videos"
+    "fixturesFolder": "tests/e2e/fixtures",
+    "integrationFolder": "tests/e2e/specs",
+    "nodeVersion": "system",
+    "pluginsFile": "tests/e2e/plugins/index.js",
+    "screenshotsFolder": "tests/e2e/screenshots",
+    "supportFile": "tests/e2e/support/index.js",
+    "testFiles": "*/*spec.ts",
+    "video": false,
+    "videoUploadOnPasses": false,
+    "videosFolder": "tests/e2e/videos"
 }
