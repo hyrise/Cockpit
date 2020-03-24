@@ -123,9 +123,7 @@ class CockpitManager:
         """Check if database is blocked in cockpit."""
         while True:
             time.sleep(0.2)
-            response = requests.get(
-                f"{self._backend_url}/monitor/database_blocked_status"
-            ).json()
+            response = requests.get(f"{self._backend_url}/monitor/status").json()
             status_flags = [
                 database["database_blocked_status"] for database in response
             ]

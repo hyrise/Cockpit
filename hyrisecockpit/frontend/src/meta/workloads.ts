@@ -30,3 +30,8 @@ export function getWorkloadFromTransferred(transferred: string): Workload {
     workload => getTransferredWorkload(workload as Workload) === transferred
   )! as Workload;
 }
+export function getDisplayedFromTransferred(transferred: string): string {
+  return Object.values(workloadProjectionData).find(
+    workload => workload.transferred === transferred
+  )!.displayed;
+}
