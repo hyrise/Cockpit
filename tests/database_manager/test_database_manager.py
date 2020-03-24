@@ -267,10 +267,7 @@ class TestDatabaseManager:
         mocked_database_constructor.assert_not_called()
         assert response == get_response(400)
 
-    @patch("hyrisecockpit.database_manager.manager.Database")
-    def test_call_get_databases(
-        self, mocked_database_constructor: MagicMock, database_manager: DatabaseManager,
-    ) -> None:
+    def test_call_get_databases(self, database_manager: DatabaseManager,) -> None:
         """Test get databases."""
         database_manager._databases["db1"] = fake_database()
         body: Dict = {}
