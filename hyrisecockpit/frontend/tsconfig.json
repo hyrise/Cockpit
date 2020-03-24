@@ -30,12 +30,8 @@
         "src/**/*.ts",
         "src/**/*.tsx",
         "src/**/*.vue",
-        "tests/**/*.ts",
-        "tests/**/*.tsx",
-        "tests/e2e/tsconfig.json"
     ],
     "exclude": [
         "node_modules",
-        "**/*.spec.ts"
     ]
 }
