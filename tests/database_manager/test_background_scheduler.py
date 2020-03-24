@@ -1,7 +1,7 @@
 """Tests for the background_scheduler module."""
 
 from multiprocessing import Value
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from unittest.mock import MagicMock, patch
 
 from pandas import DataFrame
@@ -87,39 +87,23 @@ class TestBackgroundJobManager:
         mock_scheduler = MagicMock()
         mock_scheduler.add_job.return_value = None
         background_job_manager._scheduler = mock_scheduler
-        background_job_manager._update_krueger_data = MagicMock()  # type: ignore
-        background_job_manager._update_chunks_data = MagicMock()  # type: ignore
-        background_job_manager._update_system_data = MagicMock()  # type: ignore
-        background_job_manager._update_storage_data = MagicMock()  # type: ignore
-        background_job_manager._update_plugin_log = MagicMock()  # type: ignore
+
+        jobs: List[Tuple[Callable, str, int]] = [
+            (background_job_manager._update_krueger_data, "interval", 5),
+            (background_job_manager._update_chunks_data, "interval", 5),
+            (background_job_manager._update_system_data, "interval", 1),
+            (background_job_manager._update_storage_data, "interval", 5),
+            (background_job_manager._update_plugin_log, "interval", 1),
+        ]
+        for func, _, _ in jobs:
+            func = MagicMock()
 
         background_job_manager._init_jobs()
 
-        mock_scheduler.add_job.assect_called_once_with(
-            func=background_job_manager._update_krueger_data,
-            trigger="interval",
-            seconds=5,
-        )
-        mock_scheduler.add_job.assect_called_once_with(
-            func=background_job_manager._update_chunks_data,
-            trigger="interval",
-            seconds=5,
-        )
-        mock_scheduler.add_job.assect_called_once_with(
-            func=background_job_manager._update_system_data,
-            trigger="interval",
-            seconds=1,
-        )
-        mock_scheduler.add_job.assect_called_once_with(
-            func=background_job_manager._update_storage_data,
-            trigger="interval",
-            seconds=5,
-        )
-        mock_scheduler.add_job.assect_called_once_with(
-            func=background_job_manager._update_plugin_log,
-            trigger="interval",
-            seconds=1,
-        )
+        for func, trigger, seconds in jobs:
+            mock_scheduler.add_job.assect_called_once_with(
+                func=func, trigger=trigger, seconds=seconds
+            )
 
     def test_background_scheduler_starts(
         self, background_job_manager: BackgroundJobManager
