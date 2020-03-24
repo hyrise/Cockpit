@@ -1,12 +1,12 @@
 export type DetailedQueryInformation = {
-  queryName: string;
+  queryNumber: string;
   workloadType: string;
   latency: number;
   throughput: number;
 };
 
 export type DisplayedQueryInformation = {
-  queryName: string;
+  queryNumber: string;
   workloadType: string;
   latency: string;
   throughput: number;

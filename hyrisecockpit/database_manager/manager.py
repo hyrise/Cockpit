@@ -52,7 +52,6 @@ class DatabaseManager(object):
             "start worker": (self._call_start_worker, None),
             "close worker": (self._call_close_worker, None),
             "queue length": (self._call_queue_length, None),
-            "failed tasks": (self._call_failed_tasks, None),
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
@@ -153,14 +152,6 @@ class DatabaseManager(object):
             return get_response(200)
         else:
             return get_response(404)
-
-    def _call_failed_tasks(self, body: Body) -> Response:
-        failed_tasks = {}
-        for id, database in self._databases.items():
-            failed_tasks[id] = database.get_failed_tasks()
-        response = get_response(200)
-        response["body"]["failed_tasks"] = failed_tasks
-        return response
 
     def _call_load_data(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]

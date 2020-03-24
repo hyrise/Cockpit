@@ -48,6 +48,37 @@ class TestCursor:
     @mark.parametrize(
         "queries",
         [
+            [(1, "worker1", "task_that_failed", "some_error")],
+            [
+                (1, "worker1", "task_that_failed", "some_error"),
+                (1, "worker2", "other_task_that_failed", "another_error"),
+            ],
+        ],
+    )
+    def test_logs_failed_queries(self, queries: List[Tuple[int, str, str, str]]):
+        """Test failed queries logging."""
+        expected_points = [
+            {
+                "measurement": "failed_queries",
+                "tags": {"worker_id": query[1]},
+                "fields": {"task": query[2], "error": query[3]},
+                "time": query[0],
+            }
+            for query in queries
+        ]
+
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._connection = MagicMock()
+        cursor._connection.write_points.return_value = None
+        cursor.log_failed_queries(queries)
+
+        cursor._connection.write_points.assert_called_once_with(
+            expected_points, database="database"
+        )
+
+    @mark.parametrize(
+        "queries",
+        [
             [(123, "CompressionPlugin", "Initialized!")],
             [
                 (123, "CompressionPlugin", "Initialized!"),
