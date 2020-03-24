@@ -34,7 +34,7 @@ apscheduler = "*"
 jsonschema = "*"
 influxdb = "*"
 flask-restx = "*"
-werkzeug = "*"
+werkzeug = "==0.16.1"
 flask-accepts = "*"
 marshmallow = "*"
 
