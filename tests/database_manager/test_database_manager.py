@@ -6,7 +6,7 @@ from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
-from hyrisecockpit.response import get_response
+from hyrisecockpit.response import get_error_response, get_response
 
 DB_MANAGER_LISTENING = "listening_host"
 DB_MANAGER_PORT = "listening_port"
@@ -310,3 +310,19 @@ class TestDatabaseManager:
         response = database_manager._call_delete_database(body)
 
         assert get_response(404) == response
+
+    @patch(
+        "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
+    )
+    def test_load_data_(
+        self,
+        mocked_check_if_database_blocked: MagicMock,
+        database_manager: DatabaseManager,
+    ) -> None:
+        """Test delete not existing database."""
+        mocked_check_if_database_blocked.return_value = True
+        body: Dict = {"folder_name": "tpch_0.1"}
+
+        response = database_manager._call_load_data(body)
+
+        assert get_error_response(400, "Already loading data") == response
