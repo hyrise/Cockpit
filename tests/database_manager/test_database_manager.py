@@ -310,12 +310,12 @@ class TestDatabaseManager:
     @patch(
         "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
     )
-    def test_load_data_successfull(
+    def test_load_data_successful(
         self,
         mocked_check_if_database_blocked: MagicMock,
         database_manager: DatabaseManager,
     ) -> None:
-        """Test delete not existing database."""
+        """Test load data successful."""
         mocked_check_if_database_blocked.return_value = False
         database = fake_database()
         database.load_data.return_value = True
@@ -330,12 +330,12 @@ class TestDatabaseManager:
     @patch(
         "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
     )
-    def test_load_data_unsuccessfull(
+    def test_load_data_unsuccessful(
         self,
         mocked_check_if_database_blocked: MagicMock,
         database_manager: DatabaseManager,
     ) -> None:
-        """Test delete not existing database."""
+        """Test load data unsuccessful."""
         mocked_check_if_database_blocked.return_value = False
         database = fake_database()
         database.load_data.return_value = False
@@ -365,12 +365,12 @@ class TestDatabaseManager:
     @patch(
         "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
     )
-    def test_delete_data_successfull(
+    def test_delete_data_successful(
         self,
         mocked_check_if_database_blocked: MagicMock,
         database_manager: DatabaseManager,
     ) -> None:
-        """Test delete not existing database."""
+        """Delete data successful."""
         mocked_check_if_database_blocked.return_value = False
         database = fake_database()
         database.delete_data.return_value = True
