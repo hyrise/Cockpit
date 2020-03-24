@@ -6,28 +6,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - run: npm install
-      working-directory: ./hyrisecockpit/frontend
-    - run: npm run lint > lint-output.txt
-      working-directory: ./hyrisecockpit/frontend
-    - run:   echo ::set-output name=lintSuccess::$(grep "No lint errors found!" lint-output.txt | wc -l)
-      id:    lint
-      shell: bash 
-      working-directory: ./hyrisecockpit/frontend
-    - run: exit 1
-      if:  steps.lint.outputs.lintSuccess == '0'
-      working-directory: ./hyrisecockpit/frontend
-    - run:   echo ::set-output name=ConsoleErrors::$(grep console.log * -lR | wc -l)
-      id:    console
-      shell: bash 
-      working-directory: ./hyrisecockpit/frontend/src
-    - run: exit 1
-      if: steps.console.outputs.ConsoleErrors > '0'
-      working-directory: ./hyrisecockpit/frontend/src
-
-
+      - uses: actions/checkout@v1
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./hyrisecockpit/frontend
+      - name: Check lint errors
+        run: npm run lint > lint-output.txt
+        working-directory: ./hyrisecockpit/frontend
+      - run: echo ::set-output name=lintSuccess::$(grep "No lint errors found!" lint-output.txt | wc -l)
+        id: lint
+        shell: bash
+        working-directory: ./hyrisecockpit/frontend
+      - run: exit 1
+        if: steps.lint.outputs.lintSuccess == '0'
+        working-directory: ./hyrisecockpit/frontend
+      - name: Check console.log presence
+        run: echo ::set-output name=ConsoleErrors::$(grep console.log * -lR | wc -l)
+        id: console
+        shell: bash
+        working-directory: ./hyrisecockpit/frontend/src
+      - run: exit 1
+        if: steps.console.outputs.ConsoleErrors > '0'
+        working-directory: ./hyrisecockpit/frontend/src
+      - name: Run e2e tests
+        run: npm run test:e2e --headless
+        working-directory: ./hyrisecockpit/frontend
