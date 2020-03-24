@@ -1,7 +1,7 @@
 """Tests for the background_scheduler module."""
 
 from multiprocessing import Value
-from typing import Dict, Optional
+from typing import Any, Callable, Dict, Optional
 from unittest.mock import MagicMock, patch
 
 from pandas import DataFrame
@@ -10,54 +10,32 @@ from pytest import fixture
 
 from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
 
+database_id: str = "MongoDB"
+get_database_blocked: Callable[[], Value] = lambda: Value("b", False)  # noqa: E731
+get_connection_pool: Callable[[], MagicMock] = lambda: MagicMock()  # noqa: E731
+fake_loaded_tables: Dict[str, Optional[str]] = {
+    "The Dough Rollers": "alternative",
+    "Broken Witt Rebels": "alternative",
+    "Bonny Doon": "alternative",
+    "Jack White": "alternative",
+    "Gary Clark Jr.": "Rock",
+    "Greta Van Fleet": "Rock",
+    "Tenacious D": "Rock",
+}
+storage_host: str = "influx"
+storage_password: str = "password"
+storage_port: str = "4321"
+storage_user: str = "user?"
 
-class TestBackgroundScheduler:
-    """Tests BackgroundJobManager class."""
+get_fake_read_sql_query: Callable[
+    [str, Any], DataframeType
+] = lambda sql, connection: DataFrame(  # noqa: E731
+    {"col1": ["data"]}
+)
 
-    def get_database_id(self) -> str:
-        """Return database id."""
-        return "MongoDB"
 
-    def get_database_blocked(self) -> Value:
-        """Return blocked database Value."""
-        return Value("b", False)
-
-    def get_connection_pool(self) -> MagicMock:
-        """Return connection pool."""
-        return MagicMock()
-
-    def get_storage_host(self) -> str:
-        """Return storage host."""
-        return "influx"
-
-    def get_storage_password(self) -> str:
-        """Return mocked storage password."""
-        return "password"
-
-    def get_storage_port(self) -> str:
-        """Return mocked storage port."""
-        return "4321"
-
-    def get_storage_user(self) -> str:
-        """Return mocked storage user."""
-        return "user?"
-
-    def get_fake_loaded_tables(self) -> Dict[str, Optional[str]]:
-        """Return mocked loaded tables."""
-        fake_loaded_tables: Dict[str, Optional[str]] = {
-            "The Dough Rollers": "alternative",
-            "Broken Witt Rebels": "alternative",
-            "Bonny Doon": "alternative",
-            "Jack White": "alternative",
-            "Gary Clark Jr.": "Rock",
-            "Greta Van Fleet": "Rock",
-            "Tenacious D": "Rock",
-        }
-        return fake_loaded_tables
-
-    def get_fake_read_sql_query(sql, connection) -> DataframeType:  # noqa
-        """Return dataframe."""
-        return DataFrame({"col1": ["data"]})
+class TestBackgroundJobManager:
+    """Tests for the BackgroundJobManager class."""
 
     @fixture
     @patch(
@@ -71,30 +49,36 @@ class TestBackgroundScheduler:
     def background_job_manager(self) -> BackgroundJobManager:
         """Get a new BackgrpundJobManager."""
         return BackgroundJobManager(
-            self.get_database_id(),
-            self.get_database_blocked(),
-            self.get_connection_pool(),
-            self.get_fake_loaded_tables(),
-            self.get_storage_host(),
-            self.get_storage_password(),
-            self.get_storage_port(),
-            self.get_storage_user(),
+            database_id,
+            get_database_blocked(),
+            get_connection_pool(),
+            fake_loaded_tables,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
         )
 
-    def test_initializes(self, background_job_manager: BackgroundJobManager) -> None:
-        """A BackgroundJobManager initializes."""
+    def test_creates(self, background_job_manager: BackgroundJobManager):
+        """A BackgroundJobManager can be created."""
+        assert background_job_manager
+
+    def test_initializes_correctly(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """A BackgroundJobManager initializes correctly."""
         assert isinstance(background_job_manager, BackgroundJobManager)
-        assert background_job_manager._database_id == self.get_database_id()
+        assert background_job_manager._database_id == database_id
         assert (
             background_job_manager._database_blocked.value
-            == self.get_database_blocked().value
+            == get_database_blocked().value
         )
-        assert background_job_manager._storage_host == self.get_storage_host()
-        assert background_job_manager._storage_port == self.get_storage_port()
-        assert background_job_manager._storage_user == self.get_storage_user()
-        assert background_job_manager._storage_password == self.get_storage_password()
-        assert background_job_manager._loaded_tables == self.get_fake_loaded_tables()
-        assert type(background_job_manager._previous_chunks_data) is dict
+        assert background_job_manager._storage_host == storage_host
+        assert background_job_manager._storage_port == storage_port
+        assert background_job_manager._storage_user == storage_user
+        assert background_job_manager._storage_password == storage_password
+        assert background_job_manager._loaded_tables == fake_loaded_tables
+        assert isinstance(background_job_manager._previous_chunks_data, dict)
 
     def test_initializes_background_scheduler_job(
         self, background_job_manager: BackgroundJobManager
@@ -111,27 +95,27 @@ class TestBackgroundScheduler:
 
         background_job_manager._init_jobs()
 
-        mock_scheduler.add_job.assert_any_call(
+        mock_scheduler.add_job.assect_called_once_with(
             func=background_job_manager._update_krueger_data,
             trigger="interval",
             seconds=5,
         )
-        mock_scheduler.add_job.assert_any_call(
+        mock_scheduler.add_job.assect_called_once_with(
             func=background_job_manager._update_chunks_data,
             trigger="interval",
             seconds=5,
         )
-        mock_scheduler.add_job.assert_any_call(
+        mock_scheduler.add_job.assect_called_once_with(
             func=background_job_manager._update_system_data,
             trigger="interval",
             seconds=1,
         )
-        mock_scheduler.add_job.assert_any_call(
+        mock_scheduler.add_job.assect_called_once_with(
             func=background_job_manager._update_storage_data,
             trigger="interval",
             seconds=5,
         )
-        mock_scheduler.add_job.assert_any_call(
+        mock_scheduler.add_job.assect_called_once_with(
             func=background_job_manager._update_plugin_log,
             trigger="interval",
             seconds=1,
@@ -147,7 +131,7 @@ class TestBackgroundScheduler:
 
         background_job_manager.start()
 
-        mock_scheduler.start.assert_called()
+        mock_scheduler.start.assert_called_once()
 
     def test_background_scheduler_closes(
         self, background_job_manager: BackgroundJobManager
@@ -164,12 +148,12 @@ class TestBackgroundScheduler:
 
         background_job_manager.close()
 
-        background_job_manager._update_krueger_data_job.remove.assert_any_call()
-        background_job_manager._update_system_data_job.remove.assert_any_call()
-        background_job_manager._update_chunks_data_job.remove.assert_any_call()
-        background_job_manager._update_storage_data_job.remove.assert_any_call()
-        background_job_manager._update_plugin_log_job.remove.assert_any_call()
-        mock_scheduler.shutdown.assert_called()
+        background_job_manager._update_krueger_data_job.remove.assert_called_once()
+        background_job_manager._update_system_data_job.remove.assert_called_once()
+        background_job_manager._update_chunks_data_job.remove.assert_called_once()
+        background_job_manager._update_storage_data_job.remove.assert_called_once()
+        background_job_manager._update_plugin_log_job.remove.assert_called_once()
+        mock_scheduler.shutdown.assert_called_once()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor", MagicMock(),
@@ -186,7 +170,7 @@ class TestBackgroundScheduler:
 
         result = background_job_manager._sql_to_data_frame("select ...")
 
-        assert type(result) is DataframeType
+        assert isinstance(result, DataframeType)
         assert result.empty
 
     @patch(
@@ -205,5 +189,5 @@ class TestBackgroundScheduler:
         expected_df = DataFrame({"col1": ["data"]})
         received_df = background_job_manager._sql_to_data_frame("select ...")
 
-        assert type(received_df) is DataframeType
+        assert isinstance(received_df, DataframeType)
         assert expected_df.equals(received_df)
