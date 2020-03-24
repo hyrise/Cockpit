@@ -205,3 +205,28 @@ class TestDatabaseManager:
         mocked_database_constructor.assert_called()
         assert response == get_response(200)
         assert "database_id" in database_manager._databases.keys()
+
+    @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
+    @patch("hyrisecockpit.database_manager.manager.Database")
+    def test_call_add_database_with_invalid_connection(
+        self,
+        mocked_database_constructor: MagicMock,
+        mocked_validate_connection: MagicMock,
+        database_manager: DatabaseManager,
+    ) -> None:
+        """Test add a database with an invalid connection."""
+        mocked_validate_connection.return_value = False
+        body = {
+            "id": "database_id",
+            "user": "admin",
+            "password": "12345678",
+            "host": "database_host",
+            "port": 5432,
+            "dbname": "database_name",
+            "number_workers": 8,
+        }
+        response = database_manager._call_add_database(body)
+
+        mocked_database_constructor.assert_not_called()
+        assert response == get_response(400)
+        assert "database_id" not in database_manager._databases.keys()
