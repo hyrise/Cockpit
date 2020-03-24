@@ -43,7 +43,29 @@ class DatabaseManager(object):
         self._storage_user = storage_user
 
         self._databases: Dict[str, Database] = {}
-        server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
+        server_calls: Dict[
+            str, Tuple[Callable[[Body], Response], Optional[Dict]]
+        ] = self._get_server_calls()
+        self._server = Server(db_manager_listening, db_manager_port, server_calls)
+
+    def __enter__(self) -> "DatabaseManager":
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Call close with a context manager."""
+        self.close()
+        return None
+
+    def _get_server_calls(
+        self,
+    ) -> Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]]:
+        return {
             "add database": (self._call_add_database, add_database_request_schema),
             "delete database": (
                 self._call_delete_database,
@@ -68,21 +90,6 @@ class DatabaseManager(object):
             ),
             "get plugin setting": (self._call_read_plugin_setting, None),
         }
-        self._server = Server(db_manager_listening, db_manager_port, server_calls)
-
-    def __enter__(self) -> "DatabaseManager":
-        """Return self for a context manager."""
-        return self
-
-    def __exit__(
-        self,
-        exc_type: Optional[Type[BaseException]],
-        exc_value: Optional[BaseException],
-        traceback: Optional[TracebackType],
-    ) -> Optional[bool]:
-        """Call close with a context manager."""
-        self.close()
-        return None
 
     def _call_add_database(self, body: Body) -> Response:
         """Add database and initialize driver for it."""

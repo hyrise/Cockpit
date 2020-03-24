@@ -2,7 +2,7 @@
 from typing import Callable, Dict
 from unittest.mock import MagicMock, patch
 
-from pytest import fixture
+from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
@@ -147,3 +147,28 @@ class TestDatabaseManager:
         mock_data = {"queue length": 21}
         mock_database.get_queue_length.return_value = mock_data  # type: ignore
         self.convenience_data_call(database_manager, mock_database, call, mock_data)
+
+    @mark.parametrize(
+        "call",
+        [
+            "add database",
+            "delete database",
+            "start worker",
+            "close worker",
+            "queue length",
+            "get databases",
+            "load data",
+            "delete data",
+            "status",
+            "get plugins",
+            "activate plugin",
+            "deactivate plugin",
+            "set plugin setting",
+            "get plugin setting",
+        ],
+    )
+    def test_has_server_call(
+        self, database_manager: DatabaseManager, call: str
+    ) -> None:
+        """Assert DatabaseMnager has a specific call."""
+        assert call in database_manager._get_server_calls().keys()
