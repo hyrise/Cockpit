@@ -222,6 +222,8 @@ class TestWorkerPool(object):
         worker_pool._init_workers = init_workers_mock
         worker_pool._start_worker = start_worker_mock
 
+        worker_pool._start_job()
+
         init_workers_mock.assert_not_called()
         start_worker_mock.assert_not_called()
         assert not worker_pool._worker_wait_for_exit_event.is_set()
@@ -377,3 +379,14 @@ class TestWorkerPool(object):
         """Test get status while worker pool is closed."""
         worker_pool._status = "closed"
         assert worker_pool.get_status() == "closed"
+
+    def test_gets_queue_length(self, worker_pool) -> None:
+        """Test return of queue length."""
+        mocked_task_queue = MagicMock()
+        mocked_task_queue.qsize.return_value = 42
+        worker_pool._task_queue = mocked_task_queue
+
+        result = worker_pool.get_queue_length()
+
+        assert type(result) is int
+        assert result == 42
