@@ -284,7 +284,6 @@ class TestDatabaseManager:
         ]
         expected_response = get_response(200)
         expected_response["body"]["databases"] = expected_databases
-
         response = database_manager._call_get_databases(body)
 
         assert response == expected_response
@@ -293,9 +292,7 @@ class TestDatabaseManager:
         """Test delete database."""
         database = fake_database()
         database_manager._databases["db1"] = database
-
         body: Dict = {"id": "db1"}
-
         response = database_manager._call_delete_database(body)
 
         assert get_response(200) == response
@@ -306,7 +303,6 @@ class TestDatabaseManager:
     ) -> None:
         """Test delete not existing database."""
         body: Dict = {"id": "db1"}
-
         response = database_manager._call_delete_database(body)
 
         assert get_response(404) == response
@@ -314,15 +310,34 @@ class TestDatabaseManager:
     @patch(
         "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
     )
-    def test_load_data_(
+    def test_load_data_when_database_blocked(
+        self,
+        mocked_check_if_database_blocked: MagicMock,
+        database_manager: DatabaseManager,
+    ) -> None:
+        """Test load data when database is blocked."""
+        mocked_check_if_database_blocked.return_value = True
+        body: Dict = {"folder_name": "tpch_0.1"}
+        response = database_manager._call_load_data(body)
+
+        assert get_error_response(400, "Already loading data") == response
+
+    @patch(
+        "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
+    )
+    def test_load_data_unsuccessfull(
         self,
         mocked_check_if_database_blocked: MagicMock,
         database_manager: DatabaseManager,
     ) -> None:
         """Test delete not existing database."""
-        mocked_check_if_database_blocked.return_value = True
-        body: Dict = {"folder_name": "tpch_0.1"}
+        mocked_check_if_database_blocked.return_value = False
+        database = fake_database()
+        database.load_data.return_value = False
+        database_manager._databases["db1"] = database
 
+        body: Dict = {"folder_name": "tpch_0.1"}
         response = database_manager._call_load_data(body)
 
-        assert get_error_response(400, "Already loading data") == response
+        database.load_data.assert_called()
+        assert get_response(400) == response
