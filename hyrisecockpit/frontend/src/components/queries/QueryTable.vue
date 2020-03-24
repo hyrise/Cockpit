@@ -16,7 +16,7 @@
       :headers="headers"
       :items="displayedQueries"
       :search="searchQueries"
-      item-key="queryName"
+      item-key="queryNumber"
     />
   </v-card>
 </template>
@@ -71,13 +71,13 @@ export default defineComponent({
 
     const headers = [
       {
-        text: "Query name",
+        text: "Query number",
         align: "start",
-        value: "queryName"
+        value: "queryNumber"
       },
       { text: "Workload type", value: "workloadType" },
-      { text: "Latency (in ms)", value: "latency" },
-      { text: "Throughput (in q/s)", value: "throughput" }
+      { text: "Average latency (in ms)", value: "latency" },
+      { text: "Average throughput (in q/s)", value: "throughput" }
     ];
 
     return {
