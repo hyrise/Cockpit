@@ -244,12 +244,7 @@ export function useDataTransformationHelpers(): {
       memory.push(getTableMemoryFootprint(tableData.data));
     });
 
-    return roundNumber(
-      memory.reduce((total, tableMemory) => total + tableMemory, 0),
-      100,
-      100,
-      false
-    );
+    return memory.reduce((total, tableMemory) => total + tableMemory, 0);
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
