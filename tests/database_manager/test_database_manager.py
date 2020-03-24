@@ -357,9 +357,13 @@ class TestDatabaseManager:
     ) -> None:
         """Test load data when database is blocked."""
         mocked_check_if_database_blocked.return_value = True
+        database = fake_database()
+        database.delete_data.return_value = True
+        database_manager._databases["db1"] = database
         body: Dict = {"folder_name": "tpch_0.1"}
         response = database_manager._call_load_data(body)
 
+        database.delete_data.assert_not_called()
         assert get_error_response(400, "Already loading data") == response
 
     @patch(
