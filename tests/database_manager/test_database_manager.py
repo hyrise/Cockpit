@@ -618,3 +618,27 @@ class TestDatabaseManager:
         response = database_manager._call_close_worker(body)
 
         assert get_response(400) == response
+
+    def test_start_server(self, database_manager: DatabaseManager):
+        """Test start server."""
+        fake_server = MagicMock()
+        fake_server.start.return_value = False
+        database_manager._server = fake_server
+        database_manager.start()
+
+        fake_server.start.assert_called_once()
+
+    def test_close_server(self, database_manager: DatabaseManager):
+        """Test close server."""
+        database = fake_database()
+        database.close_worker.return_value = False
+        database_manager._databases["db1"] = database
+
+        fake_server = MagicMock()
+        fake_server.close.return_value = False
+        database_manager._server = fake_server
+
+        database_manager.close()
+
+        fake_server.close.assert_called_once()
+        database.close.assert_called_once()
