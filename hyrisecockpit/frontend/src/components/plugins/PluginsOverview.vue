@@ -31,12 +31,15 @@
                 :value="database + '_' + plugin"
                 @change="onClickPluginSwitch(database, plugin)"
               />
-              <v-icon
+              <v-btn
                 v-if="canSettingsBeChanged(database, plugin)"
                 @click="toggleSettingsView(database, plugin)"
+                text
               >
-                mdi-cog
-              </v-icon>
+                <v-icon>
+                  mdi-cog
+                </v-icon>
+              </v-btn>
             </div>
             <div
               v-for="setting in pluginSettings[database][plugin]"
@@ -121,7 +124,7 @@ export default defineComponent({
       pluginSettings
     } = context.root.$pluginService;
 
-    const showSettings: any = reactive([]); // this seems to be very slow, using an object makes it even slower
+    const showSettings: any = reactive({});
 
     function toggleSettingsView(database: string, plugin: string): void {
       showSettings[database + "_" + plugin] = !showSettings[
