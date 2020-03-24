@@ -1,28 +1,41 @@
 """Tests for the database_manager module."""
 from typing import Callable, Dict
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
 from hyrisecockpit.database_manager.manager import DatabaseManager
-from hyrisecockpit.settings import (
-    DB_MANAGER_LISTENING,
-    DB_MANAGER_PORT,
-    DEFAULT_TABLES,
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-    WORKLOAD_PUBSUB_PORT,
-    WORKLOAD_SUB_HOST,
-)
+
+DB_MANAGER_LISTENING = "listening_host"
+DB_MANAGER_PORT = "listening_port"
+DEFAULT_TABLES = "default_tables"
+STORAGE_HOST = "storage_host"
+STORAGE_PASSWORD = "storage_password"
+STORAGE_PORT = "storage_port"
+STORAGE_USER = "storage_user"
+WORKLOAD_PUBSUB_PORT = "pubsub_port"
+WORKLOAD_SUB_HOST = "pubsub_host"
+
+
+def fake_server_constructor(self, *args) -> None:
+    """Fake server."""
+    fake_server = MagicMock()
+    fake_server.start.return_value = None
+    fake_server.stop.return_value = None
+
+    fake_server_constructor = MagicMock()
+    fake_server_constructor.return_value = fake_server
+    return fake_server_constructor
 
 
 class TestDatabaseManager:
     """Tests for the DatabaseManager class."""
 
     @fixture
+    @patch(
+        "hyrisecockpit.database_manager.manager.Server", fake_server_constructor,
+    )
     def database_manager(self) -> DatabaseManager:
         """Get a new DatabaseManager."""
         with DatabaseManager(
