@@ -570,3 +570,11 @@ class TestDatabaseManager:
         database_manager._databases["db1"] = database
 
         assert database_manager._check_if_database_blocked()
+
+    def test_check_database_unblocked(self, database_manager: DatabaseManager):
+        """Test check if database blocked."""
+        database = fake_database()
+        database.get_database_blocked.return_value = False
+        database_manager._databases["db1"] = database
+
+        assert not database_manager._check_if_database_blocked()
