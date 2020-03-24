@@ -5,7 +5,7 @@ import {
   DatabaseResponse
 } from "../types/database";
 import axios from "axios";
-import { getColor } from "../meta/colors";
+import { colorDefinition } from "../meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "./transformationService";
 import { useDatabaseEvents } from "../meta/events";
@@ -29,7 +29,7 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function getDatabaseColor(): string {
-    const color: any = getColor(usedColors);
+    const color: any = Array.from(Object.values(colorDefinition))[usedColors];
     usedColors += 1;
     return color;
   }

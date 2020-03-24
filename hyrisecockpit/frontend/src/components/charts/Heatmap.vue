@@ -8,7 +8,7 @@ import * as Plotly from "plotly.js";
 import { ChartConfiguration, AccessData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
-import { getColor } from "../../meta/colors";
+import { colorDefinition } from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
@@ -92,11 +92,11 @@ function useHeatMapConfiguration(
       text: data.descriptions,
       type: "heatmap",
       colorscale: [
-        [0.0, getColor(5)],
-        [0.25, getColor(0)],
+        [0.0, colorDefinition.darkblue],
+        [0.25, colorDefinition.blue],
         [0.5, "#FFFFFF"],
-        [0.75, getColor(1)],
-        [1, getColor(6)]
+        [0.75, colorDefinition.orange],
+        [1, colorDefinition.darkorange]
       ],
       hovermode: "closest",
       hovertemplate:
