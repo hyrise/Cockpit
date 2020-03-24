@@ -30,7 +30,7 @@ flake8-polyfill==1.0.2
 flake8==3.7.9
 gitdb==4.0.2
 gitpython==3.1.0
-identify==1.4.11
+identify==1.4.13
 isort==4.3.21
 mccabe==0.6.1
 more-itertools==8.2.0
@@ -40,7 +40,7 @@ nodeenv==1.3.5
 packaging==20.3
 pathspec==0.7.0
 pbr==5.4.4
-pep8-naming==0.9.1
+pep8-naming==0.10.0
 pipenv-to-requirements==0.9.0
 pipenv==2018.11.26
 pluggy==0.13.1
@@ -53,7 +53,7 @@ pyparsing==2.4.6
 pytest-cov==2.8.1
 pytest-testdox==1.2.1
 pytest==5.4.1
-pyyaml==5.3
+pyyaml==5.3.1
 regex==2020.2.20
 rope==0.16.0
 six==1.14.0
@@ -65,5 +65,5 @@ toml==0.10.0
 typed-ast==1.4.1
 typing-extensions==3.7.4.1
 virtualenv-clone==0.5.3
-virtualenv==20.0.10
-wcwidth==0.1.8
+virtualenv==20.0.13
+wcwidth==0.1.9
