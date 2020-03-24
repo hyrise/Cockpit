@@ -19,17 +19,39 @@
           {{ database }}
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div class="plugin" v-for="plugin in plugins" :key="plugin">
-            <div class="plugin-name">
-              {{ plugin }}
+          <div v-for="plugin in plugins" :key="plugin">
+            <div class="plugin">
+              <div class="plugin-name">
+                {{ plugin }}
+              </div>
+              <v-switch
+                :disabled="disableAll"
+                :loading="isLoading[database + '_' + plugin]"
+                v-model="activePlugins"
+                :value="database + '_' + plugin"
+                @change="onClickPluginSwitch(database, plugin)"
+              />
+              <v-btn
+                v-if="canSettingsBeChanged(database, plugin)"
+                @click="toggleSettingsView(database, plugin)"
+                text
+              >
+                <v-icon>
+                  mdi-cog
+                </v-icon>
+              </v-btn>
             </div>
-            <v-switch
-              :disabled="disableAll"
-              :loading="isLoading[database + '_' + plugin]"
-              v-model="activePlugins"
-              :value="database + '_' + plugin"
-              @change="onClickPluginSwitch(database, plugin)"
-            />
+            <div
+              v-for="setting in pluginSettings[database][plugin]"
+              :key="setting.name"
+            >
+              <PluginSetting
+                v-if="showSettings[database + '_' + plugin]"
+                :setting="setting"
+                :databaseId="database"
+                :pluginId="plugin"
+              />
+            </div>
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
@@ -45,10 +67,12 @@ import {
   onMounted,
   computed,
   Ref,
-  ref
+  ref,
+  reactive
 } from "@vue/composition-api";
 import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
+import PluginSetting from "./PluginSetting.vue";
 import useDragElement from "../../meta/draggable";
 
 interface Props {
@@ -67,12 +91,17 @@ interface Data {
   pluginDraggableId: string;
   pluginDraggerId: string;
   pluginLogs: Ref<any>;
+  showSettings: any;
+  toggleSettingsView: (database: string, plugin: string) => void;
+  pluginSettings: Ref<any>;
+  canSettingsBeChanged: (databseId: string, pluginId: string) => boolean;
 }
 
 export default defineComponent({
   name: "PluginOverview",
   components: {
-    PluginsLog
+    PluginsLog,
+    PluginSetting
   },
   props: {
     onClose: {
@@ -91,8 +120,27 @@ export default defineComponent({
       plugins,
       activePlugins,
       updatePlugins,
-      pluginLogs
+      pluginLogs,
+      pluginSettings
     } = context.root.$pluginService;
+
+    const showSettings: any = reactive({});
+
+    function toggleSettingsView(database: string, plugin: string): void {
+      showSettings[database + "_" + plugin] = !showSettings[
+        database + "_" + plugin
+      ];
+    }
+
+    function canSettingsBeChanged(
+      databseId: string,
+      pluginId: string
+    ): boolean {
+      return (
+        activePlugins.value.find(x => x === databseId + "_" + pluginId) &&
+        pluginSettings.value[databseId][pluginId]
+      );
+    }
 
     function togglePanelView(): void {
       showDatabasePanels.value = !showDatabasePanels.value;
@@ -123,7 +171,11 @@ export default defineComponent({
       disableAll,
       pluginDraggableId,
       pluginDraggerId,
-      pluginLogs
+      pluginLogs,
+      showSettings,
+      toggleSettingsView,
+      pluginSettings,
+      canSettingsBeChanged
     };
   }
 });
