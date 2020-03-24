@@ -500,7 +500,7 @@ class TestDatabaseManager:
 
         assert get_response(400) == response
 
-    def test_call_feactivate_plugin(self, database_manager: DatabaseManager) -> None:
+    def test_call_deactivate_plugin(self, database_manager: DatabaseManager) -> None:
         """Call deactivate plugin."""
         database = fake_database()
         database.deactivate_plugin.return_value = True
@@ -510,3 +510,16 @@ class TestDatabaseManager:
         response = database_manager._call_deactivate_plugin(body)
 
         assert get_response(200) == response
+
+    def test_call_deactivate_plugin_unsuccessful(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Call deactivate plugin unsuccessful."""
+        database = fake_database()
+        database.deactivate_plugin.return_value = False
+        database_manager._databases["db1"] = database
+
+        body: Dict = {"id": "db1", "plugin": "pluginName"}
+        response = database_manager._call_deactivate_plugin(body)
+
+        assert get_response(423) == response
