@@ -490,3 +490,12 @@ class TestDatabaseManager:
         response = database_manager._call_activate_plugin(body)
 
         assert get_response(423) == response
+
+    def test_call_activate_plugin_on_not_existing_database(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Call activate plugin on not existing database."""
+        body: Dict = {"id": "db1", "plugin": "pluginName"}
+        response = database_manager._call_activate_plugin(body)
+
+        assert get_response(400) == response
