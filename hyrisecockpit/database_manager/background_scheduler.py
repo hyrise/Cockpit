@@ -111,6 +111,39 @@ class BackgroundJobManager(object):
             with PoolCursor(self._connection_pool) as cur:
                 return read_sql_query(sql, cur.connection)
 
+    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
+        """Calculate difference base - substractor."""
+        for table_name in base.keys():
+            if table_name in substractor.keys():
+                for column_name in base[table_name].keys():
+                    if column_name in substractor[table_name].keys():
+                        if len(base[table_name][column_name]) == len(
+                            substractor[table_name][column_name]
+                        ):
+                            base[table_name][column_name] = [
+                                base[table_name][column_name][i]
+                                - substractor[table_name][column_name][i]
+                                for i in range(len(base[table_name][column_name]))
+                            ]
+        return base
+
+    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
+        chunks_data: Dict = {}
+        grouped_tables = meta_segments.reset_index().groupby("table_name")
+
+        for table_name in grouped_tables.groups:
+            chunks_data[table_name] = {}
+            table = grouped_tables.get_group(table_name)
+            grouped_columns = table.reset_index().groupby("column_name")
+
+            for column_name in grouped_columns.groups:
+                column = grouped_columns.get_group(column_name)
+                access_data = []
+                for _, row in column.iterrows():
+                    access_data.append(row["access_count"])
+                chunks_data[table_name][column_name] = access_data
+        return chunks_data
+
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         time_stamp = time_ns()
@@ -161,39 +194,6 @@ class BackgroundJobManager(object):
             self._database_id,
         ) as log:
             log.log_plugin_log(plugin_log)
-
-    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
-        """Calculate difference base - substractor."""
-        for table_name in base.keys():
-            if table_name in substractor.keys():
-                for column_name in base[table_name].keys():
-                    if column_name in substractor[table_name].keys():
-                        if len(base[table_name][column_name]) == len(
-                            substractor[table_name][column_name]
-                        ):
-                            base[table_name][column_name] = [
-                                base[table_name][column_name][i]
-                                - substractor[table_name][column_name][i]
-                                for i in range(len(base[table_name][column_name]))
-                            ]
-        return base
-
-    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
-        chunks_data: Dict = {}
-        grouped_tables = meta_segments.reset_index().groupby("table_name")
-
-        for table_name in grouped_tables.groups:
-            chunks_data[table_name] = {}
-            table = grouped_tables.get_group(table_name)
-            grouped_columns = table.reset_index().groupby("column_name")
-
-            for column_name in grouped_columns.groups:
-                column = grouped_columns.get_group(column_name)
-                access_data = []
-                for _, row in column.iterrows():
-                    access_data.append(row["access_count"])
-                chunks_data[table_name][column_name] = access_data
-        return chunks_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
