@@ -452,3 +452,17 @@ class TestDatabaseManager:
         response = database_manager._call_status(body)
 
         assert expected_response == response
+
+    def test_call_get_plugins(self, database_manager: DatabaseManager) -> None:
+        """Call status."""
+        database = fake_database()
+        database.get_plugins.return_value = ["Plugin1", "Plugin2"]
+        database_manager._databases["db1"] = database
+
+        expected_plugins = [{"id": "db1", "plugins": ["Plugin1", "Plugin2"]}]
+        expected_response = get_response(200)
+        expected_response["body"]["plugins"] = expected_plugins
+        body: Dict = {}
+        response = database_manager._call_get_plugins(body)
+
+        assert expected_response == response
