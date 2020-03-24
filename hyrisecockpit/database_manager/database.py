@@ -3,9 +3,12 @@
 from multiprocessing import Value
 from typing import Dict, List, Optional
 
+from psycopg2 import pool
+
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor
 from .driver import Driver
+from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
 
@@ -33,7 +36,7 @@ class Database(object):
         self.number_workers: int = number_workers
         self._default_tables: str = default_tables
         self._number_additional_connections: int = 50
-        self.driver = Driver(
+        self.driver: Driver = Driver(
             user,
             password,
             host,
@@ -41,12 +44,16 @@ class Database(object):
             dbname,
             self.number_workers + self._number_additional_connections,
         )
-        self._connection_pool = self.driver.get_connection_pool()
+        self._connection_pool: pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
-        self._background_scheduler = BackgroundJobManager(
+        self._loaded_tables: Dict[
+            str, Optional[str]
+        ] = self.create_empty_loaded_tables()
+        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
             self._id,
             self._database_blocked,
             self._connection_pool,
+            self._loaded_tables,
             storage_host,
             storage_password,
             storage_port,
@@ -62,13 +69,13 @@ class Database(object):
         self._background_scheduler.start()
         self._background_scheduler.load_tables(self._default_tables)
 
+    def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
+        """Create loaded_tables dictionary without information about already loaded tables."""
+        return {table: None for tables in _table_names.values() for table in tables}
+
     def get_queue_length(self) -> int:
         """Return queue length."""
         return self._worker_pool.get_queue_length()
-
-    def get_failed_tasks(self) -> List[Dict[str, str]]:
-        """Return failed tasks."""
-        return self._worker_pool.get_failed_tasks()
 
     def load_data(self, folder_name: str) -> bool:
         """Load pre-generated tables."""
@@ -98,6 +105,39 @@ class Database(object):
         """Return tables loading flag."""
         return self._database_blocked.value
 
+    def get_worker_pool_status(self) -> str:
+        """Return worker pool status."""
+        return self._worker_pool.get_status()
+
+    def get_loaded_tables(self) -> List[Dict[str, str]]:
+        """Return already loaded tables."""
+        return [
+            {"table_name": table, "benchmark": value}
+            for table, value in self._loaded_tables.items()
+            if value is not None
+        ]
+
+    def get_loaded_benchmarks(self) -> List[str]:
+        """Get list of all benchmarks which are completely loaded."""
+        loaded_benchmarks: List[str] = []
+        present_benchmarks = [
+            benchmark
+            for benchmark in set(self._loaded_tables.values())
+            if benchmark is not None
+        ]
+
+        for benchmark in present_benchmarks:
+            required_tables = _table_names[benchmark.split("_")[0]]
+            valid_flag: bool = True
+            for table_name in required_tables:
+                if self._loaded_tables[table_name] != benchmark:
+                    valid_flag = False
+                    break
+            if valid_flag:
+                loaded_benchmarks.append(benchmark)
+
+        return loaded_benchmarks
+
     def start_worker(self) -> bool:
         """Start worker."""
         return self._worker_pool.start()
@@ -110,7 +150,7 @@ class Database(object):
         """Return all currently activated plugins."""
         if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute(("SELECT name FROM meta_plugins;"), (None,))
+                cur.execute(("SELECT name FROM meta_plugins;"), None)
                 rows = cur.fetchall()
                 result = [row[0] for row in rows] if rows else []
                 return result
@@ -132,9 +172,16 @@ class Database(object):
         """Read currently set plugin settings."""
         if not self._database_blocked.value:
             with PoolCursor(self._connection_pool) as cur:
-                cur.execute("SELECT * FROM meta_settings", None)
+                cur.execute("SELECT name, value, description FROM meta_settings;", None)
                 rows = cur.fetchall()
-                result = [row[0] for row in rows] if rows else []
+                result = (
+                    [
+                        {"name": row[0], "value": row[1], "description": row[2]}
+                        for row in rows
+                    ]
+                    if rows
+                    else []
+                )
             return result
         else:
             return None

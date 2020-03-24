@@ -3,7 +3,7 @@
     <v-expansion-panel>
       <v-expansion-panel-header flat>
         <div class="log">
-          log
+          database log
         </div>
       </v-expansion-panel-header>
       <v-expansion-panel-content class="content">

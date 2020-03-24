@@ -4,9 +4,11 @@ import {
   MetricMetadata,
   MetricValueState,
   MetricValueStateOrder,
+  MetricDetailsConfiguration,
   ChartConfiguration
 } from "../types/metrics";
 import { useDataTransformation } from "../services/transformationService";
+import { colorDefinition } from "./colors";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
@@ -92,9 +94,9 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
-  average: "#fb8c00",
-  high: "#4caf50",
-  low: "#ff5252"
+  average: colorDefinition.orange,
+  high: colorDefinition.red,
+  low: colorDefinition.green
 };
 
 const metricValueStateOrder: Record<
@@ -122,12 +124,12 @@ const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   executedQueryTypeProportion: {
     title: "Query Type Proportion",
     xaxis: "Workload",
-    yaxis: queryLabel
+    yaxis: "Proportion of queries in %"
   },
   generatedQueryTypeProportion: {
     title: "Query Type Proportion",
     xaxis: "Workload",
-    yaxis: queryLabel
+    yaxis: "Proportion of queries in %"
   },
   latency: {
     title: "Latency",
@@ -170,6 +172,37 @@ const metricDescription: Record<Metric, string> = {
   throughput: "Number of queries <br/> processed in the last second."
 };
 
+const metricDetailsConfiguration: Partial<Record<
+  Metric,
+  MetricDetailsConfiguration
+>> = {
+  cpu: {
+    border: 100,
+    unit: "%",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  latency: {
+    border: 100,
+    unit: "ms",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  queueLength: {
+    border: 20000,
+    unit: "q",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  ram: {
+    border: 100,
+    unit: "%",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  throughput: {
+    border: 10000,
+    unit: "q/s",
+    stateOrder: getMetricValueStateOrder("desc")
+  }
+};
+
 export function getMetricMetadata(metric: Metric): MetricMetadata {
   return metricsMetadata[metric];
 }
@@ -204,4 +237,10 @@ export function getMetricChartConfiguration(
 
 export function getMetricDescription(metric: Metric): string {
   return metricDescription[metric];
+}
+
+export function getMetricDetailsConfiguration(
+  metric: Metric
+): MetricDetailsConfiguration | undefined {
+  return metricDetailsConfiguration[metric];
 }
