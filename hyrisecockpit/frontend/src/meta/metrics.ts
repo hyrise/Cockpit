@@ -4,6 +4,7 @@ import {
   MetricMetadata,
   MetricValueState,
   MetricValueStateOrder,
+  MetricDetailsConfiguration,
   ChartConfiguration
 } from "../types/metrics";
 import { useDataTransformation } from "../services/transformationService";
@@ -23,7 +24,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: monitorBackend + "system",
     component: "CPU",
-    requestTime: 1000
+    requestTime: 1000,
+    staticAxesRange: {
+      y: { max: 100 }
+    }
   },
   latency: {
     fetchType: "modify",
@@ -65,7 +69,10 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "system_data",
     endpoint: monitorBackend + "system",
     component: "RAM",
-    requestTime: 1000
+    requestTime: 1000,
+    staticAxesRange: {
+      y: { max: 100 }
+    }
   },
   storage: {
     fetchType: "read",
@@ -99,14 +106,14 @@ const metricValueStateOrder: Record<
   desc: ["high", "average", "low"]
 };
 
-const timeLabel = "Time in s";
+const timeLabel = "Timestamps";
 const queryLabel = "Number of queries";
 
 const metricsChartConfiguration: Record<Metric, ChartConfiguration> = {
   access: {
     title: "Access Frequency",
-    xaxis: "columns",
-    yaxis: "chunks"
+    xaxis: "Columns",
+    yaxis: "Chunks"
   },
   cpu: {
     title: "CPU",
@@ -164,6 +171,37 @@ const metricDescription: Record<Metric, string> = {
   throughput: "Number of queries <br/> processed in the last second."
 };
 
+const metricDetailsConfiguration: Partial<Record<
+  Metric,
+  MetricDetailsConfiguration
+>> = {
+  cpu: {
+    border: 100,
+    unit: "%",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  latency: {
+    border: 100,
+    unit: "ms",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  queueLength: {
+    border: 20000,
+    unit: "q",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  ram: {
+    border: 100,
+    unit: "%",
+    stateOrder: getMetricValueStateOrder("asc")
+  },
+  throughput: {
+    border: 10000,
+    unit: "q/s",
+    stateOrder: getMetricValueStateOrder("desc")
+  }
+};
+
 export function getMetricMetadata(metric: Metric): MetricMetadata {
   return metricsMetadata[metric];
 }
@@ -198,4 +236,10 @@ export function getMetricChartConfiguration(
 
 export function getMetricDescription(metric: Metric): string {
   return metricDescription[metric];
+}
+
+export function getMetricDetailsConfiguration(
+  metric: Metric
+): MetricDetailsConfiguration | undefined {
+  return metricDetailsConfiguration[metric];
 }

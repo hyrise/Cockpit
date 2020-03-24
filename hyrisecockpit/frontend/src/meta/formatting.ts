@@ -1,5 +1,12 @@
 export function useFormatting(): {
   formatNumberWithCommas: (data: number) => string;
+  formatDateWithoutMilliSec: (date: Date) => Date;
+  roundNumber: (
+    data: number,
+    ratio: number,
+    factor?: number,
+    even?: boolean
+  ) => number;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -15,5 +22,20 @@ export function useFormatting(): {
     return parts[1] ? formatted + "." + parts[1] : formatted;
   }
 
-  return { formatNumberWithCommas };
+  function formatDateWithoutMilliSec(date: Date): Date {
+    date.setMilliseconds(0);
+    return date;
+  }
+
+  function roundNumber(
+    data: number,
+    ratio: number,
+    factor: number = 1,
+    even: boolean = true
+  ): number {
+    const rounded = Math.floor(data * factor) / ratio;
+    return even ? Math.floor(rounded) : rounded;
+  }
+
+  return { formatNumberWithCommas, formatDateWithoutMilliSec, roundNumber };
 }

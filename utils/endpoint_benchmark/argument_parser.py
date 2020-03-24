@@ -21,15 +21,23 @@ class ArgumentValidation:
             "krueger_data",
             "detailed_latency",
             "detailed_throughput",
-            "process_table_status",
+            "status",
         ]
-        self._endpoints_control = ["database", "data"]
-        self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops"]
-        self._databases = ["db1", "db2"]
+        self._endpoints_control = [
+            "database",
+            "data",
+            "plugin_log",
+            "plugin",
+            "available_plugins",
+        ]
+        self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops", "none"]
+        self._table_names = ["tpch_0.1", "tpch_1", "tpcds_1", "none", "workload"]
+        self._databases = ["db1", "db2", "none"]
         self._plugins = ["wrk", "displayReply"]
+        self._close_argumernts = ["workload", "database", "none"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,
-            "workloads": self._validate_workloads,
+            "workload": self._validate_workload,
             "databases": self._validate_databases,
             "time": self._validate_time,
             "runs": self._validate_runs,
@@ -37,7 +45,9 @@ class ArgumentValidation:
             "number_workers": self._validate_number_workers,
             "workload_frequence": self._validate_workload_frequence,
             "plugins": self._validate_plugin,
-            "start_components": self._validate_start_components,
+            "start_components": self._basic_validate,
+            "close": self._validate_close,
+            "load_table": self._validate_load_tables,
         }
 
     def get_endpoints(self):
@@ -86,18 +96,13 @@ class ArgumentValidation:
             "endpoints_control": endpoints_control,
         }
 
-    def _validate_workloads(self, workload_argument):
+    def _validate_workload(self, workload_argument):
         """Validate workload arguments."""
-        if "all" in workload_argument:
-            return self._workloads
-
-        workloads = []
-        for workload in workload_argument:
-            if workload in self._workloads:
-                workloads.append(workload)
-            else:
-                print(f"{workload} workload not found")
-        return workloads
+        if workload_argument in self._workloads:
+            return workload_argument
+        else:
+            print(f"{workload_argument} workload not found.")
+        return "none"
 
     def _validate_databases(self, database_arguments):
         """Validate database arguments."""
@@ -159,12 +164,26 @@ class ArgumentValidation:
                 print(f"{plugin} plugin not found")
         return plugins
 
-    def _validate_start_components(self, start_components_arguments):
-        if start_components_arguments.upper() in ["Y", "N"]:
-            return start_components_arguments.upper()
+    def _basic_validate(self, _basic_validate_arguments):
+        if _basic_validate_arguments.upper() in ["Y", "N"]:
+            return _basic_validate_arguments.upper()
         else:
-            print(f"{start_components_arguments} not Y/N. Default Y is used.")
+            print(f"{_basic_validate_arguments} not Y/N. Default Y is used.")
             return "Y"
+
+    def _validate_close(self, close_arguments):
+        for argument in close_arguments:
+            if argument not in self._close_argumernts:
+                print(f"{argument} not valid. Default workload and database is used.")
+                return self._close_argumernts
+        return close_arguments
+
+    def _validate_load_tables(self, load_tables_arguments):
+        if load_tables_arguments in self._table_names:
+            return load_tables_arguments
+        else:
+            print(f"{load_tables_arguments} workload not found.")
+        return "workload"
 
 
 class ArgumentParser:
@@ -201,19 +220,19 @@ class ArgumentParser:
             nargs="+",
             metavar="",
             default=["all"],
-            help="databases to use in benchmark. Allowed values are "
+            help="databases to use in benchmark. For no database to add use none. Allowed values are "
             + ", ".join(self._argument_validation._databases)
             + ", all",
         )
         self.parser.add_argument(
             "--workload",
             "-w",
-            dest="workloads",
+            dest="workload",
             type=str,
-            nargs="+",
+            nargs="?",
             metavar="",
-            default=["tpch_0.1"],
-            help="workloads to run on databases. . Allowed values are "
+            default="tpch_0.1",
+            help="workload to run on databases. For no workload use none. Allowed values are "
             + ", ".join(self._argument_validation._workloads),
         )
         self.parser.add_argument(
@@ -284,8 +303,30 @@ class ArgumentParser:
             type=str,
             nargs="?",
             metavar="",
-            default="Y",
+            default="N",
             help="start components as subprocesses [Y/N]",
+        )
+        self.parser.add_argument(
+            "--close",
+            "-c",
+            dest="close",
+            type=str,
+            nargs="+",
+            metavar="",
+            default=["workload", "database"],
+            help="close database or workload. To keep workload and database running after benchmark use none. Allowed values are"
+            + ", ".join(self._argument_validation._close_argumernts),
+        )
+        self.parser.add_argument(
+            "--load_table",
+            "-lt",
+            dest="load_table",
+            type=str,
+            nargs="?",
+            metavar="",
+            default="workload",
+            help="load table. For no table loading use none. For loading workload tables use workload. Allowed values are"
+            + ", ".join(self._argument_validation._table_names),
         )
 
     def get_configuration(self):
@@ -294,7 +335,7 @@ class ArgumentParser:
         types = [
             "end_points",
             "databases",
-            "workloads",
+            "workload",
             "time",
             "runs",
             "backend_url",
@@ -302,6 +343,8 @@ class ArgumentParser:
             "workload_frequence",
             "plugins",
             "start_components",
+            "close",
+            "load_table",
         ]
         for argument_type in types:
             configuration[argument_type] = self._argument_validation.validate(

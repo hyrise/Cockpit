@@ -19,6 +19,7 @@ export interface DatabaseController {
   databasesUpdated: Ref<boolean>;
   availableDatabasesById: Ref<readonly string[]>;
   getDatabasesByIds: (ids: string[]) => Database[];
+  getDatabaseById: (id: string) => Database;
 }
 
 export interface DatabaseService {
