@@ -76,6 +76,13 @@ class TestDatabaseManager:
     def test_initializes(self, database_manager: DatabaseManager) -> None:
         """A DatabaseManager initializes."""
         assert isinstance(database_manager, DatabaseManager)
+        assert database_manager._workload_sub_host == "pubsub_host"
+        assert database_manager._workload_pubsub_port == "pubsub_port"
+        assert database_manager._default_tables == "default_tables"
+        assert database_manager._storage_host == "storage_host"
+        assert database_manager._storage_port == "storage_port"
+        assert database_manager._storage_user == "storage_user"
+        assert database_manager._storage_password == "storage_password"
 
     def test_has_no_databases(self, database_manager: DatabaseManager) -> None:
         """A DatabaseManager has no databases."""
