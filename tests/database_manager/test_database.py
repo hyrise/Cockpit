@@ -77,7 +77,14 @@ class TestDatabase(object):
         mocked_context_cur = MagicMock()
         mocked_cur = MagicMock()
         mocked_cur.execute.return_value = None
-        mocked_cur.fetchall.return_value = [("Lindwurm",), ("Wolpertinger",)]
+        mocked_cur.fetchall.return_value = [
+            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
+            (
+                "Rumo von Zamonien",
+                "Wolpertinger",
+                "gute Schachspieler und gute Kämpfer",
+            ),
+        ]
         mocked_context_cur.__enter__.return_value = mocked_cur
         return mocked_context_cur
 
@@ -85,6 +92,7 @@ class TestDatabase(object):
         id,  # noqa
         database_blocked,
         connection_pool,
+        loaded_tables,
         storage_host,
         storage_password,
         storage_port,
@@ -103,6 +111,10 @@ class TestDatabase(object):
     )
     @patch("hyrisecockpit.database_manager.database.WorkerPool", MagicMock())
     @patch("hyrisecockpit.database_manager.database.Driver", MagicMock())
+    @patch(
+        "hyrisecockpit.database_manager.database.Database.create_empty_loaded_tables",
+        MagicMock(),
+    )
     def database(self) -> Database:
         """Get a new Database."""
         return Database(
@@ -411,7 +423,7 @@ class TestDatabase(object):
     ) -> None:
         """Test get existing plug-ins."""
         database._database_blocked.value = False
-        expected = ["Lindwurm", "Wolpertinger"]
+        expected = ["Hildegunst von Mythenmetz", "Rumo von Zamonien"]
         result = database.get_plugins()
 
         assert type(result) is list
@@ -471,7 +483,18 @@ class TestDatabase(object):
     ) -> None:
         """Test get existing plug-ins settings."""
         database._database_blocked.value = False
-        expected = ["Lindwurm", "Wolpertinger"]
+        expected_plugin_one = {
+            "name": "Hildegunst von Mythenmetz",
+            "value": "Lindwurm",
+            "description": "sprachliche Begabung",
+        }
+        expected_plugin_two = {
+            "name": "Rumo von Zamonien",
+            "value": "Wolpertinger",
+            "description": "gute Schachspieler und gute Kämpfer",
+        }
+
+        expected = [expected_plugin_one, expected_plugin_two]
         result = database.get_plugin_setting()
 
         assert type(result) is list
