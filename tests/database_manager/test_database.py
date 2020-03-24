@@ -121,7 +121,7 @@ class TestDatabase(object):
             self.get_storage_user(),
         )
 
-    def test_inintialize_database(self, database) -> None:
+    def test_inintializes_database(self, database) -> None:
         """Test initialization of worker pool attributes."""
         assert database._id == self.get_id()
         assert database.number_workers == self.get_number_workers()
@@ -134,7 +134,7 @@ class TestDatabase(object):
             self.get_default_tables()
         )
 
-    def test_gettting_worker_pool_queue_length(self, database) -> None:
+    def test_gets_worker_pool_queue_length(self, database) -> None:
         """Test return of queue length from worker pool."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.get_queue_length.return_value = 42
@@ -145,7 +145,7 @@ class TestDatabase(object):
         assert type(result) is int
         assert result == 42
 
-    def test_loading_data_while_worker_pool_is_closed_and_load_table_is_successful(
+    def test_loads_data_while_worker_pool_is_closed_and_load_table_is_successful(
         self, database
     ) -> None:
         """Test loading data while worker pool is closed and background scheduler is returning true."""
@@ -166,7 +166,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_loading_data_while_worker_pool_is_running(self, database) -> None:
+    def test_loads_data_while_worker_pool_is_running(self, database) -> None:
         """Test loading data while worker pool is running."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.get_status.return_value = "running"
@@ -183,7 +183,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_loading_data_while_worker_pool_is_closed_and_load_table_failed(
+    def test_loads_data_while_worker_pool_is_closed_and_load_table_failed(
         self, database
     ) -> None:
         """Test loading data while worker pool is running."""
@@ -204,7 +204,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_delete_data_while_worker_pool_is_closed_and_load_table_is_successful(
+    def test_deletes_data_while_worker_pool_is_closed_and_load_table_is_successful(
         self, database
     ) -> None:
         """Test delete of data while worker pool is closed and background scheduler is returning true."""
@@ -225,7 +225,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_delete_data_while_worker_pool_is_running(self, database) -> None:
+    def test_deletes_data_while_worker_pool_is_running(self, database) -> None:
         """Test delete of  data while worker pool is running."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.get_status.return_value = "running"
@@ -242,7 +242,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_delete_data_while_worker_pool_is_closed_and_load_table_failed(
+    def test_deletes_data_while_worker_pool_is_closed_and_load_table_failed(
         self, database
     ) -> None:
         """Test delete of  data while worker pool is running."""
@@ -263,7 +263,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_activation_of_plugin_with_success(self, database) -> None:
+    def test_activates_plugin_with_success(self, database) -> None:
         """Test entry point for plug-in activation with success."""
         mocked_background_scheduler = MagicMock()
         mocked_background_scheduler.activate_plugin.return_value = True
@@ -276,7 +276,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_activation_of_plugin_with_no_success(self, database) -> None:
+    def test_activates_plugin_with_no_success(self, database) -> None:
         """Test entry point for plug-in activation with no success."""
         mocked_background_scheduler = MagicMock()
         mocked_background_scheduler.activate_plugin.return_value = False
@@ -289,7 +289,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_deactivation_of_plugin_with_success(self, database) -> None:
+    def test_deactivats_plugin_with_success(self, database) -> None:
         """Test entry point for plug-in deactivation with success."""
         mocked_background_scheduler = MagicMock()
         mocked_background_scheduler.deactivate_plugin.return_value = True
@@ -304,7 +304,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_deactivation_of_plugin_with_no_success(self, database) -> None:
+    def test_deactivats_plugin_with_no_success(self, database) -> None:
         """Test entry point for plug-in deactivation with no success."""
         mocked_background_scheduler = MagicMock()
         mocked_background_scheduler.deactivate_plugin.return_value = False
@@ -319,7 +319,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_getting_blocked_database_status(self, database) -> None:
+    def test_gets_blocked_database_status(self, database) -> None:
         """Test return value for blocked database."""
         database._database_blocked.value = False
         result = database.get_database_blocked()
@@ -327,7 +327,7 @@ class TestDatabase(object):
         assert type(result) is int
         assert not result
 
-    def test_getting_unblocked_database_status(self, database) -> None:
+    def test_gets_unblocked_database_status(self, database) -> None:
         """Test return value for unblocked database."""
         database._database_blocked.value = True
         result = database.get_database_blocked()
@@ -335,7 +335,7 @@ class TestDatabase(object):
         assert type(result) is int
         assert result
 
-    def test_starting_successful_worker(self, database) -> None:
+    def test_starts_successful_worker(self, database) -> None:
         """Test start of successful worker."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.start.return_value = True
@@ -346,7 +346,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_starting_unsuccessful_worker(self, database) -> None:
+    def test_starts_unsuccessful_worker(self, database) -> None:
         """Test start of unsuccessful worker."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.start.return_value = False
@@ -357,7 +357,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert not result
 
-    def test_closeing_successful_worker(self, database) -> None:
+    def test_closes_successful_worker(self, database) -> None:
         """Test successful close of worker."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.close.return_value = True
@@ -368,7 +368,7 @@ class TestDatabase(object):
         assert type(result) is bool
         assert result
 
-    def test_closeing_unsuccessful_worker(self, database) -> None:
+    def test_closes_unsuccessful_worker(self, database) -> None:
         """Test unsuccessful close of worker."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.close.return_value = False
@@ -382,7 +382,7 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
     )
-    def test_get_plugins_when_database_unblocked_and_no_plugins_exists(
+    def test_gets_plugins_when_database_unblocked_and_no_plugins_exists(
         self, database
     ) -> None:
         """Test get not existing plug-ins."""
@@ -395,7 +395,7 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
     )
-    def test_get_plugins_when_database_blocked(self, database) -> None:
+    def test_gets_plugins_when_database_blocked(self, database) -> None:
         """Test get plug-ins when database is blocked."""
         database._database_blocked.value = True
         result = database.get_plugins()
@@ -406,7 +406,7 @@ class TestDatabase(object):
         "hyrisecockpit.database_manager.database.PoolCursor",
         get_fake_pool_cursor_with_rows_to_return,
     )
-    def test_get_plugins_when_database_unblocked_and_plugins_exists(
+    def test_gets_plugins_when_database_unblocked_and_plugins_exists(
         self, database
     ) -> None:
         """Test get existing plug-ins."""
@@ -420,7 +420,7 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
     )
-    def test_set_plugin_setting_when_dataabse_is_unblocked(self, database) -> None:
+    def test_sets_plugin_setting_when_dataabse_is_unblocked(self, database) -> None:
         """Test set plug-in setting while the database is not blocked."""
         database._database_blocked.value = False
         result = database.set_plugin_setting("M. böslich", "Eiskaltius")
@@ -442,7 +442,7 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
     )
-    def test_get_plugins_settings_when_database_unblocked_and_no_plugins_exists(
+    def test_gets_plugins_settings_when_database_unblocked_and_no_plugins_exists(
         self, database
     ) -> None:
         """Test get not existing plug-ins settings."""
@@ -455,7 +455,7 @@ class TestDatabase(object):
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
     )
-    def test_get_plugins_settings_when_database_blocked(self, database) -> None:
+    def test_gets_plugins_settings_when_database_blocked(self, database) -> None:
         """Test get plug-ins settings when database is blocked."""
         database._database_blocked.value = True
         result = database.get_plugin_setting()
@@ -466,7 +466,7 @@ class TestDatabase(object):
         "hyrisecockpit.database_manager.database.PoolCursor",
         get_fake_pool_cursor_with_rows_to_return,
     )
-    def test_get_plugins_settings_when_database_unblocked_and_plugins_exists(
+    def test_gets_plugins_settings_when_database_unblocked_and_plugins_exists(
         self, database
     ) -> None:
         """Test get existing plug-ins settings."""
@@ -477,7 +477,7 @@ class TestDatabase(object):
         assert type(result) is list
         assert result[:] == expected[:]
 
-    def test_closing_of_database(self, database) -> None:
+    def test_closes_database(self, database) -> None:
         """Test closing of database."""
         mocked_worker_pool = MagicMock()
         mocked_worker_pool.terminate.return_value = None
