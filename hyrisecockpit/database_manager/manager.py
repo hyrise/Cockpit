@@ -49,13 +49,13 @@ class DatabaseManager(object):
                 self._call_delete_database,
                 delete_database_request_schema,
             ),
+            "start worker": (self._call_start_worker, None),
+            "close worker": (self._call_close_worker, None),
             "queue length": (self._call_queue_length, None),
-            "failed tasks": (self._call_failed_tasks, None),
             "get databases": (self._call_get_databases, None),
             "load data": (self._call_load_data, load_data_request_schema),
             "delete data": (self._call_delete_data, delete_data_request_schema),
-            "process table status": (self._call_process_table_status, None),
-            "purge queue": (self._call_purge_queue, None),
+            "status": (self._call_status, None),
             "get plugins": (self._call_get_plugins, None),
             "activate plugin": (
                 self._call_activate_plugin,
@@ -153,17 +153,9 @@ class DatabaseManager(object):
         else:
             return get_response(404)
 
-    def _call_failed_tasks(self, body: Body) -> Response:
-        failed_tasks = {}
-        for id, database in self._databases.items():
-            failed_tasks[id] = database.get_failed_tasks()
-        response = get_response(200)
-        response["body"]["failed_tasks"] = failed_tasks
-        return response
-
     def _call_load_data(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]
-        if self._check_if_processing_table():
+        if self._check_if_database_blocked():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
             if not database.load_data(folder_name):
@@ -172,23 +164,26 @@ class DatabaseManager(object):
 
     def _call_delete_data(self, body: Body) -> Response:
         folder_name: str = body["folder_name"]
-        if self._check_if_processing_table():
+        if self._check_if_database_blocked():
             return get_error_response(400, "Already loading data")
         for database in list(self._databases.values()):
             if not database.delete_data(folder_name):
                 return get_response(400)
         return get_response(200)
 
-    def _call_process_table_status(self, body: Body) -> Response:
-        process_table_status = [
+    def _call_status(self, body: Body) -> Response:
+        status = [
             {
                 "id": database_id,
-                "process_table_status": database.get_processing_tables_flag(),
+                "database_blocked_status": database.get_database_blocked(),
+                "worker_pool_status": database.get_worker_pool_status(),
+                "loaded_benchmarks": database.get_loaded_benchmarks(),
+                "loaded_tables": database.get_loaded_tables(),
             }
             for database_id, database in self._databases.items()
         ]
         response = get_response(200)
-        response["body"]["process_table_status"] = process_table_status
+        response["body"]["status"] = status
         return response
 
     def _call_get_plugins(self, body: Body) -> Response:
@@ -235,29 +230,31 @@ class DatabaseManager(object):
         return response
 
     def _call_read_plugin_setting(self, body: Body) -> Response:
-        id: str = body["id"]
-        if id not in self._databases.keys():
-            response = get_response(400)
-        elif self._databases[id].get_plugin_setting() is not None:
-            response = get_response(200)
-            response["body"]["plugin_settings"] = self._databases[
-                id
-            ].get_plugin_setting()
-        else:
-            response = get_response(423)
+        plugin_settings = [
+            {"id": id, "plugin_settings": database.get_plugin_setting()}
+            for id, database in self._databases.items()
+        ]
+        response = get_response(200)
+        response["body"]["plugin_settings"] = plugin_settings
         return response
 
-    def _check_if_processing_table(self) -> bool:
-        processing_table_data = False
+    def _check_if_database_blocked(self) -> bool:
+        database_blocked_status = False
         for database in list(self._databases.values()):
-            processing_table_data = (
-                processing_table_data or database.get_processing_tables_flag()
+            database_blocked_status = (
+                database_blocked_status or database.get_database_blocked()
             )
-        return processing_table_data
+        return database_blocked_status
 
-    def _call_purge_queue(self, body: Body) -> Response:
+    def _call_start_worker(self, body: Body) -> Response:
         for database in self._databases.values():
-            if not database.disable_workload_execution():
+            if not database.start_worker():
+                return get_response(400)
+        return get_response(200)
+
+    def _call_close_worker(self, body: Body) -> Response:
+        for database in self._databases.values():
+            if not database.close_worker():
                 return get_response(400)
         return get_response(200)
 

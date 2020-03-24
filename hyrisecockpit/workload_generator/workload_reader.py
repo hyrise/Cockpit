@@ -14,7 +14,7 @@ from hyrisecockpit.exception import (
 class WorkloadReader(object):
     """Generic workload reader."""
 
-    def _append_delimiter(self, queries: List, delimiter: str) -> None:
+    def _append_delimiter(self, queries: List[str], delimiter: str) -> None:
         """Append delimiter to every element in querie."""
         for i in range(len(queries)):
             queries[i] = queries[i] + delimiter

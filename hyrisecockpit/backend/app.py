@@ -16,6 +16,7 @@ from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
 from hyrisecockpit.settings import (
@@ -268,16 +269,52 @@ model_krueger_data = monitor.clone(
     },
 )
 
-model_process_table_status = monitor.clone(
-    "Process table status",
+model_database_status = monitor.clone(
+    "Database status",
     model_database,
     {
-        "process_table_status": fields.Boolean(
-            title="Process table status",
-            description="Process table status of databases.",
+        "database_blocked_status": fields.Boolean(
+            title="Database blocked status",
+            description="Database blocked status of databases.",
             required=True,
             example=True,
-        )
+        ),
+        "worker_pool_status": fields.String(
+            title="Worker pool status",
+            description="Status of the worker pools of the databases.",
+            required=True,
+            example="running",
+        ),
+        "loaded_benchmarks": fields.List(
+            fields.String(
+                title="Benchmark",
+                description="Benchmark dataset that is completely loaded.",
+                required=True,
+                example="tpch_1",
+            ),
+        ),
+        "loaded_tables": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Loaded tables",
+                    {
+                        "table_name": fields.String(
+                            title="Table name",
+                            description="Name of loaded table",
+                            required=True,
+                            example="customer",
+                        ),
+                        "benchmark": fields.String(
+                            title="Benchmark",
+                            description="Name of the benchmark",
+                            required=True,
+                            example="tpch_0.1",
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        ),
     },
 )
 
@@ -703,11 +740,19 @@ class QueueLength(Resource):
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
 
-    def get(self) -> Response:
+    def get(self) -> List[Dict[str, Union[str, List]]]:
         """Return queue length information from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
-        )
+        return [
+            {
+                "id": database,
+                "failed_queries": list(
+                    storage_connection.query(
+                        "SELECT * FROM failed_queries LIMIT 100;", database=database,
+                    )["failed_queries", None]
+                ),
+            }
+            for database in _active_databases()
+        ]
 
 
 @monitor.route("/system")
@@ -822,17 +867,16 @@ class KruegerData(Resource):
         return krueger_data
 
 
-@monitor.route("/process_table_status", methods=["GET"])
+@monitor.route("/status", methods=["GET"])
 class ProcessTableStatus(Resource):
-    """Process table status information of all databases."""
+    """Database blocked status information of all databases."""
 
-    @monitor.doc(model=[model_process_table_status])
-    def get(self) -> Response:
-        """Return process table status for databases."""
+    @monitor.doc(model=[model_database_status])
+    def get(self) -> List[Dict]:
+        """Return status of databases."""
         return _send_message(
-            db_manager_socket,
-            {"header": {"message": "process table status"}, "body": {}},
-        )["body"]["process_table_status"]
+            db_manager_socket, Request(header=Header(message="status"), body={}),
+        )["body"]["status"]
 
 
 @control.route("/database", methods=["GET", "POST", "DELETE"])
@@ -881,6 +925,13 @@ class Workload(Resource):
 
     def post(self) -> Response:
         """Start the workload generator."""
+        message = Request(header=Header(message="start worker"), body={})
+        response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] != 200:
+            return get_error_response(
+                400, response["body"].get("error", "Error during starting of worker")
+            )
+
         message = Request(
             header=Header(message="start workload"),
             body={
@@ -906,11 +957,11 @@ class Workload(Resource):
                 400, response["body"].get("error", "Error during stopping of generator")
             )
 
-        message = Request(header=Header(message="purge queue"), body={})
+        message = Request(header=Header(message="close worker"), body={})
         response = _send_message(db_manager_socket, message)
         if response["header"]["status"] != 200:
             return get_error_response(
-                400, response["body"].get("error", "Error during purging of the queues")
+                400, response["body"].get("error", "Error during closing of worker")
             )
 
         return response
@@ -951,9 +1002,9 @@ class ActivatedPlugin(Resource):
     """Get all available Plugins."""
 
     @control.doc(model=model_get_all_plugins)
-    def get(self) -> List:
+    def get(self) -> List[str]:
         """Return available plugins."""
-        return ["Clustering", "Compression"]
+        return available_plugins
 
 
 @control.route("/plugin")
@@ -1020,13 +1071,10 @@ class PluginLog(Resource):
 class PluginSettings(Resource):
     """Set settings for plugins."""
 
-    @control.doc(model=model_get_plugin_setting)
+    @control.doc(model=[model_get_plugin_setting])  # TODO: fix model
     def get(self) -> Response:
         """Read settings for plugins."""
-        message = Request(
-            header=Header(message="get plugin setting"),
-            body={"id": control.payload["id"]},
-        )
+        message = Request(header=Header(message="get plugin setting"), body={},)
         response = _send_message(db_manager_socket, message)
         return response
 

@@ -130,7 +130,7 @@ function useScrollHandling(props: Props): ScrollHandlingData {
 .sticky {
   position: fixed;
   top: 70px;
-  z-index: 10;
+  z-index: 8;
   width: 500px;
   right: 0px;
 }
