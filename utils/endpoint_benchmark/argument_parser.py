@@ -21,7 +21,7 @@ class ArgumentValidation:
             "krueger_data",
             "detailed_latency",
             "detailed_throughput",
-            "database_blocked_status",
+            "status",
         ]
         self._endpoints_control = [
             "database",

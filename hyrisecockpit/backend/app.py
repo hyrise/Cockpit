@@ -740,11 +740,19 @@ class QueueLength(Resource):
 class FailedTasks(Resource):
     """Failed tasks information of all databases."""
 
-    def get(self) -> Response:
+    def get(self) -> List[Dict[str, Union[str, List]]]:
         """Return queue length information from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "failed tasks"}, "body": {}}
-        )
+        return [
+            {
+                "id": database,
+                "failed_queries": list(
+                    storage_connection.query(
+                        "SELECT * FROM failed_queries LIMIT 100;", database=database,
+                    )["failed_queries", None]
+                ),
+            }
+            for database in _active_databases()
+        ]
 
 
 @monitor.route("/system")

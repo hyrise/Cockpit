@@ -2,6 +2,7 @@ import axios from "axios";
 import { monitorBackend } from "../../config";
 import { DetailedQueryInformation } from "@/types/queries";
 import { useFormatting } from "@/meta/formatting";
+import { getDisplayedFromTransferred } from "@/meta/workloads";
 
 export function useQueryService(): {
   getDetailedQueryInformation: () => Promise<
@@ -29,8 +30,8 @@ export function useQueryService(): {
             queryInformation[database] = entry.query_information.map(
               (query: any) => {
                 return {
-                  queryName: query.query_number,
-                  workloadType: query.benchmark,
+                  queryNumber: query.query_number,
+                  workloadType: getDisplayedFromTransferred(query.benchmark),
                   latency: roundNumber(query.latency, Math.pow(10, 6)),
                   throughput: query.throughput
                 };
