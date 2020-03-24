@@ -96,7 +96,6 @@ class TestWorkerPool(object):
         assert worker_pool._fill_task_worker is None
         assert type(worker_pool._worker_wait_for_exit_event) is EventType
         assert type(worker_pool._task_queue) is QueueType
-        assert type(worker_pool._failed_task_queue) is QueueType
 
     def test_generation_of_execute_task_worker_done_events(self, worker_pool) -> None:
         """Check if enough events of type events are generated."""
@@ -161,7 +160,6 @@ class TestWorkerPool(object):
         assert len(worker_pool._execute_task_workers) == 0
         assert type(worker_pool._worker_wait_for_exit_event) is EventType
         assert type(worker_pool._task_queue) is QueueType
-        assert type(worker_pool._failed_task_queue) is QueueType
 
     @mark.timeout(10)
     def test_waiting_for_workers(self, worker_pool) -> None:
@@ -331,19 +329,15 @@ class TestWorkerPool(object):
         terminate_worker_mock = MagicMock()
         task_queue_mock = MagicMock()
         task_queue_mock.close.return_value = None
-        failed_task_queue_mock = MagicMock()
-        failed_task_queue_mock.close.return_value = None
 
         worker_pool._terminate_worker = terminate_worker_mock
         worker_pool._task_queue = task_queue_mock
-        worker_pool._failed_task_queue = failed_task_queue_mock
 
         result = worker_pool.terminate()
 
         assert result
         terminate_worker_mock.assert_called_once()
         task_queue_mock.close.assert_called_once()
-        failed_task_queue_mock.close.assert_called_once()
         assert worker_pool._status == "closed"
         assert not worker_pool._database_blocked.value
 
