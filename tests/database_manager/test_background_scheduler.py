@@ -4,6 +4,8 @@ from multiprocessing import Value
 from typing import Dict, Optional
 from unittest.mock import MagicMock, patch
 
+from pandas import DataFrame
+from pandas.core.frame import DataFrame as DataframeType
 from pytest import fixture
 
 from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
@@ -52,6 +54,10 @@ class TestBackgroundScheduler:
             "Tenacious D": "Rock",
         }
         return fake_loaded_tables
+
+    def get_fake_read_sql_query(sql, connection) -> DataframeType:  # noqa
+        """Return dataframe."""
+        return DataFrame({"col1": ["data"]})
 
     @fixture
     @patch(
@@ -146,7 +152,7 @@ class TestBackgroundScheduler:
     def test_background_scheduler_closes(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
-        """Test clsoe of bachground scheduler object."""
+        """Test close of background scheduler object."""
         mock_scheduler = MagicMock()
         mock_scheduler.shutdown.return_value = None
         background_job_manager._scheduler = mock_scheduler
@@ -164,3 +170,40 @@ class TestBackgroundScheduler:
         background_job_manager._update_storage_data_job.remove.assert_any_call()
         background_job_manager._update_plugin_log_job.remove.assert_any_call()
         mock_scheduler.shutdown.assert_called()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor", MagicMock(),
+    )
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.read_sql_query",
+        get_fake_read_sql_query,
+    )
+    def test_converts_sql_to_data_frame_if_database_is_blocked(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test read sql query and return empty dataframe."""
+        background_job_manager._database_blocked.value = True
+
+        result = background_job_manager._sql_to_data_frame("select ...")
+
+        assert type(result) is DataframeType
+        assert result.empty
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor", MagicMock(),
+    )
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.read_sql_query",
+        get_fake_read_sql_query,
+    )
+    def test_converts_sql_to_data_frame_if_database_is_not_blocked(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test read sql query and return dataframe."""
+        background_job_manager._database_blocked.value = False
+
+        expected_df = DataFrame({"col1": ["data"]})
+        received_df = background_job_manager._sql_to_data_frame("select ...")
+
+        assert type(received_df) is DataframeType
+        assert expected_df.equals(received_df)
