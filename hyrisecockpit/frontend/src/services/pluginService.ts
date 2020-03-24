@@ -7,9 +7,11 @@ export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
   const pluginLogs = ref<any>({});
+  const pluginSettings = ref<any>({});
 
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
+  getPluginSettings();
 
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
@@ -42,6 +44,7 @@ export function usePluginService(): PluginService {
         .post(controlBackend + "plugin", { id: databaseId, plugin: plugin })
         .then(response => {
           getPlugins();
+          getPluginSettings();
         });
     } else {
       return axios
@@ -50,6 +53,7 @@ export function usePluginService(): PluginService {
         })
         .then(response => {
           getPlugins();
+          getPluginSettings();
         });
     }
   }
@@ -76,10 +80,56 @@ export function usePluginService(): PluginService {
     });
   }
 
+  function getPluginSettings(): void {
+    axios.get(controlBackend + "plugin_settings").then(response => {
+      pluginSettings.value = response.data.body.plugin_settings.reduce(
+        (result: any, currentDatabase: any) => {
+          const allDatabaseSettings = currentDatabase.plugin_settings.reduce(
+            (allSettings: any, currentSetting: any) => {
+              const pluginName = currentSetting.name.substring(
+                0,
+                currentSetting.name.indexOf("Plugin")
+              );
+              allSettings[pluginName]
+                ? (allSettings[pluginName] = [
+                    ...allSettings[pluginName],
+                    currentSetting
+                  ])
+                : (allSettings[pluginName] = [currentSetting]);
+              return allSettings;
+            },
+            {}
+          );
+          result[currentDatabase.id] = allDatabaseSettings;
+          return result;
+        },
+        {}
+      );
+    });
+  }
+
+  function updatePluginSettings(
+    databaseId: string,
+    settingId: string,
+    settingValue: string
+  ) {
+    axios
+      .post(controlBackend + "plugin_settings", {
+        id: databaseId,
+        name: settingId,
+        value: settingValue
+      })
+      .then(response => {
+        getPluginSettings();
+      });
+  }
+
   return {
     plugins,
     activePlugins,
     updatePlugins,
-    pluginLogs
+    pluginLogs,
+    pluginSettings,
+    updatePluginSettings
   };
 }
