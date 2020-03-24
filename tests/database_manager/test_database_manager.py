@@ -598,3 +598,23 @@ class TestDatabaseManager:
         response = database_manager._call_start_worker(body)
 
         assert get_response(400) == response
+
+    def test_call_close_worker_successful(self, database_manager: DatabaseManager):
+        """Test stop worker successful."""
+        database = fake_database()
+        database.close_worker.return_value = True
+        database_manager._databases["db1"] = database
+        body: Dict = {}
+        response = database_manager._call_close_worker(body)
+
+        assert get_response(200) == response
+
+    def test_call_close_worker_unsuccessful(self, database_manager: DatabaseManager):
+        """Test close worker unsuccessful."""
+        database = fake_database()
+        database.close_worker.return_value = False
+        database_manager._databases["db1"] = database
+        body: Dict = {}
+        response = database_manager._call_close_worker(body)
+
+        assert get_response(400) == response
