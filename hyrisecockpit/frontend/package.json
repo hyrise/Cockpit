@@ -10,12 +10,14 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
+        "@types/faker": "^4.1.10",
         "@types/plotly.js": "^1.44.28",
         "@typescript-eslint/eslint-plugin": "^2.22.0",
         "@typescript-eslint/parser": "^2.22.0",
         "@vue/composition-api": "^0.4.0",
         "axios": "^0.19.2",
         "core-js": "^3.6.4",
+        "faker": "^4.1.0",
         "plotly.js": "^1.52.3",
         "plotly.js-dist": "^1.52.3",
         "static-eval": "^2.0.5",

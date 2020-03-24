@@ -1,8 +1,10 @@
 import { testRedirection, testElementTrigger } from "./abstractTestCases";
 import { getRoute } from "./helpers";
+import { mockBackend } from "../setup/backendStub";
 
 describe("Change page routes", () => {
   beforeEach(() => {
+    mockBackend({ databases: 1, tables: 2, columns: 2 });
     cy.visit("/");
   });
 
