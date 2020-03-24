@@ -1,6 +1,7 @@
 """Tests for the database module."""
 
 from multiprocessing.sharedctypes import Synchronized as ValueType
+from typing import Dict
 from unittest.mock import MagicMock, patch
 
 from pytest import fixture
@@ -62,6 +63,19 @@ class TestDatabase(object):
     def get_storage_user(self) -> str:
         """Return storage user."""
         return "Käptin Blaubär"
+
+    def get_fake_tables() -> Dict:  # type: ignore
+        """Return fake table dictionary."""
+        fake_dict = {
+            "alternative": [
+                "The Dough Rollers",
+                "Broken Witt Rebels",
+                "Bonny Doon",
+                "Jack White",
+            ],
+            "Rock": ["Gary Clark Jr.", "Greta Van Fleet", "Tenacious D"],
+        }
+        return fake_dict
 
     def get_fake_pool_cursor(connection_pool) -> MagicMock:  # noqa
         """Return fake PoolCursor."""
@@ -145,6 +159,21 @@ class TestDatabase(object):
         database._background_scheduler.load_tables.assert_called_once_with(
             self.get_default_tables()
         )
+
+    @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
+    def test_creates_empty_loaded_tables(self, database) -> None:
+        """Test creates empty loaded tables."""
+        expected_results = {
+            "The Dough Rollers": None,
+            "Broken Witt Rebels": None,
+            "Bonny Doon": None,
+            "Jack White": None,
+            "Gary Clark Jr.": None,
+            "Greta Van Fleet": None,
+            "Tenacious D": None,
+        }
+        result = database.create_empty_loaded_tables()
+        assert expected_results == result
 
     def test_gets_worker_pool_queue_length(self, database) -> None:
         """Test return of queue length from worker pool."""
