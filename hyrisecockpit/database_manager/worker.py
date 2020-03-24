@@ -33,7 +33,7 @@ def fill_queue(
     workload_publisher_url: str,
     task_queue: Queue,
     continue_execution_flag: Value,
-    continue_event: EventType,
+    worker_wait_for_exit_event: EventType,
 ) -> None:
     """Fill the queue."""
     context = Context()
@@ -44,7 +44,7 @@ def fill_queue(
     while True:
         published_data: Dict = sub_socket.recv_json()
         if not continue_execution_flag.value:
-            continue_event.wait()
+            worker_wait_for_exit_event.wait()
         else:
             handle_published_data(published_data, task_queue)
 
@@ -95,7 +95,7 @@ def execute_queries(
     continue_execution_flag: Value,
     database_id: str,
     i_am_done_event: EventType,
-    continue_event: EventType,
+    worker_wait_for_exit_event: EventType,
 ) -> None:
     """Define workers work loop."""
     with PoolCursor(connection_pool) as cur:
@@ -108,7 +108,7 @@ def execute_queries(
             while True:
                 if not continue_execution_flag.value:
                     i_am_done_event.set()
-                    continue_event.wait()
+                    worker_wait_for_exit_event.wait()
 
                 try:
                     task: Tuple[
