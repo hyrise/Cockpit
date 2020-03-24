@@ -1,6 +1,6 @@
 <template>
-  <v-navigation-drawer v-model="open" app class="elevation-2" width="110">
-    <v-toolbar color="primary" class="text-center">
+  <v-navigation-drawer v-model="open" app width="110">
+    <v-toolbar class="text-center secondary">
       <v-img
         src="../../src/components/images/hyrise_logo.png"
         class="ml-2 mb-2"
@@ -10,7 +10,7 @@
       </v-img>
     </v-toolbar>
     <v-card-text
-      class="text-center secondary primary--text overline"
+      class="text-center primary white--text overline"
       max-height="30"
       >Views</v-card-text
     >
@@ -39,7 +39,7 @@
       </v-card-text>
     </v-card>
     <v-card-text
-      class="text-center secondary primary--text overline"
+      class="text-center primary white--text overline"
       max-height="30"
       >Settings</v-card-text
     >
