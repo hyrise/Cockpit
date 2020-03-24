@@ -77,10 +77,6 @@ class Database(object):
         """Return queue length."""
         return self._worker_pool.get_queue_length()
 
-    def get_failed_tasks(self) -> List[Dict[str, str]]:
-        """Return failed tasks."""
-        return self._worker_pool.get_failed_tasks()
-
     def load_data(self, folder_name: str) -> bool:
         """Load pre-generated tables."""
         return (
