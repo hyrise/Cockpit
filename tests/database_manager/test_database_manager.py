@@ -300,3 +300,13 @@ class TestDatabaseManager:
 
         assert get_response(200) == response
         assert list(database_manager._databases.values()) == []
+
+    def test_delete_not_existing_database(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Test delete not existing database."""
+        body: Dict = {"id": "db1"}
+
+        response = database_manager._call_delete_database(body)
+
+        assert get_response(404) == response
