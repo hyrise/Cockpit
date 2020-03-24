@@ -106,21 +106,13 @@ function getLatencyData(data: any, primaryKey: string = ""): number {
 }
 
 function getStorageData(data: any, primaryKey: string = ""): StorageData {
-  const { getDatabaseMemoryFootprint } = useDataTransformationHelpers();
+  const {
+    getTableMemoryFootprint,
+    getDatabaseMemoryFootprint
+  } = useDataTransformationHelpers();
 
   //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
-  const memory: number[] = [];
-  Object.entries(data[primaryKey]).forEach(
-    ([table, tableData]: [string, any]) => {
-      memory.push(getDatabaseMemoryFootprint(tableData.data));
-    }
-  );
-  const totalDatabaseMemory = roundNumber(
-    memory.reduce((total, tableMemory) => total + tableMemory, 0),
-    100,
-    100,
-    false
-  );
+  const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
 
   const labels: string[] = [primaryKey];
   const parents: string[] = [""];
@@ -149,11 +141,11 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
       parents.push(primaryKey);
       sizes.push(0);
       descriptions.push({
-        size: `${getDatabaseMemoryFootprint(tableData.data)} MB`,
+        size: `${getTableMemoryFootprint(tableData.data)} MB`,
         encoding: "",
         dataType: "",
         percentOfDatabase: `${getPercentage(
-          getDatabaseMemoryFootprint(tableData.data),
+          getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
         percentOfTable: `100% of ${table}`
@@ -174,7 +166,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
             )} % of total footprint`,
             percentOfTable: `${getPercentage(
               getRoundedData(attributeData.size),
-              getDatabaseMemoryFootprint(tableData.data)
+              getTableMemoryFootprint(tableData.data)
             )} % of ${table}`
           });
         }
@@ -232,9 +224,10 @@ function getAccessData(
 
 export function useDataTransformationHelpers(): {
   getDatabaseMemoryFootprint: (data: any) => number;
+  getTableMemoryFootprint: (data: any) => number;
   getDatabaseMainMemoryCapacity: (data: any) => number;
 } {
-  function getDatabaseMemoryFootprint(data: any): number {
+  function getTableMemoryFootprint(data: any): number {
     return roundNumber(
       Object.values(data).reduce(
         (sum1: number, table: any) => sum1 + table.size,
@@ -242,6 +235,19 @@ export function useDataTransformationHelpers(): {
       ),
       Math.pow(10, 3),
       1 / Math.pow(10, 3),
+      false
+    );
+  }
+  function getDatabaseMemoryFootprint(data: any): number {
+    const memory: number[] = [];
+    Object.entries(data).forEach(([table, tableData]: [string, any]) => {
+      memory.push(getTableMemoryFootprint(tableData.data));
+    });
+
+    return roundNumber(
+      memory.reduce((total, tableMemory) => total + tableMemory, 0),
+      100,
+      100,
       false
     );
   }
@@ -253,5 +259,9 @@ export function useDataTransformationHelpers(): {
       false
     );
   }
-  return { getDatabaseMemoryFootprint, getDatabaseMainMemoryCapacity };
+  return {
+    getDatabaseMemoryFootprint,
+    getDatabaseMainMemoryCapacity,
+    getTableMemoryFootprint
+  };
 }
