@@ -37,6 +37,7 @@ def fake_database(*args) -> MagicMock:
     fake_database.driver.host = "database_host"
     fake_database.driver.port = 10000
     fake_database.number_workers = 8
+    fake_database.close.return_value = None
 
     return fake_database
 
@@ -267,7 +268,7 @@ class TestDatabaseManager:
         mocked_database_constructor.assert_not_called()
         assert response == get_response(400)
 
-    def test_call_get_databases(self, database_manager: DatabaseManager,) -> None:
+    def test_call_get_databases(self, database_manager: DatabaseManager) -> None:
         """Test get databases."""
         database_manager._databases["db1"] = fake_database()
         body: Dict = {}
@@ -287,3 +288,15 @@ class TestDatabaseManager:
         response = database_manager._call_get_databases(body)
 
         assert response == expected_response
+
+    def test_delete_database(self, database_manager: DatabaseManager) -> None:
+        """Test delete database."""
+        database = fake_database()
+        database_manager._databases["db1"] = database
+
+        body: Dict = {"id": "db1"}
+
+        response = database_manager._call_delete_database(body)
+
+        assert get_response(200) == response
+        assert list(database_manager._databases.values()) == []
