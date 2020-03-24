@@ -381,3 +381,23 @@ class TestDatabaseManager:
 
         database.delete_data.assert_called()
         assert get_response(200) == response
+
+    @patch(
+        "hyrisecockpit.database_manager.manager.DatabaseManager._check_if_database_blocked"
+    )
+    def test_delete_data_unsuccessful(
+        self,
+        mocked_check_if_database_blocked: MagicMock,
+        database_manager: DatabaseManager,
+    ) -> None:
+        """Delete data unsuccessful."""
+        mocked_check_if_database_blocked.return_value = False
+        database = fake_database()
+        database.delete_data.return_value = False
+        database_manager._databases["db1"] = database
+
+        body: Dict = {"folder_name": "tpch_0.1"}
+        response = database_manager._call_delete_data(body)
+
+        database.delete_data.assert_called()
+        assert get_response(400) == response
