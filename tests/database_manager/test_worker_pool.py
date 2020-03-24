@@ -81,7 +81,7 @@ class TestWorkerPool(object):
             database_blocked=self.get_database_blocked_value(),
         )
 
-    def test_inintialize_worker_pool(self, worker_pool) -> None:
+    def test_initializes_worker_pool(self, worker_pool) -> None:
         """Test initialization of worker pool attributes."""
         assert worker_pool._connection_pool is None
         assert worker_pool._number_worker == self.get_number_worker()
@@ -107,7 +107,7 @@ class TestWorkerPool(object):
         "hyrisecockpit.database_manager.worker_pool.execute_queries",
         get_fake_dummy_execute_queries_worker,
     )
-    def test_generation_of_execute_task_worker(self, worker_pool) -> None:
+    def test_generats_execute_task_worker(self, worker_pool) -> None:
         """Check if enough processes of type process are generated."""
         worker_pool._execute_task_worker_done_event = [
             "foo" for _ in range(self.get_number_worker())
@@ -120,12 +120,12 @@ class TestWorkerPool(object):
         "hyrisecockpit.database_manager.worker_pool.execute_queries",
         get_fake_dummy_fill_worker,
     )
-    def test_generation_of_fill_task_worker(self, worker_pool) -> None:
+    def test_generats_fill_task_worker(self, worker_pool) -> None:
         """Check if enough processes of type process are generated."""
         process = worker_pool._generate_fill_task_worker()
         assert type(process) is ProcessType
 
-    def test_inintialization_of_worker(self, worker_pool) -> None:
+    def test_initializes_worker(self, worker_pool) -> None:
         """Check if nothing get changed while both types of worker exists."""
         expected_event = ["new_event"]
         expected_event_execute_workers = ["new_worker_one", "new_worker_two"]
@@ -147,7 +147,7 @@ class TestWorkerPool(object):
         assert execute_workers[:] == expected_event_execute_workers[:]
         assert fill_worker == expected_fill_task_worker
 
-    def test_termination_of_worker(self, worker_pool) -> None:
+    def test_terminates_worker(self, worker_pool) -> None:
         """Check if pool is closed."""
         worker_pool._fill_task_worker = MagicMock()
         worker_pool._execute_task_workers = [
@@ -162,7 +162,7 @@ class TestWorkerPool(object):
         assert type(worker_pool._task_queue) is QueueType
 
     @mark.timeout(10)
-    def test_waiting_for_workers(self, worker_pool) -> None:
+    def test_waits_for_workers(self, worker_pool) -> None:
         """Test waiting for event."""
         events = [Event() for _ in range(self.get_number_worker())]
         for event in events:
@@ -174,7 +174,7 @@ class TestWorkerPool(object):
         assert not worker_pool._worker_wait_for_exit_event.is_set()
         assert not worker_pool._continue_execution_flag.value
 
-    def test_starting_worker(self, worker_pool) -> None:
+    def test_starts_worker(self, worker_pool) -> None:
         """Test start of worker."""
         worker_pool._continue_execution_flag.value = False
         mocked_fill_worker_process = MagicMock()
@@ -196,7 +196,7 @@ class TestWorkerPool(object):
 
         assert worker_pool._continue_execution_flag.value
 
-    def test_starting_worker_job_if_workerpool_is_closed(self, worker_pool) -> None:
+    def test_starts_worker_job_if_workerpool_is_closed(self, worker_pool) -> None:
         """Test start job if the worker pool is closed."""
         worker_pool._status = "closed"
         init_workers_mock = MagicMock()
@@ -213,7 +213,7 @@ class TestWorkerPool(object):
         assert not worker_pool._database_blocked.value
         assert worker_pool._status == "running"
 
-    def test_starting_worker_job_if_workerpool_is_running(self, worker_pool) -> None:
+    def test_starts_worker_job_if_workerpool_is_running(self, worker_pool) -> None:
         """Test start job if the worker pool is running."""
         worker_pool._status = "running"
         init_workers_mock = MagicMock()
@@ -230,7 +230,7 @@ class TestWorkerPool(object):
         assert not worker_pool._database_blocked.value
         assert worker_pool._status == "running"
 
-    def test_closing_worker_job_if_workerpool_is_running(self, worker_pool) -> None:
+    def test_closes_worker_job_if_workerpool_is_running(self, worker_pool) -> None:
         """Test close job if the worker pool is running."""
         worker_pool._status = "running"
         wait_for_worker_mock = MagicMock()
@@ -246,7 +246,7 @@ class TestWorkerPool(object):
         assert worker_pool._status == "closed"
         assert not worker_pool._database_blocked.value
 
-    def test_closing_worker_job_if_workerpool_is_not_running(self, worker_pool) -> None:
+    def test_closes_worker_job_if_workerpool_is_not_running(self, worker_pool) -> None:
         """Test close job if the worker pool is running."""
         worker_pool._status = "closed"
         wait_for_worker_mock = MagicMock()
@@ -262,9 +262,7 @@ class TestWorkerPool(object):
         assert worker_pool._status == "closed"
         assert not worker_pool._database_blocked.value
 
-    def test_starting_of_start_job_while_databse_is_not_blocked(
-        self, worker_pool
-    ) -> None:
+    def test_starts_start_job_while_databse_is_not_blocked(self, worker_pool) -> None:
         """Test starting of start job if database is not blocked."""
         scheduler_mock = MagicMock()
         scheduler_mock.add_job.return_value = None
@@ -278,7 +276,7 @@ class TestWorkerPool(object):
         assert worker_pool._database_blocked.value
         scheduler_mock.add_job.assert_called_once_with(func="start_job_function")
 
-    def test_starting_of_start_job_while_databse_is_blocked(self, worker_pool) -> None:
+    def test_starts_start_job_while_databse_is_blocked(self, worker_pool) -> None:
         """Test not starting of start job if database is blocked."""
         scheduler_mock = MagicMock()
         scheduler_mock.add_job.return_value = None
@@ -292,9 +290,7 @@ class TestWorkerPool(object):
         assert worker_pool._database_blocked.value
         scheduler_mock.add_job.assert_not_called()
 
-    def test_starting_of_close_job_while_databse_is_not_blocked(
-        self, worker_pool
-    ) -> None:
+    def test_starts_close_job_while_databse_is_not_blocked(self, worker_pool) -> None:
         """Test starting of closed job if database is not blocked."""
         scheduler_mock = MagicMock()
         scheduler_mock.add_job.return_value = None
@@ -308,7 +304,7 @@ class TestWorkerPool(object):
         assert worker_pool._database_blocked.value
         scheduler_mock.add_job.assert_called_once_with(func="close_job_function")
 
-    def test_starting_of_close_job_while_databse_is_blocked(self, worker_pool) -> None:
+    def test_starts_close_job_while_databse_is_blocked(self, worker_pool) -> None:
         """Test not starting of closed job if database is blocked."""
         scheduler_mock = MagicMock()
         scheduler_mock.add_job.return_value = None
@@ -322,7 +318,7 @@ class TestWorkerPool(object):
         assert worker_pool._database_blocked.value
         scheduler_mock.add_job.assert_not_called()
 
-    def test_termination_of_worker_if_database_is_not_blocked_and_workerpool_is_running(
+    def test_terminates_worker_if_database_is_not_blocked_and_workerpool_is_running(
         self, worker_pool
     ) -> None:
         """Test termination of worker pool with no database block and running pool."""
@@ -343,7 +339,7 @@ class TestWorkerPool(object):
         assert worker_pool._status == "closed"
         assert not worker_pool._database_blocked.value
 
-    def test_termination_of_worker_if_database_is_blocked_and_workerpool_is_running(
+    def test_terminates_worker_if_database_is_blocked_and_workerpool_is_running(
         self, worker_pool
     ) -> None:
         """Test termination of worker pool with database block and running pool."""
@@ -352,7 +348,7 @@ class TestWorkerPool(object):
 
         assert not worker_pool.terminate()
 
-    def test_termination_of_worker_if_database_is_not_blocked_and_workerpool_is_closed(
+    def test_terminates_worker_if_database_is_not_blocked_and_workerpool_is_closed(
         self, worker_pool
     ) -> None:
         """Test termination of worker pool with  no database block and closed pool."""
@@ -361,7 +357,7 @@ class TestWorkerPool(object):
 
         assert not worker_pool.terminate()
 
-    def test_termination_of_worker_if_database_is_blocked_and_workerpool_is_closed(
+    def test_terminates_worker_if_database_is_blocked_and_workerpool_is_closed(
         self, worker_pool
     ) -> None:
         """Test termination of worker pool with  database block and closed pool."""
@@ -370,12 +366,12 @@ class TestWorkerPool(object):
 
         assert not worker_pool.terminate()
 
-    def test_get_status_while_workerpool_is_running(self, worker_pool) -> None:
+    def test_gets_status_while_workerpool_is_running(self, worker_pool) -> None:
         """Test get status while worker pool is running."""
         worker_pool._status = "running"
         assert worker_pool.get_status() == "running"
 
-    def test_get_status_while_workerpool_is_closed(self, worker_pool) -> None:
+    def test_gets_status_while_workerpool_is_closed(self, worker_pool) -> None:
         """Test get status while worker pool is closed."""
         worker_pool._status = "closed"
         assert worker_pool.get_status() == "closed"
