@@ -466,3 +466,14 @@ class TestDatabaseManager:
         response = database_manager._call_get_plugins(body)
 
         assert expected_response == response
+
+    def test_call_activate_plugin(self, database_manager: DatabaseManager) -> None:
+        """Call activate plugin."""
+        database = fake_database()
+        database.activate_plugin.return_value = True
+        database_manager._databases["db1"] = database
+
+        body: Dict = {"id": "db1", "plugin": "pluginName"}
+        response = database_manager._call_activate_plugin(body)
+
+        assert get_response(200) == response
