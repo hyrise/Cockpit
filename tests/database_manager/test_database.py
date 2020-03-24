@@ -1,5 +1,6 @@
 """Tests for the database module."""
 
+from collections import Counter
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Dict
 from unittest.mock import MagicMock, patch
@@ -376,6 +377,54 @@ class TestDatabase(object):
         assert type(result) is int
         assert result
 
+    @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
+    def test_gets_loaded_benchmarks_for_present_benchmarks(self, database) -> None:
+        """Test get loaded benchmark for present benchmarks."""
+        fake_loaded_tables = {
+            "The Dough Rollers": "alternative",
+            "Broken Witt Rebels": "alternative",
+            "Bonny Doon": "alternative",
+            "Jack White": "alternative",
+            "Gary Clark Jr.": "Rock",
+            "Greta Van Fleet": "Rock",
+            "Tenacious D": "Rock",
+        }
+        database._loaded_tables = fake_loaded_tables
+        expected = ["Rock", "alternative"]
+
+        results = database.get_loaded_benchmarks()
+
+        assert Counter(results) == Counter(expected)
+
+    @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
+    def test_gets_loaded_benchmarks_for_not_present_benchmarks(self, database) -> None:
+        """Test get loaded benchmark for not present benchmarks."""
+        fake_loaded_tables = {
+            "The Dough Rollers": "alternative",
+            "Broken Witt Rebels": "alternative",
+            "Bonny Doon": None,
+            "Jack White": "alternative",
+            "Gary Clark Jr.": "Rock",
+            "Greta Van Fleet": "Rock",
+            "Tenacious D": "Rock",
+        }
+        database._loaded_tables = fake_loaded_tables
+        expected = ["Rock"]
+
+        results = database.get_loaded_benchmarks()
+
+        assert Counter(results) == Counter(expected)
+
+    def test_gets_worker_pool_status(self, database) -> None:
+        """Test return of worker pool status."""
+        mocked_worker_pool = MagicMock()
+        mocked_worker_pool.get_status.return_value = "running"
+        database._worker_pool = mocked_worker_pool
+
+        result = database.get_worker_pool_status()
+
+        assert type(result) is str
+
     def test_starts_successful_worker(self, database) -> None:
         """Test start of successful worker."""
         mocked_worker_pool = MagicMock()
@@ -456,7 +505,7 @@ class TestDatabase(object):
         result = database.get_plugins()
 
         assert type(result) is list
-        assert result[:] == expected[:]
+        assert Counter(result) == Counter(expected)
 
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
