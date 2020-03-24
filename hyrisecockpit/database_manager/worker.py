@@ -22,6 +22,13 @@ from hyrisecockpit.settings import (
 from .cursor import PoolCursor, StorageCursor
 
 
+def handle_published_data(published_data: Dict, task_queue: Queue) -> None:
+    """Fill task queue."""
+    tasks = published_data["body"]["querylist"]
+    for task in tasks:
+        task_queue.put(task)
+
+
 def fill_queue(
     workload_publisher_url: str,
     task_queue: Queue,
@@ -42,59 +49,16 @@ def fill_queue(
             handle_published_data(published_data, task_queue)
 
 
-def handle_published_data(published_data: Dict, task_queue: Queue) -> None:
-    """Fill task queue."""
-    tasks = published_data["body"]["querylist"]
-    for task in tasks:
-        task_queue.put(task)
-
-
-def execute_queries(
-    worker_id: str,
-    task_queue: Queue,
-    connection_pool: pool,
-    failed_task_queue: Queue,
-    continue_execution_flag: Value,
-    database_id: str,
-    i_am_done_event: EventType,
-    continue_event: EventType,
-) -> None:
-    """Define workers work loop."""
-    with PoolCursor(connection_pool) as cur:
-        with StorageCursor(
-            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
-        ) as log:
-            succesful_queries: List[Tuple[int, int, str, str, str]] = []
-            last_batched = time_ns()
-            while True:
-                if not continue_execution_flag.value:
-                    i_am_done_event.set()
-                    continue_event.wait()
-
-                try:
-                    task: Tuple[
-                        str, Tuple[Tuple[Union[str, int], Optional[str]], ...], str, str
-                    ] = task_queue.get(block=False)
-                    query, not_formatted_parameters, workload_type, query_type = task
-                    query = query.replace("[STREAM_ID]", worker_id)
-                    formatted_parameters = get_formatted_parameters(
-                        not_formatted_parameters
-                    )
-                    endts, latency = execute_task(cur, query, formatted_parameters)
-                    succesful_queries.append(
-                        (endts, latency, workload_type, query_type, worker_id)
-                    )
-
-                    if last_batched < time_ns() - 1_000_000_000:
-                        last_batched = time_ns()
-                        log.log_queries(succesful_queries)
-                        succesful_queries = []
-                except Empty:
-                    continue
-                except (ValueError, Error) as e:
-                    failed_task_queue.put(
-                        {"worker_id": worker_id, "task": task, "Error": str(e)}
-                    )
+def get_formatted_parameters(
+    not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
+) -> Optional[Tuple[Union[AsIs, str], ...]]:
+    """Create formatted parameters."""
+    if not_formatted_parameters:
+        return tuple(
+            AsIs(parameter) if protocol == "as_is" else parameter
+            for parameter, protocol in not_formatted_parameters
+        )
+    return None
 
 
 def execute_task(
@@ -108,13 +72,62 @@ def execute_task(
     return endts, endts - startts
 
 
-def get_formatted_parameters(
-    not_formatted_parameters: Tuple[Tuple[Union[str, int], Optional[str]], ...],
-) -> Optional[Tuple[Union[AsIs, str], ...]]:
-    """Create formatted parameters."""
-    if not_formatted_parameters:
-        return tuple(
-            AsIs(parameter) if protocol == "as_is" else parameter
-            for parameter, protocol in not_formatted_parameters
-        )
-    return None
+def log_results(
+    log: StorageCursor,
+    last_batched: int,
+    succesful_queries: List[Tuple[int, int, str, str, str]],
+    failed_queries: List[Tuple[int, str, str, str]],
+) -> int:
+    """Log results to database."""
+    if last_batched < time_ns() - 1_000_000_000:
+        log.log_queries(succesful_queries)
+        succesful_queries.clear()
+        log.log_failed_queries(failed_queries)
+        failed_queries.clear()
+        return time_ns()
+    return last_batched
+
+
+def execute_queries(
+    worker_id: str,
+    task_queue: Queue,
+    connection_pool: pool,
+    continue_execution_flag: Value,
+    database_id: str,
+    i_am_done_event: EventType,
+    continue_event: EventType,
+) -> None:
+    """Define workers work loop."""
+    with PoolCursor(connection_pool) as cur:
+        with StorageCursor(
+            STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD, database_id
+        ) as log:
+            succesful_queries: List[Tuple[int, int, str, str, str]] = []
+            failed_queries: List[Tuple[int, str, str, str]] = []
+            last_batched = time_ns()
+            while True:
+                if not continue_execution_flag.value:
+                    i_am_done_event.set()
+                    continue_event.wait()
+
+                try:
+                    task: Tuple[
+                        str, Tuple[Tuple[Union[str, int], Optional[str]], ...], str, str
+                    ] = task_queue.get(block=False)
+                    query, not_formatted_parameters, workload_type, query_type = task
+                    query = query.replace("[STREAM_ID]", str(worker_id))
+                    formatted_parameters = get_formatted_parameters(
+                        not_formatted_parameters
+                    )
+                    endts, latency = execute_task(cur, query, formatted_parameters)
+                    succesful_queries.append(
+                        (endts, latency, workload_type, query_type, worker_id)
+                    )
+                except Empty:
+                    continue
+                except (ValueError, Error) as e:
+                    failed_queries.append((time_ns(), worker_id, str(task), str(e)))
+
+                last_batched = log_results(
+                    log, last_batched, succesful_queries, failed_queries
+                )

@@ -141,3 +141,9 @@ export type AccessData = {
   columns: string[];
   descriptions: string[][];
 };
+
+export type MetricDetailsConfiguration = {
+  border: number;
+  unit: string;
+  stateOrder: MetricValueState[];
+};
