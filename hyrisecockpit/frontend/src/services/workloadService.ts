@@ -2,11 +2,11 @@ import axios from "axios";
 import { Workload } from "@/types/workloads";
 import { getTransferredWorkload } from "@/meta/workloads";
 import { WorkloadService } from "../types/services";
-import { controlBackend } from "../../config";
+import { controlBackend, monitorBackend } from "../../config";
 
 export function useWorkloadService(): WorkloadService {
-  async function getWorkloadData(): Promise<string[]> {
-    return axios.get(`${controlBackend}data`);
+  async function getLoadedWorkloadData(): Promise<string[]> {
+    return axios.get(`${monitorBackend}status`);
   }
   async function loadWorkloadData(workload: Workload): Promise<void> {
     axios.post(`${controlBackend}data`, {
@@ -35,7 +35,7 @@ export function useWorkloadService(): WorkloadService {
   }
 
   return {
-    getWorkloadData,
+    getLoadedWorkloadData,
     loadWorkloadData,
     deleteWorkloadData,
     startWorkload,

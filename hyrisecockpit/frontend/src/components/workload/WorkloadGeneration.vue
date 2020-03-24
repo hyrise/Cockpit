@@ -20,26 +20,32 @@
               thumb-label="always"
               min="0"
               max="1000"
-              @click="handleChange(workload)"
+              @click="handleWorkloadChange(workload)"
             ></v-slider>
             <v-text-field
               v-model="frequency"
               label="Number of queries per second"
               outlined
               dense
-              @change="handleChange(workload)"
+              @change="handleWorkloadChange(workload)"
             ></v-text-field>
             <v-radio-group
               v-model="workload"
               class="mt-0"
-              @change="handleChange(workload)"
+              @change="handleWorkloadChange(workload)"
             >
               <v-radio
                 v-for="workload in availableWorkloads"
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
-                :disabled="!isLoaded(workload)"
+                :disabled="
+                  !isLoaded(workload) ||
+                    buttonIsLoading['loadtpch01'] ||
+                    buttonIsLoading['loadtpch1'] ||
+                    buttonIsLoading['loadtpcds'] ||
+                    buttonIsLoading['loadjob']
+                "
               >
               </v-radio>
             </v-radio-group>
@@ -90,6 +96,7 @@
               @change="handleWorkloadDataChange(workload)"
               :loading="buttonIsLoading['load' + workload]"
               :disabled="buttonIsLoading['load' + workload]"
+              class="mt-0 pt-0"
             >
             </v-switch>
           </v-col>
@@ -109,7 +116,11 @@ import {
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
-import { getDisplayedWorkload } from "../../meta/workloads";
+import {
+  getDisplayedWorkload,
+  getTransferredWorkload,
+  getWorkloadFromTransferred
+} from "../../meta/workloads";
 
 interface Props {
   open: boolean;
@@ -125,7 +136,7 @@ interface Data {
   pauseWorkload: (workload: Workload) => void;
   stoppingWorkload: () => void;
   isLoaded: (workload: Workload) => boolean;
-  handleChange: (workload: Workload) => void;
+  handleWorkloadChange: (workload: Workload) => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
   isActive: Ref<boolean>;
@@ -152,16 +163,13 @@ export default defineComponent({
     const frequency = ref<number>(200);
     const workload = ref<Workload>("");
     const {
-      getWorkloadData,
+      getLoadedWorkloadData,
       loadWorkloadData,
       deleteWorkloadData,
       startWorkload,
       stopWorkload
     } = useWorkloadService();
     const workloadData = ref<Workload[]>([]);
-    /* getWorkloadData().then((response: any) => {
-      workloadData.value = response.data;
-    }); */
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
@@ -192,7 +200,7 @@ export default defineComponent({
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
     }
-    function handleChange(workload: Workload): void {
+    function handleWorkloadChange(workload: Workload): void {
       if (startedWorkload.value) {
         startingWorkload(workload);
       }
@@ -200,15 +208,44 @@ export default defineComponent({
     function handleWorkloadDataChange(workload: Workload): void {
       buttonIsLoading["load" + workload] = true;
       if (isLoaded(workload)) {
-        loadWorkloadData(workload).then(() => {
-          buttonIsLoading["load" + workload] = false;
-        });
+        loadWorkloadData(workload);
       } else {
-        deleteWorkloadData(workload).then(() => {
-          buttonIsLoading["load" + workload] = false;
-        });
+        deleteWorkloadData(workload);
       }
     }
+    function updateWorkloadInformation(): void {
+      getLoadedWorkloadData().then((response: any) => {
+        var loadedWorkloadData: Workload[] = [];
+        var loadingCount = 0;
+        for (var i = 0; i < response.data.length; i++) {
+          for (var j = 0; j < response.data[0].loaded_benchmarks.length; j++) {
+            if (i == 0) {
+              loadedWorkloadData[i] = getWorkloadFromTransferred(
+                response.data[i].loaded_benchmarks[j]
+              );
+            } else {
+              if (
+                !response.data[i].loaded_benchmarks.includes(
+                  getTransferredWorkload(loadedWorkloadData[j])
+                )
+              ) {
+                delete loadedWorkloadData[j];
+              }
+            }
+          }
+          if (response.data[i].database_blocked_status == 0) {
+            loadingCount++;
+          }
+        }
+        if (loadingCount == response.data.length) {
+          for (j = 0; j < availableWorkloads.length; j++) {
+            buttonIsLoading["load" + availableWorkloads[j]] = false;
+          }
+        }
+        workloadData.value = loadedWorkloadData;
+      });
+    }
+    setInterval(updateWorkloadInformation, 3000);
     return {
       availableWorkloads,
       frequency,
@@ -220,7 +257,7 @@ export default defineComponent({
       pauseWorkload,
       stoppingWorkload,
       isLoaded,
-      handleChange,
+      handleWorkloadChange,
       handleWorkloadDataChange,
       closeWorkloadDialog,
       isActive

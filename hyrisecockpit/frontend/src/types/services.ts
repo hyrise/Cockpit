@@ -22,7 +22,7 @@ export interface PluginService {
 }
 
 export interface WorkloadService {
-  getWorkloadData: () => Promise<string[]>;
+  getLoadedWorkloadData: () => Promise<string[]>;
   loadWorkloadData: (workload: Workload) => Promise<void>;
   deleteWorkloadData: (workload: Workload) => Promise<void>;
   startWorkload: (workload: Workload, frequency: number) => Promise<void>;
