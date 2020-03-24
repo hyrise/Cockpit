@@ -4,6 +4,8 @@ function generateRandomFloat(min: number, range: number) {
   return Math.random() * range + min;
 }
 
+//TODO: add faker for missing entities
+
 export function fakeDatabaseData(databaseId: string): Object {
   return {
     id: databaseId,

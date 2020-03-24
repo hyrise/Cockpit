@@ -12,6 +12,7 @@ function getRandomIds(number: number): string[] {
   return [...Array(number).keys()].map(() => faker.random.word());
 }
 
+// TODO: mock missing queries
 export function useMocks(
   numbers: Record<Entity, number>
 ): { mockQueries: () => void; getMockedResponse(query: Query): any } {
