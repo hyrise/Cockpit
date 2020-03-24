@@ -19,7 +19,7 @@ WORKLOAD_PUBSUB_PORT = "pubsub_port"
 WORKLOAD_SUB_HOST = "pubsub_host"
 
 
-def fake_server_constructor(self, *args) -> None:
+def fake_server_constructor(*args) -> MagicMock:
     """Fake server."""
     fake_server = MagicMock()
     fake_server.start.return_value = None
@@ -28,6 +28,17 @@ def fake_server_constructor(self, *args) -> None:
     fake_server_constructor = MagicMock()
     fake_server_constructor.return_value = fake_server
     return fake_server_constructor
+
+
+def fake_database(*args) -> MagicMock:
+    """Fake server."""
+    fake_database = MagicMock()
+    fake_database.driver.dbname = "database_name"
+    fake_database.driver.host = "database_host"
+    fake_database.driver.port = 10000
+    fake_database.number_workers = 8
+
+    return fake_database
 
 
 class TestDatabaseManager:
@@ -239,7 +250,7 @@ class TestDatabaseManager:
         mocked_validate_connection: MagicMock,
         database_manager: DatabaseManager,
     ) -> None:
-        """Test add a database with an invalid connection."""
+        """Test add an existing database."""
         mocked_validate_connection.return_value = True
         body = {
             "id": "database_id",
@@ -255,3 +266,27 @@ class TestDatabaseManager:
 
         mocked_database_constructor.assert_not_called()
         assert response == get_response(400)
+
+    @patch("hyrisecockpit.database_manager.manager.Database")
+    def test_call_get_databases(
+        self, mocked_database_constructor: MagicMock, database_manager: DatabaseManager,
+    ) -> None:
+        """Test get databases."""
+        database_manager._databases["db1"] = fake_database()
+        body: Dict = {}
+
+        expected_databases = [
+            {
+                "id": "db1",
+                "host": "database_host",
+                "port": 10000,
+                "number_workers": 8,
+                "dbname": "database_name",
+            }
+        ]
+        expected_response = get_response(200)
+        expected_response["body"]["databases"] = expected_databases
+
+        response = database_manager._call_get_databases(body)
+
+        assert response == expected_response
