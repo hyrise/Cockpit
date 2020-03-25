@@ -9,7 +9,12 @@ def create_app(env=None) -> Flask:
     from .routes import register_routes
 
     app: Flask = Flask(__name__)
-    api: Api = Api(app, title="Flaskerific API", version="0.1.0")
+    api: Api = Api(
+        app,
+        title="Hyrise Cockpit",
+        description="Monitor and control multiple databases at once.",
+        version="2.0",
+    )
 
     register_routes(api, app)
     return app
