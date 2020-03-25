@@ -2,9 +2,10 @@
 
 from collections import Counter
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Dict
+from typing import Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
+from psycopg2 import pool
 from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
@@ -26,7 +27,7 @@ storage_user: str = "Käptin Blaubär"
 
 def get_fake_tables() -> Dict:
     """Return fake table dictionary."""
-    fake_dict = {
+    fake_dict: Dict[str, List[str]] = {
         "alternative": [
             "The Dough Rollers",
             "Broken Witt Rebels",
@@ -38,20 +39,20 @@ def get_fake_tables() -> Dict:
     return fake_dict
 
 
-def get_fake_pool_cursor(connection_pool) -> MagicMock:
+def get_fake_pool_cursor(connection_pool: pool) -> MagicMock:
     """Return fake PoolCursor."""
-    mocked_context_cur = MagicMock()
-    mocked_cur = MagicMock()
+    mocked_context_cur: MagicMock = MagicMock()
+    mocked_cur: MagicMock = MagicMock()
     mocked_cur.execute.return_value = None
     mocked_cur.fetchall.return_value = []
     mocked_context_cur.__enter__.return_value = mocked_cur
     return mocked_context_cur
 
 
-def get_fake_pool_cursor_with_rows_to_return(connection_pool) -> MagicMock:
+def get_fake_pool_cursor_with_rows_to_return(connection_pool: pool) -> MagicMock:
     """Return fake PoolCursor with return value for fetch all."""
-    mocked_context_cur = MagicMock()
-    mocked_cur = MagicMock()
+    mocked_context_cur: MagicMock = MagicMock()
+    mocked_cur: MagicMock = MagicMock()
     mocked_cur.execute.return_value = None
     mocked_cur.fetchall.return_value = [
         ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
@@ -62,20 +63,20 @@ def get_fake_pool_cursor_with_rows_to_return(connection_pool) -> MagicMock:
 
 
 def get_fake_background_job_manager(
-    database_id,
-    database_blocked,
-    connection_pool,
-    loaded_tables,
-    storage_host,
-    storage_password,
-    storage_port,
-    storage_user,
+    database_id: str,
+    database_blocked: ValueType,
+    connection_pool: pool,
+    loaded_tables: Dict[str, Optional[str]],
+    storage_host: str,
+    storage_password: str,
+    storage_port: str,
+    storage_user: str,
 ) -> MagicMock:
     """Return fake  BackgroundJobManager."""
-    m = MagicMock()
-    m.start.side_effect = None
-    m.load_tables.side_effect = None
-    return m
+    mocked_job_manager: MagicMock = MagicMock()
+    mocked_job_manager.start.side_effect = None
+    mocked_job_manager.load_tables.side_effect = None
+    return mocked_job_manager
 
 
 class TestDatabase(object):
