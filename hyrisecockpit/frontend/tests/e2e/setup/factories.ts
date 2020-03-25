@@ -3,8 +3,11 @@ import {
   assignFakeData,
   generateRandomFloat,
   generateRandomInt,
-  generateRandomNumbers
+  generateRandomNumbers,
+  benchmarks
 } from "./helpers";
+
+/* factories to fake all request data */
 
 //TODO: add faker for missing entities
 
@@ -125,4 +128,25 @@ export function fakeDatabaseChunksData(
     tableIds.map(id => fakeTableChunksData(id, columnIds, numberOfChunks))
   );
   return data;
+}
+
+function fakeQueryInformationData(): Object {
+  return {
+    benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
+    query_number: faker.random.number(),
+    throughput: faker.random.number(),
+    latency: faker.random.number()
+  };
+}
+
+export function fakeDatabaseQueryInformationData(
+  databaseId: string,
+  numberOfQueries: number
+): Object {
+  return {
+    id: databaseId,
+    query_information: [...Array(numberOfQueries).keys()].map(() =>
+      fakeQueryInformationData()
+    )
+  };
 }

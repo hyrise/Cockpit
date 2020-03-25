@@ -4,7 +4,13 @@ import { mockBackend } from "../../setup/backendMock";
 
 describe("Change page routes", () => {
   beforeEach(() => {
-    mockBackend({ databases: 1, tables: 2, columns: 2, chunks: 2 });
+    mockBackend({
+      databases: 1,
+      tables: 2,
+      columns: 2,
+      chunks: 2,
+      queries: 10
+    });
     cy.visit("/");
   });
 
@@ -34,7 +40,7 @@ describe("Change page routes", () => {
   });
 
   // test add database
-  describe("when clicking the database button button", () => {
+  describe("when clicking the database button", () => {
     it("will open the database list", () => {
       testElementTrigger("div", "Database", "DATABASES");
     });

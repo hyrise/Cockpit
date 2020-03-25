@@ -4,7 +4,8 @@ import {
   fakeDatabaseStorageData,
   fakeNumberData,
   fakeKruegerData,
-  fakeDatabaseChunksData
+  fakeDatabaseChunksData,
+  fakeDatabaseQueryInformationData
 } from "./factories";
 import {
   assignFakeData,
@@ -13,6 +14,8 @@ import {
   Entity,
   Request
 } from "./helpers";
+
+/* mocks containing fake data */
 
 // TODO: mock missing Requests
 export function useMocks(
@@ -28,10 +31,11 @@ export function useMocks(
 
   function mockIds(): Record<Entity, string[]> {
     return {
-      databases: generateRandomIds(numbers.databases),
-      tables: generateRandomIds(numbers.tables),
-      columns: generateRandomIds(numbers.columns),
-      chunks: []
+      databases: generateRandomIds(numbers.databases, "database-"),
+      tables: generateRandomIds(numbers.tables, "table-"),
+      columns: generateRandomIds(numbers.columns, "column-"),
+      chunks: [],
+      queries: []
     };
   }
 
@@ -86,6 +90,9 @@ export function useMocks(
         )
       )
     };
+    requestMocks.detailed_query_information = mockedIds.databases.map(id =>
+      fakeDatabaseQueryInformationData(id, numbers.queries)
+    );
 
     return requestMocks as Record<Request, any>;
   }

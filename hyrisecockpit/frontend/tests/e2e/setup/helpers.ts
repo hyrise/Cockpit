@@ -1,6 +1,6 @@
 import * as faker from "faker";
 
-export type Entity = "databases" | "tables" | "columns" | "chunks";
+export type Entity = "databases" | "tables" | "columns" | "chunks" | "queries";
 export type Request =
   | "database"
   | "system"
@@ -9,7 +9,9 @@ export type Request =
   | "latency"
   | "queue_length"
   | "krueger_data"
-  | "chunks";
+  | "chunks"
+  | "detailed_query_information";
+export const benchmarks = ["tpch_1", "tpch_0.1", "tpcds", "job"];
 
 export function fakeDataByIds(
   ids: string[],
@@ -30,8 +32,11 @@ export function generateRandomFloat(min: number, range: number) {
   return Math.random() * range + min;
 }
 
-export function generateRandomIds(length: number): string[] {
-  return [...Array(length).keys()].map(() => faker.random.uuid());
+export function generateRandomIds(
+  length: number,
+  prefix: string = ""
+): string[] {
+  return [...Array(length).keys()].map(() => prefix + faker.random.uuid());
 }
 
 export function generateRandomInt(min: number, range: number) {

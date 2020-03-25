@@ -15,6 +15,8 @@ function mockRoute(
   });
 }
 
+/* backend with mocked routes */
+
 //TODO: mock missing routes
 
 export function mockBackend(
@@ -50,6 +52,12 @@ export function mockBackend(
       false
     );
     mockRoute("GET", "**/monitor/chunks", getResponseMock("chunks"), true);
+    mockRoute(
+      "GET",
+      "**/monitor/detailed_query_information",
+      getResponseMock("detailed_query_information"),
+      false
+    );
   }
 
   function restartBackend(): void {
