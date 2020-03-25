@@ -33,6 +33,18 @@ get_fake_read_sql_query: Callable[
     {"col1": ["data"]}
 )
 
+mocked_storage_curser = MagicMock()
+mocked_storage_curser.log_meta_information.return_value = None
+
+
+def get_fake_storage_curser(
+    storage_host, storage_port, storage_user, _storage_password, database_id
+):
+    """Return fake storage curser."""
+    mocked_storage_curser_constructor = MagicMock()
+    mocked_storage_curser_constructor.__enter__.return_value = mocked_storage_curser
+    return mocked_storage_curser_constructor
+
 
 class TestBackgroundJobManager:
     """Tests for the BackgroundJobManager class."""
@@ -221,3 +233,68 @@ class TestBackgroundJobManager:
         )
 
         assert expected_dict == received_dict
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    def test_logs_updated_chunks_data_with_empty_meta_chunks(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test logs updated chunks data when meta chunks is empty."""
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = DataFrame()
+
+        background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
+        background_job_manager._create_chunks_dictionary = MagicMock()  # type: ignore
+        background_job_manager._calculate_chunks_difference = MagicMock()  # type: ignore
+
+        background_job_manager._update_chunks_data()
+
+        global mocked_storage_curser
+
+        background_job_manager._create_chunks_dictionary.assert_not_called()  # type: ignore
+        background_job_manager._calculate_chunks_difference.assert_not_called()  # type: ignore
+        mocked_storage_curser.log_meta_information.assert_called_once_with(
+            "chunks_data", {"chunks_data_meta_information": "{}"}, 42
+        )
+
+        mocked_storage_curser = MagicMock()
+        mocked_storage_curser.log_meta_information.return_value = None
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    def test_logs_updated_chunks_data_with_meta_chunks(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test logs updated chunks data when meta chunks is not empty."""
+        fake_not_empty_data_frame = DataFrame({"col1": [42]})
+
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_not_empty_data_frame
+
+        background_job_manager._sql_to_data_frame = (  # type: ignore
+            mocked_sql_to_data_frame
+        )
+        background_job_manager._create_chunks_dictionary = MagicMock()  # type: ignore
+        background_job_manager._calculate_chunks_difference = MagicMock()  # type: ignore
+        background_job_manager._calculate_chunks_difference.return_value = {"new": 55}  # type: ignore
+
+        background_job_manager._update_chunks_data()
+
+        global mocked_storage_curser
+
+        background_job_manager._create_chunks_dictionary.assert_called_once_with(  # type: ignore
+            fake_not_empty_data_frame
+        )
+        background_job_manager._calculate_chunks_difference.assert_called_once()  # type: ignore
+        mocked_storage_curser.log_meta_information.assert_called_once_with(
+            "chunks_data", {"chunks_data_meta_information": '{"new": 55}'}, 42
+        )
+
+        mocked_storage_curser = MagicMock()
+        mocked_storage_curser.log_meta_information.return_value = None
