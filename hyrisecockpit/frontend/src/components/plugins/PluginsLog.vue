@@ -3,7 +3,7 @@
     <v-expansion-panel>
       <v-expansion-panel-header flat>
         <div class="log">
-          log
+          Plugin log messages
         </div>
       </v-expansion-panel-header>
       <v-expansion-panel-content class="content">
@@ -11,8 +11,8 @@
           class="log-text"
           readonly
           solo
-          label="log"
-          :value="logText"
+          label="Plugin log messages"
+          :value="logMessages"
         ></v-textarea>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -32,7 +32,9 @@ import {
 interface Props {
   logText: string;
 }
-interface Data {}
+interface Data {
+  logMessages: Ref<string>;
+}
 
 export default defineComponent({
   name: "PluginsLog",
@@ -43,7 +45,12 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    return {};
+    return {
+      logMessages: computed(() => {
+        if (props.logText == "") return "No messages";
+        return props.logText;
+      })
+    };
   }
 });
 </script>

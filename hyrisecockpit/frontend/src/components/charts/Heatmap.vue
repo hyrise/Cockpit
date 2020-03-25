@@ -8,6 +8,7 @@ import * as Plotly from "plotly.js";
 import { ChartConfiguration, AccessData } from "../../types/metrics";
 import { ChartProps, ChartPropsValidation } from "../../types/charts";
 import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
+import { colorDefinition } from "../../meta/colors";
 
 interface Props extends ChartProps {
   autosize: boolean;
@@ -90,6 +91,13 @@ function useHeatMapConfiguration(
       y: data.chunks,
       text: data.descriptions,
       type: "heatmap",
+      colorscale: [
+        [0.0, colorDefinition.darkblue],
+        [0.25, colorDefinition.blue],
+        [0.5, "#FFFFFF"],
+        [0.75, colorDefinition.orange],
+        [1, colorDefinition.darkorange]
+      ],
       hovermode: "closest",
       hovertemplate:
         "<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>"

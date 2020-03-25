@@ -69,7 +69,7 @@ export default defineComponent({
       });
     }
 
-    const intervalId = setInterval(updateQueryInformation, 5000);
+    const intervalId = setInterval(updateQueryInformation, 10000);
 
     onUnmounted(() => {
       clearInterval(intervalId);
