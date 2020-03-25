@@ -1,5 +1,13 @@
 <template>
   <div class="setting-row">
+    <v-tooltip class="setting-tooltip" bottom>
+      <template v-slot:activator="{ on }">
+        <v-icon class="setting-icon" v-on="on" @click="togglePluginEditor()">
+          mdi-help-circle
+        </v-icon>
+      </template>
+      <span>{{ setting.description }}</span>
+    </v-tooltip>
     <div class="setting-name">{{ pluginName }}:</div>
     <v-text-field class="setting-text" v-model="value" />
     <v-btn text @click="updatePluginSettings(databaseId, setting.name, value)">
@@ -70,10 +78,17 @@ export default defineComponent({
   flex: 0 0 40%;
 }
 .setting-row {
-  margin-left: 5%;
-  margin-top: -10px;
+  margin-left: 2%;
+  height: 30px;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
+}
+.setting-tooltip {
+  z-index: 10;
+}
+.setting-icon {
+  margin-right: 4px;
+  margin-top: -2px;
 }
 </style>
