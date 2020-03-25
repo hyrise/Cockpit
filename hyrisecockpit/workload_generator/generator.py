@@ -11,7 +11,6 @@ from zmq import PUB, Context
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
-    NotExistingConfigFileException,
     NotExistingWorkloadFolderException,
     QueryTypeNotFoundException,
     QueryTypesNotSpecifiedException,
@@ -101,7 +100,6 @@ class WorkloadGenerator(object):
             EmptyWorkloadFolderException,
             QueryTypeNotFoundException,
             QueryTypesNotSpecifiedException,
-            NotExistingConfigFileException,
         ) as e:
             return get_error_response(400, str(e))
 
