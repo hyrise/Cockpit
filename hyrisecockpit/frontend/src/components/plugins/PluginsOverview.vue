@@ -41,17 +41,20 @@
                 </v-icon>
               </v-btn>
             </div>
-            <div
-              v-for="setting in pluginSettings[database][plugin]"
-              :key="setting.name"
-            >
-              <PluginSetting
-                v-if="showSettings[database + '_' + plugin]"
-                :setting="setting"
-                :databaseId="database"
-                :pluginId="plugin"
-              />
-            </div>
+            <v-expand-transition>
+              <div v-if="showSettings[database + '_' + plugin]">
+                <div
+                  v-for="setting in pluginSettings[database][plugin]"
+                  :key="setting.name"
+                >
+                  <PluginSetting
+                    :setting="setting"
+                    :databaseId="database"
+                    :pluginId="plugin"
+                  />
+                </div>
+              </div>
+            </v-expand-transition>
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
