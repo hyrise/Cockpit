@@ -25,13 +25,13 @@ import {
 // TODO: mock missing Requests
 export function useMocks(
   numbers: Record<Entity, number>
-): { renewMocks: () => void; getResponseMock(request: Request): any } {
+): { renewMocks: () => void; getMockedResponse(request: Request): any } {
   let mockedIds: Record<Entity, string[]> = mockIds();
-  let requestMocks: Record<Request, any> = mockRequests();
+  let responseMocks: Record<Request, any> = mockResponses();
 
   function renewMocks(): void {
     mockedIds = mockIds();
-    requestMocks = mockRequests();
+    responseMocks = mockResponses();
   }
 
   function mockIds(): Record<Entity, string[]> {
@@ -49,46 +49,46 @@ export function useMocks(
     };
   }
 
-  function mockRequests(): Record<Request, any> {
-    const requestMocks: Partial<Record<Request, any>> = {};
+  function mockResponses(): Record<Request, any> {
+    const responseMocks: Partial<Record<Request, any>> = {};
 
     // fake data for all requests
-    requestMocks.database = fakeDataByIds(
+    responseMocks.database = fakeDataByIds(
       mockedIds.databases,
       fakeDatabaseData
     );
-    requestMocks.storage = {
+    responseMocks.storage = {
       storage: assignFakeData(
         mockedIds.databases.map(id =>
           fakeDatabaseStorageData(id, mockedIds.tables, mockedIds.columns)
         )
       )
     };
-    requestMocks.system = {
+    responseMocks.system = {
       system_data: assignFakeData(
         fakeDataByIds(mockedIds.databases, fakeDatabaseSystemData)
       )
     };
-    requestMocks.throughput = {
+    responseMocks.throughput = {
       throughput: assignFakeData(
         fakeDataByIds(mockedIds.databases, fakeNumberData)
       )
     };
-    requestMocks.latency = {
+    responseMocks.latency = {
       latency: assignFakeData(
         fakeDataByIds(mockedIds.databases, fakeNumberData)
       )
     };
-    requestMocks.queue_length = {
+    responseMocks.queue_length = {
       queue_length: assignFakeData(
         fakeDataByIds(mockedIds.databases, fakeNumberData)
       )
     };
-    requestMocks.krueger_data = fakeDataByIds(
+    responseMocks.krueger_data = fakeDataByIds(
       mockedIds.databases,
       fakeKruegerData
     );
-    requestMocks.chunks = {
+    responseMocks.chunks = {
       chunks_data: assignFakeData(
         mockedIds.databases.map(id =>
           fakeDatabaseChunksData(
@@ -100,35 +100,30 @@ export function useMocks(
         )
       )
     };
-    requestMocks.detailed_query_information = mockedIds.databases.map(id =>
+    responseMocks.detailed_query_information = mockedIds.databases.map(id =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
-    requestMocks.data = benchmarks;
-    requestMocks.available_plugins = mockedIds.plugins;
+    responseMocks.data = benchmarks;
+    responseMocks.available_plugins = mockedIds.plugins;
     // NOTE: currently all databases have the same plugins activated
-    requestMocks.plugin = mockedIds.databases.map(id =>
+    responseMocks.plugin = mockedIds.databases.map(id =>
       fakeDatabasePluginsData(id, mockedIds.activated_plugins)
     );
-    requestMocks.plugin_settings = {
-      plugin_settings: mockedIds.databases
-        .map(id => fakeDatabasePluginSettings(id, mockedIds.plugins))
-        .reduce((data: any[], dbPluginSettings: any[]) => {
-          dbPluginSettings.forEach(setting => {
-            data.push(setting);
-          });
-          return data;
-        }, [])
+    responseMocks.plugin_settings = {
+      plugin_settings: mockedIds.databases.map(id =>
+        fakeDatabasePluginSettings(id, mockedIds.plugins)
+      )
     };
     // NOTE: currently all databases have exactly one log entry
-    requestMocks.plugin_log = mockedIds.databases.map(id =>
+    responseMocks.plugin_log = mockedIds.databases.map(id =>
       fakeDatabasePluginLogs(id, mockedIds.plugins)
     );
-    return requestMocks as Record<Request, any>;
+    return responseMocks as Record<Request, any>;
   }
 
-  function getResponseMock(request: Request): any {
-    return requestMocks[request];
+  function getMockedResponse(request: Request): any {
+    return responseMocks[request];
   }
 
-  return { renewMocks, getResponseMock };
+  return { renewMocks, getMockedResponse };
 }

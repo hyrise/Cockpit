@@ -7,12 +7,16 @@ function mockRoute(
   response: any,
   withBody: boolean
 ): void {
-  console.log(url, response);
+  console.log(url, method, response); //TODO: remove when finished
   cy.route({
     method: method,
     url: url,
     response: withBody ? { body: response } : response
   });
+}
+
+function mockGetRoute(url: string, response: any, withBody: boolean): void {
+  mockRoute("GET", url, response, withBody);
 }
 
 /* backend with mocked routes */
@@ -22,57 +26,54 @@ function mockRoute(
 export function useBackendMock(
   numbers: Record<Entity, number>
 ): { restart(): void; start(): void } {
-  const { getResponseMock, renewMocks } = useMocks(numbers);
+  const { getMockedResponse, renewMocks } = useMocks(numbers);
 
   function start(): void {
     cy.server();
-    mockRoute("GET", "**/control/database", getResponseMock("database"), false);
-    mockRoute("GET", "**/monitor/system", getResponseMock("system"), true);
-    mockRoute("GET", "**/monitor/storage", getResponseMock("storage"), true);
-    mockRoute(
-      "GET",
+    mockGetRoutes();
+  }
+
+  function mockGetRoutes(): void {
+    mockGetRoute("**/control/database", getMockedResponse("database"), false);
+    mockGetRoute("**/monitor/system", getMockedResponse("system"), true);
+    mockGetRoute("**/monitor/storage", getMockedResponse("storage"), true);
+    mockGetRoute(
       "**/monitor/throughput",
-      getResponseMock("throughput"),
+      getMockedResponse("throughput"),
       true
     );
-    mockRoute("GET", "**/monitor/latency", getResponseMock("latency"), true);
-    mockRoute(
-      "GET",
+    mockGetRoute("**/monitor/latency", getMockedResponse("latency"), true);
+    mockGetRoute(
       "**/monitor/queue_length",
-      getResponseMock("queue_length"),
+      getMockedResponse("queue_length"),
       true
     );
-    mockRoute(
-      "GET",
+    mockGetRoute(
       "**/monitor/krueger_data",
-      getResponseMock("krueger_data"),
+      getMockedResponse("krueger_data"),
       false
     );
-    mockRoute("GET", "**/monitor/chunks", getResponseMock("chunks"), true);
-    mockRoute(
-      "GET",
+    mockGetRoute("**/monitor/chunks", getMockedResponse("chunks"), true);
+    mockGetRoute(
       "**/monitor/detailed_query_information",
-      getResponseMock("detailed_query_information"),
+      getMockedResponse("detailed_query_information"),
       false
     );
-    mockRoute("GET", "**/control/data", getResponseMock("data"), false);
-    mockRoute(
-      "GET",
+    mockGetRoute("**/control/data", getMockedResponse("data"), false);
+    mockGetRoute(
       "**/control/available_plugins",
-      getResponseMock("available_plugins"),
+      getMockedResponse("available_plugins"),
       false
     );
-    mockRoute("GET", "**/control/plugin", getResponseMock("plugin"), false);
-    mockRoute(
-      "GET",
+    mockGetRoute("**/control/plugin", getMockedResponse("plugin"), false);
+    mockGetRoute(
       "**/control/plugin_settings",
-      getResponseMock("plugin_settings"),
+      getMockedResponse("plugin_settings"),
       true
     );
-    mockRoute(
-      "GET",
+    mockGetRoute(
       "**/control/plugin_log",
-      getResponseMock("plugin_log"),
+      getMockedResponse("plugin_log"),
       false
     );
   }
@@ -82,5 +83,8 @@ export function useBackendMock(
     start();
   }
 
-  return { restart, start };
+  return {
+    restart,
+    start
+  };
 }

@@ -158,19 +158,22 @@ export function fakeDatabasePluginsData(
   return { id: databaseId, plugins: plugins };
 }
 
-function fakePluginSettings(databaseId: string): Object {
+function fakePluginSettings(): Object {
   return {
-    id: databaseId,
     name: faker.random.word(),
-    value: faker.random.number()
+    value: faker.random.number(),
+    description: faker.random.words()
   };
 }
 
 export function fakeDatabasePluginSettings(
   databaseId: string,
   plugins: string[]
-): Object[] {
-  return plugins.map(() => fakePluginSettings(databaseId));
+): Object {
+  return {
+    id: databaseId,
+    plugin_settings: plugins.map(() => fakePluginSettings())
+  };
 }
 
 function fakePluginLog(pluginId: string): Object {
