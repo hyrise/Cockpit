@@ -10,53 +10,42 @@ from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
+database_blocked_value: Value = Value("b", False)
+number_worker: int = 42
+database_id: str = "Proformance"
+workload_publisher_url: str = "Lother_du_altes_haus"
+
+
+def get_fake_background_scheduler() -> MagicMock:
+    """Return mocked background scheduler."""
+    m = MagicMock()
+    m.start.side_effect = None
+    return m
+
+
+def get_fake_dummy_execute_queries_worker(
+    i,
+    task_queue,
+    connection_pool,
+    failed_task_queue,
+    continue_execution_flag,
+    database_id,
+    execute_task_worker_done_event,
+    worker_continue_event,
+) -> str:
+    """Return a dummy execute task worker."""
+    return "foo"
+
+
+def get_fake_dummy_fill_worker(
+    workload_publisher_url, task_queue, continue_execution_flag, worker_continue_event,
+) -> str:
+    """Return a dummy fill worker."""
+    return "foo"
+
 
 class TestWorkerPool(object):
     """Tests for the WorkerPool class."""
-
-    def get_fake_background_scheduler() -> MagicMock:  # type: ignore
-        """Return mocked background scheduler."""
-        m = MagicMock()
-        m.start.side_effect = None
-        return m
-
-    def get_database_blocked_value(self) -> Value:
-        """Return Value for blocked status."""
-        return Value("b", False)
-
-    def get_number_worker(self) -> int:
-        """Return number of workers."""
-        return 42
-
-    def get_database_id(self) -> str:
-        """Return database id."""
-        return "Proformance"
-
-    def get_workload_publisher_url(self) -> str:
-        """Return workload publisher URL."""
-        return "Lother_du_altes_haus"
-
-    def get_fake_dummy_execute_queries_worker(
-        i,  # noqa
-        task_queue,
-        connection_pool,
-        failed_task_queue,
-        continue_execution_flag,
-        database_id,
-        execute_task_worker_done_event,
-        worker_continue_event,
-    ) -> str:
-        """Return a dummy execute task worker."""
-        return "foo"
-
-    def get_fake_dummy_fill_worker(
-        workload_publisher_url,  # noqa
-        task_queue,
-        continue_execution_flag,
-        worker_continue_event,
-    ) -> str:
-        """Return a dummy fill worker."""
-        return "foo"
 
     @fixture
     @patch(
@@ -75,19 +64,19 @@ class TestWorkerPool(object):
         """Get a new WorkerPool."""
         return WorkerPool(
             connection_pool=None,
-            number_worker=self.get_number_worker(),
-            database_id=self.get_database_id(),
-            workload_publisher_url=self.get_workload_publisher_url(),
-            database_blocked=self.get_database_blocked_value(),
+            number_worker=number_worker,
+            database_id=database_id,
+            workload_publisher_url=workload_publisher_url,
+            database_blocked=database_blocked_value,
         )
 
     def test_initializes_worker_pool(self, worker_pool) -> None:
         """Test initialization of worker pool attributes."""
         assert worker_pool._connection_pool is None
-        assert worker_pool._number_worker == self.get_number_worker()
-        assert worker_pool._database_id == self.get_database_id()
+        assert worker_pool._number_worker == number_worker
+        assert worker_pool._database_id == database_id
         assert type(worker_pool._database_blocked) is ValueType
-        assert worker_pool._workload_publisher_url == self.get_workload_publisher_url()
+        assert worker_pool._workload_publisher_url == workload_publisher_url
         assert worker_pool._status == "closed"
         assert type(worker_pool._continue_execution_flag) is ValueType
         assert worker_pool._continue_execution_flag.value
@@ -100,7 +89,7 @@ class TestWorkerPool(object):
     def test_generation_of_execute_task_worker_done_events(self, worker_pool) -> None:
         """Check if enough events of type events are generated."""
         events = worker_pool._generate_execute_task_worker_done_events()
-        assert len(events) == self.get_number_worker()
+        assert len(events) == number_worker
         assert all(type(event) is EventType for event in events)
 
     @patch(
@@ -110,10 +99,10 @@ class TestWorkerPool(object):
     def test_generats_execute_task_worker(self, worker_pool) -> None:
         """Check if enough processes of type process are generated."""
         worker_pool._execute_task_worker_done_event = [
-            "foo" for _ in range(self.get_number_worker())
+            "foo" for _ in range(number_worker)
         ]
         processes = worker_pool._generate_execute_task_worker()
-        assert len(processes) == self.get_number_worker()
+        assert len(processes) == number_worker
         assert all(type(process) is ProcessType for process in processes)
 
     @patch(
@@ -150,9 +139,7 @@ class TestWorkerPool(object):
     def test_terminates_worker(self, worker_pool) -> None:
         """Check if pool is closed."""
         worker_pool._fill_task_worker = MagicMock()
-        worker_pool._execute_task_workers = [
-            MagicMock() for _ in range(self.get_number_worker())
-        ]
+        worker_pool._execute_task_workers = [MagicMock() for _ in range(number_worker)]
         worker_pool._terminate_worker()
 
         assert worker_pool._fill_task_worker is None
@@ -164,7 +151,7 @@ class TestWorkerPool(object):
     @mark.timeout(10)
     def test_waits_for_workers(self, worker_pool) -> None:
         """Test waiting for event."""
-        events = [Event() for _ in range(self.get_number_worker())]
+        events = [Event() for _ in range(number_worker)]
         for event in events:
             event.set()
 
@@ -180,7 +167,7 @@ class TestWorkerPool(object):
         mocked_fill_worker_process = MagicMock()
         mocked_fill_worker_process.start.return_value = None
         mocked_processes = []
-        for _ in range(self.get_number_worker()):
+        for _ in range(number_worker):
             mocked_execute_task_worker_process = MagicMock()
             mocked_execute_task_worker_process.start.return_value = None
             mocked_processes.append(mocked_execute_task_worker_process)
