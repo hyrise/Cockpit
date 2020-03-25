@@ -1,9 +1,5 @@
 import * as faker from "faker";
-import { assignFakeData } from "./helpers";
-
-function generateRandomFloat(min: number, range: number) {
-  return Math.random() * range + min;
-}
+import { assignFakeData, generateRandomFloat } from "./helpers";
 
 //TODO: add faker for missing entities
 
