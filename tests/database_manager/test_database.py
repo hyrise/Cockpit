@@ -9,115 +9,77 @@ from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
 
+database_id: str = "MongoDB forever"
+database_user: str = "Proform"
+database_password: str = "passwort"
+database_host: str = "nsa"
+database_port: str = "666"
+database_name: str = "MongoDB"
+number_workers: int = 42
+workload_publisher_url: str = "lothar matthäus"
+default_tables: str = "Watt_ihr_Volt"
+storage_host: str = "xulfni"
+storage_password: str = "1234"
+storage_port: str = "42"
+storage_user: str = "Käptin Blaubär"
+
+
+def get_fake_tables() -> Dict:
+    """Return fake table dictionary."""
+    fake_dict = {
+        "alternative": [
+            "The Dough Rollers",
+            "Broken Witt Rebels",
+            "Bonny Doon",
+            "Jack White",
+        ],
+        "Rock": ["Gary Clark Jr.", "Greta Van Fleet", "Tenacious D"],
+    }
+    return fake_dict
+
+
+def get_fake_pool_cursor(connection_pool) -> MagicMock:
+    """Return fake PoolCursor."""
+    mocked_context_cur = MagicMock()
+    mocked_cur = MagicMock()
+    mocked_cur.execute.return_value = None
+    mocked_cur.fetchall.return_value = []
+    mocked_context_cur.__enter__.return_value = mocked_cur
+    return mocked_context_cur
+
+
+def get_fake_pool_cursor_with_rows_to_return(connection_pool) -> MagicMock:
+    """Return fake PoolCursor with return value for fetch all."""
+    mocked_context_cur = MagicMock()
+    mocked_cur = MagicMock()
+    mocked_cur.execute.return_value = None
+    mocked_cur.fetchall.return_value = [
+        ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
+        ("Rumo von Zamonien", "Wolpertinger", "gute Schachspieler und gute Kämpfer",),
+    ]
+    mocked_context_cur.__enter__.return_value = mocked_cur
+    return mocked_context_cur
+
+
+def get_fake_background_job_manager(
+    database_id,
+    database_blocked,
+    connection_pool,
+    loaded_tables,
+    storage_host,
+    storage_password,
+    storage_port,
+    storage_user,
+) -> MagicMock:
+    """Return fake  BackgroundJobManager."""
+    m = MagicMock()
+    m.start.side_effect = None
+    m.load_tables.side_effect = None
+    return m
+
 
 class TestDatabase(object):
     """Tests for the Database class."""
-
-    def get_id(self) -> str:
-        """Return database id."""
-        return "MongoDB forever"
-
-    def get_user(self) -> str:
-        """Return database user."""
-        return "Proform"
-
-    def get_password(self) -> str:
-        """Return database password."""
-        return "passwort"
-
-    def get_host(self) -> str:
-        """Return host."""
-        return "nsa"
-
-    def get_port(self) -> str:
-        """Return port."""
-        return "666"
-
-    def get_dbname(self) -> str:
-        """Return database name."""
-        return "MongoDB"
-
-    def get_number_workers(self) -> int:
-        """Return number of worker."""
-        return 42
-
-    def get_workload_publisher_url(self) -> str:
-        """Return workload publisher URL."""
-        return "lothar matthäus"
-
-    def get_default_tables(self) -> str:
-        """Return default tables."""
-        return "Watt_ihr_Volt"
-
-    def get_storage_host(self) -> str:
-        """Return storage host."""
-        return "xulfni"
-
-    def get_storage_password(self) -> str:
-        """Return storage password."""
-        return "1234"
-
-    def get_storage_port(self) -> str:
-        """Return storage port."""
-        return "42"
-
-    def get_storage_user(self) -> str:
-        """Return storage user."""
-        return "Käptin Blaubär"
-
-    def get_fake_tables() -> Dict:  # type: ignore
-        """Return fake table dictionary."""
-        fake_dict = {
-            "alternative": [
-                "The Dough Rollers",
-                "Broken Witt Rebels",
-                "Bonny Doon",
-                "Jack White",
-            ],
-            "Rock": ["Gary Clark Jr.", "Greta Van Fleet", "Tenacious D"],
-        }
-        return fake_dict
-
-    def get_fake_pool_cursor(connection_pool) -> MagicMock:  # noqa
-        """Return fake PoolCursor."""
-        mocked_context_cur = MagicMock()
-        mocked_cur = MagicMock()
-        mocked_cur.execute.return_value = None
-        mocked_cur.fetchall.return_value = []
-        mocked_context_cur.__enter__.return_value = mocked_cur
-        return mocked_context_cur
-
-    def get_fake_pool_cursor_with_rows_to_return(connection_pool) -> MagicMock:  # noqa
-        """Return fake PoolCursor with return value for fetch all."""
-        mocked_context_cur = MagicMock()
-        mocked_cur = MagicMock()
-        mocked_cur.execute.return_value = None
-        mocked_cur.fetchall.return_value = [
-            ("Hildegunst von Mythenmetz", "Lindwurm", "sprachliche Begabung",),
-            (
-                "Rumo von Zamonien",
-                "Wolpertinger",
-                "gute Schachspieler und gute Kämpfer",
-            ),
-        ]
-        mocked_context_cur.__enter__.return_value = mocked_cur
-        return mocked_context_cur
-
-    def get_fake_background_job_manager(
-        id,  # noqa
-        database_blocked,
-        connection_pool,
-        loaded_tables,
-        storage_host,
-        storage_password,
-        storage_port,
-        storage_user,
-    ) -> MagicMock:
-        """Return fake  BackgroundJobManager."""
-        m = MagicMock()
-        m.start.side_effect = None
-        m.load_tables.side_effect = None
-        return m
 
     @fixture
     @patch(
@@ -133,32 +95,32 @@ class TestDatabase(object):
     def database(self) -> Database:
         """Get a new Database."""
         return Database(
-            self.get_id(),
-            self.get_user(),
-            self.get_password(),
-            self.get_host(),
-            self.get_port(),
-            self.get_dbname(),
-            self.get_number_workers(),
-            self.get_workload_publisher_url(),
-            self.get_default_tables(),
-            self.get_storage_host(),
-            self.get_storage_password(),
-            self.get_storage_port(),
-            self.get_storage_user(),
+            database_id,
+            database_user,
+            database_password,
+            database_host,
+            database_port,
+            database_name,
+            number_workers,
+            workload_publisher_url,
+            default_tables,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
         )
 
     def test_inintializes_database(self, database) -> None:
         """Test initialization of worker pool attributes."""
-        assert database._id == self.get_id()
-        assert database.number_workers == self.get_number_workers()
-        assert database._default_tables == self.get_default_tables()
+        assert database._id == database_id
+        assert database.number_workers == number_workers
+        assert database._default_tables == default_tables
         assert type(database._number_additional_connections) is int
         assert type(database._database_blocked) is ValueType
         assert not database._database_blocked.value
         database._background_scheduler.start.assert_called_once()
         database._background_scheduler.load_tables.assert_called_once_with(
-            self.get_default_tables()
+            default_tables
         )
 
     @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
@@ -199,12 +161,10 @@ class TestDatabase(object):
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result = database.load_data(self.get_default_tables())
+        result = database.load_data(default_tables)
 
         mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_called_once_with(
-            self.get_default_tables()
-        )
+        mocked_background_scheduler.load_tables.assert_called_once_with(default_tables)
         assert type(result) is bool
         assert result
 
@@ -218,7 +178,7 @@ class TestDatabase(object):
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result = database.load_data(self.get_default_tables())
+        result = database.load_data(default_tables)
 
         mocked_worker_pool.get_status.assert_called_once()
         mocked_background_scheduler.load_tables.assert_not_called()
@@ -237,12 +197,10 @@ class TestDatabase(object):
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result = database.load_data(self.get_default_tables())
+        result = database.load_data(default_tables)
 
         mocked_worker_pool.get_status.assert_called_once()
-        mocked_background_scheduler.load_tables.assert_called_once_with(
-            self.get_default_tables()
-        )
+        mocked_background_scheduler.load_tables.assert_called_once_with(default_tables)
         assert type(result) is bool
         assert not result
 
@@ -258,11 +216,11 @@ class TestDatabase(object):
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result = database.delete_data(self.get_default_tables())
+        result = database.delete_data(default_tables)
 
         mocked_worker_pool.get_status.assert_called_once()
         mocked_background_scheduler.delete_tables.assert_called_once_with(
-            self.get_default_tables()
+            default_tables
         )
         assert type(result) is bool
         assert result
@@ -277,7 +235,7 @@ class TestDatabase(object):
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result = database.delete_data(self.get_default_tables())
+        result = database.delete_data(default_tables)
 
         mocked_worker_pool.get_status.assert_called_once()
         mocked_background_scheduler.delete_tables.assert_not_called()
@@ -296,11 +254,11 @@ class TestDatabase(object):
         database._worker_pool = mocked_worker_pool
         database._background_scheduler = mocked_background_scheduler
 
-        result = database.delete_data(self.get_default_tables())
+        result = database.delete_data(default_tables)
 
         mocked_worker_pool.get_status.assert_called_once()
         mocked_background_scheduler.delete_tables.assert_called_once_with(
-            self.get_default_tables()
+            default_tables
         )
         assert type(result) is bool
         assert not result
