@@ -127,7 +127,9 @@ class BackgroundJobManager(object):
                             ]
         return base
 
-    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
+    def _create_chunks_dictionary(
+        self, meta_segments: DataFrame
+    ) -> Dict:  # TODO refactoring
         chunks_data: Dict = {}
         grouped_tables = meta_segments.reset_index().groupby("table_name")
 
