@@ -1,5 +1,6 @@
 """Tests for the background_scheduler module."""
 
+from json import dumps
 from multiprocessing import Value
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from unittest.mock import MagicMock, patch
@@ -34,7 +35,6 @@ get_fake_read_sql_query: Callable[
 )
 
 mocked_storage_curser = MagicMock()
-mocked_storage_curser.log_meta_information.return_value = None
 
 
 def get_fake_storage_curser(
@@ -335,7 +335,6 @@ class TestBackgroundJobManager:
         )
 
         mocked_storage_curser = MagicMock()
-        mocked_storage_curser.log_meta_information.return_value = None
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
@@ -345,9 +344,9 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs plugin log."""
-        fake_not_empty_data_frame = DataFrame()
+        fake_empty_data_frame = DataFrame()
         mocked_sql_to_data_frame = MagicMock()
-        mocked_sql_to_data_frame.return_value = fake_not_empty_data_frame
+        mocked_sql_to_data_frame.return_value = fake_empty_data_frame
 
         background_job_manager._sql_to_data_frame = (  # type: ignore
             mocked_sql_to_data_frame
@@ -360,7 +359,6 @@ class TestBackgroundJobManager:
         mocked_storage_curser.log_plugin_log.assert_not_called()
 
         mocked_storage_curser = MagicMock()
-        mocked_storage_curser.log_meta_information.return_value = None
 
     def test_successfully_create_cpu_data_dict(
         self, background_job_manager: BackgroundJobManager
@@ -420,3 +418,143 @@ class TestBackgroundJobManager:
         )
 
         assert received_dict == expected_dict
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    def test_logs_updated_system_data(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test logs updated system data."""
+        fake_not_empty_df = DataFrame({"column1": [1]})
+        fake_cpu_dict = {
+            "cpu_system_usage": 120.0,
+            "cpu_process_usage": 300.0,
+            "cpu_count": 16,
+            "cpu_clock_speed": 120,
+        }
+        fake_memory_dict = {"free": 0, "used": 42, "total": 42, "percent": 1}
+
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_not_empty_df
+        background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
+
+        mocked_create_cpu_data_dict = MagicMock()
+        mocked_create_cpu_data_dict.return_value = fake_cpu_dict
+        background_job_manager._create_cpu_data_dict = mocked_create_cpu_data_dict  # type: ignore
+
+        mocked_create_memory_data_dict = MagicMock()
+        mocked_create_memory_data_dict.return_value = fake_memory_dict
+        background_job_manager._create_memory_data_dict = mocked_create_memory_data_dict  # type: ignore
+
+        background_job_manager._update_system_data()
+
+        expected_function_argument = {
+            "cpu": dumps(fake_cpu_dict),
+            "memory": dumps(fake_memory_dict),
+            "database_threads": "16",
+        }
+
+        global mocked_storage_curser
+
+        mocked_storage_curser.log_meta_information.assert_called_once_with(
+            "system_data", expected_function_argument, 42
+        )
+
+        mocked_storage_curser = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    def test_doesnt_log_updated_system_data(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't log updated system data when it's emtpy."""
+        fake_empty_df = DataFrame()
+
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_empty_df
+        background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
+
+        background_job_manager._create_cpu_data_dict = MagicMock()  # type: ignore
+
+        background_job_manager._create_memory_data_dict = MagicMock()  # type: ignore
+
+        background_job_manager._update_system_data()
+
+        global mocked_storage_curser
+
+        background_job_manager._create_cpu_data_dict.assert_not_called()  # type: ignore
+        background_job_manager._create_memory_data_dict.assert_not_called()  # type: ignore
+        mocked_storage_curser.log_meta_information.assert_not_called()
+
+        mocked_storage_curser = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    def test_successfully_logs_storage_data(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully logs storage data."""
+        fake_storage_df = DataFrame(
+            {
+                "table_name": ["customer", "customer", "supplier"],
+                "chunk_id": [0, 0, 0],
+                "column_id": [0, 1, 2],
+                "column_name": ["c_custkey", "c_nationkey", "s_address"],
+                "column_data_type": ["int", "string", "string"],
+                "encoding_type": ["Dictionary", "Dictionary", "Dictionary"],
+                "estimated_size_in_bytes": [9000, 1000, 400],
+            }
+        )
+
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_storage_df
+        background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
+
+        expected_storage_dict = {
+            "customer": {
+                "size": 10000,
+                "number_columns": 2,
+                "data": {
+                    "c_custkey": {
+                        "size": 9000,
+                        "data_type": "int",
+                        "encoding": ["Dictionary"],
+                    },
+                    "c_nationkey": {
+                        "size": 1000,
+                        "data_type": "string",
+                        "encoding": ["Dictionary"],
+                    },
+                },
+            },
+            "supplier": {
+                "size": 400,
+                "number_columns": 1,
+                "data": {
+                    "s_address": {
+                        "size": 400,
+                        "data_type": "string",
+                        "encoding": ["Dictionary"],
+                    }
+                },
+            },
+        }
+
+        global mocked_storage_curser
+
+        background_job_manager._update_storage_data()
+
+        mocked_storage_curser.log_meta_information.assert_called_with(
+            "storage", {"storage_meta_information": dumps(expected_storage_dict)}, 42
+        )
+
+        mocked_storage_curser = MagicMock()
