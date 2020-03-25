@@ -19,21 +19,16 @@ function mockRoute(
 export function mockBackend(
   numbers: Record<Entity, number>
 ): { restartBackend(): void } {
-  const { getMockedResponse, renewMocks } = useMocks(numbers);
+  const { getResponseMock, renewMocks } = useMocks(numbers);
 
   // start mocked backend
   setupBackend();
 
   function setupBackend(): void {
     cy.server();
-    mockRoute(
-      "GET",
-      "**/control/database",
-      getMockedResponse("database"),
-      false
-    );
-    mockRoute("GET", "**/monitor/system", getMockedResponse("system"), true);
-    mockRoute("GET", "**/monitor/storage", getMockedResponse("storage"), true);
+    mockRoute("GET", "**/control/database", getResponseMock("database"), false);
+    mockRoute("GET", "**/monitor/system", getResponseMock("system"), true);
+    mockRoute("GET", "**/monitor/storage", getResponseMock("storage"), true);
   }
 
   function restartBackend(): void {

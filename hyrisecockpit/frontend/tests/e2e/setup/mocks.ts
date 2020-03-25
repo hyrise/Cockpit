@@ -11,7 +11,7 @@ export type Request = "database" | "system" | "storage";
 // TODO: mock missing Requests
 export function useMocks(
   numbers: Record<Entity, number>
-): { renewMocks: () => void; getMockedResponse(request: Request): any } {
+): { renewMocks: () => void; getResponseMock(request: Request): any } {
   let mockedIds: Record<Entity, string[]> = mockIds();
   let requestMocks: Record<Request, any> = mockRequests();
 
@@ -42,9 +42,9 @@ export function useMocks(
     return requestMocks as Record<Request, any>;
   }
 
-  function getMockedResponse(request: Request): any {
+  function getResponseMock(request: Request): any {
     return requestMocks[request];
   }
 
-  return { renewMocks, getMockedResponse };
+  return { renewMocks, getResponseMock };
 }

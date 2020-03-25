@@ -1,6 +1,6 @@
 import { testRedirection, testElementTrigger } from "./abstractTestCases";
 import { getRoute } from "./helpers";
-import { mockBackend } from "../../setup/backendStub";
+import { mockBackend } from "../../setup/backendMock";
 
 describe("Change page routes", () => {
   beforeEach(() => {
