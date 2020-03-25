@@ -558,3 +558,64 @@ class TestBackgroundJobManager:
         )
 
         mocked_storage_curser = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    def test_logs_empty_storage_data(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't log storage data when it's empty."""
+        fake_empty_storage_df = DataFrame()
+
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_empty_storage_df
+        background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
+
+        global mocked_storage_curser
+
+        background_job_manager._update_storage_data()
+
+        mocked_storage_curser.log_meta_information.assert_called_with(
+            "storage", {"storage_meta_information": dumps({})}, 42
+        )
+
+        mocked_storage_curser = MagicMock()
+
+    def tests_successfully_generates_table_loading_queries(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully generates table loading queries."""
+        fake_folder_name = "hyriseDown"
+        fake_table_names = ["keep", "on", "going", "please!!!"]
+
+        received_queries = background_job_manager._generate_table_loading_queries(
+            fake_table_names, fake_folder_name
+        )
+
+        expected_queries = [
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (("keep", "as_is"), ("hyriseDown", "as_is"), ("keep", "as_is"),),
+            ),
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (("on", "as_is"), ("hyriseDown", "as_is"), ("on", "as_is"),),
+            ),
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (("going", "as_is"), ("hyriseDown", "as_is"), ("going", "as_is"),),
+            ),
+            (
+                "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+                (
+                    ("please!!!", "as_is"),
+                    ("hyriseDown", "as_is"),
+                    ("please!!!", "as_is"),
+                ),
+            ),
+        ]
+
+        assert received_queries == expected_queries
