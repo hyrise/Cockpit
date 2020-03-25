@@ -79,7 +79,7 @@ export default defineComponent({
 }
 .setting-row {
   margin-left: 2%;
-  margin-top: -10px;
+  height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
