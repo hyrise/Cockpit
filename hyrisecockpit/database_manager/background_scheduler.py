@@ -182,10 +182,9 @@ class BackgroundJobManager(object):
         if log_df.empty:
             return
 
-        log_dict = log_df.set_index(["timestamp", "reporter"]).to_dict("index")
         plugin_log = [
-            (timestamp, reporter, message["message"])
-            for (timestamp, reporter), message in log_dict.items()
+            (row["timestamp"], row["reporter"], row["message"])
+            for row in log_df.to_dict("index").values()
         ]
 
         with StorageCursor(
