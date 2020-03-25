@@ -1,16 +1,20 @@
 import { testRedirection, testElementTrigger } from "./abstractTestCases";
 import { getRoute } from "./helpers";
-import { mockBackend } from "../../setup/backendMock";
+import { useBackendMock } from "../../setup/backendMock";
+
+const backend = useBackendMock({
+  databases: 1,
+  tables: 2,
+  columns: 2,
+  chunks: 2,
+  queries: 10,
+  plugins: 3,
+  activated_plugins: 0
+});
 
 describe("Change page routes", () => {
   beforeEach(() => {
-    mockBackend({
-      databases: 1,
-      tables: 2,
-      columns: 2,
-      chunks: 2,
-      queries: 10
-    });
+    backend.start();
     cy.visit("/");
   });
 

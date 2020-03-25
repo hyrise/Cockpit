@@ -150,3 +150,40 @@ export function fakeDatabaseQueryInformationData(
     )
   };
 }
+
+export function fakeDatabasePluginsData(
+  databaseId: string,
+  plugins: string[]
+): Object {
+  return { id: databaseId, plugins: plugins };
+}
+
+function fakePluginSettings(databaseId: string): Object {
+  return {
+    id: databaseId,
+    name: faker.random.word(),
+    value: faker.random.number()
+  };
+}
+
+export function fakeDatabasePluginSettings(
+  databaseId: string,
+  plugins: string[]
+): Object[] {
+  return plugins.map(() => fakePluginSettings(databaseId));
+}
+
+function fakePluginLog(pluginId: string): Object {
+  return {
+    timestamp: faker.date.past().getTime(),
+    reporter: pluginId,
+    message: faker.random.words()
+  };
+}
+
+export function fakeDatabasePluginLogs(
+  databaseId: string,
+  pluginIds: string[]
+): Object {
+  return { id: databaseId, plugin_log: pluginIds.map(id => fakePluginLog(id)) };
+}

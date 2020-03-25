@@ -5,14 +5,19 @@ import {
   fakeNumberData,
   fakeKruegerData,
   fakeDatabaseChunksData,
-  fakeDatabaseQueryInformationData
+  fakeDatabaseQueryInformationData,
+  fakeDatabasePluginsData,
+  fakeDatabasePluginSettings,
+  fakeDatabasePluginLogs
 } from "./factories";
 import {
   assignFakeData,
   generateRandomIds,
+  generateRandomInt,
   fakeDataByIds,
   Entity,
-  Request
+  Request,
+  benchmarks
 } from "./helpers";
 
 /* mocks containing fake data */
@@ -30,12 +35,17 @@ export function useMocks(
   }
 
   function mockIds(): Record<Entity, string[]> {
+    const plugins = generateRandomIds(numbers.plugins, "plugin-");
     return {
       databases: generateRandomIds(numbers.databases, "database-"),
       tables: generateRandomIds(numbers.tables, "table-"),
       columns: generateRandomIds(numbers.columns, "column-"),
       chunks: [],
-      queries: []
+      queries: [],
+      plugins: plugins,
+      activated_plugins: [...Array(numbers.activated_plugins).keys()].map(
+        () => plugins[generateRandomInt(0, plugins.length)]
+      )
     };
   }
 
@@ -93,7 +103,26 @@ export function useMocks(
     requestMocks.detailed_query_information = mockedIds.databases.map(id =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
-
+    requestMocks.data = benchmarks;
+    requestMocks.available_plugins = mockedIds.plugins;
+    // NOTE: currently all databases have the same plugins activated
+    requestMocks.plugin = mockedIds.databases.map(id =>
+      fakeDatabasePluginsData(id, mockedIds.activated_plugins)
+    );
+    requestMocks.plugin_settings = {
+      plugin_settings: mockedIds.databases
+        .map(id => fakeDatabasePluginSettings(id, mockedIds.plugins))
+        .reduce((data: any[], dbPluginSettings: any[]) => {
+          dbPluginSettings.forEach(setting => {
+            data.push(setting);
+          });
+          return data;
+        }, [])
+    };
+    // NOTE: currently all databases have exactly one log entry
+    requestMocks.plugin_log = mockedIds.databases.map(id =>
+      fakeDatabasePluginLogs(id, mockedIds.plugins)
+    );
     return requestMocks as Record<Request, any>;
   }
 

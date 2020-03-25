@@ -19,15 +19,12 @@ function mockRoute(
 
 //TODO: mock missing routes
 
-export function mockBackend(
+export function useBackendMock(
   numbers: Record<Entity, number>
-): { restartBackend(): void } {
+): { restart(): void; start(): void } {
   const { getResponseMock, renewMocks } = useMocks(numbers);
 
-  // start mocked backend
-  setupBackend();
-
-  function setupBackend(): void {
+  function start(): void {
     cy.server();
     mockRoute("GET", "**/control/database", getResponseMock("database"), false);
     mockRoute("GET", "**/monitor/system", getResponseMock("system"), true);
@@ -58,12 +55,32 @@ export function mockBackend(
       getResponseMock("detailed_query_information"),
       false
     );
+    mockRoute("GET", "**/control/data", getResponseMock("data"), false);
+    mockRoute(
+      "GET",
+      "**/control/available_plugins",
+      getResponseMock("available_plugins"),
+      false
+    );
+    mockRoute("GET", "**/control/plugin", getResponseMock("plugin"), false);
+    mockRoute(
+      "GET",
+      "**/control/plugin_settings",
+      getResponseMock("plugin_settings"),
+      true
+    );
+    mockRoute(
+      "GET",
+      "**/control/plugin_log",
+      getResponseMock("plugin_log"),
+      false
+    );
   }
 
-  function restartBackend(): void {
+  function restart(): void {
     renewMocks();
-    setupBackend();
+    start();
   }
 
-  return { restartBackend };
+  return { restart, start };
 }

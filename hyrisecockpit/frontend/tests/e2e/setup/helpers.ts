@@ -1,6 +1,13 @@
 import * as faker from "faker";
 
-export type Entity = "databases" | "tables" | "columns" | "chunks" | "queries";
+export type Entity =
+  | "databases"
+  | "tables"
+  | "columns"
+  | "chunks"
+  | "queries"
+  | "plugins"
+  | "activated_plugins";
 export type Request =
   | "database"
   | "system"
@@ -10,7 +17,13 @@ export type Request =
   | "queue_length"
   | "krueger_data"
   | "chunks"
-  | "detailed_query_information";
+  | "detailed_query_information"
+  | "data"
+  | "available_plugins"
+  | "plugin"
+  | "plugin_settings"
+  | "plugin_log";
+
 export const benchmarks = ["tpch_1", "tpch_0.1", "tpcds", "job"];
 
 export function fakeDataByIds(
