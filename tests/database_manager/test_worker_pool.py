@@ -1,11 +1,12 @@
 """Tests for the worker_pool module."""
-from multiprocessing import Event, Value
+from multiprocessing import Event, Queue, Value
 from multiprocessing.context import Process as ProcessType
 from multiprocessing.queues import Queue as QueueType
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from multiprocessing.synchronize import Event as EventType
 from unittest.mock import MagicMock, patch
 
+from psycopg2 import pool
 from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.worker_pool import WorkerPool
@@ -24,21 +25,23 @@ def get_fake_background_scheduler() -> MagicMock:
 
 
 def get_fake_dummy_execute_queries_worker(
-    i,
-    task_queue,
-    connection_pool,
-    failed_task_queue,
-    continue_execution_flag,
-    database_id,
-    execute_task_worker_done_event,
-    worker_continue_event,
+    i: str,
+    task_queue: Queue,
+    connection_pool: pool,
+    continue_execution_flag: Value,
+    database_id: str,
+    execute_task_worker_done_event: EventType,
+    worker_continue_event: EventType,
 ) -> str:
     """Return a dummy execute task worker."""
     return "foo"
 
 
 def get_fake_dummy_fill_worker(
-    workload_publisher_url, task_queue, continue_execution_flag, worker_continue_event,
+    workload_publisher_url: str,
+    task_queue: Queue,
+    continue_execution_flag: Value,
+    worker_continue_event: EventType,
 ) -> str:
     """Return a dummy fill worker."""
     return "foo"
