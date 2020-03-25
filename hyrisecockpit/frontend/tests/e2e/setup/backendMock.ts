@@ -53,6 +53,8 @@ function mockDeleteRoute(
 
 /* backend with mocked routes */
 
+//NOTE: only used routes are mocked yet
+
 export function useBackendMock(
   numbers: Record<Entity, number>
 ): { restart(): void; start(): void } {

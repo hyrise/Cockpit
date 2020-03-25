@@ -25,7 +25,7 @@ describe("Add database", () => {
     it("will add a new database with the correct data", () => {
       clickElement("div", "Database");
       cy.get("span[id=add-database-button]").click();
-      cy.contains("Add new database1");
+      cy.contains("Add new database");
       cy.get("button[id=save-database-button]").click();
       cy.wait("@" + getPostAlias("database"));
       cy.get("@addDatabase").should(xhr => {
