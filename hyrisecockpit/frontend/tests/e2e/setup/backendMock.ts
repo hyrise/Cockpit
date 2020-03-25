@@ -1,4 +1,5 @@
-import { useMocks, Entity } from "./mocks";
+import { useMocks } from "./mocks";
+import { Entity } from "./helpers";
 
 function mockRoute(
   method: string,
@@ -6,7 +7,7 @@ function mockRoute(
   response: any,
   withBody: boolean
 ): void {
-  console.log(response);
+  console.log(url, response);
   cy.route({
     method: method,
     url: url,
@@ -29,6 +30,26 @@ export function mockBackend(
     mockRoute("GET", "**/control/database", getResponseMock("database"), false);
     mockRoute("GET", "**/monitor/system", getResponseMock("system"), true);
     mockRoute("GET", "**/monitor/storage", getResponseMock("storage"), true);
+    mockRoute(
+      "GET",
+      "**/monitor/throughput",
+      getResponseMock("throughput"),
+      true
+    );
+    mockRoute("GET", "**/monitor/latency", getResponseMock("latency"), true);
+    mockRoute(
+      "GET",
+      "**/monitor/queue_length",
+      getResponseMock("queue_length"),
+      true
+    );
+    mockRoute(
+      "GET",
+      "**/monitor/krueger_data",
+      getResponseMock("krueger_data"),
+      false
+    );
+    mockRoute("GET", "**/monitor/chunks", getResponseMock("chunks"), true);
   }
 
   function restartBackend(): void {

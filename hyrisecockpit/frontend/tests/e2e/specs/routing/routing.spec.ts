@@ -4,7 +4,7 @@ import { mockBackend } from "../../setup/backendMock";
 
 describe("Change page routes", () => {
   beforeEach(() => {
-    mockBackend({ databases: 1, tables: 2, columns: 2 });
+    mockBackend({ databases: 1, tables: 2, columns: 2, chunks: 2 });
     cy.visit("/");
   });
 

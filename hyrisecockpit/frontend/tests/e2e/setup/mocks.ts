@@ -1,12 +1,18 @@
 import {
   fakeDatabaseData,
   fakeDatabaseSystemData,
-  fakeDatabaseStorageData
+  fakeDatabaseStorageData,
+  fakeNumberData,
+  fakeKruegerData,
+  fakeDatabaseChunksData
 } from "./factories";
-import { assignFakeData, generateRandomIds } from "./helpers";
-
-export type Entity = "databases" | "tables" | "columns";
-export type Request = "database" | "system" | "storage";
+import {
+  assignFakeData,
+  generateRandomIds,
+  fakeDataByIds,
+  Entity,
+  Request
+} from "./helpers";
 
 // TODO: mock missing Requests
 export function useMocks(
@@ -24,21 +30,63 @@ export function useMocks(
     return {
       databases: generateRandomIds(numbers.databases),
       tables: generateRandomIds(numbers.tables),
-      columns: generateRandomIds(numbers.columns)
+      columns: generateRandomIds(numbers.columns),
+      chunks: []
     };
   }
 
   function mockRequests(): Record<Request, any> {
     const requestMocks: Partial<Record<Request, any>> = {};
-    requestMocks.database = mockedIds.databases.map(id => fakeDatabaseData(id));
-    const storageFake = mockedIds.databases.map(id =>
-      fakeDatabaseStorageData(id, mockedIds.tables, mockedIds.columns)
+
+    // fake data for all requests
+    requestMocks.database = fakeDataByIds(
+      mockedIds.databases,
+      fakeDatabaseData
     );
-    const systemFake = mockedIds.databases.map(id =>
-      fakeDatabaseSystemData(id)
+    requestMocks.storage = {
+      storage: assignFakeData(
+        mockedIds.databases.map(id =>
+          fakeDatabaseStorageData(id, mockedIds.tables, mockedIds.columns)
+        )
+      )
+    };
+    requestMocks.system = {
+      system_data: assignFakeData(
+        fakeDataByIds(mockedIds.databases, fakeDatabaseSystemData)
+      )
+    };
+    requestMocks.throughput = {
+      throughput: assignFakeData(
+        fakeDataByIds(mockedIds.databases, fakeNumberData)
+      )
+    };
+    requestMocks.latency = {
+      latency: assignFakeData(
+        fakeDataByIds(mockedIds.databases, fakeNumberData)
+      )
+    };
+    requestMocks.queue_length = {
+      queue_length: assignFakeData(
+        fakeDataByIds(mockedIds.databases, fakeNumberData)
+      )
+    };
+    requestMocks.krueger_data = fakeDataByIds(
+      mockedIds.databases,
+      fakeKruegerData
     );
-    requestMocks.storage = { storage: assignFakeData(storageFake) };
-    requestMocks.system = { system_data: assignFakeData(systemFake) };
+    requestMocks.chunks = {
+      chunks_data: assignFakeData(
+        mockedIds.databases.map(id =>
+          fakeDatabaseChunksData(
+            id,
+            mockedIds.tables,
+            mockedIds.columns,
+            numbers.chunks
+          )
+        )
+      )
+    };
+
     return requestMocks as Record<Request, any>;
   }
 

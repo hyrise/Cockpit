@@ -1,5 +1,10 @@
 import * as faker from "faker";
-import { assignFakeData, generateRandomFloat } from "./helpers";
+import {
+  assignFakeData,
+  generateRandomFloat,
+  generateRandomInt,
+  generateRandomNumbers
+} from "./helpers";
 
 //TODO: add faker for missing entities
 
@@ -33,7 +38,7 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
   return systemData;
 }
 
-export function fakeColumnStorageData(columnId: string): Object {
+function fakeColumnStorageData(columnId: string): Object {
   const storageData: any = {};
   storageData[columnId] = {
     size: faker.random.number(),
@@ -43,16 +48,12 @@ export function fakeColumnStorageData(columnId: string): Object {
   return storageData;
 }
 
-export function fakeTableStorageData(
-  tableId: string,
-  columnIds: string[]
-): Object {
+function fakeTableStorageData(tableId: string, columnIds: string[]): Object {
   const storageData: any = {};
-  const columnFakes = columnIds.map(id => fakeColumnStorageData(id));
   storageData[tableId] = {
     size: faker.random.number(),
     number_columns: columnIds.length,
-    data: assignFakeData(columnFakes)
+    data: assignFakeData(columnIds.map(id => fakeColumnStorageData(id)))
   };
   return storageData;
 }
@@ -63,8 +64,65 @@ export function fakeDatabaseStorageData(
   columnIds: string[]
 ): Object {
   const storageData: any = {};
-  const tableFakes = tableIds.map(id => fakeTableStorageData(id, columnIds));
-  storageData[databaseId] = assignFakeData(tableFakes);
-
+  storageData[databaseId] = assignFakeData(
+    tableIds.map(id => fakeTableStorageData(id, columnIds))
+  );
   return storageData;
+}
+
+export function fakeNumberData(databaseId: string): Object {
+  const data: any = {};
+  data[databaseId] = faker.random.number();
+  return data;
+}
+
+function fakeQueryTypeProportion(): Object {
+  return {
+    SELECT: generateRandomInt(0, 100),
+    INSERT: generateRandomInt(0, 100),
+    UPDATE: generateRandomInt(0, 100),
+    DELETE: generateRandomInt(0, 100)
+  };
+}
+
+export function fakeKruegerData(datebaseId: string): Object {
+  return {
+    id: datebaseId,
+    executed: fakeQueryTypeProportion(),
+    generated: fakeQueryTypeProportion()
+  };
+}
+
+function fakeColumnChunksData(
+  columnId: string,
+  numberOfChunks: number
+): Object {
+  const data: any = {};
+  data[columnId] = generateRandomNumbers(numberOfChunks);
+  return data;
+}
+
+function fakeTableChunksData(
+  tableId: string,
+  columnIds: string[],
+  numberOfChunks: number
+): Object {
+  const data: any = {};
+  data[tableId] = assignFakeData(
+    columnIds.map(id => fakeColumnChunksData(id, numberOfChunks))
+  );
+  return data;
+}
+
+export function fakeDatabaseChunksData(
+  databaseId: string,
+  tableIds: string[],
+  columnIds: string[],
+  numberOfChunks: number
+): Object {
+  const data: any = {};
+  data[databaseId] = assignFakeData(
+    tableIds.map(id => fakeTableChunksData(id, columnIds, numberOfChunks))
+  );
+  return data;
 }
