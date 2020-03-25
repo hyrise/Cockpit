@@ -1,5 +1,5 @@
 import { testRedirection, testElementTrigger } from "./abstractTests";
-import { getRoute } from "./helpers";
+import { getRoute, getSelector } from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
 
 const backend = useBackendMock({
@@ -21,14 +21,14 @@ describe("Change page routes", () => {
   // test overview
   describe("when clicking the overview button", () => {
     it("will redirect to the overview page", () => {
-      testRedirection("div", "Overview", getRoute("overview"));
+      testRedirection(getSelector("overviewButton"), getRoute("overview"));
     });
   });
 
   // test comparison
   describe("when clicking the comparison button", () => {
     it("will redirect to the comparison page", () => {
-      testRedirection("div", "Comparison", getRoute("comparison"));
+      testRedirection(getSelector("comparisonButton"), getRoute("comparison"));
     });
   });
 
@@ -36,31 +36,39 @@ describe("Change page routes", () => {
   describe("when clicking the workload monitoring button", () => {
     it("will redirect to the workload monitoring page", () => {
       testRedirection(
-        "div",
-        "Workload metrics",
+        getSelector("workloadMonitoringButton"),
         getRoute("workloadMonitoring")
       );
     });
   });
 
   // test add database
-  describe("when clicking the database button", () => {
+  describe("when clicking the database list button", () => {
     it("will open the database list", () => {
-      testElementTrigger("div", "Database", "DATABASES");
+      testElementTrigger(
+        getSelector("databaseListButton"),
+        getSelector("databaseList")
+      );
     });
   });
 
   // test workload generation
   describe("when clicking the workload generation button", () => {
     it("will open the workload generation dialog", () => {
-      testElementTrigger("div", "Workload Generation", "Workload Generation");
+      testElementTrigger(
+        getSelector("workloadGenerationButton"),
+        getSelector("workloadGeneration")
+      );
     });
   });
 
   // test plugin overview
-  describe("when clicking the plugins button", () => {
+  describe("when clicking the plugin overview button", () => {
     it("will open the plugin overview panel", () => {
-      testElementTrigger("div", "Plugins", "Plugins");
+      testElementTrigger(
+        getSelector("pluginOverviewButton"),
+        getSelector("pluginOverview")
+      );
     });
   });
 });

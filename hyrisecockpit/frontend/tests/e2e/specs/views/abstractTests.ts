@@ -1,19 +1,14 @@
-import { clickElement } from "../helpers";
+import { clickElement, getElement } from "../helpers";
 
-export function testRedirection(
-  elementType: string,
-  content: string,
-  newRoute: string
-): void {
-  clickElement(elementType, content);
+export function testRedirection(selector: string, newRoute: string): void {
+  clickElement(selector);
   cy.url().should("contain", newRoute);
 }
 
 export function testElementTrigger(
-  elementType: string,
-  content: string,
-  openedContent: string
+  rootSelector: string,
+  triggeredSelector: string
 ): void {
-  clickElement(elementType, content);
-  cy.contains(openedContent);
+  clickElement(rootSelector);
+  getElement(triggeredSelector);
 }

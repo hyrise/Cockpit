@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="open" persistent max-width="600px">
-    <v-card>
+    <v-card id="add-database">
       <v-card-title>
         <span class="headline">Add new database</span>
       </v-card-title>

@@ -1,6 +1,8 @@
 import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getPostAlias } from "../../setup/helpers";
+import { getSelector as getViewSelector } from "../views/helpers";
+import { getSelector } from "./helpers";
 
 const backend = useBackendMock({
   databases: 1,
@@ -23,12 +25,11 @@ describe("Add database", () => {
   // test adding correct database
   describe("when adding a new database", () => {
     it("will add a new database with the correct data", () => {
-      clickElement("div", "Database");
-      cy.get("span[id=add-database-button]").click();
-      cy.contains("Add new database");
-      cy.get("button[id=save-database-button]").click();
+      clickElement(getViewSelector("databaseListButton"));
+      clickElement(getSelector("addDatabaseButton"));
+      clickElement(getSelector("saveDatabaseButton"));
       cy.wait("@" + getPostAlias("database"));
-      cy.get("@addDatabase").should(xhr => {
+      cy.get("@" + getPostAlias("database")).should(xhr => {
         // assert correct values here
         // accessibile via xhr.request.body
       });
