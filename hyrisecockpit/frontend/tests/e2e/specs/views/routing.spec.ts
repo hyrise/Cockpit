@@ -1,4 +1,4 @@
-import { testRedirection, testElementTrigger } from "./abstractTestCases";
+import { testRedirection, testElementTrigger } from "./abstractTests";
 import { getRoute } from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
 
