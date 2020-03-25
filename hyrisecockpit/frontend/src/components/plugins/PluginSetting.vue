@@ -85,7 +85,7 @@ export default defineComponent({
   align-items: center;
 }
 .setting-tooltip {
-  z-index: 1000;
+  z-index: 10;
 }
 .setting-icon {
   margin-right: 4px;
