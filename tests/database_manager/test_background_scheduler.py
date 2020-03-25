@@ -298,3 +298,125 @@ class TestBackgroundJobManager:
 
         mocked_storage_curser = MagicMock()
         mocked_storage_curser.log_meta_information.return_value = None
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    def test_logs_plugin_log(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test logs plugin log."""
+        fake_not_empty_data_frame = DataFrame(
+            {
+                "timestamp": [0, 42],
+                "reporter": ["KeepHyriseRunning", "HyrisePleaseStayAlive"],
+                "message": ["error", "error"],
+            }
+        )
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_not_empty_data_frame
+
+        background_job_manager._sql_to_data_frame = (  # type: ignore
+            mocked_sql_to_data_frame
+        )
+
+        background_job_manager._update_plugin_log()
+
+        expected_function_argument = [
+            (0, "KeepHyriseRunning", "error"),
+            (42, "HyrisePleaseStayAlive", "error"),
+        ]
+
+        global mocked_storage_curser
+
+        mocked_storage_curser.log_plugin_log.assert_called_once_with(
+            expected_function_argument
+        )
+
+        mocked_storage_curser = MagicMock()
+        mocked_storage_curser.log_meta_information.return_value = None
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
+        get_fake_storage_curser,
+    )
+    def test_doesnt_log_plugin_log_when_empty(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test logs plugin log."""
+        fake_not_empty_data_frame = DataFrame()
+        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame.return_value = fake_not_empty_data_frame
+
+        background_job_manager._sql_to_data_frame = (  # type: ignore
+            mocked_sql_to_data_frame
+        )
+
+        background_job_manager._update_plugin_log()
+
+        global mocked_storage_curser
+
+        mocked_storage_curser.log_plugin_log.assert_not_called()
+
+        mocked_storage_curser = MagicMock()
+        mocked_storage_curser.log_meta_information.return_value = None
+
+    def test_successfully_create_cpu_data_dict(
+        self, background_job_manager: BackgroundJobManager
+    ):
+        """Test creates cpu data dict successfully."""
+        fake_utilization_df = DataFrame(
+            {
+                "cpu_system_usage": [120],
+                "cpu_process_usage": [300],
+                "system_memory_free_bytes": [0],
+                "process_physical_memory_bytes": [42],
+            }
+        )
+        fake_system_df = DataFrame(
+            {
+                "cpu_count": [16],
+                "cpu_clock_speed": [120],
+                "system_memory_total_bytes": [1234],
+            }
+        )
+        expected_dict = {
+            "cpu_system_usage": 120.0,
+            "cpu_process_usage": 300.0,
+            "cpu_count": 16,
+            "cpu_clock_speed": 120,
+        }
+
+        received_dict = background_job_manager._create_cpu_data_dict(
+            fake_utilization_df, fake_system_df
+        )
+
+        assert received_dict == expected_dict
+
+    def test_successfully_create_memory_data_dict(
+        self, background_job_manager: BackgroundJobManager
+    ):
+        """Test creates memory data dict successfully."""
+        fake_utilization_df = DataFrame(
+            {
+                "cpu_system_usage": [120],
+                "cpu_process_usage": [300],
+                "system_memory_free_bytes": [0],
+                "process_physical_memory_bytes": [42],
+            }
+        )
+        fake_system_df = DataFrame(
+            {
+                "cpu_count": [16],
+                "cpu_clock_speed": [120],
+                "system_memory_total_bytes": [42],
+            }
+        )
+        expected_dict = {"free": 0, "used": 42, "total": 42, "percent": 1}
+
+        received_dict = background_job_manager._create_memory_data_dict(
+            fake_utilization_df, fake_system_df
+        )
+
+        assert received_dict == expected_dict
