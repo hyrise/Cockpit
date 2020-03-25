@@ -1,4 +1,5 @@
 import * as faker from "faker";
+import { assignFakeData } from "./helpers";
 
 function generateRandomFloat(min: number, range: number) {
   return Math.random() * range + min;
@@ -51,16 +52,12 @@ export function fakeTableStorageData(
   columnIds: string[]
 ): Object {
   const storageData: any = {};
+  const columnFakes = columnIds.map(id => fakeColumnStorageData(id));
   storageData[tableId] = {
     size: faker.random.number(),
-    number_columns: columnIds.length
+    number_columns: columnIds.length,
+    data: assignFakeData(columnFakes)
   };
-  columnIds
-    .map(id => fakeColumnStorageData(id))
-    .forEach(column => {
-      storageData[tableId].data = { ...storageData[tableId].data, ...column };
-    });
-
   return storageData;
 }
 
@@ -70,10 +67,8 @@ export function fakeDatabaseStorageData(
   columnIds: string[]
 ): Object {
   const storageData: any = {};
-  tableIds
-    .map(id => fakeTableStorageData(id, columnIds))
-    .forEach(table => {
-      storageData[databaseId] = { ...storageData[databaseId], ...table };
-    });
+  const tableFakes = tableIds.map(id => fakeTableStorageData(id, columnIds));
+  storageData[databaseId] = assignFakeData(tableFakes);
+
   return storageData;
 }

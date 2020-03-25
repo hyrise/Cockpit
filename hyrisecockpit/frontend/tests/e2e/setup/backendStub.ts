@@ -17,9 +17,9 @@ function mockRoute(
 //TODO: mock missing routes
 
 export function mockBackend(numbers: Record<Entity, number>): void {
-  const { getMockedResponse, mockQueries } = useMocks(numbers);
+  const { getMockedResponse, mockRequests } = useMocks(numbers);
 
-  mockQueries();
+  mockRequests();
   cy.server();
   mockRoute("GET", "**/control/database", getMockedResponse("database"), false);
   mockRoute("GET", "**/monitor/system", getMockedResponse("system"), true);
