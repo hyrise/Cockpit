@@ -101,7 +101,7 @@ class TestBackgroundJobManager:
         background_job_manager._init_jobs()
 
         for func, trigger, seconds in jobs:
-            mock_scheduler.add_job.assect_called_once_with(
+            mock_scheduler.add_job.assert_any_call(
                 func=func, trigger=trigger, seconds=seconds
             )
 
@@ -175,3 +175,49 @@ class TestBackgroundJobManager:
 
         assert isinstance(received_df, DataframeType)
         assert expected_df.equals(received_df)
+
+    def test_successfully_creates_chunks_data_frame(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully creates chunks dataframe from sql."""
+        fake_data_frame = {
+            "table_name": ["customer", "customer", "supplier", "supplier"],
+            "column_name": ["c_custkey", "c_name", "s_address", "s_comment"],
+            "chunk_id": [0, 0, 42, 5],
+            "access_count": [15000, 15000, 1000, 600],
+        }
+
+        fake_chunks_df = DataFrame(data=fake_data_frame)
+        fake_chunks_dict = background_job_manager._create_chunks_dictionary(
+            fake_chunks_df
+        )
+
+        expected_dict = {
+            "customer": {"c_custkey": [15000], "c_name": [15000]},
+            "supplier": {"s_address": [1000], "s_comment": [600]},
+        }
+
+        assert fake_chunks_dict == expected_dict
+
+    def test_successfully_calculates_chunk_differences(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully calculates chunks differences."""
+        fake_base_dict = {
+            "customer": {"c_custkey": [15000], "c_name": [15000]},
+            "supplier": {"s_address": [1000], "s_comment": [600]},
+        }
+        fake_substractor_dict = {
+            "customer": {"c_custkey": [1000], "c_name": [5000]},
+            "supplier": {"s_address": [1000], "s_comment": [555]},
+        }
+        expected_dict = {
+            "customer": {"c_custkey": [14000], "c_name": [10000]},
+            "supplier": {"s_address": [0], "s_comment": [45]},
+        }
+
+        received_dict = background_job_manager._calculate_chunks_difference(
+            fake_base_dict, fake_substractor_dict
+        )
+
+        assert expected_dict == received_dict
