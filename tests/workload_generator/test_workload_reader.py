@@ -1,6 +1,6 @@
 """Tests for WorkloadReader."""
 from typing import Any
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from pytest import raises
 
@@ -50,3 +50,43 @@ class TestWorkloadReader:
         mock_list_function.return_value = ["file"]
         reader = WorkloadReader()
         assert reader._get_workload_folder("absolute_path", "tpch") == ["file"]
+
+    @patch("hyrisecockpit.workload_generator.workload_reader.dirname",)
+    def test_creates_absolute_workload_path(self, mock_dirname):
+        """Create absolute workload path."""
+        mock_dirname.return_value = "absolute_workload_reader_path"
+        reader = WorkloadReader()
+        assert (
+            reader._create_absolute_workload_path("relative_workload_path")
+            == "absolute_workload_reader_path/relative_workload_path"
+        )
+
+    @patch("hyrisecockpit.workload_generator.workload_reader.fsdecode",)
+    @patch("hyrisecockpit.workload_generator.workload_reader.open",)
+    def test_reads_content_of_workload_folder(self, mock_open, mock_fsdecode):
+        """Read content of workload folder."""
+
+        def fsdecode_side_effect(file_name):
+            return file_name
+
+        mock_fsdecode.side_effect = fsdecode_side_effect
+
+        mocked_file = MagicMock()
+        mocked_file.read.return_value = "Query1---Query2---"
+        mock_open.return_value.__enter__.return_value = mocked_file
+
+        workload_folder = ["file_1.sql", "file_2.sql"]
+        absolute_workload_path = "absolute_workload_path"
+        delimiter = "---"
+        file_type = "sql"
+
+        expected_queries = {
+            "file_1": ["Query1", "Query2"],
+            "file_2": ["Query1", "Query2"],
+        }
+
+        reader = WorkloadReader()
+        queries = reader._read_content_of_workload_folder(
+            workload_folder, absolute_workload_path, delimiter, file_type
+        )
+        assert queries == expected_queries
