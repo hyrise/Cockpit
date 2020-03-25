@@ -62,6 +62,7 @@
         <v-spacer></v-spacer>
         <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
         <v-btn
+          id="save-database-button"
           color="primary"
           text
           @click="

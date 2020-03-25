@@ -9,8 +9,6 @@ import {
 
 /* factories to fake all request data */
 
-//TODO: add faker for missing entities
-
 export function fakeDatabaseData(databaseId: string): Object {
   return {
     id: databaseId,

@@ -17,17 +17,30 @@ import {
   fakeDataByIds,
   Entity,
   Request,
-  benchmarks
+  benchmarks,
+  empty
 } from "./helpers";
 
 /* mocks containing fake data */
 
-// TODO: mock missing Requests
 export function useMocks(
   numbers: Record<Entity, number>
-): { renewMocks: () => void; getMockedResponse(request: Request): any } {
+): {
+  renewMocks: () => void;
+  getMockedResponse(request: Request): any;
+  getMockedPostCallback: (request: Request) => () => void;
+  getMockedDeleteCallback: (request: Request) => () => void;
+} {
   let mockedIds: Record<Entity, string[]> = mockIds();
   let responseMocks: Record<Request, any> = mockResponses();
+  let postCallbackMocks: Partial<Record<
+    Request,
+    () => void
+  >> = mockPostCallbacks();
+  let deleteCallbackMocks: Partial<Record<
+    Request,
+    () => void
+  >> = mockDeleteCallbacks();
 
   function renewMocks(): void {
     mockedIds = mockIds();
@@ -52,7 +65,6 @@ export function useMocks(
   function mockResponses(): Record<Request, any> {
     const responseMocks: Partial<Record<Request, any>> = {};
 
-    // fake data for all requests
     responseMocks.database = fakeDataByIds(
       mockedIds.databases,
       fakeDatabaseData
@@ -111,7 +123,7 @@ export function useMocks(
     );
     responseMocks.plugin_settings = {
       plugin_settings: mockedIds.databases.map(id =>
-        fakeDatabasePluginSettings(id, mockedIds.plugins)
+        fakeDatabasePluginSettings(id, mockedIds.activated_plugins)
       )
     };
     // NOTE: currently all databases have exactly one log entry
@@ -121,9 +133,36 @@ export function useMocks(
     return responseMocks as Record<Request, any>;
   }
 
+  function mockPostCallbacks(): Partial<Record<Request, () => void>> {
+    //TODO: add callbacks here
+    const postCallbackMocks: Partial<Record<Request, () => void>> = {};
+
+    return postCallbackMocks;
+  }
+
+  function mockDeleteCallbacks(): Partial<Record<Request, () => void>> {
+    //TODO: add callbacks here
+    const deleteCallbackMocks: Partial<Record<Request, () => void>> = {};
+
+    return deleteCallbackMocks;
+  }
+
+  function getMockedPostCallback(request: Request): () => void {
+    return postCallbackMocks[request] || empty;
+  }
+
+  function getMockedDeleteCallback(request: Request): () => void {
+    return deleteCallbackMocks[request] || empty;
+  }
+
   function getMockedResponse(request: Request): any {
     return responseMocks[request];
   }
 
-  return { renewMocks, getMockedResponse };
+  return {
+    renewMocks,
+    getMockedResponse,
+    getMockedPostCallback,
+    getMockedDeleteCallback
+  };
 }

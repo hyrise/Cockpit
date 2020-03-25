@@ -22,9 +22,33 @@ export type Request =
   | "available_plugins"
   | "plugin"
   | "plugin_settings"
-  | "plugin_log";
+  | "plugin_log"
+  | "workload";
 
 export const benchmarks = ["tpch_1", "tpch_0.1", "tpcds", "job"];
+
+const postAliases: Partial<Record<Request, string>> = {
+  database: "addDatabase",
+  data: "loadTables",
+  plugin: "activatePlugin",
+  plugin_settings: "setPluginSettings",
+  workload: "startWorkload"
+};
+
+const deleteAliases: Partial<Record<Request, string>> = {
+  database: "removeDatabase",
+  data: "removeTables",
+  plugin: "deactivatePlugin",
+  workload: "stopWorkload"
+};
+
+export function getPostAlias(request: Request): string {
+  return postAliases[request]!;
+}
+
+export function getDeleteAlias(request: Request): string {
+  return deleteAliases[request]!;
+}
 
 export function fakeDataByIds(
   ids: string[],
@@ -58,4 +82,8 @@ export function generateRandomInt(min: number, range: number) {
 
 export function generateRandomNumbers(length: number): number[] {
   return [...Array(length).keys()].map(() => faker.random.number());
+}
+
+export function empty(): void {
+  return;
 }

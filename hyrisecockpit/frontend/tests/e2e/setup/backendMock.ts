@@ -1,36 +1,73 @@
 import { useMocks } from "./mocks";
-import { Entity } from "./helpers";
+import { Entity, getPostAlias, getDeleteAlias, empty } from "./helpers";
 
-function mockRoute(
+function getRouteMock(
   method: string,
   url: string,
   response: any,
-  withBody: boolean
-): void {
-  console.log(url, method, response); //TODO: remove when finished
-  cy.route({
+  withBody: boolean,
+  callback: () => void = empty,
+  delay: number = 0
+): Object {
+  return {
     method: method,
     url: url,
-    response: withBody ? { body: response } : response
-  });
+    response: withBody ? { body: response } : response,
+    delay: delay,
+    onRequest: () => {
+      // call function on request
+      callback();
+    }
+  };
 }
 
 function mockGetRoute(url: string, response: any, withBody: boolean): void {
-  mockRoute("GET", url, response, withBody);
+  cy.route(getRouteMock("GET", url, response, withBody));
+}
+
+function mockPostRoute(
+  url: string,
+  alias: string,
+  callback: () => void,
+  delay: number = 0,
+  withBody: boolean = false,
+  response: any = {}
+): void {
+  cy.route(getRouteMock("POST", url, response, withBody, callback, delay)).as(
+    alias
+  );
+}
+
+function mockDeleteRoute(
+  url: string,
+  alias: string,
+  callback: () => void,
+  delay: number = 0,
+  withBody: boolean = false,
+  response: any = {}
+): void {
+  cy.route(getRouteMock("DELETE", url, response, withBody, callback, delay)).as(
+    alias
+  );
 }
 
 /* backend with mocked routes */
 
-//TODO: mock missing routes
-
 export function useBackendMock(
   numbers: Record<Entity, number>
 ): { restart(): void; start(): void } {
-  const { getMockedResponse, renewMocks } = useMocks(numbers);
+  const {
+    getMockedResponse,
+    getMockedPostCallback,
+    getMockedDeleteCallback,
+    renewMocks
+  } = useMocks(numbers);
 
   function start(): void {
     cy.server();
     mockGetRoutes();
+    mockPostRoutes();
+    mockDeleteRoutes();
   }
 
   function mockGetRoutes(): void {
@@ -75,6 +112,57 @@ export function useBackendMock(
       "**/control/plugin_log",
       getMockedResponse("plugin_log"),
       false
+    );
+  }
+
+  function mockPostRoutes(): void {
+    mockPostRoute(
+      "**/control/database",
+      getPostAlias("database"),
+      getMockedPostCallback("database")
+    );
+    mockPostRoute(
+      "**/control/data",
+      getPostAlias("data"),
+      getMockedPostCallback("data")
+    );
+    mockPostRoute(
+      "**/control/plugin",
+      getPostAlias("plugin"),
+      getMockedPostCallback("plugin")
+    );
+    mockPostRoute(
+      "**/control/plugin_settings",
+      getPostAlias("plugin_settings"),
+      getMockedPostCallback("plugin_settings")
+    );
+    mockPostRoute(
+      "**/control/workload",
+      getPostAlias("workload"),
+      getMockedPostCallback("workload")
+    );
+  }
+
+  function mockDeleteRoutes(): void {
+    mockDeleteRoute(
+      "**/control/database",
+      getDeleteAlias("database"),
+      getMockedDeleteCallback("database")
+    );
+    mockDeleteRoute(
+      "**/control/data",
+      getDeleteAlias("data"),
+      getMockedDeleteCallback("data")
+    );
+    mockDeleteRoute(
+      "**/control/plugin",
+      getDeleteAlias("plugin"),
+      getMockedDeleteCallback("plugin")
+    );
+    mockDeleteRoute(
+      "**/control/workload",
+      getDeleteAlias("workload"),
+      getMockedDeleteCallback("workload")
     );
   }
 
