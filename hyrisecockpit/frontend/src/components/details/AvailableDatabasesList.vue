@@ -1,5 +1,5 @@
 <template>
-  <v-list class="list">
+  <v-list id="database-list" class="list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
         DATABASES
@@ -7,6 +7,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-chip
+              id="add-database-button"
               class="button"
               color="secondary primary--text"
               v-on="on"
