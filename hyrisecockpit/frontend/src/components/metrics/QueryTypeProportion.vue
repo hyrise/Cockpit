@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <Barchart
-      :data="transformedData"
-      :graph-id="graphId || 'queryTypeProportion'"
-      :chart-configuration="chartConfiguration"
-      :selected-databases="selectedDatabases"
-      :max-chart-width="maxChartWidth"
-    />
-  </div>
+  <Barchart
+    :data="transformedData"
+    :graph-id="graphId || 'queryTypeProportion'"
+    :chart-configuration="chartConfiguration"
+    :selected-databases="selectedDatabases"
+    :max-chart-width="maxChartWidth"
+  />
 </template>
 
 <script lang="ts">
@@ -61,18 +59,3 @@ export default defineComponent({
   }
 });
 </script>
-<style scoped>
-.metric-title {
-  display: flex;
-  align-items: center !important;
-  justify-content: center;
-  white-space: nowrap;
-}
-.metric-description {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-right: 1%;
-  width: 50%;
-}
-</style>
