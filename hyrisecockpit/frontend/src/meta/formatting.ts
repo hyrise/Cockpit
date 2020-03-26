@@ -29,7 +29,7 @@ export function useFormatting(): {
   }
 
   function formatDateToHHMMSS(date: Date): string {
-    return date.toLocaleTimeString();
+    return date.toLocaleTimeString("de-DE");
   }
 
   function roundNumber(

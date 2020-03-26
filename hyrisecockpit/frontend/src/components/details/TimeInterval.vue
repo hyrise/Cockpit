@@ -43,6 +43,6 @@ export default defineComponent({
 <style scoped>
 .interval {
   margin-left: 10px;
-  font-size: 16px;
+  font-size: 14px;
 }
 </style>
