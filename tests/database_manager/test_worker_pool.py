@@ -1,6 +1,6 @@
 """Tests for the worker_pool module."""
 from collections import Counter
-from multiprocessing import Event, Process, Queue, Value
+from multiprocessing import Event, Process, Value
 from multiprocessing.context import Process as ProcessType
 from multiprocessing.queues import Queue as QueueType
 from multiprocessing.sharedctypes import Synchronized as ValueType
@@ -8,7 +8,6 @@ from multiprocessing.synchronize import Event as EventType
 from typing import List, Optional
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import pool
 from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.worker_pool import WorkerPool
@@ -26,29 +25,6 @@ def get_fake_background_scheduler() -> MagicMock:
     return mocked_background_scheduler
 
 
-def get_fake_dummy_execute_queries_worker(
-    i: str,
-    task_queue: Queue,
-    connection_pool: pool,
-    continue_execution_flag: Value,
-    database_id: str,
-    execute_task_worker_done_event: EventType,
-    worker_continue_event: EventType,
-) -> str:
-    """Return a dummy execute task worker."""
-    return "foo"
-
-
-def get_fake_dummy_fill_worker(
-    workload_publisher_url: str,
-    task_queue: Queue,
-    continue_execution_flag: Value,
-    worker_continue_event: EventType,
-) -> str:
-    """Return a dummy fill worker."""
-    return "foo"
-
-
 class TestWorkerPool(object):
     """Tests for the WorkerPool class."""
 
@@ -56,14 +32,6 @@ class TestWorkerPool(object):
     @patch(
         "hyrisecockpit.database_manager.worker_pool.BackgroundScheduler",
         get_fake_background_scheduler,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.worker_pool.execute_queries",
-        get_fake_dummy_execute_queries_worker,
-    )
-    @patch(
-        "hyrisecockpit.database_manager.worker_pool.execute_queries",
-        get_fake_dummy_fill_worker,
     )
     def worker_pool(self) -> WorkerPool:
         """Get a new WorkerPool."""
@@ -103,12 +71,12 @@ class TestWorkerPool(object):
 
     @patch(
         "hyrisecockpit.database_manager.worker_pool.execute_queries",
-        get_fake_dummy_execute_queries_worker,
+        lambda *args: "fake_execute_queries_worker",
     )
     def test_generats_execute_task_worker(self, worker_pool: WorkerPool) -> None:
         """Check if enough processes of type process are generated."""
         worker_pool._execute_task_worker_done_event = [
-            "foo" for _ in range(number_worker)  # type: ignore
+            "fake_execute_queries_worker" for _ in range(number_worker)  # type: ignore
         ]
         processes: List[Process] = worker_pool._generate_execute_task_worker()
         assert len(processes) == number_worker
@@ -116,7 +84,7 @@ class TestWorkerPool(object):
 
     @patch(
         "hyrisecockpit.database_manager.worker_pool.execute_queries",
-        get_fake_dummy_fill_worker,
+        lambda *args: "fake_fill_worker",
     )
     def test_generats_fill_task_worker(self, worker_pool: WorkerPool) -> None:
         """Check if enough processes of type process are generated."""
