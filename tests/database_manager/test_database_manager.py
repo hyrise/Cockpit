@@ -23,7 +23,7 @@ def fake_server_constructor(*args) -> MagicMock:
     """Fake server."""
     fake_server = MagicMock()
     fake_server.start.return_value = None
-    fake_server.stop.return_value = None
+    fake_server.close.return_value = None
 
     fake_server_constructor = MagicMock()
     fake_server_constructor.return_value = fake_server
@@ -296,7 +296,7 @@ class TestDatabaseManager:
         response = database_manager._call_delete_database(body)
 
         assert get_response(200) == response
-        assert list(database_manager._databases.values()) == []
+        assert "db1" not in database_manager._databases.keys()
 
     def test_delete_not_existing_database(
         self, database_manager: DatabaseManager
