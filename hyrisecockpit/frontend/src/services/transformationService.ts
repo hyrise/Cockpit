@@ -128,7 +128,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   ];
 
   function getRoundedData(value: number): number {
-    return roundNumber(value, 100, 1 / Math.pow(10, 4), false);
+    return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
   }
 
   function getPercentage(part: number, total: number): number {
@@ -244,7 +244,12 @@ export function useDataTransformationHelpers(): {
       memory.push(getTableMemoryFootprint(tableData.data));
     });
 
-    return memory.reduce((total, tableMemory) => total + tableMemory, 0);
+    return roundNumber(
+      memory.reduce((total, tableMemory) => total + tableMemory, 0),
+      Math.pow(10, 3),
+      Math.pow(10, 3),
+      false
+    );
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
