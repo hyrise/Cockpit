@@ -87,11 +87,11 @@
             bordered
           >
             <v-icon class="mt-4" size="40">
-              mdi-database-plus
+              mdi-database
             </v-icon>
           </v-badge>
           <v-card-text class="justify-center card-title overline pt-1">
-            Database
+            Databases
           </v-card-text>
         </v-card>
       </template>
