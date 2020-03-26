@@ -1,11 +1,23 @@
 <template>
-  <Barchart
-    :data="transformedData"
-    :graph-id="graphId || 'queryTypeProportion'"
-    :chart-configuration="chartConfiguration"
-    :selected-databases="selectedDatabases"
-    :max-chart-width="maxChartWidth"
-  />
+  <div>
+    <!-- This needs refactoring: Maybe move container into an own component -->
+    <v-container fluid justify="center" align="center">
+      <v-row no-gutters>
+        <v-col> </v-col>
+        <v-col class="metric-title"> </v-col>
+        <v-col class="metric-description">
+          <time-interval :metric="metric" />
+        </v-col>
+      </v-row>
+    </v-container>
+    <Barchart
+      :data="transformedData"
+      :graph-id="graphId || 'queryTypeProportion'"
+      :chart-configuration="chartConfiguration"
+      :selected-databases="selectedDatabases"
+      :max-chart-width="maxChartWidth"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,6 +40,7 @@ import {
   getMetricChartConfiguration,
   getMetricMetadata
 } from "../../meta/metrics";
+import TimeInterval from "@/components/details/TimeInterval.vue";
 
 interface Data {
   transformedData: Ref<any>;
@@ -36,7 +49,7 @@ interface Data {
 
 export default defineComponent({
   name: "QueryTypeProportion",
-  components: { Barchart },
+  components: { Barchart, TimeInterval },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
     const data = context.root.$metricController.data[props.metric];
@@ -59,3 +72,18 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+.metric-title {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+  white-space: nowrap;
+}
+.metric-description {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 1%;
+  width: 50%;
+}
+</style>

@@ -1,19 +1,32 @@
 <template>
   <div>
-    <metric-detailed-view>
-      <template #header>
-        Storage
-      </template>
-      <template #content>
-        <Treemap
-          :graph-id="'1' + graphId || 'storage'"
-          :data="storageData"
-          :chart-configuration="chartConfiguration"
-          :selected-databases="selectedDatabases"
-          :max-chart-width="1600"
-        />
-      </template>
-    </metric-detailed-view>
+    <!-- This needs refactoring: Maybe move container into an own component -->
+    <v-container fluid justify="center" align="center">
+      <v-row no-gutters>
+        <v-col>
+          <metric-detailed-view>
+            <template #header>
+              Storage
+            </template>
+            <template #content>
+              <Treemap
+                :graph-id="'1' + graphId || 'storage'"
+                :data="storageData"
+                :chart-configuration="chartConfiguration"
+                :selected-databases="selectedDatabases"
+                :max-chart-width="1600"
+              />
+            </template>
+          </metric-detailed-view>
+        </v-col>
+
+        <v-col> </v-col>
+        <v-col class="metric-description">
+          <time-interval :metric="metric" />
+        </v-col>
+      </v-row>
+    </v-container>
+
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
       :data="storageData"
@@ -44,6 +57,7 @@ import {
   getMetricChartConfiguration,
   getMetricMetadata
 } from "../../meta/metrics";
+import TimeInterval from "@/components/details/TimeInterval.vue";
 
 interface Data {
   storageData: Ref<StorageData>;
@@ -54,7 +68,8 @@ export default defineComponent({
   name: "Storage",
   components: {
     Treemap,
-    MetricDetailedView
+    MetricDetailedView,
+    TimeInterval
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
@@ -78,3 +93,18 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+.metric-title {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+  white-space: nowrap;
+}
+.metric-description {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 1%;
+  width: 50%;
+}
+</style>

@@ -1,39 +1,49 @@
 <template>
   <div>
-    <div class="mt-12">
-      <metric-detailed-view>
-        <template #header>
-          Access Frequency
-        </template>
-        <template #content>
-          <v-select
-            v-model="selectedTable"
-            :items="tables"
-            class="select"
-            chips
-            label="table"
-            outlined
-            prepend-icon="mdi-table"
-            width="100"
-          />
-          <Heatmap
-            :graph-id="'1' + graphId || 'access'"
-            :data="accessData"
-            :chart-configuration="chartConfiguration"
-            :autosize="false"
-          />
-        </template>
-      </metric-detailed-view>
-      <v-select
-        v-model="selectedTable"
-        :items="tables"
-        class="select"
-        chips
-        label="table"
-        outlined
-        prepend-icon="mdi-table"
-        width="100"
-      />
+    <div>
+      <!-- This needs refactoring: Maybe move container into an own component -->
+      <v-container fluid justify="center" align="center">
+        <v-row no-gutters>
+          <v-col>
+            <metric-detailed-view>
+              <template #header>
+                Access Frequency
+              </template>
+              <template #content>
+                <v-select
+                  v-model="selectedTable"
+                  :items="tables"
+                  chips
+                  label="table"
+                  outlined
+                  prepend-icon="mdi-table"
+                  width="100"
+                />
+                <Heatmap
+                  :graph-id="'1' + graphId || 'access'"
+                  :data="accessData"
+                  :chart-configuration="chartConfiguration"
+                  :autosize="false"
+                />
+              </template>
+            </metric-detailed-view>
+          </v-col>
+          <v-col class="metric-title">
+            <v-select
+              v-model="selectedTable"
+              :items="tables"
+              chips
+              label="table"
+              outlined
+              prepend-icon="mdi-table"
+            />
+          </v-col>
+          <v-col class="metric-description">
+            <time-interval :metric="metric" />
+          </v-col>
+        </v-row>
+      </v-container>
+
       <Heatmap
         :graph-id="'2' + graphId || 'access'"
         :data="accessData"
@@ -67,6 +77,7 @@ import {
   getMetricChartConfiguration,
   getMetricMetadata
 } from "../../meta/metrics";
+import TimeInterval from "@/components/details/TimeInterval.vue";
 
 interface Data {
   tables: Ref<readonly string[]>;
@@ -79,7 +90,8 @@ export default defineComponent({
   name: "Access",
   components: {
     Heatmap,
-    MetricDetailedView
+    MetricDetailedView,
+    TimeInterval
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
@@ -111,9 +123,16 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.select {
-  z-index: 2;
-  width: 50%;
-  margin: auto;
+.metric-title {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+  white-space: nowrap;
+}
+.metric-description {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 1%;
 }
 </style>
