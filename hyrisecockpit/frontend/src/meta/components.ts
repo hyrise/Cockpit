@@ -2,7 +2,7 @@ import { SetupContext, Ref, computed } from "@vue/composition-api";
 import { MetricProps, ComparisonMetricData, Metric } from "../types/metrics";
 import { getMetricChartConfiguration } from "./metrics";
 import { useDataEvents } from "../meta/events";
-import { getMetricRequestTime } from "@/meta/metrics";
+import { getMetricRequestTime, getMetricFetchType } from "@/meta/metrics";
 import { useFormatting } from "@/meta/formatting";
 
 export function useLineChartComponent(
@@ -62,7 +62,10 @@ export function useUpdatingInterval(
     }
     if (timestamps.value.length > 1) {
       currentTimeStamp = timestamps.value[timestamps.value.length - 1];
-      previousTimeStamp = timestamps.value[timestamps.value.length - 2];
+      previousTimeStamp =
+        getMetricFetchType(metric) === "modify"
+          ? timestamps.value[0]
+          : timestamps.value[timestamps.value.length - 2];
     }
     return `${formatDateToHHMMSS(previousTimeStamp)} - ${formatDateToHHMMSS(
       currentTimeStamp

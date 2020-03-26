@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="open" app width="110">
+  <v-navigation-drawer app width="110">
     <v-toolbar class="text-center secondary">
       <v-img
         src="../../src/components/images/hyrise_logo.png"
@@ -143,10 +143,6 @@ import PluginsOverview from "../components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
 import AvailableDatabasesList from "@/components/details/AvailableDatabasesList.vue";
 
-interface Props {
-  open: boolean;
-}
-
 interface Data {
   showPluginEditor: Ref<boolean>;
   togglePluginEditor: () => void;
@@ -163,15 +159,7 @@ export default defineComponent({
     addDatabase,
     AvailableDatabasesList
   },
-  setup(
-    props: {
-      open: {
-        type: Boolean;
-        default: true;
-      };
-    },
-    context: SetupContext
-  ): Data {
+  setup(props: {}, context: SetupContext): Data {
     const showPluginEditor = ref<boolean>(false);
     const showWorkloadDialog = ref<boolean>(false);
     const showAddDatabaseDialog = ref<boolean>(false);

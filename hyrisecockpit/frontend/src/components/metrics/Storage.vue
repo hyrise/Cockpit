@@ -1,32 +1,19 @@
 <template>
   <div>
-    <!-- This needs refactoring: Maybe move container into an own component -->
-    <v-container fluid justify="center" align="center">
-      <v-row no-gutters>
-        <v-col>
-          <metric-detailed-view>
-            <template #header>
-              Storage
-            </template>
-            <template #content>
-              <Treemap
-                :graph-id="'1' + graphId || 'storage'"
-                :data="storageData"
-                :chart-configuration="chartConfiguration"
-                :selected-databases="selectedDatabases"
-                :max-chart-width="1600"
-              />
-            </template>
-          </metric-detailed-view>
-        </v-col>
-
-        <v-col> </v-col>
-        <v-col class="metric-description">
-          <time-interval :metric="metric" />
-        </v-col>
-      </v-row>
-    </v-container>
-
+    <metric-detailed-view>
+      <template #header>
+        Storage
+      </template>
+      <template #content>
+        <Treemap
+          :graph-id="'1' + graphId || 'storage'"
+          :data="storageData"
+          :chart-configuration="chartConfiguration"
+          :selected-databases="selectedDatabases"
+          :max-chart-width="1600"
+        />
+      </template>
+    </metric-detailed-view>
     <Treemap
       :graph-id="'2' + graphId || 'storage'"
       :data="storageData"
@@ -57,7 +44,6 @@ import {
   getMetricChartConfiguration,
   getMetricMetadata
 } from "../../meta/metrics";
-import TimeInterval from "@/components/details/TimeInterval.vue";
 
 interface Data {
   storageData: Ref<StorageData>;
@@ -68,8 +54,7 @@ export default defineComponent({
   name: "Storage",
   components: {
     Treemap,
-    MetricDetailedView,
-    TimeInterval
+    MetricDetailedView
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
