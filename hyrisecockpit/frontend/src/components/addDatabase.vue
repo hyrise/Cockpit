@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="open" persistent max-width="600px">
-    <v-card>
+    <v-card id="add-database">
       <v-card-title>
         <span class="headline">Add new database</span>
       </v-card-title>
@@ -62,6 +62,7 @@
         <v-spacer></v-spacer>
         <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
         <v-btn
+          id="save-database-button"
           color="primary"
           text
           @click="
