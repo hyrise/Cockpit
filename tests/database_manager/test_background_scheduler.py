@@ -25,6 +25,15 @@ fake_loaded_tables: Dict[str, Optional[str]] = {
     "Greta Van Fleet": "Rock",
     "Tenacious D": "Rock",
 }
+fake_dict: Dict[str, List[str]] = {
+    "alternative": [
+        "The Dough Rollers",
+        "Broken Witt Rebels",
+        "Bonny Doon",
+        "Jack White",
+    ],
+    "Rock": ["Gary Clark Jr.", "Greta Van Fleet", "Tenacious D"],
+}
 storage_host: str = "influx"
 storage_password: str = "password"
 storage_port: str = "4321"
@@ -58,7 +67,7 @@ def get_mocked_pool_cursor(*args):
 
 
 def fake_execute_table_query(self, query, success_flag):
-    """Retuen dummy execute table query method."""
+    """Return dummy execute table query method."""
     success_flag.value = True
 
 
@@ -779,3 +788,44 @@ class TestBackgroundJobManager:
         )
 
         assert "HyriseAreYouStillAlive" not in background_job_manager._loaded_tables
+
+    def test_successfully_calls_execute_queries(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully calls execute queries in load tables job."""
+        background_job_manager._database_blocked.value = True
+
+        background_job_manager._generate_table_loading_queries = MagicMock()  # type: ignore
+        background_job_manager._execute_queries_parallel = MagicMock()  # type: ignore
+
+        background_job_manager._load_tables_job(["table_names"], "folder_name")
+
+        background_job_manager._generate_table_loading_queries.assert_called_once()  # type: ignore
+        background_job_manager._execute_queries_parallel.assert_called_once()  # type: ignore
+
+        assert not background_job_manager._database_blocked.value
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler._table_names", fake_dict,
+    )
+    def test_get_load_table_names(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test gets table names of not imported tables."""
+        fake_loaded_tables: Dict[str, Optional[str]] = {
+            "The Dough Rollers": "alternative",
+            "Broken Witt Rebels": "Hip Hop",
+            "Bonny Doon": "alternative",
+            "Jack White": "alternative",
+            "Gary Clark Jr.": "Rock",
+            "Greta Van Fleet": "Rock",
+            "Tenacious D": "Rock",
+        }
+
+        background_job_manager._loaded_tables = fake_loaded_tables
+
+        received = background_job_manager._get_load_table_names("alternative")
+
+        expected = ["Broken Witt Rebels"]
+
+        assert received == expected
