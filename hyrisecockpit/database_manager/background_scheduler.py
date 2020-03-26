@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -328,16 +328,20 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
-        query, not_formatted_parameters = query_tuple
+    def _format_query_parameters(self, parameters) -> Optional[Tuple[Any, ...]]:
         formatted_parameters = (
             tuple(
                 AsIs(parameter) if protocol == "as_is" else parameter
-                for parameter, protocol in not_formatted_parameters
+                for parameter, protocol in parameters
             )
-            if not_formatted_parameters is not None
+            if parameters is not None
             else None
         )
+        return formatted_parameters
+
+    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
+        query, parameters = query_tuple
+        formatted_parameters = self._format_query_parameters(parameters)
         with PoolCursor(self._connection_pool) as cur:
             try:
                 cur.execute(query, formatted_parameters)

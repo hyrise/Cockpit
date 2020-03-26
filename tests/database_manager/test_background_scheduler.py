@@ -2,11 +2,13 @@
 
 from json import dumps
 from multiprocessing import Value
+from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Any, Callable, Dict, List, Optional, Tuple
 from unittest.mock import MagicMock, patch
 
 from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
+from psycopg2.extensions import AsIs
 from pytest import fixture
 
 from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
@@ -35,15 +37,22 @@ get_fake_read_sql_query: Callable[
 )
 
 mocked_storage_curser = MagicMock()
+mocked_pool_curser = MagicMock()
+mocked_process = MagicMock()
 
 
-def get_fake_storage_curser(
-    storage_host, storage_port, storage_user, _storage_password, database_id
-):
+def get_mocked_storage_curser(*args):
     """Return fake storage curser."""
     mocked_storage_curser_constructor = MagicMock()
     mocked_storage_curser_constructor.__enter__.return_value = mocked_storage_curser
     return mocked_storage_curser_constructor
+
+
+def get_mocked_pool_curser(*args):
+    """Return fake storage curser."""
+    mocked_pool_curser_constructor = MagicMock()
+    mocked_pool_curser_constructor.__enter__.return_value = mocked_pool_curser
+    return mocked_pool_curser_constructor
 
 
 class TestBackgroundJobManager:
@@ -236,7 +245,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_chunks_data_with_empty_meta_chunks(
@@ -265,7 +274,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_chunks_data_with_meta_chunks(
@@ -301,7 +310,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     def test_logs_plugin_log(
         self, background_job_manager: BackgroundJobManager
@@ -338,7 +347,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     def test_doesnt_log_plugin_log_when_empty(
         self, background_job_manager: BackgroundJobManager
@@ -421,7 +430,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_system_data(
@@ -467,7 +476,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_doesnt_log_updated_system_data(
@@ -496,7 +505,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_successfully_logs_storage_data(
@@ -561,7 +570,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_fake_storage_curser,
+        get_mocked_storage_curser,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_empty_storage_data(
@@ -619,3 +628,104 @@ class TestBackgroundJobManager:
         ]
 
         assert received_queries == expected_queries
+
+    def test_successfully_formats_query_parameters(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully formats query parameters."""
+        parameters = (
+            ("keep", "as_is"),
+            ("hyriseDown", None),
+            ("keep", None),
+        )
+        received = background_job_manager._format_query_parameters(parameters)
+        expected_formatted_parameters = (
+            AsIs("keep"),
+            "hyriseDown",
+            "keep",
+        )
+
+        assert type(received[0]) is AsIs  # type: ignore
+        assert type(received[1]) is str  # type: ignore
+        assert type(received[2]) is str  # type: ignore
+
+        assert received[0].getquoted() == expected_formatted_parameters[0].getquoted()  # type: ignore
+        assert received[1] == expected_formatted_parameters[1]  # type: ignore
+        assert received[2] == expected_formatted_parameters[2]  # type: ignore
+
+    def test_doesnt_format_no_parameters(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't format when there are no parameters."""
+        parameters = None
+        received = background_job_manager._format_query_parameters(parameters)
+        expected_formatted_parameters = None
+
+        assert received == expected_formatted_parameters
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_curser,
+    )
+    def test_successfully_executes_table_query(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully executes table queries."""
+        mocked_format_query_parameters = MagicMock()
+        mocked_format_query_parameters.return_value = (
+            "keep",
+            "hyriseDown",
+            "keep",
+        )
+        background_job_manager._format_query_parameters = mocked_format_query_parameters  # type: ignore
+
+        query_tuple = (
+            "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+            ("keep", "hyriseDown", "keep",),
+        )
+
+        success_flag = Value("b", 0)
+        background_job_manager._execute_table_query(query_tuple, success_flag)
+
+        global mocked_pool_curser
+        mocked_pool_curser.execute.assert_called_once_with(
+            "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+            ("keep", "hyriseDown", "keep",),
+        )
+
+        mocked_pool_curser = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.Process", mocked_process,
+    )
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
+        lambda *args: 42,
+    )
+    def test_successfully_execute_queries_parallel(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully executes table loading queries in parallel."""
+        fake_table_names = "HyriseAreYoueStillAlive"
+        fake_queries = ("Ping Hyrise",)
+        folder_name = "Hallo"
+
+        background_job_manager._loaded_tables = {}
+
+        background_job_manager._execute_queries_parallel(
+            fake_table_names, fake_queries, folder_name
+        )
+
+        args, kwargs = mocked_process.call_args_list[0]
+
+        assert kwargs["target"]() == 42
+        assert kwargs["args"][0] == fake_queries[0]
+        assert type(kwargs["args"][1]) is ValueType
+
+        mocked_process.start.assert_called_once()
+        mocked_process.join.assert_called_once()
+        mocked_process.terminate.assert_called_once()
+
+        assert (
+            background_job_manager._loaded_tables["HyriseAreYoueStillAlive"] == "Hallo"
+        )
