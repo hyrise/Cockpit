@@ -398,6 +398,26 @@ class TestDatabase(object):
         assert type(result) is str
         assert result == "running"
 
+    def test_gets_loaded_tables(self, database: Database) -> None:
+        """Test get loaded tables."""
+        fake_loaded_tables: Dict[str, Optional[str]] = {
+            "Broken Witt Rebels": "alternative",
+            "Bonny Doon": None,
+            "Jack White": "alternative",
+            "Greta Van Fleet": None,
+            "Tenacious D": "Rock",
+        }
+        database._loaded_tables = fake_loaded_tables
+        expected = [
+            {"table_name": "Broken Witt Rebels", "benchmark": "alternative"},
+            {"table_name": "Jack White", "benchmark": "alternative"},
+            {"table_name": "Tenacious D", "benchmark": "Rock"},
+        ]
+
+        received = database.get_loaded_tables()
+
+        assert expected == received
+
     def test_starts_successful_worker(self, database: Database) -> None:
         """Test start of successful worker."""
         mocked_worker_pool: MagicMock = MagicMock()
@@ -535,8 +555,15 @@ class TestDatabase(object):
         database._database_blocked.value = False
         result: Optional[List] = database.get_plugin_setting()
 
+        global mocked_pool_cur
+        mocked_pool_cur.execute.assert_called_once_with(
+            "SELECT name, value, description FROM meta_settings;", None
+        )
+
         assert type(result) is list
         assert result == []
+
+        reset_mocked_pool_cursor()
 
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
@@ -548,7 +575,12 @@ class TestDatabase(object):
         database._database_blocked.value = True
         result: Optional[List] = database.get_plugin_setting()
 
+        global mocked_pool_cur
+        mocked_pool_cur.execute.assert_not_called()
+
         assert not result
+
+        reset_mocked_pool_cursor()
 
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor",
