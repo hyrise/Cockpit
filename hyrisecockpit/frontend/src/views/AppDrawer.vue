@@ -14,7 +14,12 @@
       max-height="30"
       >Views</v-card-text
     >
-    <v-card class="text-center" elevation="0" :to="{ name: 'overview' }">
+    <v-card
+      id="overview-button"
+      class="text-center"
+      elevation="0"
+      :to="{ name: 'overview' }"
+    >
       <v-icon class="text-center mt-4" size="40">
         mdi-speedometer
       </v-icon>
@@ -22,7 +27,12 @@
         Overview
       </v-card-text>
     </v-card>
-    <v-card class="text-center" elevation="0" :to="{ name: 'comparison' }">
+    <v-card
+      id="comparison-button"
+      class="text-center"
+      elevation="0"
+      :to="{ name: 'comparison' }"
+    >
       <v-icon class="mt-2" size="40">
         mdi-database-search
       </v-icon>
@@ -30,7 +40,12 @@
         Comparison
       </v-card-text>
     </v-card>
-    <v-card class="text-center" elevation="0" :to="{ name: 'workload' }">
+    <v-card
+      id="workload-monitoring-button"
+      class="text-center"
+      elevation="0"
+      :to="{ name: 'workload' }"
+    >
       <v-icon class="mt-2" size="40">
         mdi-align-vertical-bottom
       </v-icon>
@@ -53,7 +68,12 @@
     />
     <v-menu bottom offset-x>
       <template v-slot:activator="{ on: menu }">
-        <v-card class="text-center" elevation="0" v-on="{ ...menu }">
+        <v-card
+          id="database-list-button"
+          class="text-center"
+          elevation="0"
+          v-on="{ ...menu }"
+        >
           <v-badge
             color="secondary primary--text"
             :content="databaseCount"
@@ -73,7 +93,12 @@
       <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
     </v-menu>
 
-    <v-card class="text-center" elevation="0" @click="openWorkloadDialog()">
+    <v-card
+      id="workload-generation-button"
+      class="text-center"
+      elevation="0"
+      @click="openWorkloadDialog()"
+    >
       <v-icon class="mt-2" size="40">
         mdi-account-cog
       </v-icon>
@@ -81,7 +106,12 @@
         Workload Generation
       </v-card-text>
     </v-card>
-    <v-card class="text-center" elevation="0" @click="togglePluginEditor()">
+    <v-card
+      id="plugin-overview-button"
+      class="text-center"
+      elevation="0"
+      @click="togglePluginEditor()"
+    >
       <v-icon class="mt-2" size="40">
         mdi-alpha-p-box
       </v-icon>
