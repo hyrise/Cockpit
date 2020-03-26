@@ -205,8 +205,8 @@ class TestDatabaseManager:
         mocked_validate_connection.return_value = True
         body = {
             "id": "database_id",
-            "user": "admin",
-            "password": "12345678",
+            "user": "user",
+            "password": "password",
             "host": "database_host",
             "port": 5432,
             "dbname": "database_name",
@@ -214,7 +214,21 @@ class TestDatabaseManager:
         }
         response = database_manager._call_add_database(body)
 
-        mocked_database_constructor.assert_called()
+        mocked_database_constructor.assert_called_once_with(
+            "database_id",
+            "user",
+            "password",
+            "database_host",
+            5432,
+            "database_name",
+            8,
+            "tcp://{:s}:{:s}".format(WORKLOAD_SUB_HOST, WORKLOAD_PUBSUB_PORT,),
+            DEFAULT_TABLES,
+            STORAGE_HOST,
+            STORAGE_PASSWORD,
+            STORAGE_PORT,
+            STORAGE_USER,
+        )
         assert response == get_response(200)
         assert "database_id" in database_manager._databases.keys()
 
