@@ -39,13 +39,7 @@
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
-                :disabled="
-                  !isLoaded(workload) ||
-                    buttonIsLoading['loadtpch01'] ||
-                    buttonIsLoading['loadtpch1'] ||
-                    buttonIsLoading['loadtpcds'] ||
-                    buttonIsLoading['loadjob']
-                "
+                :disabled="!isLoaded(workload) || loading"
               >
               </v-radio>
             </v-radio-group>
@@ -88,6 +82,7 @@
               Load and remove generated data into/from instances
             </p>
             <v-switch
+              class="mt-0 pt-0"
               v-model="workloadData"
               v-for="workload in availableWorkloads"
               :key="workload"
@@ -95,8 +90,7 @@
               :value="workload"
               @change="handleWorkloadDataChange(workload)"
               :loading="buttonIsLoading['load' + workload]"
-              :disabled="buttonIsLoading['load' + workload]"
-              class="mt-0 pt-0"
+              :disabled="loading"
             >
             </v-switch>
           </v-col>
@@ -112,7 +106,8 @@ import {
   defineComponent,
   ref,
   Ref,
-  reactive
+  reactive,
+  computed
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
@@ -131,6 +126,8 @@ interface Data {
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
   buttonIsLoading: any;
+  isActive: Ref<boolean>;
+  loading: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
   startingWorkload: (workload: Workload) => void;
   pauseWorkload: (workload: Workload) => void;
@@ -139,7 +136,6 @@ interface Data {
   handleWorkloadChange: (workload: Workload) => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
-  isActive: Ref<boolean>;
 }
 export default defineComponent({
   props: {
@@ -151,7 +147,7 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): Data {
     const isActive = ref<boolean>(false);
     const startedWorkload = ref<boolean>(false);
-    const buttonIsLoading: any = reactive({
+    const buttonIsLoading: Record<string, boolean> = reactive({
       loadtpch01: false,
       loadtpch1: false,
       loadtpcds: false,
@@ -170,6 +166,7 @@ export default defineComponent({
       stopWorkload
     } = useWorkloadService();
     const workloadData = ref<Workload[]>([]);
+    updateWorkloadInformation();
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
@@ -205,53 +202,57 @@ export default defineComponent({
         startingWorkload(workload);
       }
     }
+    let changeWorkloadData = true;
     function handleWorkloadDataChange(workload: Workload): void {
       buttonIsLoading["load" + workload] = true;
       if (isLoaded(workload)) {
-        loadWorkloadData(workload);
+        changeWorkloadData = false;
+        loadWorkloadData(workload).then(() => (changeWorkloadData = true));
       } else {
-        deleteWorkloadData(workload);
+        changeWorkloadData = false;
+        deleteWorkloadData(workload).then(() => (changeWorkloadData = true));
       }
     }
     function updateWorkloadInformation(): void {
       getLoadedWorkloadData().then((response: any) => {
-        var loadedWorkloadData: Workload[] = [];
-        var loadingCount = 0;
-        for (var i = 0; i < response.data.length; i++) {
-          for (var j = 0; j < response.data[0].loaded_benchmarks.length; j++) {
-            if (i == 0) {
-              loadedWorkloadData[i] = getWorkloadFromTransferred(
-                response.data[i].loaded_benchmarks[j]
-              );
-            } else {
-              if (
-                !response.data[i].loaded_benchmarks.includes(
-                  getTransferredWorkload(loadedWorkloadData[j])
-                )
-              ) {
-                delete loadedWorkloadData[j];
-              }
-            }
-          }
-          if (response.data[i].database_blocked_status == 0) {
-            loadingCount++;
-          }
+        let loading = true;
+        //TODO: error when no database is added
+        let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
+        Object.values(response.data).forEach((instance: any) => {
+          loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
+            instance.loaded_benchmarks.includes(benchmark)
+          );
+          loading = Object.values(instance).some(
+            () => instance.database_blocked_status == 1
+          );
+        });
+        //TODO: error when loading and deleting (sometimes)
+        if (!loading && changeWorkloadData) {
+          Object.values(availableWorkloads).forEach((workload: Workload) => {
+            buttonIsLoading["load" + workload] = false;
+          });
+          workloadData.value = [];
+          Object.values(loadedWorkloadData).forEach((transferred: string) => {
+            workloadData.value.push(getWorkloadFromTransferred(transferred));
+          });
         }
-        if (loadingCount == response.data.length) {
-          for (j = 0; j < availableWorkloads.length; j++) {
-            buttonIsLoading["load" + availableWorkloads[j]] = false;
-          }
-        }
-        workloadData.value = loadedWorkloadData;
       });
     }
-    setInterval(updateWorkloadInformation, 3000);
+    setInterval(updateWorkloadInformation, 1000);
     return {
       availableWorkloads,
       frequency,
       workload,
       workloadData,
       buttonIsLoading,
+      isActive,
+      loading: computed(
+        () =>
+          buttonIsLoading.loadtpch01 ||
+          buttonIsLoading.loadtpch1 ||
+          buttonIsLoading.loadtpcds ||
+          buttonIsLoading.loadjob
+      ),
       getDisplayedWorkload,
       startingWorkload,
       pauseWorkload,
@@ -259,8 +260,7 @@ export default defineComponent({
       isLoaded,
       handleWorkloadChange,
       handleWorkloadDataChange,
-      closeWorkloadDialog,
-      isActive
+      closeWorkloadDialog
     };
   }
 });
