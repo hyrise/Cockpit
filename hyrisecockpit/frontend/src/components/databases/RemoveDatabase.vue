@@ -6,19 +6,19 @@
       </v-card-title>
       <v-card-text>
         <div>Do you really want to remove this database?</div>
-        <database-chip class="mt-4" :database-id="databaseId"
-      /></v-card-text>
-
+        <database-chip class="mt-4" :database-id="databaseId" />
+      </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn color="primary" text @click="$emit('close')">Cancel</v-btn>
         <v-btn
           id="save-database-button"
           color="primary"
           text
           @click="removeDatabase()"
-          >Remove</v-btn
         >
+          Remove
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
