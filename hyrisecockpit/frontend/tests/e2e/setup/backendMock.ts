@@ -1,56 +1,6 @@
 import { useMocks } from "./mocks";
 import { Entity, getPostAlias, getDeleteAlias, empty } from "./helpers";
 
-function getRouteMock(
-  method: string,
-  url: string,
-  response: any,
-  withBody: boolean,
-  callback: () => void = empty,
-  delay: number = 0
-): Object {
-  return {
-    method: method,
-    url: url,
-    response: withBody ? { body: response } : response,
-    delay: delay,
-    onRequest: () => {
-      // call function on request
-      callback();
-    }
-  };
-}
-
-function mockGetRoute(url: string, response: any, withBody: boolean): void {
-  cy.route(getRouteMock("GET", url, response, withBody));
-}
-
-function mockPostRoute(
-  url: string,
-  alias: string,
-  callback: () => void,
-  delay: number = 0,
-  withBody: boolean = false,
-  response: any = {}
-): void {
-  cy.route(getRouteMock("POST", url, response, withBody, callback, delay)).as(
-    alias
-  );
-}
-
-function mockDeleteRoute(
-  url: string,
-  alias: string,
-  callback: () => void,
-  delay: number = 0,
-  withBody: boolean = false,
-  response: any = {}
-): void {
-  cy.route(getRouteMock("DELETE", url, response, withBody, callback, delay)).as(
-    alias
-  );
-}
-
 /* backend with mocked routes */
 
 //NOTE: only used routes are mocked yet
@@ -177,4 +127,54 @@ export function useBackendMock(
     restart,
     start
   };
+}
+
+function getRouteMock(
+  method: string,
+  url: string,
+  response: any,
+  withBody: boolean,
+  callback: (payload: any) => void = empty,
+  delay: number = 0
+): Object {
+  return {
+    method: method,
+    url: url,
+    response: withBody ? { body: response } : response,
+    delay: delay,
+    onRequest: (xhr: any) => {
+      // call function on request
+      callback(xhr);
+    }
+  };
+}
+
+function mockGetRoute(url: string, response: any, withBody: boolean): void {
+  cy.route(getRouteMock("GET", url, response, withBody));
+}
+
+function mockPostRoute(
+  url: string,
+  alias: string,
+  callback: (payload: any) => void,
+  delay: number = 500,
+  withBody: boolean = false,
+  response: any = {}
+): void {
+  cy.route(getRouteMock("POST", url, response, withBody, callback, delay)).as(
+    alias
+  );
+}
+
+function mockDeleteRoute(
+  url: string,
+  alias: string,
+  callback: (payload?: any) => void,
+  delay: number = 0,
+  withBody: boolean = false,
+  response: any = {}
+): void {
+  cy.route(getRouteMock("DELETE", url, response, withBody, callback, delay)).as(
+    alias
+  );
 }

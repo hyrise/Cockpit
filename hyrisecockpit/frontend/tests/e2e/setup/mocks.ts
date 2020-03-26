@@ -20,6 +20,7 @@ import {
   benchmarks,
   empty
 } from "./helpers";
+import { useCallbacks } from "./callbacks";
 
 /* mocks containing fake data */
 
@@ -27,23 +28,29 @@ export function useMocks(
   numbers: Record<Entity, number>
 ): {
   renewMocks: () => void;
+  renewMockResponses: () => void;
   getMockedResponse(request: Request): any;
-  getMockedPostCallback: (request: Request) => () => void;
-  getMockedDeleteCallback: (request: Request) => () => void;
+  getMockedPostCallback: (request: Request) => (payload: any) => void;
+  getMockedDeleteCallback: (request: Request) => (payload?: any) => void;
 } {
+  const callbacks = useCallbacks(renewMockResponses);
   let mockedIds: Record<Entity, string[]> = mockIds();
   let responseMocks: Record<Request, any> = mockResponses();
   let postCallbackMocks: Partial<Record<
     Request,
-    () => void
+    (payload: any) => void
   >> = mockPostCallbacks();
   let deleteCallbackMocks: Partial<Record<
     Request,
-    () => void
+    (payload?: any) => void
   >> = mockDeleteCallbacks();
 
   function renewMocks(): void {
     mockedIds = mockIds();
+    responseMocks = mockResponses();
+  }
+
+  function renewMockResponses(): void {
     responseMocks = mockResponses();
   }
 
@@ -133,25 +140,33 @@ export function useMocks(
     return responseMocks as Record<Request, any>;
   }
 
-  function mockPostCallbacks(): Partial<Record<Request, () => void>> {
+  function mockPostCallbacks(): Partial<
+    Record<Request, (payload: any) => void>
+  > {
     //TODO: add callbacks here
-    const postCallbackMocks: Partial<Record<Request, () => void>> = {};
+    const postCallbackMocks: Partial<Record<
+      Request,
+      (payload: any) => void
+    >> = {};
+    postCallbackMocks.database = callbacks.handleDatabaseCreation;
 
     return postCallbackMocks;
   }
 
-  function mockDeleteCallbacks(): Partial<Record<Request, () => void>> {
+  function mockDeleteCallbacks(): Partial<
+    Record<Request, (payload?: any) => void>
+  > {
     //TODO: add callbacks here
     const deleteCallbackMocks: Partial<Record<Request, () => void>> = {};
 
     return deleteCallbackMocks;
   }
 
-  function getMockedPostCallback(request: Request): () => void {
+  function getMockedPostCallback(request: Request): (payload: any) => void {
     return postCallbackMocks[request] || empty;
   }
 
-  function getMockedDeleteCallback(request: Request): () => void {
+  function getMockedDeleteCallback(request: Request): (payload?: any) => void {
     return deleteCallbackMocks[request] || empty;
   }
 
@@ -161,6 +176,7 @@ export function useMocks(
 
   return {
     renewMocks,
+    renewMockResponses,
     getMockedResponse,
     getMockedPostCallback,
     getMockedDeleteCallback

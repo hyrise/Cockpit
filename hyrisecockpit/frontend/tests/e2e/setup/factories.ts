@@ -9,7 +9,24 @@ import {
 
 /* factories to fake all request data */
 
-export function fakeDatabaseData(databaseId: string): Object {
+type Database = {
+  host: string;
+  port: string;
+  number_workers: number;
+  dbname: string;
+};
+
+// DATABASES
+
+export function fakeDatabaseData(
+  databaseId: string,
+  predefined?: Database
+): Object {
+  if (predefined)
+    return {
+      id: databaseId,
+      ...predefined
+    };
   return {
     id: databaseId,
     host: faker.random.word(),
@@ -18,6 +35,8 @@ export function fakeDatabaseData(databaseId: string): Object {
     dbname: faker.database.engine()
   };
 }
+
+// SYSTEM DATA
 
 export function fakeDatabaseSystemData(databaseId: string): Object {
   const systemData: any = {};
@@ -38,6 +57,8 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
   };
   return systemData;
 }
+
+// STORAGE DATA
 
 function fakeColumnStorageData(columnId: string): Object {
   const storageData: any = {};
@@ -71,11 +92,15 @@ export function fakeDatabaseStorageData(
   return storageData;
 }
 
+// GENERIC NUMBER DATA
+
 export function fakeNumberData(databaseId: string): Object {
   const data: any = {};
   data[databaseId] = faker.random.number();
   return data;
 }
+
+// QUERY TYPE PROPORTION DATA
 
 function fakeQueryTypeProportion(): Object {
   return {
@@ -93,6 +118,8 @@ export function fakeKruegerData(datebaseId: string): Object {
     generated: fakeQueryTypeProportion()
   };
 }
+
+// CHUNKS DATA
 
 function fakeColumnChunksData(
   columnId: string,
@@ -128,6 +155,8 @@ export function fakeDatabaseChunksData(
   return data;
 }
 
+// DETAILED QUERY INFORMATION DATA
+
 function fakeQueryInformationData(): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
@@ -148,6 +177,8 @@ export function fakeDatabaseQueryInformationData(
     )
   };
 }
+
+// PLUGIN DATA
 
 export function fakeDatabasePluginsData(
   databaseId: string,
