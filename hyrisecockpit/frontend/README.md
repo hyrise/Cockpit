@@ -6,12 +6,6 @@
 npm install
 ```
 
-## Lint and start development server in one step
-
-```
-./scripts/start-dev.sh
-```
-
 ### Compiles and hot-reloads for development
 
 ```
@@ -28,6 +22,17 @@ npm run build
 
 ```
 npm run lint --fix
+```
+
+### Runs e2e tests in UI
+
+```
+npm run test:e2e
+```
+
+### Runs e2e tests without UI
+```
+npm run test:e2e:headless
 ```
 
 ### Customize configuration

@@ -94,7 +94,7 @@ function useHeatMapConfiguration(
       colorscale: [
         [0.0, colorDefinition.darkblue],
         [0.25, colorDefinition.blue],
-        [0.5, "#FFFFFF"],
+        [0.5, "#F5F5F5"],
         [0.75, colorDefinition.orange],
         [1, colorDefinition.darkorange]
       ],
