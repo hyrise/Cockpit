@@ -332,17 +332,17 @@ class TestDatabase(object):
     def test_gets_blocked_database_status(self, database: Database) -> None:
         """Test return value for blocked database."""
         database._database_blocked.value = False
-        result: int = database.get_database_blocked()
+        result: bool = database.get_database_blocked()
 
-        assert type(result) is int
+        assert type(result) is bool
         assert not result
 
     def test_gets_unblocked_database_status(self, database: Database) -> None:
         """Test return value for unblocked database."""
         database._database_blocked.value = True
-        result: int = database.get_database_blocked()
+        result: bool = database.get_database_blocked()
 
-        assert type(result) is int
+        assert type(result) is bool
         assert result
 
     @patch("hyrisecockpit.database_manager.database._table_names", get_fake_tables())
@@ -408,13 +408,13 @@ class TestDatabase(object):
             "Tenacious D": "Rock",
         }
         database._loaded_tables = fake_loaded_tables
-        expected = [
+        expected: List[Dict[str, str]] = [
             {"table_name": "Broken Witt Rebels", "benchmark": "alternative"},
             {"table_name": "Jack White", "benchmark": "alternative"},
             {"table_name": "Tenacious D", "benchmark": "Rock"},
         ]
 
-        received = database.get_loaded_tables()
+        received: List[Dict[str, str]] = database.get_loaded_tables()
 
         assert expected == received
 
