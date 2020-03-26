@@ -355,7 +355,6 @@ class BackgroundJobManager(object):
             Process(target=self._execute_table_query, args=(query, success_flag),)
             for query, success_flag in zip(queries, success_flags)
         ]
-
         for process in processes:
             process.start()
         for process in processes:
@@ -373,15 +372,15 @@ class BackgroundJobManager(object):
         self._execute_queries_parallel(table_names, table_loading_queries, folder_name)
         self._database_blocked.value = False
 
-    def _get_load_table_names(self, benchmark_variation: str):
+    def _get_load_table_names(self, workload_type: str):
         """Get table names to load."""
         table_names = []
-        full_table_names = _table_names.get(benchmark_variation.split("_")[0])
+        full_table_names = _table_names.get(workload_type.split("_")[0])
         if full_table_names is not None:
             table_names = [
                 table_name
                 for table_name in full_table_names
-                if self._loaded_tables[table_name] != benchmark_variation
+                if self._loaded_tables[table_name] != workload_type
             ]
         return table_names
 
@@ -390,7 +389,7 @@ class BackgroundJobManager(object):
         if self._database_blocked.value:
             return False
 
-        table_names = self._get_load_table_names(folder_name)
+        table_names = self._get_load_table_names(workload_type=folder_name)
         if not table_names:
             return True
 
@@ -432,7 +431,7 @@ class BackgroundJobManager(object):
             return False
 
     def _get_existing_tables(self, table_names: List[str]) -> Dict:
-        """Check wich tables exists and which not."""
+        """Check which tables exists and which not."""
         existing_tables = []
         not_existing_tables = []
         with PoolCursor(self._connection_pool) as cur:
