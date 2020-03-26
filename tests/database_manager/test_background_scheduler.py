@@ -36,25 +36,30 @@ get_fake_read_sql_query: Callable[
     {"col1": ["data"]}
 )
 
-mocked_storage_curser = MagicMock()
-mocked_pool_curser = MagicMock()
+mocked_storage_cursor = MagicMock()
+mocked_pool_cursor = MagicMock()
 mocked_process = MagicMock()
 mocked_process_constructor = MagicMock()
 mocked_process_constructor.return_value = mocked_process
 
 
-def get_mocked_storage_curser(*args):
-    """Return fake storage curser."""
-    mocked_storage_curser_constructor = MagicMock()
-    mocked_storage_curser_constructor.__enter__.return_value = mocked_storage_curser
-    return mocked_storage_curser_constructor
+def get_mocked_storage_cursor(*args):
+    """Return fake storage cursor."""
+    mocked_storage_cursor_constructor = MagicMock()
+    mocked_storage_cursor_constructor.__enter__.return_value = mocked_storage_cursor
+    return mocked_storage_cursor_constructor
 
 
-def get_mocked_pool_curser(*args):
-    """Return fake storage curser."""
-    mocked_pool_curser_constructor = MagicMock()
-    mocked_pool_curser_constructor.__enter__.return_value = mocked_pool_curser
-    return mocked_pool_curser_constructor
+def get_mocked_pool_cursor(*args):
+    """Return fake storage cursor."""
+    mocked_pool_cursor_constructor = MagicMock()
+    mocked_pool_cursor_constructor.__enter__.return_value = mocked_pool_cursor
+    return mocked_pool_cursor_constructor
+
+
+def fake_execute_table_query(self, query, success_flag):
+    """Retuen dummy execute table query method."""
+    success_flag.value = True
 
 
 class TestBackgroundJobManager:
@@ -247,7 +252,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_chunks_data_with_empty_meta_chunks(
@@ -263,20 +268,20 @@ class TestBackgroundJobManager:
 
         background_job_manager._update_chunks_data()
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
         background_job_manager._create_chunks_dictionary.assert_not_called()  # type: ignore
         background_job_manager._calculate_chunks_difference.assert_not_called()  # type: ignore
-        mocked_storage_curser.log_meta_information.assert_called_once_with(
+        mocked_storage_cursor.log_meta_information.assert_called_once_with(
             "chunks_data", {"chunks_data_meta_information": "{}"}, 42
         )
 
-        mocked_storage_curser = MagicMock()
-        mocked_storage_curser.log_meta_information.return_value = None
+        mocked_storage_cursor = MagicMock()
+        mocked_storage_cursor.log_meta_information.return_value = None
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_chunks_data_with_meta_chunks(
@@ -297,22 +302,22 @@ class TestBackgroundJobManager:
 
         background_job_manager._update_chunks_data()
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
         background_job_manager._create_chunks_dictionary.assert_called_once_with(  # type: ignore
             fake_not_empty_data_frame
         )
         background_job_manager._calculate_chunks_difference.assert_called_once()  # type: ignore
-        mocked_storage_curser.log_meta_information.assert_called_once_with(
+        mocked_storage_cursor.log_meta_information.assert_called_once_with(
             "chunks_data", {"chunks_data_meta_information": '{"new": 55}'}, 42
         )
 
-        mocked_storage_curser = MagicMock()
-        mocked_storage_curser.log_meta_information.return_value = None
+        mocked_storage_cursor = MagicMock()
+        mocked_storage_cursor.log_meta_information.return_value = None
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     def test_logs_plugin_log(
         self, background_job_manager: BackgroundJobManager
@@ -339,17 +344,17 @@ class TestBackgroundJobManager:
             (42, "HyrisePleaseStayAlive", "error"),
         ]
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
-        mocked_storage_curser.log_plugin_log.assert_called_once_with(
+        mocked_storage_cursor.log_plugin_log.assert_called_once_with(
             expected_function_argument
         )
 
-        mocked_storage_curser = MagicMock()
+        mocked_storage_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     def test_doesnt_log_plugin_log_when_empty(
         self, background_job_manager: BackgroundJobManager
@@ -365,11 +370,11 @@ class TestBackgroundJobManager:
 
         background_job_manager._update_plugin_log()
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
-        mocked_storage_curser.log_plugin_log.assert_not_called()
+        mocked_storage_cursor.log_plugin_log.assert_not_called()
 
-        mocked_storage_curser = MagicMock()
+        mocked_storage_cursor = MagicMock()
 
     def test_successfully_create_cpu_data_dict(
         self, background_job_manager: BackgroundJobManager
@@ -432,7 +437,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_system_data(
@@ -468,17 +473,17 @@ class TestBackgroundJobManager:
             "database_threads": "16",
         }
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
-        mocked_storage_curser.log_meta_information.assert_called_once_with(
+        mocked_storage_cursor.log_meta_information.assert_called_once_with(
             "system_data", expected_function_argument, 42
         )
 
-        mocked_storage_curser = MagicMock()
+        mocked_storage_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_doesnt_log_updated_system_data(
@@ -497,17 +502,17 @@ class TestBackgroundJobManager:
 
         background_job_manager._update_system_data()
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
         background_job_manager._create_cpu_data_dict.assert_not_called()  # type: ignore
         background_job_manager._create_memory_data_dict.assert_not_called()  # type: ignore
-        mocked_storage_curser.log_meta_information.assert_not_called()
+        mocked_storage_cursor.log_meta_information.assert_not_called()
 
-        mocked_storage_curser = MagicMock()
+        mocked_storage_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_successfully_logs_storage_data(
@@ -560,19 +565,19 @@ class TestBackgroundJobManager:
             },
         }
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
         background_job_manager._update_storage_data()
 
-        mocked_storage_curser.log_meta_information.assert_called_with(
+        mocked_storage_cursor.log_meta_information.assert_called_with(
             "storage", {"storage_meta_information": dumps(expected_storage_dict)}, 42
         )
 
-        mocked_storage_curser = MagicMock()
+        mocked_storage_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
-        get_mocked_storage_curser,
+        get_mocked_storage_cursor,
     )
     @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_empty_storage_data(
@@ -585,15 +590,15 @@ class TestBackgroundJobManager:
         mocked_sql_to_data_frame.return_value = fake_empty_storage_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        global mocked_storage_curser
+        global mocked_storage_cursor
 
         background_job_manager._update_storage_data()
 
-        mocked_storage_curser.log_meta_information.assert_called_with(
+        mocked_storage_cursor.log_meta_information.assert_called_with(
             "storage", {"storage_meta_information": dumps({})}, 42
         )
 
-        mocked_storage_curser = MagicMock()
+        mocked_storage_cursor = MagicMock()
 
     def tests_successfully_generates_table_loading_queries(
         self, background_job_manager: BackgroundJobManager
@@ -667,7 +672,7 @@ class TestBackgroundJobManager:
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
-        get_mocked_pool_curser,
+        get_mocked_pool_cursor,
     )
     def test_successfully_executes_table_query(
         self, background_job_manager: BackgroundJobManager
@@ -689,13 +694,13 @@ class TestBackgroundJobManager:
         success_flag = Value("b", 0)
         background_job_manager._execute_table_query(query_tuple, success_flag)
 
-        global mocked_pool_curser
-        mocked_pool_curser.execute.assert_called_once_with(
+        global mocked_pool_cursor
+        mocked_pool_cursor.execute.assert_called_once_with(
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
             ("keep", "hyriseDown", "keep",),
         )
 
-        mocked_pool_curser = MagicMock()
+        mocked_pool_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.Process",
@@ -705,10 +710,10 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
         lambda *args: 42,
     )
-    def test_unsuccessfully_execute_queries_parallel(
+    def test_starts_processes_for_execute_queries_parallel(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
-        """Test successfully executes table loading queries in parallel."""
+        """Test start processes for table loading queries in parallel."""
         fake_table_names = ["HyriseAreYoueStillAlive"]
         fake_queries = ("Ping Hyrise",)
         folder_name = "Hallo"
@@ -732,7 +737,45 @@ class TestBackgroundJobManager:
         mocked_process.join.assert_called_once()
         mocked_process.terminate.assert_called_once()
 
-        assert "HyriseAreYoueStillAlive" not in background_job_manager._loaded_tables
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
+        fake_execute_table_query,
+    )
+    def test_successfully_updates_loaded_tables(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully update table loading queries in parallel."""
+        fake_table_names = ["HyriseAreYouStillAlive"]
+        fake_queries = ("Ping Hyrise",)
+        folder_name = "Hallo"
 
-        mocked_process = MagicMock()
-        mocked_process_constructor = MagicMock()
+        background_job_manager._loaded_tables = {}
+
+        background_job_manager._execute_queries_parallel(
+            fake_table_names, fake_queries, folder_name
+        )
+
+        assert "HyriseAreYouStillAlive" in background_job_manager._loaded_tables
+        assert (
+            background_job_manager._loaded_tables["HyriseAreYouStillAlive"] == "Hallo"
+        )
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
+        lambda *args: "I do nothing",
+    )
+    def test_doesnt_update_loaded_tables_when_unsuccessful(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesnt update loaded tables when loading wasn't successful."""
+        fake_table_names = ["HyriseAreYouStillAlive"]
+        fake_queries = ("Ping Hyrise",)
+        folder_name = "Hallo"
+
+        background_job_manager._loaded_tables = {}
+
+        background_job_manager._execute_queries_parallel(
+            fake_table_names, fake_queries, folder_name
+        )
+
+        assert "HyriseAreYouStillAlive" not in background_job_manager._loaded_tables
