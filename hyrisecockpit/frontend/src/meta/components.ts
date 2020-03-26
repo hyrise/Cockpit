@@ -54,7 +54,7 @@ export function useUpdatingInterval(
     let previousTimeStamp = new Date(
       currentTimeStamp.getTime() - getMetricRequestTime(metric)
     );
-    if (timestamps.value.length == 1) {
+    if (timestamps.value.length === 1) {
       currentTimeStamp = timestamps.value[0];
       previousTimeStamp = new Date(
         timestamps.value[0].getTime() - getMetricRequestTime(metric)
