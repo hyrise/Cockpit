@@ -39,6 +39,8 @@ get_fake_read_sql_query: Callable[
 mocked_storage_curser = MagicMock()
 mocked_pool_curser = MagicMock()
 mocked_process = MagicMock()
+mocked_process_constructor = MagicMock()
+mocked_process_constructor.return_value = mocked_process
 
 
 def get_mocked_storage_curser(*args):
@@ -696,17 +698,18 @@ class TestBackgroundJobManager:
         mocked_pool_curser = MagicMock()
 
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.Process", mocked_process,
+        "hyrisecockpit.database_manager.background_scheduler.Process",
+        mocked_process_constructor,
     )
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.BackgroundJobManager._execute_table_query",
         lambda *args: 42,
     )
-    def test_successfully_execute_queries_parallel(
+    def test_unsuccessfully_execute_queries_parallel(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully executes table loading queries in parallel."""
-        fake_table_names = "HyriseAreYoueStillAlive"
+        fake_table_names = ["HyriseAreYoueStillAlive"]
         fake_queries = ("Ping Hyrise",)
         folder_name = "Hallo"
 
@@ -716,7 +719,10 @@ class TestBackgroundJobManager:
             fake_table_names, fake_queries, folder_name
         )
 
-        args, kwargs = mocked_process.call_args_list[0]
+        global mocked_process
+        global mocked_process_constructor
+
+        args, kwargs = mocked_process_constructor.call_args_list[0]
 
         assert kwargs["target"]() == 42
         assert kwargs["args"][0] == fake_queries[0]
@@ -726,6 +732,7 @@ class TestBackgroundJobManager:
         mocked_process.join.assert_called_once()
         mocked_process.terminate.assert_called_once()
 
-        assert (
-            background_job_manager._loaded_tables["HyriseAreYoueStillAlive"] == "Hallo"
-        )
+        assert "HyriseAreYoueStillAlive" not in background_job_manager._loaded_tables
+
+        mocked_process = MagicMock()
+        mocked_process_constructor = MagicMock()
