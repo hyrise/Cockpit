@@ -24,6 +24,9 @@ storage_password: str = "1234"
 storage_port: str = "42"
 storage_user: str = "Käptin Blaubär"
 
+mocked_pool_cur: MagicMock = MagicMock()
+mocked_pool_cur.fetchall.return_value = []
+
 
 def get_fake_tables() -> Dict:
     """Return fake table dictionary."""
@@ -39,14 +42,18 @@ def get_fake_tables() -> Dict:
     return fake_dict
 
 
-def get_fake_pool_cursor(connection_pool: pool) -> MagicMock:
+def get_mocked_pool_cursor(*args) -> MagicMock:
     """Return fake PoolCursor."""
     mocked_context_cur: MagicMock = MagicMock()
-    mocked_cur: MagicMock = MagicMock()
-    mocked_cur.execute.return_value = None
-    mocked_cur.fetchall.return_value = []
-    mocked_context_cur.__enter__.return_value = mocked_cur
+    mocked_context_cur.__enter__.return_value = mocked_pool_cur
     return mocked_context_cur
+
+
+def reset_mocked_pool_cursor() -> None:
+    """Reset mocked pool cursor."""
+    global mocked_pool_cur
+    mocked_pool_cur = MagicMock()
+    mocked_pool_cur.fetchall.return_value = []
 
 
 def get_fake_pool_cursor_with_rows_to_return(connection_pool: pool) -> MagicMock:
@@ -436,7 +443,7 @@ class TestDatabase(object):
         assert not result
 
     @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
     def test_gets_plugins_when_database_unblocked_and_no_plugins_exists(
         self, database: Database
@@ -445,11 +452,17 @@ class TestDatabase(object):
         database._database_blocked.value = False
         result: Optional[List] = database.get_plugins()
 
+        global mocked_pool_cur
+        mocked_pool_cur.execute.assert_called_once_with(
+            ("SELECT name FROM meta_plugins;"), None
+        )
         assert type(result) is list
         assert result == []
 
+        reset_mocked_pool_cursor()
+
     @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
     def test_gets_plugins_when_database_blocked(self, database: Database) -> None:
         """Test get plug-ins when database is blocked."""
@@ -474,20 +487,28 @@ class TestDatabase(object):
         assert Counter(result) == Counter(expected)
 
     @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
-    def test_sets_plugin_setting_when_dataabse_is_unblocked(
+    def test_sets_plugin_setting_when_database_is_unblocked(
         self, database: Database
     ) -> None:
         """Test set plug-in setting while the database is not blocked."""
         database._database_blocked.value = False
         result: bool = database.set_plugin_setting("M. böslich", "Eiskaltius")
 
+        global mocked_pool_cur
+        mocked_pool_cur.execute.assert_called_once_with(
+            "UPDATE meta_settings SET value=%s WHERE name=%s;",
+            ("Eiskaltius", "M. böslich",),
+        )
+
         assert type(result) is bool
         assert result
 
+        reset_mocked_pool_cursor()
+
     @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
     def test_set_plugin_settings_when_database_blocked(
         self, database: Database
@@ -496,11 +517,16 @@ class TestDatabase(object):
         database._database_blocked.value = True
         result: bool = database.set_plugin_setting("Eiskaltius", "M. böslich")
 
+        global mocked_pool_cur
+        mocked_pool_cur.execute.assert_not_called()
+
         assert type(result) is bool
         assert not result
 
+        reset_mocked_pool_cursor()
+
     @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
     def test_gets_plugins_settings_when_database_unblocked_and_no_plugins_exists(
         self, database: Database
@@ -513,7 +539,7 @@ class TestDatabase(object):
         assert result == []
 
     @patch(
-        "hyrisecockpit.database_manager.database.PoolCursor", get_fake_pool_cursor,
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
     )
     def test_gets_plugins_settings_when_database_blocked(
         self, database: Database
