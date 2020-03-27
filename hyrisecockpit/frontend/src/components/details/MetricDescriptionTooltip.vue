@@ -1,7 +1,7 @@
 <template>
-  <v-tooltip left>
+  <v-tooltip right>
     <template v-slot:activator="{ on }">
-      <v-icon v-on="on">mdi-help-circle-outline</v-icon>
+      <v-icon right v-on="on">mdi-help-circle-outline</v-icon>
     </template>
     <span v-html="metricDescription" />
   </v-tooltip>
