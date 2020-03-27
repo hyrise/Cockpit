@@ -190,7 +190,7 @@ class TestDatabaseManager:
     def test_has_server_call(
         self, database_manager: DatabaseManager, call: str
     ) -> None:
-        """Assert DatabaseMnager has a specific call."""
+        """Assert DatabaseManager has a specific call."""
         assert call in database_manager._get_server_calls().keys()
 
     @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
