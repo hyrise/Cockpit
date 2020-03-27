@@ -11,9 +11,12 @@ import { useDataTransformationHelpers } from "./transformationService";
 import { useDatabaseEvents } from "../meta/events";
 
 export function useDatabaseService(): DatabaseService {
-  //TODO: think about how to handle colors now
+  const colors = Object.values(colorDefinition);
   let usedColors: any = 0;
-  const { emitDatabaseAddedEvent } = useDatabaseEvents();
+  const {
+    emitDatabaseAddedEvent,
+    emitDatabaseRemovedEvent
+  } = useDatabaseEvents();
 
   const {
     getDatabaseMemoryFootprint,
@@ -29,7 +32,7 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function getDatabaseColor(): string {
-    const color: any = Array.from(Object.values(colorDefinition))[usedColors];
+    const color = colors[usedColors];
     usedColors += 1;
     return color;
   }
@@ -100,8 +103,24 @@ export function useDatabaseService(): DatabaseService {
     });
   }
 
+  function removeDatabase(databaseId: string): void {
+    axios
+      .delete(controlBackend + "database", {
+        data: { id: databaseId }
+      })
+      .then(() => {
+        emitDatabaseRemovedEvent();
+      });
+  }
+
+  function resetColors(): void {
+    usedColors = 0;
+  }
+
   return {
     addDatabase,
+    removeDatabase,
+    resetColors,
     fetchDatabases,
     fetchDatabasesCPUInformation,
     fetchDatabasesStorageInformation,

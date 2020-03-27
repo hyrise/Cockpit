@@ -86,7 +86,7 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-import { useDatabaseService } from "../services/databaseService";
+import { useDatabaseService } from "@/services/databaseService";
 
 interface Props {
   open: boolean;
