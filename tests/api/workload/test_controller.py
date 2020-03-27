@@ -1,5 +1,6 @@
 """Tests for the Workload controller."""
 
+from itertools import product
 from json import dumps
 from typing import List, Optional
 from unittest.mock import patch
@@ -17,13 +18,30 @@ from hyrisecockpit.api.app.workload.service import WorkloadService
 
 url = f"/api/{BASE_ROUTE}"
 
-interfaces: List[WorkloadInterface] = [
-    WorkloadInterface(workload_id="workload0", folder_name="tpch_0.1", frequency=420),
-    WorkloadInterface(workload_id="workload1", folder_name="tpcds_1", frequency=210),
-    WorkloadInterface(workload_id="workload2", folder_name="job", frequency=0),
-]
 
-workloads: List[Workload] = [Workload(**interface) for interface in interfaces]
+def interfaces() -> List[WorkloadInterface]:
+    """Return a list of WorkloadInterfaces."""
+    return [
+        WorkloadInterface(
+            workload_id=f"{folder_name}@{frequency}",
+            folder_name=folder_name,
+            frequency=frequency,
+        )
+        for folder_name, frequency in product(
+            {"tpch_0.1", "tpcds_1", "job", "no-ops"}, {0, 1, 100}
+        )
+    ]
+
+
+def workloads() -> List[Workload]:
+    """Return a list of Workloads corresponding to the interfaces."""
+    return [Workload(**interface) for interface in interfaces()]
+
+
+def workload_ids() -> List[str]:
+    """Return a list of workload_ids corresponding to the Workloads."""
+    return [workload.workload_id for workload in workloads()]
+
 
 bad_id = "id_that_will_fail"
 
@@ -39,7 +57,7 @@ def create_workload(interface: WorkloadInterface) -> Optional[Workload]:
 def get_workload_by_id(id: str) -> Optional[Workload]:
     """Return the Workload with the id."""
     try:
-        return [w for w in workloads if w.workload_id == id].pop()
+        return [w for w in workloads() if w.workload_id == id].pop()
     except IndexError:
         return None
 
@@ -47,6 +65,14 @@ def get_workload_by_id(id: str) -> Optional[Workload]:
 def delete_workload_by_id(id: str) -> Optional[str]:
     """Return the workload_id of the deleted Workload."""
     return None if id == bad_id else id
+
+
+def update_workload_by_id(id: str, interface: WorkloadInterface) -> Optional[Workload]:
+    """Return the updated Workload."""
+    workload = get_workload_by_id(id)
+    if workload is None:
+        return None
+    return workload.update(interface)
 
 
 @fixture
@@ -68,13 +94,13 @@ class TestWorkloadController:
     """Tests for the Workload controller."""
 
     @patch.object(
-        WorkloadService, "get_all", lambda: workloads,
+        WorkloadService, "get_all", workloads,
     )
     def test_gets_all_workloads(self, client: FlaskClient):
         """A Workload controller routes get_all correctly."""
         response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
-        assert WorkloadSchema(many=True).dump(workloads) == response.get_json()
+        assert WorkloadSchema(many=True).dump(workloads()) == response.get_json()
 
     @patch.object(
         WorkloadService, "get_all", lambda: [],
@@ -85,7 +111,7 @@ class TestWorkloadController:
         assert 200 == response.status_code
         assert WorkloadSchema(many=True).dump([]) == response.get_json()
 
-    @mark.parametrize("interface", interfaces)
+    @mark.parametrize("interface", interfaces())
     @patch.object(WorkloadService, "create", create_workload)
     def test_creates_a_workload(
         self, client: FlaskClient, interface: WorkloadInterface
@@ -100,7 +126,7 @@ class TestWorkloadController:
         assert 200 == response.status_code
         assert WorkloadSchema().load(interface) == response.get_json()
 
-    @mark.parametrize("interface", interfaces)
+    @mark.parametrize("interface", interfaces())
     @patch.object(WorkloadService, "create", create_workload)
     def test_creates_no_workload_if_it_already_exists(
         self, client: FlaskClient, interface: WorkloadInterface
@@ -120,7 +146,7 @@ class TestWorkloadController:
 class TestWorkloadIdController:
     """Tests for the WorkloadId controller."""
 
-    @mark.parametrize("id", [w.workload_id for w in workloads])
+    @mark.parametrize("id", workload_ids())
     @patch.object(
         WorkloadService, "get_by_id", get_workload_by_id,
     )
@@ -141,12 +167,12 @@ class TestWorkloadIdController:
         assert 404 == response.status_code
         assert not response.is_json
 
-    @mark.parametrize("id", [w.workload_id for w in workloads])
+    @mark.parametrize("id", workload_ids())
     @patch.object(
         WorkloadService, "delete_by_id", delete_workload_by_id,
     )
     def test_deletes_the_correct_workload(self, client: FlaskClient, id: str):
-        """A WorkloadId controller routes get correctly."""
+        """A WorkloadId controller routes delete correctly."""
         response = client.delete(url + f"/{id}", follow_redirects=True)
         assert 200 == response.status_code
         assert not response.is_json
@@ -157,7 +183,54 @@ class TestWorkloadIdController:
     def test_deletes_no_workload_if_it_cannot_be_found(
         self, client: FlaskClient, id: str = bad_id
     ):
-        """A WorkloadId controller routes get correctly."""
+        """A WorkloadId controller routes delete correctly."""
         response = client.delete(url + f"/{id}", follow_redirects=True)
+        assert 404 == response.status_code
+        assert not response.is_json
+
+    @mark.parametrize("interface", interfaces())
+    @patch.object(
+        WorkloadService, "update_by_id", update_workload_by_id,
+    )
+    @patch.object(
+        WorkloadService, "get_by_id", get_workload_by_id,
+    )
+    def test_updates_the_correct_workload(
+        self, client: FlaskClient, interface: WorkloadInterface
+    ):
+        """A WorkloadId controller routes update correctly."""
+        id = interface["workload_id"]
+        new_interface = WorkloadInterface(
+            workload_id=id,
+            folder_name=interface["folder_name"],
+            frequency=interface["frequency"] * 10,
+        )
+        response_before = client.get(url + f"/{id}", follow_redirects=True)
+        assert 200 == response_before.status_code
+        assert WorkloadSchema().load(interface) == response_before.get_json()
+        response_after = client.put(
+            url + f"/{id}",
+            data=dumps(new_interface),
+            content_type="application/json",
+            follow_redirects=True,
+        )
+        assert 200 == response_after.status_code
+        assert WorkloadSchema().load(new_interface) == response_after.get_json()
+
+    @mark.parametrize("interface", interfaces())
+    @patch.object(
+        WorkloadService, "update_by_id", update_workload_by_id,
+    )
+    def test_updates_no_workload_if_it_cannot_be_found(
+        self, client: FlaskClient, interface: WorkloadInterface
+    ):
+        """A WorkloadId controller routes update correctly."""
+        id = bad_id
+        response = client.put(
+            url + f"/{id}",
+            data=dumps(interface),
+            content_type="application/json",
+            follow_redirects=True,
+        )
         assert 404 == response.status_code
         assert not response.is_json

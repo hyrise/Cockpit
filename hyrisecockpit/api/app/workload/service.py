@@ -55,6 +55,8 @@ class WorkloadService:
         raise NotImplementedError()
 
     @staticmethod
-    def update(workload_id: str, changes: WorkloadInterface) -> Optional[Workload]:
+    def update_by_id(
+        workload_id: str, changes: WorkloadInterface
+    ) -> Optional[Workload]:
         """Update a Workload by ID."""
         raise NotImplementedError()

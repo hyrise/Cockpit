@@ -63,8 +63,8 @@ class WorkloadIdController(Resource):
     @responds(schema=WorkloadSchema, api=api)
     def put(self, workload_id: str) -> Union[Workload, Response]:
         """Update a Workload."""
-        changes: WorkloadInterface = request.parsed_obj
-        workload = WorkloadService.update(workload_id, changes)
+        interface: WorkloadInterface = request.parsed_obj
+        workload = WorkloadService.update_by_id(workload_id, interface)
         if workload is None:
             return Response(status=404)
         else:
