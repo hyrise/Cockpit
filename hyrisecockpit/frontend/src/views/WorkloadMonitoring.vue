@@ -14,15 +14,26 @@
       </unselected-warning>
       <v-card color="primary">
         <v-card-title class="white--text">
-          Workload metrics
+          Workload Metrics
         </v-card-title>
       </v-card>
-      <metrics-tile-list
+      <v-container
         v-if="$databaseController.databasesUpdated.value"
-        :selected-databases="watchedInstances"
-        :show-details="false"
-        :selected-metrics="watchedMetrics"
-      />
+        class="grey lighten-5 flex"
+        fluid
+        justify="center"
+        align="center"
+      >
+        <metric-tile
+          v-for="metric in watchedMetrics"
+          :key="metric"
+          class="flex-item"
+          :metric="metric"
+          :selected-databases="watchedInstances"
+          :show-details="false"
+          :graph-id="metric"
+        />
+      </v-container>
     </div>
   </div>
 </template>
@@ -37,7 +48,6 @@ import {
   watch
 } from "@vue/composition-api";
 import { Metric, workloadMetrics } from "../types/metrics";
-import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/linearLoader.vue";
@@ -46,6 +56,7 @@ import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelec
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "../meta/views";
 import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
+import MetricTile from "@/components/container/MetricTile.vue";
 
 interface Props {}
 interface Data extends MetricViewData {
@@ -55,7 +66,7 @@ interface Data extends MetricViewData {
 export default defineComponent({
   name: "WorkloadMonitoring",
   components: {
-    MetricsTileList,
+    MetricTile,
     LinearLoader,
     DatabaseQueryTables,
     DatabaseMetricSelection,
@@ -90,5 +101,15 @@ export default defineComponent({
 .select {
   margin-top: 0.5%;
   margin-bottom: 0.5%;
+}
+.flex {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.flex-item {
+  flex: 0 0 49%;
+  margin: 5px 0.5% 5px 0.5%;
 }
 </style>
