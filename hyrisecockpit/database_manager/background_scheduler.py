@@ -432,8 +432,8 @@ class BackgroundJobManager(object):
 
     def _get_existing_tables(self, table_names: List[str]) -> Dict:
         """Check which tables exists and which not."""
-        existing_tables = []
-        not_existing_tables = []
+        existing_tables: List = []
+        not_existing_tables: List = []
         with PoolCursor(self._connection_pool) as cur:
             cur.execute("SELECT table_name FROM meta_tables;", None)
             results = cur.fetchall()
@@ -445,9 +445,7 @@ class BackgroundJobManager(object):
                 not_existing_tables.append(name)
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_drop_queries(
-        self, table_names: List[str], folder_name: str
-    ) -> List[Tuple]:
+    def _generate_table_drop_queries(self, table_names: List[str]) -> List[Tuple]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
@@ -455,9 +453,9 @@ class BackgroundJobManager(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
+    def _delete_tables_job(self, table_names: List[str]) -> None:
         """Delete tables."""
-        table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
+        table_drop_queries = self._generate_table_drop_queries(table_names)
         self._execute_queries_parallel(table_names, table_drop_queries, None)
         self._database_blocked.value = False
 
@@ -479,7 +477,5 @@ class BackgroundJobManager(object):
             return True
 
         self._database_blocked.value = True
-        self._scheduler.add_job(
-            func=self._delete_tables_job, args=(table_names, folder_name,)
-        )
+        self._scheduler.add_job(func=self._delete_tables_job, args=(table_names,))
         return True
