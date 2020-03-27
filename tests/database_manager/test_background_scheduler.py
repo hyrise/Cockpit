@@ -3,7 +3,7 @@
 from json import dumps
 from multiprocessing import Value
 from multiprocessing.sharedctypes import Synchronized as ValueType
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 from unittest.mock import MagicMock, patch
 
 from pandas import DataFrame
@@ -46,26 +46,26 @@ get_fake_read_sql_query: Callable[
 
 mocked_storage_cursor = MagicMock()
 mocked_pool_cursor = MagicMock()
-mocked_process = MagicMock()
-mocked_process_constructor = MagicMock()
+mocked_process: MagicMock = MagicMock()
+mocked_process_constructor: MagicMock = MagicMock()
 mocked_process_constructor.return_value = mocked_process
 
 
 def get_mocked_storage_cursor(*args):
     """Return fake storage cursor."""
-    mocked_storage_cursor_constructor = MagicMock()
-    mocked_storage_cursor_constructor.__enter__.return_value = mocked_storage_cursor
+    mocked_storage_cursor_constructor: MagicMock = MagicMock()
+    mocked_storage_cursor_constructor.__enter__.return_value: MagicMock = mocked_storage_cursor
     return mocked_storage_cursor_constructor
 
 
 def get_mocked_pool_cursor(*args):
     """Return fake storage cursor."""
-    mocked_pool_cursor_constructor = MagicMock()
-    mocked_pool_cursor_constructor.__enter__.return_value = mocked_pool_cursor
+    mocked_pool_cursor_constructor: MagicMock = MagicMock()
+    mocked_pool_cursor_constructor.__enter__.return_value: MagicMock = mocked_pool_cursor
     return mocked_pool_cursor_constructor
 
 
-def fake_execute_table_query(self, query, success_flag):
+def fake_execute_table_query(self, query: Tuple, success_flag: Value) -> None:
     """Return dummy execute table query method."""
     success_flag.value = True
 
@@ -120,7 +120,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test initialization of background scheduler job."""
-        mock_scheduler = MagicMock()
+        mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.add_job.return_value = None
         background_job_manager._scheduler = mock_scheduler
 
@@ -145,7 +145,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test start of background scheduler."""
-        mock_scheduler = MagicMock()
+        mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.start.return_value = None
         background_job_manager._scheduler = mock_scheduler
 
@@ -157,7 +157,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test close of background scheduler object."""
-        mock_scheduler = MagicMock()
+        mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.shutdown.return_value = None
         background_job_manager._scheduler = mock_scheduler
         background_job_manager._update_krueger_data_job = MagicMock()
@@ -188,7 +188,7 @@ class TestBackgroundJobManager:
         """Test read sql query and return empty dataframe."""
         background_job_manager._database_blocked.value = True
 
-        result = background_job_manager._sql_to_data_frame("select ...")
+        result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
 
         assert isinstance(result, DataframeType)
         assert result.empty
@@ -206,8 +206,8 @@ class TestBackgroundJobManager:
         """Test read sql query and return dataframe."""
         background_job_manager._database_blocked.value = False
 
-        expected_df = DataFrame({"col1": ["data"]})
-        received_df = background_job_manager._sql_to_data_frame("select ...")
+        expected_df: DataFrame = DataFrame({"col1": ["data"]})
+        received_df: DataFrame = background_job_manager._sql_to_data_frame("select ...")
 
         assert isinstance(received_df, DataframeType)
         assert expected_df.equals(received_df)
@@ -216,19 +216,19 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully creates chunks dataframe from sql."""
-        fake_data_frame = {
+        fake_data_frame_data: Dict[str, List[Union[str, int]]] = {
             "table_name": ["customer", "customer", "supplier", "supplier"],
             "column_name": ["c_custkey", "c_name", "s_address", "s_comment"],
             "chunk_id": [0, 0, 42, 5],
             "access_count": [15000, 15000, 1000, 600],
         }
 
-        fake_chunks_df = DataFrame(data=fake_data_frame)
-        fake_chunks_dict = background_job_manager._create_chunks_dictionary(
+        fake_chunks_df: DataFrame = DataFrame(data=fake_data_frame_data)
+        fake_chunks_dict: Dict = background_job_manager._create_chunks_dictionary(
             fake_chunks_df
         )
 
-        expected_dict = {
+        expected_dict: Dict[str, Dict[str, List[int]]] = {
             "customer": {"c_custkey": [15000], "c_name": [15000]},
             "supplier": {"s_address": [1000], "s_comment": [600]},
         }
@@ -239,20 +239,20 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully calculates chunks differences."""
-        fake_base_dict = {
+        fake_base_dict: Dict[str, Dict[str, List[int]]] = {
             "customer": {"c_custkey": [15000], "c_name": [15000]},
             "supplier": {"s_address": [1000], "s_comment": [600]},
         }
-        fake_substractor_dict = {
+        fake_substractor_dict: Dict[str, Dict[str, List[int]]] = {
             "customer": {"c_custkey": [1000], "c_name": [5000]},
             "supplier": {"s_address": [1000], "s_comment": [555]},
         }
-        expected_dict = {
+        expected_dict: Dict[str, Dict[str, List[int]]] = {
             "customer": {"c_custkey": [14000], "c_name": [10000]},
             "supplier": {"s_address": [0], "s_comment": [45]},
         }
 
-        received_dict = background_job_manager._calculate_chunks_difference(
+        received_dict: Dict = background_job_manager._calculate_chunks_difference(
             fake_base_dict, fake_substractor_dict
         )
 
@@ -267,7 +267,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs updated chunks data when meta chunks is empty."""
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = DataFrame()
 
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
@@ -298,7 +298,7 @@ class TestBackgroundJobManager:
         """Test logs updated chunks data when meta chunks is not empty."""
         fake_not_empty_data_frame = DataFrame({"col1": [42]})
 
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_not_empty_data_frame
 
         background_job_manager._sql_to_data_frame = (  # type: ignore
@@ -331,14 +331,14 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs plugin log."""
-        fake_not_empty_data_frame = DataFrame(
+        fake_not_empty_data_frame: DataFrame = DataFrame(
             {
                 "timestamp": [0, 42],
                 "reporter": ["KeepHyriseRunning", "HyrisePleaseStayAlive"],
                 "message": ["error", "error"],
             }
         )
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_not_empty_data_frame
 
         background_job_manager._sql_to_data_frame = (  # type: ignore
@@ -347,7 +347,7 @@ class TestBackgroundJobManager:
 
         background_job_manager._update_plugin_log()
 
-        expected_function_argument = [
+        expected_function_argument: List[Tuple[int, str, str]] = [
             (0, "KeepHyriseRunning", "error"),
             (42, "HyrisePleaseStayAlive", "error"),
         ]
@@ -368,8 +368,8 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs plugin log."""
-        fake_empty_data_frame = DataFrame()
-        mocked_sql_to_data_frame = MagicMock()
+        fake_empty_data_frame: DataFrame = DataFrame()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_empty_data_frame
 
         background_job_manager._sql_to_data_frame = (  # type: ignore
@@ -388,7 +388,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ):
         """Test creates cpu data dict successfully."""
-        fake_utilization_df = DataFrame(
+        fake_utilization_df: DataFrame = DataFrame(
             {
                 "cpu_system_usage": [120],
                 "cpu_process_usage": [300],
@@ -396,21 +396,23 @@ class TestBackgroundJobManager:
                 "process_physical_memory_bytes": [42],
             }
         )
-        fake_system_df = DataFrame(
+        fake_system_df: DataFrame = DataFrame(
             {
                 "cpu_count": [16],
                 "cpu_clock_speed": [120],
                 "system_memory_total_bytes": [1234],
             }
         )
-        expected_dict = {
+        expected_dict: Dict[str, float] = {
             "cpu_system_usage": 120.0,
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
         }
 
-        received_dict = background_job_manager._create_cpu_data_dict(
+        received_dict: Dict[
+            str, Union[int, float]
+        ] = background_job_manager._create_cpu_data_dict(
             fake_utilization_df, fake_system_df
         )
 
@@ -420,7 +422,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ):
         """Test creates memory data dict successfully."""
-        fake_utilization_df = DataFrame(
+        fake_utilization_df: DataFrame = DataFrame(
             {
                 "cpu_system_usage": [120],
                 "cpu_process_usage": [300],
@@ -428,16 +430,23 @@ class TestBackgroundJobManager:
                 "process_physical_memory_bytes": [42],
             }
         )
-        fake_system_df = DataFrame(
+        fake_system_df: DataFrame = DataFrame(
             {
                 "cpu_count": [16],
                 "cpu_clock_speed": [120],
                 "system_memory_total_bytes": [42],
             }
         )
-        expected_dict = {"free": 0, "used": 42, "total": 42, "percent": 1}
+        expected_dict: Dict[str, int] = {
+            "free": 0,
+            "used": 42,
+            "total": 42,
+            "percent": 1,
+        }
 
-        received_dict = background_job_manager._create_memory_data_dict(
+        received_dict: Dict[
+            str, Union[int, float]
+        ] = background_job_manager._create_memory_data_dict(
             fake_utilization_df, fake_system_df
         )
 
@@ -452,30 +461,35 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs updated system data."""
-        fake_not_empty_df = DataFrame({"column1": [1]})
-        fake_cpu_dict = {
+        fake_not_empty_df: DataFrame = DataFrame({"column1": [1]})
+        fake_cpu_dict: Dict[str, float] = {
             "cpu_system_usage": 120.0,
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
         }
-        fake_memory_dict = {"free": 0, "used": 42, "total": 42, "percent": 1}
+        fake_memory_dict: Dict[str, int] = {
+            "free": 0,
+            "used": 42,
+            "total": 42,
+            "percent": 1,
+        }
 
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_not_empty_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        mocked_create_cpu_data_dict = MagicMock()
+        mocked_create_cpu_data_dict: MagicMock = MagicMock()
         mocked_create_cpu_data_dict.return_value = fake_cpu_dict
         background_job_manager._create_cpu_data_dict = mocked_create_cpu_data_dict  # type: ignore
 
-        mocked_create_memory_data_dict = MagicMock()
+        mocked_create_memory_data_dict: MagicMock = MagicMock()
         mocked_create_memory_data_dict.return_value = fake_memory_dict
         background_job_manager._create_memory_data_dict = mocked_create_memory_data_dict  # type: ignore
 
         background_job_manager._update_system_data()
 
-        expected_function_argument = {
+        expected_function_argument: Dict[str, str] = {
             "cpu": dumps(fake_cpu_dict),
             "memory": dumps(fake_memory_dict),
             "database_threads": "16",
@@ -498,9 +512,9 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test doesn't log updated system data when it's emtpy."""
-        fake_empty_df = DataFrame()
+        fake_empty_df: DataFrame = DataFrame()
 
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_empty_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
@@ -527,7 +541,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully logs storage data."""
-        fake_storage_df = DataFrame(
+        fake_storage_df: DataFrame = DataFrame(
             {
                 "table_name": ["customer", "customer", "supplier"],
                 "chunk_id": [0, 0, 0],
@@ -539,11 +553,13 @@ class TestBackgroundJobManager:
             }
         )
 
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_storage_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        expected_storage_dict = {
+        expected_storage_dict: Dict[
+            str, Dict[str, Union[int, Dict[str, Dict[str, Union[int, str, List[str]]]]]]
+        ] = {
             "customer": {
                 "size": 10000,
                 "number_columns": 2,
@@ -592,9 +608,9 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test doesn't log storage data when it's empty."""
-        fake_empty_storage_df = DataFrame()
+        fake_empty_storage_df: DataFrame = DataFrame()
 
-        mocked_sql_to_data_frame = MagicMock()
+        mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_empty_storage_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
@@ -612,14 +628,18 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully generates table loading queries."""
-        fake_folder_name = "hyriseDown"
-        fake_table_names = ["keep", "on", "going", "please!!!"]
+        fake_folder_name: str = "hyriseDown"
+        fake_table_names: List[str] = ["keep", "on", "going", "please!!!"]
 
-        received_queries = background_job_manager._generate_table_loading_queries(
+        received_queries: List[
+            Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]
+        ] = background_job_manager._generate_table_loading_queries(
             fake_table_names, fake_folder_name
         )
 
-        expected_queries = [
+        expected_queries: List[
+            Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]
+        ] = [
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
                 (("keep", "as_is"), ("hyriseDown", "as_is"), ("keep", "as_is"),),
@@ -652,14 +672,16 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully formats query parameters."""
-        parameters = (
-            ("keep", "as_is"),
-            ("hyriseDown", None),
-            ("keep", None),
+        parameters: Tuple[Tuple[str, str], Tuple[str, None], Tuple[str, None]] = (
+            ("keep", "as_is",),
+            ("hyriseDown", None,),
+            ("keep", None,),
         )
-        received = background_job_manager._format_query_parameters(parameters)
+        received: Optional[
+            Tuple[Any, ...]
+        ] = background_job_manager._format_query_parameters(parameters)
 
-        expected_formatted_parameters = (
+        expected_formatted_parameters: Tuple[str, str, str] = (
             "AsIs(keep)",
             "hyriseDown",
             "keep",
@@ -672,7 +694,9 @@ class TestBackgroundJobManager:
     ) -> None:
         """Test doesn't format when there are no parameters."""
         parameters = None
-        received = background_job_manager._format_query_parameters(parameters)
+        received: Optional[
+            Tuple[Any, ...]
+        ] = background_job_manager._format_query_parameters(parameters)
         expected_formatted_parameters = None
 
         assert received == expected_formatted_parameters
@@ -685,7 +709,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully executes table queries."""
-        mocked_format_query_parameters = MagicMock()
+        mocked_format_query_parameters: MagicMock = MagicMock()
         mocked_format_query_parameters.return_value = (
             "keep",
             "hyriseDown",
@@ -693,12 +717,12 @@ class TestBackgroundJobManager:
         )
         background_job_manager._format_query_parameters = mocked_format_query_parameters  # type: ignore
 
-        query_tuple = (
+        query_tuple: Tuple[str, Tuple[str, str, str]] = (
             "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
             ("keep", "hyriseDown", "keep",),
         )
 
-        success_flag = Value("b", 0)
+        success_flag: Value = Value("b", 0)
         background_job_manager._execute_table_query(query_tuple, success_flag)
 
         global mocked_pool_cursor
@@ -721,9 +745,9 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test start processes for table loading queries in parallel."""
-        fake_table_names = ["HyriseAreYoueStillAlive"]
-        fake_queries = ("Ping Hyrise",)
-        folder_name = "Hallo"
+        fake_table_names: List[str] = ["HyriseAreYoueStillAlive"]
+        fake_queries: Tuple[str] = ("Ping Hyrise",)
+        folder_name: str = "Hallo"
 
         background_job_manager._loaded_tables = {}
 
@@ -752,9 +776,9 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully update table loading queries in parallel."""
-        fake_table_names = ["HyriseAreYouStillAlive"]
-        fake_queries = ("Ping Hyrise",)
-        folder_name = "Hallo"
+        fake_table_names: List[str] = ["HyriseAreYouStillAlive"]
+        fake_queries: Tuple[str] = ("Ping Hyrise",)
+        folder_name: str = "Hallo"
 
         background_job_manager._loaded_tables = {}
 
@@ -775,9 +799,9 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test doesnt update loaded tables when loading wasn't successful."""
-        fake_table_names = ["HyriseAreYouStillAlive"]
-        fake_queries = ("Ping Hyrise",)
-        folder_name = "Hallo"
+        fake_table_names: List[str] = ["HyriseAreYouStillAlive"]
+        fake_queries: Tuple[str] = ("Ping Hyrise",)
+        folder_name: str = "Hallo"
 
         background_job_manager._loaded_tables = {}
 
@@ -822,7 +846,9 @@ class TestBackgroundJobManager:
 
         background_job_manager._loaded_tables = fake_loaded_tables
 
-        received = background_job_manager._get_load_table_names("alternative")
+        received: List[str] = background_job_manager._get_load_table_names(
+            "alternative"
+        )
 
         expected = ["Broken Witt Rebels"]
 
@@ -847,7 +873,9 @@ class TestBackgroundJobManager:
 
         background_job_manager._loaded_tables = fake_loaded_tables
 
-        received = background_job_manager._get_load_table_names("techno techno... :(")
+        received: List = background_job_manager._get_load_table_names(
+            "techno techno... :("
+        )
 
         assert not received
 
@@ -858,7 +886,7 @@ class TestBackgroundJobManager:
         background_job_manager._scheduler = MagicMock()
         background_job_manager._database_blocked.value = True
 
-        mocked_get_load_table_names = MagicMock()
+        mocked_get_load_table_names: MagicMock = MagicMock()
         background_job_manager._get_load_table_names = mocked_get_load_table_names  # type: ignore
 
         result = background_job_manager.load_tables("")
@@ -876,11 +904,11 @@ class TestBackgroundJobManager:
         background_job_manager._scheduler = MagicMock()
         background_job_manager._database_blocked.value = False
 
-        mocked_get_load_table_names = MagicMock()
+        mocked_get_load_table_names: MagicMock = MagicMock()
         mocked_get_load_table_names.return_value = []
         background_job_manager._get_load_table_names = mocked_get_load_table_names  # type: ignore
 
-        result = background_job_manager.load_tables("folder_name")
+        result: bool = background_job_manager.load_tables("folder_name")
 
         mocked_get_load_table_names.assert_called_once_with(workload_type="folder_name")
         background_job_manager._scheduler.add_job.assert_not_called()
@@ -892,16 +920,16 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully loads tables."""
-        mock_scheduler = MagicMock()
+        mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.add_job.return_value = None
         background_job_manager._scheduler = mock_scheduler
         background_job_manager._database_blocked.value = False
 
-        mocked_get_load_table_names = MagicMock()
+        mocked_get_load_table_names: MagicMock = MagicMock()
         mocked_get_load_table_names.return_value = ["table_name"]
         background_job_manager._get_load_table_names = mocked_get_load_table_names  # type: ignore
 
-        result = background_job_manager.load_tables("folder_name")
+        result: bool = background_job_manager.load_tables("folder_name")
 
         mocked_get_load_table_names.assert_called_once_with(workload_type="folder_name")
         background_job_manager._scheduler.add_job.assert_called_once_with(
@@ -928,8 +956,8 @@ class TestBackgroundJobManager:
 
         global mocked_pool_cursor
 
-        expected_query = "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
-        expected_parameter = ("AsIs(plugin)",)
+        expected_query: str = "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+        expected_parameter: Tuple[str] = ("AsIs(plugin)",)
 
         mocked_pool_cursor.execute.assert_called_once_with(
             expected_query, expected_parameter
@@ -953,8 +981,8 @@ class TestBackgroundJobManager:
 
         global mocked_pool_cursor
 
-        expected_query = "DELETE FROM meta_plugins WHERE name='%sPlugin';"
-        expected_parameter = ("AsIs(plugin)",)
+        expected_query: str = "DELETE FROM meta_plugins WHERE name='%sPlugin';"
+        expected_parameter: Tuple[str] = ("AsIs(plugin)",)
 
         mocked_pool_cursor.execute.assert_called_once_with(
             expected_query, expected_parameter
@@ -969,7 +997,7 @@ class TestBackgroundJobManager:
         background_job_manager._database_blocked.value = False
         background_job_manager._scheduler = MagicMock()
 
-        result = background_job_manager.activate_plugin("HyriseHallo")
+        result: bool = background_job_manager.activate_plugin("HyriseHallo")
 
         background_job_manager._scheduler.add_job.assert_called_once_with(
             func=background_job_manager._activate_plugin_job, args=("HyriseHallo",)
@@ -983,7 +1011,7 @@ class TestBackgroundJobManager:
         background_job_manager._database_blocked.value = False
         background_job_manager._scheduler = MagicMock()
 
-        result = background_job_manager.deactivate_plugin("HyriseBye")
+        result: bool = background_job_manager.deactivate_plugin("HyriseBye")
 
         background_job_manager._scheduler.add_job.assert_called_once_with(
             func=background_job_manager._deactivate_plugin_job, args=("HyriseBye",)
@@ -1002,11 +1030,16 @@ class TestBackgroundJobManager:
 
         mocked_pool_cursor.fetchall.return_value = [("table_name",)]
 
-        result = background_job_manager._get_existing_tables(
+        result: Dict[
+            str, List[Optional[str]]
+        ] = background_job_manager._get_existing_tables(
             ["table_name", "another_table_name"]
         )
 
-        expected = {"existing": ["table_name"], "not_existing": ["another_table_name"]}
+        expected: Dict[str, List[str]] = {
+            "existing": ["table_name"],
+            "not_existing": ["another_table_name"],
+        }
 
         assert result == expected
 
@@ -1016,7 +1049,7 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully generates table dropping queries."""
-        fake_existing_table_names = {
+        fake_existing_table_names: Dict[str, List[Optional[str]]] = {
             "existing": ["keep", "hyrise", "alive"],
             "not_existing": ["hyrise running"],
         }
@@ -1026,11 +1059,11 @@ class TestBackgroundJobManager:
             fake_existing_table_names
         )
 
-        received_queries = background_job_manager._generate_table_drop_queries(
-            ["table_names"],
-        )
+        received_queries: List[
+            Tuple[Any, ...]
+        ] = background_job_manager._generate_table_drop_queries(["table_names"],)
 
-        expected_queries = [
+        expected_queries: List[Tuple[Any, ...]] = [
             ("DROP TABLE %s;", (("keep", "as_is"),),),
             ("DROP TABLE %s;", (("hyrise", "as_is"),),),
             ("DROP TABLE %s;", (("alive", "as_is"),),),
@@ -1042,16 +1075,16 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test delete tables job."""
-        fake_drop_queries = [
+        fake_drop_queries: List[Tuple[str, Tuple[Tuple[str, str]]]] = [
             ("DROP TABLE %s;", (("keep", "as_is"),),),
             ("DROP TABLE %s;", (("hyrise", "as_is"),),),
             ("DROP TABLE %s;", (("alive", "as_is"),),),
         ]
-        fake_table_names = ["keep", "hyrise", "alive"]
+        fake_table_names: List[str] = ["keep", "hyrise", "alive"]
 
         background_job_manager._database_blocked.value = True
 
-        mocked_generate_table_drop_queries = MagicMock()
+        mocked_generate_table_drop_queries: MagicMock = MagicMock()
         mocked_generate_table_drop_queries.return_value = fake_drop_queries
         background_job_manager._generate_table_drop_queries = (  # type: ignore
             mocked_generate_table_drop_queries
@@ -1076,9 +1109,11 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test gets table names of imported tables."""
-        received = background_job_manager._get_delete_table_names("alternative")
+        received: List[str] = background_job_manager._get_delete_table_names(
+            "alternative"
+        )
 
-        expected = [
+        expected: List[str] = [
             "The Dough Rollers",
             "Broken Witt Rebels",
             "Bonny Doon",
@@ -1097,7 +1132,7 @@ class TestBackgroundJobManager:
         mocked_get_delete_table_names = MagicMock()
         background_job_manager._get_delete_table_names = mocked_get_delete_table_names  # type: ignore
 
-        result = background_job_manager.delete_tables("")
+        result: bool = background_job_manager.delete_tables("")
 
         background_job_manager._get_delete_table_names.assert_not_called()  # type: ignore
         background_job_manager._scheduler.add_job.assert_not_called()
@@ -1112,11 +1147,11 @@ class TestBackgroundJobManager:
         background_job_manager._scheduler = MagicMock()
         background_job_manager._database_blocked.value = False
 
-        mocked_get_delete_table_names = MagicMock()
+        mocked_get_delete_table_names: MagicMock = MagicMock()
         mocked_get_delete_table_names.return_value = []
         background_job_manager._get_delete_table_names = mocked_get_delete_table_names  # type: ignore
 
-        result = background_job_manager.delete_tables("folder_name")
+        result: bool = background_job_manager.delete_tables("folder_name")
 
         mocked_get_delete_table_names.assert_called_once_with("folder_name")
         background_job_manager._scheduler.add_job.assert_not_called()
@@ -1128,16 +1163,16 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully deletes tables."""
-        mock_scheduler = MagicMock()
+        mock_scheduler: MagicMock = MagicMock()
         mock_scheduler.add_job.return_value = None
         background_job_manager._scheduler = mock_scheduler
         background_job_manager._database_blocked.value = False
 
-        mocked_get_delete_table_names = MagicMock()
+        mocked_get_delete_table_names: MagicMock = MagicMock()
         mocked_get_delete_table_names.return_value = ["table_name"]
         background_job_manager._get_delete_table_names = mocked_get_delete_table_names  # type: ignore
 
-        result = background_job_manager.delete_tables("folder_name")
+        result: bool = background_job_manager.delete_tables("folder_name")
 
         mocked_get_delete_table_names.assert_called_once_with("folder_name")
         background_job_manager._scheduler.add_job.assert_called_once_with(
