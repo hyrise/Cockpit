@@ -65,7 +65,7 @@ class TestWorkloadController:
     @patch.object(
         WorkloadService, "get_all", lambda: workloads,
     )
-    def test_returns_all_workloads(self, client: FlaskClient):
+    def test_gets_all_workloads(self, client: FlaskClient):
         """A Workload controller routes get_all correctly."""
         response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
@@ -74,7 +74,7 @@ class TestWorkloadController:
     @patch.object(
         WorkloadService, "get_all", lambda: [],
     )
-    def test_returns_no_workloads_if_there_are_none(self, client: FlaskClient):
+    def test_gets_no_workloads_if_there_are_none(self, client: FlaskClient):
         """A Workload controller routes get_all correctly."""
         response = client.get(url, follow_redirects=True)
         assert 200 == response.status_code
@@ -97,7 +97,7 @@ class TestWorkloadController:
 
     @mark.parametrize("interface", interfaces)
     @patch.object(WorkloadService, "create", create_workload)
-    def test_does_not_create_a_workload_if_it_already_exists(
+    def test_creates_no_workload_if_it_already_exists(
         self, client: FlaskClient, interface: WorkloadInterface
     ):
         """A Workload controller routes create correctly."""
@@ -119,7 +119,7 @@ class TestWorkloadIdController:
     @patch.object(
         WorkloadService, "get_by_id", get_workload_by_id,
     )
-    def test_returns_the_correct_workload(self, client: FlaskClient, id: str):
+    def test_gets_the_correct_workload(self, client: FlaskClient, id: str):
         """A WorkloadId controller routes get correctly."""
         response = client.get(url + f"/{id}", follow_redirects=True)
         assert 200 == response.status_code
@@ -129,7 +129,7 @@ class TestWorkloadIdController:
     @patch.object(
         WorkloadService, "get_by_id", get_workload_by_id,
     )
-    def test_fails_if_the_workload_cannot_be_found(self, client: FlaskClient, id: str):
+    def test_gets_no_workload_if_it_cannot_be_found(self, client: FlaskClient, id: str):
         """A WorkloadId controller routes get correctly."""
         response = client.get(url + f"/{id}", follow_redirects=True)
         assert 404 == response.status_code
