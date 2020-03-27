@@ -2,7 +2,7 @@
   <div>
     <v-card color="primary">
       <v-card-title class="white--text">
-        Detailed query information
+        Detailed Query Information
       </v-card-title>
     </v-card>
     <v-container
