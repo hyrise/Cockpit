@@ -8,7 +8,6 @@ from unittest.mock import MagicMock, patch
 
 from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
-from psycopg2.extensions import AsIs
 from pytest import fixture
 
 from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
@@ -645,6 +644,10 @@ class TestBackgroundJobManager:
 
         assert received_queries == expected_queries
 
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.AsIs",
+        lambda name: f"AsIs({name})",
+    )
     def test_successfully_formats_query_parameters(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
@@ -655,19 +658,14 @@ class TestBackgroundJobManager:
             ("keep", None),
         )
         received = background_job_manager._format_query_parameters(parameters)
+
         expected_formatted_parameters = (
-            AsIs("keep"),
+            "AsIs(keep)",
             "hyriseDown",
             "keep",
         )
 
-        assert type(received[0]) is AsIs  # type: ignore
-        assert type(received[1]) is str  # type: ignore
-        assert type(received[2]) is str  # type: ignore
-
-        assert received[0].getquoted() == expected_formatted_parameters[0].getquoted()  # type: ignore
-        assert received[1] == expected_formatted_parameters[1]  # type: ignore
-        assert received[2] == expected_formatted_parameters[2]  # type: ignore
+        assert received == expected_formatted_parameters
 
     def test_doesnt_format_no_parameters(
         self, background_job_manager: BackgroundJobManager
@@ -829,3 +827,165 @@ class TestBackgroundJobManager:
         expected = ["Broken Witt Rebels"]
 
         assert received == expected
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler._table_names", fake_dict,
+    )
+    def test_get_empty_load_table_names(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test gets empty list when workload isn't available."""
+        fake_loaded_tables: Dict[str, Optional[str]] = {
+            "The Dough Rollers": "alternative",
+            "Broken Witt Rebels": "Hip Hop",
+            "Bonny Doon": "alternative",
+            "Jack White": "alternative",
+            "Gary Clark Jr.": "Rock",
+            "Greta Van Fleet": "Rock",
+            "Tenacious D": "Rock",
+        }
+
+        background_job_manager._loaded_tables = fake_loaded_tables
+
+        received = background_job_manager._get_load_table_names("techno techno... :(")
+
+        assert not received
+
+    def test_doesnt_load_tables_when_database_locked(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't load tables when database is locked."""
+        background_job_manager._scheduler = MagicMock()
+        background_job_manager._database_blocked.value = True
+
+        mocked_get_load_table_names = MagicMock()
+        background_job_manager._get_load_table_names = mocked_get_load_table_names  # type: ignore
+
+        result = background_job_manager.load_tables("")
+
+        background_job_manager._get_load_table_names.assert_not_called()  # type: ignore
+        background_job_manager._scheduler.add_job.assert_not_called()
+
+        assert not result
+        assert background_job_manager._database_blocked.value
+
+    def test_doesnt_load_tables_when_table_names_empty(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't load tables when table names is empty."""
+        background_job_manager._scheduler = MagicMock()
+        background_job_manager._database_blocked.value = False
+
+        mocked_get_load_table_names = MagicMock()
+        mocked_get_load_table_names.return_value = []
+        background_job_manager._get_load_table_names = mocked_get_load_table_names  # type: ignore
+
+        result = background_job_manager.load_tables("folder_name")
+
+        mocked_get_load_table_names.assert_called_once_with(workload_type="folder_name")
+        background_job_manager._scheduler.add_job.assert_not_called()
+
+        assert result
+        assert not background_job_manager._database_blocked.value
+
+    def test_successfully_loads_tables(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully loads tables."""
+        mock_scheduler = MagicMock()
+        mock_scheduler.add_job.return_value = None
+        background_job_manager._scheduler = mock_scheduler
+        background_job_manager._database_blocked.value = False
+
+        mocked_get_load_table_names = MagicMock()
+        mocked_get_load_table_names.return_value = ["table_name"]
+        background_job_manager._get_load_table_names = mocked_get_load_table_names  # type: ignore
+
+        result = background_job_manager.load_tables("folder_name")
+
+        mocked_get_load_table_names.assert_called_once_with(workload_type="folder_name")
+        background_job_manager._scheduler.add_job.assert_called_once_with(
+            func=background_job_manager._load_tables_job,
+            args=(["table_name"], "folder_name"),
+        )
+
+        assert result
+        assert background_job_manager._database_blocked.value
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.AsIs",
+        lambda plugin: f"AsIs({plugin})",
+    )
+    def test_execute_plugin_activating_query_job(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully executes plugin activating query."""
+        background_job_manager._activate_plugin_job("plugin")
+
+        global mocked_pool_cursor
+
+        expected_query = "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+        expected_parameter = ("AsIs(plugin)",)
+
+        mocked_pool_cursor.execute.assert_called_once_with(
+            expected_query, expected_parameter
+        )
+
+        mocked_pool_cursor = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.AsIs",
+        lambda plugin: f"AsIs({plugin})",
+    )
+    def test_execute_plugin_deactivating_query_job(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully executes plugin deactivating query."""
+        background_job_manager._deactivate_plugin_job("plugin")
+
+        global mocked_pool_cursor
+
+        expected_query = "DELETE FROM meta_plugins WHERE name='%sPlugin';"
+        expected_parameter = ("AsIs(plugin)",)
+
+        mocked_pool_cursor.execute.assert_called_once_with(
+            expected_query, expected_parameter
+        )
+
+        mocked_pool_cursor = MagicMock()
+
+    def test_successfully_adds_plugin_activating_job(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully adds plugin activating job."""
+        background_job_manager._database_blocked.value = False
+        background_job_manager._scheduler = MagicMock()
+
+        result = background_job_manager.activate_plugin("HyriseHallo")
+
+        background_job_manager._scheduler.add_job.assert_called_once_with(
+            func=background_job_manager._activate_plugin_job, args=("HyriseHallo",)
+        )
+        assert result
+
+    def test_successfully_adds_plugin_deactivating_job(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully adds plugin deactivating job."""
+        background_job_manager._database_blocked.value = False
+        background_job_manager._scheduler = MagicMock()
+
+        result = background_job_manager.deactivate_plugin("HyriseBye")
+
+        background_job_manager._scheduler.add_job.assert_called_once_with(
+            func=background_job_manager._deactivate_plugin_job, args=("HyriseBye",)
+        )
+        assert result
