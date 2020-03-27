@@ -11,8 +11,8 @@ class Workload:
         self.folder_name: str = folder_name
         self.frequency: int = frequency
 
-    def update(self, changes: WorkloadInterface) -> "Workload":
+    def update(self, interface: WorkloadInterface) -> "Workload":
         """Update attributes of a Workload model."""
-        for key, value in changes.items():
+        for key, value in interface.items():
             setattr(self, key, value)
         return self
