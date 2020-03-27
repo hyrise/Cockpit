@@ -1,12 +1,19 @@
 <template>
-  <v-chip
-    class="white--text"
-    :color="database.color"
-    :close="closable"
-    @click:close="$emit('closed')"
-  >
+  <v-chip class="white--text" :color="database.color">
     <v-icon left>mdi-database</v-icon>
     <b>{{ database.id }}</b>
+    <v-tooltip v-if="closable" right>
+      <template v-slot:activator="{ on }">
+        <v-icon
+          id="remove-database-button"
+          v-on="on"
+          right
+          @click="$emit('closed')"
+          >mdi-close-circle</v-icon
+        >
+      </template>
+      <span>Remove Database</span>
+    </v-tooltip>
   </v-chip>
 </template>
 <script lang="ts">

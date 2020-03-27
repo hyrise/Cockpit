@@ -12,10 +12,10 @@
         <v-spacer />
         <v-btn color="primary" text @click="$emit('close')">Cancel</v-btn>
         <v-btn
-          id="save-database-button"
+          id="delete-database-button"
           color="primary"
           text
-          @click="removeDatabase()"
+          @click="onRemoveDatabase()"
         >
           Remove
         </v-btn>
@@ -42,7 +42,7 @@ interface Props {
   databaseId: string;
 }
 interface Data {
-  removeDatabase: () => void;
+  onRemoveDatabase: () => void;
 }
 
 export default defineComponent({
@@ -62,11 +62,11 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const databaseService = useDatabaseService();
 
-    function removeDatabase(): void {
+    function onRemoveDatabase(): void {
       context.emit("close");
       databaseService.removeDatabase(props.databaseId);
     }
-    return { removeDatabase };
+    return { onRemoveDatabase };
   }
 });
 </script>
