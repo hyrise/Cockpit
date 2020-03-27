@@ -8,11 +8,11 @@ import {
   fakeDatabaseQueryInformationData,
   fakeDatabasePluginsData,
   fakeDatabasePluginSettings,
-  fakeDatabasePluginLogs
+  fakeDatabasePluginLogs,
+  fakeIds
 } from "./factories";
 import {
   assignFakeData,
-  generateRandomIds,
   fakeDataByIds,
   generateUniqueRandomNumbers,
   Entity,
@@ -59,11 +59,11 @@ export function useMocks(
   }
 
   function mockIds(): Record<Entity, string[]> {
-    const plugins = generateRandomIds(numbers.plugins, "plugin-");
+    const plugins = fakeIds(numbers.plugins, "plugin-");
     return {
-      databases: generateRandomIds(numbers.databases, "database-"),
-      tables: generateRandomIds(numbers.tables, "table-"),
-      columns: generateRandomIds(numbers.columns, "column-"),
+      databases: fakeIds(numbers.databases, "database-"),
+      tables: fakeIds(numbers.tables, "table-"),
+      columns: fakeIds(numbers.columns, "column-"),
       chunks: [],
       queries: [],
       plugins: plugins,

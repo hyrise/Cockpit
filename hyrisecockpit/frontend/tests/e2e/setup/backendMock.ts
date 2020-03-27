@@ -14,7 +14,15 @@ import {
 //NOTE: only used routes are mocked yet
 
 export function useBackendMock(
-  numbers: Record<Entity, number>
+  numbers: Record<Entity, number> = {
+    databases: 1,
+    tables: 2,
+    columns: 2,
+    chunks: 2,
+    queries: 10,
+    plugins: 2,
+    activated_plugins: 1
+  }
 ): {
   restart(status?: BackendStatus, delay?: number): void;
   start(status?: BackendStatus, delay?: number): void;

@@ -16,6 +16,16 @@ type Database = {
   dbname: string;
 };
 
+// IDS
+
+export function fakeId(prefix: string): string {
+  return prefix + faker.random.uuid();
+}
+
+export function fakeIds(length: number, prefix: string = ""): string[] {
+  return [...Array(length).keys()].map(() => fakeId(prefix));
+}
+
 // DATABASES
 
 export function fakeDatabaseData(

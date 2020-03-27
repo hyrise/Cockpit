@@ -9,6 +9,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
+                id="host-input"
                 v-model="host"
                 label="Host*"
                 required
@@ -16,6 +17,7 @@
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
+                id="port-input"
                 v-model="port"
                 label="Port*"
                 required
@@ -23,6 +25,7 @@
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
+                id="dbname-input"
                 v-model="dbname"
                 label="Databasename*"
                 required
@@ -30,6 +33,7 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
+                id="user-input"
                 v-model="user"
                 label="User*"
                 required
@@ -37,6 +41,7 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
+                id="password-input"
                 v-model="password"
                 label="Password*"
                 type="password"
@@ -45,6 +50,7 @@
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field
+                id="worker-input"
                 v-model="number_workers"
                 label="Number of Workers*"
                 type="number"
@@ -52,7 +58,12 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field v-model="id" label="Id*" required></v-text-field>
+              <v-text-field
+                id="id-input"
+                v-model="id"
+                label="Id*"
+                required
+              ></v-text-field>
             </v-col>
           </v-row>
         </v-container>
@@ -60,7 +71,13 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
+        <v-btn
+          id="cancel-add-database-button"
+          color="primary"
+          text
+          @click="closeDialog()"
+          >Close</v-btn
+        >
         <v-btn
           id="save-database-button"
           color="primary"

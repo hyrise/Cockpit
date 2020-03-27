@@ -105,13 +105,6 @@ export function generateRandomFloat(min: number, range: number) {
   return Math.random() * range + min;
 }
 
-export function generateRandomIds(
-  length: number,
-  prefix: string = ""
-): string[] {
-  return [...Array(length).keys()].map(() => prefix + faker.random.uuid());
-}
-
 export function generateRandomInt(min: number, range: number) {
   return Math.floor(Math.random() * range + min);
 }

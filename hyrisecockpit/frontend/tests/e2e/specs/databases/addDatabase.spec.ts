@@ -2,17 +2,21 @@ import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getPostAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
-import { getSelector } from "./helpers";
+import { getSelector, assertValues, DatabaseData } from "./helpers";
+import { fakeId, fakeDatabaseData } from "../../setup/factories";
+import {
+  testContentExistence,
+  testContentNoExistence,
+  testElementExistence,
+  testElementVisibility,
+  testElementNoVisibility
+} from "../abstractTests";
 
-const backend = useBackendMock({
-  databases: 1,
-  tables: 2,
-  columns: 2,
-  chunks: 2,
-  queries: 10,
-  plugins: 3,
-  activated_plugins: 3
-});
+const backend = useBackendMock();
+
+const newDatabase: DatabaseData = fakeDatabaseData(
+  fakeId("database-")
+) as DatabaseData;
 
 describe("Add database", () => {
   beforeEach(() => {
@@ -20,23 +24,66 @@ describe("Add database", () => {
     cy.visit("/");
   });
 
-  /* This test is currently just a blueprint for how to handle post requests */
-
-  // test adding correct database
+  // test add database
   describe("when adding a new database", () => {
-    it("will add a new database with the correct data", () => {
-      clickElement(getViewSelector("databaseListButton"));
-      clickElement(getSelector("addDatabaseButton"));
-      backend.reload("database", "hyrise-2", "POST");
-      cy.wait(500);
-      //TODO: get aliases
-      clickElement(getSelector("saveDatabaseButton"));
-      cy.wait("@" + getPostAlias("database"));
-      cy.get("@" + getPostAlias("database")).should(xhr => {
-        // assert correct values here
-        // accessibile via xhr.request.body
+    describe("and clicking the cancel button", () => {
+      it("will not add a new database", () => {
+        clickElement(getViewSelector("databaseListButton"));
+        testContentNoExistence(newDatabase.id);
+
+        clickElement(getSelector("addDatabaseButton"));
+        testElementExistence(getSelector("addDatabase"));
+        testElementVisibility(getSelector("addDatabase"));
+
+        clickElement(getSelector("cancelAddDatabaseButton"));
+        cy.numberOfRequests(getPostAlias("database")).should("eq", 0);
+
+        testElementNoVisibility(getSelector("addDatabase"));
+
+        clickElement(getViewSelector("databaseListButton"));
+        testContentNoExistence(newDatabase.id);
       });
-      // spy if callback was called here
+    });
+
+    describe("and clicking the save button", () => {
+      it("will add a new database with the correct data", () => {
+        clickElement(getViewSelector("databaseListButton"));
+        testContentNoExistence(newDatabase.id);
+
+        clickElement(getSelector("addDatabaseButton"));
+        testElementExistence(getSelector("addDatabase"));
+        testElementVisibility(getSelector("addDatabase"));
+
+        backend.reload("database", newDatabase.id, "POST");
+
+        cy.get(getSelector("idInput"))
+          .clear()
+          .type(newDatabase.id);
+        cy.get(getSelector("hostInput"))
+          .clear()
+          .type(newDatabase.host);
+        cy.get(getSelector("portInput"))
+          .clear()
+          .type(newDatabase.port);
+        cy.get(getSelector("workerInput"))
+          .clear()
+          .type(newDatabase.number_workers.toString());
+        cy.get(getSelector("dbNameInput"))
+          .clear()
+          .type(newDatabase.dbname);
+
+        clickElement(getSelector("saveDatabaseButton"));
+
+        cy.wait("@" + getPostAlias("database"));
+        cy.get("@" + getPostAlias("database")).should((xhr: any) => {
+          assertValues(newDatabase, xhr.request.body);
+        });
+        cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
+        testElementNoVisibility(getSelector("addDatabase"));
+
+        clickElement(getViewSelector("databaseListButton"));
+        testContentExistence(newDatabase.id);
+      });
     });
   });
 });
