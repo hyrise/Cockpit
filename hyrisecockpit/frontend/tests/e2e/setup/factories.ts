@@ -187,7 +187,13 @@ export function fakeDatabasePluginsData(
   return { id: databaseId, plugins: plugins };
 }
 
-function fakePluginSettings(): Object {
+type PluginSetting = {
+  name: string;
+  value: number;
+  description: string;
+};
+
+function fakePluginSetting(): PluginSetting {
   return {
     name: faker.random.word(),
     value: faker.random.number(),
@@ -201,7 +207,7 @@ export function fakeDatabasePluginSettings(
 ): Object {
   return {
     id: databaseId,
-    plugin_settings: plugins.map(() => fakePluginSettings())
+    plugin_settings: plugins.map(() => fakePluginSetting())
   };
 }
 

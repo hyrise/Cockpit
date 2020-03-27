@@ -11,7 +11,7 @@ const backend = useBackendMock({
   chunks: 2,
   queries: 10,
   plugins: 3,
-  activated_plugins: 0
+  activated_plugins: 3
 });
 
 describe("Add database", () => {
@@ -27,6 +27,9 @@ describe("Add database", () => {
     it("will add a new database with the correct data", () => {
       clickElement(getViewSelector("databaseListButton"));
       clickElement(getSelector("addDatabaseButton"));
+      backend.reload("database", "hyrise-2", "POST");
+      cy.wait(500);
+      //TODO: get aliases
       clickElement(getSelector("saveDatabaseButton"));
       cy.wait("@" + getPostAlias("database"));
       cy.get("@" + getPostAlias("database")).should(xhr => {

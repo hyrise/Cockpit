@@ -1,5 +1,13 @@
 import { useMocks } from "./mocks";
-import { Entity, getPostAlias, getDeleteAlias, empty } from "./helpers";
+import {
+  Entity,
+  Request,
+  BackendStatus,
+  getPostAlias,
+  getDeleteAlias,
+  getResponseStatus,
+  getGetAlias
+} from "./helpers";
 
 /* backend with mocked routes */
 
@@ -7,7 +15,11 @@ import { Entity, getPostAlias, getDeleteAlias, empty } from "./helpers";
 
 export function useBackendMock(
   numbers: Record<Entity, number>
-): { restart(): void; start(): void } {
+): {
+  restart(status?: BackendStatus, delay?: number): void;
+  start(status?: BackendStatus, delay?: number): void;
+  reload(request: Request, id: string, type: "POST" | "DELETE"): void;
+} {
   const {
     getMockedResponse,
     getMockedPostCallback,
@@ -15,166 +27,193 @@ export function useBackendMock(
     renewMocks
   } = useMocks(numbers);
 
-  function start(): void {
+  function start(status: BackendStatus = "up", delay?: number): void {
     cy.server();
-    mockGetRoutes();
-    mockPostRoutes();
-    mockDeleteRoutes();
+    mockRoutes(getResponseStatus(status), delay);
   }
 
-  function mockGetRoutes(): void {
-    mockGetRoute("**/control/database", getMockedResponse("database"), false);
-    mockGetRoute("**/monitor/system", getMockedResponse("system"), true);
-    mockGetRoute("**/monitor/storage", getMockedResponse("storage"), true);
-    mockGetRoute(
+  function reload(request: Request, id: string, type: "POST" | "DELETE"): void {
+    if (type == "POST") getMockedPostCallback(request)(id);
+    if (type == "DELETE") getMockedDeleteCallback(request)(id);
+    mockRoutes();
+  }
+
+  function mockRoutes(status: number = 200, delay?: number): void {
+    const { mockGetRoute, mockDeleteRoute, mockPostRoute } = useRouteMocking(
+      status,
+      delay
+    );
+    mockGetRoutes(mockGetRoute);
+    mockPostRoutes(mockPostRoute);
+    mockDeleteRoutes(mockDeleteRoute);
+  }
+
+  function mockGetRoutes(mock: RouteMockFunction): void {
+    mock(
+      "**/control/database",
+      getGetAlias("database"),
+      getMockedResponse("database")
+    );
+    mock(
+      "**/monitor/system",
+      getGetAlias("system"),
+      getMockedResponse("system"),
+      true
+    );
+    mock(
+      "**/monitor/storage",
+      getGetAlias("storage"),
+      getMockedResponse("storage"),
+      true
+    );
+    mock(
       "**/monitor/throughput",
+      getGetAlias("throughput"),
       getMockedResponse("throughput"),
       true
     );
-    mockGetRoute("**/monitor/latency", getMockedResponse("latency"), true);
-    mockGetRoute(
+    mock(
+      "**/monitor/latency",
+      getGetAlias("latency"),
+      getMockedResponse("latency"),
+      true
+    );
+    mock(
       "**/monitor/queue_length",
+      getGetAlias("queue_length"),
       getMockedResponse("queue_length"),
       true
     );
-    mockGetRoute(
+    mock(
       "**/monitor/krueger_data",
-      getMockedResponse("krueger_data"),
-      false
+      getGetAlias("krueger_data"),
+      getMockedResponse("krueger_data")
     );
-    mockGetRoute("**/monitor/chunks", getMockedResponse("chunks"), true);
-    mockGetRoute(
+    mock(
+      "**/monitor/chunks",
+      getGetAlias("chunks"),
+      getMockedResponse("chunks"),
+      true
+    );
+    mock(
       "**/monitor/detailed_query_information",
-      getMockedResponse("detailed_query_information"),
-      false
+      getGetAlias("detailed_query_information"),
+      getMockedResponse("detailed_query_information")
     );
-    mockGetRoute("**/control/data", getMockedResponse("data"), false);
-    mockGetRoute(
+    mock("**/control/data", getGetAlias("data"), getMockedResponse("data"));
+    mock(
       "**/control/available_plugins",
-      getMockedResponse("available_plugins"),
-      false
+      getGetAlias("available_plugins"),
+      getMockedResponse("available_plugins")
     );
-    mockGetRoute("**/control/plugin", getMockedResponse("plugin"), false);
-    mockGetRoute(
+    mock(
+      "**/control/plugin",
+      getGetAlias("plugin"),
+      getMockedResponse("plugin")
+    );
+    mock(
       "**/control/plugin_settings",
+      getGetAlias("plugin_settings"),
       getMockedResponse("plugin_settings"),
       true
     );
-    mockGetRoute(
+    mock(
       "**/control/plugin_log",
-      getMockedResponse("plugin_log"),
-      false
+      getGetAlias("plugin_log"),
+      getMockedResponse("plugin_log")
     );
   }
 
-  function mockPostRoutes(): void {
-    mockPostRoute(
-      "**/control/database",
-      getPostAlias("database"),
-      getMockedPostCallback("database")
-    );
-    mockPostRoute(
-      "**/control/data",
-      getPostAlias("data"),
-      getMockedPostCallback("data")
-    );
-    mockPostRoute(
-      "**/control/plugin",
-      getPostAlias("plugin"),
-      getMockedPostCallback("plugin")
-    );
-    mockPostRoute(
-      "**/control/plugin_settings",
-      getPostAlias("plugin_settings"),
-      getMockedPostCallback("plugin_settings")
-    );
-    mockPostRoute(
-      "**/control/workload",
-      getPostAlias("workload"),
-      getMockedPostCallback("workload")
-    );
+  function mockPostRoutes(mock: RouteMockFunction): void {
+    mock("**/control/database", getPostAlias("database"));
+    mock("**/control/data", getPostAlias("data"));
+    mock("**/control/plugin", getPostAlias("plugin"));
+    mock("**/control/plugin_settings", getPostAlias("plugin_settings"));
+    mock("**/control/workload", getPostAlias("workload"));
   }
 
-  function mockDeleteRoutes(): void {
-    mockDeleteRoute(
-      "**/control/database",
-      getDeleteAlias("database"),
-      getMockedDeleteCallback("database")
-    );
-    mockDeleteRoute(
-      "**/control/data",
-      getDeleteAlias("data"),
-      getMockedDeleteCallback("data")
-    );
-    mockDeleteRoute(
-      "**/control/plugin",
-      getDeleteAlias("plugin"),
-      getMockedDeleteCallback("plugin")
-    );
-    mockDeleteRoute(
-      "**/control/workload",
-      getDeleteAlias("workload"),
-      getMockedDeleteCallback("workload")
-    );
+  function mockDeleteRoutes(mock: RouteMockFunction): void {
+    mock("**/control/database", getDeleteAlias("database"));
+    mock("**/control/data", getDeleteAlias("data"));
+    mock("**/control/plugin", getDeleteAlias("plugin"));
+    mock("**/control/workload", getDeleteAlias("workload"));
   }
 
-  function restart(): void {
+  function restart(status: BackendStatus = "up", delay?: number): void {
     renewMocks();
-    start();
+    start(status, delay);
   }
 
   return {
     restart,
-    start
+    start,
+    reload
   };
 }
 
-function getRouteMock(
-  method: string,
-  url: string,
-  response: any,
-  withBody: boolean,
-  callback: (payload: any) => void = empty,
-  delay: number = 0
-): Object {
-  return {
-    method: method,
-    url: url,
-    response: withBody ? { body: response } : response,
-    delay: delay,
-    onRequest: (xhr: any) => {
-      // call function on request
-      callback(xhr);
-    }
-  };
-}
-
-function mockGetRoute(url: string, response: any, withBody: boolean): void {
-  cy.route(getRouteMock("GET", url, response, withBody));
-}
-
-function mockPostRoute(
+type RouteMockFunction = (
   url: string,
   alias: string,
-  callback: (payload: any) => void,
-  delay: number = 500,
-  withBody: boolean = false,
-  response: any = {}
-): void {
-  cy.route(getRouteMock("POST", url, response, withBody, callback, delay)).as(
-    alias
-  );
-}
+  response?: any,
+  withBody?: boolean
+) => void;
 
-function mockDeleteRoute(
-  url: string,
-  alias: string,
-  callback: (payload?: any) => void,
-  delay: number = 0,
-  withBody: boolean = false,
-  response: any = {}
-): void {
-  cy.route(getRouteMock("DELETE", url, response, withBody, callback, delay)).as(
-    alias
-  );
+function useRouteMocking(
+  status: number,
+  delay?: number
+): {
+  mockGetRoute: RouteMockFunction;
+  mockPostRoute: RouteMockFunction;
+  mockDeleteRoute: RouteMockFunction;
+} {
+  function getRouteMock(
+    method: string,
+    url: string,
+    response: any,
+    withBody: boolean,
+    delay: number
+  ): Object {
+    return {
+      method: method,
+      url: url,
+      status: status,
+      response: withBody ? { body: response } : response,
+      delay: delay
+    };
+  }
+
+  function mockGetRoute(
+    url: string,
+    alias: string,
+    response: any = {},
+    withBody: boolean = false
+  ): void {
+    cy.route(getRouteMock("GET", url, response, withBody, delay || 0)).as(
+      alias
+    );
+  }
+
+  function mockPostRoute(
+    url: string,
+    alias: string,
+    response: any = {},
+    withBody: boolean = false
+  ): void {
+    cy.route(getRouteMock("POST", url, response, withBody, delay || 100)).as(
+      alias
+    );
+  }
+
+  function mockDeleteRoute(
+    url: string,
+    alias: string,
+    response: any = {},
+    withBody: boolean = false
+  ): void {
+    cy.route(getRouteMock("DELETE", url, response, withBody, delay || 100)).as(
+      alias
+    );
+  }
+
+  return { mockGetRoute, mockPostRoute, mockDeleteRoute };
 }
