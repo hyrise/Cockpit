@@ -9,7 +9,6 @@
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
-        :handle-scroll="false"
       />
       <unselected-warning :condition="selectedDatabases">
         <template #message>
