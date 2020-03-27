@@ -2,7 +2,7 @@ import { useBackendMock } from "../../setup/backendMock";
 import { clickElement } from "../helpers";
 import { getPostAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector } from "../views/helpers";
-import { getSelector, assertValues, DatabaseData } from "./helpers";
+import { getSelector, assertPostValues, DatabaseData } from "./helpers";
 import { fakeId, fakeDatabaseData } from "../../setup/factories";
 import {
   testContentExistence,
@@ -26,6 +26,7 @@ describe("Add database", () => {
 
   // test add database
   describe("when adding a new database", () => {
+    // test cancel
     describe("and clicking the cancel button", () => {
       it("will not add a new database", () => {
         clickElement(getViewSelector("databaseListButton"));
@@ -45,6 +46,7 @@ describe("Add database", () => {
       });
     });
 
+    // test save
     describe("and clicking the save button", () => {
       it("will add a new database with the correct data", () => {
         clickElement(getViewSelector("databaseListButton"));
@@ -76,7 +78,7 @@ describe("Add database", () => {
 
         cy.wait("@" + getPostAlias("database"));
         cy.get("@" + getPostAlias("database")).should((xhr: any) => {
-          assertValues(newDatabase, xhr.request.body);
+          assertPostValues(newDatabase, xhr.request.body);
         });
         cy.numberOfRequests(getPostAlias("database")).should("eq", 1);
         testElementNoVisibility(getSelector("addDatabase"));

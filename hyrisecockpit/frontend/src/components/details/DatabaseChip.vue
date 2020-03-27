@@ -1,5 +1,5 @@
 <template>
-  <v-chip class="white--text" :color="database.color">
+  <v-chip v-if="database" class="white--text" :color="database.color">
     <v-icon left>mdi-database</v-icon>
     <b>{{ database.id }}</b>
     <v-tooltip v-if="closable" right>

@@ -1,3 +1,7 @@
+import { clickElement, getElement } from "./helpers";
+
+// CONTENT
+
 export function testContentExistence(content: string): void {
   cy.contains(content);
 }
@@ -6,8 +10,10 @@ export function testContentNoExistence(content: string): void {
   cy.contains(content).should("not.exist");
 }
 
+// ELEMENT
+
 export function testElementExistence(element: string): void {
-  cy.get(element);
+  getElement(element);
 }
 
 export function testElementNoExistence(element: string): void {
@@ -20,4 +26,19 @@ export function testElementVisibility(element: string): void {
 
 export function testElementNoVisibility(element: string): void {
   cy.get(element).should("not.be.visible");
+}
+
+export function testElementTrigger(
+  rootSelector: string,
+  triggeredSelector: string
+): void {
+  clickElement(rootSelector);
+  getElement(triggeredSelector);
+}
+
+// URL
+
+export function testRedirection(selector: string, newRoute: string): void {
+  clickElement(selector);
+  cy.url().should("contain", newRoute);
 }

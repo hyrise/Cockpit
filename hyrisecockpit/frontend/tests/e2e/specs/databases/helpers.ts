@@ -16,6 +16,13 @@ const selectors: Record<string, string> = {
     "button",
     "cancel-add-database-button"
   ),
+  removeDatabaseButton: getSelectorByConfig("button", "remove-database-button"),
+  removeDatabase: getSelectorByConfig("div", "remove-database"),
+  deleteDatabaseButton: getSelectorByConfig("button", "delete-database-button"),
+  cancelRemoveDatabaseButton: getSelectorByConfig(
+    "button",
+    "cancel-remove-database-button"
+  ),
   idInput: getSelectorByConfig("input", "id-input"),
   hostInput: getSelectorByConfig("input", "host-input"),
   portInput: getSelectorByConfig("input", "port-input"),
@@ -27,7 +34,7 @@ export function getSelector(component: string): string {
   return selectors[component];
 }
 
-export function assertValues(
+export function assertPostValues(
   input: DatabaseData,
   requested: DatabaseData
 ): void {
@@ -36,4 +43,11 @@ export function assertValues(
   expect(input.number_workers).to.eq(requested.number_workers);
   expect(input.port).to.eq(requested.port);
   expect(input.dbname).to.eq(requested.dbname);
+}
+
+export function assertDeleteValues(
+  input: string,
+  requested: { id: string }
+): void {
+  expect(input).to.eq(requested.id);
 }
