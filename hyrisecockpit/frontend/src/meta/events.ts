@@ -17,6 +17,7 @@ export function useMetricEvents(): {
 export function useDatabaseEvents(): {
   emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
   emitDatabaseAddedEvent: () => void;
+  emitDatabaseRemovedEvent: () => void;
 } {
   function emitSelectedDatabasesChangedEvent(databases: string[] = []): void {
     eventBus.$emit("SELECTED_DATABASES_CHANGED", databases);
@@ -24,7 +25,14 @@ export function useDatabaseEvents(): {
   function emitDatabaseAddedEvent(): void {
     eventBus.$emit("DATABASE_ADDED");
   }
-  return { emitSelectedDatabasesChangedEvent, emitDatabaseAddedEvent };
+  function emitDatabaseRemovedEvent(): void {
+    eventBus.$emit("DATABASE_REMOVED");
+  }
+  return {
+    emitSelectedDatabasesChangedEvent,
+    emitDatabaseAddedEvent,
+    emitDatabaseRemovedEvent
+  };
 }
 
 export function useDataEvents(): {
