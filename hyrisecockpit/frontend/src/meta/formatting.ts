@@ -7,6 +7,7 @@ export function useFormatting(): {
     factor?: number,
     even?: boolean
   ) => number;
+  formatDateToHHMMSS: (date: Date) => string;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -27,6 +28,10 @@ export function useFormatting(): {
     return date;
   }
 
+  function formatDateToHHMMSS(date: Date): string {
+    return date.toLocaleTimeString("de-DE");
+  }
+
   function roundNumber(
     data: number,
     ratio: number,
@@ -37,5 +42,10 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
-  return { formatNumberWithCommas, formatDateWithoutMilliSec, roundNumber };
+  return {
+    formatNumberWithCommas,
+    formatDateWithoutMilliSec,
+    roundNumber,
+    formatDateToHHMMSS
+  };
 }
