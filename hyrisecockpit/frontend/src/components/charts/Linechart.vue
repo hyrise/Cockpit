@@ -163,7 +163,14 @@ function useLineChartConfiguration(
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
-      legend: { x: 0, y: 1.3 }
+      legend: { x: 0, y: 1.3 },
+      margin: {
+        l: 70,
+        r: 40,
+        b: 70,
+        t: 10,
+        pad: 0
+      }
 
       // plot_bgcolor: "#424242",
       // paper_bgcolor: "#424242",
