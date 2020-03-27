@@ -989,3 +989,160 @@ class TestBackgroundJobManager:
             func=background_job_manager._deactivate_plugin_job, args=("HyriseBye",)
         )
         assert result
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    def test_get_existing_tables(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test gets existing tables."""
+        global mocked_pool_cursor
+
+        mocked_pool_cursor.fetchall.return_value = [("table_name",)]
+
+        result = background_job_manager._get_existing_tables(
+            ["table_name", "another_table_name"]
+        )
+
+        expected = {"existing": ["table_name"], "not_existing": ["another_table_name"]}
+
+        assert result == expected
+
+        mocked_pool_cursor = MagicMock()
+
+    def test_successfully_generates_table_dropping_queries(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully generates table dropping queries."""
+        fake_existing_table_names = {
+            "existing": ["keep", "hyrise", "alive"],
+            "not_existing": ["hyrise running"],
+        }
+
+        background_job_manager._get_existing_tables = MagicMock()  # type: ignore
+        background_job_manager._get_existing_tables.return_value = (  # type: ignore
+            fake_existing_table_names
+        )
+
+        received_queries = background_job_manager._generate_table_drop_queries(
+            ["table_names"],
+        )
+
+        expected_queries = [
+            ("DROP TABLE %s;", (("keep", "as_is"),),),
+            ("DROP TABLE %s;", (("hyrise", "as_is"),),),
+            ("DROP TABLE %s;", (("alive", "as_is"),),),
+        ]
+
+        assert received_queries == expected_queries
+
+    def test_delete_tables_job(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test delete tables job."""
+        fake_drop_queries = [
+            ("DROP TABLE %s;", (("keep", "as_is"),),),
+            ("DROP TABLE %s;", (("hyrise", "as_is"),),),
+            ("DROP TABLE %s;", (("alive", "as_is"),),),
+        ]
+        fake_table_names = ["keep", "hyrise", "alive"]
+
+        background_job_manager._database_blocked.value = True
+
+        mocked_generate_table_drop_queries = MagicMock()
+        mocked_generate_table_drop_queries.return_value = fake_drop_queries
+        background_job_manager._generate_table_drop_queries = (  # type: ignore
+            mocked_generate_table_drop_queries
+        )
+
+        background_job_manager._execute_queries_parallel = MagicMock()  # type: ignore
+
+        background_job_manager._delete_tables_job(fake_table_names)
+
+        background_job_manager._generate_table_drop_queries.assert_called_once_with(  # type: ignore
+            fake_table_names
+        )
+        background_job_manager._execute_queries_parallel.assert_called_once_with(  # type: ignore
+            fake_table_names, fake_drop_queries, None
+        )
+        assert not background_job_manager._database_blocked.value
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler._table_names", fake_dict,
+    )
+    def test_get_delete_table_names(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test gets table names of imported tables."""
+        received = background_job_manager._get_delete_table_names("alternative")
+
+        expected = [
+            "The Dough Rollers",
+            "Broken Witt Rebels",
+            "Bonny Doon",
+            "Jack White",
+        ]
+
+        assert received == expected
+
+    def test_doesnt_delete_tables_when_database_locked(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't delete tables when database is locked."""
+        background_job_manager._scheduler = MagicMock()
+        background_job_manager._database_blocked.value = True
+
+        mocked_get_delete_table_names = MagicMock()
+        background_job_manager._get_delete_table_names = mocked_get_delete_table_names  # type: ignore
+
+        result = background_job_manager.delete_tables("")
+
+        background_job_manager._get_delete_table_names.assert_not_called()  # type: ignore
+        background_job_manager._scheduler.add_job.assert_not_called()
+
+        assert not result
+        assert background_job_manager._database_blocked.value
+
+    def test_doesnt_delete_tables_when_table_names_empty(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test doesn't delete tables when table names is empty."""
+        background_job_manager._scheduler = MagicMock()
+        background_job_manager._database_blocked.value = False
+
+        mocked_get_delete_table_names = MagicMock()
+        mocked_get_delete_table_names.return_value = []
+        background_job_manager._get_delete_table_names = mocked_get_delete_table_names  # type: ignore
+
+        result = background_job_manager.delete_tables("folder_name")
+
+        mocked_get_delete_table_names.assert_called_once_with("folder_name")
+        background_job_manager._scheduler.add_job.assert_not_called()
+
+        assert result
+        assert not background_job_manager._database_blocked.value
+
+    def test_successfully_delets_tables(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test successfully deletes tables."""
+        mock_scheduler = MagicMock()
+        mock_scheduler.add_job.return_value = None
+        background_job_manager._scheduler = mock_scheduler
+        background_job_manager._database_blocked.value = False
+
+        mocked_get_delete_table_names = MagicMock()
+        mocked_get_delete_table_names.return_value = ["table_name"]
+        background_job_manager._get_delete_table_names = mocked_get_delete_table_names  # type: ignore
+
+        result = background_job_manager.delete_tables("folder_name")
+
+        mocked_get_delete_table_names.assert_called_once_with("folder_name")
+        background_job_manager._scheduler.add_job.assert_called_once_with(
+            func=background_job_manager._delete_tables_job, args=(["table_name"],)
+        )
+
+        assert result
+        assert background_job_manager._database_blocked.value
