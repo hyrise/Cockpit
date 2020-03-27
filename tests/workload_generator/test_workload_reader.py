@@ -1,5 +1,4 @@
 """Tests for WorkloadReader."""
-from typing import Any
 from unittest.mock import MagicMock, patch
 
 from pytest import raises
@@ -13,10 +12,6 @@ from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
 
 class TestWorkloadReader:
     """Tests for the WorkloadReader class."""
-
-    def false_function(self, *argv) -> Any:
-        """Return False."""
-        return False
 
     @patch("hyrisecockpit.workload_generator.workload_reader.exists")
     def test_catches_not_existing_workload_folder_exception(self, mock_path_function):
