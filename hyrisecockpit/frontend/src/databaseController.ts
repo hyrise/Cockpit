@@ -17,8 +17,9 @@ export function useDatabaseController(): DatabaseController {
 
   updateDatabases();
 
-  eventBus.$on("DATABASE_ADDED", () => {
+  eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {
     databasesUpdated.value = false;
+    databaseService.resetColors();
     updateDatabases();
   });
 

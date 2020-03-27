@@ -2,6 +2,7 @@ import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
+import { eventBus } from "../plugins/eventBus";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
@@ -12,6 +13,11 @@ export function usePluginService(): PluginService {
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
   getPluginSettings();
+
+  eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {
+    getPlugins();
+    getPluginSettings();
+  });
 
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
