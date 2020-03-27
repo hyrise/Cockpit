@@ -435,11 +435,11 @@ class BackgroundJobManager(object):
         existing_tables = []
         not_existing_tables = []
         with PoolCursor(self._connection_pool) as cur:
+            cur.execute("SELECT table_name FROM meta_tables;", None)
+            results = cur.fetchall()
+            loaded_tables = [row[0] for row in results]
             for name in table_names:
-                cur.execute(
-                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
-                )
-                if cur.fetchone():
+                if name in loaded_tables:
                     existing_tables.append(name)
                     continue
                 not_existing_tables.append(name)
