@@ -66,6 +66,11 @@
       :open="showAddDatabaseDialog"
       @close="showAddDatabaseDialog = false"
     />
+    <remove-database
+      :open="showRemoveDatabaseDialog"
+      :database-id="removedDatabaseId"
+      @close="showRemoveDatabaseDialog = false"
+    />
     <v-menu bottom offset-x>
       <template v-slot:activator="{ on: menu }">
         <v-card
@@ -82,22 +87,25 @@
             bordered
           >
             <v-icon class="mt-4" size="40">
-              mdi-database-plus
+              mdi-database
             </v-icon>
           </v-badge>
           <v-card-text class="justify-center card-title overline pt-1">
-            Database
+            Databases
           </v-card-text>
         </v-card>
       </template>
-      <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
+      <available-databases-list
+        @addDatabase="showAddDatabaseDialog = true"
+        @removeDatabase="handleDatabaseDeletion"
+      />
     </v-menu>
 
     <v-card
       id="workload-generation-button"
       class="text-center"
       elevation="0"
-      @click="openWorkloadDialog()"
+      @click="showWorkloadDialog = true"
     >
       <v-icon class="mt-2" size="40">
         mdi-account-cog
@@ -110,7 +118,7 @@
       id="plugin-overview-button"
       class="text-center"
       elevation="0"
-      @click="togglePluginEditor()"
+      @click="$emit('openPlugins')"
     >
       <v-icon class="mt-2" size="40">
         mdi-alpha-p-box
@@ -138,48 +146,48 @@ import {
   Ref,
   computed
 } from "@vue/composition-api";
-import addDatabase from "../components/addDatabase.vue";
+import AddDatabase from "@/components/databases/AddDatabase.vue";
+import RemoveDatabase from "@/components/databases/RemoveDatabase.vue";
 import PluginsOverview from "../components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
-import AvailableDatabasesList from "@/components/details/AvailableDatabasesList.vue";
+import AvailableDatabasesList from "@/components/databases/AvailableDatabasesList.vue";
+import { Database } from "@/types/database";
 
 interface Data {
   showPluginEditor: Ref<boolean>;
-  togglePluginEditor: () => void;
   showWorkloadDialog: Ref<boolean>;
-  openWorkloadDialog: () => void;
   showAddDatabaseDialog: Ref<boolean>;
+  showRemoveDatabaseDialog: Ref<boolean>;
   databaseCount: Ref<string>;
+  handleDatabaseDeletion: (database: Database) => void;
+  removedDatabaseId: Ref<string>;
 }
 
 export default defineComponent({
   components: {
     PluginsOverview,
     WorkloadGeneration,
-    addDatabase,
-    AvailableDatabasesList
+    AddDatabase,
+    AvailableDatabasesList,
+    RemoveDatabase
   },
   setup(props: {}, context: SetupContext): Data {
-    const showPluginEditor = ref<boolean>(false);
-    const showWorkloadDialog = ref<boolean>(false);
-    const showAddDatabaseDialog = ref<boolean>(false);
-
-    function togglePluginEditor(): void {
-      context.emit("openPlugins");
+    const showRemoveDatabaseDialog = ref(false);
+    const removedDatabaseId = ref<string>("");
+    function handleDatabaseDeletion(database: Database): void {
+      removedDatabaseId.value = database.id;
+      showRemoveDatabaseDialog.value = true;
     }
-    function openWorkloadDialog(): void {
-      showWorkloadDialog.value = true;
-    }
-
     return {
-      showPluginEditor,
-      togglePluginEditor,
-      showWorkloadDialog,
-      openWorkloadDialog,
-      showAddDatabaseDialog,
+      showPluginEditor: ref(false),
+      showWorkloadDialog: ref(false),
+      showAddDatabaseDialog: ref(false),
+      showRemoveDatabaseDialog,
       databaseCount: computed(() =>
         context.root.$databaseController.availableDatabasesById.value.length.toString()
-      )
+      ),
+      handleDatabaseDeletion,
+      removedDatabaseId
     };
   }
 });
