@@ -60,41 +60,7 @@ class TestWorkloadReader:
     @patch("hyrisecockpit.workload_generator.workload_reader.open",)
     def test_reads_content_of_workload_folder(self, mock_open, mock_fsdecode):
         """Read content of workload folder."""
-
-        def fsdecode_side_effect(file_name):
-            return file_name
-
-        mock_fsdecode.side_effect = fsdecode_side_effect
-
-        mocked_file = MagicMock()
-        mocked_file.read.return_value = "Query1---Query2---"
-        mock_open.return_value.__enter__.return_value = mocked_file
-
-        workload_folder = ["file_1.sql", "file_2.sql"]
-        absolute_workload_path = "absolute_workload_path"
-        delimiter = "---"
-        file_type = "sql"
-
-        expected_queries = {
-            "file_1": ["Query1", "Query2"],
-            "file_2": ["Query1", "Query2"],
-        }
-
-        reader = WorkloadReader()
-        queries = reader._read_content_of_workload_folder(
-            workload_folder, absolute_workload_path, delimiter, file_type
-        )
-        assert queries == expected_queries
-
-    @patch("hyrisecockpit.workload_generator.workload_reader.fsdecode",)
-    @patch("hyrisecockpit.workload_generator.workload_reader.open",)
-    def test_reads_workload(self, mock_open, mock_fsdecode):
-        """Read workload."""
-
-        def fsdecode_side_effect(file_name):
-            return file_name
-
-        mock_fsdecode.side_effect = fsdecode_side_effect
+        mock_fsdecode.side_effect = lambda file_name: file_name
 
         mocked_file = MagicMock()
         mocked_file.read.return_value = "Query1---Query2---"
