@@ -44,6 +44,11 @@ def get_workload_by_id(id: str) -> Optional[Workload]:
         return None
 
 
+def delete_workload_by_id(id: str) -> Optional[str]:
+    """Return the workload_id of the deleted Workload."""
+    return None if id == bad_id else id
+
+
 @fixture
 def app() -> Flask:
     """Return a testing app."""
@@ -125,12 +130,34 @@ class TestWorkloadIdController:
         assert 200 == response.status_code
         assert WorkloadSchema().dump(get_workload_by_id(id)) == response.get_json()
 
-    @mark.parametrize("id", [bad_id])
     @patch.object(
         WorkloadService, "get_by_id", get_workload_by_id,
     )
-    def test_gets_no_workload_if_it_cannot_be_found(self, client: FlaskClient, id: str):
+    def test_gets_no_workload_if_it_cannot_be_found(
+        self, client: FlaskClient, id: str = bad_id
+    ):
         """A WorkloadId controller routes get correctly."""
         response = client.get(url + f"/{id}", follow_redirects=True)
+        assert 404 == response.status_code
+        assert not response.is_json
+
+    @mark.parametrize("id", [w.workload_id for w in workloads])
+    @patch.object(
+        WorkloadService, "delete_by_id", delete_workload_by_id,
+    )
+    def test_deletes_the_correct_workload(self, client: FlaskClient, id: str):
+        """A WorkloadId controller routes get correctly."""
+        response = client.delete(url + f"/{id}", follow_redirects=True)
+        assert 200 == response.status_code
+        assert not response.is_json
+
+    @patch.object(
+        WorkloadService, "delete_by_id", delete_workload_by_id,
+    )
+    def test_deletes_no_workload_if_it_cannot_be_found(
+        self, client: FlaskClient, id: str = bad_id
+    ):
+        """A WorkloadId controller routes get correctly."""
+        response = client.delete(url + f"/{id}", follow_redirects=True)
         assert 404 == response.status_code
         assert not response.is_json
