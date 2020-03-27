@@ -1,5 +1,5 @@
 """Tests for the database_manager module."""
-from typing import Callable, Dict
+from typing import Callable, Dict, List
 from unittest.mock import MagicMock, patch
 
 from pytest import fixture, mark
@@ -40,6 +40,26 @@ def fake_database(*args) -> MagicMock:
     fake_database.close.return_value = None
 
     return fake_database
+
+
+def get_server_calls() -> List[str]:
+    """Server calls of a DatabaseManager."""
+    return [
+        "add database",
+        "delete database",
+        "start worker",
+        "close worker",
+        "queue length",
+        "get databases",
+        "load data",
+        "delete data",
+        "status",
+        "get plugins",
+        "activate plugin",
+        "deactivate plugin",
+        "set plugin setting",
+        "get plugin setting",
+    ]
 
 
 class TestDatabaseManager:
@@ -169,29 +189,21 @@ class TestDatabaseManager:
         self.convenience_data_call(database_manager, mock_database, call, mock_data)
 
     @mark.parametrize(
-        "call",
-        [
-            "add database",
-            "delete database",
-            "start worker",
-            "close worker",
-            "queue length",
-            "get databases",
-            "load data",
-            "delete data",
-            "status",
-            "get plugins",
-            "activate plugin",
-            "deactivate plugin",
-            "set plugin setting",
-            "get plugin setting",
-        ],
+        "call", get_server_calls(),
     )
     def test_has_server_call(
         self, database_manager: DatabaseManager, call: str
     ) -> None:
         """Assert DatabaseManager has a specific call."""
         assert call in database_manager._get_server_calls().keys()
+
+    def test_has_no_additional_server_calls(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Assert DatabaseManager has no additional calls."""
+        calls = get_server_calls()
+        for call in database_manager._get_server_calls().keys():
+            assert call in calls
 
     @patch("hyrisecockpit.database_manager.manager.Driver.validate_connection")
     @patch("hyrisecockpit.database_manager.manager.Database")
