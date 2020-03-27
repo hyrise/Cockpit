@@ -153,10 +153,6 @@ import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
 import AvailableDatabasesList from "@/components/databases/AvailableDatabasesList.vue";
 import { Database } from "@/types/database";
 
-interface Props {
-  open: boolean;
-}
-
 interface Data {
   showPluginEditor: Ref<boolean>;
   showWorkloadDialog: Ref<boolean>;
