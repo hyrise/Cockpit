@@ -51,7 +51,14 @@ function useBarChartConfiguration(
         rangemode: "tozero"
       },
       barmode: "stack",
-      autosize: true
+      autosize: true,
+      margin: {
+        l: 70,
+        r: 40,
+        b: 70,
+        t: 0,
+        pad: 0
+      }
     };
   }
 
