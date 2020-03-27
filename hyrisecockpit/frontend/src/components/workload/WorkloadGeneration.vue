@@ -66,7 +66,7 @@
               </v-btn>
               <v-btn
                 @click="stoppingWorkload()"
-                :disabled="buttonIsLoading.stop"
+                :disabled="buttonIsLoading.stop || noDatabaseAdded"
                 :loading="buttonIsLoading.stop"
                 :style="{ color: isActive ? 'red' : '' }"
               >
@@ -81,6 +81,14 @@
             <p class="subtitle-1 font-weight-medium">
               Load and remove generated data into/from instances
             </p>
+            <v-alert
+              v-if="noDatabaseAdded"
+              class="alert pt-2 pb-2 primary--text"
+              type="warning"
+              color="warning"
+            >
+              <slot>No database added </slot>
+            </v-alert>
             <v-switch
               class="mt-0 pt-0"
               v-model="workloadData"
@@ -90,7 +98,7 @@
               :value="workload"
               @change="handleWorkloadDataChange(workload)"
               :loading="buttonIsLoading['load' + workload]"
-              :disabled="loading"
+              :disabled="loading || noDatabaseAdded"
             >
             </v-switch>
           </v-col>
@@ -113,7 +121,6 @@ import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
 import {
   getDisplayedWorkload,
-  getTransferredWorkload,
   getWorkloadFromTransferred
 } from "../../meta/workloads";
 
@@ -128,6 +135,7 @@ interface Data {
   buttonIsLoading: any;
   isActive: Ref<boolean>;
   loading: Ref<boolean>;
+  noDatabaseAdded: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
   startingWorkload: (workload: Workload) => void;
   pauseWorkload: (workload: Workload) => void;
@@ -205,36 +213,45 @@ export default defineComponent({
     let changeWorkloadData = true;
     function handleWorkloadDataChange(workload: Workload): void {
       buttonIsLoading["load" + workload] = true;
+      changeWorkloadData = false;
       if (isLoaded(workload)) {
-        changeWorkloadData = false;
-        loadWorkloadData(workload).then(() => (changeWorkloadData = true));
+        loadWorkloadData(workload).then(() => {
+          changeWorkloadData = true;
+          console.log("Antwort");
+        });
       } else {
-        changeWorkloadData = false;
-        deleteWorkloadData(workload).then(() => (changeWorkloadData = true));
+        deleteWorkloadData(workload).then(() => {
+          changeWorkloadData = true;
+        });
       }
     }
+    const noDatabaseAdded = ref<boolean>(false);
     function updateWorkloadInformation(): void {
+      //TODO: error when workload started and loading
       getLoadedWorkloadData().then((response: any) => {
-        let loading = true;
-        //TODO: error when no database is added
-        let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
-        Object.values(response.data).forEach((instance: any) => {
-          loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
-            instance.loaded_benchmarks.includes(benchmark)
-          );
-          loading = Object.values(instance).some(
-            () => instance.database_blocked_status == 1
-          );
-        });
-        //TODO: error when loading and deleting (sometimes)
-        if (!loading && changeWorkloadData) {
-          Object.values(availableWorkloads).forEach((workload: Workload) => {
-            buttonIsLoading["load" + workload] = false;
+        if (response.data.length !== 0) {
+          noDatabaseAdded.value = false;
+          let loading = true;
+          let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
+          Object.values(response.data).forEach((instance: any) => {
+            loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
+              instance.loaded_benchmarks.includes(benchmark)
+            );
+            loading = Object.values(instance).some(
+              () => instance.database_blocked_status === 1
+            );
           });
-          workloadData.value = [];
-          Object.values(loadedWorkloadData).forEach((transferred: string) => {
-            workloadData.value.push(getWorkloadFromTransferred(transferred));
-          });
+          if (!loading && changeWorkloadData) {
+            Object.values(availableWorkloads).forEach((workload: Workload) => {
+              buttonIsLoading["load" + workload] = false;
+            });
+            workloadData.value = [];
+            Object.values(loadedWorkloadData).forEach((transferred: string) => {
+              workloadData.value.push(getWorkloadFromTransferred(transferred));
+            });
+          }
+        } else {
+          noDatabaseAdded.value = true;
         }
       });
     }
@@ -253,6 +270,7 @@ export default defineComponent({
           buttonIsLoading.loadtpcds ||
           buttonIsLoading.loadjob
       ),
+      noDatabaseAdded,
       getDisplayedWorkload,
       startingWorkload,
       pauseWorkload,
