@@ -217,7 +217,6 @@ export default defineComponent({
       if (isLoaded(workload)) {
         loadWorkloadData(workload).then(() => {
           changeWorkloadData = true;
-          console.log("Antwort");
         });
       } else {
         deleteWorkloadData(workload).then(() => {
