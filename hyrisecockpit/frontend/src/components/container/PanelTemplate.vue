@@ -2,23 +2,19 @@
   <div>
     <slot name="optionalHeader" />
     <v-expansion-panels
-      v-if="showPanels"
-      v-model="panels"
-      multiple
+      v-model="showContent"
       class="panels white--text"
       :accordion="accordion"
     >
-      <v-expansion-panel v-for="content in contentList" :key="content">
+      <v-expansion-panel>
         <v-expansion-panel-header class="title" :color="headerColor">
-          <slot name="header">{{ content }}</slot>
+          <slot name="header"></slot>
           <template #actions>
             <v-icon :color="iconColor">$expand</v-icon>
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <slot name="content">
-            <database-system-details :selected-databases="[content]" />
-          </slot>
+          <slot name="content"> </slot>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -34,26 +30,20 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import DatabaseSystemDetails from "./DatabaseSystemDetails.vue";
 
 interface Props {
-  contentList: string[];
   accordion: boolean;
   headerColor: string;
-  showPanels: boolean;
+  showPanel: boolean;
 }
 interface Data {
-  panels: Ref<number[]>;
+  showContent: Ref<0 | undefined>;
   iconColor: Ref<string>;
 }
 
 export default defineComponent({
-  name: "DatabaseDetailsPanel",
+  name: "PanelTemplate",
   props: {
-    contentList: {
-      type: Array,
-      default: () => [0]
-    },
     accordion: {
       type: Boolean,
       default: false
@@ -62,18 +52,25 @@ export default defineComponent({
       type: String,
       default: "primary"
     },
-    showPanels: {
+    showPanel: {
       type: Boolean,
       default: true
     }
   },
-  components: { DatabaseSystemDetails },
   setup(props: Props, context: SetupContext): Data {
     return {
-      panels: ref<number[]>([]),
       iconColor: computed(() =>
         props.headerColor === "primary" ? "white" : ""
-      )
+      ),
+      showContent: computed({
+        get: () => {
+          if (props.showPanel) return 0;
+          return;
+        },
+        set: val => {
+          return val;
+        }
+      })
     };
   }
 });
