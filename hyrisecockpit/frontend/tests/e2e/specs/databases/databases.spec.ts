@@ -80,9 +80,9 @@ describe("Show database data", () => {
         );
         clickElement(getViewSelector("databaseListButton"));
         cy.get(getViewSelector("databaseList")).within(() => {
-          for (let i = 0; i < databases.length; i++) {
-            cy.contains(databases[i].id);
-          }
+          databases.forEach((database: any) => {
+            cy.contains(database.id);
+          });
         });
       });
     });
@@ -91,43 +91,42 @@ describe("Show database data", () => {
     describe("and just visiting the view", () => {
       it("will show the correct system details for every database", () => {
         // test correct data existence
-        for (let i = 0; i < databases.length; i++) {
+        databases.forEach((database: any, idx: number) => {
           cy.get(getSelector("idDetails"))
-            .eq(i)
-            .contains(databases[i].id);
+            .eq(idx)
+            .contains(database.id);
           cy.get(getSelector("hostDetails"))
-            .eq(i)
-            .contains(databases[i].host);
+            .eq(idx)
+            .contains(database.host);
           cy.get(getSelector("workerDetails"))
-            .eq(i)
-            .contains(databases[i].number_workers);
+            .eq(idx)
+            .contains(database.number_workers);
           cy.get(getSelector("cpuDetails"))
-            .eq(i)
-            .contains(databasesSystemData[i].cpu.cpu_count.toString());
+            .eq(idx)
+            .contains(databasesSystemData[idx].cpu.cpu_count.toString());
           cy.get(getSelector("memoryCapacityDetails"))
-            .eq(i)
-            .contains(getDatabaseMainMemoryCapacity(databasesSystemData[i]));
+            .eq(idx)
+            .contains(getDatabaseMainMemoryCapacity(databasesSystemData[idx]));
           cy.get(getSelector("memoryFootprintDetails"))
-            .eq(i)
-            .contains(getDatabaseMemoryFootprint(databasesStorageData[i]));
-        }
+            .eq(idx)
+            .contains(getDatabaseMemoryFootprint(databasesStorageData[idx]));
+        });
 
         // test correct rounding
-        for (let i = 0; i < databases.length; i++) {
+        databases.forEach((database: any, idx: number) => {
           cy.get(getSelector("memoryCapacityDetails"))
-            .eq(i)
+            .eq(idx)
             .invoke("text")
             .then((text: any) => {
               testMaxDecimalDigits(text, 3);
             });
-
           cy.get(getSelector("memoryFootprintDetails"))
-            .eq(i)
+            .eq(idx)
             .invoke("text")
             .then((text: any) => {
               testMaxDecimalDigits(text, 3);
             });
-        }
+        });
       });
     });
   });
