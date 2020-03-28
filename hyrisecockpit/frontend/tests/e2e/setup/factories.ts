@@ -58,9 +58,9 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
       cpu_clock_speed: faker.random.number()
     },
     memory: {
-      free: faker.random.number(),
-      used: faker.random.number(),
-      total: faker.random.number(),
+      free: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
+      used: generateRandomInt(Math.pow(10, 8), Math.pow(10, 8)),
+      total: generateRandomInt(Math.pow(10, 9), Math.pow(10, 10)),
       percent: generateRandomFloat(0, 100)
     },
     database_threads: faker.random.number()

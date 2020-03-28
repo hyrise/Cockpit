@@ -1,6 +1,7 @@
 <template>
   <div class="flex">
     <v-card
+      id="database-system-details"
       class="card"
       :style="databaseFlex"
       v-for="database in databases"

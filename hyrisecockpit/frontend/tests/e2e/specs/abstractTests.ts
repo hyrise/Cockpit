@@ -1,5 +1,14 @@
 import { clickElement, getElement } from "./helpers";
 
+// DATA
+
+export function testMaxDecimalDigits(content: string, maxDigits: number): void {
+  const decimal = content.split(".");
+  const decimalOnly = decimal[1].split(" ");
+
+  expect(decimalOnly[0]).to.have.length.of.at.most(maxDigits);
+}
+
 // CONTENT
 
 export function testContentExistence(content: string): void {

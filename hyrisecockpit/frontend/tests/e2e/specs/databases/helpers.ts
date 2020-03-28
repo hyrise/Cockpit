@@ -27,7 +27,19 @@ const selectors: Record<string, string> = {
   hostInput: getSelectorByConfig("input", "host-input"),
   portInput: getSelectorByConfig("input", "port-input"),
   dbNameInput: getSelectorByConfig("input", "dbname-input"),
-  workerInput: getSelectorByConfig("input", "worker-input")
+  workerInput: getSelectorByConfig("input", "worker-input"),
+  databaseDetailsPanel: getSelectorByConfig("div", "database-details-panel"),
+  databaseSystemDetails: getSelectorByConfig("div", "database-system-details"),
+  idDetails: getSelectorByConfig("div", "database-id"),
+  hostDetails: getSelectorByConfig("div", "database-host"),
+  memoryCapacityDetails: getSelectorByConfig("div", "database-memory-capacity"),
+  memoryFootprintDetails: getSelectorByConfig(
+    "div",
+    "database-memory-footprint"
+  ),
+  cpuDetails: getSelectorByConfig("div", "database-number-cpus"),
+  workerDetails: getSelectorByConfig("div", "database-number-workers"),
+  numberOfDatabases: getSelectorByConfig("span", "number-of-databases")
 };
 
 export function getSelector(component: string): string {
@@ -50,4 +62,48 @@ export function assertDeleteValues(
   requested: { id: string }
 ): void {
   expect(input).to.eq(requested.id);
+}
+
+function roundNumber(
+  data: number,
+  ratio: number,
+  factor: number = 1,
+  even: boolean = true
+): number {
+  const rounded = Math.floor(data * factor) / ratio;
+  return even ? Math.floor(rounded) : rounded;
+}
+
+function getTableMemoryFootprint(data: any): number {
+  return roundNumber(
+    Object.values(data).reduce(
+      (sum1: number, table: any) => sum1 + table.size,
+      0
+    ),
+    Math.pow(10, 3),
+    1 / Math.pow(10, 3),
+    false
+  );
+}
+
+export function getDatabaseMemoryFootprint(data: any): number {
+  const memory: number[] = [];
+  Object.entries(data).forEach(([table, tableData]: [string, any]) => {
+    memory.push(getTableMemoryFootprint(tableData.data));
+  });
+  return roundNumber(
+    memory.reduce((total, tableMemory) => total + tableMemory, 0),
+    Math.pow(10, 3),
+    Math.pow(10, 3),
+    false
+  );
+}
+
+export function getDatabaseMainMemoryCapacity(data: any): number {
+  return roundNumber(
+    data.memory.total,
+    Math.pow(10, 3),
+    1 / Math.pow(10, 6),
+    false
+  );
 }
