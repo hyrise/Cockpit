@@ -73,7 +73,7 @@ describe("Show database data", () => {
     });
 
     // test correct number of databases
-    describe("and clicking the databaslist button", () => {
+    describe("and clicking the database list button", () => {
       it("will show the correct number of databases", () => {
         cy.get(getSelector("numberOfDatabases")).contains(
           databases.length.toString()
@@ -82,6 +82,39 @@ describe("Show database data", () => {
         cy.get(getViewSelector("databaseList")).within(() => {
           databases.forEach((database: any) => {
             cy.contains(database.id);
+          });
+        });
+      });
+    });
+
+    // test correct database colors
+    describe("and changing routes", () => {
+      it("will show the same database colors", () => {
+        const colors: string[] = [];
+        clickElement(getViewSelector("databaseListButton"));
+        cy.get(getViewSelector("databaseList")).within(() => {
+          databases.forEach((database: any, idx: number) => {
+            cy.get("span")
+              .eq(3 * (idx + 1)) // title offset
+              .then((elem: any) => {
+                colors.push(elem[0].attributes.style.value);
+              });
+          });
+        });
+        cy.visit(getRoute("home"));
+        cy.wait(500);
+        testRedirection(
+          getViewSelector("overviewButton"),
+          getRoute("overview")
+        );
+        clickElement(getViewSelector("databaseListButton"));
+        cy.get(getViewSelector("databaseList")).within(() => {
+          databases.forEach((database: any, idx: number) => {
+            cy.get("span")
+              .eq(3 * (idx + 1)) // title offset
+              .then((elem: any) => {
+                expect(colors[idx]).to.eq(elem[0].attributes.style.value);
+              });
           });
         });
       });
