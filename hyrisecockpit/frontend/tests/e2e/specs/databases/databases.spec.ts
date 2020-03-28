@@ -94,10 +94,10 @@ describe("Show database data", () => {
         clickElement(getViewSelector("databaseListButton"));
         cy.get(getViewSelector("databaseList")).within(() => {
           databases.forEach((database: any, idx: number) => {
-            cy.get("span")
-              .eq(3 * (idx + 1)) // title offset
+            cy.get(getSelector("databaseChip"))
+              .eq(idx)
               .then((elem: any) => {
-                colors.push(elem[0].attributes.style.value);
+                colors.push(elem[0].style.backgroundColor);
               });
           });
         });
@@ -110,10 +110,10 @@ describe("Show database data", () => {
         clickElement(getViewSelector("databaseListButton"));
         cy.get(getViewSelector("databaseList")).within(() => {
           databases.forEach((database: any, idx: number) => {
-            cy.get("span")
-              .eq(3 * (idx + 1)) // title offset
+            cy.get(getSelector("databaseChip"))
+              .eq(idx)
               .then((elem: any) => {
-                expect(colors[idx]).to.eq(elem[0].attributes.style.value);
+                expect(colors[idx]).to.eq(elem[0].style.backgroundColor);
               });
           });
         });
