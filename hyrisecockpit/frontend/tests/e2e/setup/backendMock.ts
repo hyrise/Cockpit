@@ -13,16 +13,23 @@ import {
 
 //NOTE: only used routes are mocked yet
 
-export function useBackendMock(
-  numbers: Record<Entity, number> = {
+function getInitialNumbers(
+  numbers: Partial<Record<Entity, number>>
+): Record<Entity, number> {
+  return {
     databases: 1,
     tables: 2,
     columns: 2,
     chunks: 2,
     queries: 10,
     plugins: 2,
-    activated_plugins: 1
-  }
+    activated_plugins: 1,
+    ...numbers
+  };
+}
+
+export function useBackendMock(
+  numbers: Partial<Record<Entity, number>> = {}
 ): {
   restart(status?: BackendStatus, delay?: number): void;
   start(status?: BackendStatus, delay?: number): void;
@@ -33,7 +40,7 @@ export function useBackendMock(
     getMockedPostCallback,
     getMockedDeleteCallback,
     renewMocks
-  } = useMocks(numbers);
+  } = useMocks(getInitialNumbers(numbers));
 
   function start(status: BackendStatus = "up", delay?: number): void {
     cy.server();

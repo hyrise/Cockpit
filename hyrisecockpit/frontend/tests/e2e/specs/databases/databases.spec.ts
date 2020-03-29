@@ -16,13 +16,7 @@ import {
 } from "../abstractTests";
 
 const backend = useBackendMock({
-  databases: 2,
-  tables: 2,
-  columns: 2,
-  chunks: 2,
-  queries: 10,
-  plugins: 2,
-  activated_plugins: 1
+  databases: 2
 });
 
 let databases: any = [];

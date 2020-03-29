@@ -34,7 +34,7 @@ describe("Change page routes", () => {
     });
   });
 
-  // test add database
+  // test database list
   describe("when clicking the database list button", () => {
     it("will open the database list", () => {
       testElementTrigger(
