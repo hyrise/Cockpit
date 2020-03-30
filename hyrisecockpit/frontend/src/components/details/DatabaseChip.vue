@@ -1,18 +1,38 @@
 <template>
-  <v-chip :color="database.color" class="white--text">
-    {{ database.id }}
+  <v-chip class="white--text" :color="database.color">
+    <v-icon left>mdi-database</v-icon>
+    <b>{{ database.id }}</b>
+    <v-tooltip v-if="closable" right>
+      <template v-slot:activator="{ on }">
+        <v-icon
+          id="remove-database-button"
+          v-on="on"
+          right
+          @click="$emit('closed')"
+          >mdi-close-circle</v-icon
+        >
+      </template>
+      <span>Remove Database</span>
+    </v-tooltip>
   </v-chip>
 </template>
 <script lang="ts">
-import { defineComponent, SetupContext, Ref, ref } from "@vue/composition-api";
+import {
+  defineComponent,
+  SetupContext,
+  Ref,
+  ref,
+  computed
+} from "@vue/composition-api";
 import { Database } from "@/types/database";
 
 interface Data {
-  database: Database;
+  database: Ref<Database>;
 }
 
 interface Props {
   databaseId: string;
+  closable: boolean;
 }
 
 export default defineComponent({
@@ -21,12 +41,16 @@ export default defineComponent({
     databaseId: {
       type: String,
       default: null
+    },
+    closable: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props: Props, context: SetupContext): Data {
     return {
-      database: context.root.$databaseController.getDatabaseById(
-        props.databaseId
+      database: computed(() =>
+        context.root.$databaseController.getDatabaseById(props.databaseId)
       )
     };
   }
