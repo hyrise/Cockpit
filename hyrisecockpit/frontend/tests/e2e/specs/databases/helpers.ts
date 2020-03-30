@@ -23,11 +23,14 @@ const selectors: Record<string, string> = {
     "button",
     "cancel-remove-database-button"
   ),
+  advancedInputButton: getSelectorByConfig("button", "advanced-input-button"),
   idInput: getSelectorByConfig("input", "id-input"),
   hostInput: getSelectorByConfig("input", "host-input"),
   portInput: getSelectorByConfig("input", "port-input"),
   dbNameInput: getSelectorByConfig("input", "dbname-input"),
   workerInput: getSelectorByConfig("input", "worker-input"),
+  userInput: getSelectorByConfig("input", "user-input"),
+  passwordInput: getSelectorByConfig("input", "password-input"),
   databaseDetailsPanel: getSelectorByConfig("div", "database-details-panel"),
   databaseSystemDetails: getSelectorByConfig("div", "database-system-details"),
   idDetails: getSelectorByConfig("div", "database-id"),
@@ -47,7 +50,7 @@ export function getSelector(component: string): string {
   return selectors[component];
 }
 
-export function assertPostValues(
+export function assertAdvancedPostValues(
   input: DatabaseData,
   requested: DatabaseData
 ): void {
@@ -58,12 +61,24 @@ export function assertPostValues(
   expect(input.dbname).to.eq(requested.dbname);
 }
 
+export function assertDefaultPostValues(
+  input: DatabaseData,
+  requested: DatabaseData
+): void {
+  expect(input.host).to.eq(requested.host);
+  expect(input.number_workers).to.eq(requested.number_workers);
+  expect(requested.id).to.eq(requested.host);
+  expect(input.host).to.eq(requested.id);
+}
+
 export function assertDeleteValues(
   input: string,
   requested: { id: string }
 ): void {
   expect(input).to.eq(requested.id);
 }
+
+// DATA HELPERS
 
 function roundNumber(
   data: number,

@@ -19,6 +19,12 @@ export function testContentNoExistence(content: string): void {
   cy.contains(content).should("not.exist");
 }
 
+// BUTTONS
+
+export function testButtonIsDisabled(element: string): void {
+  cy.get(element).should("be.disabled");
+}
+
 // ELEMENT
 
 export function testElementExistence(element: string): void {

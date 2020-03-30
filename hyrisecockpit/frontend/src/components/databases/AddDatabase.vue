@@ -36,7 +36,11 @@
               ></v-text-field>
             </v-col>
             <v-spacer />
-            <v-btn text @click="showAdvanced = !showAdvanced">
+            <v-btn
+              id="advanced-input-button"
+              text
+              @click="showAdvanced = !showAdvanced"
+            >
               <div v-if="!showAdvanced">
                 show advanced
               </div>
@@ -91,13 +95,14 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
+          id="cancel-add-database-button"
           color="primary"
           text
           @click="
             closeDialog();
             showAdvanced = false;
           "
-          >Close</v-btn
+          >Cancel</v-btn
         >
         <v-btn
           id="save-database-button"
