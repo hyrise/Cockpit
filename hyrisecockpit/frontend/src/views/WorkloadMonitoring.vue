@@ -14,7 +14,7 @@
       </unselected-warning>
       <v-card color="primary">
         <v-card-title class="white--text">
-          Workload metrics
+          Workload Metrics
         </v-card-title>
       </v-card>
       <v-container

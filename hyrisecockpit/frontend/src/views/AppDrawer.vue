@@ -2,7 +2,7 @@
   <v-navigation-drawer app width="110">
     <v-toolbar class="text-center secondary">
       <v-img
-        src="../../src/components/images/hyrise_logo.png"
+        src="../../src/assets/images/hyrise_logo.png"
         class="ml-2 mb-2"
         max-width="55"
         max-height="55"
@@ -129,7 +129,7 @@
     </v-card>
     <v-footer absolute class="font-weight-medium">
       <v-img
-        src="../../src/components/images/hpi_logo_bw.png"
+        src="../../src/assets/images/hpi_logo_bw.png"
         max-width="80"
         max-height="80"
       >

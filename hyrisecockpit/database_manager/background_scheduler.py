@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -111,6 +111,41 @@ class BackgroundJobManager(object):
             with PoolCursor(self._connection_pool) as cur:
                 return read_sql_query(sql, cur.connection)
 
+    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
+        """Calculate difference base - substractor."""
+        for table_name in base.keys():
+            if table_name in substractor.keys():
+                for column_name in base[table_name].keys():
+                    if column_name in substractor[table_name].keys():
+                        if len(base[table_name][column_name]) == len(
+                            substractor[table_name][column_name]
+                        ):
+                            base[table_name][column_name] = [
+                                base[table_name][column_name][i]
+                                - substractor[table_name][column_name][i]
+                                for i in range(len(base[table_name][column_name]))
+                            ]
+        return base
+
+    def _create_chunks_dictionary(
+        self, meta_segments: DataFrame
+    ) -> Dict:  # TODO refactoring
+        chunks_data: Dict = {}
+        grouped_tables = meta_segments.reset_index().groupby("table_name")
+
+        for table_name in grouped_tables.groups:
+            chunks_data[table_name] = {}
+            table = grouped_tables.get_group(table_name)
+            grouped_columns = table.reset_index().groupby("column_name")
+
+            for column_name in grouped_columns.groups:
+                column = grouped_columns.get_group(column_name)
+                access_data = []
+                for _, row in column.iterrows():
+                    access_data.append(row["access_count"])
+                chunks_data[table_name][column_name] = access_data
+        return chunks_data
+
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
         time_stamp = time_ns()
@@ -161,67 +196,47 @@ class BackgroundJobManager(object):
         ) as log:
             log.log_plugin_log(plugin_log)
 
-    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
-        """Calculate difference base - substractor."""
-        for table_name in base.keys():
-            if table_name in substractor.keys():
-                for column_name in base[table_name].keys():
-                    if column_name in substractor[table_name].keys():
-                        if len(base[table_name][column_name]) == len(
-                            substractor[table_name][column_name]
-                        ):
-                            base[table_name][column_name] = [
-                                base[table_name][column_name][i]
-                                - substractor[table_name][column_name][i]
-                                for i in range(len(base[table_name][column_name]))
-                            ]
-        return base
+    def _create_cpu_data_dict(
+        self, utilization_df, system_df
+    ) -> Dict[str, Union[int, float]]:
+        return {
+            "cpu_system_usage": float(utilization_df["cpu_system_usage"][0]),
+            "cpu_process_usage": float(utilization_df["cpu_process_usage"][0]),
+            "cpu_count": int(system_df["cpu_count"][0]),
+            "cpu_clock_speed": int(system_df["cpu_clock_speed"][0]),
+        }
 
-    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
-        chunks_data: Dict = {}
-        grouped_tables = meta_segments.reset_index().groupby("table_name")
+    def _create_memory_data_dict(
+        self, utilization_df, system_df
+    ) -> Dict[str, Union[int, float]]:
+        memory_data: Dict[str, Union[int, float]] = {
+            "free": int(utilization_df["system_memory_free_bytes"][0]),
+            "used": int(utilization_df["process_physical_memory_bytes"][0]),
+            "total": int(system_df["system_memory_total_bytes"][0]),
+        }
 
-        for table_name in grouped_tables.groups:
-            chunks_data[table_name] = {}
-            table = grouped_tables.get_group(table_name)
-            grouped_columns = table.reset_index().groupby("column_name")
-
-            for column_name in grouped_columns.groups:
-                column = grouped_columns.get_group(column_name)
-                access_data = []
-                for _, row in column.iterrows():
-                    access_data.append(row["access_count"])
-                chunks_data[table_name][column_name] = access_data
-        return chunks_data
+        memory_data["percent"] = memory_data["used"] / memory_data["total"]
+        return memory_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
         time_stamp = time_ns()
 
-        system_utilization_sql = "SELECT * FROM meta_system_utilization;"
-        utilization_segments = self._sql_to_data_frame(system_utilization_sql)
+        utilization_df = self._sql_to_data_frame(
+            "SELECT * FROM meta_system_utilization;"
+        )
+        system_df = self._sql_to_data_frame("SELECT * FROM meta_system_information;")
 
-        system_information_sql = "SELECT * FROM meta_system_information;"
-        system_segments = self._sql_to_data_frame(system_information_sql)
-
-        if utilization_segments.empty or system_segments.empty:
+        if utilization_df.empty or system_df.empty:
             return
 
-        cpu_data = {
-            "cpu_system_usage": float(utilization_segments["cpu_system_usage"][0]),
-            "cpu_process_usage": float(utilization_segments["cpu_process_usage"][0]),
-            "cpu_count": int(system_segments["cpu_count"][0]),
-            "cpu_clock_speed": int(system_segments["cpu_clock_speed"][0]),
-        }
-        memory_data: Dict[str, Union[int, float]] = {
-            "free": int(utilization_segments["system_memory_free_bytes"][0]),
-            "used": int(utilization_segments["process_physical_memory_bytes"][0]),
-            "total": int(system_segments["system_memory_total_bytes"][0]),
-        }
-
-        memory_data["percent"] = memory_data["used"] / memory_data["total"]
-
-        database_threads = "8"
+        cpu_data: Dict[str, Union[int, float]] = self._create_cpu_data_dict(
+            utilization_df, system_df
+        )
+        memory_data: Dict[str, Union[int, float]] = self._create_memory_data_dict(
+            utilization_df, system_df
+        )
+        mocked_database_threads = "16"
 
         with StorageCursor(
             self._storage_host,
@@ -233,7 +248,7 @@ class BackgroundJobManager(object):
             system_data = {
                 "cpu": dumps(cpu_data),
                 "memory": dumps(memory_data),
-                "database_threads": database_threads,
+                "database_threads": mocked_database_threads,
             }
             log.log_meta_information("system_data", system_data, time_stamp)
 
@@ -313,16 +328,20 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
-        query, not_formatted_parameters = query_tuple
+    def _format_query_parameters(self, parameters) -> Optional[Tuple[Any, ...]]:
         formatted_parameters = (
             tuple(
                 AsIs(parameter) if protocol == "as_is" else parameter
-                for parameter, protocol in not_formatted_parameters
+                for parameter, protocol in parameters
             )
-            if not_formatted_parameters is not None
+            if parameters is not None
             else None
         )
+        return formatted_parameters
+
+    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
+        query, parameters = query_tuple
+        formatted_parameters = self._format_query_parameters(parameters)
         with PoolCursor(self._connection_pool) as cur:
             try:
                 cur.execute(query, formatted_parameters)
@@ -336,7 +355,6 @@ class BackgroundJobManager(object):
             Process(target=self._execute_table_query, args=(query, success_flag),)
             for query, success_flag in zip(queries, success_flags)
         ]
-
         for process in processes:
             process.start()
         for process in processes:
@@ -354,15 +372,15 @@ class BackgroundJobManager(object):
         self._execute_queries_parallel(table_names, table_loading_queries, folder_name)
         self._database_blocked.value = False
 
-    def _get_load_table_names(self, benchmark_variation: str):
+    def _get_load_table_names(self, workload_type: str):
         """Get table names to load."""
         table_names = []
-        full_table_names = _table_names.get(benchmark_variation.split("_")[0])
+        full_table_names = _table_names.get(workload_type.split("_")[0])
         if full_table_names is not None:
             table_names = [
                 table_name
                 for table_name in full_table_names
-                if self._loaded_tables[table_name] != benchmark_variation
+                if self._loaded_tables[table_name] != workload_type
             ]
         return table_names
 
@@ -371,7 +389,7 @@ class BackgroundJobManager(object):
         if self._database_blocked.value:
             return False
 
-        table_names = self._get_load_table_names(folder_name)
+        table_names = self._get_load_table_names(workload_type=folder_name)
         if not table_names:
             return True
 
@@ -413,23 +431,21 @@ class BackgroundJobManager(object):
             return False
 
     def _get_existing_tables(self, table_names: List[str]) -> Dict:
-        """Check wich tables exists and which not."""
-        existing_tables = []
-        not_existing_tables = []
+        """Check which tables exists and which not."""
+        existing_tables: List = []
+        not_existing_tables: List = []
         with PoolCursor(self._connection_pool) as cur:
+            cur.execute("SELECT table_name FROM meta_tables;", None)
+            results = cur.fetchall()
+            loaded_tables = [row[0] for row in results]
             for name in table_names:
-                cur.execute(
-                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
-                )
-                if cur.fetchone():
+                if name in loaded_tables:
                     existing_tables.append(name)
                     continue
                 not_existing_tables.append(name)
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_drop_queries(
-        self, table_names: List[str], folder_name: str
-    ) -> List[Tuple]:
+    def _generate_table_drop_queries(self, table_names: List[str]) -> List[Tuple]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
@@ -437,9 +453,9 @@ class BackgroundJobManager(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
+    def _delete_tables_job(self, table_names: List[str]) -> None:
         """Delete tables."""
-        table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
+        table_drop_queries = self._generate_table_drop_queries(table_names)
         self._execute_queries_parallel(table_names, table_drop_queries, None)
         self._database_blocked.value = False
 
@@ -461,7 +477,5 @@ class BackgroundJobManager(object):
             return True
 
         self._database_blocked.value = True
-        self._scheduler.add_job(
-            func=self._delete_tables_job, args=(table_names, folder_name,)
-        )
+        self._scheduler.add_job(func=self._delete_tables_job, args=(table_names,))
         return True
