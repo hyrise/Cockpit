@@ -20,7 +20,7 @@
         </v-tooltip>
       </v-card-title>
     </v-card>
-    <v-list-item v-for="database in databases" :key="database.id">
+    <v-list-item class="mt-1" v-for="database in databases" :key="database.id">
       <v-list-item-title>
         <database-chip
           :database-id="database.id"
