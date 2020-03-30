@@ -284,10 +284,8 @@ class BackgroundJobManager(object):
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
             for _, row in grouped.get_group(column).iterrows():
-                output[column]["number_columns"] = output[column]["number_columns"] + 1
-                output[column]["size"] = (
-                    output[column]["size"] + row["estimated_size_in_bytes"]
-                )
+                output[column]["number_columns"] += 1
+                output[column]["size"] += row["estimated_size_in_bytes"]
                 output[column]["data"][row["column_name"]] = {
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
