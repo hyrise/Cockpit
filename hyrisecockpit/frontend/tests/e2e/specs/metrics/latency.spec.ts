@@ -63,6 +63,16 @@ describe("Show latency", () => {
         });
       });
     });
+    describe("observing the chart layout", () => {
+      it("will show the correct range and title", () => {
+        cy.get(getSelector("latency")).should((elements: any) => {
+          const layout = elements[0].layout;
+          expect(layout.xaxis.title.text).to.eq("Timestamps");
+          expect(layout.yaxis.title.text).to.eq("Latency in ms");
+          expect(layout.yaxis.range[0]).to.eq(0);
+        });
+      });
+    });
   });
 
   describe("visiting the comparison page", () => {
@@ -90,6 +100,24 @@ describe("Show latency", () => {
           cy.get(getSelectorWithID("latency", database.id)).should(
             (elements: any) => {
               assertChartData(elements[0].data, data, [database.id]);
+            }
+          );
+        });
+      });
+    });
+    describe("observing the chart layout", () => {
+      it("will show the correct range and title", () => {
+        let maxValue: number | undefined = undefined;
+        databases.forEach((database: any) => {
+          cy.get(getSelectorWithID("latency", database.id)).should(
+            (elements: any) => {
+              const layout = elements[0].layout;
+              expect(layout.xaxis.title.text).to.eq("Timestamps");
+              expect(layout.yaxis.title.text).to.eq("Latency in ms");
+              expect(layout.yaxis.range[0]).to.eq(0);
+
+              if (maxValue) expect(maxValue).to.eq(layout.yaxis.range[1]);
+              maxValue = layout.yaxis.range[1];
             }
           );
         });

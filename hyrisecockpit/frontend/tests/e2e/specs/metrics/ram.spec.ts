@@ -62,6 +62,17 @@ describe("Show ram", () => {
         });
       });
     });
+    describe("observing the chart layout", () => {
+      it("will show the correct range and title", () => {
+        cy.get(getSelector("ram")).should((elements: any) => {
+          const layout = elements[0].layout;
+          expect(layout.xaxis.title.text).to.eq("Timestamps");
+          expect(layout.yaxis.title.text).to.eq("Memory usage in %");
+          expect(layout.yaxis.range[0]).to.eq(0);
+          expect(layout.yaxis.range[1]).to.eq(105);
+        });
+      });
+    });
   });
 
   describe("visiting the comparison page", () => {
@@ -89,6 +100,21 @@ describe("Show ram", () => {
           cy.get(getSelectorWithID("ram", database.id)).should(
             (elements: any) => {
               assertChartData(elements[0].data, data, [database.id]);
+            }
+          );
+        });
+      });
+    });
+    describe("observing the chart layout", () => {
+      it("will show the correct range and title", () => {
+        databases.forEach((database: any) => {
+          cy.get(getSelectorWithID("ram", database.id)).should(
+            (elements: any) => {
+              const layout = elements[0].layout;
+              expect(layout.xaxis.title.text).to.eq("Timestamps");
+              expect(layout.yaxis.title.text).to.eq("Memory usage in %");
+              expect(layout.yaxis.range[0]).to.eq(0);
+              expect(layout.yaxis.range[1]).to.eq(105);
             }
           );
         });
