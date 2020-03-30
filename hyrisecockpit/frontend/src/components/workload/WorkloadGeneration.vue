@@ -8,7 +8,7 @@
         <v-spacer></v-spacer>
         <v-icon @click="closeWorkloadDialog()">mdi-close</v-icon>
       </v-system-bar>
-      <v-card-text class="pb-0">
+      <v-card-text>
         <v-row>
           <v-col max-width="300px">
             <p class="subtitle-1 font-weight-medium">
@@ -20,55 +20,55 @@
               thumb-label="always"
               min="0"
               max="1000"
-              @click="handleWorkloadChange(workload)"
+              @click="handleWorkloadChange()"
             ></v-slider>
             <v-text-field
               v-model="frequency"
               label="Number of queries per second"
               outlined
               dense
-              @change="handleWorkloadChange(workload)"
+              @change="handleWorkloadChange()"
             ></v-text-field>
             <v-radio-group
               v-model="workload"
               class="mt-0"
-              @change="handleWorkloadChange(workload)"
+              @change="handleWorkloadChange()"
             >
               <v-radio
                 v-for="workload in availableWorkloads"
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
-                :disabled="!isLoaded(workload) || loading"
+                :disabled="!isLoaded(workload) || loadingWorkloadData"
               >
               </v-radio>
             </v-radio-group>
             <v-btn-toggle>
               <v-btn
-                @click="startingWorkload(workload)"
-                :disabled="buttonIsLoading.start || !isLoaded(workload)"
-                :loading="buttonIsLoading.start"
-                :style="{ color: isActive ? 'green' : '' }"
+                @click="handleButtonChange('start')"
+                :disabled="buttons.start.loading || !isLoaded(workload)"
+                :loading="buttons.start.loading"
+                :style="{ color: buttons.start.active ? 'green' : '' }"
               >
                 <v-icon>
                   mdi-play
                 </v-icon>
               </v-btn>
               <v-btn
-                @click="pauseWorkload(workload)"
-                :disabled="buttonIsLoading.pause || !isLoaded(workload)"
-                :loading="buttonIsLoading.pause"
-                :style="{ color: isActive ? 'blue' : '' }"
+                @click="handleButtonChange('pause')"
+                :disabled="buttons.pause.loading || !isLoaded(workload)"
+                :loading="buttons.pause.loading"
+                :style="{ color: buttons.pause.active ? 'blue' : '' }"
               >
                 <v-icon>
                   mdi-pause
                 </v-icon>
               </v-btn>
               <v-btn
-                @click="stoppingWorkload()"
-                :disabled="buttonIsLoading.stop || noDatabaseAdded"
-                :loading="buttonIsLoading.stop"
-                :style="{ color: isActive ? 'red' : '' }"
+                @click="handleButtonChange('stop')"
+                :disabled="buttons.stop.loading || noDatabaseAdded"
+                :loading="buttons.stop.loading"
+                :style="{ color: buttons.stop.active ? 'red' : '' }"
               >
                 <v-icon>
                   mdi-stop
@@ -97,8 +97,10 @@
               :label="getDisplayedWorkload(workload)"
               :value="workload"
               @change="handleWorkloadDataChange(workload)"
-              :loading="buttonIsLoading['load' + workload]"
-              :disabled="loading || noDatabaseAdded"
+              :loading="switchesLoading[workload]"
+              :disabled="
+                runningWorkload || loadingWorkloadData || noDatabaseAdded
+              "
             >
             </v-switch>
           </v-col>
@@ -114,8 +116,7 @@ import {
   defineComponent,
   ref,
   Ref,
-  reactive,
-  computed
+  reactive
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
@@ -132,16 +133,15 @@ interface Data {
   frequency: Ref<number>;
   workload: Ref<Workload>;
   workloadData: Ref<Workload[]>;
-  buttonIsLoading: any;
-  isActive: Ref<boolean>;
-  loading: Ref<boolean>;
+  buttons: Record<string, { active: boolean; loading: boolean }>;
+  switchesLoading: Record<string, boolean>;
+  runningWorkload: Ref<boolean>;
+  loadingWorkloadData: Ref<boolean>;
   noDatabaseAdded: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
-  startingWorkload: (workload: Workload) => void;
-  pauseWorkload: (workload: Workload) => void;
-  stoppingWorkload: () => void;
   isLoaded: (workload: Workload) => boolean;
-  handleWorkloadChange: (workload: Workload) => void;
+  handleButtonChange: (button: string) => void;
+  handleWorkloadChange: () => void;
   handleWorkloadDataChange: (workload: Workload) => void;
   closeWorkloadDialog: () => void;
 }
@@ -153,19 +153,9 @@ export default defineComponent({
     }
   },
   setup(props: {}, context: SetupContext): Data {
-    const isActive = ref<boolean>(false);
-    const startedWorkload = ref<boolean>(false);
-    const buttonIsLoading: Record<string, boolean> = reactive({
-      loadtpch01: false,
-      loadtpch1: false,
-      loadtpcds: false,
-      loadjob: false,
-      start: false,
-      pause: false,
-      stop: false
-    });
     const frequency = ref<number>(200);
     const workload = ref<Workload>("");
+    const workloadData = ref<Workload[]>([]);
     const {
       getLoadedWorkloadData,
       loadWorkloadData,
@@ -173,46 +163,69 @@ export default defineComponent({
       startWorkload,
       stopWorkload
     } = useWorkloadService();
-    const workloadData = ref<Workload[]>([]);
-    updateWorkloadInformation();
+    const buttons: Record<
+      string,
+      { active: boolean; loading: boolean }
+    > = reactive({
+      start: {
+        active: false,
+        loading: false
+      },
+      pause: {
+        active: false,
+        loading: false
+      },
+      stop: {
+        active: false,
+        loading: false
+      }
+    });
+    const switchesLoading: Record<string, boolean> = reactive({
+      tpch01: false,
+      tpch1: false,
+      tpcds: false,
+      job: false
+    });
+    const runningWorkload = ref<boolean>(false);
+    const loadingWorkloadData = ref<boolean>(false);
+    const noDatabaseAdded = ref<boolean>(false);
+
     function closeWorkloadDialog(): void {
       context.emit("close");
     }
-    function startingWorkload(workload: Workload): void {
-      buttonIsLoading["start"] = true;
-      startWorkload(workload, frequency.value).then(() => {
-        buttonIsLoading["start"] = false;
-        startedWorkload.value = true;
-        isActive.value = true;
+    function handleButtonChange(button: string): void {
+      buttons[button].loading = true;
+      Object.values(buttons).forEach((button: any) => {
+        button.active = false;
       });
-    }
-    function pauseWorkload(workload: Workload): void {
-      buttonIsLoading["pause"] = true;
-      startedWorkload.value = false;
-      startWorkload(workload, 0).then(() => {
-        buttonIsLoading["pause"] = false;
-        isActive.value = true;
-      });
-    }
-    function stoppingWorkload(): void {
-      buttonIsLoading["stop"] = true;
-      startedWorkload.value = false;
-      stopWorkload().then(() => {
-        buttonIsLoading["stop"] = false;
-        isActive.value = true;
-      });
+      if (button === "start") {
+        startWorkload(workload.value, frequency.value).then(() => {
+          buttons[button].loading = false;
+          buttons[button].active = true;
+        });
+      } else if (button === "pause") {
+        startWorkload(workload.value, 0).then(() => {
+          buttons[button].loading = false;
+          buttons[button].active = true;
+        });
+      } else {
+        stopWorkload().then(() => {
+          buttons[button].loading = false;
+          buttons[button].active = true;
+        });
+      }
     }
     function isLoaded(workload: Workload): boolean {
       return workloadData.value.includes(workload);
     }
-    function handleWorkloadChange(workload: Workload): void {
-      if (startedWorkload.value) {
-        startingWorkload(workload);
+    function handleWorkloadChange(): void {
+      if (buttons.start.active) {
+        handleButtonChange("start");
       }
     }
     let changeWorkloadData = true;
     function handleWorkloadDataChange(workload: Workload): void {
-      buttonIsLoading["load" + workload] = true;
+      switchesLoading[workload] = true;
       changeWorkloadData = false;
       if (isLoaded(workload)) {
         loadWorkloadData(workload).then(() => {
@@ -224,25 +237,25 @@ export default defineComponent({
         });
       }
     }
-    const noDatabaseAdded = ref<boolean>(false);
     function updateWorkloadInformation(): void {
-      //TODO: error when workload started and loading
       getLoadedWorkloadData().then((response: any) => {
         if (response.data.length !== 0) {
           noDatabaseAdded.value = false;
-          let loading = true;
           let loadedWorkloadData: string[] = response.data[0].loaded_benchmarks;
           Object.values(response.data).forEach((instance: any) => {
             loadedWorkloadData = loadedWorkloadData.filter((benchmark: any) =>
               instance.loaded_benchmarks.includes(benchmark)
             );
-            loading = Object.values(instance).some(
-              () => instance.database_blocked_status === 1
-            );
           });
-          if (!loading && changeWorkloadData) {
+          loadingWorkloadData.value = Object.values(response.data).some(
+            (instance: any) => instance.database_blocked_status === 1
+          );
+          runningWorkload.value = Object.values(response.data).some(
+            (instance: any) => instance.worker_pool_status === "running"
+          );
+          if (!loadingWorkloadData.value && changeWorkloadData) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
-              buttonIsLoading["load" + workload] = false;
+              switchesLoading[workload] = false;
             });
             workloadData.value = [];
             Object.values(loadedWorkloadData).forEach((transferred: string) => {
@@ -260,21 +273,14 @@ export default defineComponent({
       frequency,
       workload,
       workloadData,
-      buttonIsLoading,
-      isActive,
-      loading: computed(
-        () =>
-          buttonIsLoading.loadtpch01 ||
-          buttonIsLoading.loadtpch1 ||
-          buttonIsLoading.loadtpcds ||
-          buttonIsLoading.loadjob
-      ),
+      buttons,
+      switchesLoading,
+      runningWorkload,
+      loadingWorkloadData,
       noDatabaseAdded,
       getDisplayedWorkload,
-      startingWorkload,
-      pauseWorkload,
-      stoppingWorkload,
       isLoaded,
+      handleButtonChange,
       handleWorkloadChange,
       handleWorkloadDataChange,
       closeWorkloadDialog
