@@ -1,12 +1,10 @@
 """Module for reading queries."""
-from json import load
 from os import fsdecode, fsencode, listdir
 from os.path import dirname, exists, splitext
 from typing import Any, Dict, List
 
 from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
-    NotExistingConfigFileException,
     NotExistingWorkloadFolderException,
 )
 
@@ -14,18 +12,10 @@ from hyrisecockpit.exception import (
 class WorkloadReader(object):
     """Generic workload reader."""
 
-    def _append_delimiter(self, queries: List[str], delimiter: str) -> None:
-        """Append delimiter to every element in querie."""
-        for i in range(len(queries)):
-            queries[i] = queries[i] + delimiter
-
     def _create_absolute_workload_path(self, relative_workload_path: str) -> str:
         """Create absolute path to the folder."""
         absolute_workload_reader_path: str = dirname(__file__)
-        absolute_workload_path: str = (
-            f"{absolute_workload_reader_path}/{relative_workload_path}"
-        )
-        return absolute_workload_path
+        return f"{absolute_workload_reader_path}/{relative_workload_path}"
 
     def _get_workload_folder(
         self, absolute_workload_path: str, workload_type: str
@@ -83,26 +73,3 @@ class WorkloadReader(object):
         )
 
         return workload
-
-    def read_config_data(self, relative_workload_path: str) -> Dict[str, Any]:
-        """Read config file in the folder."""
-        absolute_workload_path: str = self._create_absolute_workload_path(
-            relative_workload_path
-        )
-
-        absolute_config_file_path: str = (f"{absolute_workload_path}/config.json")
-
-        if not exists(absolute_workload_path):
-            raise NotExistingWorkloadFolderException(
-                f"Workload {relative_workload_path} not found: directory doesn't exist"
-            )
-
-        if not exists(absolute_config_file_path):
-            raise NotExistingConfigFileException(
-                f"Config file in the directory {relative_workload_path} not found"
-            )
-
-        config_data: Dict[str, Any] = {}
-        with open(absolute_config_file_path) as config_file:
-            config_data = load(config_file)
-        return config_data
