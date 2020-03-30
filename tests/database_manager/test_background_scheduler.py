@@ -175,11 +175,8 @@ class TestBackgroundJobManager:
         mock_scheduler.shutdown.assert_called_once()
 
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor", MagicMock(),
-    )
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.read_sql_query",
-        get_fake_read_sql_query,
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
     )
     def test_converts_sql_to_data_frame_if_database_is_blocked(
         self, background_job_manager: BackgroundJobManager
@@ -189,15 +186,16 @@ class TestBackgroundJobManager:
 
         result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
 
+        global mocked_pool_cursor
+        mocked_pool_cursor.read_sql_query.assert_not_called()
         assert isinstance(result, DataframeType)
         assert result.empty
 
+        mocked_pool_cursor = MagicMock()
+
     @patch(
-        "hyrisecockpit.database_manager.background_scheduler.PoolCursor", MagicMock(),
-    )
-    @patch(
-        "hyrisecockpit.database_manager.background_scheduler.read_sql_query",
-        get_fake_read_sql_query,
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
     )
     def test_converts_sql_to_data_frame_if_database_is_not_blocked(
         self, background_job_manager: BackgroundJobManager
@@ -205,11 +203,12 @@ class TestBackgroundJobManager:
         """Test read sql query and return dataframe."""
         background_job_manager._database_blocked.value = False
 
-        expected_df: DataFrame = DataFrame({"col1": ["data"]})
-        received_df: DataFrame = background_job_manager._sql_to_data_frame("select ...")
+        background_job_manager._sql_to_data_frame("select ...")
 
-        assert isinstance(received_df, DataframeType)
-        assert expected_df.equals(received_df)
+        global mocked_pool_cursor
+        mocked_pool_cursor.read_sql_query.assert_called_once_with("select ...")
+
+        mocked_pool_cursor = MagicMock()
 
     def test_successfully_creates_chunks_data_frame(
         self, background_job_manager: BackgroundJobManager
