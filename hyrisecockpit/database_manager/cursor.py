@@ -107,6 +107,18 @@ class StorageCursor:
         """Drop database with a given name."""
         self._connection.drop_database(database_name)
 
+    def create_continuous_query(
+        self,
+        query_name: str,
+        query: str,
+        database_name: str,
+        resample_options: Optional[str] = None,
+    ) -> None:
+        """Create continuous query."""
+        self._connection.create_continuous_query(
+            query_name, query, database_name, resample_options
+        )
+
     def log_meta_information(
         self, measurement: str, fields: Dict[str, Any], time_stamp: int
     ) -> None:
