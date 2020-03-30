@@ -1,22 +1,35 @@
-import { getSelectorByConfig } from "../helpers";
+import { getSelectorByConfig, roundNumber } from "../helpers";
 import { testDateFormatting } from "../abstractTests";
 
-const selectors: Record<string, string[]> = {
-  throughput: ["div", "throughput"],
-  latency: ["div", "latency"],
-  queueLength: ["div", "queueLength"],
-  cpu: ["div", "cpu"],
-  ram: ["div", "ram"]
+const selectors: Record<string, { element: string; title: string }> = {
+  throughput: { element: "div", title: "throughput" },
+  latency: { element: "div", title: "latency" },
+  queueLength: { element: "div", title: "queueLength" },
+  cpu: { element: "div", title: "cpu" },
+  ram: { element: "div", title: "ram" }
 };
 
 export function getSelector(component: string): string {
-  return getSelectorByConfig(selectors[component][0], selectors[component][1]);
+  return getSelectorByConfig(
+    selectors[component].element,
+    selectors[component].title
+  );
 }
 
 export function getSelectorWithID(component: string, id: string): string {
   return getSelectorByConfig(
-    selectors[component][0],
-    `${selectors[component][1]}-${id}`
+    selectors[component].element,
+    `${selectors[component].title}-${id}`
+  );
+}
+
+export function getDetailsSelectorWithID(
+  component: string,
+  id: string
+): string {
+  return getSelectorByConfig(
+    selectors[component].element,
+    `${selectors[component].title}-${id}-details`
   );
 }
 
@@ -41,4 +54,23 @@ export function assertChartData(
       expect(item).to.eq(requestData[database]);
     });
   });
+}
+
+export function assertMetricDetails(
+  text: string,
+  value: number,
+  digits: number = 2
+): void {
+  const expected = roundNumber(
+    value,
+    Math.pow(10, digits),
+    Math.pow(10, digits),
+    false
+  ).toString();
+  let j = 0;
+  for (let i = 0; i < expected.length; i++) {
+    if (text[j] === "´" || text[j] === " ") j++;
+    expect(text[j]).to.eq(expected[i]);
+    j++;
+  }
 }

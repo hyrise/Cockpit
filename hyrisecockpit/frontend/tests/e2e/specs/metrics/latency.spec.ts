@@ -2,7 +2,13 @@ import { useBackendMock } from "../../setup/backendMock";
 import { getGetAlias } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { testRedirection } from "../abstractTests";
-import { getSelector, getSelectorWithID, assertChartData } from "./helpers";
+import {
+  getSelector,
+  getSelectorWithID,
+  getDetailsSelectorWithID,
+  assertMetricDetails,
+  assertChartData
+} from "./helpers";
 import { roundNumber } from "../helpers";
 
 const backend = useBackendMock({ databases: 2 });
@@ -47,6 +53,16 @@ describe("Show latency", () => {
         });
       });
     });
+    describe("observing the metric details", () => {
+      it("will not show metric details", () => {
+        cy.wait(1000); // wait for data
+        databases.forEach((database: any) => {
+          cy.get(getDetailsSelectorWithID("latency", database.id)).should(
+            "not.exist"
+          );
+        });
+      });
+    });
   });
 
   describe("visiting the comparison page", () => {
@@ -76,6 +92,18 @@ describe("Show latency", () => {
               assertChartData(elements[0].data, data, [database.id]);
             }
           );
+        });
+      });
+    });
+    describe("observing the metric details", () => {
+      it("will show the correct metric detail data", () => {
+        cy.wait(1000); // wait for data
+        databases.forEach((database: any) => {
+          cy.get(getDetailsSelectorWithID("latency", database.id))
+            .invoke("text")
+            .then((text: any) => {
+              assertMetricDetails(text, data[database.id]);
+            });
         });
       });
     });

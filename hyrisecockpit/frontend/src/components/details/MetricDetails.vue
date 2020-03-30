@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      :id="`${metric}-${database}-details`"
       class="details"
       v-for="(database, idx) in databases"
       :key="database"

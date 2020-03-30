@@ -9,6 +9,10 @@ export function testMaxDecimalDigits(content: string, maxDigits: number): void {
   expect(decimalOnly[0]).to.have.length.of.at.most(maxDigits);
 }
 
+export function testDateFormatting(date: Date, format: "HHMMSS"): void {
+  expect(date.getMilliseconds()).to.eq(0);
+}
+
 // CONTENT
 
 export function testContentExistence(content: string): void {
