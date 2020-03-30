@@ -17,14 +17,6 @@ class NotExistingWorkloadFolderException(Exception):
         super().__init__(message)
 
 
-class NotExistingConfigFileException(Exception):
-    """Exception raised for missing config file."""
-
-    def __init__(self, message: str):
-        """Initialize a  NotExistingConfigFileException."""
-        super().__init__(message)
-
-
 class QueryTypeNotFoundException(Exception):
     """Exception raised for invalid query type."""
 
