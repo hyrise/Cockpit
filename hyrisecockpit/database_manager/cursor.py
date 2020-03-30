@@ -99,6 +99,14 @@ class StorageCursor:
         """Write a single point to the database."""
         return self.__write_points([point])
 
+    def create_database(self, database_name):
+        """Create database with a given name."""
+        self._connection.create_database(database_name)
+
+    def drop_database(self, database_name):
+        """Drop database with a given name."""
+        self._connection.drop_database(database_name)
+
     def log_meta_information(
         self, measurement: str, fields: Dict[str, Any], time_stamp: int
     ) -> None:
