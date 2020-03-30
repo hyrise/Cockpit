@@ -15,7 +15,7 @@ import {
   testMaxDecimalDigits
 } from "../abstractTests";
 
-const backend = useBackendMock({
+let backend = useBackendMock({
   databases: 2
 });
 
@@ -156,6 +156,30 @@ describe("Show database data", () => {
               testMaxDecimalDigits(text, 3);
             });
         });
+      });
+    });
+
+    // test empty databases
+    describe("and just visiting the view with no databases added", () => {
+      it("will show empty database list and details", () => {
+        backend = useBackendMock({
+          databases: 0
+        });
+        backend.restart();
+        cy.visit("/");
+
+        cy.get(getSelector("numberOfDatabases")).contains("0");
+
+        clickElement(getViewSelector("databaseListButton"));
+        cy.get(getViewSelector("databaseList")).within(() => {
+          cy.get(getSelector("databaseChip")).should("not.exist");
+        });
+
+        testRedirection(
+          getViewSelector("overviewButton"),
+          getRoute("overview")
+        );
+        cy.get(getSelector("databaseSystemDetails")).should("not.exist");
       });
     });
   });
