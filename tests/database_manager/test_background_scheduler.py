@@ -4,7 +4,7 @@ from json import dumps
 from multiprocessing import Value
 from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
@@ -131,15 +131,14 @@ class TestBackgroundJobManager:
             (background_job_manager._update_storage_data, "interval", 5),
             (background_job_manager._update_plugin_log, "interval", 1),
         ]
-        for func, _, _ in jobs:
-            func = MagicMock()
+
+        expected = [
+            call.add_job(func=job[0], trigger=job[1], seconds=job[2]) for job in jobs
+        ]
 
         background_job_manager._init_jobs()
 
-        for func, trigger, seconds in jobs:
-            mock_scheduler.add_job.assert_any_call(
-                func=func, trigger=trigger, seconds=seconds
-            )
+        mock_scheduler.mock_calls == expected
 
     def test_background_scheduler_starts(
         self, background_job_manager: BackgroundJobManager
