@@ -35,10 +35,10 @@ class Database(object):
         self._id = id
         self.number_workers: int = number_workers
         self._default_tables: str = default_tables
-        self.storage_host: str = storage_host
-        self.storage_password: str = storage_password
-        self.storage_port: str = storage_port
-        self.storage_user: str = storage_user
+        self._storage_host: str = storage_host
+        self._storage_password: str = storage_password
+        self._storage_port: str = storage_port
+        self._storage_user: str = storage_user
 
         self._number_additional_connections: int = 50
         self.driver: Driver = Driver(
@@ -59,10 +59,10 @@ class Database(object):
             self._database_blocked,
             self._connection_pool,
             self._loaded_tables,
-            self.storage_host,
-            self.storage_password,
-            self.storage_port,
-            self.storage_user,
+            self._storage_host,
+            self._storage_password,
+            self._storage_port,
+            self._storage_user,
         )
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_pool,
