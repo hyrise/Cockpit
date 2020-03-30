@@ -3,6 +3,8 @@ from types import TracebackType
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, Union
 
 from influxdb import InfluxDBClient
+from pandas import DataFrame
+from pandas.io.sql import read_sql_query as read_sql_query_pandas
 from psycopg2 import DatabaseError, InterfaceError, OperationalError, pool
 
 
@@ -67,6 +69,13 @@ class PoolCursor:
             return self.cur.fetchall()
         except (DatabaseError, OperationalError, InterfaceError):
             return []
+
+    def read_sql_query(self, sql: str) -> DataFrame:
+        """Execute query and return result as data-frame."""
+        try:
+            return read_sql_query_pandas(sql, self.connection)
+        except (DatabaseError, OperationalError, InterfaceError):
+            return DataFrame()
 
 
 class StorageCursor:

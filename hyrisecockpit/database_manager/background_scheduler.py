@@ -8,7 +8,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from pandas.io.sql import read_sql_query
 from psycopg2 import ProgrammingError, pool
 from psycopg2.extensions import AsIs
 
@@ -109,7 +108,7 @@ class BackgroundJobManager(object):
             return DataFrame()
         else:
             with PoolCursor(self._connection_pool) as cur:
-                return read_sql_query(sql, cur.connection)
+                return cur.read_sql_query(sql)
 
     def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
         """Calculate difference base - substractor."""
