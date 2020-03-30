@@ -74,8 +74,10 @@ describe("Show database data", () => {
         );
         clickElement(getViewSelector("databaseListButton"));
         cy.get(getViewSelector("databaseList")).within(() => {
-          databases.forEach((database: any) => {
-            cy.contains(database.id);
+          databases.forEach((database: any, idx: number) => {
+            cy.get(getSelector("databaseChip"))
+              .eq(idx)
+              .contains(database.id);
           });
         });
       });
@@ -96,7 +98,7 @@ describe("Show database data", () => {
           });
         });
         cy.visit(getRoute("home"));
-        cy.wait(500);
+        cy.wait(100);
         testRedirection(
           getViewSelector("overviewButton"),
           getRoute("overview")

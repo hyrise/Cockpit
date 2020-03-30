@@ -43,6 +43,11 @@ describe("Add database", () => {
 
         clickElement(getViewSelector("databaseListButton"));
         testContentNoExistence(newDatabase.id);
+        cy.get(getViewSelector("databaseList")).within(() => {
+          cy.get(getSelector("databaseChip"))
+            .contains(newDatabase.id)
+            .should("not.exist");
+        });
       });
     });
 
@@ -85,6 +90,11 @@ describe("Add database", () => {
 
         clickElement(getViewSelector("databaseListButton"));
         testContentExistence(newDatabase.id);
+        cy.get(getViewSelector("databaseList")).within(() => {
+          cy.get(getSelector("databaseChip"))
+            .eq(1)
+            .contains(newDatabase.id);
+        });
       });
     });
   });

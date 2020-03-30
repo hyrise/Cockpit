@@ -46,6 +46,9 @@ describe("Remove database", () => {
 
         clickElement(getViewSelector("databaseListButton"));
         testContentExistence(databaseId);
+        cy.get(getViewSelector("databaseList")).within(() => {
+          cy.get(getSelector("databaseChip")).contains(databaseId);
+        });
       });
     });
 
@@ -112,6 +115,9 @@ describe("Remove database", () => {
 
         clickElement(getViewSelector("databaseListButton"));
         testContentNoExistence(databaseId);
+        cy.get(getViewSelector("databaseList")).within(() => {
+          cy.get(getSelector("databaseChip")).should("not.exist");
+        });
       });
     });
   });
