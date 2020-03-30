@@ -7,68 +7,113 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field
+                id="host-input"
                 v-model="host"
                 label="Host*"
                 required
               ></v-text-field>
             </v-col>
+            <v-col cols="6">
+              <v-text-field
+                id="id-input"
+                v-model="id"
+                label="Id*"
+                required
+                :error-messages="idError"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row align="center">
             <v-col cols="12" sm="6">
               <v-text-field
-                v-model="port"
-                label="Port*"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="dbname"
-                label="Databasename*"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="user"
-                label="User*"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="password"
-                label="Password*"
-                type="password"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
+                id="worker-input"
                 v-model="number_workers"
                 label="Number of Workers*"
                 type="number"
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field v-model="id" label="Id*" required></v-text-field>
-            </v-col>
+            <v-spacer />
+            <v-btn
+              id="advanced-input-button"
+              text
+              @click="showAdvanced = !showAdvanced"
+            >
+              <div v-if="!showAdvanced">
+                show advanced
+              </div>
+              <div v-else>
+                hide advanced
+              </div>
+            </v-btn>
           </v-row>
+          <v-expand-transition>
+            <div v-if="showAdvanced">
+              <v-row>
+                <v-col cols="6" sm="6">
+                  <v-text-field
+                    id="port-input"
+                    v-model="port"
+                    label="Port*"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" sm="6">
+                  <v-text-field
+                    id="dbname-input"
+                    v-model="dbname"
+                    label="Databasename*"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
+                    id="user-input"
+                    v-model="user"
+                    label="User*"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field
+                    id="password-input"
+                    v-model="password"
+                    label="Password"
+                    type="password"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </div>
+          </v-expand-transition>
         </v-container>
         <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
+        <v-btn
+          id="cancel-add-database-button"
+          color="primary"
+          text
+          @click="
+            closeDialog();
+            showAdvanced = false;
+          "
+          >Cancel</v-btn
+        >
         <v-btn
           id="save-database-button"
           color="primary"
           text
           @click="
             createNewDatabase();
+            showAdvanced = false;
             closeDialog();
           "
+          :disabled="!!idError.length"
           >Save</v-btn
         >
       </v-card-actions>
@@ -91,7 +136,9 @@ import { useDatabaseService } from "@/services/databaseService";
 interface Props {
   open: boolean;
 }
-interface Data extends DatabaseCreationData {}
+interface Data extends DatabaseCreationData {
+  showAdvanced: Ref<boolean>;
+}
 
 export default defineComponent({
   props: {
@@ -101,8 +148,10 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
+    const showAdvanced = ref(false);
     return {
-      ...useDatabaseCreation(context)
+      ...useDatabaseCreation(context),
+      showAdvanced
     };
   }
 });
@@ -115,6 +164,7 @@ interface DatabaseCreationData {
   host: Ref<string>;
   port: Ref<string>;
   dbname: Ref<string>;
+  idError: Ref<string>;
   createNewDatabase: () => void;
   closeDialog: () => void;
 }
@@ -129,6 +179,21 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const host = ref<string>("vm-");
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
+  const idError = ref<string>("");
+
+  watch(host, (host, prevHost) => {
+    if (!id.value.length || id.value === prevHost) id.value = host;
+  });
+
+  watch(id, id => {
+    if (
+      context.root.$databaseController.availableDatabasesById.value.includes(id)
+    ) {
+      idError.value = "Id is already taken.";
+    } else {
+      idError.value = "";
+    }
+  });
 
   function resetValues(): void {
     number_workers.value = 8;
@@ -166,7 +231,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     port,
     dbname,
     createNewDatabase,
-    closeDialog
+    closeDialog,
+    idError
   };
 }
 </script>

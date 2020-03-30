@@ -8,13 +8,13 @@ import {
   fakeDatabaseQueryInformationData,
   fakeDatabasePluginsData,
   fakeDatabasePluginSettings,
-  fakeDatabasePluginLogs
+  fakeDatabasePluginLogs,
+  fakeIds
 } from "./factories";
 import {
   assignFakeData,
-  generateRandomIds,
-  generateRandomInt,
   fakeDataByIds,
+  generateUniqueRandomNumbers,
   Entity,
   Request,
   benchmarks,
@@ -30,19 +30,23 @@ export function useMocks(
   renewMocks: () => void;
   renewMockResponses: () => void;
   getMockedResponse(request: Request): any;
-  getMockedPostCallback: (request: Request) => (payload: any) => void;
-  getMockedDeleteCallback: (request: Request) => (payload?: any) => void;
+  getMockedPostCallback: (request: Request) => (id: string) => void;
+  getMockedDeleteCallback: (request: Request) => (id: string) => void;
 } {
-  const callbacks = useCallbacks(renewMockResponses);
+  const callbacks = useCallbacks(
+    addMockedId,
+    removeMockedId,
+    renewMockResponses
+  );
   let mockedIds: Record<Entity, string[]> = mockIds();
   let responseMocks: Record<Request, any> = mockResponses();
   let postCallbackMocks: Partial<Record<
     Request,
-    (payload: any) => void
+    (id: string) => void
   >> = mockPostCallbacks();
   let deleteCallbackMocks: Partial<Record<
     Request,
-    (payload?: any) => void
+    (id: string) => void
   >> = mockDeleteCallbacks();
 
   function renewMocks(): void {
@@ -55,17 +59,18 @@ export function useMocks(
   }
 
   function mockIds(): Record<Entity, string[]> {
-    const plugins = generateRandomIds(numbers.plugins, "plugin-");
+    const plugins = fakeIds(numbers.plugins, "plugin-");
     return {
-      databases: generateRandomIds(numbers.databases, "database-"),
-      tables: generateRandomIds(numbers.tables, "table-"),
-      columns: generateRandomIds(numbers.columns, "column-"),
+      databases: fakeIds(numbers.databases, "database-"),
+      tables: fakeIds(numbers.tables, "table-"),
+      columns: fakeIds(numbers.columns, "column-"),
       chunks: [],
       queries: [],
       plugins: plugins,
-      activated_plugins: [...Array(numbers.activated_plugins).keys()].map(
-        () => plugins[generateRandomInt(0, plugins.length)]
-      )
+      activated_plugins: generateUniqueRandomNumbers(
+        numbers.activated_plugins,
+        plugins.length
+      ).map(index => plugins[index])
     };
   }
 
@@ -122,6 +127,7 @@ export function useMocks(
     responseMocks.detailed_query_information = mockedIds.databases.map(id =>
       fakeDatabaseQueryInformationData(id, numbers.queries)
     );
+    //TODO: handle loaded tables for every database
     responseMocks.data = benchmarks;
     responseMocks.available_plugins = mockedIds.plugins;
     // NOTE: currently all databases have the same plugins activated
@@ -140,33 +146,44 @@ export function useMocks(
     return responseMocks as Record<Request, any>;
   }
 
-  function mockPostCallbacks(): Partial<
-    Record<Request, (payload: any) => void>
-  > {
+  function addMockedId(entity: Entity, id: string): void {
+    mockedIds[entity].push(id);
+  }
+
+  function removeMockedId(entity: Entity, id: string): void {
+    mockedIds[entity] = mockedIds[entity].filter(
+      availableId => availableId !== id
+    );
+  }
+
+  function mockPostCallbacks(): Partial<Record<Request, (id: string) => void>> {
     //TODO: add callbacks here
-    const postCallbackMocks: Partial<Record<
-      Request,
-      (payload: any) => void
-    >> = {};
-    postCallbackMocks.database = callbacks.handleDatabaseCreation;
+    const postCallbackMocks: Partial<Record<Request, (id: string) => void>> = {
+      database: callbacks.handleAddDatabase
+    };
 
     return postCallbackMocks;
   }
 
   function mockDeleteCallbacks(): Partial<
-    Record<Request, (payload?: any) => void>
+    Record<Request, (id: string) => void>
   > {
     //TODO: add callbacks here
-    const deleteCallbackMocks: Partial<Record<Request, () => void>> = {};
+    const deleteCallbackMocks: Partial<Record<
+      Request,
+      (id: string) => void
+    >> = {
+      database: callbacks.handleRemoveDatabase
+    };
 
     return deleteCallbackMocks;
   }
 
-  function getMockedPostCallback(request: Request): (payload: any) => void {
+  function getMockedPostCallback(request: Request): (id: string) => void {
     return postCallbackMocks[request] || empty;
   }
 
-  function getMockedDeleteCallback(request: Request): (payload?: any) => void {
+  function getMockedDeleteCallback(request: Request): (id: string) => void {
     return deleteCallbackMocks[request] || empty;
   }
 
