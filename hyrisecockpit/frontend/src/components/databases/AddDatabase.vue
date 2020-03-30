@@ -18,7 +18,7 @@
               <v-text-field v-model="id" label="Id*" required></v-text-field>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row align="center">
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="number_workers"
@@ -27,6 +27,19 @@
                 required
               ></v-text-field>
             </v-col>
+            <spacer/>
+            <v-btn
+              class="advanced-btn"
+              text
+              @click="showAdvanced = !showAdvanced"
+            >
+              <div v-if="!showAdvanced">
+                show advanced
+              </div>
+              <div v-else>
+                hide advanced
+              </div>
+            </v-btn>
           </v-row>
           <v-expand-transition>
             <div v-if="showAdvanced">
@@ -66,14 +79,6 @@
           </v-expand-transition>
         </v-container>
         <small>*indicates required field</small>
-        <v-btn class="advanced-btn" text @click="showAdvanced = !showAdvanced">
-          <div v-if="!showAdvanced">
-            show advanced
-          </div>
-          <div v-else>
-            hide advanced
-          </div>
-        </v-btn>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -206,6 +211,7 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
 </script>
 <style scoped>
 .advanced-btn {
-  float: right;
+  position: absolute;
+  right: 24px;
 }
 </style>
