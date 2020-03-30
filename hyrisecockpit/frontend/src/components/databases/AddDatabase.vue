@@ -15,7 +15,12 @@
               ></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-text-field v-model="id" label="Id*" required></v-text-field>
+              <v-text-field
+                v-model="id"
+                label="Id*"
+                required
+                :error-messages="idError"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row align="center">
@@ -96,6 +101,7 @@
             showAdvanced = false;
             closeDialog();
           "
+          :disabled="!!idError.length"
           >Save</v-btn
         >
       </v-card-actions>
@@ -146,6 +152,7 @@ interface DatabaseCreationData {
   host: Ref<string>;
   port: Ref<string>;
   dbname: Ref<string>;
+  idError: Ref<string>;
   createNewDatabase: () => void;
   closeDialog: () => void;
 }
@@ -160,9 +167,20 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const host = ref<string>("vm-");
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
+  const idError = ref<string>("");
 
   watch(host, (host, prevHost) => {
     if (!id.value.length || id.value === prevHost) id.value = host;
+  });
+
+  watch(id, id => {
+    if (
+      context.root.$databaseController.availableDatabasesById.value.includes(id)
+    ) {
+      idError.value = "Id is already taken.";
+    } else {
+      idError.value = "";
+    }
   });
 
   function resetValues(): void {
@@ -201,7 +219,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
     port,
     dbname,
     createNewDatabase,
-    closeDialog
+    closeDialog,
+    idError
   };
 }
 </script>
