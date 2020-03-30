@@ -3,22 +3,22 @@
     <div
       class="details"
       v-for="(database, idx) in databases"
-      :key="database.id"
+      :key="database"
       :style="{
-        color: valueColor[database.id],
+        color: valueColor[database],
         fontSize: '18px',
         fontWeight: 'bold',
         top: idx * 5 + 12.5 + '%'
       }"
     >
-      {{ currentValue[database.id] }} {{ unit }}
+      {{ formatNumberWithCommas(currentValue[database]) }} {{ unit }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -27,84 +27,115 @@ import {
 } from "@vue/composition-api";
 import {
   getMetricDetailColor,
-  getMetricValueStateOrder
-} from "../../meta/metrics";
-import { MetricValueState, MetricValueStateOrder } from "../../types/metrics";
-import { Database } from "../../types/database";
+  getMetricDetailsConfiguration
+} from "@/meta/metrics";
+import {
+  MetricValueState,
+  MetricValueStateOrder,
+  Metric,
+  MetricDetailsConfiguration
+} from "@/types/metrics";
+import { useFormatting } from "@/meta/formatting";
 
 interface Props {
-  data: any;
-  databases: Database[];
-  unit: string;
-  border: number;
-  stateOrder: MetricValueStateOrder;
+  metric: Metric;
+  databases: string[];
+  decimalDigits: number;
 }
 interface Data {
   currentValue: Ref<Record<string, number>>;
   valueColor: Ref<Record<string, string>>;
+  formatNumberWithCommas: (data: number) => string;
+  unit: string;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "MetricDetails",
   props: {
-    data: {
-      type: Object,
+    metric: {
+      type: String,
       default: null
     },
     databases: {
       type: Array,
       default: null
     },
-    unit: {
-      type: String,
-      default: null
-    },
-    border: {
+    decimalDigits: {
       type: Number,
-      default: 0
-    },
-    stateOrder: {
-      type: String,
-      default: null
+      default: 2
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    const valueStateOrder = getMetricValueStateOrder(props.stateOrder);
+    const metricDetailsConfig = getMetricDetailsConfiguration(props.metric)!;
+    const { currentValue } = useMetricValues(props, context);
 
-    function getValueState(value: number): MetricValueState {
-      return value > 0.66 * props.border
-        ? valueStateOrder[0]
-        : value > 0.33 * props.border
-        ? valueStateOrder[1]
-        : valueStateOrder[2];
-    }
-    const currentValue = computed(() => {
-      const databaseValueMap: Record<string, number> = {};
-      if (!props.databases.length) return databaseValueMap;
-      props.databases.forEach(
-        database =>
-          (databaseValueMap[database.id] = Object.keys(props.data).length
-            ? Math.floor(
-                props.data[database.id][props.data[database.id].length - 1] *
-                  100
-              ) / 100
-            : 0)
-      );
-      return databaseValueMap;
-    });
-    const valueColor = computed(() => {
-      const databaseValueColorMap: Record<string, string> = {};
-      Object.keys(currentValue.value).forEach(
-        database =>
-          (databaseValueColorMap[database] = getMetricDetailColor(
-            getValueState(currentValue.value[database])
-          ))
-      );
-      return databaseValueColorMap;
-    });
-    return { currentValue, valueColor };
+    return {
+      currentValue,
+      ...useMetricColors(currentValue, metricDetailsConfig),
+      formatNumberWithCommas: useFormatting().formatNumberWithCommas,
+      unit: metricDetailsConfig.unit
+    };
   }
 });
+
+interface MetricValueData {
+  currentValue: Ref<Record<string, number>>;
+}
+
+function useMetricValues(props: Props, context: SetupContext): MetricValueData {
+  const { roundNumber } = useFormatting();
+  const data = context.root.$metricController.data[props.metric];
+  return {
+    currentValue: computed(() => {
+      if (!props.databases.length) return {};
+      return props.databases.reduce(
+        (valueMap: Record<string, number>, database: string) => {
+          valueMap[database] = Object.keys(data.value).length
+            ? roundNumber(
+                data.value[database][data.value[database].length - 1],
+                Math.pow(10, props.decimalDigits),
+                Math.pow(10, props.decimalDigits),
+                false
+              )
+            : 0;
+          return valueMap;
+        },
+        {} as Record<string, number>
+      );
+    })
+  };
+}
+
+interface MetricColorData {
+  valueColor: Ref<Record<string, string>>;
+}
+
+function useMetricColors(
+  currentValue: Ref<Record<string, number>>,
+  metricDetailsConfig: MetricDetailsConfiguration
+): MetricColorData {
+  function getValueState(value: number): MetricValueState {
+    return value > 0.66 * metricDetailsConfig.border
+      ? metricDetailsConfig.stateOrder[0]
+      : value > 0.33 * metricDetailsConfig.border
+      ? metricDetailsConfig.stateOrder[1]
+      : metricDetailsConfig.stateOrder[2];
+  }
+
+  return {
+    valueColor: computed(() => {
+      return Object.keys(currentValue.value).reduce(
+        (colorMap: Record<string, string>, database: string) => {
+          colorMap[database] = getMetricDetailColor(
+            getValueState(currentValue.value[database])
+          );
+          return colorMap;
+        },
+        {} as Record<string, string>
+      );
+    })
+  };
+}
 </script>
 <style>
 .details {

@@ -5,26 +5,16 @@
 
 # DevOps
 # @caterinamandel98 @cH3n7i @fabianhe
+/* @caterinamandel98 @cH3n7i @fabianhe
 /.github/ @caterinamandel98 @cH3n7i @fabianhe
 /docker/ @caterinamandel98 @cH3n7i @fabianhe
-.env.example @caterinamandel98 @cH3n7i @fabianhe
-.flake8 @caterinamandel98 @cH3n7i @fabianhe
-.gitignore @caterinamandel98 @cH3n7i @fabianhe
-.isort.cfg @caterinamandel98 @cH3n7i @fabianhe
-.pre-commit-config.yaml @caterinamandel98 @cH3n7i @fabianhe
-Pipfile @caterinamandel98 @cH3n7i @fabianhe
-Pipfile.lock @caterinamandel98 @cH3n7i @fabianhe
-docker-compose.yml @caterinamandel98 @cH3n7i @fabianhe
-pytest.ini @caterinamandel98 @cH3n7i @fabianhe
-requirements-dev.txt @caterinamandel98 @cH3n7i @fabianhe
-requirements.txt @caterinamandel98 @cH3n7i @fabianhe
-setup.py @caterinamandel98 @cH3n7i @fabianhe
+/hyrise/ @caterinamandel98 @cH3n7i @fabianhe
 
 # Backend
 # @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /hyrisecockpit/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /tests/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
-/debug/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+/utils/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 
 # Frontend
 # @kathwill @MaxSchneider1337 @monasobh @schTi

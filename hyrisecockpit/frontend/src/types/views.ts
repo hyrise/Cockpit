@@ -1,13 +1,14 @@
 import { Ref } from "@vue/composition-api";
 import { Metric } from "./metrics";
-import { Database } from "./database";
 
 export interface MetricViewData {
-  watchedInstances: Ref<Database[]>;
+  watchedMetrics: Metric[];
+  selectedMetrics: Ref<Metric[]>;
+  selectedDatabases: Ref<string[]>;
 }
 
 export interface ContainerProps {
-  selectedDatabases: Database[];
+  selectedDatabases: string[];
   selectedMetrics: Metric[];
   showDetails: boolean;
 }

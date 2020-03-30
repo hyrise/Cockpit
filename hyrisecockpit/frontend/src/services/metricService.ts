@@ -1,45 +1,59 @@
-import { ref } from "@vue/composition-api";
+import { ref, computed } from "@vue/composition-api";
 import axios from "axios";
-import { MetricMetadata } from "@/types/metrics";
-import { FetchService } from "@/types/services";
+import { Metric } from "@/types/metrics";
+import { MetricService } from "@/types/services";
+import { useUpdatingData } from "../meta/components";
+import { getMetricMetadata } from "../meta/metrics";
+import { useFormatting } from "@/meta/formatting";
 
-export function useMetricService(metric: MetricMetadata): FetchService {
-  const queryReadyState = ref<boolean>(true);
-  const data = ref<any>({}); // TODO: change the initial value
+export function useMetricService(metric: Metric): MetricService {
+  const queryReadyState = ref(true);
+  const data = ref<any>({});
+  const timestamps = ref<Date[]>([]);
+  const metricMetaData = getMetricMetadata(metric);
+  const maxValue = computed(
+    () =>
+      metricMetaData.staticAxesRange?.y?.max ||
+      Object.values(data.value).reduce(
+        (max: number, dataSet: any) => Math.max(...dataSet, max),
+        0
+      )
+  );
+
+  const { formatDateWithoutMilliSec } = useFormatting();
 
   function getData(): void {
     queryReadyState.value = false;
+    const currentTimestamp = formatDateWithoutMilliSec(new Date());
     fetchData().then(result => {
-      if (metric.fetchType === "modify") {
+      useUpdatingData(result, metric);
+      if (metricMetaData.fetchType === "modify") {
         Object.keys(result).forEach(key => {
-          addData(key, metric.transformationService(result, key));
+          handleDataChange(
+            key,
+            metricMetaData.transformationService(result, key)
+          );
         });
-      } else if (metric.fetchType === "read") {
+      } else if (metricMetaData.fetchType === "read") {
         data.value = result;
       }
+      handleTimestamps(currentTimestamp);
+      const dataCopy = JSON.parse(JSON.stringify(data.value));
+      data.value = dataCopy;
       queryReadyState.value = true;
     });
-  }
-
-  function addData(dataBaseId: string, newData: number): void {
-    if (!data.value[dataBaseId]) {
-      data.value[dataBaseId] = [];
-    }
-    data.value[dataBaseId].push(newData);
-    const dataCopy = JSON.parse(JSON.stringify(data.value));
-    data.value = dataCopy;
   }
 
   function fetchData(): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
-        .get(metric.endpoint)
+        .get(metricMetaData.endpoint)
         .then(response => {
-          if (metric.component == "QueryTypeProportion") {
+          if (metricMetaData.component == "QueryTypeProportion") {
             //TODO: just for debug: adapt response in backend to pass data in body and divided for db instances
             resolve(response.data);
           } else {
-            resolve(response.data.body[metric.base]);
+            resolve(response.data.body[metricMetaData.base]);
           }
         })
         .catch(error => {
@@ -49,11 +63,31 @@ export function useMetricService(metric: MetricMetadata): FetchService {
     });
   }
 
+  function handleDataChange(databaseId: string, newData: number): void {
+    if (!data.value[databaseId]) {
+      data.value[databaseId] = [];
+    }
+    data.value[databaseId] = handleDataPoints(data.value[databaseId], newData);
+  }
+
+  function handleTimestamps(timestamp: Date): void {
+    timestamps.value = handleDataPoints(timestamps.value, timestamp);
+  }
+
+  function handleDataPoints<T>(data: T[], newData: T): T[] {
+    const dataCopy = data;
+    if (dataCopy.length > 29) {
+      dataCopy.shift();
+    }
+    dataCopy.push(newData);
+    return dataCopy;
+  }
+
   function getDataIfReady(): void {
     if (queryReadyState.value) {
       getData();
     }
   }
 
-  return { data, getDataIfReady };
+  return { data, getDataIfReady, maxValue, timestamps };
 }

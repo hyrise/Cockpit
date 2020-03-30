@@ -1,23 +1,44 @@
 <template>
   <div>
-    <div v-if="$databaseService.tables.value.length" class="mt-12">
+    <div>
+      <metric-detailed-view>
+        <template #header>
+          Access Frequency
+        </template>
+        <template #content>
+          <v-select
+            v-model="selectedTable"
+            class="select"
+            :items="tables"
+            chips
+            label="table"
+            outlined
+            prepend-icon="mdi-table"
+            width="100"
+          />
+          <Heatmap
+            :graph-id="'1' + graphId || 'access'"
+            :data="accessData"
+            :chart-configuration="chartConfiguration"
+            :autosize="false"
+          />
+        </template>
+      </metric-detailed-view>
       <v-select
         v-model="selectedTable"
-        :items="tables"
         class="select"
+        :items="tables"
         chips
         label="table"
         outlined
         prepend-icon="mdi-table"
-        width="100"
-      ></v-select>
-
+      />
       <Heatmap
-        :graph-id="graphId || 'access'"
-        :data="mapData"
-        :x-values="columns"
-        :y-values="chunks"
+        :graph-id="'2' + graphId || 'access'"
+        :data="accessData"
         :chart-configuration="chartConfiguration"
+        :selected-databases="selectedDatabases"
+        :max-chart-width="maxChartWidth"
       />
     </div>
   </div>
@@ -25,72 +46,64 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
-  onMounted,
   computed,
   Ref,
   ref,
   watch
 } from "@vue/composition-api";
-
 import Heatmap from "../charts/Heatmap.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import MetricDetailedView from "@/components/details/MetricDetailedView.vue";
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ChartConfiguration,
+  AccessData
+} from "../../types/metrics";
+import { useUpdatingDatabases } from "../../meta/databases";
+import {
+  getMetricChartConfiguration,
+  getMetricMetadata
+} from "../../meta/metrics";
 
 interface Data {
-  tables: Ref<string[]>;
-  mapData: Ref<number[][]>;
-  columns: Ref<string[]>;
-  chunks: Ref<string[]>;
-  chartConfiguration: string[];
+  tables: Ref<readonly string[]>;
+  accessData: Ref<AccessData>;
+  chartConfiguration: ChartConfiguration;
   selectedTable: Ref<string>;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "Access",
   components: {
-    Heatmap
+    Heatmap,
+    MetricDetailedView
   },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { tables } = context.root.$databaseService;
+    const metricMeta = getMetricMetadata(props.metric);
     const selectedTable = ref<string>("");
     const data = context.root.$metricController.data[props.metric];
+    const watchedDatabase = useUpdatingDatabases(props, context).databases
+      .value[0];
 
-    const table = computed(() => selectedTable.value);
+    const accessData = ref<AccessData>({});
 
-    const mapData = ref<number[][]>([]);
-    const columns = ref<string[]>([]);
-    const chunks = ref<string[]>([]);
-    const chartConfiguration: string[] = ["Access frequency"];
-
-    watch(tables, () => {
-      selectedTable.value = tables.value.length ? tables.value[0] : "";
-    });
-
-    watch([data, table], () => {
-      if (Object.keys(data.value).length && table.value != "") {
-        const {
-          newColumns,
-          newChunks,
-          dataByChunks
-        } = props.metricMeta.transformationService(
+    watch([data, selectedTable], () => {
+      if (Object.keys(data.value).length && selectedTable.value != "") {
+        accessData.value = metricMeta.transformationService(
           data.value,
-          props.selectedDatabases.map(database => database.id)[0],
-          table.value
+          watchedDatabase.id,
+          selectedTable.value
         );
-        chunks.value = newChunks;
-        columns.value = newColumns;
-        mapData.value = dataByChunks;
       }
     });
 
     return {
-      chartConfiguration,
-      tables,
-      mapData,
-      columns,
-      chunks,
+      chartConfiguration: getMetricChartConfiguration(props.metric),
+      tables: computed(() => watchedDatabase.tables),
+      accessData,
       selectedTable
     };
   }

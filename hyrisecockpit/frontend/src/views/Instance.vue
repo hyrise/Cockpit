@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="ml-6">
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
+    <div v-if="$databaseController.databasesUpdated.value" class="ml-6">
       <MetricsTileList
         :selected-databases="watchedInstances"
         :show-details="true"
@@ -13,23 +17,22 @@
         :metric="metric"
         :is="getMetricComponent(metric)"
         :selected-databases="watchedInstances"
-        :metric-meta="getMetadata(metric)"
+        :metric-meta="getMetricMetadata(metric)"
       />
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   Ref,
   ref,
   onMounted
 } from "@vue/composition-api";
 import MetricsTileList from "../components/container/MetricsTileList.vue";
-import { getMetadata, getMetricComponent } from "../meta/metrics";
+import { getMetricMetadata, getMetricComponent } from "../meta/metrics";
 import {
   Metric,
   MetricMetadata,
@@ -41,42 +44,34 @@ import Access from "../components/metrics/Access.vue";
 import QueryTypeProportion from "../components/metrics/QueryTypeProportion.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
+import LinearLoader from "../components/alerts/linearLoader.vue";
 
-import { MetricViewData } from "../types/views";
-
-interface Data extends MetricViewData {
-  getMetadata: (metric: Metric) => MetricMetadata;
+interface Data {
+  getMetricMetadata: (metric: Metric) => MetricMetadata;
   getMetricComponent: (metric: Metric) => string;
   overviewMetrics: Metric[];
   instanceMetrics: Metric[];
+  watchedInstances: Ref<string[]>;
 }
 
-export default createComponent({
+export default defineComponent({
   components: {
     MetricsTileList,
     Storage,
     Access,
-    QueryTypeProportion
+    QueryTypeProportion,
+    LinearLoader
   },
   setup(props: {}, context: SetupContext): Data {
-    const watchedInstances = ref<Database[]>([
-      getDatabaseById(context.root.$route.params.id)
-    ]);
-    const { emitMetricsChangedEvent } = useMetricEvents();
+    const { emitWatchedMetricsChangedEvent } = useMetricEvents();
     onMounted(() => {
-      emitMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
+      emitWatchedMetricsChangedEvent(instanceMetrics.concat(overviewMetrics));
     });
 
-    function getDatabaseById(id: string): Database | undefined {
-      return context.root.$databaseService.databases.value.find(
-        database => database.id === id
-      );
-    }
-
     return {
-      getMetadata,
+      getMetricMetadata,
       getMetricComponent,
-      watchedInstances,
+      watchedInstances: ref([context.root.$route.params.id]),
       overviewMetrics,
       instanceMetrics
     };

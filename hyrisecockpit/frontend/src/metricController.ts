@@ -1,9 +1,8 @@
 import { eventBus } from "./plugins/eventBus";
 import { useMetricService } from "./services/metricService";
 import { Metric, availableMetrics, MetricController } from "./types/metrics";
-import { FetchService } from "./types/services";
-import { Ref } from "@vue/composition-api";
-import { getMetadata, getMetricRequestTime } from "./meta/metrics";
+import { MetricService } from "./types/services";
+import { getMetricRequestTime } from "./meta/metrics";
 
 type Interval = {
   id: number | undefined;
@@ -12,7 +11,7 @@ type Interval = {
 };
 
 export function useMetricController(): MetricController {
-  eventBus.$on("METRICS_CHANGED", (payload: Metric[]) => {
+  eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
     stop();
     start(payload);
   });
@@ -21,12 +20,16 @@ export function useMetricController(): MetricController {
 
   const metricIntervals = setupIntervals();
 
-  const data = mapToData(metricServices);
+  let data = {} as any;
+  let maxValueData = {} as any;
+  let timestamps = {} as any;
 
-  function setupServices(): Record<Metric, FetchService> {
+  mapToData(metricServices);
+
+  function setupServices(): Record<Metric, MetricService> {
     const services: any = {};
     availableMetrics.forEach(metric => {
-      services[metric] = useMetricService(getMetadata(metric));
+      services[metric] = useMetricService(metric);
     });
     return services;
   }
@@ -65,15 +68,13 @@ export function useMetricController(): MetricController {
     });
   }
 
-  function mapToData(
-    services: Record<Metric, FetchService>
-  ): Record<Metric, Ref<any>> {
-    const data: any = {};
+  function mapToData(services: Record<Metric, MetricService>): void {
     Object.entries(services).forEach(([metric, service]) => {
       data[metric as Metric] = service.data;
+      maxValueData[metric as Metric] = service.maxValue;
+      timestamps[metric as Metric] = service.timestamps;
     });
-    return data;
   }
 
-  return { data };
+  return { data, maxValueData, timestamps };
 }

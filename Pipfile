@@ -21,6 +21,7 @@ pytest-cov = "*"
 pipenv-to-requirements = "*"
 flake8-eradicate = "*"
 flake8-comprehensions = "*"
+sqlparse = "*"
 
 [packages]
 pandas = "*"
@@ -36,7 +37,7 @@ flask-restx = "*"
 werkzeug = "==0.16.1"
 
 [requires]
-python_version = "3.8.1"
+python_version = "3.8.2"
 
 [pipenv]
 allow_prereleases = true

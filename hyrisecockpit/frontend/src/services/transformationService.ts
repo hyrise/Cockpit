@@ -1,22 +1,29 @@
-import { Metric } from "../types/metrics";
+import {
+  Metric,
+  StorageData,
+  TreemapDescription,
+  AccessData
+} from "../types/metrics";
 import { TransformationService } from "@/types/services";
-import Vue from "vue";
-import { equals } from "../helpers/methods";
+import { useFormatting } from "@/meta/formatting";
+import { colorDefinition } from "@/meta/colors";
+
+const transformationServiceMap: Record<Metric, TransformationService> = {
+  access: getAccessData,
+  cpu: getCPUData,
+  latency: getLatencyData,
+  executedQueryTypeProportion: getExecutedQueryTypeProportionData,
+  generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
+  queueLength: getReadOnlyData,
+  ram: getRAMData,
+  storage: getStorageData,
+  throughput: getReadOnlyData
+};
+
+const { roundNumber } = useFormatting();
 
 export function useDataTransformation(metric: Metric): TransformationService {
-  const transformationMap: Record<Metric, TransformationService> = {
-    access: getAccessData,
-    cpu: getCPUData,
-    latency: getReadOnlyData,
-    executedQueryTypeProportion: getExecutedQueryTypeProportionData,
-    generatedQueryTypeProportion: getGeneratedQueryTypeProportionData,
-    queueLength: getReadOnlyData,
-    ram: getRAMData,
-    storage: getStorageData,
-    throughput: getReadOnlyData
-  };
-
-  return transformationMap[metric];
+  return transformationServiceMap[metric];
 }
 
 function getExecutedQueryTypeProportionData(
@@ -45,35 +52,45 @@ function getQueryTypeProportionData(data: any, type: string): any {
   return [
     {
       x: [type],
-      y: [data.DELETE] as number[],
-      name: "DELETE",
-      type: "bar"
-    },
-    {
-      x: [type],
-      y: [data.INSERT] as number[],
-      name: "INSERT",
-      type: "bar"
+      y: [data.UPDATE] as number[],
+      name: "UPDATE",
+      type: "bar",
+      marker: {
+        color: colorDefinition.green
+      }
     },
     {
       x: [type],
       y: [data.SELECT] as number[],
       name: "SELECT",
-      type: "bar"
+      type: "bar",
+      marker: {
+        color: colorDefinition.blue
+      }
     },
     {
       x: [type],
-      y: [data.UPDATE] as number[],
-      name: "UPDATE",
-      type: "bar"
+      y: [data.INSERT] as number[],
+      name: "INSERT",
+      type: "bar",
+      marker: {
+        color: colorDefinition.orange
+      }
+    },
+    {
+      x: [type],
+      y: [data.DELETE] as number[],
+      name: "DELETE",
+      type: "bar",
+      marker: {
+        color: colorDefinition.red
+      }
     }
   ];
 }
 
 function getCPUData(data: any, primaryKey: string = ""): number {
-  return data[primaryKey].cpu.reduce(
-    (accumulator: any, currentValue: any) => accumulator + currentValue
-  );
+  return data[primaryKey].cpu.cpu_process_usage;
 }
 
 function getRAMData(data: any, primaryKey: string = ""): number {
@@ -84,57 +101,117 @@ function getReadOnlyData(data: any, primaryKey: string = ""): number {
   return data[primaryKey];
 }
 
-function getStorageData(
-  data: any,
-  primaryKey: string = ""
-): { newLabels: string[]; newParents: string[]; newSizes: number[] } {
-  const newLabels: string[] = [];
-  const newParents: string[] = [];
-  const newSizes: number[] = [];
+function getLatencyData(data: any, primaryKey: string = ""): number {
+  return roundNumber(getReadOnlyData(data, primaryKey), Math.pow(10, 6));
+}
 
-  if (
-    !equals(
-      Vue.prototype.$databaseService.tables.value,
-      Object.keys(data[primaryKey])
-    ) &&
-    Object.keys(data[primaryKey]).length
-  ) {
-    Vue.prototype.$databaseService.tables.value = Object.keys(data[primaryKey]);
+function getStorageData(data: any, primaryKey: string = ""): StorageData {
+  const {
+    getTableMemoryFootprint,
+    getDatabaseMemoryFootprint
+  } = useDataTransformationHelpers();
+
+  //TODO: this can be replaced when the size entry of the returned data of every table is fixed from the backend
+  const totalDatabaseMemory = getDatabaseMemoryFootprint(data[primaryKey]);
+
+  const labels: string[] = [primaryKey];
+  const parents: string[] = [""];
+  const sizes: number[] = [0];
+  const descriptions: TreemapDescription[] = [
+    {
+      size: `${totalDatabaseMemory} MB`,
+      encoding: "",
+      dataType: "",
+      percentOfDatabase: "100% of total footprint",
+      percentOfTable: ""
+    }
+  ];
+
+  function getRoundedData(value: number): number {
+    return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
   }
 
-  Object.keys(data[primaryKey]).forEach(table => {
-    newLabels.push(table);
-    newParents.push("");
-    newSizes.push(0);
-    Object.keys(data[primaryKey][table].data).forEach(attribute => {
-      newLabels.push(attribute);
-      newParents.push(table);
-      newSizes.push(data[primaryKey][table].data[attribute].size);
-    });
-  });
+  function getPercentage(part: number, total: number): number {
+    return roundNumber(part / total, 100, Math.pow(10, 4), false);
+  }
 
-  return { newLabels, newParents, newSizes };
+  Object.entries(data[primaryKey]).forEach(
+    ([table, tableData]: [string, any]) => {
+      labels.push(table);
+      parents.push(primaryKey);
+      sizes.push(0);
+      descriptions.push({
+        size: `${getTableMemoryFootprint(tableData.data)} MB`,
+        encoding: "",
+        dataType: "",
+        percentOfDatabase: `${getPercentage(
+          getTableMemoryFootprint(tableData.data),
+          totalDatabaseMemory
+        )} % of total footprint`,
+        percentOfTable: `100% of ${table}`
+      });
+      Object.entries(tableData.data).forEach(
+        ([attribute, attributeData]: [string, any]) => {
+          labels.push(attribute);
+          parents.push(table);
+          getRoundedData(attributeData.size);
+          sizes.push(getRoundedData(attributeData.size));
+          descriptions.push({
+            size: `${getRoundedData(attributeData.size)} MB`,
+            encoding: `encoding: ${attributeData.encoding}`,
+            dataType: `data type: ${attributeData.data_type}`,
+            percentOfDatabase: `${getPercentage(
+              getRoundedData(attributeData.size),
+              totalDatabaseMemory
+            )} % of total footprint`,
+            percentOfTable: `${getPercentage(
+              getRoundedData(attributeData.size),
+              getTableMemoryFootprint(tableData.data)
+            )} % of ${table}`
+          });
+        }
+      );
+    }
+  );
+
+  return {
+    parents,
+    labels,
+    sizes,
+    descriptions
+  };
 }
 
 function getAccessData(
   data: any,
   primaryKey: string = "",
   secondaryKey: string = ""
-) {
+): AccessData {
   const dataByColumns: number[][] = [];
   const dataByChunks: number[][] = [];
-  const newChunks: string[] = [];
-  const newColumns: string[] = [];
+  const chunks: string[] = [];
+  const columns: string[] = [];
+  const descriptions: string[][] = [];
 
-  Object.keys(data[primaryKey][secondaryKey]).forEach(column => {
-    dataByColumns.push(data[primaryKey][secondaryKey][column]);
-    newColumns.push(column);
-  });
+  const availableColumns: string[] = [];
+
+  Object.entries(data[primaryKey][secondaryKey]).forEach(
+    ([column, columnData]: [string, any]) => {
+      dataByColumns.push(columnData);
+      columns.push(truncateColumnName(column));
+      availableColumns.push(column);
+    }
+  );
 
   const numberOfChunks = dataByColumns[0].length;
 
+  function truncateColumnName(column: string): string {
+    return column.length > 7 ? column.substring(0, 7) + ".." : column;
+  }
+
   for (let i = 0; i < numberOfChunks; i++) {
-    newChunks.push("chunk_" + i);
+    chunks.push("Nr. " + i);
+    descriptions.push(availableColumns);
 
     const chunk: number[] = [];
     dataByColumns.forEach(column => {
@@ -142,5 +219,49 @@ function getAccessData(
     });
     dataByChunks.push(chunk);
   }
-  return { newChunks, newColumns, dataByChunks };
+  return { chunks, columns, dataByChunks, descriptions };
+}
+
+export function useDataTransformationHelpers(): {
+  getDatabaseMemoryFootprint: (data: any) => number;
+  getTableMemoryFootprint: (data: any) => number;
+  getDatabaseMainMemoryCapacity: (data: any) => number;
+} {
+  function getTableMemoryFootprint(data: any): number {
+    return roundNumber(
+      Object.values(data).reduce(
+        (sum1: number, table: any) => sum1 + table.size,
+        0
+      ),
+      Math.pow(10, 3),
+      1 / Math.pow(10, 3),
+      false
+    );
+  }
+  function getDatabaseMemoryFootprint(data: any): number {
+    const memory: number[] = [];
+    Object.entries(data).forEach(([table, tableData]: [string, any]) => {
+      memory.push(getTableMemoryFootprint(tableData.data));
+    });
+
+    return roundNumber(
+      memory.reduce((total, tableMemory) => total + tableMemory, 0),
+      Math.pow(10, 3),
+      Math.pow(10, 3),
+      false
+    );
+  }
+  function getDatabaseMainMemoryCapacity(data: any): number {
+    return roundNumber(
+      data.memory.total,
+      Math.pow(10, 3),
+      1 / Math.pow(10, 6),
+      false
+    );
+  }
+  return {
+    getDatabaseMemoryFootprint,
+    getDatabaseMainMemoryCapacity,
+    getTableMemoryFootprint
+  };
 }

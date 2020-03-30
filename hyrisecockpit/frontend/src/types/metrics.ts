@@ -1,6 +1,5 @@
 import { TransformationService, Base, FetchType } from "./services";
 import { Ref } from "@vue/composition-api";
-import { Database } from "./database";
 
 export type MetricValueState = "low" | "average" | "high";
 export type MetricValueStateOrder = "asc" | "desc";
@@ -17,6 +16,8 @@ export type Metric =
 
 export interface MetricController {
   data: Record<Metric, Ref<any>>;
+  maxValueData: Record<Metric, Ref<number>>;
+  timestamps: Record<Metric, Ref<Date[]>>;
 }
 
 //TODO: refactor
@@ -54,36 +55,45 @@ export const overviewMetrics: Metric[] = [
 
 export const workloadMetrics: Metric[] = ["generatedQueryTypeProportion"];
 
+interface AxesRange {
+  x?: {
+    min?: number;
+    max?: number;
+  };
+  y?: {
+    min?: number;
+    max?: number;
+  };
+}
+
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
   base: Base;
   endpoint: string;
-  title: string;
   component: string;
   requestTime: number;
+  staticAxesRange?: AxesRange;
 }
 
 export interface ComparisonMetricData {
   data: Ref<any>;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
+  maxValue: Ref<number>;
+  timestamps: Ref<Date[]>;
 }
 
 export interface MetricProps {
   metric: Metric;
-  metricMeta: MetricMetadata;
-  selectedDatabases: Database[];
+  selectedDatabases: string[];
   graphId: string;
   showDetails: boolean;
+  maxChartWidth: number;
 }
 
 export const MetricPropsValidation = {
   metric: {
     type: String,
-    default: null
-  },
-  metricMeta: {
-    type: Object,
     default: null
   },
   selectedDatabases: {
@@ -97,5 +107,43 @@ export const MetricPropsValidation = {
   graphId: {
     type: String,
     default: null
+  },
+  maxChartWidth: {
+    type: Number,
+    default: 0
   }
+};
+
+export type ChartConfiguration = {
+  title: string;
+  xaxis?: string;
+  yaxis?: string;
+};
+
+export type TreemapDescription = {
+  size: string;
+  encoding: string;
+  dataType: string;
+  percentOfDatabase: string;
+  percentOfTable: string;
+};
+
+export type StorageData = {
+  parents: string[];
+  labels: string[];
+  sizes: number[];
+  descriptions: TreemapDescription[];
+};
+
+export type AccessData = {
+  dataByChunks: number[][];
+  chunks: string[];
+  columns: string[];
+  descriptions: string[][];
+};
+
+export type MetricDetailsConfiguration = {
+  border: number;
+  unit: string;
+  stateOrder: MetricValueState[];
 };

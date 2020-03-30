@@ -1,68 +1,131 @@
-import { ref } from "@vue/composition-api";
-import { Database, DatabaseService } from "../types/database";
+import {
+  DatabaseService,
+  DatabaseCPUResponse,
+  DatabaseStorageResponse,
+  DatabaseResponse
+} from "../types/database";
 import axios from "axios";
-import colors from "vuetify/lib/util/colors";
+import { colorDefinition } from "../meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
+import { useDataTransformationHelpers } from "./transformationService";
+import { useDatabaseEvents } from "../meta/events";
 
 export function useDatabaseService(): DatabaseService {
-  const colorsArray: any = Object.keys(colors);
+  const colors = Object.values(colorDefinition);
   let usedColors: any = 0;
-  const databases = ref<Database[]>([]);
-  const isReady = ref<boolean>(false);
-  const tables = ref<string[]>([]);
+  const {
+    emitDatabaseAddedEvent,
+    emitDatabaseRemovedEvent
+  } = useDatabaseEvents();
 
-  function getTables(): void {
-    axios.get(monitorBackend + "storage").then(result => {
-      const instance = Object.keys(result.data.body.storage)[0];
-      tables.value = Object.keys(result.data.body.storage[instance]);
+  const {
+    getDatabaseMemoryFootprint,
+    getDatabaseMainMemoryCapacity
+  } = useDataTransformationHelpers();
+
+  async function fetchDatabases(): Promise<DatabaseResponse[]> {
+    let databases: DatabaseResponse[] = [];
+    await axios.get(controlBackend + "database").then(response => {
+      databases = getDatabasesInformation(response.data);
     });
+    return databases;
   }
 
-  function getDatabases(): void {
-    axios.get(controlBackend + "database").then(response => {
-      databases.value = response.data.body.databases.map((database: any) => ({
-        id: database,
-        color: getDatabaseColor(database)
-      }));
-      isReady.value = true;
-    });
-  }
-
-  getDatabases();
-  getTables();
-
-  function getDatabaseColor(id: string): string {
-    const database =
-      databases && databases.value.find(database => database.id === id);
-    if (database) {
-      return database.color;
-    }
-    const color: any = (colors as any)[colorsArray[usedColors]].base;
-    usedColors += 2;
+  function getDatabaseColor(): string {
+    const color = colors[usedColors];
+    usedColors += 1;
     return color;
   }
 
-  function addDatabase(databaseService: any): void {
+  async function fetchDatabasesCPUInformation(): Promise<
+    DatabaseCPUResponse[]
+  > {
+    let databasesWithCPUInformation: DatabaseCPUResponse[] = [];
+    await axios.get(monitorBackend + "system").then(response => {
+      databasesWithCPUInformation = getCPUInformation(
+        response.data.body.system_data
+      );
+    });
+    return databasesWithCPUInformation;
+  }
+
+  async function fetchDatabasesStorageInformation(): Promise<
+    DatabaseStorageResponse[]
+  > {
+    let databasesWithStorageInformation: DatabaseStorageResponse[] = [];
+    await axios.get(monitorBackend + "storage").then(response => {
+      databasesWithStorageInformation = getStorageInformation(
+        response.data.body.storage
+      );
+    });
+    return databasesWithStorageInformation;
+  }
+
+  function getDatabasesInformation(response: any): DatabaseResponse[] {
+    const databases: DatabaseResponse[] = [];
+    Object.values(response).forEach((data: any) => {
+      databases.push({
+        id: data.id,
+        host: data.host,
+        numberOfWorkers: data.number_workers
+      } as DatabaseResponse);
+    });
+    return databases;
+  }
+
+  function getCPUInformation(response: any): DatabaseCPUResponse[] {
+    const databasesWithCPUInformation: DatabaseCPUResponse[] = [];
+    Object.entries(response).forEach(([id, data]: [string, any]) => {
+      databasesWithCPUInformation.push({
+        id: id,
+        numberOfCPUs: data.cpu.cpu_count,
+        memoryCapacity: getDatabaseMainMemoryCapacity(data)
+      } as DatabaseCPUResponse);
+    });
+    return databasesWithCPUInformation;
+  }
+
+  function getStorageInformation(response: any): DatabaseStorageResponse[] {
+    const databasesWithStorageInformation: DatabaseStorageResponse[] = [];
+    Object.entries(response).forEach(([id, data]: [string, any]) => {
+      databasesWithStorageInformation.push({
+        id: id,
+        memoryFootprint: getDatabaseMemoryFootprint(data),
+        tables: Object.keys(data)
+      } as DatabaseStorageResponse);
+    });
+    return databasesWithStorageInformation;
+  }
+
+  function addDatabase(databaseConnection: any): void {
+    axios.post(controlBackend + "database", databaseConnection).then(() => {
+      emitDatabaseAddedEvent();
+    });
+  }
+
+  function removeDatabase(databaseId: string): void {
     axios
-      .post(controlBackend + "database", databaseService)
-      .then(response => {
-        axios.get(controlBackend + "database").then(
-          result =>
-            (databases.value = result.data.body.databases.map(
-              (database: any) => ({
-                id: database,
-                color: getDatabaseColor(database)
-              })
-            ))
-        );
+      .delete(controlBackend + "database", {
+        data: { id: databaseId }
       })
-      .catch(error => {});
+      .then(() => {
+        emitDatabaseRemovedEvent();
+      });
+  }
+
+  function resetColors(): void {
+    usedColors = 0;
   }
 
   return {
-    databases,
     addDatabase,
-    isReady,
-    tables
+    removeDatabase,
+    resetColors,
+    fetchDatabases,
+    fetchDatabasesCPUInformation,
+    fetchDatabasesStorageInformation,
+    getDatabaseColor,
+    getCPUInformation,
+    getStorageInformation
   };
 }

@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python 3.8.1
+    - name: Set up Python 3.8.2
       uses: actions/setup-python@v1
       with:
-        python-version: 3.8.1
+        python-version: 3.8.2
     - name: Install libpq PostgreSQL client
       run: sudo apt-get -yqq install libpq-dev
     - name: Install pipenv
@@ -23,4 +23,4 @@ jobs:
         pipenv run pre-commit run --all-files
     - name: Run all python tests
       run: |
-        pipenv run pre-commit run --hook-stage manual pytest
+        pipenv run pytest tests/ --cov=hyrisecockpit --cov-fail-under=28

@@ -2,24 +2,24 @@
   <div>
     <metric-details
       v-if="showDetails"
-      :data="data"
+      :metric="metric"
       :databases="selectedDatabases"
-      :border="1000000"
-      state-order="asc"
-      unit="q"
     />
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
       :graph-id="graphId || 'queueLength'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
+      :timestamps="timestamps"
+      :max-chart-width="maxChartWidth"
     />
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -27,7 +27,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
@@ -35,23 +34,15 @@ import {
   ComparisonMetricData
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
+import { useLineChartComponent } from "../../meta/components";
 
-export default createComponent({
+export default defineComponent({
   name: "QueueLength",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const data = context.root.$metricController.data[props.metric];
-
-    const chartConfiguration = [
-      "Queue Length",
-      "time in sec",
-      "amount of queries"
-    ];
-
     return {
-      data,
-      chartConfiguration
+      ...useLineChartComponent(props, context)
     };
   }
 });

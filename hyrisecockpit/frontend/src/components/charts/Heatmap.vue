@@ -3,105 +3,104 @@
 </template>
 
 <script lang="ts">
-import {
-  createComponent,
-  SetupContext,
-  onMounted,
-  computed,
-  Ref,
-  ref,
-  watch
-} from "@vue/composition-api";
-import axios from "axios";
-
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
-import Vue from "vue";
+import { ChartConfiguration, AccessData } from "../../types/metrics";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
+import { colorDefinition } from "../../meta/colors";
 
-interface Props {
-  data: number[][];
-  xValues: string[];
-  yValues: string[];
-  graphId: string;
-  chartConfiguration: string[];
+interface Props extends ChartProps {
+  autosize: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "Heatmap",
   props: {
-    data: {
-      type: Array,
-      default: null
+    autosize: {
+      type: Boolean,
+      default: true
     },
-    xValues: {
-      type: Array,
-      default: null
-    },
-    yValues: {
-      type: Array,
-      default: null
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Array,
-      default: null
-    }
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
-    const mapData = computed(() => props.data);
-    const xData = computed(() => props.xValues);
-    const yData = computed(() => props.yValues);
-
     const { getDataset, getLayout, getOptions } = useHeatMapConfiguration(
-      props.chartConfiguration
+      props.chartConfiguration,
+      props.autosize
     );
+    const { updateLayout } = useResizingOnChange(props);
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, [getDataset()], getLayout(), getOptions());
-      watch([mapData, xData, yData], () => {
-        Plotly.deleteTraces(props.graphId, 0);
-        Plotly.addTraces(
-          props.graphId,
-          getDataset(mapData.value, xData.value, yData.value)
-        );
-      });
+      useChartReactivity(props, context, updateDataset, updateLayout);
     });
+
+    function updateDataset(): void {
+      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.deleteTraces(props.graphId, 0);
+    }
   }
 });
+
 function useHeatMapConfiguration(
-  chartConfiguration: string[]
+  chartConfiguration: ChartConfiguration,
+  autosize: boolean
 ): {
-  getDataset: (
-    data?: readonly number[][],
-    columns?: readonly string[],
-    chunks?: readonly string[]
-  ) => Object;
+  getDataset: (data?: AccessData) => Object;
   getLayout: () => Object;
   getOptions: () => Object;
 } {
   function getLayout(): Object {
     return {
       xaxis: {
-        rangemode: "tozero"
+        rangemode: "tozero",
+        title: {
+          text: chartConfiguration.xaxis
+        }
       },
       yaxis: {
-        rangemode: "tozero"
+        rangemode: "tozero",
+        title: {
+          text: chartConfiguration.yaxis
+        }
+      },
+      autosize: autosize,
+      width: autosize ? 0 : 1400,
+      height: autosize ? 0 : 700,
+      margin: {
+        l: 80,
+        r: 50,
+        b: 100,
+        t: 50,
+        pad: 10
       }
     };
   }
 
   function getDataset(
-    data: readonly number[][] = [],
-    columns: readonly string[] = [],
-    chunks: readonly string[] = []
+    data: AccessData = {
+      dataByChunks: [],
+      descriptions: [],
+      chunks: [],
+      columns: []
+    }
   ): Object {
     return {
-      z: data,
-      x: columns,
-      y: chunks,
-      type: "heatmap"
+      z: data.dataByChunks,
+      x: data.columns,
+      y: data.chunks,
+      text: data.descriptions,
+      type: "heatmap",
+      colorscale: [
+        [0.0, colorDefinition.darkblue],
+        [0.25, colorDefinition.blue],
+        [0.5, "#F5F5F5"],
+        [0.75, colorDefinition.orange],
+        [1, colorDefinition.darkorange]
+      ],
+      hovermode: "closest",
+      hovertemplate:
+        "<b>column: %{text}</b> <br><b>chunk: %{y}</b> <br>%{z} accesses <extra></extra>"
     };
   }
   function getOptions(): Object {

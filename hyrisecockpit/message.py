@@ -32,7 +32,7 @@ response_schema = {
 get_databases_response_schema = {
     "type": "object",
     "required": ["databases"],
-    "properties": {"databases": {"type": "array", "items": {"type": "string"}}},
+    "properties": {"databases": {"type": "array", "items": {"type": "object"}}},
 }
 
 add_database_request_schema = {
@@ -72,5 +72,15 @@ start_workload_request_schema = {
     "properties": {
         "folder_name": {"type": "string"},
         "frequency": {"type": "integer"},
+    },
+}
+
+set_plugin_request_schema = {
+    "type": "object",
+    "required": ["id", "name", "value"],
+    "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "value": {"type": "string"},
     },
 }

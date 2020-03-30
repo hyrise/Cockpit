@@ -2,24 +2,24 @@
   <div>
     <metric-details
       v-if="showDetails"
-      :data="data"
+      :metric="metric"
       :databases="selectedDatabases"
-      :border="1200"
-      state-order="desc"
-      unit="%"
     />
     <Linechart
       :selected-databases="selectedDatabases"
       :data="data"
       :graph-id="graphId || 'cpu'"
       :chart-configuration="chartConfiguration"
+      :max-value="maxValue"
+      :timestamps="timestamps"
+      :max-chart-width="maxChartWidth"
     />
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -27,10 +27,6 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
-import { Database } from "../../types/database";
-import * as Plotly from "plotly.js";
-import Vue from "vue";
 import Linechart from "../charts/Linechart.vue";
 import {
   MetricProps,
@@ -38,19 +34,15 @@ import {
   ComparisonMetricData
 } from "../../types/metrics";
 import MetricDetails from "../details/MetricDetails.vue";
+import { useLineChartComponent } from "../../meta/components";
 
-export default createComponent({
+export default defineComponent({
   name: "CPU",
   props: MetricPropsValidation,
   components: { Linechart, MetricDetails },
   setup(props: MetricProps, context: SetupContext): ComparisonMetricData {
-    const chartConfiguration = ["CPU", "time in sec", "workload in %"];
-
-    const data = context.root.$metricController.data[props.metric];
-
     return {
-      data,
-      chartConfiguration
+      ...useLineChartComponent(props, context)
     };
   }
 });

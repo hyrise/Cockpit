@@ -3,12 +3,15 @@
     :data="transformedData"
     :graph-id="graphId || 'queryTypeProportion'"
     :chart-configuration="chartConfiguration"
+    :selected-databases="selectedDatabases"
+    :max-chart-width="maxChartWidth"
+    class="query-type-chart"
   />
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
   computed,
@@ -16,45 +19,49 @@ import {
   ref,
   watch
 } from "@vue/composition-api";
-
-import * as Plotly from "plotly.js";
-import Vue from "vue";
 import Barchart from "../charts/Barchart.vue";
-import { MetricProps, MetricPropsValidation } from "../../types/metrics";
+import {
+  MetricProps,
+  MetricPropsValidation,
+  ChartConfiguration
+} from "../../types/metrics";
+import {
+  getMetricChartConfiguration,
+  getMetricMetadata
+} from "../../meta/metrics";
 
 interface Data {
   transformedData: Ref<any>;
-  chartConfiguration: string[];
+  chartConfiguration: ChartConfiguration;
 }
 
-export default createComponent({
+export default defineComponent({
   name: "QueryTypeProportion",
   components: { Barchart },
   props: MetricPropsValidation,
   setup(props: MetricProps, context: SetupContext): Data {
-    const { databases } = context.root.$databaseService;
     const data = context.root.$metricController.data[props.metric];
     const transformedData = ref<any>([]);
-
-    const chartConfiguration = [
-      "Query Type Proportion",
-      "workload",
-      "amount of queries"
-    ];
+    const metricMeta = getMetricMetadata(props.metric);
 
     watch(data, () => {
       if (Object.keys(data.value).length) {
-        transformedData.value = props.metricMeta.transformationService(
+        transformedData.value = metricMeta.transformationService(
           data.value,
-          props.selectedDatabases.map(database => database.id)[0]
+          props.selectedDatabases[0]
         );
       }
     });
 
     return {
       transformedData,
-      chartConfiguration
+      chartConfiguration: getMetricChartConfiguration(props.metric)
     };
   }
 });
 </script>
+<style scoped>
+.query-type-chart {
+  margin-top: -40px;
+}
+</style>

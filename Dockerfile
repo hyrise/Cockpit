@@ -1,16 +1,16 @@
-FROM python:3.8.1-buster
+FROM python:3.8.2-buster
 
 LABEL maintainer="upigorsch@me.com"
 
 RUN mkdir -p /usr/local/Cockpit/hyrisecockpit
 WORKDIR /usr/local/Cockpit
-COPY    setup.py \
+COPY setup.py \
     Pipfile \
     Pipfile.lock \
     requirements.txt \
     .env \
     /usr/local/Cockpit/
-COPY    hyrisecockpit/__init__.py \
+COPY hyrisecockpit/__init__.py \
     hyrisecockpit/exception.py \
     hyrisecockpit/message.py \
     hyrisecockpit/response.py \

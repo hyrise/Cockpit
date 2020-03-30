@@ -4,106 +4,105 @@
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   onMounted,
-  computed,
-  Ref,
-  ref,
-  watch
+  watch,
+  inject
 } from "@vue/composition-api";
-import { Database } from "../../types/database";
 import * as Plotly from "plotly.js";
+import { useUpdatingDatabases } from "../../meta/databases";
+import { ChartConfiguration } from "../../types/metrics";
+import { useChartReactivity, useResizingOnChange } from "../../meta/charts";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useFormatting } from "@/meta/formatting";
 
-interface Props {
-  data: any;
-  selectedDatabases: Database[];
-  graphId: string;
-  chartConfiguration: string[];
+interface Props extends ChartProps {
+  maxValue: number;
+  timestamps: Date[];
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
-    data: {
-      type: Object,
-      default: null
+    maxValue: {
+      type: Number,
+      default: 1
     },
-    selectedDatabases: {
+    timestamps: {
       type: Array,
       default: null
     },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Array,
-      default: null
-    }
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext): void {
-    const selectedDatabaseIds = computed(() =>
-      props.selectedDatabases.map(database => database.id)
+    const { databasesUpdated } = context.root.$databaseController;
+    const { updateLayout } = useResizingOnChange(props);
+    const multipleDatabasesAllowed = inject<boolean>(
+      "multipleDatabasesAllowed",
+      true
     );
-    const data = computed(() => props.data);
-    const graphId = props.graphId;
+
     const { getDataset, getLayout, getOptions } = useLineChartConfiguration(
       context,
-      props.chartConfiguration
+      props,
+      multipleDatabasesAllowed
     );
-    const { isReady } = context.root.$databaseService;
 
     onMounted(() => {
-      watch(isReady, () => {
-        if (isReady.value) {
-          Plotly.newPlot(graphId, getDatasets(), getLayout(), getOptions());
+      Plotly.newPlot(
+        props.graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
+      );
+      useChartReactivity(props, context, updateChartDatasets, updateLayout);
+
+      watch(
+        () => props.selectedDatabases,
+        () => {
+          if (databasesUpdated.value && multipleDatabasesAllowed) {
+            handleDatabaseChange();
+          }
         }
-      });
-      watch(selectedDatabaseIds, () => {
-        if (isReady.value) {
-          handleDatabaseChange();
-        }
-      });
-      watch(data, () => {
-        if (isReady.value && Object.keys(data.value).length) {
-          updateChartDatasets();
-        }
-      });
+      );
     });
 
+    function handleDatabaseChange(): void {
+      Plotly.react(
+        props.graphId,
+        getDatasets(),
+        getLayout(props.maxValue),
+        getOptions()
+      );
+    }
+
     function getDatasets(): any[] {
-      return selectedDatabaseIds.value.reduce((result, id): any => {
+      return props.selectedDatabases.reduce((result, id): any => {
         return [
           ...result,
-          getDataset(data.value[id] ? data.value[id] : [], id)
+          getDataset(props.data[id] ? props.data[id] : [], id)
         ];
       }, []);
     }
 
-    function handleDatabaseChange(): void {
-      Plotly.purge(graphId);
-      Plotly.plot(graphId, getDatasets(), getLayout(), getOptions());
-    }
-
     function getMaxDatasetLength(): number {
-      return selectedDatabaseIds.value.reduce((currentMax, id) => {
-        return Math.max(data.value[id].length, currentMax);
+      return props.selectedDatabases.reduce((currentMax, id) => {
+        return Math.max(props.data[id].length, currentMax);
       }, 0);
     }
 
     function updateChartDatasets(): void {
+      const timestamps = props.timestamps;
       const newData = {
-        y: Object.values(selectedDatabaseIds.value).map(id => data.value[id])
+        y: Object.values(props.selectedDatabases).map(id => props.data[id]),
+        x: Object.values(props.selectedDatabases).map(() => timestamps)
       };
       const maxSelectedLength = getMaxDatasetLength();
 
       Plotly.update(
-        graphId,
+        props.graphId,
         newData,
-        getLayout(
-          Math.max(maxSelectedLength - 30, 0),
-          Math.max(maxSelectedLength, 30)
-        )
+        getLayout(props.maxValue, Math.min(maxSelectedLength, 30))
       );
     }
   }
@@ -111,69 +110,51 @@ export default createComponent({
 
 function useLineChartConfiguration(
   context: SetupContext,
-  chartConfiguration: string[]
+  props: Props,
+  multipleDatabasesAllowed: boolean
 ): {
   getDataset: (data?: number[], databaseId?: string) => Object;
-  getLayout: (xMin?: number, xMax?: number) => Object;
+  getLayout: (yMax: number, xMin?: number) => Object;
   getOptions: () => Object;
 } {
-  const databases: Ref<Database[]> = context.root.$databaseService.databases;
-  function getLayout(xMin: number = 0, xMax: number = 30): Object {
+  const { databases } = useUpdatingDatabases(props, context);
+  const { formatDateWithoutMilliSec } = useFormatting();
+
+  function getLayout(yMax: number, xMin: number = 1): Object {
+    const currentTime = formatDateWithoutMilliSec(new Date()).getTime();
     return {
       xaxis: {
         title: {
-          text: chartConfiguration[1],
-          font: {
-            //size: 16
-            //color: "#FAFAFA"
-          }
+          text: props.chartConfiguration.xaxis
         },
-        range: [xMin, xMax]
-        // linecolor: "#616161",
-        // gridcolor: "#616161",
-        // tickcolor: "#616161",
-        // tickfont: {
-        //   size: 12,
-        //   color: "#FAFAFA"
-        // },
-        //linewidth: 2
+        type: "date",
+        tickformat: "%H:%M:%S",
+        range: [currentTime - (xMin - 1) * 1000, currentTime]
       },
       yaxis: {
         title: {
-          text: chartConfiguration[2],
-          font: {
-            // size: 16
-            //color: "#FAFAFA"
-          }
+          text: props.chartConfiguration.yaxis
         },
-        rangemode: "tozero"
-        // linecolor: "#616161",
-        // gridcolor: "#616161",
-        // tickcolor: "#616161",
-        // tickfont: {
-        //   size: 12,
-        //   color: "#FAFAFA"
-        // },
-        //linewidth: 2
-      }
-      // plot_bgcolor: "#424242",
-      // paper_bgcolor: "#424242",
-      // legend: {
-      //   font: {
-      //     family: "sans-serif",
-      //     size: 12,
-      //     color: "#FAFAFA"
-      //   }
-      // }
+        range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1]
+      },
+      autosize: true,
+      showlegend: multipleDatabasesAllowed,
+      legend: { x: 0, y: 1.3 },
+      margin: {
+        l: 70,
+        r: 40,
+        b: 70,
+        t: 10,
+        pad: 0
+      },
+      paper_bgcolor: "rgba(0,0,0,0)"
     };
   }
 
-  function getDatabaseById(databaseId: string): Database | undefined {
-    return databases.value.find(element => element.id === databaseId);
-  }
-
   function getDataset(data: number[] = [], databaseId: string = ""): Object {
-    const database: Database | undefined = getDatabaseById(databaseId);
+    const database = databases.value.find(
+      database => database.id === databaseId
+    );
     return {
       y: data,
       mode: "lines+markers",

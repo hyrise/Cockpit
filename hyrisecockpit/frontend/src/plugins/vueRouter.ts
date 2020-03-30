@@ -3,17 +3,15 @@ import VueRouter from "vue-router";
 import Instance from "../views/Instance.vue";
 import InstanceComparison from "../views/InstanceComparison.vue";
 import Overview from "../views/Overview.vue";
-import Selection from "../views/Selection.vue";
 import Home from "../views/Home.vue";
-import WorkloadScreen from "../views/WorkloadScreen.vue";
+import WorkloadMonitoring from "../views/WorkloadMonitoring.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   { name: "home", path: "/", component: Home },
   { name: "database", path: "/database/:id", component: Instance },
-  { name: "workload", path: "/workload", component: WorkloadScreen },
-  { name: "databases", path: "/databases", component: Selection },
+  { name: "workload", path: "/workload", component: WorkloadMonitoring },
   {
     name: "comparison",
     path: "/databases/compare",

@@ -15,7 +15,7 @@ const workloadProjectionData: Record<Workload, WorkloadProjectionData> = {
   },
   job: {
     transferred: "job",
-    displayed: "JOB"
+    displayed: "Join Order Benchmark"
   }
 };
 
@@ -24,4 +24,10 @@ export function getTransferredWorkload(workload: Workload): string {
 }
 export function getDisplayedWorkload(workload: Workload): string {
   return workloadProjectionData[workload].displayed;
+}
+
+export function getDisplayedFromTransferred(transferred: string): string {
+  return Object.values(workloadProjectionData).find(
+    workload => workload.transferred === transferred
+  )!.displayed;
 }

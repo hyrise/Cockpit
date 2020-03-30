@@ -1,88 +1,59 @@
 <template>
-  <div :id="graphId"></div>
+  <div class="treemap" :id="graphId"></div>
 </template>
 
 <script lang="ts">
-import {
-  createComponent,
-  SetupContext,
-  onMounted,
-  watch,
-  Ref,
-  ref
-} from "@vue/composition-api";
+import { defineComponent, SetupContext, onMounted } from "@vue/composition-api";
 import * as Plotly from "plotly.js";
+import { ChartConfiguration, StorageData } from "../../types/metrics";
+import { ChartProps, ChartPropsValidation } from "../../types/charts";
+import { useChartReactivity } from "../../meta/charts";
+import { colorDefinition } from "../../meta/colors";
 
-interface Props {
-  labels: string[];
-  parents: string[];
-  values: number[];
-  graphId: string;
-  chartConfiguration: string[];
+interface Props extends ChartProps {
   autosize: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
-    labels: {
-      type: Array,
-      default: null
-    },
-    parents: {
-      type: Array,
-      default: null
-    },
-    values: {
-      type: Array,
-      default: null
-    },
-    graphId: {
-      type: String,
-      default: null
-    },
-    chartConfiguration: {
-      type: Array,
-      default: null
-    },
     autosize: {
       type: Boolean,
       default: true
-    }
+    },
+    ...ChartPropsValidation
   },
   setup(props: Props, context: SetupContext) {
     const { getLayout, getDataset, getOptions } = useTreemapConfiguration(
-      props.autosize,
-      props.chartConfiguration
+      props
     );
 
     onMounted(() => {
       Plotly.newPlot(props.graphId, getDataset(), getLayout(), getOptions());
-      watch(() => {
-        if (
-          props.labels.length > 0 &&
-          props.parents.length > 0 &&
-          props.values.length > 0
-        ) {
-          Plotly.deleteTraces(props.graphId, 0);
-          Plotly.addTraces(
-            props.graphId,
-            getDataset(props.labels, props.parents, props.values)
-          );
-        }
-      });
+      useChartReactivity(props, context, updateDatasets, updateLayout);
     });
+
+    function updateDatasets(): void {
+      Plotly.addTraces(props.graphId, getDataset(props.data));
+      Plotly.deleteTraces(props.graphId, 0);
+    }
+
+    function getHeightFactor(autosize: boolean): number {
+      return autosize ? 1.75 : 1.25;
+    }
+
+    function updateLayout(): void {
+      Plotly.relayout(props.graphId, {
+        width: 0.8 * props.maxChartWidth,
+        height: (0.8 * props.maxChartWidth) / getHeightFactor(props.autosize)
+      });
+    }
   }
 });
 function useTreemapConfiguration(
-  autosize: boolean,
-  chartConfiguration: string[]
+  props: Props
 ): {
   getLayout: () => Object;
-  getDataset: (
-    labels?: string[],
-    parents?: string[],
-    values?: number[]
-  ) => Object[];
+  getDataset: (data?: StorageData) => Object[];
   getOptions: () => Object;
 } {
   function getLayout(): Object {
@@ -97,24 +68,37 @@ function useTreemapConfiguration(
           yanchor: "bottom"
         }
       ],
-      autosize: autosize,
-      width: autosize ? 0 : 1600,
-      height: autosize ? 0 : 800
+      autosize: props.autosize,
+      width: props.autosize ? 0 : 1400,
+      height: props.autosize ? 0 : 700,
+      hovermode: "closest",
+      hoverlabel: { bgcolor: "#FFF" },
+      treemapcolorway: Object.values(colorDefinition),
+      margin: {
+        l: 0,
+        r: 0,
+        b: 20,
+        t: 0,
+        pad: 0
+      }
     };
   }
   function getDataset(
-    labels: string[] = [],
-    parents: string[] = [],
-    values: number[] = []
+    data: StorageData = { labels: [], parents: [], sizes: [], descriptions: [] }
   ): Object[] {
     return [
       {
         type: "treemap",
-        labels: labels,
-        parents: parents,
-        values: values,
-        textinfo: "label+value+percent parent+percent entry",
-        outsidetextfont: { size: 20, color: "#377eb8" },
+        labels: data.labels,
+        parents: data.parents,
+        values: data.sizes,
+        text: data.descriptions,
+        hovertemplate:
+          "<b>%{label}</b> <br>size: %{text.size}  <br>%{text.percentOfDatabase} <br>%{text.percentOfTable}" +
+          "<br>%{text.dataType} <br>%{text.encoding}<extra></extra>",
+        texttemplate:
+          "<b>%{label}</b> <br>size:%{text.size} <br>%{text.dataType} <br>%{text.encoding}",
+        outsidetextfont: { size: 20, color: colorDefinition.darkblue },
         marker: { line: { width: 2 } },
         pathbar: { visible: false }
       }
@@ -128,6 +112,6 @@ function useTreemapConfiguration(
 </script>
 <style>
 .treemap {
-  width: 100%;
+  margin: 1% 1% 3% 10%;
 }
 </style>

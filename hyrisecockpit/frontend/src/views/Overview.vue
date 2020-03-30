@@ -1,36 +1,39 @@
 <template>
   <div>
-    <div v-if="$databaseService.isReady.value" class="mx-6">
-      <v-select
-        class="select"
-        v-model="watchedInstances"
-        :items="availableInstances"
-        :error="!watchedInstances.length"
-        chips
-        label="databases"
-        multiple
-        clearable
-        deletable-chips
-        return-object
-        outlined
-        prepend-icon="mdi-database"
-      ></v-select>
-      <v-alert v-if="!watchedInstances.length" class="alert" type="warning">
-        No databases selected.
-      </v-alert>
-      <MetricsTileList
-        :selected-databases="watchedInstances.map(database => database.value)"
+    <linear-loader
+      :conditions="[$databaseController.databasesUpdated]"
+      :evaluations="[false]"
+    />
+    <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
+      <database-metric-selection class="select" :metrics="watchedMetrics" />
+      <database-details-panel
+        v-if="selectedDatabases.length"
+        :selected-databases="selectedDatabases"
+      />
+      <unselected-warning :condition="selectedDatabases">
+        <template #message>
+          No databases selected.
+        </template>
+      </unselected-warning>
+      <unselected-warning :condition="selectedMetrics">
+        <template #message>
+          No metrics selected.
+        </template>
+      </unselected-warning>
+      <metrics-tile-list
+        v-if="selectedDatabases.length"
+        class="list"
+        :selected-databases="selectedDatabases"
         :show-details="false"
-        :selected-metrics="overviewMetrics"
+        :selected-metrics="selectedMetrics"
       />
     </div>
-    <v-progress-linear v-else indeterminate color="primary" height="7" />
   </div>
 </template>
 
 <script lang="ts">
 import {
-  createComponent,
+  defineComponent,
   SetupContext,
   watch,
   computed,
@@ -41,36 +44,34 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { useMetricEvents } from "../meta/events";
-import { Database } from "../types/database";
-import { useDatabaseSelection } from "../meta/views";
+import { useSelectionHandling } from "../meta/views";
+import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
+import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
+import LinearLoader from "../components/alerts/linearLoader.vue";
+import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 
-interface Data extends MetricViewData {
-  overviewMetrics: Metric[];
-  availableInstances: Ref<any[]>;
-}
-
-export default createComponent({
+export default defineComponent({
   components: {
-    MetricsTileList
+    MetricsTileList,
+    DatabaseDetailsPanel,
+    DatabaseMetricSelection,
+    LinearLoader,
+    UnselectedWarning
   },
-  setup(props: {}, context: SetupContext): Data {
-    const { watchedInstances, availableInstances } = useDatabaseSelection(
-      context
-    );
-    const { emitMetricsChangedEvent } = useMetricEvents();
-
-    onMounted(() => {
-      emitMetricsChangedEvent(overviewMetrics);
-    });
-
-    return { watchedInstances, overviewMetrics, availableInstances };
+  setup(props: {}, context: SetupContext): MetricViewData {
+    return {
+      watchedMetrics: overviewMetrics,
+      ...useSelectionHandling()
+    };
   }
 });
 </script>
 <style scoped>
 .select {
-  padding-top: 20px;
-  width: 33%;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+.list {
+  margin-top: 1%;
 }
 </style>

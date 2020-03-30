@@ -6,7 +6,7 @@
 
 ## Setup
 
-You may need to install a different python version (`3.8.1`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
+You may need to install a different python version (`3.8.2`, e.g. using [`pyenv`](https://github.com/pyenv/pyenv#installation)).
 Installing pyenv can be done with the following commands:
 
 
@@ -52,12 +52,12 @@ exec "$SHELL"
 Subsequently, the required version of Python can be installed and set with:
 
 ```bash
-# Install Python 3.8.1
-pyenv install 3.8.1
+# Install Python 3.8.2
+pyenv install 3.8.2
 
-# Set the local (directory) Python version to 3.8.1
+# Set the local (directory) Python version to 3.8.2
 cd Cockpit
-pyenv local 3.8.1
+pyenv local 3.8.2
 ```
 Since there is a dependency for [`psycopg2`](http://initd.org/psycopg/docs/install.html), you may need to run the following commands:
 
@@ -147,5 +147,5 @@ pipenv run pre-commit run --all-files
 You can run all tests with:
 
 ```bash
-pipenv run pre-commit run --hook-stage manual pytest
+pipenv run pytest
 ```
