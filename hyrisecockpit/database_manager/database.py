@@ -49,22 +49,23 @@ class Database(object):
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
-        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
-            self._id,
-            self._database_blocked,
-            self._connection_pool,
-            self._loaded_tables,
-            storage_host,
-            storage_password,
-            storage_port,
-            storage_user,
-        )
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_pool,
             self.number_workers,
             self._id,
             workload_publisher_url,
             self._database_blocked,
+        )
+        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
+            self._id,
+            self._database_blocked,
+            self._connection_pool,
+            self._loaded_tables,
+            self._worker_pool,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
         )
         self._background_scheduler.start()
         self._background_scheduler.load_tables(self._default_tables)
