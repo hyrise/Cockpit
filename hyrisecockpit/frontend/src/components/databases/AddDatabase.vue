@@ -7,42 +7,18 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field
                 v-model="host"
                 label="Host*"
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="port"
-                label="Port*"
-                required
-              ></v-text-field>
+            <v-col cols="6">
+              <v-text-field v-model="id" label="Id*" required></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field
-                v-model="dbname"
-                label="Databasename*"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="user"
-                label="User*"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="password"
-                label="Password*"
-                type="password"
-                required
-              ></v-text-field>
-            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="number_workers"
@@ -51,22 +27,72 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6">
-              <v-text-field v-model="id" label="Id*" required></v-text-field>
-            </v-col>
           </v-row>
+          <v-expand-transition>
+            <div v-if="showAdvanced">
+              <v-row>
+                <v-col cols="6" sm="6">
+                  <v-text-field
+                    v-model="port"
+                    label="Port*"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" sm="6">
+                  <v-text-field
+                    v-model="dbname"
+                    label="Databasename*"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="user"
+                    label="User*"
+                    required
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-text-field
+                    v-model="password"
+                    label="Password"
+                    type="password"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </div>
+          </v-expand-transition>
         </v-container>
         <small>*indicates required field</small>
+        <v-btn class="advanced-btn" text @click="showAdvanced = !showAdvanced">
+          <div v-if="!showAdvanced">
+            show advanced
+          </div>
+          <div v-else>
+            hide advanced
+          </div>
+        </v-btn>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="closeDialog()">Close</v-btn>
+        <v-btn
+          color="primary"
+          text
+          @click="
+            closeDialog();
+            showAdvanced = false;
+          "
+          >Close</v-btn
+        >
         <v-btn
           id="save-database-button"
           color="primary"
           text
           @click="
             createNewDatabase();
+            showAdvanced = false;
             closeDialog();
           "
           >Save</v-btn
@@ -91,7 +117,9 @@ import { useDatabaseService } from "@/services/databaseService";
 interface Props {
   open: boolean;
 }
-interface Data extends DatabaseCreationData {}
+interface Data extends DatabaseCreationData {
+  showAdvanced: Ref<boolean>;
+}
 
 export default defineComponent({
   props: {
@@ -101,8 +129,10 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
+    const showAdvanced = ref(false);
     return {
-      ...useDatabaseCreation(context)
+      ...useDatabaseCreation(context),
+      showAdvanced
     };
   }
 });
@@ -129,6 +159,10 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const host = ref<string>("vm-");
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
+
+  watch(host, host => {
+    id.value = host;
+  });
 
   function resetValues(): void {
     number_workers.value = 8;
@@ -170,4 +204,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   };
 }
 </script>
-<style scoped></style>
+<style scoped>
+.advanced-btn {
+  float: right;
+}
+</style>
