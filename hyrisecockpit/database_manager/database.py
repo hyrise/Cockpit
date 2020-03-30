@@ -83,9 +83,32 @@ class Database(object):
             self._storage_user,
             self._storage_password,
             self._id,
-        ) as cur:
-            cur.drop_database(self._id)
-            cur.create_database(self._id)
+        ) as cursor:
+            cursor.drop_database(self._id)
+            cursor.create_database(self._id)
+            throughput_continuous_query = """SELECT count("latency") AS "throughput"
+                INTO "throughput"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+            throughput_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "throughput_calculation",
+                throughput_continuous_query,
+                self._id,
+                throughput_resample_options,
+            )
+
+            latency_continuous_query = """SELECT mean("latency") AS "latency"
+                INTO "latency"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+            latency_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "latency_calculation",
+                latency_continuous_query,
+                self._id,
+                latency_resample_options,
+            )
 
     def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
         """Create loaded_tables dictionary without information about already loaded tables."""
