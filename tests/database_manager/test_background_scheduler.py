@@ -762,7 +762,7 @@ class TestBackgroundJobManager:
 
         assert kwargs["target"]() == 42
         assert kwargs["args"][0] == fake_queries[0]
-        assert type(kwargs["args"][1]) is ValueType
+        assert isinstance(kwargs["args"][1], ValueType)
 
         mocked_process.start.assert_called_once()
         mocked_process.join.assert_called_once()
@@ -877,7 +877,7 @@ class TestBackgroundJobManager:
             "techno techno... :("
         )
 
-        assert not received
+        assert received == []
 
     def test_doesnt_load_tables_when_database_locked(
         self, background_job_manager: BackgroundJobManager
