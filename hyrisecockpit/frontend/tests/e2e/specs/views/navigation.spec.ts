@@ -1,16 +1,8 @@
-import { testRedirection, testElementTrigger } from "./abstractTests";
+import { testRedirection, testElementTrigger } from "../abstractTests";
 import { getRoute, getSelector } from "./helpers";
 import { useBackendMock } from "../../setup/backendMock";
 
-const backend = useBackendMock({
-  databases: 1,
-  tables: 2,
-  columns: 2,
-  chunks: 2,
-  queries: 10,
-  plugins: 3,
-  activated_plugins: 0
-});
+const backend = useBackendMock();
 
 describe("Change page routes", () => {
   beforeEach(() => {
@@ -42,7 +34,7 @@ describe("Change page routes", () => {
     });
   });
 
-  // test add database
+  // test database list
   describe("when clicking the database list button", () => {
     it("will open the database list", () => {
       testElementTrigger(
