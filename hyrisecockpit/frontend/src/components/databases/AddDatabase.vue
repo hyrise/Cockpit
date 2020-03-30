@@ -27,9 +27,8 @@
                 required
               ></v-text-field>
             </v-col>
-            <spacer/>
+            <v-spacer/>
             <v-btn
-              class="advanced-btn"
               text
               @click="showAdvanced = !showAdvanced"
             >
@@ -210,8 +209,4 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
 }
 </script>
 <style scoped>
-.advanced-btn {
-  position: absolute;
-  right: 24px;
-}
 </style>
