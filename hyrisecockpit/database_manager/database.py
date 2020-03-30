@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 from psycopg2 import pool
 
 from .background_scheduler import BackgroundJobManager
-from .cursor import PoolCursor
+from .cursor import PoolCursor, StorageCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
@@ -71,8 +71,21 @@ class Database(object):
             workload_publisher_url,
             self._database_blocked,
         )
+        self._initialize_influx()
         self._background_scheduler.start()
         self._background_scheduler.load_tables(self._default_tables)
+
+    def _initialize_influx(self) -> None:
+        """Initialize Influx database."""
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._id,
+        ) as cur:
+            cur.drop_database(self._id)
+            cur.create_database(self._id)
 
     def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
         """Create loaded_tables dictionary without information about already loaded tables."""
