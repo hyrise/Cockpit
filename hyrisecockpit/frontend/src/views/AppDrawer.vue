@@ -1,8 +1,8 @@
 <template>
-  <v-navigation-drawer v-model="open" app width="110">
+  <v-navigation-drawer app width="110">
     <v-toolbar class="text-center secondary">
       <v-img
-        src="../../src/components/images/hyrise_logo.png"
+        src="../../src/assets/images/hyrise_logo.png"
         class="ml-2 mb-2"
         max-width="55"
         max-height="55"
@@ -14,7 +14,12 @@
       max-height="30"
       >Views</v-card-text
     >
-    <v-card class="text-center" elevation="0" :to="{ name: 'overview' }">
+    <v-card
+      id="overview-button"
+      class="text-center"
+      elevation="0"
+      :to="{ name: 'overview' }"
+    >
       <v-icon class="text-center mt-4" size="40">
         mdi-speedometer
       </v-icon>
@@ -22,7 +27,12 @@
         Overview
       </v-card-text>
     </v-card>
-    <v-card class="text-center" elevation="0" :to="{ name: 'comparison' }">
+    <v-card
+      id="comparison-button"
+      class="text-center"
+      elevation="0"
+      :to="{ name: 'comparison' }"
+    >
       <v-icon class="mt-2" size="40">
         mdi-database-search
       </v-icon>
@@ -30,7 +40,12 @@
         Comparison
       </v-card-text>
     </v-card>
-    <v-card class="text-center" elevation="0" :to="{ name: 'workload' }">
+    <v-card
+      id="workload-monitoring-button"
+      class="text-center"
+      elevation="0"
+      :to="{ name: 'workload' }"
+    >
       <v-icon class="mt-2" size="40">
         mdi-align-vertical-bottom
       </v-icon>
@@ -51,9 +66,19 @@
       :open="showAddDatabaseDialog"
       @close="showAddDatabaseDialog = false"
     />
+    <remove-database
+      :open="showRemoveDatabaseDialog"
+      :database-id="removedDatabaseId"
+      @close="showRemoveDatabaseDialog = false"
+    />
     <v-menu bottom offset-x>
       <template v-slot:activator="{ on: menu }">
-        <v-card class="text-center" elevation="0" v-on="{ ...menu }">
+        <v-card
+          id="database-list-button"
+          class="text-center"
+          elevation="0"
+          v-on="{ ...menu }"
+        >
           <v-badge
             color="secondary primary--text"
             :content="databaseCount"
@@ -62,18 +87,26 @@
             bordered
           >
             <v-icon class="mt-4" size="40">
-              mdi-database-plus
+              mdi-database
             </v-icon>
           </v-badge>
           <v-card-text class="justify-center card-title overline pt-1">
-            Database
+            Databases
           </v-card-text>
         </v-card>
       </template>
-      <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
+      <available-databases-list
+        @addDatabase="showAddDatabaseDialog = true"
+        @removeDatabase="handleDatabaseDeletion"
+      />
     </v-menu>
 
-    <v-card class="text-center" elevation="0" @click="openWorkloadDialog()">
+    <v-card
+      id="workload-generation-button"
+      class="text-center"
+      elevation="0"
+      @click="showWorkloadDialog = true"
+    >
       <v-icon class="mt-2" size="40">
         mdi-account-cog
       </v-icon>
@@ -81,7 +114,12 @@
         Workload Generation
       </v-card-text>
     </v-card>
-    <v-card class="text-center" elevation="0" @click="togglePluginEditor()">
+    <v-card
+      id="plugin-overview-button"
+      class="text-center"
+      elevation="0"
+      @click="$emit('openPlugins')"
+    >
       <v-icon class="mt-2" size="40">
         mdi-alpha-p-box
       </v-icon>
@@ -91,7 +129,7 @@
     </v-card>
     <v-footer absolute class="font-weight-medium">
       <v-img
-        src="../../src/components/images/hpi_logo_bw.png"
+        src="../../src/assets/images/hpi_logo_bw.png"
         max-width="80"
         max-height="80"
       >
@@ -108,60 +146,48 @@ import {
   Ref,
   computed
 } from "@vue/composition-api";
-import addDatabase from "../components/addDatabase.vue";
+import AddDatabase from "@/components/databases/AddDatabase.vue";
+import RemoveDatabase from "@/components/databases/RemoveDatabase.vue";
 import PluginsOverview from "../components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
-import AvailableDatabasesList from "@/components/details/AvailableDatabasesList.vue";
-
-interface Props {
-  open: boolean;
-}
+import AvailableDatabasesList from "@/components/databases/AvailableDatabasesList.vue";
+import { Database } from "@/types/database";
 
 interface Data {
   showPluginEditor: Ref<boolean>;
-  togglePluginEditor: () => void;
   showWorkloadDialog: Ref<boolean>;
-  openWorkloadDialog: () => void;
   showAddDatabaseDialog: Ref<boolean>;
+  showRemoveDatabaseDialog: Ref<boolean>;
   databaseCount: Ref<string>;
+  handleDatabaseDeletion: (database: Database) => void;
+  removedDatabaseId: Ref<string>;
 }
 
 export default defineComponent({
   components: {
     PluginsOverview,
     WorkloadGeneration,
-    addDatabase,
-    AvailableDatabasesList
+    AddDatabase,
+    AvailableDatabasesList,
+    RemoveDatabase
   },
-  setup(
-    props: {
-      open: {
-        type: Boolean;
-        default: true;
-      };
-    },
-    context: SetupContext
-  ): Data {
-    const showPluginEditor = ref<boolean>(false);
-    const showWorkloadDialog = ref<boolean>(false);
-    const showAddDatabaseDialog = ref<boolean>(false);
-
-    function togglePluginEditor(): void {
-      context.emit("openPlugins");
+  setup(props: {}, context: SetupContext): Data {
+    const showRemoveDatabaseDialog = ref(false);
+    const removedDatabaseId = ref<string>("");
+    function handleDatabaseDeletion(database: Database): void {
+      removedDatabaseId.value = database.id;
+      showRemoveDatabaseDialog.value = true;
     }
-    function openWorkloadDialog(): void {
-      showWorkloadDialog.value = true;
-    }
-
     return {
-      showPluginEditor,
-      togglePluginEditor,
-      showWorkloadDialog,
-      openWorkloadDialog,
-      showAddDatabaseDialog,
+      showPluginEditor: ref(false),
+      showWorkloadDialog: ref(false),
+      showAddDatabaseDialog: ref(false),
+      showRemoveDatabaseDialog,
       databaseCount: computed(() =>
         context.root.$databaseController.availableDatabasesById.value.length.toString()
-      )
+      ),
+      handleDatabaseDeletion,
+      removedDatabaseId
     };
   }
 });

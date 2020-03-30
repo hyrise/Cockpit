@@ -125,55 +125,29 @@ function useLineChartConfiguration(
     return {
       xaxis: {
         title: {
-          text: props.chartConfiguration.xaxis,
-          font: {
-            //size: 16
-            //color: "#FAFAFA"
-          }
+          text: props.chartConfiguration.xaxis
         },
         type: "date",
         tickformat: "%H:%M:%S",
         range: [currentTime - (xMin - 1) * 1000, currentTime]
-        // linecolor: "#616161",
-        // gridcolor: "#616161",
-        // tickcolor: "#616161",
-        // tickfont: {
-        //   size: 12,
-        //   color: "#FAFAFA"
-        // },
-        //linewidth: 2
       },
       yaxis: {
         title: {
-          text: props.chartConfiguration.yaxis,
-          font: {
-            // size: 16
-            //color: "#FAFAFA"
-          }
+          text: props.chartConfiguration.yaxis
         },
         range: [0, yMax * 1.05 > 0 ? yMax * 1.05 : 1]
-        // linecolor: "#616161",
-        // gridcolor: "#616161",
-        // tickcolor: "#616161",
-        // tickfont: {
-        //   size: 12,
-        //   color: "#FAFAFA"
-        // },
-        //linewidth: 2
       },
       autosize: true,
       showlegend: multipleDatabasesAllowed,
-      legend: { x: 0, y: 1.3 }
-
-      // plot_bgcolor: "#424242",
-      // paper_bgcolor: "#424242",
-      // legend: {
-      //   font: {
-      //     family: "sans-serif",
-      //     size: 12,
-      //     color: "#FAFAFA"
-      //   }
-      // }
+      legend: { x: 0, y: 1.3 },
+      margin: {
+        l: 70,
+        r: 40,
+        b: 70,
+        t: 10,
+        pad: 0
+      },
+      paper_bgcolor: "rgba(0,0,0,0)"
     };
   }
 

@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="open" persistent max-width="900px">
-    <v-card>
+    <v-card id="workload-generation">
       <v-system-bar :height="50">
         <v-card-title>
           Workload Generation

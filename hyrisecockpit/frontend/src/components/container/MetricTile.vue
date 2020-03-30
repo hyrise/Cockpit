@@ -3,20 +3,20 @@
     <v-card-title>
       <v-container fluid>
         <v-row no-gutters>
-          <v-col>
+          <v-col class="database-title">
             <database-chip v-if="!!tileDatabase" :database-id="tileDatabase" />
           </v-col>
           <v-col class="metric-title">
-            {{ getMetricTitle(metric) }}
+            <div>{{ getMetricTitle(metric) }}</div>
+            <!--  Think about where to add this  <metric-description-tooltip :metric="metric" /> -->
           </v-col>
           <v-col class="metric-description">
-            <metric-description-tooltip :metric="metric" />
+            <time-interval :metric="metric" />
           </v-col>
         </v-row>
       </v-container>
     </v-card-title>
     <component
-      class="metric-component"
       :is="getMetricComponent(metric)"
       :selected-databases="selectedDatabases"
       :metric="metric"
@@ -46,6 +46,7 @@ import {
 import { Database } from "../../types/database";
 import MetricDescriptionTooltip from "@/components/details/MetricDescriptionTooltip.vue";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
+import TimeInterval from "@/components/details/TimeInterval.vue";
 
 interface Props extends MetricProps {
   tileDatabase: string;
@@ -67,7 +68,8 @@ export default defineComponent({
     QueueLength,
     QueryTypeProportion,
     Access,
-    Storage
+    Storage,
+    TimeInterval
   },
   props: {
     tileDatabase: {
@@ -86,8 +88,10 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.metric-component {
-  margin-top: -20px;
+.database-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .metric-title {
   display: flex;
@@ -97,7 +101,7 @@ export default defineComponent({
 }
 .metric-description {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
 }
 </style>

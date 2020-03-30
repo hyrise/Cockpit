@@ -24,6 +24,8 @@ export interface DatabaseController {
 
 export interface DatabaseService {
   addDatabase: (databaseConnection: any) => void;
+  removeDatabase: (databaseId: string) => void;
+  resetColors: () => void;
   fetchDatabases: () => Promise<any[]>;
   fetchDatabasesCPUInformation: () => Promise<any[]>;
   fetchDatabasesStorageInformation: () => Promise<any[]>;

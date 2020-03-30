@@ -103,7 +103,7 @@ class Database(object):
 
     def get_database_blocked(self) -> bool:
         """Return tables loading flag."""
-        return self._database_blocked.value
+        return bool(self._database_blocked.value)
 
     def get_worker_pool_status(self) -> str:
         """Return worker pool status."""
