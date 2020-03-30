@@ -33,10 +33,10 @@ class TestWorker:
         formatted_params = get_formatted_parameters(unformatted_params)
         for uf_param, f_param in zip(unformatted_params, formatted_params):  # type: ignore
             if uf_param[1] == "as_is":
-                assert type(f_param) == AsIs
-                assert str(uf_param[0]) == f_param.getquoted().decode("utf-8")  # type: ignore
+                assert isinstance(f_param, AsIs)
+                assert str(uf_param[0]) == f_param.getquoted().decode("utf-8")
             else:
-                assert type(f_param) in (str, int)
+                assert isinstance(f_param, (str, int))
                 assert uf_param[0] == f_param
 
     @patch("hyrisecockpit.database_manager.worker.time_ns")
