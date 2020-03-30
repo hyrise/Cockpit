@@ -5,6 +5,7 @@
     :chart-configuration="chartConfiguration"
     :selected-databases="selectedDatabases"
     :max-chart-width="maxChartWidth"
+    class="query-type-chart"
   />
 </template>
 
@@ -59,3 +60,8 @@ export default defineComponent({
   }
 });
 </script>
+<style scoped>
+.query-type-chart {
+  margin-top: -40px;
+}
+</style>
