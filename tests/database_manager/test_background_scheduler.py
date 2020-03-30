@@ -58,6 +58,13 @@ def get_mocked_storage_cursor(*args):
     return mocked_storage_cursor_constructor
 
 
+def get_mocked_worker_pool(*args) -> MagicMock:
+    """Return fake storage cursor."""
+    worker_pool: MagicMock = MagicMock()
+    worker_pool.get_queue_length.return_value = 0
+    return worker_pool
+
+
 def get_mocked_pool_cursor(*args):
     """Return fake storage cursor."""
     mocked_pool_cursor_constructor: MagicMock = MagicMock()
@@ -84,11 +91,13 @@ class TestBackgroundJobManager:
     )
     def background_job_manager(self) -> BackgroundJobManager:
         """Get a new BackgrpundJobManager."""
+        worker_pool: MagicMock = get_mocked_worker_pool()
         return BackgroundJobManager(
             database_id,
             get_database_blocked(),
             get_connection_pool(),
             fake_loaded_tables,
+            worker_pool,
             storage_host,
             storage_password,
             storage_port,
@@ -164,6 +173,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_chunks_data_job = MagicMock()
         background_job_manager._update_storage_data_job = MagicMock()
         background_job_manager._update_plugin_log_job = MagicMock()
+        background_job_manager._update_queue_length_job = MagicMock()
 
         background_job_manager.close()
 
@@ -172,6 +182,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_chunks_data_job.remove.assert_called_once()
         background_job_manager._update_storage_data_job.remove.assert_called_once()
         background_job_manager._update_plugin_log_job.remove.assert_called_once()
+        background_job_manager._update_queue_length_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()
 
     @patch(
