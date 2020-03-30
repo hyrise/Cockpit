@@ -27,11 +27,8 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-spacer/>
-            <v-btn
-              text
-              @click="showAdvanced = !showAdvanced"
-            >
+            <v-spacer />
+            <v-btn text @click="showAdvanced = !showAdvanced">
               <div v-if="!showAdvanced">
                 show advanced
               </div>
@@ -164,8 +161,8 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   const port = ref<string>("5432");
   const dbname = ref<string>("postgres");
 
-  watch(host, host => {
-    id.value = host;
+  watch(host, (host, prevHost) => {
+    if (!id.value.length || id.value === prevHost) id.value = host;
   });
 
   function resetValues(): void {
@@ -208,5 +205,4 @@ function useDatabaseCreation(context: SetupContext): DatabaseCreationData {
   };
 }
 </script>
-<style scoped>
-</style>
+<style scoped></style>
