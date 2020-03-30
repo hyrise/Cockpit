@@ -146,7 +146,8 @@ function useLineChartConfiguration(
         b: 70,
         t: 10,
         pad: 0
-      }
+      },
+      paper_bgcolor: "rgba(0,0,0,0)"
     };
   }
 
