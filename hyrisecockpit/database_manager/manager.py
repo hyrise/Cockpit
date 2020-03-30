@@ -43,7 +43,29 @@ class DatabaseManager(object):
         self._storage_user = storage_user
 
         self._databases: Dict[str, Database] = {}
-        server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
+        server_calls: Dict[
+            str, Tuple[Callable[[Body], Response], Optional[Dict]]
+        ] = self._get_server_calls()
+        self._server = Server(db_manager_listening, db_manager_port, server_calls)
+
+    def __enter__(self) -> "DatabaseManager":
+        """Return self for a context manager."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Call close with a context manager."""
+        self.close()
+        return None
+
+    def _get_server_calls(
+        self,
+    ) -> Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]]:
+        return {
             "add database": (self._call_add_database, add_database_request_schema),
             "delete database": (
                 self._call_delete_database,
@@ -66,23 +88,8 @@ class DatabaseManager(object):
                 self._call_plugin_setting,
                 set_plugin_request_schema,
             ),
-            "get plugin setting": (self._call_read_plugin_setting, None),
+            "get plugin setting": (self._call_get_plugin_setting, None),
         }
-        self._server = Server(db_manager_listening, db_manager_port, server_calls)
-
-    def __enter__(self) -> "DatabaseManager":
-        """Return self for a context manager."""
-        return self
-
-    def __exit__(
-        self,
-        exc_type: Optional[Type[BaseException]],
-        exc_value: Optional[BaseException],
-        traceback: Optional[TracebackType],
-    ) -> Optional[bool]:
-        """Call close with a context manager."""
-        self.close()
-        return None
 
     def _call_add_database(self, body: Body) -> Response:
         """Add database and initialize driver for it."""
@@ -229,7 +236,7 @@ class DatabaseManager(object):
             response = get_response(423)
         return response
 
-    def _call_read_plugin_setting(self, body: Body) -> Response:
+    def _call_get_plugin_setting(self, body: Body) -> Response:
         plugin_settings = [
             {"id": id, "plugin_settings": database.get_plugin_setting()}
             for id, database in self._databases.items()
