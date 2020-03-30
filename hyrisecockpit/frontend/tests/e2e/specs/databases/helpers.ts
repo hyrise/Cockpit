@@ -1,4 +1,4 @@
-import { getSelectorByConfig } from "../helpers";
+import { getSelectorByConfig, roundNumber } from "../helpers";
 
 export type DatabaseData = {
   id: string;
@@ -63,16 +63,6 @@ export function assertDeleteValues(
   requested: { id: string }
 ): void {
   expect(input).to.eq(requested.id);
-}
-
-function roundNumber(
-  data: number,
-  ratio: number,
-  factor: number = 1,
-  even: boolean = true
-): number {
-  const rounded = Math.floor(data * factor) / ratio;
-  return even ? Math.floor(rounded) : rounded;
 }
 
 function getTableMemoryFootprint(data: any): number {
