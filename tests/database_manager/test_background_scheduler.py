@@ -549,6 +549,11 @@ class TestBackgroundJobManager:
                 "column_data_type": ["int", "string", "string"],
                 "encoding_type": ["Dictionary", "Dictionary", "Dictionary"],
                 "estimated_size_in_bytes": [9000, 1000, 400],
+                "vector_compression_type": [
+                    "FixedSize2ByteAligned",
+                    "FixedSize2ByteAligned",
+                    "FixedSize2ByteAligned",
+                ],
             }
         )
 
@@ -567,11 +572,13 @@ class TestBackgroundJobManager:
                         "size": 9000,
                         "data_type": "int",
                         "encoding": ["Dictionary"],
+                        "vector_compression_type": ["FixedSize2ByteAligned"],
                     },
                     "c_nationkey": {
                         "size": 1000,
                         "data_type": "string",
                         "encoding": ["Dictionary"],
+                        "vector_compression_type": ["FixedSize2ByteAligned"],
                     },
                 },
             },
@@ -583,6 +590,7 @@ class TestBackgroundJobManager:
                         "size": 400,
                         "data_type": "string",
                         "encoding": ["Dictionary"],
+                        "vector_compression_type": ["FixedSize2ByteAligned"],
                     }
                 },
             },

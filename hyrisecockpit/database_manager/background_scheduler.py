@@ -264,6 +264,12 @@ class BackgroundJobManager(object):
             .sum()
         )
 
+        vector_compression_type = DataFrame(
+            meta_segments["vector_compression_type"]
+            .groupby(level=["table_name", "column_name"])
+            .apply(list)
+        )
+
         encoding: DataFrame = DataFrame(
             meta_segments["encoding_type"]
             .groupby(level=["table_name", "column_name"])
@@ -274,7 +280,9 @@ class BackgroundJobManager(object):
             ["table_name", "column_name"]
         )[["column_data_type"]]
 
-        result: DataFrame = size.join(encoding).join(datatype)
+        result: DataFrame = size.join(encoding).join(datatype).join(
+            vector_compression_type
+        )
         return result
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
@@ -290,6 +298,7 @@ class BackgroundJobManager(object):
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
                     "encoding": row["encoding_type"],
+                    "vector_compression_type": row["vector_compression_type"],
                 }
         return output
 
