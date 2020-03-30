@@ -28,9 +28,13 @@ class PoolCursor:
     def __init__(self, connection_pool: pool) -> None:
         """Initialize a PoolCursor."""
         self.pool: pool = connection_pool
-        self.connection = self.pool.getconn()
-        self.connection.set_session(autocommit=True)
-        self.cur = self.connection.cursor()
+        try:
+            self.__connection = self.pool.getconn()
+            self.__connection.set_session(autocommit=True)
+            self.__cur = self.__connection.cursor()
+            self.valid = True
+        except (DatabaseError, OperationalError, InterfaceError):
+            self.valid = False
 
     def __enter__(self) -> "PoolCursor":
         """Return self for a context manager."""
@@ -43,37 +47,46 @@ class PoolCursor:
         traceback: Optional[TracebackType],
     ) -> Optional[bool]:
         """Call close with a context manager."""
-        self.cur.close()
-        self.pool.putconn(self.connection)
+        if self.valid:
+            self.__cur.close()
+            self.pool.putconn(self.__connection)
         return None
 
     def execute(
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
         """Execute a query."""
+        if not self.valid:
+            return None
         try:
-            return self.cur.execute(query, parameters)
+            return self.__cur.execute(query, parameters)
         except (DatabaseError, OperationalError, InterfaceError):
             return None
 
     def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
+        if not self.valid:
+            return ()
         try:
-            return self.cur.fetchone()
+            return self.__cur.fetchone()
         except (DatabaseError, OperationalError, InterfaceError):
             return ()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
+        if not self.valid:
+            return []
         try:
-            return self.cur.fetchall()
+            return self.__cur.fetchall()
         except (DatabaseError, OperationalError, InterfaceError):
             return []
 
     def read_sql_query(self, sql: str) -> DataFrame:
         """Execute query and return result as data-frame."""
+        if not self.valid:
+            return DataFrame()
         try:
-            return read_sql_query_pandas(sql, self.connection)
+            return read_sql_query_pandas(sql, self.__connection)
         except (DatabaseError, OperationalError, InterfaceError):
             return DataFrame()
 
