@@ -38,11 +38,14 @@ class WorkloadGenerator(object):
         self._workload_pub_port = workload_pub_port
         self._default_workload_location = default_workload_location
         server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
+            "get all workloads": (self._call_get_all_workloads, None),
             "start workload": (
                 self._call_start_workload,
                 start_workload_request_schema,
             ),
+            "get workload": (self._call_get_workload, None),
             "stop workload": (self._call_stop_workload, None),
+            "update workload": (self._call_update_workload, None),
         }
         self._server = Server(generator_listening, generator_port, server_calls)
 
@@ -90,6 +93,9 @@ class WorkloadGenerator(object):
             self._workloads[workload_type] = workload
         return workload
 
+    def _call_get_all_workloads(self, body: Body) -> Response:
+        raise NotImplementedError()
+
     def _call_start_workload(self, body: Body) -> Response:
         frequency: int = body["frequency"]
         workload_type: str = body["folder_name"]
@@ -109,9 +115,15 @@ class WorkloadGenerator(object):
 
         return get_response(200)
 
+    def _call_get_workload(self, body: Body) -> Response:
+        raise NotImplementedError()
+
     def _call_stop_workload(self, body: Body) -> Response:
         self._generate_workload_flag = False
         return get_response(200)
+
+    def _call_update_workload(self, body: Body) -> Response:
+        raise NotImplementedError()
 
     def _publish_data(self, data: Response) -> None:
         self._pub_socket.send_json(data)
