@@ -9,6 +9,7 @@
           <v-row>
             <v-col cols="6">
               <v-text-field
+                id="host-input"
                 v-model="host"
                 label="Host*"
                 required
@@ -16,6 +17,7 @@
             </v-col>
             <v-col cols="6">
               <v-text-field
+                id="id-input"
                 v-model="id"
                 label="Id*"
                 required
@@ -26,6 +28,7 @@
           <v-row align="center">
             <v-col cols="12" sm="6">
               <v-text-field
+                id="worker-input"
                 v-model="number_workers"
                 label="Number of Workers*"
                 type="number"
@@ -33,7 +36,11 @@
               ></v-text-field>
             </v-col>
             <v-spacer />
-            <v-btn text @click="showAdvanced = !showAdvanced">
+            <v-btn
+              id="advanced-input-button"
+              text
+              @click="showAdvanced = !showAdvanced"
+            >
               <div v-if="!showAdvanced">
                 show advanced
               </div>
@@ -47,6 +54,7 @@
               <v-row>
                 <v-col cols="6" sm="6">
                   <v-text-field
+                    id="port-input"
                     v-model="port"
                     label="Port*"
                     required
@@ -54,6 +62,7 @@
                 </v-col>
                 <v-col cols="6" sm="6">
                   <v-text-field
+                    id="dbname-input"
                     v-model="dbname"
                     label="Databasename*"
                     required
@@ -63,6 +72,7 @@
               <v-row>
                 <v-col cols="6">
                   <v-text-field
+                    id="user-input"
                     v-model="user"
                     label="User*"
                     required
@@ -70,6 +80,7 @@
                 </v-col>
                 <v-col cols="6">
                   <v-text-field
+                    id="password-input"
                     v-model="password"
                     label="Password"
                     type="password"
@@ -84,13 +95,14 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
+          id="cancel-add-database-button"
           color="primary"
           text
           @click="
             closeDialog();
             showAdvanced = false;
           "
-          >Close</v-btn
+          >Cancel</v-btn
         >
         <v-btn
           id="save-database-button"
