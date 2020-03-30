@@ -3,7 +3,7 @@ from types import TracebackType
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, Union
 
 from influxdb import InfluxDBClient
-from psycopg2 import pool
+from psycopg2 import DatabaseError, InterfaceError, OperationalError, pool
 
 
 class PointBase(TypedDict):
@@ -49,15 +49,24 @@ class PoolCursor:
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
         """Execute a query."""
-        return self.cur.execute(query, parameters)
+        try:
+            return self.cur.execute(query, parameters)
+        except (DatabaseError, OperationalError, InterfaceError):
+            return None
 
     def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
-        return self.cur.fetchone()
+        try:
+            return self.cur.fetchone()
+        except (DatabaseError, OperationalError, InterfaceError):
+            return ()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
-        return self.cur.fetchall()
+        try:
+            return self.cur.fetchall()
+        except (DatabaseError, OperationalError, InterfaceError):
+            return []
 
 
 class StorageCursor:
