@@ -31,9 +31,9 @@ function getInitialNumbers(
 export function useBackendMock(
   numbers: Partial<Record<Entity, number>> = {}
 ): {
-  restart(status?: BackendStatus, delay?: number): void;
   start(status?: BackendStatus, delay?: number): void;
   reload(request: Request, id: string, type: "POST" | "DELETE"): void;
+  restart(status?: BackendStatus, delay?: number): void;
 } {
   const {
     getMockedResponse,
@@ -51,6 +51,11 @@ export function useBackendMock(
     if (type == "POST") getMockedPostCallback(request)(id);
     if (type == "DELETE") getMockedDeleteCallback(request)(id);
     mockRoutes();
+  }
+
+  function restart(status: BackendStatus = "up", delay?: number): void {
+    renewMocks();
+    start(status, delay);
   }
 
   function mockRoutes(status: number = 200, delay?: number): void {
@@ -152,11 +157,6 @@ export function useBackendMock(
     mock("**/control/data", getDeleteAlias("data"));
     mock("**/control/plugin", getDeleteAlias("plugin"));
     mock("**/control/workload", getDeleteAlias("workload"));
-  }
-
-  function restart(status: BackendStatus = "up", delay?: number): void {
-    renewMocks();
-    start(status, delay);
   }
 
   return {
