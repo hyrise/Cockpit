@@ -59,7 +59,7 @@ def get_mocked_storage_cursor(*args):
 
 
 def get_mocked_worker_pool(*args) -> MagicMock:
-    """Return fake storage cursor."""
+    """Return fake worker pool."""
     worker_pool: MagicMock = MagicMock()
     worker_pool.get_queue_length.return_value = 0
     return worker_pool
