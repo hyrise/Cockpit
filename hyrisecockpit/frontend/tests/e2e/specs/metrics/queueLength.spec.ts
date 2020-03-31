@@ -7,7 +7,7 @@ import {
   getSelectorWithID,
   getDetailsSelectorWithID,
   assertMetricDetails,
-  assertChartData
+  assertLineChartData
 } from "./helpers";
 
 const backend = useBackendMock({ databases: 2 });
@@ -15,7 +15,7 @@ const backend = useBackendMock({ databases: 2 });
 let databases: any[] = [];
 let data: any = {};
 
-describe("Show latency", () => {
+describe("Show queue length", () => {
   beforeEach(() => {
     backend.start();
     cy.visit("/");
@@ -37,7 +37,7 @@ describe("Show latency", () => {
       it("will show the correct metric data", () => {
         cy.wait(1000); // wait for data
         cy.get(getSelector("queueLength")).should((elements: any) => {
-          assertChartData(
+          assertLineChartData(
             elements[0].data,
             data,
             databases.map(db => db.id)
@@ -84,7 +84,7 @@ describe("Show latency", () => {
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("queueLength", database.id)).should(
             (elements: any) => {
-              assertChartData(elements[0].data, data, [database.id]);
+              assertLineChartData(elements[0].data, data, [database.id]);
             }
           );
         });

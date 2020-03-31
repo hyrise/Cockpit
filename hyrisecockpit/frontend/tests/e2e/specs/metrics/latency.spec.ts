@@ -7,7 +7,7 @@ import {
   getSelectorWithID,
   getDetailsSelectorWithID,
   assertMetricDetails,
-  assertChartData
+  assertLineChartData
 } from "./helpers";
 import { roundNumber } from "../helpers";
 
@@ -45,7 +45,7 @@ describe("Show latency", () => {
       it("will show the correct metric data", () => {
         cy.wait(1000); // wait for data
         cy.get(getSelector("latency")).should((elements: any) => {
-          assertChartData(
+          assertLineChartData(
             elements[0].data,
             data,
             databases.map(db => db.id)
@@ -99,7 +99,7 @@ describe("Show latency", () => {
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("latency", database.id)).should(
             (elements: any) => {
-              assertChartData(elements[0].data, data, [database.id]);
+              assertLineChartData(elements[0].data, data, [database.id]);
             }
           );
         });

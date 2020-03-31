@@ -6,7 +6,7 @@ import {
   getSelector,
   getSelectorWithID,
   getDetailsSelectorWithID,
-  assertChartData,
+  assertLineChartData,
   assertMetricDetails
 } from "./helpers";
 
@@ -37,7 +37,7 @@ describe("Show throughput", () => {
       it("will show the correct metric data", () => {
         cy.wait(1000); // wait for data
         cy.get(getSelector("throughput")).should((elements: any) => {
-          assertChartData(
+          assertLineChartData(
             elements[0].data,
             data,
             databases.map(db => db.id)
@@ -84,7 +84,7 @@ describe("Show throughput", () => {
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("throughput", database.id)).should(
             (elements: any) => {
-              assertChartData(elements[0].data, data, [database.id]);
+              assertLineChartData(elements[0].data, data, [database.id]);
             }
           );
         });

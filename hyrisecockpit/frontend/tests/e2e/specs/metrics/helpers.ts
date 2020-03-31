@@ -6,7 +6,11 @@ const selectors: Record<string, { element: string; title: string }> = {
   latency: { element: "div", title: "latency" },
   queueLength: { element: "div", title: "queueLength" },
   cpu: { element: "div", title: "cpu" },
-  ram: { element: "div", title: "ram" }
+  ram: { element: "div", title: "ram" },
+  executedQueryTypeProportion: {
+    element: "div",
+    title: "executedQueryTypeProportion"
+  }
 };
 
 export function getSelector(component: string): string {
@@ -33,7 +37,7 @@ export function getDetailsSelectorWithID(
   );
 }
 
-export function assertChartData(
+export function assertLineChartData(
   chartDatasets: any[],
   requestData: any,
   databases: any[]
@@ -53,6 +57,23 @@ export function assertChartData(
     chartData.y.forEach((item: any) => {
       expect(item).to.eq(requestData[database]);
     });
+  });
+}
+
+export function assertBarChartData(
+  chartDatasets: any[],
+  requestData: any,
+  xaxis: string
+): void {
+  Object.keys(requestData).forEach((label: string) => {
+    const chartData: any = chartDatasets.find(
+      (data: any) => data.name === label
+    );
+    expect(chartData).to.exist;
+    expect(chartData.x).to.exist;
+    expect(chartData.y).to.exist;
+    expect(chartData.y).to.eql([requestData[label]]);
+    expect(chartData.x).to.eql([xaxis]);
   });
 }
 
