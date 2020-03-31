@@ -1,5 +1,5 @@
 import { getSelectorByConfig, roundNumber } from "../helpers";
-import { testDateFormatting } from "../abstractTests";
+import { testDateFormatting, testMaxDecimalDigits } from "../abstractTests";
 
 const selectors: Record<string, { element: string; title: string }> = {
   throughput: { element: "div", title: "throughput" },
@@ -10,7 +10,9 @@ const selectors: Record<string, { element: string; title: string }> = {
   executedQueryTypeProportion: {
     element: "div",
     title: "executedQueryTypeProportion"
-  }
+  },
+  firstStorage: { element: "div", title: "1storage" },
+  secondStorage: { element: "div", title: "2storage" }
 };
 
 export function getSelector(component: string): string {
@@ -77,6 +79,49 @@ export function assertBarChartData(
   });
 }
 
+export function assertTreeMapData(
+  chartDatasets: any,
+  requestData: any,
+  database: string
+): void {
+  console.log(chartDatasets, requestData, database);
+  // assert root element
+  expect(chartDatasets.labels[0]).to.eq(database);
+  expect(chartDatasets.parents[0]).to.eq("");
+  expect(chartDatasets.values[0]).to.eq(0);
+
+  let i = 1;
+  // assert table elements
+  Object.entries(requestData).forEach(([table, columns]: [any, any]) => {
+    expect(chartDatasets.labels[i]).to.eq(table);
+    expect(chartDatasets.parents[i]).to.eq(database);
+    expect(chartDatasets.values[i]).to.eq(0);
+    testMaxDecimalDigits(chartDatasets.text[i].percentOfDatabase, 3);
+    testMaxDecimalDigits(chartDatasets.text[i].percentOfTable, 3);
+    i++;
+    // assert column elements
+    Object.entries(columns.data).forEach(([column, data]: [any, any]) => {
+      expect(chartDatasets.labels[i]).to.eq(column);
+      expect(chartDatasets.parents[i]).to.eq(table);
+      expect(chartDatasets.values[i]).to.eq(getRoundedData(data.size));
+      expect(chartDatasets.text[i].dataType).to.eq(
+        "data type: " + data.data_type
+      );
+      expect(chartDatasets.text[i].encoding).to.eq(
+        "encoding: " + data.encoding
+      );
+      testMaxDecimalDigits(chartDatasets.text[i].percentOfDatabase, 3);
+      testMaxDecimalDigits(chartDatasets.text[i].percentOfTable, 3);
+      i++;
+    });
+  });
+
+  expect(chartDatasets.labels.length).to.eq(i);
+  expect(chartDatasets.parents.length).to.eq(i);
+  expect(chartDatasets.values.length).to.eq(i);
+  expect(chartDatasets.text.length).to.eq(i);
+}
+
 export function assertMetricDetails(
   text: string,
   value: number,
@@ -94,4 +139,9 @@ export function assertMetricDetails(
     expect(text[j]).to.eq(expected[i]);
     j++;
   }
+}
+
+// DATA
+function getRoundedData(value: number): number {
+  return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
 }
