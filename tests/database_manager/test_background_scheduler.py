@@ -383,10 +383,11 @@ class TestBackgroundJobManager:
 
         mocked_storage_cursor = MagicMock()
 
-    def test_successfully_create_cpu_data_dict(
+    def test_successfully_create_system_data_dict(
         self, background_job_manager: BackgroundJobManager
     ):
-        """Test creates cpu data dict successfully."""
+        """Test creates system data dict successfully."""
+        fake_database_threads: int = 16
         fake_utilization_df: DataFrame = DataFrame(
             {
                 "cpu_system_usage": [120],
@@ -407,46 +408,16 @@ class TestBackgroundJobManager:
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
+            "free_memory": 0,
+            "used_memory": 42,
+            "total_memory": 1234,
+            "database_threads": fake_database_threads,
         }
 
         received_dict: Dict[
             str, Union[int, float]
-        ] = background_job_manager._create_cpu_data_dict(
-            fake_utilization_df, fake_system_df
-        )
-
-        assert received_dict == expected_dict
-
-    def test_successfully_create_memory_data_dict(
-        self, background_job_manager: BackgroundJobManager
-    ):
-        """Test creates memory data dict successfully."""
-        fake_utilization_df: DataFrame = DataFrame(
-            {
-                "cpu_system_usage": [120],
-                "cpu_process_usage": [300],
-                "system_memory_free_bytes": [0],
-                "process_physical_memory_bytes": [42],
-            }
-        )
-        fake_system_df: DataFrame = DataFrame(
-            {
-                "cpu_count": [16],
-                "cpu_clock_speed": [120],
-                "system_memory_total_bytes": [42],
-            }
-        )
-        expected_dict: Dict[str, int] = {
-            "free": 0,
-            "used": 42,
-            "total": 42,
-            "percent": 1,
-        }
-
-        received_dict: Dict[
-            str, Union[int, float]
-        ] = background_job_manager._create_memory_data_dict(
-            fake_utilization_df, fake_system_df
+        ] = background_job_manager._create_system_data_dict(
+            fake_utilization_df, fake_system_df, fake_database_threads
         )
 
         assert received_dict == expected_dict
