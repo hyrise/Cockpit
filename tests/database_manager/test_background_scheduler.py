@@ -184,6 +184,50 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
         get_mocked_pool_cursor,
     )
+    def test_pings_hyrise_if_cursor_not_valid(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test handling of not valid connection."""
+        background_job_manager._loaded_tables = {"hyrise": "down", "Hallo": "world"}
+
+        global mocked_pool_cursor
+        mocked_pool_cursor.valid = False
+
+        expected: Dict = {"hyrise": None, "Hallo": None}
+
+        background_job_manager._ping_hyrise()
+
+        assert not background_job_manager._hyrise_active.value
+        assert background_job_manager._loaded_tables == expected
+
+        mocked_pool_cursor = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    def test_pings_hyrise_if_cursor_valid(
+        self, background_job_manager: BackgroundJobManager
+    ) -> None:
+        """Test handling of valid connection."""
+        background_job_manager._loaded_tables = {"hyrise": "down", "Hallo": "world"}
+
+        global mocked_pool_cursor
+        mocked_pool_cursor.valid = True
+
+        expected: Dict = {"hyrise": "down", "Hallo": "world"}
+
+        background_job_manager._ping_hyrise()
+
+        assert background_job_manager._hyrise_active.value
+        assert background_job_manager._loaded_tables == expected
+
+        mocked_pool_cursor = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
     def test_converts_sql_to_data_frame_if_database_is_blocked(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
