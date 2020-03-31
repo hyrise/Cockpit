@@ -122,7 +122,7 @@ describe("Show cpu", () => {
     });
     describe("observing the metric details", () => {
       it("will show the correct metric detail data", () => {
-        cy.wait(1000); // wait for data
+        cy.wait(1500); // wait for data
         databases.forEach((database: any) => {
           cy.get(getDetailsSelectorWithID("cpu", database.id))
             .invoke("text")
