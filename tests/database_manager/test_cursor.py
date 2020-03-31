@@ -148,22 +148,22 @@ class TestCursor:
     @patch("hyrisecockpit.database_manager.cursor.PoolCursor._initialize",)
     def test_initializes_pool_cursor_correctly(self, mocked_initialize) -> None:
         """Test initializes pool cursor correctly."""
-        mocked_pool = MagicMock()
-        pool_cursor = PoolCursor(mocked_pool)
+        mocked_pool: MagicMock = MagicMock()
+        pool_cursor: PoolCursor = PoolCursor(mocked_pool)
 
         pool_cursor.pool == mocked_pool
         mocked_initialize.assert_called_once()
 
     def test_initializes_connection_correctly_with_no_exception(self) -> None:
         """Test initialize connection and cursor correctly."""
-        mocked_pool = MagicMock()
-        mocked_connection = MagicMock()
-        mocked_cursor = MagicMock()
+        mocked_pool: MagicMock = MagicMock()
+        mocked_connection: MagicMock = MagicMock()
+        mocked_cursor: MagicMock = MagicMock()
 
         mocked_connection.cursor.return_value = mocked_cursor
         mocked_pool.getconn.return_value = mocked_connection
 
-        pool_cursor = PoolCursor(mocked_pool)
+        pool_cursor: PoolCursor = PoolCursor(mocked_pool)
 
         assert pool_cursor._connection == mocked_connection
         mocked_connection.set_session.assert_called_once_with(autocommit=True)
@@ -176,18 +176,18 @@ class TestCursor:
     def test_initializes_connection_with_exception(self, exceptions) -> None:
         """Test initialize connection witch exception."""
 
-        def raise_exception(*args):
+        def raise_exception(*args) -> Exception:
             """Throw exception."""
             raise exceptions
 
-        mocked_pool = MagicMock()
-        mocked_connection = MagicMock()
-        mocked_cursor = MagicMock()
+        mocked_pool: MagicMock = MagicMock()
+        mocked_connection: MagicMock = MagicMock()
+        mocked_cursor: MagicMock = MagicMock()
 
         mocked_connection.cursor.return_value = mocked_cursor
         mocked_pool.getconn = raise_exception
 
-        pool_cursor = PoolCursor(mocked_pool)
+        pool_cursor: PoolCursor = PoolCursor(mocked_pool)
 
         assert pool_cursor._connection is None
         assert pool_cursor._cur is None
@@ -220,7 +220,7 @@ class TestCursor:
     def test_execute_with_exception(self, pool_cursor, exceptions) -> None:
         """Test execute with exceptions."""
 
-        def raise_exception(*args):
+        def raise_exception(*args) -> Exception:
             """Throw exception."""
             raise exceptions
 
@@ -237,7 +237,7 @@ class TestCursor:
         pool_cursor.valid = False
         pool_cursor._cur = MagicMock()
 
-        results = pool_cursor.fetchone()
+        results: Tuple[Any, ...] = pool_cursor.fetchone()
 
         assert results == ()
         pool_cursor._cur.fetchone.assert_not_called()
@@ -248,7 +248,7 @@ class TestCursor:
         pool_cursor._cur = MagicMock()
         pool_cursor._cur.fetchone.return_value = ("hallo",)
 
-        results = pool_cursor.fetchone()
+        results: Tuple[Any, ...] = pool_cursor.fetchone()
 
         assert results == ("hallo",)
         pool_cursor._cur.fetchone.assert_called_once()
@@ -259,7 +259,7 @@ class TestCursor:
     def test_fetches_one_with_exception(self, pool_cursor, exceptions) -> None:
         """Test fetch one with exceptions."""
 
-        def raise_exception(*args):
+        def raise_exception(*args) -> Exception:
             """Throw exception."""
             raise exceptions
 
@@ -267,7 +267,7 @@ class TestCursor:
         pool_cursor._cur = MagicMock()
         pool_cursor._cur.fetchone = raise_exception
 
-        results = pool_cursor.fetchone()
+        results: Tuple[Any, ...] = pool_cursor.fetchone()
 
         assert results == ()
 
@@ -276,7 +276,7 @@ class TestCursor:
         pool_cursor.valid = False
         pool_cursor._cur = MagicMock()
 
-        results = pool_cursor.fetchall()
+        results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
 
         assert results == []
         pool_cursor._cur.fetchall.assert_not_called()
@@ -287,7 +287,7 @@ class TestCursor:
         pool_cursor._cur = MagicMock()
         pool_cursor._cur.fetchall.return_value = [("hallo",), ("world",)]
 
-        results = pool_cursor.fetchall()
+        results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
 
         assert results == [("hallo",), ("world",)]
         pool_cursor._cur.fetchall.assert_called_once()
@@ -298,7 +298,7 @@ class TestCursor:
     def test_fetches_all_with_exception(self, pool_cursor, exceptions) -> None:
         """Test fetch all with exceptions."""
 
-        def raise_exception(*args):
+        def raise_exception(*args) -> Exception:
             """Throw exception."""
             raise exceptions
 
@@ -306,7 +306,7 @@ class TestCursor:
         pool_cursor._cur = MagicMock()
         pool_cursor._cur.fetchall = raise_exception
 
-        results = pool_cursor.fetchall()
+        results: List[Tuple[Any, ...]] = pool_cursor.fetchall()
 
         assert results == []
 
@@ -315,7 +315,7 @@ class TestCursor:
         pool_cursor.valid = False
         pool_cursor._cur = MagicMock()
 
-        results = pool_cursor.read_sql_query("query")
+        results: DataFrame = pool_cursor.read_sql_query("query")
 
         assert results.empty
         assert type(results) is DataFrame
@@ -328,12 +328,12 @@ class TestCursor:
         """Test read sql query witch valid pool cursor and no exception."""
         pool_cursor.valid = True
         pool_cursor._cur = MagicMock()
-        fake_df = DataFrame({"hallo": [1, 2]})
-        moked_connection = MagicMock()
+        fake_df: DataFrame = DataFrame({"hallo": [1, 2]})
+        moked_connection: MagicMock = MagicMock()
         pool_cursor._connection = moked_connection
         mocked_read_sql_query_pandas.return_value = fake_df
 
-        results = pool_cursor.read_sql_query("query")
+        results: DataFrame = pool_cursor.read_sql_query("query")
 
         assert results.equals(fake_df)
         mocked_read_sql_query_pandas.assert_called_once_with("query", moked_connection)
@@ -347,7 +347,7 @@ class TestCursor:
     ) -> None:
         """Test read sql query with exceptions."""
 
-        def raise_exception(*args):
+        def raise_exception(*args) -> Exception:
             """Throw exception."""
             raise exceptions
 
@@ -356,7 +356,7 @@ class TestCursor:
         pool_cursor._connection = MagicMock()
         mocked_read_sql_query_pandas.side_effect = raise_exception
 
-        results = pool_cursor.read_sql_query("query")
+        results: DataFrame = pool_cursor.read_sql_query("query")
 
         assert results.empty
         assert type(results) is DataFrame
