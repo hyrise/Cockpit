@@ -12,7 +12,9 @@ from .app import create_app
 def main() -> None:
     """Create and start a backend API."""
     app = create_app(FLASK_ENV)
-    app.run(host=BACKEND_LISTENING, port=BACKEND_PORT, debug=FLASK_DEBUG)
+    app.run(
+        host=BACKEND_LISTENING, port=BACKEND_PORT, debug=FLASK_DEBUG, threaded=False
+    )
 
 
 if __name__ == "__main__":

@@ -16,4 +16,4 @@ def register_routes(api: Api, app: Flask, root: str) -> None:
     """Register all workload routes."""
     from .controller import api as workload_api
 
-    api.add_namespace(workload_api, path=f"/{root}/{BASE_ROUTE}")
+    api.add_namespace(workload_api, path=f"{root}/{BASE_ROUTE}")
