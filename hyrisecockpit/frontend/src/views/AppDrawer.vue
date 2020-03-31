@@ -1,132 +1,127 @@
 <template>
-  <v-navigation-drawer v-model="open" app width="110">
-    <v-toolbar class="text-center secondary">
-      <v-img
-        src="../../src/components/images/hyrise_logo.png"
-        class="ml-2 mb-2"
-        max-width="55"
-        max-height="55"
-      >
-      </v-img>
-    </v-toolbar>
-    <v-card-text
-      class="text-center primary white--text overline"
-      max-height="30"
-      >Views</v-card-text
-    >
-    <v-card
-      id="overview-button"
-      class="text-center"
-      elevation="0"
-      :to="{ name: 'overview' }"
-    >
-      <v-icon class="text-center mt-4" size="40">
-        mdi-speedometer
-      </v-icon>
-      <v-card-text class="justify-center card-title overline pt-1">
-        Overview
-      </v-card-text>
-    </v-card>
-    <v-card
-      id="comparison-button"
-      class="text-center"
-      elevation="0"
-      :to="{ name: 'comparison' }"
-    >
-      <v-icon class="mt-2" size="40">
-        mdi-database-search
-      </v-icon>
-      <v-card-text class="justify-center card-title overline pt-1">
-        Comparison
-      </v-card-text>
-    </v-card>
-    <v-card
-      id="workload-monitoring-button"
-      class="text-center"
-      elevation="0"
-      :to="{ name: 'workload' }"
-    >
-      <v-icon class="mt-2" size="40">
-        mdi-align-vertical-bottom
-      </v-icon>
-      <v-card-text class="justify-center card-title overline pt-1">
-        Workload metrics
-      </v-card-text>
-    </v-card>
-    <v-card-text
-      class="text-center primary white--text overline"
-      max-height="30"
-      >Settings</v-card-text
-    >
-    <workload-generation
-      :open="showWorkloadDialog"
-      @close="showWorkloadDialog = false"
-    />
-    <add-database
-      :open="showAddDatabaseDialog"
-      @close="showAddDatabaseDialog = false"
-    />
-    <v-menu bottom offset-x>
-      <template v-slot:activator="{ on: menu }">
-        <v-card
-          id="database-list-button"
-          class="text-center"
-          elevation="0"
-          v-on="{ ...menu }"
-        >
-          <v-badge
-            color="secondary primary--text"
-            :content="databaseCount"
-            offset-y="30"
-            offset-x="12"
-            bordered
-          >
-            <v-icon class="mt-4" size="40">
-              mdi-database-plus
-            </v-icon>
-          </v-badge>
-          <v-card-text class="justify-center card-title overline pt-1">
-            Database
-          </v-card-text>
-        </v-card>
-      </template>
-      <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
-    </v-menu>
+  <v-navigation-drawer
+    v-model="drawer"
+    permanent
+    absolute
+    app
+    width="220"
+    fixed="true"
+  >
+    <v-list>
+      <v-list-item two-line>
+        <v-list-item-avatar tile="true">
+          <img src="../../src/components/images/hyrise_logo.png" />
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title>Cockpit</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-    <v-card
-      id="workload-generation-button"
-      class="text-center"
-      elevation="0"
-      @click="openWorkloadDialog()"
-    >
-      <v-icon class="mt-2" size="40">
-        mdi-account-cog
-      </v-icon>
-      <v-card-text class="justify-center overline pt-1">
-        Workload Generation
-      </v-card-text>
-    </v-card>
-    <v-card
-      id="plugin-overview-button"
-      class="text-center"
-      elevation="0"
-      @click="togglePluginEditor()"
-    >
-      <v-icon class="mt-2" size="40">
-        mdi-alpha-p-box
-      </v-icon>
-      <v-card-text class="justify-center overline pt-1">
-        Plugins
-      </v-card-text>
-    </v-card>
-    <v-footer absolute class="font-weight-medium">
-      <v-img
-        src="../../src/components/images/hpi_logo_bw.png"
-        max-width="80"
-        max-height="80"
-      >
-      </v-img>
-    </v-footer>
+      <v-divider></v-divider>
+      <!-- <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          > -->
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>Views</v-list-item-title>
+        </v-list-item-content>
+
+        <v-list-item-icon>
+          <v-icon>mdi-cog-outline</v-icon>
+        </v-list-item-icon>
+      </v-list-item>
+
+      <v-list-item :to="{ name: 'overview' }">
+        <v-list-item-icon>
+          <v-icon>mdi-speedometer</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Overview</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item :to="{ name: 'comparison' }">
+        <v-list-item-icon>
+          <v-icon>mdi-database-search</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Comparison</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item :to="{ name: 'workload' }">
+        <v-list-item-icon>
+          <v-icon>mdi-align-vertical-bottom</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Workload Metrics</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-menu bottom offset-x>
+        <template v-slot:activator="{ on: menu }">
+          <v-list-item v-on="{ ...menu }">
+            <v-list-item-icon>
+              <v-icon>mdi-database-plus</v-icon>
+            </v-list-item-icon>
+            <v-badge
+              color="secondary primary--text"
+              :content="databaseCount"
+              offset-y="1"
+              offset-x="40"
+              bordered
+            >
+            </v-badge>
+
+            <v-list-item-content>
+              <v-list-item-title>Database</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
+      </v-menu>
+
+      <workload-generation
+        :open="showWorkloadDialog"
+        @close="showWorkloadDialog = false"
+      />
+
+      <v-list-item @click="openWorkloadDialog()">
+        <v-list-item-icon>
+          <v-icon>mdi-account-cog</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Workload</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <add-database
+        :open="showAddDatabaseDialog"
+        @close="showAddDatabaseDialog = false"
+      />
+
+      <v-list-item @click="togglePluginEditor()">
+        <v-list-item-icon>
+          <v-icon>mdi-alpha-p-box</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Plugins</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 ​
