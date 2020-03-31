@@ -271,15 +271,15 @@ class BackgroundJobManager(object):
             .apply(list)
         )
 
-        encodings: DataFrame = DataFrame(
+        encoding: DataFrame = DataFrame(
             meta_segments["encoding_type"]
             .groupby(level=["table_name", "column_name"])
             .apply(list)
         )
 
-        encoding = encodings.join(vector_compression_type)
+        combined_encoding = encoding.join(vector_compression_type)
 
-        for _, row in encoding.iterrows():
+        for _, row in combined_encoding.iterrows():
             row["encoding_type"] = [
                 {
                     "name": encoding,
@@ -293,9 +293,7 @@ class BackgroundJobManager(object):
             ["table_name", "column_name"]
         )[["column_data_type"]]
 
-        result: DataFrame = size.join(encoding).join(datatype).join(
-            vector_compression_type
-        )
+        result: DataFrame = size.join(combined_encoding).join(datatype)
         return result
 
     def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
