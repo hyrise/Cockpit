@@ -17,7 +17,7 @@ from hyrisecockpit.api.app.workload.service import WorkloadService
 
 from .data import interfaces, workload_ids, workloads
 
-url = f"/api/{BASE_ROUTE}"
+url = f"/{BASE_ROUTE}"
 
 bad_id = "id_that_will_fail"
 
