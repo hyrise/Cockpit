@@ -141,6 +141,7 @@ export default defineComponent({
     ): boolean {
       return (
         activePlugins.value.find(x => x === databseId + "_" + pluginId) &&
+        pluginSettings.value[databseId] &&
         pluginSettings.value[databseId][pluginId]
       );
     }
