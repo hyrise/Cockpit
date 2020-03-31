@@ -411,6 +411,14 @@ class TestDatabase(object):
 
         assert expected == received
 
+    def test_gets_hyrise_active(self, database: Database) -> None:
+        """Test get hyrise active status."""
+        database._hyrise_active.value = True
+        result: bool = database.get_hyrise_active()
+
+        assert type(result) is bool
+        assert result
+
     def test_starts_successful_worker(self, database: Database) -> None:
         """Test start of successful worker."""
         mocked_worker_pool: MagicMock = MagicMock()
