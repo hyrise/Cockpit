@@ -83,18 +83,17 @@ class BackgroundJobManager(object):
 
     def _update_queue_length(self) -> None:
         queue_length: int = self._worker_pool.get_queue_length()
-        if queue_length > 0:
-            time_stamp: int = int(time()) * 1_000_000_000
-            with StorageCursor(
-                self._storage_host,
-                self._storage_port,
-                self._storage_user,
-                self._storage_password,
-                self._database_id,
-            ) as log:
-                log.log_meta_information(
-                    "queue_length", {"queue_length": queue_length}, time_stamp,
-                )
+        time_stamp: int = int(time()) * 1_000_000_000
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_meta_information(
+                "queue_length", {"queue_length": queue_length}, time_stamp,
+            )
 
     def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
