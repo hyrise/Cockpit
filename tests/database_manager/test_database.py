@@ -69,16 +69,7 @@ def get_fake_pool_cursor_with_rows_to_return(connection_pool: pool) -> MagicMock
     return mocked_context_cur
 
 
-def get_fake_background_job_manager(
-    database_id: str,
-    database_blocked: ValueType,
-    connection_pool: pool,
-    loaded_tables: Dict[str, Optional[str]],
-    storage_host: str,
-    storage_password: str,
-    storage_port: str,
-    storage_user: str,
-) -> MagicMock:
+def get_fake_background_job_manager(*args) -> MagicMock:
     """Return fake  BackgroundJobManager."""
     mocked_job_manager: MagicMock = MagicMock()
     mocked_job_manager.start.side_effect = None
@@ -125,6 +116,8 @@ class TestDatabase(object):
         assert database._default_tables == default_tables
         assert type(database._number_additional_connections) is int
         assert type(database._database_blocked) is ValueType
+        assert type(database._hyrise_active) is ValueType
+        assert database._hyrise_active.value
         assert not database._database_blocked.value
         database._background_scheduler.start.assert_called_once()  # type: ignore
         database._background_scheduler.load_tables.assert_called_once_with(  # type: ignore

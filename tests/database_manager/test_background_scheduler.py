@@ -14,6 +14,7 @@ from hyrisecockpit.database_manager.background_scheduler import BackgroundJobMan
 
 database_id: str = "MongoDB"
 get_database_blocked: Callable[[], Value] = lambda: Value("b", False)  # noqa: E731
+get_hyrise_active: Callable[[], Value] = lambda: Value("b", True)
 get_connection_pool: Callable[[], MagicMock] = lambda: MagicMock()  # noqa: E731
 fake_loaded_tables: Dict[str, Optional[str]] = {
     "The Dough Rollers": "alternative",
@@ -89,6 +90,7 @@ class TestBackgroundJobManager:
             get_database_blocked(),
             get_connection_pool(),
             fake_loaded_tables,
+            get_hyrise_active(),
             storage_host,
             storage_password,
             storage_port,
@@ -115,6 +117,7 @@ class TestBackgroundJobManager:
         assert background_job_manager._storage_password == storage_password
         assert background_job_manager._loaded_tables == fake_loaded_tables
         assert isinstance(background_job_manager._previous_chunks_data, dict)
+        assert background_job_manager._hyrise_active.value == get_hyrise_active().value
 
     def test_initializes_background_scheduler_job(
         self, background_job_manager: BackgroundJobManager
@@ -130,6 +133,7 @@ class TestBackgroundJobManager:
             (background_job_manager._update_system_data, "interval", 1),
             (background_job_manager._update_storage_data, "interval", 5),
             (background_job_manager._update_plugin_log, "interval", 1),
+            (background_job_manager._ping_hyrise, "interval", 0.5),  # type: ignore
         ]
 
         expected = [
@@ -164,6 +168,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_chunks_data_job = MagicMock()
         background_job_manager._update_storage_data_job = MagicMock()
         background_job_manager._update_plugin_log_job = MagicMock()
+        background_job_manager._ping_hyrise_job = MagicMock()
 
         background_job_manager.close()
 
@@ -172,6 +177,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_chunks_data_job.remove.assert_called_once()
         background_job_manager._update_storage_data_job.remove.assert_called_once()
         background_job_manager._update_plugin_log_job.remove.assert_called_once()
+        background_job_manager._ping_hyrise_job.remove.assert_called_once()
         mock_scheduler.shutdown.assert_called_once()
 
     @patch(
