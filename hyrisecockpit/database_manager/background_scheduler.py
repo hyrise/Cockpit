@@ -267,15 +267,28 @@ class BackgroundJobManager(object):
         vector_compression_type = DataFrame(
             meta_segments["vector_compression_type"]
             .groupby(level=["table_name", "column_name"])
+            .apply(set)
             .apply(list)
         )
 
-        encoding: DataFrame = DataFrame(
+        encodings: DataFrame = DataFrame(
             meta_segments["encoding_type"]
             .groupby(level=["table_name", "column_name"])
-            .apply(set)
+            .apply(list)
         )
-        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
+
+        encoding = encodings.join(vector_compression_type)
+
+        for _, row in encoding.iterrows():
+            row["encoding_type"] = [
+                {
+                    "name": encoding,
+                    "amount": row["encoding_type"].count(encoding),
+                    "compression": row["vector_compression_type"],
+                }
+                for encoding in set(row["encoding_type"])
+            ]
+
         datatype: DataFrame = meta_segments.reset_index().set_index(
             ["table_name", "column_name"]
         )[["column_data_type"]]
@@ -298,7 +311,6 @@ class BackgroundJobManager(object):
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
                     "encoding": row["encoding_type"],
-                    "vector_compression_type": row["vector_compression_type"],
                 }
         return output
 

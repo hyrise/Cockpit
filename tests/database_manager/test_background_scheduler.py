@@ -548,12 +548,12 @@ class TestBackgroundJobManager:
                 "column_name": ["c_custkey", "c_nationkey", "s_address"],
                 "column_data_type": ["int", "string", "string"],
                 "encoding_type": ["Dictionary", "Dictionary", "Dictionary"],
-                "estimated_size_in_bytes": [9000, 1000, 400],
                 "vector_compression_type": [
                     "FixedSize2ByteAligned",
                     "FixedSize2ByteAligned",
                     "FixedSize2ByteAligned",
                 ],
+                "estimated_size_in_bytes": [9000, 1000, 400],
             }
         )
 
@@ -562,7 +562,19 @@ class TestBackgroundJobManager:
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
         expected_storage_dict: Dict[
-            str, Dict[str, Union[int, Dict[str, Dict[str, Union[int, str, List[str]]]]]]
+            str,
+            Dict[
+                str,
+                Union[
+                    int,
+                    Dict[
+                        str,
+                        Dict[
+                            str, Union[int, str, List[Dict[str, Union[int, str, List]]]]
+                        ],
+                    ],
+                ],
+            ],
         ] = {
             "customer": {
                 "size": 10000,
@@ -571,14 +583,24 @@ class TestBackgroundJobManager:
                     "c_custkey": {
                         "size": 9000,
                         "data_type": "int",
-                        "encoding": ["Dictionary"],
-                        "vector_compression_type": ["FixedSize2ByteAligned"],
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "amount": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
                     },
                     "c_nationkey": {
                         "size": 1000,
                         "data_type": "string",
-                        "encoding": ["Dictionary"],
-                        "vector_compression_type": ["FixedSize2ByteAligned"],
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "amount": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
                     },
                 },
             },
@@ -589,8 +611,13 @@ class TestBackgroundJobManager:
                     "s_address": {
                         "size": 400,
                         "data_type": "string",
-                        "encoding": ["Dictionary"],
-                        "vector_compression_type": ["FixedSize2ByteAligned"],
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "amount": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
                     }
                 },
             },
