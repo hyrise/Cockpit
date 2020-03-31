@@ -9,6 +9,7 @@ import {
 } from "../types/metrics";
 import { useDataTransformation } from "../services/transformationService";
 import { colorDefinition } from "./colors";
+import { FetchType } from "@/types/services";
 
 const metricsMetadata: Record<Metric, MetricMetadata> = {
   access: {
@@ -217,6 +218,10 @@ export function getMetricTitle(metric: Metric): string {
 
 export function getMetricRequestTime(metric: Metric): number {
   return metricsMetadata[metric].requestTime;
+}
+
+export function getMetricFetchType(metric: Metric): FetchType {
+  return metricsMetadata[metric].fetchType;
 }
 
 export function getMetricValueStateOrder(

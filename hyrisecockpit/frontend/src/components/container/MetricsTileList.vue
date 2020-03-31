@@ -37,11 +37,11 @@ export default defineComponent({
   flex-wrap: wrap;
 }
 .metric-chart {
-  flex: 0 0 32.5%;
+  flex: 0 0 32.8%;
   margin: 0px 3px 6px 3px;
   padding: 0px;
 }
-@media (min-width: 2000px) {
+@media (min-width: 2400px) {
   .metric-chart {
     flex: 0 0 24%;
     margin: 0px 3px 6px 3px;

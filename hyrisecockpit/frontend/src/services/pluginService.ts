@@ -2,16 +2,24 @@ import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
+import { eventBus } from "../plugins/eventBus";
+import { useFormatting } from "../meta/formatting";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
   const pluginLogs = ref<any>({});
   const pluginSettings = ref<any>({});
+  const { formatDateToHHMMSS } = useFormatting();
 
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
   getPluginSettings();
+
+  eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {
+    getPlugins();
+    getPluginSettings();
+  });
 
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
@@ -66,9 +74,9 @@ export function usePluginService(): PluginService {
             (databaseLog: string, currentLog: any) => {
               return (
                 databaseLog +
-                `${currentLog.reporter} [${new Date(
-                  parseInt(currentLog.timestamp)
-                ).toLocaleTimeString()}]: ${currentLog.message}\n`
+                `${currentLog.reporter} [${formatDateToHHMMSS(
+                  new Date(parseInt(currentLog.timestamp))
+                )}]: ${currentLog.message}\n`
               );
             },
             ""

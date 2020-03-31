@@ -1,6 +1,7 @@
 <template>
   <div class="flex">
     <v-card
+      id="database-system-details"
       class="card"
       :style="databaseFlex"
       v-for="database in databases"
@@ -12,9 +13,8 @@
             <v-icon left> mdi-database</v-icon>
             <b>ID: </b>
           </v-col>
-          <v-col class="entry">
-            <v-avatar class="mr-2" size="16" :color="database.color" />
-            <b>{{ database.id }}</b>
+          <v-col id="database-id" class="top-entry">
+            <database-chip :database-id="database.id" />
           </v-col>
         </v-row>
         <v-divider class="divider" />
@@ -23,7 +23,7 @@
             <v-icon left> mdi-desktop-classic</v-icon>
             <b>Host:</b>
           </v-col>
-          <v-col class="entry">
+          <v-col id="database-host" class="entry">
             {{ database.systemDetails.host }}
           </v-col>
         </v-row>
@@ -32,7 +32,7 @@
             <v-icon left> mdi-memory</v-icon>
             <b>Memory capacity:</b>
           </v-col>
-          <v-col class="entry">
+          <v-col id="database-memory-capacity" class="entry">
             {{ database.systemDetails.memoryCapacity }} GB
           </v-col>
         </v-row>
@@ -41,7 +41,7 @@
             <v-icon left> mdi-shoe-print</v-icon>
             <b>Memory footprint:</b>
           </v-col>
-          <v-col class="entry">
+          <v-col id="database-memory-footprint" class="entry">
             {{ database.systemDetails.memoryFootprint }} MB
           </v-col>
         </v-row>
@@ -50,7 +50,7 @@
             <v-icon left> mdi-cpu-64-bit</v-icon>
             <b>Number of CPUs:</b>
           </v-col>
-          <v-col class="entry">
+          <v-col id="database-number-cpus" class="entry">
             {{ database.systemDetails.numberOfCPUs }}
           </v-col>
         </v-row>
@@ -59,7 +59,7 @@
             <v-icon left> mdi-account-hard-hat </v-icon>
             <b>Number of workers:</b>
           </v-col>
-          <v-col class="entry">
+          <v-col id="database-number-workers" class="entry">
             {{ database.systemDetails.numberOfWorkers }}
           </v-col>
         </v-row>
@@ -77,9 +77,10 @@ import {
   Ref,
   ref
 } from "@vue/composition-api";
-import { Database } from "../../types/database";
-import { useUpdatingDatabases } from "../../meta/databases";
-import { useDatabaseFlex } from "../../meta/components";
+import { Database } from "@/types/database";
+import { useUpdatingDatabases } from "@/meta/databases";
+import { useDatabaseFlex } from "@/meta/components";
+import DatabaseChip from "@/components/details/DatabaseChip.vue";
 
 interface Props {
   selectedDatabases: string[];
@@ -96,6 +97,9 @@ export default defineComponent({
       type: Array,
       default: null
     }
+  },
+  components: {
+    DatabaseChip
   },
   setup(props: Props, context: SetupContext): Data {
     return {
@@ -115,13 +119,16 @@ export default defineComponent({
   margin-top: 0.5%;
   margin-left: 2%;
 }
+.top-entry {
+  margin-left: 2%;
+}
 .card {
   margin-bottom: 0.5%;
   margin-top: 1%;
   margin-right: 0.5%;
 }
 .divider {
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
 }
 </style>

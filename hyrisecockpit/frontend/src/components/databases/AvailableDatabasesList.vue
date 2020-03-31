@@ -4,12 +4,12 @@
       <v-card-title class="header subtitle-1">
         DATABASES
         <v-spacer />
-        <v-tooltip bottom>
+        <v-tooltip right>
           <template v-slot:activator="{ on }">
             <v-chip
               id="add-database-button"
               class="button"
-              color="secondary primary--text"
+              color="primary--text"
               v-on="on"
               @click="$emit('addDatabase')"
             >
@@ -20,11 +20,14 @@
         </v-tooltip>
       </v-card-title>
     </v-card>
-    <v-list-item v-for="database in databases" :key="database.id">
+    <v-list-item class="mt-1" v-for="database in databases" :key="database.id">
       <v-list-item-title>
-        <v-icon left :color="database.color">mdi-database</v-icon
-        >{{ database.id }}</v-list-item-title
-      >
+        <database-chip
+          :database-id="database.id"
+          :closable="true"
+          @closed="$emit('removeDatabase', database)"
+        />
+      </v-list-item-title>
     </v-list-item>
   </v-list>
 </template>
@@ -38,12 +41,16 @@ import {
   computed
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
+import DatabaseChip from "@/components/details/DatabaseChip.vue";
 
 interface Data {
   databases: Ref<readonly Database[]>;
 }
 
 export default defineComponent({
+  components: {
+    DatabaseChip
+  },
   setup(props: {}, context: SetupContext): Data {
     const {
       getDatabasesByIds,
