@@ -10,7 +10,7 @@
     <v-list>
       <v-list-item two-line>
         <v-list-item-avatar tile="true">
-          <img src="../../src/components/images/hyrise_logo.png" />
+          <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>Cockpit</v-list-item-title>
@@ -90,9 +90,9 @@
           </v-list-item>
         </template>
         <available-databases-list
-        @addDatabase="showAddDatabaseDialog = true"
-        @removeDatabase="handleDatabaseDeletion"
-      />
+          @addDatabase="showAddDatabaseDialog = true"
+          @removeDatabase="handleDatabaseDeletion"
+        />
       </v-menu>
 
       <workload-generation
@@ -115,10 +115,10 @@
         @close="showAddDatabaseDialog = false"
       />
       <remove-database
-      :open="showRemoveDatabaseDialog"
-      :database-id="removedDatabaseId"
-      @close="showRemoveDatabaseDialog = false"
-    />
+        :open="showRemoveDatabaseDialog"
+        :database-id="removedDatabaseId"
+        @close="showRemoveDatabaseDialog = false"
+      />
 
       <v-list-item @click="$emit('openPlugins')">
         <v-list-item-icon>
