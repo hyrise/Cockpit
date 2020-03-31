@@ -5,7 +5,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, 
 from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query as read_sql_query_pandas
-from psycopg2 import DatabaseError, InterfaceError, OperationalError, pool
+from psycopg2 import DatabaseError, InterfaceError, pool
 
 
 class PointBase(TypedDict):
@@ -33,7 +33,7 @@ class PoolCursor:
             self.__connection.set_session(autocommit=True)
             self.__cur = self.__connection.cursor()
             self.valid = True
-        except (DatabaseError, OperationalError, InterfaceError):
+        except (DatabaseError, InterfaceError):
             self.valid = False
 
     def __enter__(self) -> "PoolCursor":
@@ -60,7 +60,7 @@ class PoolCursor:
             return None
         try:
             return self.__cur.execute(query, parameters)
-        except (DatabaseError, OperationalError, InterfaceError):
+        except (DatabaseError, InterfaceError):
             return None
 
     def fetchone(self) -> Tuple[Any, ...]:
@@ -69,7 +69,7 @@ class PoolCursor:
             return ()
         try:
             return self.__cur.fetchone()
-        except (DatabaseError, OperationalError, InterfaceError):
+        except (DatabaseError, InterfaceError):
             return ()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
@@ -78,7 +78,7 @@ class PoolCursor:
             return []
         try:
             return self.__cur.fetchall()
-        except (DatabaseError, OperationalError, InterfaceError):
+        except (DatabaseError, InterfaceError):
             return []
 
     def read_sql_query(self, sql: str) -> DataFrame:
@@ -87,7 +87,7 @@ class PoolCursor:
             return DataFrame()
         try:
             return read_sql_query_pandas(sql, self.__connection)
-        except (DatabaseError, OperationalError, InterfaceError):
+        except (DatabaseError, InterfaceError):
             return DataFrame()
 
 
