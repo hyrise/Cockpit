@@ -39,7 +39,9 @@
                 :key="workload"
                 :label="getDisplayedWorkload(workload)"
                 :value="workload"
-                :disabled="!isLoaded(workload) || loadingWorkloadData"
+                :disabled="
+                  !isLoaded(workload) || loadingWorkloadData || instanceBlocked
+                "
               >
               </v-radio>
             </v-radio-group>
@@ -99,7 +101,10 @@
               @change="handleWorkloadDataChange(workload)"
               :loading="switchesLoading[workload]"
               :disabled="
-                runningWorkload || loadingWorkloadData || noDatabaseAdded
+                runningWorkload ||
+                  loadingWorkloadData ||
+                  instanceBlocked ||
+                  noDatabaseAdded
               "
             >
             </v-switch>
@@ -116,7 +121,8 @@ import {
   defineComponent,
   ref,
   Ref,
-  reactive
+  reactive,
+  computed
 } from "@vue/composition-api";
 import { Workload, availableWorkloads } from "../../types/workloads";
 import { useWorkloadService } from "../../services/workloadService";
@@ -137,6 +143,7 @@ interface Data {
   switchesLoading: Record<string, boolean>;
   runningWorkload: Ref<boolean>;
   loadingWorkloadData: Ref<boolean>;
+  instanceBlocked: Ref<boolean>;
   noDatabaseAdded: Ref<boolean>;
   getDisplayedWorkload: (workload: Workload) => string;
   isLoaded: (workload: Workload) => boolean;
@@ -187,7 +194,7 @@ export default defineComponent({
       job: false
     });
     const runningWorkload = ref<boolean>(false);
-    const loadingWorkloadData = ref<boolean>(false);
+    const instanceBlocked = ref<boolean>(false);
     const noDatabaseAdded = ref<boolean>(false);
 
     function closeWorkloadDialog(): void {
@@ -247,13 +254,13 @@ export default defineComponent({
               instance.loaded_benchmarks.includes(benchmark)
             );
           });
-          loadingWorkloadData.value = Object.values(response.data).some(
-            (instance: any) => instance.database_blocked_status === 1
+          instanceBlocked.value = Object.values(response.data).some(
+            (instance: any) => instance.database_blocked_status === true
           );
           runningWorkload.value = Object.values(response.data).some(
             (instance: any) => instance.worker_pool_status === "running"
           );
-          if (!loadingWorkloadData.value && changeWorkloadData) {
+          if (!instanceBlocked.value && changeWorkloadData) {
             Object.values(availableWorkloads).forEach((workload: Workload) => {
               switchesLoading[workload] = false;
             });
@@ -276,7 +283,14 @@ export default defineComponent({
       buttons,
       switchesLoading,
       runningWorkload,
-      loadingWorkloadData,
+      loadingWorkloadData: computed(
+        () =>
+          switchesLoading.tpch01 ||
+          switchesLoading.tpch1 ||
+          switchesLoading.tpcds ||
+          switchesLoading.job
+      ),
+      instanceBlocked,
       noDatabaseAdded,
       getDisplayedWorkload,
       isLoaded,
