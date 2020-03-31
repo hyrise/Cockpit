@@ -1,4 +1,4 @@
-x<template>
+<template>
   <v-card flat>
     <v-card-title class="py-2 px-2">
       <b class="interval secondary--text">{{ interval }}</b>
