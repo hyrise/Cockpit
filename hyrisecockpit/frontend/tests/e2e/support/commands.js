@@ -23,3 +23,8 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add("numberOfRequests", alias =>
+  cy
+    .wrap()
+    .then(() => cy.state("requests").filter(req => req.alias === alias).length)
+);
