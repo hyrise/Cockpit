@@ -61,7 +61,6 @@ describe("Show storage", () => {
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("secondStorage", database.id)).should(
             (elements: any) => {
-              console.log("graph data", elements[0].data[0]);
               assertTreeMapData(
                 elements[0].data[0],
                 data[database.id],
