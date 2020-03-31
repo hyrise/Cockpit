@@ -80,6 +80,7 @@
           v-on="{ ...menu }"
         >
           <v-badge
+            id="number-of-databases"
             color="secondary primary--text"
             :content="databaseCount"
             offset-y="30"
