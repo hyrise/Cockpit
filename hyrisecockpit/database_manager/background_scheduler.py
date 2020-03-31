@@ -84,7 +84,6 @@ class BackgroundJobManager(object):
         with PoolCursor(self._connection_pool) as cur:
             if not cur.valid:
                 self._hyrise_active.value = False
-                self._loaded_tables = dict.fromkeys(self._loaded_tables, None)
             else:
                 self._hyrise_active.value = True
 
