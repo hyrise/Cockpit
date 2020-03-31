@@ -84,8 +84,8 @@ class Database(object):
             self._storage_password,
             self._id,
         ) as cursor:
-            cursor.drop_database(self._id)
-            cursor.create_database(self._id)
+            cursor.drop_database()
+            cursor.create_database()
             throughput_continuous_query = """SELECT count("latency") AS "throughput"
                 INTO "throughput"
                 FROM "successful_queries"
@@ -94,7 +94,6 @@ class Database(object):
             cursor.create_continuous_query(
                 "throughput_calculation",
                 throughput_continuous_query,
-                self._id,
                 throughput_resample_options,
             )
 
@@ -106,7 +105,6 @@ class Database(object):
             cursor.create_continuous_query(
                 "latency_calculation",
                 latency_continuous_query,
-                self._id,
                 latency_resample_options,
             )
 

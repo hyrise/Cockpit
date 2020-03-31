@@ -99,24 +99,20 @@ class StorageCursor:
         """Write a single point to the database."""
         return self.__write_points([point])
 
-    def create_database(self, database_name) -> None:
-        """Create database with a given name."""
-        self._connection.create_database(database_name)
+    def create_database(self) -> None:
+        """Create database."""
+        self._connection.create_database(self._database)
 
-    def drop_database(self, database_name) -> None:
-        """Drop database with a given name."""
-        self._connection.drop_database(database_name)
+    def drop_database(self) -> None:
+        """Drop database."""
+        self._connection.drop_database(self._database)
 
     def create_continuous_query(
-        self,
-        query_name: str,
-        query: str,
-        database_name: str,
-        resample_options: Optional[str] = None,
+        self, query_name: str, query: str, resample_options: Optional[str] = None,
     ) -> None:
         """Create continuous query."""
         self._connection.create_continuous_query(
-            query_name, query, database_name, resample_options
+            query_name, query, self._database, resample_options
         )
 
     def log_meta_information(
