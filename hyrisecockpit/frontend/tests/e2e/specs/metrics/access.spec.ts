@@ -59,7 +59,6 @@ describe("Show access", () => {
     });
     describe("observing the chart data with no selected table", () => {
       it("will show the correct empty metric data", () => {
-        cy.wait(5500);
         databases.forEach((database: any) => {
           cy.get(getSelectorWithID("secondAccess", database.id)).should(
             (elements: any) => {
@@ -116,7 +115,7 @@ describe("Show access", () => {
             .click();
           cy.wait(500);
           cy.get(getSelectorWithID("firstAccess", database.id)).should("exist");
-          cy.wait(1000);
+          cy.wait(500);
 
           const items = Object.keys(data[databases[0].id]);
           const index = generateRandomInt(0, items.length);

@@ -95,7 +95,7 @@ describe("Show storage", () => {
           cy.get(getSelectorWithID("firstStorage", database.id)).should(
             "exist"
           );
-          cy.wait(1000);
+          cy.wait(500);
           cy.get(getSelectorWithID("firstStorage", database.id)).should(
             (elements: any) => {
               assertTreeMapData(
