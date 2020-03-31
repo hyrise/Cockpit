@@ -4,7 +4,7 @@ Includes the main WorkloadGenerator.
 """
 
 from types import TracebackType
-from typing import Any, Callable, Dict, Optional, Tuple, Type
+from typing import Callable, Dict, Optional, Tuple, Type
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, Context
@@ -49,9 +49,8 @@ class WorkloadGenerator(object):
         }
         self._server = Server(generator_listening, generator_port, server_calls)
 
-        self._generate_workload_flag = False
         self._frequency = 0
-        self._workloads: Dict[str, Any] = {}
+        self._workloads: Dict[str, Workload] = {}
         self._init_server()
         self._init_scheduler()
 
@@ -83,58 +82,91 @@ class WorkloadGenerator(object):
             "tcp://{:s}:{:s}".format(self._workload_listening, self._workload_pub_port)
         )
 
-    def _get_default_workload_location(self) -> str:
-        return self._default_workload_location
-
-    def _get_workload(self, workload_type: str) -> Workload:
-        workload = self._workloads.get(workload_type)
-        if not workload:
-            workload = Workload(workload_type, self._get_default_workload_location())
-            self._workloads[workload_type] = workload
-        return workload
-
     def _call_get_all_workloads(self, body: Body) -> Response:
-        raise NotImplementedError()
+        response = get_response(200)
+        response["body"]["workloads"] = [
+            {
+                "workload_id": workload_id,
+                "frequency": workload.frequency,
+                "folder_name": workload.folder_name,
+            }
+            for workload_id, workload in self._workloads.items()
+        ]
+        return response
 
     def _call_start_workload(self, body: Body) -> Response:
+        workload_id: str = body["workload_id"]
         frequency: int = body["frequency"]
-        workload_type: str = body["folder_name"]
-        try:
-            self._get_workload(workload_type)
-        except (
-            NotExistingWorkloadFolderException,
-            EmptyWorkloadFolderException,
-            QueryTypeNotFoundException,
-            QueryTypesNotSpecifiedException,
-        ) as e:
-            return get_error_response(400, str(e))
-
-        self._workload_type = workload_type
-        self._frequency = frequency
-        self._generate_workload_flag = True
-
-        return get_response(200)
+        folder_name: str = body["folder_name"]
+        if workload_id not in self._workloads:
+            try:
+                self._workloads[workload_id] = Workload(
+                    folder_name, self._default_workload_location, frequency
+                )
+            except (
+                NotExistingWorkloadFolderException,
+                EmptyWorkloadFolderException,
+                QueryTypeNotFoundException,
+                QueryTypesNotSpecifiedException,
+            ) as e:
+                return get_error_response(400, str(e))
+            else:
+                response = get_response(200)
+                response["body"]["workload"] = {
+                    "workload_id": workload_id,
+                    "frequency": self._workloads[workload_id].frequency,
+                    "folder_name": self._workloads[workload_id].folder_name,
+                }
+        else:
+            response = get_response(409)
+        return response
 
     def _call_get_workload(self, body: Body) -> Response:
-        raise NotImplementedError()
+        workload_id: str = body["workload_id"]
+        try:
+            workload = self._workloads[workload_id]
+        except KeyError:
+            response = get_response(404)
+        else:
+            response = get_response(200)
+            response["body"]["workload"] = {
+                "workload_id": workload_id,
+                "frequency": workload.frequency,
+                "folder_name": workload.folder_name,
+            }
+        return response
 
     def _call_stop_workload(self, body: Body) -> Response:
-        self._generate_workload_flag = False
-        return get_response(200)
+        workload_id: str = body["workload_id"]
+        try:
+            self._workloads.pop(workload_id)
+        except KeyError:
+            response = get_response(404)
+        else:
+            response = get_response(200)
+            response["body"]["workload_id"] = workload_id
+        return response
 
     def _call_update_workload(self, body: Body) -> Response:
-        raise NotImplementedError()
-
-    def _publish_data(self, data: Response) -> None:
-        self._pub_socket.send_json(data)
+        workload_id: str = body["workload_id"]
+        new_workload: Dict = body["workload"]  # TODO make this a typed dict
+        try:
+            workload = self._workloads[workload_id]
+        except KeyError:
+            response = get_response(404)
+        else:
+            workload.update(new_workload)
+            response = get_response(200)
+            response["body"]["workload_id"] = workload_id
+        return response
 
     def _generate_workload(self) -> None:
-        if self._generate_workload_flag:
-            workload = self._get_workload(self._workload_type)
-            queries = workload.generate_workload(self._frequency)
+        for workload in self._workloads.values():
             response = get_response(200)
-            response["body"] = {"querylist": queries}
-            self._publish_data(response)
+            response["body"]["querylist"] = [
+                tuple(query) for query in workload.generate_workload()
+            ]
+            self._pub_socket.send_json(response)
 
     def start(self) -> None:
         """Start the generator by starting the server."""

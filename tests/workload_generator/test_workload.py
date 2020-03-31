@@ -8,8 +8,9 @@ from pytest import fixture, raises
 from hyrisecockpit.exception import QueryTypeNotFoundException
 from hyrisecockpit.workload_generator.workloads.workload import Workload
 
-workload_type: str = "TPCH"
+folder_name: str = "TPCH"
 queries_location: str = "/foo"
+frequency = 123
 delimiter: str = ";"
 file_type: str = "sql"
 
@@ -24,10 +25,6 @@ def get_fake_workload_reader() -> Any:
 class TestWorkload:
     """Test for workload class."""
 
-    def idle_function(self) -> None:
-        """Idle function."""
-        return
-
     @fixture
     @patch(
         "hyrisecockpit.workload_generator.workload_reader.WorkloadReader",
@@ -39,11 +36,11 @@ class TestWorkload:
     )
     def fake_workload(self) -> Any:
         """Instance of WorkloadGenerator without Workloadreader."""
-        return Workload(workload_type, queries_location, delimiter, file_type)
+        return Workload(folder_name, queries_location, frequency, delimiter, file_type)
 
     def test_checks_initialization_of_workload_attributes(self, fake_workload):
         """Test if initial attributes are correct."""
-        assert fake_workload.workload_type == workload_type
+        assert fake_workload.folder_name == folder_name
         assert fake_workload._queries_location == f"{queries_location}/TPCH"
         assert fake_workload._delimiter == delimiter
         assert fake_workload._file_type == file_type
@@ -57,23 +54,25 @@ class TestWorkload:
     def test_generates_workload(self, fake_workload):
         """Test cration of workload."""
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
-        expected_workload = [("foo", None, workload_type, "Type1")]
+        expected_workload = [("foo", None, folder_name, "Type1")]
         fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload(1)
-        assert received_queries[:] == expected_workload[:]
+        fake_workload.frequency = 1
+        received_queries = fake_workload.generate_workload()
+        assert [tuple(query) for query in received_queries] == expected_workload
 
     def test_generates_workload_with_factor(self, fake_workload):
         """Test cration of workload."""
         dummy_queries = {"Type1": ["foo"], "Type2": ["foo2"]}
         expected_workload = [
-            ("foo", None, workload_type, "Type1"),
-            ("foo2", None, workload_type, "Type2"),
-            ("foo", None, workload_type, "Type1"),
-            ("foo2", None, workload_type, "Type2"),
+            ("foo", None, folder_name, "Type1"),
+            ("foo2", None, folder_name, "Type2"),
+            ("foo", None, folder_name, "Type1"),
+            ("foo2", None, folder_name, "Type2"),
         ]
         fake_workload._queries = dummy_queries
-        received_queries = fake_workload.generate_workload(4)
-        assert received_queries[:] == expected_workload[:]
+        fake_workload.frequency = 4
+        received_queries = fake_workload.generate_workload()
+        assert [tuple(query) for query in received_queries] == expected_workload
 
     def test_generates_specific_query(self, fake_workload):
         """Test generating of a single query."""
