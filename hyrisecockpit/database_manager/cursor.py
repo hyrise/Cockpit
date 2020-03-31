@@ -28,12 +28,18 @@ class PoolCursor:
     def __init__(self, connection_pool: pool) -> None:
         """Initialize a PoolCursor."""
         self.pool: pool = connection_pool
+        self._initialize()
+
+    def _initialize(self) -> None:
+        """Initialize connection and cursor."""
         try:
-            self.__connection = self.pool.getconn()
-            self.__connection.set_session(autocommit=True)
-            self.__cur = self.__connection.cursor()
+            self._connection = self.pool.getconn()
+            self._connection.set_session(autocommit=True)
+            self._cur = self._connection.cursor()
             self.valid = True
         except (DatabaseError, InterfaceError):
+            self._connection = None
+            self._cur = None
             self.valid = False
 
     def __enter__(self) -> "PoolCursor":
@@ -48,8 +54,8 @@ class PoolCursor:
     ) -> Optional[bool]:
         """Call close with a context manager."""
         if self.valid:
-            self.__cur.close()
-            self.pool.putconn(self.__connection)
+            self._cur.close()
+            self.pool.putconn(self._connection)
         return None
 
     def execute(
@@ -59,7 +65,7 @@ class PoolCursor:
         if not self.valid:
             return None
         try:
-            return self.__cur.execute(query, parameters)
+            return self._cur.execute(query, parameters)
         except (DatabaseError, InterfaceError):
             return None
 
@@ -68,7 +74,7 @@ class PoolCursor:
         if not self.valid:
             return ()
         try:
-            return self.__cur.fetchone()
+            return self._cur.fetchone()
         except (DatabaseError, InterfaceError):
             return ()
 
@@ -77,7 +83,7 @@ class PoolCursor:
         if not self.valid:
             return []
         try:
-            return self.__cur.fetchall()
+            return self._cur.fetchall()
         except (DatabaseError, InterfaceError):
             return []
 
@@ -86,7 +92,7 @@ class PoolCursor:
         if not self.valid:
             return DataFrame()
         try:
-            return read_sql_query_pandas(sql, self.__connection)
+            return read_sql_query_pandas(sql, self._connection)
         except (DatabaseError, InterfaceError):
             return DataFrame()
 
