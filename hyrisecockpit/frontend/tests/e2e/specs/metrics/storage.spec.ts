@@ -81,5 +81,39 @@ describe("Show storage", () => {
         });
       });
     });
+    describe("clicking the detailed view button", () => {
+      it("will open a detailed treemap view", () => {
+        databases.forEach((database: any) => {
+          cy.get(getSelectorWithID("firstStorage", database.id)).should(
+            "not.exist"
+          );
+        });
+        databases.forEach((database: any, idx: number) => {
+          cy.get(getSelector("openDetailed"))
+            .eq(idx * 2)
+            .click();
+          cy.wait(500);
+          cy.get(getSelectorWithID("firstStorage", database.id)).should(
+            "exist"
+          );
+          cy.wait(1000);
+          cy.get(getSelectorWithID("firstStorage", database.id)).should(
+            (elements: any) => {
+              assertTreeMapData(
+                elements[0].data[0],
+                data[database.id],
+                database.id
+              );
+            }
+          );
+          cy.get(getSelector("closeDetailed"))
+            .eq(idx)
+            .click();
+          cy.get(getSelectorWithID("firstStorage", database.id)).should(
+            "not.be.visible"
+          );
+        });
+      });
+    });
   });
 });

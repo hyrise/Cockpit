@@ -12,7 +12,9 @@ const selectors: Record<string, { element: string; title: string }> = {
     title: "executedQueryTypeProportion"
   },
   firstStorage: { element: "div", title: "1storage" },
-  secondStorage: { element: "div", title: "2storage" }
+  secondStorage: { element: "div", title: "2storage" },
+  openDetailed: { element: "button", title: "open-metric-detailed-view" },
+  closeDetailed: { element: "button", title: "close-metric-detailed-view" }
 };
 
 export function getSelector(component: string): string {
