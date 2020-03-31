@@ -24,7 +24,7 @@ class BackgroundJobManager(object):
         database_blocked: Value,
         connection_pool: pool,
         loaded_tables: Dict[str, Optional[str]],
-        hyrise_active: bool,
+        hyrise_active: Value,
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -41,7 +41,7 @@ class BackgroundJobManager(object):
         self._scheduler: BackgroundScheduler = BackgroundScheduler()
         self._previous_chunks_data: Dict = {}
         self._loaded_tables: Dict[str, Optional[str]] = loaded_tables
-        self._hyrise_active: bool = hyrise_active
+        self._hyrise_active: Value = hyrise_active
         self._init_jobs()
 
     def _init_jobs(self) -> None:
@@ -83,8 +83,9 @@ class BackgroundJobManager(object):
         """Check in interval if hyrise is still alive."""
         with PoolCursor(self._connection_pool) as cur:
             if not cur.valid:
-                self._hyrise_active = False
-                return
+                self._hyrise_active.value = False
+            else:
+                self._hyrise_active.value = True
 
     def _update_krueger_data(self) -> None:
         time_stamp = time_ns()

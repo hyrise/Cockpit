@@ -273,6 +273,12 @@ model_database_status = monitor.clone(
     "Database status",
     model_database,
     {
+        "hyrise_active": fields.Boolean(
+            title="hyrise active status",
+            description="Hyrise is reachable.",
+            required=True,
+            example=True,
+        ),
         "database_blocked_status": fields.Boolean(
             title="Database blocked status",
             description="Database blocked status of databases.",

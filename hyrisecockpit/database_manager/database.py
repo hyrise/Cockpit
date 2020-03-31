@@ -46,7 +46,7 @@ class Database(object):
         )
         self._connection_pool: pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
-        self._hyrise_active: bool = True
+        self._hyrise_active: Value = Value("b", True)
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
@@ -118,6 +118,10 @@ class Database(object):
             for table, value in self._loaded_tables.items()
             if value is not None
         ]
+
+    def get_hyrise_active(self) -> bool:
+        """Return status of hyrise."""
+        return bool(self._hyrise_active.value)
 
     def get_loaded_benchmarks(self) -> List[str]:
         """Get list of all benchmarks which are completely loaded."""
