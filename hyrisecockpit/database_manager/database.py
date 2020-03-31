@@ -46,6 +46,7 @@ class Database(object):
         )
         self._connection_pool: pool = self.driver.get_connection_pool()
         self._database_blocked: Value = Value("b", False)
+        self._hyrise_active: bool = True
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
@@ -54,6 +55,7 @@ class Database(object):
             self._database_blocked,
             self._connection_pool,
             self._loaded_tables,
+            self._hyrise_active,
             storage_host,
             storage_password,
             storage_port,
