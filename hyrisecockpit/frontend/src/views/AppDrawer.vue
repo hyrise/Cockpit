@@ -1,12 +1,5 @@
 <template>
-  <v-navigation-drawer
-    v-model="drawer"
-    permanent
-    absolute
-    app
-    width="220"
-    fixed="true"
-  >
+  <v-navigation-drawer v-model="drawer" permanent absolute app width="250">
     <v-list>
       <v-list-item two-line>
         <v-list-item-avatar tile="true">
@@ -28,12 +21,24 @@
           <v-list-item-title>Views</v-list-item-title>
         </v-list-item-content>
 
-        <v-list-item-icon>
-          <v-icon>mdi-cog-outline</v-icon>
-        </v-list-item-icon>
+        <v-menu v-model="menu" bottom offset-x>
+          <template v-slot:activator="{ on }">
+            <v-list-item-icon>
+              <v-icon v-on="on">mdi-cog-outline</v-icon>
+            </v-list-item-icon>
+          </template>
+
+          <v-list>
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>PopupMenu</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-list-item>
 
-      <v-list-item :to="{ name: 'overview' }">
+      <v-list-item id="overview-button" :to="{ name: 'overview' }">
         <v-list-item-icon>
           <v-icon>mdi-speedometer</v-icon>
         </v-list-item-icon>
@@ -43,7 +48,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item :to="{ name: 'comparison' }">
+      <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
         <v-list-item-icon>
           <v-icon>mdi-database-search</v-icon>
         </v-list-item-icon>
@@ -53,7 +58,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item :to="{ name: 'workload' }">
+      <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
         <v-list-item-icon>
           <v-icon>mdi-align-vertical-bottom</v-icon>
         </v-list-item-icon>
@@ -71,11 +76,12 @@
 
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
-          <v-list-item v-on="{ ...menu }">
+          <v-list-item id="database-list-button" v-on="{ ...menu }">
             <v-list-item-icon>
               <v-icon>mdi-database-plus</v-icon>
             </v-list-item-icon>
             <v-badge
+              id="number-of-databases"
               color="secondary primary--text"
               :content="databaseCount"
               offset-y="1"
@@ -100,7 +106,10 @@
         @close="showWorkloadDialog = false"
       />
 
-      <v-list-item @click="openWorkloadDialog()">
+      <v-list-item
+        id="workload-generation-button"
+        @click="openWorkloadDialog()"
+      >
         <v-list-item-icon>
           <v-icon>mdi-account-cog</v-icon>
         </v-list-item-icon>
@@ -120,7 +129,7 @@
         @close="showRemoveDatabaseDialog = false"
       />
 
-      <v-list-item @click="$emit('openPlugins')">
+      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
         <v-list-item-icon>
           <v-icon>mdi-alpha-p-box</v-icon>
         </v-list-item-icon>
