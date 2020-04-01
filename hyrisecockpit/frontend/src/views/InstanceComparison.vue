@@ -40,11 +40,10 @@ import {
   onMounted
 } from "@vue/composition-api";
 import MetricsComparisonTable from "../components/container/MetricsComparisonTable.vue";
-import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
-import { useSelectionHandling } from "../meta/views";
+import { useSelectionHandling } from "@/meta/selection";
 import LinearLoader from "../components/alerts/linearLoader.vue";
 import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
@@ -52,7 +51,6 @@ import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue
 export default defineComponent({
   components: {
     MetricsComparisonTable,
-    DatabaseMetricSelection,
     DatabaseDetailsPanel,
     LinearLoader,
     UnselectedWarning

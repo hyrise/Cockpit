@@ -43,9 +43,8 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { useSelectionHandling } from "../meta/views";
+import { useSelectionHandling } from "@/meta/selection";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
-import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 import LinearLoader from "../components/alerts/linearLoader.vue";
 import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 
@@ -53,7 +52,6 @@ export default defineComponent({
   components: {
     MetricsTileList,
     DatabaseDetailsPanel,
-    DatabaseMetricSelection,
     LinearLoader,
     UnselectedWarning
   },

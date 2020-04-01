@@ -24,7 +24,7 @@
         align="center"
       >
         <metric-tile
-          v-for="metric in watchedMetrics"
+          v-for="metric in selectedMetrics"
           :key="metric"
           class="flex-item"
           :metric="metric"
@@ -51,9 +51,8 @@ import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
 import LinearLoader from "../components/alerts/linearLoader.vue";
 import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
-import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 import { MetricViewData } from "../types/views";
-import { useSelectionHandling } from "../meta/views";
+import { useSelectionHandling } from "@/meta/selection";
 import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
 import MetricTile from "@/components/container/MetricTile.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
@@ -69,7 +68,6 @@ export default defineComponent({
     MetricTile,
     LinearLoader,
     DatabaseQueryTables,
-    DatabaseMetricSelection,
     UnselectedWarning,
     SelectionList
   },

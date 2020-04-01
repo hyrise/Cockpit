@@ -82,13 +82,7 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    watch(
-      () => props.selected,
-      () => {
-        console.log(props.selected);
-      }
-    );
-
+    //TODO: outsource
     function handleUnSelect(): void {
       context.emit("toggleSelected", props.databaseId, false);
     }

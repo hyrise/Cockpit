@@ -5,7 +5,7 @@ export type PageName = "workload" | "comparison" | "overview";
 
 export interface MetricViewData {
   watchedMetrics: Metric[];
-  selectedMetrics: Ref<Metric[]>;
+  selectedMetrics: Ref<readonly Metric[]>;
   selectedDatabases: Ref<readonly string[]>;
 }
 
