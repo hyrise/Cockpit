@@ -1,8 +1,8 @@
 <template>
-  <v-navigation-drawer v-model="drawer" permanent absolute app width="250">
+  <v-navigation-drawer v-model="drawer" app fixed width="250">
     <v-list>
       <v-list-item two-line>
-        <v-list-item-avatar tile="true">
+        <v-list-item-avatar tile>
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
         <v-list-item-content>
