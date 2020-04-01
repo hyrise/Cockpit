@@ -21,7 +21,8 @@ export function useDatabaseEvents(): {
   emitDatabaseRemovedEvent: () => void;
   emitSelectedDatabasesChangedWithinEvent: (
     page: PageName,
-    databases?: string[]
+    database: string,
+    value: boolean
   ) => void;
 } {
   function emitSelectedDatabasesChangedEvent(databases: string[] = []): void {
@@ -29,10 +30,14 @@ export function useDatabaseEvents(): {
   }
   function emitSelectedDatabasesChangedWithinEvent(
     page: PageName,
-    databases: string[] = []
+    database: string,
+    value: boolean
   ): void {
     //emitSelectedDatabasesChangedEvent();
-    eventBus.$emit(`SELECTED_DATABASES_CHANGED_ON_${page}`, databases);
+    eventBus.$emit(`SELECTED_DATABASES_CHANGED_ON_${page.toUpperCase()}`, {
+      database,
+      value
+    });
   }
   function emitDatabaseAddedEvent(): void {
     eventBus.$emit("DATABASE_ADDED");

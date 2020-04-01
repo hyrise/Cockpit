@@ -6,6 +6,7 @@ import App from "./App.vue";
 import { usePluginService } from "./services/pluginService";
 import { useDatabaseController } from "./databaseController";
 import { useMetricController } from "./metricController";
+import { useSelectionController } from "./selectionController";
 
 Vue.use(VueCompositionApi);
 
@@ -14,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$databaseController = useDatabaseController();
 Vue.prototype.$metricController = useMetricController();
 Vue.prototype.$pluginService = usePluginService();
+Vue.prototype.$selectionController = useSelectionController();
 
 new Vue({
   vuetify,

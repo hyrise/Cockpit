@@ -5,7 +5,6 @@
       :evaluations="[false]"
     />
     <div class="mx-6">
-      <!-- <database-metric-selection class="select" :select-metrics="false" /> -->
       <database-query-tables :selected-databases="selectedDatabases" />
       <unselected-warning :condition="selectedDatabases">
         <template #message>
@@ -94,7 +93,7 @@ export default defineComponent({
     return {
       watchedInstances,
       watchedMetrics: workloadMetrics,
-      ...useSelectionHandling("WORKLOAD")
+      ...useSelectionHandling(context, "workload")
     };
   }
 });

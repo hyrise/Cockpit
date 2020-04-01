@@ -1,9 +1,9 @@
 <template>
   <div>
-    <database-selection @selectionChanged="handleDatabaseChange" />
-    <database-selection @selectionChanged="handleDatabaseChange" />
-    <database-selection @selectionChanged="handleDatabaseChange" />
-    <div v-if="page === `WORKLOAD`">test</div>
+    <database-selection
+      :initial-databases="selectedDatabases"
+      @selectionChanged="handleDatabaseChange"
+    />
   </div>
 </template>
 
@@ -22,13 +22,14 @@ import {
 import { Database } from "@/types/database";
 import DatabaseSelection from "@/components/selection/DatabaseSelection.vue";
 import { useDatabaseEvents } from "@/meta/events";
-import { getPageName, PageName } from "@/types/views";
+import { PageName } from "@/types/views";
 
 interface Props {}
 
 interface Data {
   page: Ref<PageName>;
-  handleDatabaseChange: (databases: string[]) => void;
+  selectedDatabases: Ref<readonly string[]>;
+  handleDatabaseChange: (databaseId: string, value: boolean) => void;
 }
 
 export default defineComponent({
@@ -38,16 +39,19 @@ export default defineComponent({
   setup(props: Props, context: SetupContext): Data {
     const { emitSelectedDatabasesChangedWithinEvent } = useDatabaseEvents();
     const page = computed(() => {
-      console.log(context.root.$route.name!);
-      return getPageName(context.root.$route.name!);
+      return context.root.$route.name! as PageName;
+    });
+    const selectedDatabases = computed(() => {
+      return context.root.$selectionController.selectedDatabases[
+        page.value
+      ] as string[];
     });
 
-    function handleDatabaseChange(databases: string[]): void {
-      console.log(page.value);
-      emitSelectedDatabasesChangedWithinEvent(page.value, databases);
+    function handleDatabaseChange(databaseId: string, value: boolean): void {
+      emitSelectedDatabasesChangedWithinEvent(page.value, databaseId, value);
     }
 
-    return { handleDatabaseChange, page };
+    return { handleDatabaseChange, page, selectedDatabases };
   }
 });
 </script>

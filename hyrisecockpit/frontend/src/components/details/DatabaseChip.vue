@@ -43,13 +43,13 @@ import {
   SetupContext,
   Ref,
   ref,
-  computed
+  computed,
+  watch
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
 
 interface Data {
   database: Ref<Database>;
-  selected: Ref<boolean>;
   handleSelect: () => void;
   handleUnSelect: () => void;
 }
@@ -58,6 +58,7 @@ interface Props {
   databaseId: string;
   closable: boolean;
   selectable: boolean;
+  selected: boolean;
 }
 
 export default defineComponent({
@@ -74,24 +75,30 @@ export default defineComponent({
     selectable: {
       type: Boolean,
       default: false
+    },
+    selected: {
+      type: Boolean,
+      default: undefined
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    const selected = ref(true);
+    watch(
+      () => props.selected,
+      () => {
+        console.log(props.selected);
+      }
+    );
 
     function handleUnSelect(): void {
-      selected.value = false;
       context.emit("toggleSelected", props.databaseId, false);
     }
     function handleSelect(): void {
-      selected.value = true;
       context.emit("toggleSelected", props.databaseId, true);
     }
     return {
       database: computed(() =>
         context.root.$databaseController.getDatabaseById(props.databaseId)
       ),
-      selected,
       handleSelect,
       handleUnSelect
     };

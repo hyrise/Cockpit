@@ -5,7 +5,6 @@
       :evaluations="[false]"
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
-      <!-- <database-metric-selection class="select" :metrics="watchedMetrics" /> -->
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -61,7 +60,7 @@ export default defineComponent({
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: comparisonMetrics,
-      ...useSelectionHandling("COMPARISON")
+      ...useSelectionHandling(context, "comparison")
     };
   }
 });

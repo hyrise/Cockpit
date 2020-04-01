@@ -1,40 +1,30 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app fixed width="250">
+  <v-navigation-drawer app fixed width="250">
     <v-list>
       <v-list-item two-line>
         <v-list-item-avatar tile>
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title>Cockpit</v-list-item-title>
+          <v-list-item-title><b>Cockpit</b></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider></v-divider>
-      <!-- <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-          > -->
+      <v-divider />
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>Views</v-list-item-title>
         </v-list-item-content>
 
-        <v-menu id="popup-menu" v-model="menu" bottom offset-x>
+        <v-menu v-model="menu" bottom offset-x>
           <template v-slot:activator="{ on }">
             <v-list-item-icon>
-              <v-icon v-on="on">mdi-cog-outline</v-icon>
+              <v-icon id="selection-list-button" v-on="on"
+                >mdi-cog-outline</v-icon
+              >
             </v-list-item-icon>
           </template>
-
-          <v-list>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>PopupMenu</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
+          <selection-list></selection-list>
         </v-menu>
       </v-list-item>
 
@@ -165,6 +155,7 @@ import PluginsOverview from "../components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
 import AvailableDatabasesList from "@/components/databases/AvailableDatabasesList.vue";
 import { Database } from "@/types/database";
+import SelectionList from "@/components/selection/SelectionList.vue";
 
 interface Data {
   showPluginEditor: Ref<boolean>;
@@ -182,7 +173,8 @@ export default defineComponent({
     WorkloadGeneration,
     AddDatabase,
     AvailableDatabasesList,
-    RemoveDatabase
+    RemoveDatabase,
+    SelectionList
   },
   setup(props: {}, context: SetupContext): Data {
     const showRemoveDatabaseDialog = ref(false);

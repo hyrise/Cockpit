@@ -1,22 +1,12 @@
 import { Ref } from "@vue/composition-api";
 import { Metric } from "./metrics";
 
-export type PageName = "WORKLOAD" | "COMPARISON" | "OVERVIEW";
-
-const pageNames: Record<string, PageName> = {
-  workload: "WORKLOAD",
-  comparison: "COMPARISON",
-  overview: "OVERVIEW"
-};
-
-export function getPageName(route: string): PageName {
-  return pageNames[route];
-}
+export type PageName = "workload" | "comparison" | "overview";
 
 export interface MetricViewData {
   watchedMetrics: Metric[];
   selectedMetrics: Ref<Metric[]>;
-  selectedDatabases: Ref<string[]>;
+  selectedDatabases: Ref<readonly string[]>;
 }
 
 export interface ContainerProps {

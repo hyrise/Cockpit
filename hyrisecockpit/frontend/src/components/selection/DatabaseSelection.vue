@@ -9,6 +9,7 @@
       <v-list-item-title>
         <database-chip
           :database-id="database"
+          :selected="selectedDatabases[database]"
           :selectable="true"
           @toggleSelected="handleDatabaseSelection"
         />
@@ -33,56 +34,61 @@ import { Database } from "@/types/database";
 import DatabaseChip from "@/components/details/DatabaseChip.vue";
 import { useDatabaseEvents } from "@/meta/events";
 
-interface Props {}
+interface Props {
+  initialDatabases: string[];
+}
 
 interface Data {
   databases: Ref<readonly string[]>;
+  selectedDatabases: Ref<Record<string, boolean>>;
   handleDatabaseSelection: (databaseId: string, value: boolean) => void;
 }
 
 export default defineComponent({
-  props: {},
+  props: {
+    initialDatabases: {
+      type: Array,
+      default: () => []
+    }
+  },
 
   components: { DatabaseChip },
   setup(props: Props, context: SetupContext): Data {
-    const selectedDatabases = ref<string[]>([]);
+    const selectedDatabases = ref<Record<string, boolean>>({});
+
     const { databasesUpdated } = context.root.$databaseController;
-    const { emitSelectedDatabasesChangedEvent } = useDatabaseEvents();
 
     watch(
       () => databasesUpdated.value,
       () => {
-        selectedDatabases.value = context.root.$databaseController
-          .availableDatabasesById.value as string[];
+        context.root.$databaseController.availableDatabasesById.value.forEach(
+          (database: any) => {
+            selectedDatabases.value[database] = false;
+          }
+        );
       }
     );
-
     watch(
-      () => selectedDatabases.value,
+      () => props.initialDatabases,
       () => {
-        context.emit("selectionChanged", selectedDatabases.value);
+        const newSelected: Record<string, boolean> = {};
+        Object.keys(selectedDatabases.value).forEach(database => {
+          newSelected[database] = props.initialDatabases.includes(database);
+        });
+        selectedDatabases.value = JSON.parse(JSON.stringify(newSelected));
       }
     );
 
     function handleDatabaseSelection(databaseId: string, value: boolean): void {
-      //TODO: show error message when too many databases are selected  && selectedDatabases.value.length < 4
-      if (value) {
-        selectedDatabases.value.push(databaseId);
-      }
-
-      if (!value) {
-        selectedDatabases.value = selectedDatabases.value.filter(
-          (current: string) => current !== databaseId
-        );
-      }
-      console.log(selectedDatabases.value);
+      context.emit("selectionChanged", databaseId, value);
     }
 
     return {
       databases: computed(
         () => context.root.$databaseController.availableDatabasesById.value
       ),
-      handleDatabaseSelection
+      handleDatabaseSelection,
+      selectedDatabases
     };
   }
 });
