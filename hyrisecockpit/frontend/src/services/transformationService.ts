@@ -265,3 +265,67 @@ export function useDataTransformationHelpers(): {
     getTableMemoryFootprint
   };
 }
+
+export function usePluginTransformationSevice(): any {
+  const { formatDateToHHMMSS } = useFormatting();
+
+  function getActivePluginData(data: any): any {
+    return data.reduce((result: string[], currentDatabase: any) => {
+      return currentDatabase.plugins
+        ? [
+            ...result,
+            ...currentDatabase.plugins.map(
+              (plugin: string) =>
+                currentDatabase.id + "_" + plugin.replace("Plugin", "")
+            )
+          ]
+        : result;
+    }, []);
+  }
+
+  function getPluginLogsData(data: any): any {
+    return data.reduce((result: any, currentDatabase: any) => {
+      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+        (databaseLog: string, currentLog: any) => {
+          return (
+            databaseLog +
+            `${currentLog.reporter} [${formatDateToHHMMSS(
+              new Date(parseInt(currentLog.timestamp))
+            )}]: ${currentLog.message}\n`
+          );
+        },
+        ""
+      );
+      return result;
+    }, {});
+  }
+
+  function getPluginSettingsData(data: any): any {
+    return data.reduce((result: any, currentDatabase: any) => {
+      const allDatabaseSettings = currentDatabase.plugin_settings.reduce(
+        (allSettings: any, currentSetting: any) => {
+          const pluginName = currentSetting.name.substring(
+            0,
+            currentSetting.name.indexOf("Plugin")
+          );
+          allSettings[pluginName]
+            ? (allSettings[pluginName] = [
+                ...allSettings[pluginName],
+                currentSetting
+              ])
+            : (allSettings[pluginName] = [currentSetting]);
+          return allSettings;
+        },
+        {}
+      );
+      result[currentDatabase.id] = allDatabaseSettings;
+      return result;
+    }, {});
+  }
+
+  return {
+    getActivePluginData,
+    getPluginLogsData,
+    getPluginSettingsData
+  };
+}
