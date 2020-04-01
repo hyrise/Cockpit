@@ -108,7 +108,7 @@
 
       <v-list-item
         id="workload-generation-button"
-        @click="openWorkloadDialog()"
+        @click="showWorkloadDialog = true"
       >
         <v-list-item-icon>
           <v-icon>mdi-account-cog</v-icon>
