@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time_ns
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -14,6 +14,33 @@ from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
 from .table_names import table_names as _table_names
+
+
+class Encoding(TypedDict):
+    """Type of an encoding in a storage dictionary."""
+
+    name: str
+    amount: int
+    compression: List[str]
+
+
+class ColumnData(TypedDict):
+    """Type of column data in a storage dictionary."""
+
+    size: int
+    data_type: str
+    encoding: List[Encoding]
+
+
+class TableData(TypedDict):
+    """Type of table data in a storage dictionary."""
+
+    size: int
+    number_columns: int
+    data: Dict[str, ColumnData]
+
+
+StorageDataType = Dict[str, TableData]
 
 
 class BackgroundJobManager(object):
@@ -296,9 +323,9 @@ class BackgroundJobManager(object):
         result: DataFrame = size.join(combined_encoding).join(datatype)
         return result
 
-    def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
+    def _create_storage_data_dictionary(self, result: DataFrame) -> StorageDataType:
         """Sort storage data to dictionary."""
-        output: Dict = {}
+        output: StorageDataType = {}
         grouped = result.reset_index().groupby("table_name")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}

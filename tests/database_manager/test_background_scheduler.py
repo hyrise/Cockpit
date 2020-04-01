@@ -10,7 +10,10 @@ from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
 from pytest import fixture
 
-from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
+from hyrisecockpit.database_manager.background_scheduler import (
+    BackgroundJobManager,
+    StorageDataType,
+)
 
 database_id: str = "MongoDB"
 get_database_blocked: Callable[[], Value] = lambda: Value("b", False)  # noqa: E731
@@ -561,21 +564,7 @@ class TestBackgroundJobManager:
         mocked_sql_to_data_frame.return_value = fake_storage_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        expected_storage_dict: Dict[
-            str,
-            Dict[
-                str,
-                Union[
-                    int,
-                    Dict[
-                        str,
-                        Dict[
-                            str, Union[int, str, List[Dict[str, Union[int, str, List]]]]
-                        ],
-                    ],
-                ],
-            ],
-        ] = {
+        expected_storage_dict: StorageDataType = {
             "customer": {
                 "size": 10000,
                 "number_columns": 2,
