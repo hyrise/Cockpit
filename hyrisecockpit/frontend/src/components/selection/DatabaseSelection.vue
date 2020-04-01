@@ -1,5 +1,5 @@
 <template>
-  <v-list id="database-selection" class="list">
+  <v-list class="list">
     <v-card flat>
       <v-card-title class="header subtitle-1">
         DATABASES
@@ -50,7 +50,7 @@ export default defineComponent({
     const { emitSelectedDatabasesChangedEvent } = useDatabaseEvents();
 
     watch(
-      () => databasesUpdated,
+      () => databasesUpdated.value,
       () => {
         selectedDatabases.value = context.root.$databaseController
           .availableDatabasesById.value as string[];
@@ -58,20 +58,24 @@ export default defineComponent({
     );
 
     watch(
-      () => selectedDatabases,
+      () => selectedDatabases.value,
       () => {
         context.emit("selectionChanged", selectedDatabases.value);
       }
     );
 
     function handleDatabaseSelection(databaseId: string, value: boolean): void {
-      if (value && selectedDatabases.value.length < 4)
+      //TODO: show error message when too many databases are selected  && selectedDatabases.value.length < 4
+      if (value) {
         selectedDatabases.value.push(databaseId);
-      //TODO: show error message when too many databases are selected
-      if (!value)
+      }
+
+      if (!value) {
         selectedDatabases.value = selectedDatabases.value.filter(
           (current: string) => current !== databaseId
         );
+      }
+      console.log(selectedDatabases.value);
     }
 
     return {
