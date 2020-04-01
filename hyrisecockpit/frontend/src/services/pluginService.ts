@@ -3,12 +3,14 @@ import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
 import { eventBus } from "../plugins/eventBus";
+import { useFormatting } from "../meta/formatting";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
   const pluginLogs = ref<any>({});
   const pluginSettings = ref<any>({});
+  const { formatDateToHHMMSS } = useFormatting();
 
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
@@ -72,9 +74,9 @@ export function usePluginService(): PluginService {
             (databaseLog: string, currentLog: any) => {
               return (
                 databaseLog +
-                `${currentLog.reporter} [${new Date(
-                  parseInt(currentLog.timestamp)
-                ).toLocaleTimeString()}]: ${currentLog.message}\n`
+                `${currentLog.reporter} [${formatDateToHHMMSS(
+                  new Date(parseInt(currentLog.timestamp))
+                )}]: ${currentLog.message}\n`
               );
             },
             ""
@@ -90,22 +92,24 @@ export function usePluginService(): PluginService {
     axios.get(controlBackend + "plugin_settings").then(response => {
       pluginSettings.value = response.data.body.plugin_settings.reduce(
         (result: any, currentDatabase: any) => {
-          const allDatabaseSettings = currentDatabase.plugin_settings.reduce(
-            (allSettings: any, currentSetting: any) => {
-              const pluginName = currentSetting.name.substring(
-                0,
-                currentSetting.name.indexOf("Plugin")
-              );
-              allSettings[pluginName]
-                ? (allSettings[pluginName] = [
-                    ...allSettings[pluginName],
-                    currentSetting
-                  ])
-                : (allSettings[pluginName] = [currentSetting]);
-              return allSettings;
-            },
-            {}
-          );
+          const allDatabaseSettings =
+            currentDatabase.plugin_settings &&
+            currentDatabase.plugin_settings.reduce(
+              (allSettings: any, currentSetting: any) => {
+                const pluginName = currentSetting.name.substring(
+                  0,
+                  currentSetting.name.indexOf("Plugin")
+                );
+                allSettings[pluginName]
+                  ? (allSettings[pluginName] = [
+                      ...allSettings[pluginName],
+                      currentSetting
+                    ])
+                  : (allSettings[pluginName] = [currentSetting]);
+                return allSettings;
+              },
+              {}
+            );
           result[currentDatabase.id] = allDatabaseSettings;
           return result;
         },
