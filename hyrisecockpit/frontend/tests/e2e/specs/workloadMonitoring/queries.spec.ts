@@ -7,7 +7,7 @@ import { getSelector, assertQueryData } from "./helpers";
 const backend = useBackendMock({ databases: 2 });
 
 let databases: any[] = [];
-let data: any = {};
+let data: any = [];
 
 describe("Show detailed query information", () => {
   beforeEach(() => {
@@ -24,13 +24,19 @@ describe("Show detailed query information", () => {
     cy.wait("@" + getGetAlias("detailed_query_information"));
     cy.get("@" + getGetAlias("detailed_query_information")).should(
       (xhr: any) => {
-        data = xhr.response.body;
+        data = [];
+        xhr.response.body.forEach((database: any) => {
+          database.query_information = database.query_information.sort(
+            (query1: any, query2: any) => query2.latency - query1.latency
+          );
+          data.push(database);
+        });
       }
     );
   });
 
   describe("observe query information", () => {
-    it("will show correct query information for every database", () => {
+    it("will show correct query information for every database sorted by latency", () => {
       databases.forEach((database: any, idx: number) => {
         cy.get(getSelector("queryTable"))
           .eq(idx)
@@ -69,6 +75,34 @@ describe("Show detailed query information", () => {
                   );
               });
               expect(table[0].rows.length).to.eq(2);
+            });
+          });
+      });
+    });
+  });
+  describe("changing the sorting order of latency", () => {
+    it("will sort the queries otherwise", () => {
+      databases.forEach((database: any, idx: number) => {
+        cy.get("table")
+          .eq(idx)
+          .within(() => {
+            cy.get("tr")
+              .contains("latency (in ms)")
+              .click({ force: true });
+          });
+
+        cy.get(getSelector("queryTable"))
+          .eq(idx)
+          .within(() => {
+            cy.get("table").should((table: any) => {
+              table[0].rows.forEach((row: any, rowIdx: number) => {
+                const requestData = data[idx].query_information;
+                if (rowIdx !== 0)
+                  assertQueryData(
+                    row.textContent,
+                    requestData[requestData.length - rowIdx]
+                  );
+              });
             });
           });
       });
