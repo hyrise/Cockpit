@@ -102,6 +102,10 @@ class TestDatabase(object):
         "hyrisecockpit.database_manager.database.Database.create_empty_loaded_tables",
         MagicMock(),
     )
+    @patch(
+        "hyrisecockpit.database_manager.database.Database._initialize_influx",
+        MagicMock(),
+    )
     def database(self) -> Database:
         """Get a new Database."""
         return Database(
