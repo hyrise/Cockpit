@@ -1,6 +1,6 @@
 import { testRedirection } from "../abstractTests";
 import { useBackendMock } from "../../setup/backendMock";
-import { getGetAlias } from "../../setup/helpers";
+import { getGetAlias, generateRandomInt } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { getSelector, assertQueryData } from "./helpers";
 
@@ -30,7 +30,7 @@ describe("Show detailed query information", () => {
   });
 
   describe("observe query information", () => {
-    it("will show correct queryinformation for every database", () => {
+    it("will show correct query information for every database", () => {
       databases.forEach((database: any, idx: number) => {
         cy.get(getSelector("queryTable"))
           .eq(idx)
@@ -43,6 +43,32 @@ describe("Show detailed query information", () => {
                     data[idx].query_information[rowIdx - 1]
                   );
               });
+            });
+          });
+      });
+    });
+  });
+  describe("searching for a specific query", () => {
+    it("will show only the matching queries", () => {
+      const index = generateRandomInt(0, data[0].query_information.length);
+      databases.forEach((database: any, idx: number) => {
+        cy.get("input")
+          .eq(idx * 3)
+          .click({ force: true })
+          .type(data[idx].query_information[index].query_number);
+
+        cy.get(getSelector("queryTable"))
+          .eq(idx)
+          .within(() => {
+            cy.get("table").should((table: any) => {
+              table[0].rows.forEach((row: any, rowIdx: number) => {
+                if (rowIdx !== 0)
+                  assertQueryData(
+                    row.textContent,
+                    data[idx].query_information[index]
+                  );
+              });
+              expect(table[0].rows.length).to.eq(2);
             });
           });
       });
