@@ -12,6 +12,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
+from iso8601 import parse_date
 from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
@@ -560,30 +561,41 @@ def _active_databases() -> List[str]:
 class Throughput(Resource):
     """Throughput information of all databases."""
 
-    @monitor.doc(model=[model_throughput])
-    def get(self) -> Union[int, Response]:
+    # @monitor.doc(model=[model_throughput])
+    def get(self) -> Union[int, List]:
         """Return throughput information from the stored queries."""
-        offset_seconds = 3
-        offsetts = (int(time()) - offset_seconds) * 1_000_000_000
+        startts = monitor.payload["startts"]
+        endts = monitor.payload["endts"]
 
-        throughput: Dict[str, int] = {}
+        response: List = []
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
             result = storage_connection.query(
-                "SELECT * FROM throughput WHERE time = $offsetts;",
+                "SELECT * FROM throughput WHERE time >= $startts AND time <= $endts;",
                 database=database,
-                bind_params={"offsetts": offsetts},
+                bind_params={"startts": startts, "endts": endts},
             )
-            throughput_value = list(result["throughput", None])
-            if len(throughput_value) > 0:
-                throughput[database] = list(result["throughput", None])[0]["throughput"]
-            else:
-                throughput[database] = 0
-        response = get_response(200)
-        response["body"]["throughput"] = throughput
+            throughput_rows: List = list(result["throughput", None])
+            throughput: List = []
+            for timestamp in range(startts, endts + 1, 1_000_000_000):
+                throughput_value = 0
+                for row in throughput_rows:
+                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
+                        throughput_value = row["throughput"]
+                        break
+                throughput.append(
+                    {"timestamp": timestamp, "throughput": throughput_value}
+                )
+
+            database_data["throughput"] = throughput
+            response.append(database_data)
         return response
 
 
