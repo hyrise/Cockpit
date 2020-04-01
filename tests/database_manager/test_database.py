@@ -9,6 +9,7 @@ from psycopg2 import pool
 from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
+from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
 database_id: str = "MongoDB forever"
 database_user: str = "Proform"
@@ -74,6 +75,7 @@ def get_fake_background_job_manager(
     database_blocked: ValueType,
     connection_pool: pool,
     loaded_tables: Dict[str, Optional[str]],
+    worker_pool: WorkerPool,
     storage_host: str,
     storage_password: str,
     storage_port: str,
