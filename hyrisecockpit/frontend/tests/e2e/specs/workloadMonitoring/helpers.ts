@@ -2,7 +2,11 @@ import { getSelectorByConfig, roundNumber } from "../helpers";
 
 const selectors: Record<string, string> = {
   queryTable: getSelectorByConfig("div", "query-table"),
-  queryDataTable: getSelectorByConfig("div", "query-data-table")
+  queryDataTable: getSelectorByConfig("div", "query-data-table"),
+  generatedQueryTypeProportion: getSelectorByConfig(
+    "div",
+    "generatedQueryTypeProportion"
+  )
 };
 
 export function getSelector(component: string): string {
