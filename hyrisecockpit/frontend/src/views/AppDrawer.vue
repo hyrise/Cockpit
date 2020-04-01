@@ -21,7 +21,7 @@
           <v-list-item-title>Views</v-list-item-title>
         </v-list-item-content>
 
-        <v-menu v-model="menu" bottom offset-x>
+        <v-menu id="popup-menu" v-model="menu" bottom offset-x>
           <template v-slot:activator="{ on }">
             <v-list-item-icon>
               <v-icon v-on="on">mdi-cog-outline</v-icon>
