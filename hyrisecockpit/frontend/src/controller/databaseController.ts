@@ -24,17 +24,13 @@ export function useDatabaseController(): DatabaseController {
   });
 
   eventBus.$on("STORAGE_DATA_CHANGED", (data: any) => {
-    if (!allDatabasesExist(Object.keys(data))) {
-      updateDatabases();
-    } else {
+    if (allDatabasesExist(Object.keys(data))) {
       updateDatabaseStorageInformation(data);
     }
   });
 
   eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
-    if (!allDatabasesExist(Object.keys(data))) {
-      updateDatabases();
-    } else {
+    if (allDatabasesExist(Object.keys(data))) {
       updateDatabaseCPUInformation(data);
     }
   });

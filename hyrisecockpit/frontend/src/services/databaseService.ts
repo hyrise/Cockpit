@@ -11,7 +11,6 @@ import { useDataTransformationHelpers } from "./transformationService";
 import { useDatabaseEvents } from "../meta/events";
 
 export function useDatabaseService(): DatabaseService {
-  const colors = Object.values(colorDefinition);
   let usedColors: any = 0;
   const {
     emitDatabaseAddedEvent,
@@ -32,7 +31,7 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function getDatabaseColor(): string {
-    const color = colors[usedColors];
+    const color = Object.values(colorDefinition)[usedColors];
     usedColors += 1;
     return color;
   }
