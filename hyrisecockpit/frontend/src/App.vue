@@ -2,7 +2,8 @@
   <v-app :style="{ background: $vuetify.theme.themes['light'].background }">
     <app-drawer
       @openPlugins="togglePluginEditor()"
-      @openSelection="toggleSelectionList()"
+      @toggleSelection="toggleSelectionList()"
+      @closeSelection="showSelectionList = false"
     />
     <v-content>
       <selection-list v-show="showSelectionList" />

@@ -16,7 +16,7 @@
           <v-list-item-title>Views</v-list-item-title>
         </v-list-item-content>
         <v-list-item-icon>
-          <v-icon id="selection-list-button" @click="$emit('openSelection')"
+          <v-icon id="selection-list-button" @click="$emit('toggleSelection')"
             >mdi-cog-outline</v-icon
           >
         </v-list-item-icon>
@@ -60,7 +60,11 @@
 
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
-          <v-list-item id="database-list-button" v-on="{ ...menu }">
+          <v-list-item
+            id="database-list-button"
+            v-on="{ ...menu }"
+            @click="$emit('closeSelection')"
+          >
             <v-list-item-icon>
               <v-icon>mdi-database</v-icon>
             </v-list-item-icon>

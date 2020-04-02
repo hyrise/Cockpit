@@ -104,6 +104,6 @@ export default defineComponent({
 .selection-list {
   position: fixed;
   top: 100px;
-  z-index: 11;
+  z-index: 10;
 }
 </style>

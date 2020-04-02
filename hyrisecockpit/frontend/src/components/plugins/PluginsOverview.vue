@@ -199,7 +199,8 @@ export default defineComponent({
 }
 .plugin-overview {
   position: fixed;
-  top: 70px;
+  top: 20px;
+  right: 10px;
   z-index: 11;
   width: 500px;
 }

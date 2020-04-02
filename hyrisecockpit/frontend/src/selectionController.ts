@@ -10,9 +10,11 @@ import {
   overviewMetrics,
   workloadMetrics
 } from "@/types/metrics";
+import { useSorting } from "@/meta/formatting";
 
 export function useSelectionController(): SelectionController {
   const { sortElements } = useSorting();
+
   const availableDatabases = computed(
     () =>
       Vue.prototype.$databaseController.availableDatabasesById.value as string[]
@@ -81,20 +83,4 @@ export function useSelectionController(): SelectionController {
   });
 
   return { selectedDatabases, availableMetrics, selectedMetrics };
-}
-
-function useSorting(): {
-  sortElements: <T>(selected: T[], available: T[]) => T[];
-} {
-  function sortElements<T>(selected: T[], available: T[]): T[] {
-    const sorted: T[] = [];
-    available.forEach(availableElement => {
-      const relatedSelectedElement = selected.find(
-        selectedElement => selectedElement === availableElement
-      );
-      if (relatedSelectedElement) sorted.push(relatedSelectedElement);
-    });
-    return sorted;
-  }
-  return { sortElements };
 }
