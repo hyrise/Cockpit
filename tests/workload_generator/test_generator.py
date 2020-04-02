@@ -135,3 +135,30 @@ class TestWorkloadGenerator:
             for workload_id, workload in workloads.items()
         ]
         assert response == expected_response
+
+    @mark.parametrize(
+        "workloads",
+        [
+            {},
+            {"1": get_fake_workload()},
+            {"1": get_fake_workload(), "2": get_fake_workload()},
+        ],
+    )
+    def test_gets_a_workload(
+        self, isolated_generator: WorkloadGenerator, workloads: Dict[str, Workload],
+    ):
+        """Test gets a workload."""
+        assert isolated_generator._workloads == {}
+        isolated_generator._workloads = workloads
+
+        for workload_id, workload in workloads.items():
+            response = isolated_generator._call_get_workload(
+                {"workload_id": workload_id}
+            )
+            expected_response = get_response(200)
+            expected_response["body"]["workload"] = {
+                "workload_id": workload_id,
+                "folder_name": workload.folder_name,
+                "frequency": workload.frequency,
+            }
+            assert response == expected_response
