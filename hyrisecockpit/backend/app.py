@@ -244,20 +244,6 @@ model_queue_length = monitor.clone(
     "Queue length",
     model_database,
     {
-        "queue_length": fields.Integer(
-            title="Queue length",
-            description="Query queue length of a database at a given point in time.",
-            required=True,
-            example=18623,
-        )
-    },
-)
-
-
-model_queue_length = monitor.clone(
-    "Queue length",
-    model_database,
-    {
         "queue_length": fields.List(
             fields.Nested(
                 monitor.model(
