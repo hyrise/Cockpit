@@ -1,4 +1,5 @@
 """Utility custom cursors."""
+from sqlite3 import connect
 from types import TracebackType
 from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, Union
 
@@ -162,3 +163,47 @@ class StorageCursor:
             )
             for row in plugin_log
         )
+
+
+class SharedMemoryCursor:
+    """Context Manager for a connection to shared memory space."""
+
+    def __init__(self) -> None:
+        """Initialize a SharedMemoryCursor."""
+        self._connection = connect(":memory:")
+        self._cursor = self._connection.cursor()
+
+    def __enter__(self) -> "SharedMemoryCursor":
+        """Call for context manager."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_value: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        """Call close with a context manager."""
+        self._connection.close()
+        return None
+
+    def create_active_database_table(self) -> None:
+        """Add active databases table."""
+        self._cursor.execute("""CREATE TABLE active_databases (name real)""")
+
+    def drop_active_databases_table(self) -> None:
+        """Delete active databases table."""
+        self._cursor.execute("""DROP TABLE active_databases""")
+
+    def add_active_databases(self, db_name) -> None:
+        """Delete active databases table."""
+        self._cursor.execute("""INSERT INTO active_databases VALUES (?)""", (db_name,))
+
+    def drop_active_databases(self, db_name) -> None:
+        """Remove database from active databases."""
+        self._cursor.execute("""DELETE FROM active_databases WHERE (?)""", (db_name,))
+
+    def get_active_databases(self) -> List[str]:
+        """Get active databases."""
+        self._cursor.execute("""SELECT * active_databases""")
+        return [row[0] for row in self._cursor.fetchall()]
