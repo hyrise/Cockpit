@@ -4,15 +4,15 @@
       <div class="selection">{{ pageName }}</div>
     </v-card-title>
     <v-card-text>
-      <v-container class="white container">
+      <v-container class="white container flex">
         <v-row no gutters>
-          <v-col class="row">
+          <v-col class="row flex-item">
             <database-selection
               :initial-databases="selectedDatabases"
               @selectionChanged="handleDatabaseChange"
             />
           </v-col>
-          <v-col class="row">
+          <v-col class="row flex-item">
             <metric-selection
               :initial-metrics="selectedMetrics"
               :available-metrics="availableMetrics"
@@ -105,6 +105,15 @@ export default defineComponent({
 }
 .row {
   padding: 0px 20px 0px 20px !important;
+}
+.flex {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.flex-item {
+  flex: 0 0 45%;
 }
 .selection-list {
   position: fixed;
