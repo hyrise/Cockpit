@@ -5,7 +5,23 @@
     class="white--text"
     :color="database.color"
   >
-    <v-icon left>mdi-database</v-icon>
+    <div v-if="selectable">
+      <v-icon
+        v-if="selected"
+        id="add-select-database-button"
+        left
+        @click="handleUnSelect(database.id)"
+        >mdi-eye</v-icon
+      >
+      <v-icon
+        v-if="!selected"
+        id="remove-select-database-button"
+        left
+        @click="handleSelect(database.id)"
+        >mdi-eye-off</v-icon
+      >
+    </div>
+    <v-icon v-if="!selectable" left>mdi-database</v-icon>
     <b>{{ database.id }}</b>
     <v-tooltip v-if="closable" right>
       <template v-slot:activator="{ on }">
@@ -27,17 +43,23 @@ import {
   SetupContext,
   Ref,
   ref,
-  computed
+  computed,
+  watch
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
+import { useSelectableItem } from "@/meta/selection";
 
 interface Data {
   database: Ref<Database>;
+  handleSelect: (id: string) => void;
+  handleUnSelect: (id: string) => void;
 }
 
 interface Props {
   databaseId: string;
   closable: boolean;
+  selectable: boolean;
+  selected: boolean;
 }
 
 export default defineComponent({
@@ -50,13 +72,22 @@ export default defineComponent({
     closable: {
       type: Boolean,
       default: false
+    },
+    selectable: {
+      type: Boolean,
+      default: false
+    },
+    selected: {
+      type: Boolean,
+      default: undefined
     }
   },
   setup(props: Props, context: SetupContext): Data {
     return {
       database: computed(() =>
         context.root.$databaseController.getDatabaseById(props.databaseId)
-      )
+      ),
+      ...useSelectableItem(context)
     };
   }
 });

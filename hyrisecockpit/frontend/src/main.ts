@@ -4,8 +4,9 @@ import vuetify from "./plugins/vuetify";
 import vueRouter from "./plugins/vueRouter";
 import App from "./App.vue";
 import { usePluginService } from "./services/pluginService";
-import { useDatabaseController } from "./databaseController";
-import { useMetricController } from "./metricController";
+import { useDatabaseController } from "@/controller/databaseController";
+import { useMetricController } from "@/controller/metricController";
+import { useSelectionController } from "@/controller/selectionController";
 
 Vue.use(VueCompositionApi);
 
@@ -14,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$databaseController = useDatabaseController();
 Vue.prototype.$metricController = useMetricController();
 Vue.prototype.$pluginService = usePluginService();
+Vue.prototype.$selectionController = useSelectionController();
 
 new Vue({
   vuetify,
