@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
-from psycopg2 import ProgrammingError, pool
+from psycopg2 import DatabaseError, InterfaceError, ProgrammingError, pool
 from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
@@ -64,11 +64,9 @@ class BackgroundJobManager(object):
         self._update_plugin_log_job = self._scheduler.add_job(
             func=self._update_plugin_log, trigger="interval", seconds=1,
         )
-
         self._ping_hyrise_job = self._scheduler.add_job(
             func=self._ping_hyrise, trigger="interval", seconds=0.5,
         )
-
         self._update_queue_length_job = self._scheduler.add_job(
             func=self._update_queue_length, trigger="interval", seconds=1,
         )
@@ -90,11 +88,12 @@ class BackgroundJobManager(object):
 
     def _ping_hyrise(self) -> None:
         """Check in interval if hyrise is still alive."""
-        with PoolCursor(self._connection_pool) as cur:
-            if not cur.valid:
-                self._hyrise_active.value = False
-            else:
+        try:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute("SELECT 1;", None)
                 self._hyrise_active.value = True
+        except (DatabaseError, InterfaceError):
+            self._hyrise_active.value = False
 
     def _update_queue_length(self) -> None:
         queue_length: int = self._worker_pool.get_queue_length()
@@ -143,9 +142,11 @@ class BackgroundJobManager(object):
     def _sql_to_data_frame(self, sql: str) -> DataFrame:
         if self._database_blocked.value:
             return DataFrame()
-        else:
+        try:
             with PoolCursor(self._connection_pool) as cur:
                 return cur.read_sql_query(sql)
+        except (DatabaseError, InterfaceError):
+            return DataFrame()
 
     def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
         """Calculate difference base - substractor."""
@@ -378,12 +379,12 @@ class BackgroundJobManager(object):
     def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
         query, parameters = query_tuple
         formatted_parameters = self._format_query_parameters(parameters)
-        with PoolCursor(self._connection_pool) as cur:
-            try:
+        try:
+            with PoolCursor(self._connection_pool) as cur:
                 cur.execute(query, formatted_parameters)
                 success_flag.value = True
-            except ProgrammingError:
-                pass  # TODO: log error
+        except (DatabaseError, InterfaceError, ProgrammingError):
+            pass  # TODO: log error
 
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         success_flags: List[Value] = [Value("b", False) for _ in queries]
@@ -436,13 +437,16 @@ class BackgroundJobManager(object):
         return True
 
     def _activate_plugin_job(self, plugin: str) -> None:
-        with PoolCursor(self._connection_pool) as cur:
-            cur.execute(
-                (
-                    "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
-                ),
-                (AsIs(plugin),),
-            )
+        try:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    (
+                        "INSERT INTO meta_plugins(name) VALUES ('/usr/local/hyrise/lib/lib%sPlugin.so');"
+                    ),
+                    (AsIs(plugin),),
+                )
+        except (DatabaseError, InterfaceError):
+            return None  # TODO: log that activate plug-in failed
 
     def activate_plugin(self, plugin: str) -> bool:
         """Activate plugin."""
@@ -453,10 +457,13 @@ class BackgroundJobManager(object):
             return False
 
     def _deactivate_plugin_job(self, plugin: str) -> None:
-        with PoolCursor(self._connection_pool) as cur:
-            cur.execute(
-                ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
-            )
+        try:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute(
+                    ("DELETE FROM meta_plugins WHERE name='%sPlugin';"), (AsIs(plugin),)
+                )
+        except (DatabaseError, InterfaceError):
+            return None  # TODO: log that deactivate plug-in failed
 
     def deactivate_plugin(self, plugin: str) -> bool:
         """Dectivate plugin."""
@@ -470,15 +477,18 @@ class BackgroundJobManager(object):
         """Check which tables exists and which not."""
         existing_tables: List = []
         not_existing_tables: List = []
-        with PoolCursor(self._connection_pool) as cur:
-            cur.execute("SELECT table_name FROM meta_tables;", None)
-            results = cur.fetchall()
-            loaded_tables = [row[0] for row in results]
-            for name in table_names:
-                if name in loaded_tables:
-                    existing_tables.append(name)
-                    continue
-                not_existing_tables.append(name)
+        try:
+            with PoolCursor(self._connection_pool) as cur:
+                cur.execute("SELECT table_name FROM meta_tables;", None)
+                results = cur.fetchall()
+                loaded_tables = [row[0] for row in results]
+                for name in table_names:
+                    if name in loaded_tables:
+                        existing_tables.append(name)
+                        continue
+                    not_existing_tables.append(name)
+        except (DatabaseError, InterfaceError):
+            return {"existing": [], "not_existing": []}
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
     def _generate_table_drop_queries(self, table_names: List[str]) -> List[Tuple]:

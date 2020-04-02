@@ -5,7 +5,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, Type, TypedDict, 
 from influxdb import InfluxDBClient
 from pandas import DataFrame
 from pandas.io.sql import read_sql_query as read_sql_query_pandas
-from psycopg2 import DatabaseError, InterfaceError, pool
+from psycopg2 import pool
 
 
 class PointBase(TypedDict):
@@ -32,15 +32,10 @@ class PoolCursor:
 
     def _initialize(self) -> None:
         """Initialize connection and cursor."""
-        try:
-            self._connection = self.pool.getconn()
-            self._connection.set_session(autocommit=True)
-            self._cur = self._connection.cursor()
-            self.valid = True
-        except (DatabaseError, InterfaceError):
-            self._connection = None
-            self._cur = None
-            self.valid = False
+        self._connection = self.pool.getconn()
+        self._connection.set_session(autocommit=True)
+        self._cur = self._connection.cursor()
+        self.valid = True
 
     def __enter__(self) -> "PoolCursor":
         """Return self for a context manager."""
@@ -53,48 +48,27 @@ class PoolCursor:
         traceback: Optional[TracebackType],
     ) -> Optional[bool]:
         """Call close with a context manager."""
-        if self.valid:
-            self._cur.close()
-            self.pool.putconn(self._connection)
+        self._cur.close()
+        self.pool.putconn(self._connection)
         return None
 
     def execute(
         self, query: str, parameters: Optional[Tuple[Union[str, int], ...]]
     ) -> None:
         """Execute a query."""
-        if not self.valid:
-            return None
-        try:
-            return self._cur.execute(query, parameters)
-        except (DatabaseError, InterfaceError):
-            return None
+        return self._cur.execute(query, parameters)
 
     def fetchone(self) -> Tuple[Any, ...]:
         """Fetch one."""
-        if not self.valid:
-            return ()
-        try:
-            return self._cur.fetchone()
-        except (DatabaseError, InterfaceError):
-            return ()
+        return self._cur.fetchone()
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
         """Fetch all."""
-        if not self.valid:
-            return []
-        try:
-            return self._cur.fetchall()
-        except (DatabaseError, InterfaceError):
-            return []
+        return self._cur.fetchall()
 
     def read_sql_query(self, sql: str) -> DataFrame:
         """Execute query and return result as data-frame."""
-        if not self.valid:
-            return DataFrame()
-        try:
-            return read_sql_query_pandas(sql, self._connection)
-        except (DatabaseError, InterfaceError):
-            return DataFrame()
+        return read_sql_query_pandas(sql, self._connection)
 
 
 class StorageCursor:
