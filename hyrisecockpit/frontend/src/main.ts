@@ -4,9 +4,9 @@ import vuetify from "./plugins/vuetify";
 import vueRouter from "./plugins/vueRouter";
 import App from "./App.vue";
 import { usePluginService } from "./services/pluginService";
-import { useDatabaseController } from "./databaseController";
-import { useMetricController } from "./metricController";
-import { useSelectionController } from "./selectionController";
+import { useDatabaseController } from "@/controller/databaseController";
+import { useMetricController } from "@/controller/metricController";
+import { useSelectionController } from "@/controller/selectionController";
 
 Vue.use(VueCompositionApi);
 
