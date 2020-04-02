@@ -654,26 +654,22 @@ class TestBackgroundJobManager:
         fake_folder_name: str = "hyriseDown"
         fake_table_names: List[str] = ["keep", "on", "going", "please!!!"]
 
-        received_queries: List[
-            Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]
-        ] = background_job_manager._generate_table_loading_queries(
+        received_queries = background_job_manager._generate_table_loading_queries(
             fake_table_names, fake_folder_name
         )
 
-        expected_queries: List[
-            Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]
-        ] = [
+        expected_queries = [
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("keep", "as_is"), ("hyriseDown", "as_is"), ("keep", "as_is"),),
+                (("keep", "as_is"), (fake_folder_name, "as_is"), ("keep", "as_is"),),
             ),
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("on", "as_is"), ("hyriseDown", "as_is"), ("on", "as_is"),),
+                (("on", "as_is"), (fake_folder_name, "as_is"), ("on", "as_is"),),
             ),
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("going", "as_is"), ("hyriseDown", "as_is"), ("going", "as_is"),),
+                (("going", "as_is"), (fake_folder_name, "as_is"), ("going", "as_is"),),
             ),
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
@@ -695,34 +691,19 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully formats query parameters."""
-        parameters: Tuple[Tuple[str, str], Tuple[str, None], Tuple[str, None]] = (
+        parameters = (
             ("keep", "as_is",),
             ("hyriseDown", None,),
             ("keep", None,),
         )
-        received: Optional[
-            Tuple[Any, ...]
-        ] = background_job_manager._format_query_parameters(parameters)
-
-        expected_formatted_parameters: Tuple[str, str, str] = (
-            "AsIs(keep)",
-            "hyriseDown",
-            "keep",
-        )
-
-        assert received == expected_formatted_parameters
+        received = background_job_manager._format_query_parameters(parameters)
+        assert received == ("AsIs(keep)", "hyriseDown", "keep")
 
     def test_doesnt_format_no_parameters(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test doesn't format when there are no parameters."""
-        parameters = None
-        received: Optional[
-            Tuple[Any, ...]
-        ] = background_job_manager._format_query_parameters(parameters)
-        expected_formatted_parameters = None
-
-        assert received == expected_formatted_parameters
+        assert background_job_manager._format_query_parameters(None) is None
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
