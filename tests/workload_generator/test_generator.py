@@ -162,3 +162,28 @@ class TestWorkloadGenerator:
                 "frequency": workload.frequency,
             }
             assert response == expected_response
+
+    @mark.parametrize(
+        "workloads",
+        [
+            {},
+            {"1": get_fake_workload()},
+            {"1": get_fake_workload(), "2": get_fake_workload()},
+        ],
+    )
+    def test_update_workload(
+        self, isolated_generator: WorkloadGenerator, workloads: Dict[str, Workload],
+    ):
+        """Test update a workload."""
+        assert isolated_generator._workloads == {}
+        isolated_generator._workloads = workloads
+
+        for workload_id, workload in workloads.items():
+            new_workload = get_fake_workload()
+            response = isolated_generator._call_update_workload(
+                {"workload_id": workload_id, "workload": new_workload}
+            )
+            expected_response = get_response(200)
+            expected_response["body"]["workload_id"] = workload_id
+            assert response == expected_response
+            workload.update.assert_called_once_with(new_workload)  # type: ignore
