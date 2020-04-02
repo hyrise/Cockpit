@@ -18,3 +18,19 @@ export function useSelectionHandling(
 
   return { selectedMetrics, selectedDatabases };
 }
+
+export function useSelectableItem(
+  context: SetupContext
+): {
+  handleSelect: <T>(id: T) => void;
+  handleUnSelect: <T>(id: T) => void;
+} {
+  function handleUnSelect<T>(id: T): void {
+    context.emit("toggleSelected", id, false);
+  }
+  function handleSelect<T>(id: T): void {
+    context.emit("toggleSelected", id, true);
+  }
+
+  return { handleSelect, handleUnSelect };
+}

@@ -10,14 +10,14 @@
         v-if="selected"
         id="add-select-database-button"
         left
-        @click="handleUnSelect()"
+        @click="handleUnSelect(database.id)"
         >mdi-eye</v-icon
       >
       <v-icon
         v-if="!selected"
         id="remove-select-database-button"
         left
-        @click="handleSelect()"
+        @click="handleSelect(database.id)"
         >mdi-eye-off</v-icon
       >
     </div>
@@ -47,11 +47,12 @@ import {
   watch
 } from "@vue/composition-api";
 import { Database } from "@/types/database";
+import { useSelectableItem } from "@/meta/selection";
 
 interface Data {
   database: Ref<Database>;
-  handleSelect: () => void;
-  handleUnSelect: () => void;
+  handleSelect: (id: string) => void;
+  handleUnSelect: (id: string) => void;
 }
 
 interface Props {
@@ -82,19 +83,11 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    //TODO: outsource
-    function handleUnSelect(): void {
-      context.emit("toggleSelected", props.databaseId, false);
-    }
-    function handleSelect(): void {
-      context.emit("toggleSelected", props.databaseId, true);
-    }
     return {
       database: computed(() =>
         context.root.$databaseController.getDatabaseById(props.databaseId)
       ),
-      handleSelect,
-      handleUnSelect
+      ...useSelectableItem(context)
     };
   }
 });

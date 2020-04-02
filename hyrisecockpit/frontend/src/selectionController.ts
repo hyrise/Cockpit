@@ -3,7 +3,7 @@ import { eventBus } from "@/plugins/eventBus";
 import { PageName } from "@/types/views";
 import { SelectionController } from "@/types/controller";
 import { pages } from "@/meta/views";
-import { reactive, watch } from "@vue/composition-api";
+import { reactive, watch, computed } from "@vue/composition-api";
 import {
   Metric,
   comparisonMetrics,
@@ -13,6 +13,10 @@ import {
 
 export function useSelectionController(): SelectionController {
   const { sortElements } = useSorting();
+  const availableDatabases = computed(
+    () =>
+      Vue.prototype.$databaseController.availableDatabasesById.value as string[]
+  );
   const selectedDatabases = reactive<Record<PageName, string[]>>({
     comparison: [] as string[],
     overview: [] as string[],
@@ -30,13 +34,11 @@ export function useSelectionController(): SelectionController {
   });
 
   watch(
-    () => Vue.prototype.$databaseController.databasesUpdated.value,
+    () => availableDatabases.value,
     () => {
-      const databases = Vue.prototype.$databaseController.availableDatabasesById
-        .value as string[];
-      selectedDatabases.comparison = databases;
-      selectedDatabases.overview = databases;
-      selectedDatabases.workload = databases;
+      selectedDatabases.comparison = availableDatabases.value as string[];
+      selectedDatabases.overview = availableDatabases.value as string[];
+      selectedDatabases.workload = availableDatabases.value as string[];
     }
   );
 
@@ -49,7 +51,7 @@ export function useSelectionController(): SelectionController {
           selectedDatabases[page].push(payload.database);
           selectedDatabases[page] = sortElements(
             selectedDatabases[page],
-            Vue.prototype.$databaseController.availableDatabasesById
+            availableDatabases.value as string[]
           );
         } else {
           selectedDatabases[page] = selectedDatabases[page].filter(

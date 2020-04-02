@@ -4,14 +4,14 @@
       v-if="selected"
       id="add-select-metric-button"
       left
-      @click="handleUnSelect()"
+      @click="handleUnSelect(metric)"
       >mdi-eye</v-icon
     >
     <v-icon
       v-if="!selected"
       id="remove-select-metric-button"
       left
-      @click="handleSelect()"
+      @click="handleSelect(metric)"
       >mdi-eye-off</v-icon
     >
     <b>{{ getMetricTitle(metric) }}</b>
@@ -29,11 +29,12 @@ import {
 import { Database } from "@/types/database";
 import { Metric } from "@/types/metrics";
 import { getMetricTitle } from "@/meta/metrics";
+import { useSelectableItem } from "@/meta/selection";
 
 interface Data {
   getMetricTitle: (metric: Metric) => string;
-  handleSelect: () => void;
-  handleUnSelect: () => void;
+  handleSelect: (metric: Metric) => void;
+  handleUnSelect: (metric: Metric) => void;
 }
 
 interface Props {
@@ -54,16 +55,9 @@ export default defineComponent({
     }
   },
   setup(props: Props, context: SetupContext): Data {
-    function handleUnSelect(): void {
-      context.emit("toggleSelected", props.metric, false);
-    }
-    function handleSelect(): void {
-      context.emit("toggleSelected", props.metric, true);
-    }
     return {
-      handleSelect,
-      handleUnSelect,
-      getMetricTitle
+      getMetricTitle,
+      ...useSelectableItem(context)
     };
   }
 });
