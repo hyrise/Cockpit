@@ -16,7 +16,7 @@
     >
       <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
-          {{ database }}
+          <database-chip :database-id="database" />
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div v-for="plugin in plugins" :key="plugin">
@@ -77,6 +77,7 @@ import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
 import PluginSetting from "./PluginSetting.vue";
 import useDragElement from "../../meta/draggable";
+import DatabaseChip from "../details/DatabaseChip.vue";
 
 interface Props {
   onClose: () => void;
@@ -104,7 +105,8 @@ export default defineComponent({
   name: "PluginOverview",
   components: {
     PluginsLog,
-    PluginSetting
+    PluginSetting,
+    DatabaseChip
   },
   props: {
     onClose: {
@@ -141,6 +143,7 @@ export default defineComponent({
     ): boolean {
       return (
         activePlugins.value.find(x => x === databseId + "_" + pluginId) &&
+        pluginSettings.value[databseId] &&
         pluginSettings.value[databseId][pluginId]
       );
     }
