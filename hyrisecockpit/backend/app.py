@@ -737,6 +737,7 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
+    @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return latency information from the stored queries."""
         startts: int = monitor.payload["startts"]
@@ -812,6 +813,7 @@ class QueueLength(Resource):
     """Queue length information of all databases."""
 
     @monitor.doc(model=[model_queue_length])
+    @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return queue length information from database manager for a given time interval."""
         startts: int = monitor.payload["startts"]
