@@ -6,7 +6,7 @@ from typing import Dict, List, Optional
 from psycopg2 import pool
 
 from .background_scheduler import BackgroundJobManager
-from .cursor import PoolCursor
+from .cursor import PoolCursor, StorageCursor
 from .driver import Driver
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
@@ -35,6 +35,11 @@ class Database(object):
         self._id = id
         self.number_workers: int = number_workers
         self._default_tables: str = default_tables
+        self._storage_host: str = storage_host
+        self._storage_password: str = storage_password
+        self._storage_port: str = storage_port
+        self._storage_user: str = storage_user
+
         self._number_additional_connections: int = 50
         self.driver: Driver = Driver(
             user,
@@ -50,17 +55,6 @@ class Database(object):
         self._loaded_tables: Dict[
             str, Optional[str]
         ] = self.create_empty_loaded_tables()
-        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
-            self._id,
-            self._database_blocked,
-            self._connection_pool,
-            self._loaded_tables,
-            self._hyrise_active,
-            storage_host,
-            storage_password,
-            storage_port,
-            storage_user,
-        )
         self._worker_pool: WorkerPool = WorkerPool(
             self._connection_pool,
             self.number_workers,
@@ -68,8 +62,54 @@ class Database(object):
             workload_publisher_url,
             self._database_blocked,
         )
+        self._background_scheduler: BackgroundJobManager = BackgroundJobManager(
+            self._id,
+            self._database_blocked,
+            self._connection_pool,
+            self._loaded_tables,
+            self._hyrise_active,
+            self._worker_pool,
+            storage_host,
+            storage_password,
+            storage_port,
+            storage_user,
+        )
+        self._initialize_influx()
         self._background_scheduler.start()
         self._background_scheduler.load_tables(self._default_tables)
+
+    def _initialize_influx(self) -> None:
+        """Initialize Influx database."""
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._id,
+        ) as cursor:
+            cursor.drop_database()
+            cursor.create_database()
+            throughput_continuous_query = """SELECT count("latency") AS "throughput"
+                INTO "throughput"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+            throughput_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "throughput_calculation",
+                throughput_continuous_query,
+                throughput_resample_options,
+            )
+
+            latency_continuous_query = """SELECT mean("latency") AS "latency"
+                INTO "latency"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+            latency_resample_options = "EVERY 1s FOR 5s"
+            cursor.create_continuous_query(
+                "latency_calculation",
+                latency_continuous_query,
+                latency_resample_options,
+            )
 
     def create_empty_loaded_tables(self) -> Dict[str, Optional[str]]:
         """Create loaded_tables dictionary without information about already loaded tables."""

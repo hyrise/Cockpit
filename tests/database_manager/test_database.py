@@ -9,6 +9,7 @@ from psycopg2 import pool
 from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
+from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
 database_id: str = "MongoDB forever"
 database_user: str = "Proform"
@@ -89,6 +90,10 @@ class TestDatabase(object):
     @patch("hyrisecockpit.database_manager.database.Driver", MagicMock())
     @patch(
         "hyrisecockpit.database_manager.database.Database.create_empty_loaded_tables",
+        MagicMock(),
+    )
+    @patch(
+        "hyrisecockpit.database_manager.database.Database._initialize_influx",
         MagicMock(),
     )
     def database(self) -> Database:

@@ -5,7 +5,7 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
-from time import time_ns
+from time import time, time_ns
 from typing import Any, Dict, List, Union
 
 from flask import Flask
@@ -569,9 +569,8 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, Response]:
         """Return throughput information from the stored queries."""
-        currentts = time_ns()
-        startts = currentts - 2_000_000_000
-        endts = currentts - 1_000_000_000
+        offset_seconds = 3
+        offsetts = (int(time()) - offset_seconds) * 1_000_000_000
 
         throughput: Dict[str, int] = {}
         try:
@@ -580,15 +579,13 @@ class Throughput(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT COUNT("latency") FROM successful_queries WHERE time > $startts AND time <= $endts;',
+                "SELECT * FROM throughput WHERE time = $offsetts;",
                 database=database,
-                bind_params={"startts": startts, "endts": endts},
+                bind_params={"offsetts": offsetts},
             )
-            throughput_value = list(result["successful_queries", None])
+            throughput_value = list(result["throughput", None])
             if len(throughput_value) > 0:
-                throughput[database] = list(result["successful_queries", None])[0][
-                    "count"
-                ]
+                throughput[database] = list(result["throughput", None])[0]["throughput"]
             else:
                 throughput[database] = 0
         response = get_response(200)
@@ -669,9 +666,8 @@ class Latency(Resource):
     @monitor.doc(model=[model_latency])
     def get(self) -> Union[int, Response]:
         """Return latency information from the stored queries."""
-        currentts = time_ns()
-        startts = currentts - 2_000_000_000
-        endts = currentts - 1_000_000_000
+        offset_seconds = 3
+        offsetts = (int(time()) - offset_seconds) * 1_000_000_000
         latency: Dict[str, float] = {}
         try:
             active_databases = _active_databases()
@@ -679,15 +675,13 @@ class Latency(Resource):
             return 500
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT MEAN("latency") as "latency" FROM successful_queries WHERE time > $startts AND time <= $endts;',
+                "SELECT * FROM latency WHERE time = $offsetts;",
                 database=database,
-                bind_params={"startts": startts, "endts": endts},
+                bind_params={"offsetts": offsetts},
             )
-            latency_value = list(result["successful_queries", None])
+            latency_value = list(result["latency", None])
             if len(latency_value) > 0:
-                latency[database] = list(result["successful_queries", None])[0][
-                    "latency"
-                ]
+                latency[database] = list(result["latency", None])[0]["latency"]
             else:
                 latency[database] = 0
         response = get_response(200)

@@ -4,9 +4,14 @@ import { clickElement, getElement } from "./helpers";
 
 export function testMaxDecimalDigits(content: string, maxDigits: number): void {
   const decimal = content.split(".");
-  const decimalOnly = decimal[1].split(" ");
+  const decimalOnly =
+    decimal.length > 1 ? decimal[1].split(" ") : decimal[0].split(" ");
 
   expect(decimalOnly[0]).to.have.length.of.at.most(maxDigits);
+}
+
+export function testDateFormatting(date: Date, format: "HHMMSS"): void {
+  expect(date.getMilliseconds()).to.eq(0);
 }
 
 // CONTENT
