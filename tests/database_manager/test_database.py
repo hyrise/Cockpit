@@ -9,7 +9,6 @@ from psycopg2 import pool
 from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
-from hyrisecockpit.database_manager.worker_pool import WorkerPool
 
 database_id: str = "MongoDB forever"
 database_user: str = "Proform"
