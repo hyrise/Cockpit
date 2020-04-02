@@ -7,6 +7,7 @@
         </template>
         <template #content>
           <v-select
+            :id="'1' + 'access-select'"
             v-model="selectedTable"
             class="select"
             :items="tables"
@@ -25,6 +26,7 @@
         </template>
       </metric-detailed-view>
       <v-select
+        :id="'2' + 'access-select'"
         v-model="selectedTable"
         class="select"
         :items="tables"

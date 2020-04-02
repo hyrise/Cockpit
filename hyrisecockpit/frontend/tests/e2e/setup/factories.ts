@@ -4,6 +4,7 @@ import {
   generateRandomFloat,
   generateRandomInt,
   generateRandomNumbers,
+  generateUniqueRandomNumbers,
   benchmarks
 } from "./helpers";
 
@@ -167,12 +168,12 @@ export function fakeDatabaseChunksData(
 
 // DETAILED QUERY INFORMATION DATA
 
-function fakeQueryInformationData(): Object {
+function fakeQueryInformationData(latency: number): Object {
   return {
     benchmark: benchmarks[generateRandomInt(0, benchmarks.length)],
     query_number: faker.random.number(),
     throughput: faker.random.number(),
-    latency: faker.random.number()
+    latency: latency
   };
 }
 
@@ -180,10 +181,15 @@ export function fakeDatabaseQueryInformationData(
   databaseId: string,
   numberOfQueries: number
 ): Object {
+  // ensure uniquenes of latency data
+  const latencyData = generateUniqueRandomNumbers(
+    numberOfQueries,
+    Math.pow(10, 3)
+  );
   return {
     id: databaseId,
-    query_information: [...Array(numberOfQueries).keys()].map(() =>
-      fakeQueryInformationData()
+    query_information: [...Array(numberOfQueries).keys()].map((idx: number) =>
+      fakeQueryInformationData(latencyData[idx] * Math.pow(10, 6))
     )
   };
 }
