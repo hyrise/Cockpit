@@ -630,7 +630,7 @@ class Throughput(Resource):
     @monitor.doc(model=[model_throughput])
     @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
-        """Return throughput information from the stored queries in a given time range."""
+        """Return throughput information in a given time range."""
         startts: int = monitor.payload["startts"]
         endts: int = monitor.payload["endts"]
 
@@ -739,7 +739,7 @@ class Latency(Resource):
     @monitor.doc(model=[model_latency])
     @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
-        """Return latency information from the stored queries."""
+        """Return latency information in a given time range."""
         startts: int = monitor.payload["startts"]
         endts: int = monitor.payload["endts"]
 
@@ -815,7 +815,7 @@ class QueueLength(Resource):
     @monitor.doc(model=[model_queue_length])
     @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
-        """Return queue length information from database manager for a given time interval."""
+        """Return queue length information in a given time range."""
         startts: int = monitor.payload["startts"]
         endts: int = monitor.payload["endts"]
 
