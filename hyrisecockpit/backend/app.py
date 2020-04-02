@@ -87,7 +87,7 @@ model_throughput = monitor.clone(
                             example=1585762457000000000,
                         ),
                         "throughput": fields.Integer(
-                            title="THroughput",
+                            title="Throughput",
                             description="Throughput value",
                             required=True,
                             example=273,
@@ -172,19 +172,6 @@ model_query_information = monitor.clone(
                 )
             ),
             required=True,
-        )
-    },
-)
-
-model_latency = monitor.clone(
-    "Latency",
-    model_database,
-    {
-        "latency": fields.Float(
-            title="Latency",
-            description="Average query latency (ns) of a given time interval.",
-            required=True,
-            example=923.263,
         )
     },
 )
