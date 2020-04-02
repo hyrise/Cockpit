@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card id="query-table">
     <v-card-title>
       <database-chip :database-id="databaseId" />
       <v-spacer />
@@ -12,6 +12,7 @@
       />
     </v-card-title>
     <v-data-table
+      id="query-data-table"
       :loading="loading"
       :headers="headers"
       :items="displayedQueries"
