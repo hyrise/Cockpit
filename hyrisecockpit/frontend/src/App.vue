@@ -1,8 +1,13 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes['light'].background }">
-    <AppDrawer @openPlugins="togglePluginEditor()" />
+    <app-drawer
+      @openPlugins="togglePluginEditor()"
+      @toggleSelection="toggleSelectionList()"
+      @closeSelection="showSelectionList = false"
+    />
     <v-content>
-      <PluginsOverview v-if="showPluginEditor" :onClose="togglePluginEditor" />
+      <selection-list v-show="showSelectionList" />
+      <plugins-overview v-if="showPluginEditor" :onClose="togglePluginEditor" />
       <router-view />
     </v-content>
   </v-app>
@@ -18,16 +23,20 @@ import {
 } from "@vue/composition-api";
 import AppDrawer from "./views/AppDrawer.vue";
 import PluginsOverview from "./components/plugins/PluginsOverview.vue";
+import SelectionList from "@/components/selection/SelectionList.vue";
 
 interface Data {
   togglePluginEditor: () => void;
   showPluginEditor: Ref<boolean>;
+  showSelectionList: Ref<boolean>;
+  toggleSelectionList: () => void;
 }
 
 export default defineComponent({
   components: {
     AppDrawer,
-    PluginsOverview
+    PluginsOverview,
+    SelectionList
   },
   setup(props: {}, context: SetupContext): Data {
     const showPluginEditor = ref<boolean>(false);
@@ -35,9 +44,16 @@ export default defineComponent({
     function togglePluginEditor(): void {
       showPluginEditor.value = !showPluginEditor.value;
     }
+    const showSelectionList = ref<boolean>(false);
+
+    function toggleSelectionList(): void {
+      showSelectionList.value = !showSelectionList.value;
+    }
     return {
       togglePluginEditor,
-      showPluginEditor
+      showPluginEditor,
+      showSelectionList,
+      toggleSelectionList
     };
   }
 });
