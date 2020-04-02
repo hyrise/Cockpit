@@ -8,7 +8,8 @@ from unittest.mock import MagicMock, call, patch
 
 from pandas import DataFrame
 from pandas.core.frame import DataFrame as DataframeType
-from pytest import fixture
+from psycopg2 import DatabaseError, InterfaceError
+from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
 
@@ -195,39 +196,39 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
         get_mocked_pool_cursor,
     )
-    def test_pings_hyrise_if_cursor_not_valid(
+    def test_pings_hyrise_if_hyrise_alive(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
-        """Test handling of not valid connection."""
+        """Test handling of valid connection."""
         global mocked_pool_cursor
-        mocked_pool_cursor.valid = False
-
         background_job_manager._ping_hyrise()
 
-        assert not background_job_manager._hyrise_active.value
-
+        mocked_pool_cursor.execute.assert_called_once_with("SELECT 1;", None)
+        assert background_job_manager._hyrise_active.value
         mocked_pool_cursor = MagicMock()
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
         get_mocked_pool_cursor,
     )
-    def test_pings_hyrise_if_cursor_valid(
-        self, background_job_manager: BackgroundJobManager
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_pings_hyrise_if_hyrise_dead(
+        self, background_job_manager: BackgroundJobManager, exceptions
     ) -> None:
-        """Test handling of valid connection."""
-        background_job_manager._loaded_tables = {"hyrise": "down", "Hallo": "world"}
+        """Test handling of not valid connection."""
+
+        def raise_exception(*args) -> Exception:
+            """Throw exception."""
+            raise exceptions
 
         global mocked_pool_cursor
-        mocked_pool_cursor.valid = True
-
-        expected: Dict = {"hyrise": "down", "Hallo": "world"}
+        mocked_pool_cursor.execute.side_effect = raise_exception
 
         background_job_manager._ping_hyrise()
 
-        assert background_job_manager._hyrise_active.value
-        assert background_job_manager._loaded_tables == expected
-
+        assert not background_job_manager._hyrise_active.value
         mocked_pool_cursor = MagicMock()
 
     @patch(
