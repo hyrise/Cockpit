@@ -189,6 +189,35 @@ model_latency = monitor.clone(
     },
 )
 
+model_latency = monitor.clone(
+    "Latency",
+    model_database,
+    {
+        "latency": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Latency values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "latency": fields.Float(
+                            title="Latency",
+                            description="Average latency value in nanoseconds",
+                            required=True,
+                            example=66064020.96710526,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        ),
+    },
+)
+
 model_detailed_latency = monitor.clone(
     "Detailed Latency",
     model_database,
@@ -685,7 +714,7 @@ class DetailedLatency(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
-    # @monitor.doc(model=[model_latency])
+    @monitor.doc(model=[model_latency])
     def get(self) -> Union[int, List]:
         """Return latency information from the stored queries."""
         startts: int = monitor.payload["startts"]
