@@ -66,7 +66,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .list {
-  z-index: 9;
+  z-index: 12;
 }
 .button {
   margin-right: 10px;
