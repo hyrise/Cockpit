@@ -67,6 +67,7 @@ class BackgroundJobManager(object):
 
         self._ping_hyrise_job = self._scheduler.add_job(
             func=self._ping_hyrise, trigger="interval", seconds=0.5,
+        )
 
         self._update_queue_length_job = self._scheduler.add_job(
             func=self._update_queue_length, trigger="interval", seconds=1,
@@ -84,7 +85,6 @@ class BackgroundJobManager(object):
         self._update_storage_data_job.remove()
         self._update_plugin_log_job.remove()
         self._update_queue_length_job.remove()
-        self._scheduler.shutdown()
         self._ping_hyrise_job.remove()
         self._scheduler.shutdown()
 
@@ -109,7 +109,6 @@ class BackgroundJobManager(object):
             log.log_meta_information(
                 "queue_length", {"queue_length": queue_length}, time_stamp,
             )
-          
 
     def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
