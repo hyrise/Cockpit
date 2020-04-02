@@ -269,6 +269,23 @@ model_queue_length = monitor.clone(
     },
 )
 
+model_time_interval = monitor.clone(
+    "Time interval",
+    {
+        "startts": fields.Integer(
+            title="Start timestamp",
+            description="Timestamp in nanoseconds since epoch",
+            required=True,
+            example=1585837018000000000,
+        ),
+        "endts": fields.Integer(
+            title="End timestamp",
+            description="Timestamp in nanoseconds since epoch",
+            required=True,
+            example=1585837025000000000,
+        ),
+    },
+)
 
 model_workload_composition = monitor.model(
     "Workload composition",
@@ -611,6 +628,7 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
+    @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return throughput information from the stored queries in a given time range."""
         startts: int = monitor.payload["startts"]
