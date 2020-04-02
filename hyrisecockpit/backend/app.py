@@ -253,6 +253,37 @@ model_queue_length = monitor.clone(
     },
 )
 
+
+model_queue_length = monitor.clone(
+    "Queue length",
+    model_database,
+    {
+        "queue_length": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Queue_length values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "queue_length": fields.Integer(
+                            title="Queue length",
+                            description="Queue_length",
+                            required=True,
+                            example=450,
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        ),
+    },
+)
+
+
 model_workload_composition = monitor.model(
     "Workload composition",
     {
@@ -776,7 +807,7 @@ class DetailedQueryInformation(Resource):
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
-    # @monitor.doc(model=[model_queue_length])
+    @monitor.doc(model=[model_queue_length])
     def get(self) -> Union[int, List]:
         """Return queue length information from database manager for a given time interval."""
         startts: int = monitor.payload["startts"]
