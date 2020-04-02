@@ -1,26 +1,64 @@
-import { eventBus } from "../plugins/eventBus";
+import { eventBus } from "@/plugins/eventBus";
 import { Metric } from "@/types/metrics";
+import { PageName } from "@/types/views";
+import { SetupContext } from "@vue/composition-api";
 
 export function useMetricEvents(): {
-  emitWatchedMetricsChangedEvent: (metrics?: Metric[]) => void;
-  emitSelectedMetricsChangedEvent: (metrics?: Metric[]) => void;
+  emitWatchedMetricsChangedEvent: (metrics: Metric[]) => void;
+  emitSelectedMetricsChangedEvent: () => void;
+  emitSelectedMetricsChangedWithinEvent: (
+    page: PageName,
+    metric: Metric,
+    value: boolean
+  ) => void;
 } {
-  function emitWatchedMetricsChangedEvent(metrics: Metric[] = []): void {
+  function emitWatchedMetricsChangedEvent(metrics: Metric[]): void {
     eventBus.$emit("WATCHED_METRICS_CHANGED", metrics);
   }
-  function emitSelectedMetricsChangedEvent(metrics: Metric[] = []): void {
-    eventBus.$emit("SELECTED_METRICS_CHANGED", metrics);
+  function emitSelectedMetricsChangedEvent(): void {
+    eventBus.$emit("SELECTED_METRICS_CHANGED");
   }
-  return { emitWatchedMetricsChangedEvent, emitSelectedMetricsChangedEvent };
+  function emitSelectedMetricsChangedWithinEvent(
+    page: PageName,
+    metric: Metric,
+    value: boolean
+  ): void {
+    emitSelectedMetricsChangedEvent();
+    eventBus.$emit(`SELECTED_METRICS_CHANGED_ON_${page.toUpperCase()}`, {
+      metric,
+      value
+    });
+  }
+  return {
+    emitWatchedMetricsChangedEvent,
+    emitSelectedMetricsChangedEvent,
+    emitSelectedMetricsChangedWithinEvent
+  };
 }
 
 export function useDatabaseEvents(): {
   emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
   emitDatabaseAddedEvent: () => void;
   emitDatabaseRemovedEvent: () => void;
+  emitSelectedDatabasesChangedWithinEvent: (
+    page: PageName,
+    database: string,
+    value: boolean
+  ) => void;
 } {
-  function emitSelectedDatabasesChangedEvent(databases: string[] = []): void {
-    eventBus.$emit("SELECTED_DATABASES_CHANGED", databases);
+  function emitSelectedDatabasesChangedEvent(): void {
+    eventBus.$emit("SELECTED_DATABASES_CHANGED");
+  }
+  function emitSelectedDatabasesChangedWithinEvent(
+    page: PageName,
+    database: string,
+    value: boolean
+  ): void {
+    emitSelectedDatabasesChangedEvent();
+    eventBus.$emit(`SELECTED_DATABASES_CHANGED_ON_${page.toUpperCase()}`, {
+      database,
+      value
+    });
   }
   function emitDatabaseAddedEvent(): void {
     eventBus.$emit("DATABASE_ADDED");
@@ -30,6 +68,7 @@ export function useDatabaseEvents(): {
   }
   return {
     emitSelectedDatabasesChangedEvent,
+    emitSelectedDatabasesChangedWithinEvent,
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent
   };
