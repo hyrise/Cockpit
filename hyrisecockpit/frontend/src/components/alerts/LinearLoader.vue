@@ -65,11 +65,11 @@ interface DatabaseChangeAnimation {
 
 function useDatabaseChangeAnimation(): DatabaseChangeAnimation {
   const databasesLoading = ref(false);
-  eventBus.$on("SELECTED_DATABASES_CHANGED", (databases: string[]) => {
+  eventBus.$on("SELECTED_DATABASES_CHANGED", () => {
     databasesLoading.value = true;
     setTimeout(() => {
       databasesLoading.value = false;
-    }, Math.floor(500 + 100 * databases.length));
+    }, Math.floor(500));
   });
   return { databasesLoading };
 }
@@ -80,11 +80,11 @@ interface MetricChangeAnimation {
 
 function useMetricChangeAnimation(): MetricChangeAnimation {
   const metricsLoading = ref(false);
-  eventBus.$on("SELECTED_METRICS_CHANGED", (metrics: string[]) => {
+  eventBus.$on("SELECTED_METRICS_CHANGED", () => {
     metricsLoading.value = true;
     setTimeout(() => {
       metricsLoading.value = false;
-    }, Math.floor(300 + 50 * metrics.length));
+    }, Math.floor(300));
   });
   return { metricsLoading };
 }

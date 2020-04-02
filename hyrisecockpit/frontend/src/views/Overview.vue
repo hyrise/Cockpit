@@ -5,7 +5,6 @@
       :evaluations="[false]"
     />
     <div v-if="$databaseController.databasesUpdated.value" class="mx-6">
-      <database-metric-selection class="select" :metrics="watchedMetrics" />
       <database-details-panel
         v-if="selectedDatabases.length"
         :selected-databases="selectedDatabases"
@@ -44,24 +43,22 @@ import {
 import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { MetricViewData } from "../types/views";
 import { Metric, overviewMetrics } from "../types/metrics";
-import { useSelectionHandling } from "../meta/views";
+import { useSelectionHandling } from "@/meta/selection";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
-import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
-import LinearLoader from "../components/alerts/linearLoader.vue";
-import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
+import LinearLoader from "../components/alerts/LinearLoader.vue";
+import UnselectedWarning from "@/components/alerts/UnselectedWarning.vue";
 
 export default defineComponent({
   components: {
     MetricsTileList,
     DatabaseDetailsPanel,
-    DatabaseMetricSelection,
     LinearLoader,
     UnselectedWarning
   },
   setup(props: {}, context: SetupContext): MetricViewData {
     return {
       watchedMetrics: overviewMetrics,
-      ...useSelectionHandling()
+      ...useSelectionHandling(context, "overview")
     };
   }
 });

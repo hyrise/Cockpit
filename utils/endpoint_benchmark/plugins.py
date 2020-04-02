@@ -2,6 +2,7 @@
 import pprint
 import subprocess  # nosec
 import time
+from multiprocessing import Process
 
 import requests
 
@@ -10,6 +11,56 @@ from utils.endpoint_benchmark.print_colors import (
     print_purple,
     print_yellow,
 )
+
+
+def wrk_background_process(url, duration):
+    """Background process to execute wrk."""
+    sub_process = subprocess.run(  # nosec
+        ["wrk", "-t1", "-c1", f"-d{duration}s", f"{url}"], capture_output=True,
+    )
+    print(sub_process.stdout.decode("utf-8"))
+    print(sub_process.stderr.decode("utf-8"))
+
+
+class MultiProcessWrkPlugin:
+    """Handle and execute wrk benchmark in separate processes for every endpoint."""
+
+    def __init__(self, configuration):
+        """Initialize WrkBenchmark."""
+        self._configuration = configuration
+        self._backend_url = configuration["backend_url"]
+
+    def _create_wrk_processes(self, endpoint_type, end_points):
+        """Create one wrk process per endpoint."""
+        return [
+            Process(
+                target=wrk_background_process,
+                args=(
+                    f"{self._backend_url}/{endpoint_type}/{end_point}",
+                    self._configuration["time"],
+                ),
+            )
+            for end_point in end_points
+        ]
+
+    def run_benchmark(self):
+        """Run wrk benchmark on endpoints."""
+        monitor_processes = self._create_wrk_processes(
+            "monitor", self._configuration["end_points"]["endpoints_monitor"]
+        )
+        control_processes = self._create_wrk_processes(
+            "control", self._configuration["end_points"]["endpoints_control"]
+        )
+        for process in monitor_processes:
+            process.start()
+        for process in control_processes:
+            process.start()
+        for process in monitor_processes:
+            process.join()
+            process.terminate()
+        for process in control_processes:
+            process.join()
+            process.terminate()
 
 
 class WrkPlugin:
@@ -92,6 +143,7 @@ class PluginManager:
         self.plugins = {
             "wrk": self._get_wrk_plugin,
             "displayReply": self._get_display_reply_plugin,
+            "multiProcessWrk": self._get_multi_process_wrk_plugin,
         }
 
     def _get_wrk_plugin(self, configuration):
@@ -99,6 +151,9 @@ class PluginManager:
 
     def _get_display_reply_plugin(self, configuration):
         return DisplayReply(configuration)
+
+    def _get_multi_process_wrk_plugin(self, configuration):
+        return MultiProcessWrkPlugin(configuration)
 
     def get_plugins(self, configuration):
         """Initialize plug-ins and return them."""
