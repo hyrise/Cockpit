@@ -5,7 +5,7 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
-from time import time, time_ns
+from time import time_ns
 from typing import Any, Dict, List, Union
 
 from flask import Flask
@@ -685,29 +685,39 @@ class DetailedLatency(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
-    @monitor.doc(model=[model_latency])
-    def get(self) -> Union[int, Response]:
+    # @monitor.doc(model=[model_latency])
+    def get(self) -> Union[int, List]:
         """Return latency information from the stored queries."""
-        offset_seconds = 3
-        offsetts = (int(time()) - offset_seconds) * 1_000_000_000
-        latency: Dict[str, float] = {}
+        startts: int = monitor.payload["startts"]
+        endts: int = monitor.payload["endts"]
+
+        response: List = []
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
             result = storage_connection.query(
-                "SELECT * FROM latency WHERE time = $offsetts;",
+                "SELECT * FROM latency WHERE time >= $startts AND time <= $endts;",
                 database=database,
-                bind_params={"offsetts": offsetts},
+                bind_params={"startts": startts, "endts": endts},
             )
-            latency_value = list(result["latency", None])
-            if len(latency_value) > 0:
-                latency[database] = list(result["latency", None])[0]["latency"]
-            else:
-                latency[database] = 0
-        response = get_response(200)
-        response["body"]["latency"] = latency
+            latency_rows: List = list(result["latency", None])
+            latency: List[Dict[str, int]] = []
+            for timestamp in range(startts, endts + 1, 1_000_000_000):
+                latency_value = 0
+                for row in latency_rows:
+                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
+                        latency_value = row["latency"]
+                        break
+                latency.append({"timestamp": timestamp, "latency": latency_value})
+
+            database_data["latency"] = latency
+            response.append(database_data)
         return response
 
 
