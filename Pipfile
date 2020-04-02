@@ -36,6 +36,7 @@ jsonschema = "*"
 influxdb = "*"
 flask-restx = "*"
 werkzeug = "==0.16.1"
+iso8601 = "*"
 
 [requires]
 python_version = "3.8.2"
