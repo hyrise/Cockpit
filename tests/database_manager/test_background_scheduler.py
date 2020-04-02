@@ -1074,11 +1074,11 @@ class TestBackgroundJobManager:
             fake_existing_table_names
         )
 
-        received_queries: List[
-            Tuple[Any, ...]
-        ] = background_job_manager._generate_table_drop_queries(["table_names"],)
+        received_queries = background_job_manager._generate_table_drop_queries(
+            ["table_names"],
+        )
 
-        expected_queries: List[Tuple[Any, ...]] = [
+        expected_queries = [
             ("DROP TABLE %s;", (("keep", "as_is"),),),
             ("DROP TABLE %s;", (("hyrise", "as_is"),),),
             ("DROP TABLE %s;", (("alive", "as_is"),),),
