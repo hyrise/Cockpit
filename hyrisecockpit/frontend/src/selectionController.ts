@@ -10,10 +10,9 @@ import {
   overviewMetrics,
   workloadMetrics
 } from "@/types/metrics";
-import { useMetricEvents } from "@/meta/events";
 
 export function useSelectionController(): SelectionController {
-  const { emitWatchedMetricsChangedEvent } = useMetricEvents();
+  const { sortElements } = useSorting();
   const selectedDatabases = reactive<Record<PageName, string[]>>({
     comparison: [] as string[],
     overview: [] as string[],
@@ -48,6 +47,10 @@ export function useSelectionController(): SelectionController {
       (payload: { database: string; value: boolean }) => {
         if (payload.value) {
           selectedDatabases[page].push(payload.database);
+          selectedDatabases[page] = sortElements(
+            selectedDatabases[page],
+            Vue.prototype.$databaseController.availableDatabasesById
+          );
         } else {
           selectedDatabases[page] = selectedDatabases[page].filter(
             current => current !== payload.database
@@ -62,6 +65,10 @@ export function useSelectionController(): SelectionController {
       (payload: { metric: Metric; value: boolean }) => {
         if (payload.value) {
           selectedMetrics[page].push(payload.metric);
+          selectedMetrics[page] = sortElements(
+            selectedMetrics[page],
+            availableMetrics[page]
+          );
         } else {
           selectedMetrics[page] = selectedMetrics[page].filter(
             current => current !== payload.metric
@@ -72,4 +79,20 @@ export function useSelectionController(): SelectionController {
   });
 
   return { selectedDatabases, availableMetrics, selectedMetrics };
+}
+
+function useSorting(): {
+  sortElements: <T>(selected: T[], available: T[]) => T[];
+} {
+  function sortElements<T>(selected: T[], available: T[]): T[] {
+    const sorted: T[] = [];
+    available.forEach(availableElement => {
+      const relatedSelectedElement = selected.find(
+        selectedElement => selectedElement === availableElement
+      );
+      if (relatedSelectedElement) sorted.push(relatedSelectedElement);
+    });
+    return sorted;
+  }
+  return { sortElements };
 }
