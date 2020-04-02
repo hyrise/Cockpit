@@ -179,7 +179,7 @@ class TestBackgroundJobManager:
         background_job_manager._update_plugin_log_job = MagicMock()
         background_job_manager._ping_hyrise_job = MagicMock()
         background_job_manager._update_queue_length_job = MagicMock()
-        
+
         background_job_manager.close()
 
         background_job_manager._update_krueger_data_job.remove.assert_called_once()
@@ -199,17 +199,12 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test handling of not valid connection."""
-        background_job_manager._loaded_tables = {"hyrise": "down", "Hallo": "world"}
-
         global mocked_pool_cursor
         mocked_pool_cursor.valid = False
-
-        expected: Dict = {"hyrise": None, "Hallo": None}
 
         background_job_manager._ping_hyrise()
 
         assert not background_job_manager._hyrise_active.value
-        assert background_job_manager._loaded_tables == expected
 
         mocked_pool_cursor = MagicMock()
 
