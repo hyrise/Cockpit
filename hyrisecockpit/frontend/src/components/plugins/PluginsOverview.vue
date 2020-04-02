@@ -16,7 +16,9 @@
     >
       <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
-          <database-chip :database-id="database" />
+          <v-list-item class="item">
+            <database-chip :database-id="database" />
+          </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div v-for="plugin in plugins" :key="plugin">
@@ -214,5 +216,8 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.item {
+  padding: 0px;
 }
 </style>
