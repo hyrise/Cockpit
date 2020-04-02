@@ -776,12 +776,42 @@ class DetailedQueryInformation(Resource):
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
-    @monitor.doc(model=[model_queue_length])
-    def get(self) -> Response:
-        """Return queue length information from database manager."""
-        return _send_message(
-            db_manager_socket, {"header": {"message": "queue length"}, "body": {}}
-        )
+    # @monitor.doc(model=[model_queue_length])
+    def get(self) -> Union[int, List]:
+        """Return queue length information from database manager for a given time interval."""
+        startts: int = monitor.payload["startts"]
+        endts: int = monitor.payload["endts"]
+
+        response: List = []
+        try:
+            active_databases = _active_databases()
+        except ValidationError:
+            return 500
+        for database in active_databases:
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
+            result = storage_connection.query(
+                "SELECT * FROM queue_length WHERE time >= $startts AND time <= $endts;",
+                database=database,
+                bind_params={"startts": startts, "endts": endts},
+            )
+            queue_length_rows: List = list(result["queue_length", None])
+            queue_length: List[Dict[str, int]] = []
+            for timestamp in range(startts, endts + 1, 1_000_000_000):
+                queue_length_value = 0
+                for row in queue_length_rows:
+                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
+                        queue_length_value = row["queue_length"]
+                        break
+                queue_length.append(
+                    {"timestamp": timestamp, "queue_length": queue_length_value}
+                )
+
+            database_data["queue_length"] = queue_length
+            response.append(database_data)
+        return response
 
 
 @monitor.route("/failed_tasks")
