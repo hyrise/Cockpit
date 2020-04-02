@@ -92,3 +92,10 @@ class TestWorkload:
         with raises(QueryTypeNotFoundException) as e:
             fake_workload.generate_specific("Type3", 2)
         assert str(e.value) == expected_error_meassage
+
+    def test_updates(self, fake_workload):
+        """A workload updates itself."""
+        assert fake_workload.frequency == frequency
+        new_frequency = frequency + 1
+        fake_workload.update({"frequency": new_frequency})
+        assert fake_workload.frequency == new_frequency
