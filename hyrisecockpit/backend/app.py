@@ -579,7 +579,7 @@ class Throughput(Resource):
 
     @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, List]:
-        """Return throughput information from the stored queries."""
+        """Return throughput information from the stored queries in a given time range."""
         startts: int = monitor.payload["startts"]
         endts: int = monitor.payload["endts"]
 
