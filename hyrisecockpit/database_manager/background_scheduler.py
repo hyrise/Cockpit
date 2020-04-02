@@ -3,7 +3,7 @@
 from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
-from time import time_ns
+from time import time, time_ns
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -14,6 +14,7 @@ from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
 from .table_names import table_names as _table_names
+from .worker_pool import WorkerPool
 
 
 class Encoding(TypedDict):
@@ -52,6 +53,7 @@ class BackgroundJobManager(object):
         database_blocked: Value,
         connection_pool: pool,
         loaded_tables: Dict[str, Optional[str]],
+        worker_pool: WorkerPool,
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -61,6 +63,7 @@ class BackgroundJobManager(object):
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
         self._connection_pool: pool = connection_pool
+        self._worker_pool: WorkerPool = worker_pool
         self._storage_host: str = storage_host
         self._storage_password: str = storage_password
         self._storage_port: str = storage_port
@@ -87,6 +90,9 @@ class BackgroundJobManager(object):
         self._update_plugin_log_job = self._scheduler.add_job(
             func=self._update_plugin_log, trigger="interval", seconds=1,
         )
+        self._update_queue_length_job = self._scheduler.add_job(
+            func=self._update_queue_length, trigger="interval", seconds=1,
+        )
 
     def start(self) -> None:
         """Start background scheduler."""
@@ -99,7 +105,22 @@ class BackgroundJobManager(object):
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
         self._update_plugin_log_job.remove()
+        self._update_queue_length_job.remove()
         self._scheduler.shutdown()
+
+    def _update_queue_length(self) -> None:
+        queue_length: int = self._worker_pool.get_queue_length()
+        time_stamp: int = int(time()) * 1_000_000_000
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_meta_information(
+                "queue_length", {"queue_length": queue_length}, time_stamp,
+            )
 
     def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
