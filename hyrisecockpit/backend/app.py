@@ -564,8 +564,8 @@ class Throughput(Resource):
     # @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, List]:
         """Return throughput information from the stored queries."""
-        startts = monitor.payload["startts"]
-        endts = monitor.payload["endts"]
+        startts: int = monitor.payload["startts"]
+        endts: int = monitor.payload["endts"]
 
         response: List = []
         try:
@@ -583,7 +583,7 @@ class Throughput(Resource):
                 bind_params={"startts": startts, "endts": endts},
             )
             throughput_rows: List = list(result["throughput", None])
-            throughput: List = []
+            throughput: List[Dict[str, int]] = []
             for timestamp in range(startts, endts + 1, 1_000_000_000):
                 throughput_value = 0
                 for row in throughput_rows:
