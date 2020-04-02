@@ -44,8 +44,8 @@ import { Metric, comparisonMetrics } from "../types/metrics";
 import { MetricViewData } from "../types/views";
 import { Database } from "../types/database";
 import { useSelectionHandling } from "@/meta/selection";
-import LinearLoader from "../components/alerts/linearLoader.vue";
-import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
+import LinearLoader from "../components/alerts/LinearLoader.vue";
+import UnselectedWarning from "@/components/alerts/UnselectedWarning.vue";
 import DatabaseDetailsPanel from "../components/details/DatabaseDetailsPanel.vue";
 
 export default defineComponent({

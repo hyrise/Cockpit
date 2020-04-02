@@ -49,11 +49,11 @@ import {
 import { Metric, workloadMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
-import LinearLoader from "../components/alerts/linearLoader.vue";
+import LinearLoader from "../components/alerts/LinearLoader.vue";
 import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
 import { MetricViewData } from "../types/views";
 import { useSelectionHandling } from "@/meta/selection";
-import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
+import UnselectedWarning from "@/components/alerts/UnselectedWarning.vue";
 import MetricTile from "@/components/container/MetricTile.vue";
 import SelectionList from "@/components/selection/SelectionList.vue";
 
