@@ -384,7 +384,7 @@ class BackgroundJobManager(object):
                 cur.execute(query, formatted_parameters)
                 success_flag.value = True
         except (DatabaseError, InterfaceError, ProgrammingError):
-            pass  # TODO: log error
+            return None  # TODO: log error
 
     def _execute_queries_parallel(self, table_names, queries, folder_name) -> None:
         success_flags: List[Value] = [Value("b", False) for _ in queries]
