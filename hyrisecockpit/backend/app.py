@@ -75,12 +75,28 @@ model_throughput = monitor.clone(
     "Throughput",
     model_database,
     {
-        "throughput": fields.Integer(
-            title="Throughput",
-            description="Query throughput of a given time interval.",
+        "throughput": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "Throughput values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "throughput": fields.Integer(
+                            title="THroughput",
+                            description="Throughput value",
+                            required=True,
+                            example=273,
+                        ),
+                    },
+                )
+            ),
             required=True,
-            example=7381,
-        )
+        ),
     },
 )
 
@@ -561,7 +577,7 @@ def _active_databases() -> List[str]:
 class Throughput(Resource):
     """Throughput information of all databases."""
 
-    # @monitor.doc(model=[model_throughput])
+    @monitor.doc(model=[model_throughput])
     def get(self) -> Union[int, List]:
         """Return throughput information from the stored queries."""
         startts: int = monitor.payload["startts"]
