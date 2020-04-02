@@ -35,7 +35,6 @@ class PoolCursor:
         self._connection = self.pool.getconn()
         self._connection.set_session(autocommit=True)
         self._cur = self._connection.cursor()
-        self.valid = True
 
     def __enter__(self) -> "PoolCursor":
         """Return self for a context manager."""

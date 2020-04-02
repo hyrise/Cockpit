@@ -267,6 +267,32 @@ class TestBackgroundJobManager:
 
         mocked_pool_cursor = MagicMock()
 
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_converts_sql_to_data_frame_if_database_throws_exception(
+        self, background_job_manager: BackgroundJobManager, exceptions
+    ) -> None:
+        """Test read sql query in the case that database throws exception."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        global mocked_pool_cursor
+        mocked_pool_cursor.read_sql_query.side_effect = raise_exception
+
+        result: DataFrame = background_job_manager._sql_to_data_frame("select ...")
+
+        assert isinstance(result, DataframeType)
+        assert result.empty
+
+        mocked_pool_cursor = MagicMock()
+
     def test_successfully_creates_chunks_data_frame(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
@@ -789,6 +815,45 @@ class TestBackgroundJobManager:
         mocked_pool_cursor = MagicMock()
 
     @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_successfully_executes_table_query_with_exception_from_database(
+        self, background_job_manager: BackgroundJobManager, exceptions
+    ) -> None:
+        """Test executes table queries with exception from database."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        mocked_format_query_parameters: MagicMock = MagicMock()
+        mocked_format_query_parameters.return_value = (
+            "keep",
+            "hyriseDown",
+            "keep",
+        )
+        background_job_manager._format_query_parameters = mocked_format_query_parameters  # type: ignore
+
+        query_tuple: Tuple[str, Tuple[str, str, str]] = (
+            "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
+            ("keep", "hyriseDown", "keep",),
+        )
+
+        global mocked_pool_cursor
+        mocked_pool_cursor.execute.side_effect = raise_exception
+
+        success_flag: Value = Value("b", False)
+        background_job_manager._execute_table_query(query_tuple, success_flag)
+
+        assert not success_flag.value
+
+        mocked_pool_cursor = MagicMock()
+
+    @patch(
         "hyrisecockpit.database_manager.background_scheduler.Process",
         mocked_process_constructor,
     )
@@ -1094,6 +1159,40 @@ class TestBackgroundJobManager:
         expected: Dict[str, List[str]] = {
             "existing": ["table_name"],
             "not_existing": ["another_table_name"],
+        }
+
+        assert result == expected
+
+        mocked_pool_cursor = MagicMock()
+
+    @patch(
+        "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
+        get_mocked_pool_cursor,
+    )
+    @mark.parametrize(
+        "exceptions", [DatabaseError(), InterfaceError()],
+    )
+    def test_get_existing_tables_with_exception_from_database(
+        self, background_job_manager: BackgroundJobManager, exceptions
+    ) -> None:
+        """Test gets existing tables with exception from database."""
+
+        def raise_exception(*args):
+            """Throw exception."""
+            raise exceptions
+
+        global mocked_pool_cursor
+        mocked_pool_cursor.execute.side_effect = raise_exception
+
+        result: Dict[
+            str, List[Optional[str]]
+        ] = background_job_manager._get_existing_tables(
+            ["table_name", "another_table_name"]
+        )
+
+        expected: Dict[str, List[str]] = {
+            "existing": [],
+            "not_existing": [],
         }
 
         assert result == expected
