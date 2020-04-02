@@ -1,12 +1,12 @@
 """Module for WorkloadGenerator testing."""
 
-from typing import Any
+from typing import Any, Dict
 from unittest.mock import MagicMock, patch
 
-from pytest import fixture
+from pytest import fixture, mark
 
 from hyrisecockpit.response import get_response
-from hyrisecockpit.workload_generator.generator import WorkloadGenerator
+from hyrisecockpit.workload_generator.generator import Workload, WorkloadGenerator
 
 generator_listening = "generator_listening"
 generator_port = "10000"
@@ -15,13 +15,17 @@ workload_pub_port = "20000"
 default_workload_location = "default_workload_location"
 
 
-fake_workload = [("dummy_query", None, "benchmark", "query_no")]
+folder_name = "myFolder123"
+frequency = 123
+fake_workload = [("dummy_query", None, folder_name, "query_no")]
 
 
 def get_fake_workload(*args) -> MagicMock:
     """Get fake workload."""
     workload = MagicMock()
     workload.generate_workload.return_value = fake_workload
+    workload.folder_name = folder_name
+    workload.frequency = frequency
     return workload
 
 
@@ -112,3 +116,22 @@ class TestWorkloadGenerator:
         isolated_generator._pub_socket.send_json.assert_called_once_with(
             expected_response
         )
+
+    @mark.parametrize("workloads", [{}, {"1": get_fake_workload()}])
+    def test_gets_all_workloads(
+        self, isolated_generator: WorkloadGenerator, workloads: Dict[str, Workload],
+    ):
+        """Test get_all_workloads."""
+        assert isolated_generator._workloads == {}
+        isolated_generator._workloads = workloads
+        response = isolated_generator._call_get_all_workloads({})
+        expected_response = get_response(200)
+        expected_response["body"]["workloads"] = [
+            {
+                "workload_id": workload_id,
+                "folder_name": workload.folder_name,
+                "frequency": workload.frequency,
+            }
+            for workload_id, workload in workloads.items()
+        ]
+        assert response == expected_response
