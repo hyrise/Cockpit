@@ -148,7 +148,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
-        percentOfTable: `100% of ${table}`
+        percentOfTable: `100 % of ${table}`
       });
       Object.entries(tableData.data).forEach(
         ([attribute, attributeData]: [string, any]) => {
