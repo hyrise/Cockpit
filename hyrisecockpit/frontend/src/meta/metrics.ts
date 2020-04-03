@@ -5,9 +5,10 @@ import {
   MetricValueState,
   MetricValueStateOrder,
   MetricDetailsConfiguration,
-  ChartConfiguration
-} from "../types/metrics";
-import { useDataTransformation } from "../services/transformationService";
+  ChartConfiguration,
+  DataType
+} from "@/types/metrics";
+import { useDataTransformation } from "@/services/transformationService";
 import { colorDefinition } from "./colors";
 import { FetchType } from "@/types/services";
 
@@ -18,7 +19,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "chunks_data",
     endpoint: monitorBackend + "chunks",
     component: "Access",
-    requestTime: 5000
+    requestTime: 5000,
+    dataType: "interval"
   },
   cpu: {
     fetchType: "modify",
@@ -27,6 +29,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "system",
     component: "CPU",
     requestTime: 1000,
+    dataType: "interval",
     staticAxesRange: {
       y: { max: 100 }
     }
@@ -37,7 +40,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "latency",
     endpoint: monitorBackend + "latency",
     component: "Latency",
-    requestTime: 1000
+    requestTime: 1000,
+    dataType: "interval"
   },
   executedQueryTypeProportion: {
     fetchType: "read",
@@ -45,7 +49,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
-    requestTime: 2000
+    requestTime: 5000,
+    dataType: "interval"
   },
   generatedQueryTypeProportion: {
     fetchType: "read",
@@ -55,7 +60,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "krueger_data",
     endpoint: monitorBackend + "krueger_data",
     component: "QueryTypeProportion",
-    requestTime: 2000
+    requestTime: 5000,
+    dataType: "interval"
   },
   queueLength: {
     fetchType: "modify",
@@ -63,7 +69,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "queue_length",
     endpoint: monitorBackend + "queue_length",
     component: "QueueLength",
-    requestTime: 1000
+    requestTime: 1000,
+    dataType: "interval"
   },
   ram: {
     fetchType: "modify",
@@ -72,6 +79,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     endpoint: monitorBackend + "system",
     component: "RAM",
     requestTime: 1000,
+    dataType: "interval",
     staticAxesRange: {
       y: { max: 100 }
     }
@@ -82,6 +90,7 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "storage",
     endpoint: monitorBackend + "storage",
     component: "Storage",
+    dataType: "snapshot",
     requestTime: 5000
   },
   throughput: {
@@ -90,14 +99,15 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "throughput",
     endpoint: monitorBackend + "throughput",
     component: "Throughput",
+    dataType: "interval",
     requestTime: 1000
   }
 };
 
 const metricDetailColor: Record<MetricValueState, string> = {
   average: colorDefinition.orange,
-  high: colorDefinition.red,
-  low: colorDefinition.green
+  high: colorDefinition.green,
+  low: colorDefinition.red
 };
 
 const metricValueStateOrder: Record<
@@ -222,6 +232,10 @@ export function getMetricRequestTime(metric: Metric): number {
 
 export function getMetricFetchType(metric: Metric): FetchType {
   return metricsMetadata[metric].fetchType;
+}
+
+export function getMetricDataType(metric: Metric): DataType {
+  return metricsMetadata[metric].dataType;
 }
 
 export function getMetricValueStateOrder(
