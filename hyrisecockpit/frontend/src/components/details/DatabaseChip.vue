@@ -1,15 +1,15 @@
 <template>
   <div>
     <v-tooltip v-if="closable" left>
-      <template v-slot:activator="{ on }">
+      <template v-slot:activator="{ on, value }">
         <v-icon
           id="remove-database-button"
-          class="mr-1"
+          class="mr-3"
           v-on="on"
           color="error"
-          size="28"
+          :size="value ? 36 : 28"
           @click="$emit('closed')"
-          >mdi-close-circle</v-icon
+          >mdi-delete-forever</v-icon
         >
       </template>
       <span>Remove Database</span>
