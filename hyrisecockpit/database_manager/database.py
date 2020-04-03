@@ -234,9 +234,14 @@ class Database(object):
             try:
                 with PoolCursor(self._connection_pool) as cur:
                     cur.execute(query, None)
-                    return {"successful": True, "results": cur.fetchall()}
+                    col_names = [col[0] for col in cur.cur.description]
+                    return {
+                        "successful": True,
+                        "results": cur.fetchall(),
+                        "col_names": col_names,
+                    }
             except Error as e:
-                return {"successful": False, "results": str(e)}
+                return {"successful": False, "results": str(e), "col_names": []}
         return None
 
     def close(self) -> None:
