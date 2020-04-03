@@ -894,6 +894,7 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
+    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return cpu and memory information for every database and the number of threads it is using from database manager."""
         startts: int = monitor.payload["startts"]
