@@ -538,6 +538,17 @@ model_get_plugin_setting = control.clone(
     },
 )
 
+modelhelper_sql = fields.String(
+    title="SQL query",
+    description="Sql query to execute on database.",
+    required=True,
+    example="SELECT 1;",
+)
+
+model_execute_sql = control.clone(
+    "Execute SQL query", model_database, {"query": modelhelper_sql},
+)
+
 
 def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
@@ -1085,3 +1096,18 @@ class PluginSettings(Resource):
         )
         response = _send_message(db_manager_socket, message)
         return response
+
+
+@control.route("/sql")
+class Sql(Resource):
+    """Execute SQL query on database."""
+
+    @control.doc(body=model_execute_sql)
+    def post(self) -> Response:
+        """Execute SQL query."""
+        message = Request(
+            header=Header(message="execute sql query"),
+            body={"id": control.payload["id"], "query": control.payload["query"]},
+        )
+        response = _send_message(db_manager_socket, message)
+        return response["body"]["result"]
