@@ -1,14 +1,14 @@
-import { eventBus } from "./plugins/eventBus";
+import { eventBus } from "@/plugins/eventBus";
 import {
   DatabaseController,
   Database,
   DatabaseCPUResponse,
   DatabaseStorageResponse,
   DatabaseResponse
-} from "./types/database";
-import { useDatabaseService } from "./services/databaseService";
+} from "@/types/database";
+import { useDatabaseService } from "@/services/databaseService";
 import { ref, reactive, computed } from "@vue/composition-api";
-import { equals } from "./helpers/methods";
+import { equals } from "@/helpers/methods";
 
 export function useDatabaseController(): DatabaseController {
   const databases = ref<Database[]>([]);
