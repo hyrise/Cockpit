@@ -830,22 +830,18 @@ class QueueLength(Resource):
             }
 
             result = storage_connection.query(
-                "SELECT * FROM queue_length WHERE time >= $startts AND time <= $endts;",
+                "SELECT * FROM queue_length WHERE time >= $startts AND time < $endts;",
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
             queue_length_rows: List = list(result["queue_length", None])
-            queue_length: List[Dict[str, int]] = []
-            for timestamp in range(startts, endts + 1, 1_000_000_000):
-                queue_length_value = 0
-                for row in queue_length_rows:
-                    if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
-                        queue_length_value = row["queue_length"]
-                        break
-                queue_length.append(
-                    {"timestamp": timestamp, "queue_length": queue_length_value}
-                )
-
+            queue_length: List[Dict[str, int]] = [
+                {
+                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
+                    "queue_length": row["queue_length"],
+                }
+                for row in queue_length_rows
+            ]
             database_data["queue_length"] = queue_length
             response.append(database_data)
         return response
