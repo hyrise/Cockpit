@@ -646,6 +646,45 @@ class TestDatabaseManager:
 
         assert get_response(400) == response
 
+    def test_calls_execute_sql_query(self, database_manager: DatabaseManager) -> None:
+        """Test call execute sql query."""
+        fake_body = {
+            "id": "just some ordinary database",
+            "query": "SELECT what_is_the_meaning_of_everything FROM all_the_answers_to _all_the_question",
+        }
+        mocked_database = MagicMock()
+        mocked_database.execute_sql_query.return_value = [
+            ("42 of course"),
+        ]
+        database_manager._databases = {"just some ordinary database": mocked_database}
+
+        expected = get_response(200)
+        expected["body"]["results"] = [
+            ("42 of course"),
+        ]
+
+        response = database_manager._call_execute_sql_query(fake_body)
+
+        mocked_database.execute_sql_query.assert_called_once_with(
+            "SELECT what_is_the_meaning_of_everything FROM all_the_answers_to _all_the_question"
+        )
+        assert expected == response
+
+    def test_calls_execute_sql_query_on_not_existing_database(
+        self, database_manager: DatabaseManager
+    ) -> None:
+        """Test call execute sql query on not existing database."""
+        fake_body = {
+            "id": "just some ordinary database",
+            "query": "SELECT when_can_i_get_out_? FROM all_the_answers_to _all_the_question",
+        }
+        database_manager._databases = {}
+
+        expected = get_response(400)
+        response = database_manager._call_execute_sql_query(fake_body)
+
+        assert expected == response
+
     def test_start_server(self, database_manager: DatabaseManager):
         """Test start server."""
         fake_server = MagicMock()
