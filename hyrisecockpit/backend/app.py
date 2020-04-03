@@ -631,8 +631,20 @@ class Throughput(Resource):
     @control.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
-        startts: int = monitor.payload["startts"]
-        endts: int = monitor.payload["endts"]
+        startts_rounded: int = int(
+            monitor.payload["startts"] / 1_000_000_000
+        ) * 1_000_000_000
+        endts_rounded: int = int(
+            monitor.payload["endts"] / 1_000_000_000
+        ) * 1_000_000_000
+
+        # take nearest whole numbers of seconds
+        startts: int = startts_rounded if monitor.payload[
+            "startts"
+        ] % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if monitor.payload[
+            "endts"
+        ] % 1_000_000_000 == 0 else endts_rounded + 1
 
         response: List = []
         try:
@@ -645,13 +657,13 @@ class Throughput(Resource):
             }
 
             result = storage_connection.query(
-                "SELECT * FROM throughput WHERE time >= $startts AND time <= $endts;",
+                "SELECT * FROM throughput WHERE time >= $startts AND time < $endts;",
                 database=database,
                 bind_params={"startts": startts, "endts": endts},
             )
             throughput_rows: List = list(result["throughput", None])
             throughput: List[Dict[str, int]] = []
-            for timestamp in range(startts, endts + 1, 1_000_000_000):
+            for timestamp in range(startts, endts, 1_000_000_000):
                 throughput_value = 0
                 for row in throughput_rows:
                     if int(parse_date(row["time"]).timestamp() * 1e9) == timestamp:
