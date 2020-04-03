@@ -628,7 +628,7 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    @control.doc(body=model_time_interval)
+    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
         startts_rounded: int = int(
@@ -749,7 +749,7 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    @control.doc(body=model_time_interval)
+    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return latency information in a given time range."""
         startts_rounded: int = int(
@@ -837,7 +837,7 @@ class QueueLength(Resource):
     """Queue length information of all databases."""
 
     @monitor.doc(model=[model_queue_length])
-    @control.doc(body=model_time_interval)
+    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return queue length information in a given time range."""
         startts: int = monitor.payload["startts"]
