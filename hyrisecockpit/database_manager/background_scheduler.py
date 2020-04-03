@@ -3,7 +3,7 @@
 from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
-from time import time, time_ns
+from time import time_ns
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -83,7 +83,7 @@ class BackgroundJobManager(object):
 
     def _update_queue_length(self) -> None:
         queue_length: int = self._worker_pool.get_queue_length()
-        time_stamp: int = int(time()) * 1_000_000_000
+        time_stamp: int = time_ns()
         with StorageCursor(
             self._storage_host,
             self._storage_port,
