@@ -5,6 +5,7 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
+from threading import RLock
 from time import time, time_ns
 from typing import Any, Dict, List, Union
 
@@ -15,7 +16,7 @@ from influxdb import InfluxDBClient
 from jsonschema import ValidationError, validate
 from zmq import REQ, Context, Socket
 
-from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.message import response_schema
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
@@ -31,6 +32,8 @@ from hyrisecockpit.settings import (
 )
 
 context = Context(io_threads=1)
+multiprocess_lock = RLock()
+active_databases: List[str] = []
 
 db_manager_socket = context.socket(REQ)
 db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
@@ -541,19 +544,16 @@ model_get_plugin_setting = control.clone(
 
 def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
-    socket.send_json(message)
-    response: Response = socket.recv_json()
+    with multiprocess_lock:
+        socket.send_json(message)
+        response: Response = socket.recv_json()
     validate(instance=response, schema=response_schema)
     return response
 
 
-def _active_databases() -> List[str]:
+def _get_active_databases() -> List[str]:
     """Get a list of active databases."""
-    response: Response = _send_message(
-        db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
-    )
-    validate(instance=response["body"], schema=get_databases_response_schema)
-    return [database["id"] for database in response["body"]["databases"]]
+    return active_databases
 
 
 @monitor.route("/throughput")
@@ -568,7 +568,7 @@ class Throughput(Resource):
 
         throughput: Dict[str, int] = {}
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
@@ -598,7 +598,7 @@ class DetailedThroughput(Resource):
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         response: List[Dict] = []
@@ -631,7 +631,7 @@ class DetailedLatency(Resource):
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         response: List[Dict] = []
@@ -664,7 +664,7 @@ class Latency(Resource):
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
         latency: Dict[str, float] = {}
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
@@ -694,7 +694,7 @@ class DetailedQueryInformation(Resource):
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         response: List[Dict] = []
@@ -745,7 +745,7 @@ class FailedTasks(Resource):
                     )["failed_queries", None]
                 ),
             }
-            for database in _active_databases()
+            for database in _get_active_databases()
         ]
 
 
@@ -757,7 +757,7 @@ class System(Resource):
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
         system: Dict[str, Dict] = {}
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
@@ -786,7 +786,7 @@ class Chunks(Resource):
         """Return chunks data information for every database."""
         chunks: Dict[str, Dict] = {}
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
@@ -813,7 +813,7 @@ class Storage(Resource):
         """Return storage metadata from database manager."""
         storage: Dict[str, Dict] = {}
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
@@ -840,7 +840,7 @@ class KruegerData(Resource):
         """Provide mock data for a Krügergraph."""
         krueger_data: List[Dict] = []
         try:
-            active_databases = _active_databases()
+            active_databases = _get_active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
@@ -1057,7 +1057,7 @@ class PluginLog(Resource):
                     )
                 ],
             }
-            for database in _active_databases()
+            for database in _get_active_databases()
         ]
 
 
