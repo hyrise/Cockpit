@@ -270,7 +270,7 @@ class DatabaseManager(object):
         database_id: str = body["id"]
         query: str = body["query"]
         if database_id not in self._databases.keys():
-            response = get_response(400)
+            return get_response(400)
         results = self._databases[database_id].execute_sql_query(query)
         response = get_response(200)
         response["body"]["results"] = results
