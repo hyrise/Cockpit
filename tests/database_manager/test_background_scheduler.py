@@ -394,10 +394,11 @@ class TestBackgroundJobManager:
 
         mocked_storage_cursor = MagicMock()
 
-    def test_successfully_create_cpu_data_dict(
+    def test_successfully_create_system_data_dict(
         self, background_job_manager: BackgroundJobManager
     ):
-        """Test creates cpu data dict successfully."""
+        """Test creates system data dict successfully."""
+        fake_database_threads: int = 16
         fake_utilization_df: DataFrame = DataFrame(
             {
                 "cpu_system_usage": [120],
@@ -418,46 +419,16 @@ class TestBackgroundJobManager:
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
+            "free_memory": 0,
+            "used_memory": 42,
+            "total_memory": 1234,
+            "database_threads": fake_database_threads,
         }
 
         received_dict: Dict[
             str, Union[int, float]
-        ] = background_job_manager._create_cpu_data_dict(
-            fake_utilization_df, fake_system_df
-        )
-
-        assert received_dict == expected_dict
-
-    def test_successfully_create_memory_data_dict(
-        self, background_job_manager: BackgroundJobManager
-    ):
-        """Test creates memory data dict successfully."""
-        fake_utilization_df: DataFrame = DataFrame(
-            {
-                "cpu_system_usage": [120],
-                "cpu_process_usage": [300],
-                "system_memory_free_bytes": [0],
-                "process_physical_memory_bytes": [42],
-            }
-        )
-        fake_system_df: DataFrame = DataFrame(
-            {
-                "cpu_count": [16],
-                "cpu_clock_speed": [120],
-                "system_memory_total_bytes": [42],
-            }
-        )
-        expected_dict: Dict[str, int] = {
-            "free": 0,
-            "used": 42,
-            "total": 42,
-            "percent": 1,
-        }
-
-        received_dict: Dict[
-            str, Union[int, float]
-        ] = background_job_manager._create_memory_data_dict(
-            fake_utilization_df, fake_system_df
+        ] = background_job_manager._create_system_data_dict(
+            fake_utilization_df, fake_system_df, fake_database_threads
         )
 
         assert received_dict == expected_dict
@@ -466,49 +437,37 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
         get_mocked_storage_cursor,
     )
-    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    @patch("hyrisecockpit.database_manager.background_scheduler.time", lambda: 42)
     def test_logs_updated_system_data(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs updated system data."""
         fake_not_empty_df: DataFrame = DataFrame({"column1": [1]})
-        fake_cpu_dict: Dict[str, float] = {
+        fake_system_dict: Dict[str, float] = {
             "cpu_system_usage": 120.0,
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
-        }
-        fake_memory_dict: Dict[str, int] = {
-            "free": 0,
-            "used": 42,
-            "total": 42,
-            "percent": 1,
+            "free_memory": 0,
+            "used_memory": 42,
+            "total_memory": 1234,
+            "database_threads": 16,
         }
 
         mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_not_empty_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        mocked_create_cpu_data_dict: MagicMock = MagicMock()
-        mocked_create_cpu_data_dict.return_value = fake_cpu_dict
-        background_job_manager._create_cpu_data_dict = mocked_create_cpu_data_dict  # type: ignore
-
-        mocked_create_memory_data_dict: MagicMock = MagicMock()
-        mocked_create_memory_data_dict.return_value = fake_memory_dict
-        background_job_manager._create_memory_data_dict = mocked_create_memory_data_dict  # type: ignore
+        mocked_create_system_data_dict: MagicMock = MagicMock()
+        mocked_create_system_data_dict.return_value = fake_system_dict
+        background_job_manager._create_system_data_dict = mocked_create_system_data_dict  # type: ignore
 
         background_job_manager._update_system_data()
-
-        expected_function_argument: Dict[str, str] = {
-            "cpu": dumps(fake_cpu_dict),
-            "memory": dumps(fake_memory_dict),
-            "database_threads": "16",
-        }
 
         global mocked_storage_cursor
 
         mocked_storage_cursor.log_meta_information.assert_called_once_with(
-            "system_data", expected_function_argument, 42
+            "system_data", fake_system_dict, 42_000_000_000
         )
 
         mocked_storage_cursor = MagicMock()
