@@ -90,8 +90,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "storage",
     endpoint: monitorBackend + "storage",
     component: "Storage",
-    dataType: "snapshot",
-    requestTime: 5000
+    requestTime: 5000,
+    dataType: "snapshot"
   },
   throughput: {
     fetchType: "modify",
@@ -99,8 +99,8 @@ const metricsMetadata: Record<Metric, MetricMetadata> = {
     base: "throughput",
     endpoint: monitorBackend + "throughput",
     component: "Throughput",
-    dataType: "interval",
-    requestTime: 1000
+    requestTime: 1000,
+    dataType: "interval"
   }
 };
 
