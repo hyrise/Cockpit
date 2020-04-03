@@ -66,6 +66,8 @@ interface AxesRange {
   };
 }
 
+export type DataType = "interval" | "snapshot";
+
 export interface MetricMetadata {
   fetchType: FetchType;
   transformationService: TransformationService;
@@ -73,6 +75,7 @@ export interface MetricMetadata {
   endpoint: string;
   component: string;
   requestTime: number;
+  dataType: DataType;
   staticAxesRange?: AxesRange;
 }
 
