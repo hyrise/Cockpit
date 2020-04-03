@@ -1,9 +1,9 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple, Union
 
-from psycopg2 import pool
+from psycopg2 import Error, pool
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor, StorageCursor
@@ -225,6 +225,19 @@ class Database(object):
             return result
         else:
             return None
+
+    def execute_sql_query(
+        self, query
+    ) -> Optional[Dict[str, Union[str, bool, List[Tuple]]]]:
+        """Execute sql query on database."""
+        if not self._database_blocked.value:
+            try:
+                with PoolCursor(self._connection_pool) as cur:
+                    cur.execute(query, None)
+                    return {"successful": True, "results": cur.fetchall()}
+            except Error as e:
+                return {"successful": False, "results": str(e)}
+        return None
 
     def close(self) -> None:
         """Close the database."""

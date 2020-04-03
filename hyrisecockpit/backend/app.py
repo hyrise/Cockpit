@@ -1110,4 +1110,4 @@ class Sql(Resource):
             body={"id": control.payload["id"], "query": control.payload["query"]},
         )
         response = _send_message(db_manager_socket, message)
-        return response["body"]["result"]
+        return response["body"]["results"]
