@@ -551,8 +551,19 @@ def _send_message(socket: Socket, message: Request) -> Response:
     return response
 
 
+def _add_active_database(database_id: str) -> None:
+    global active_databases
+    active_databases.append(database_id)
+
+
+def _remove_active_database(database_id: str) -> None:
+    global active_databases
+    active_databases.remove(database_id)
+
+
 def _get_active_databases() -> List[str]:
     """Get a list of active databases."""
+    global active_databases
     return active_databases
 
 
@@ -900,6 +911,8 @@ class Database(Resource):
             },
         )
         response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] == 200:
+            _add_active_database(control.payload["id"])
         return response
 
     @control.doc(body=model_control_database)
@@ -910,6 +923,8 @@ class Database(Resource):
             body={"id": control.payload["id"]},
         )
         response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] == 200:
+            _remove_active_database(control.payload["id"])
         return response
 
 
