@@ -894,39 +894,49 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    def get(self) -> Union[int, Response]:
-        """Return cpu and memory information for every database and the number of thread it is using from database manager."""
-        system: Dict[str, Dict] = {}
+    def get(self) -> Union[int, List]:
+        """Return cpu and memory information for every database and the number of threads it is using from database manager."""
+        startts: int = monitor.payload["startts"]
+        endts: int = monitor.payload["endts"]
+
+        response: List = []
         try:
             active_databases = _active_databases()
         except ValidationError:
             return 500
         for database in active_databases:
+            database_data: Dict[str, Union[str, List]] = {
+                "id": database,
+            }
+
             result = storage_connection.query(
-                "SELECT LAST(cpu_count) as cpu_count, * FROM system_data;",
+                "SELECT * FROM system_data WHERE time >= $startts AND time < $endts;",
                 database=database,
+                bind_params={"startts": startts, "endts": endts},
             )
-            system_values = list(result["system_data", None])
-            if len(system_values) > 0:
-                system_value: Dict[str, Union[int, float]] = system_values[0]
-                system[database] = {
-                    "cpu": {
-                        "cpu_system_usage": system_value["cpu_system_usage"],
-                        "cpu_process_usage": system_value["cpu_process_usage"],
-                        "cpu_count": system_value["cpu_count"],
-                        "cpu_clock_speed": system_value["cpu_clock_speed"],
+            system_data_rows: List = list(result["system_data", None])
+            system_data: List[Dict[str, Union[int, Dict]]] = [
+                {
+                    "timestamp": int(parse_date(row["time"]).timestamp() * 1e9),
+                    "system_data": {
+                        "cpu": {
+                            "cpu_system_usage": row["cpu_system_usage"],
+                            "cpu_process_usage": row["cpu_process_usage"],
+                            "cpu_count": row["cpu_count"],
+                            "cpu_clock_speed": row["cpu_clock_speed"],
+                        },
+                        "memory": {
+                            "free": row["free_memory"],
+                            "used": row["used_memory"],
+                            "total": row["total_memory"],
+                        },
+                        "database_threads": row["database_threads"],
                     },
-                    "memory": {
-                        "free": system_value["free_memory"],
-                        "used": system_value["used_memory"],
-                        "total": system_value["total_memory"],
-                    },
-                    "database_threads": system_value["database_threads"],
                 }
-            else:
-                system[database] = {}
-        response = get_response(200)
-        response["body"]["system_data"] = system
+                for row in system_data_rows
+            ]
+            database_data["system_data"] = system_data
+            response.append(database_data)
         return response
 
 
