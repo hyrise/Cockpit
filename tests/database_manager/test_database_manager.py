@@ -59,6 +59,7 @@ def get_server_calls() -> List[str]:
         "deactivate plugin",
         "set plugin setting",
         "get plugin setting",
+        "execute sql query",
     ]
 
 
