@@ -5,7 +5,7 @@ from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import pool
+from psycopg2 import Error, pool
 from pytest import fixture
 
 from hyrisecockpit.database_manager.database import Database
@@ -613,6 +613,86 @@ class TestDatabase(object):
 
         assert type(result) is list
         assert result[:] == expected[:]  # type: ignore
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    def test_executes_sql_query(self, database: Database) -> None:
+        """Test execute sql query."""
+        database._database_blocked.value = False
+        global mocked_pool_cur
+        mocked_pool_cur.fetchall.return_value = [
+            (
+                "I'm planning to make a film series on databases",
+                "I've got the first part ready, but I can't think of a SQL.",
+            )
+        ]
+        mocked_pool_cur.cur.description = (
+            ("bad", "encoding",),
+            ("joke", "encoding",),
+        )
+
+        expected = {
+            "successful": True,
+            "results": [
+                (
+                    "I'm planning to make a film series on databases",
+                    "I've got the first part ready, but I can't think of a SQL.",
+                )
+            ],
+            "col_names": ["bad", "joke"],
+        }
+
+        result = database.execute_sql_query("SELECT funny FROM not_funny")
+
+        assert expected == result
+
+        reset_mocked_pool_cursor()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    def test_executes_sql_query_with_throwing_exception(
+        self, database: Database
+    ) -> None:
+        """Test execute sql query with throwing exception."""
+
+        def raise_exception(*args) -> Exception:
+            """Throw exception."""
+            raise Error
+
+        database._database_blocked.value = False
+        global mocked_pool_cur
+        mocked_pool_cur.execute.side_effect = raise_exception
+
+        expected = {
+            "successful": False,
+            "results": "",
+            "col_names": [],
+        }
+
+        result = database.execute_sql_query("SELECT funny FROM not_funny")
+
+        assert expected == result
+
+        reset_mocked_pool_cursor()
+
+    @patch(
+        "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
+    )
+    def test_executes_sql_query_while_database_is_blocked(
+        self, database: Database
+    ) -> None:
+        """Test execute sql query while database is blocked."""
+        global mocked_pool_cur
+
+        database._database_blocked.value = True
+        result = database.execute_sql_query("SELECT funny FROM not_funny")
+
+        assert result is None
+        mocked_pool_cur.execute.assert_not_called()
+
+        reset_mocked_pool_cursor()
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
