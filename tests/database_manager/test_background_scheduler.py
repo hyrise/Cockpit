@@ -437,7 +437,7 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
         get_mocked_storage_cursor,
     )
-    @patch("hyrisecockpit.database_manager.background_scheduler.time", lambda: 42)
+    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
     def test_logs_updated_system_data(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
@@ -467,7 +467,7 @@ class TestBackgroundJobManager:
         global mocked_storage_cursor
 
         mocked_storage_cursor.log_meta_information.assert_called_once_with(
-            "system_data", fake_system_dict, 42_000_000_000
+            "system_data", fake_system_dict, 42
         )
 
         mocked_storage_cursor = MagicMock()
