@@ -49,3 +49,19 @@ export function useFormatting(): {
     formatDateToHHMMSS
   };
 }
+
+export function useSorting(): {
+  sortElements: <T>(selected: T[], available: T[]) => T[];
+} {
+  function sortElements<T>(selected: T[], available: T[]): T[] {
+    const sorted: T[] = [];
+    available.forEach(availableElement => {
+      const relatedSelectedElement = selected.find(
+        selectedElement => selectedElement === availableElement
+      );
+      if (relatedSelectedElement) sorted.push(relatedSelectedElement);
+    });
+    return sorted;
+  }
+  return { sortElements };
+}
