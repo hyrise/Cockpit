@@ -755,14 +755,25 @@ class System(Resource):
         active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
-                'SELECT LAST("cpu"), * FROM system_data', database=database,
+                "SELECT LAST(cpu_count) as cpu_count, * FROM system_data;",
+                database=database,
             )
-            system_value = list(result["system_data", None])
-            if len(system_value) > 0:
+            system_values = list(result["system_data", None])
+            if len(system_values) > 0:
+                system_value: Dict[str, Union[int, float]] = system_values[0]
                 system[database] = {
-                    "cpu": loads(system_value[0]["cpu"]),
-                    "memory": loads(system_value[0]["memory"]),
-                    "database_threads": loads(system_value[0]["database_threads"]),
+                    "cpu": {
+                        "cpu_system_usage": system_value["cpu_system_usage"],
+                        "cpu_process_usage": system_value["cpu_process_usage"],
+                        "cpu_count": system_value["cpu_count"],
+                        "cpu_clock_speed": system_value["cpu_clock_speed"],
+                    },
+                    "memory": {
+                        "free": system_value["free_memory"],
+                        "used": system_value["used_memory"],
+                        "total": system_value["total_memory"],
+                    },
+                    "database_threads": system_value["database_threads"],
                 }
             else:
                 system[database] = {}
