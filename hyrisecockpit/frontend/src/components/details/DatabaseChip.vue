@@ -1,41 +1,45 @@
 <template>
-  <v-chip
-    v-if="database"
-    id="database-chip"
-    class="white--text"
-    :color="database.color"
-  >
-    <div v-if="selectable">
-      <v-icon
-        v-if="selected"
-        id="add-select-database-button"
-        left
-        @click="handleUnSelect(database.id)"
-        >mdi-eye</v-icon
-      >
-      <v-icon
-        v-if="!selected"
-        id="remove-select-database-button"
-        left
-        @click="handleSelect(database.id)"
-        >mdi-eye-off</v-icon
-      >
-    </div>
-    <v-icon v-if="!selectable" left>mdi-database</v-icon>
-    <b>{{ database.id }}</b>
-    <v-tooltip v-if="closable" right>
-      <template v-slot:activator="{ on }">
+  <div>
+    <v-tooltip v-if="closable" left>
+      <template v-slot:activator="{ on, value }">
         <v-icon
           id="remove-database-button"
+          class="mr-3"
           v-on="on"
-          right
+          color="error"
+          :size="value ? 36 : 28"
           @click="$emit('closed')"
-          >mdi-close-circle</v-icon
+          >mdi-delete-forever</v-icon
         >
       </template>
       <span>Remove Database</span>
     </v-tooltip>
-  </v-chip>
+    <v-chip
+      v-if="database"
+      id="database-chip"
+      class="white--text"
+      :color="database.color"
+    >
+      <div v-if="selectable">
+        <v-icon
+          v-if="selected"
+          id="add-select-database-button"
+          left
+          @click="handleUnSelect(database.id)"
+          >mdi-eye</v-icon
+        >
+        <v-icon
+          v-if="!selected"
+          id="remove-select-database-button"
+          left
+          @click="handleSelect(database.id)"
+          >mdi-eye-off</v-icon
+        >
+      </div>
+      <v-icon v-if="!selectable" left>mdi-database</v-icon>
+      <b>{{ database.id }}</b>
+    </v-chip>
+  </div>
 </template>
 <script lang="ts">
 import {
