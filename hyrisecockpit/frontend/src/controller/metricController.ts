@@ -1,8 +1,8 @@
-import { eventBus } from "./plugins/eventBus";
-import { useMetricService } from "./services/metricService";
-import { Metric, availableMetrics, MetricController } from "./types/metrics";
-import { MetricService } from "./types/services";
-import { getMetricRequestTime } from "./meta/metrics";
+import { eventBus } from "@/plugins/eventBus";
+import { useMetricService } from "@/services/metricService";
+import { Metric, availableMetrics, MetricController } from "@/types/metrics";
+import { MetricService } from "@/types/services";
+import { getMetricRequestTime } from "@/meta/metrics";
 
 type Interval = {
   id: number | undefined;

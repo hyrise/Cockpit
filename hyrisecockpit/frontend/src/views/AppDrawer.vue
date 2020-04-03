@@ -1,41 +1,25 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app fixed width="250">
+  <v-navigation-drawer app fixed width="250">
     <v-list>
       <v-list-item two-line>
         <v-list-item-avatar tile>
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title>Cockpit</v-list-item-title>
+          <v-list-item-title><b>Cockpit</b></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider></v-divider>
-      <!-- <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-          > -->
+      <v-divider />
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>Views</v-list-item-title>
         </v-list-item-content>
-
-        <v-menu id="popup-menu" v-model="menu" bottom offset-x>
-          <template v-slot:activator="{ on }">
-            <v-list-item-icon>
-              <v-icon v-on="on">mdi-cog-outline</v-icon>
-            </v-list-item-icon>
-          </template>
-
-          <v-list>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>PopupMenu</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <v-list-item-icon>
+          <v-icon id="selection-list-button" @click="$emit('toggleSelection')"
+            >mdi-cog-outline</v-icon
+          >
+        </v-list-item-icon>
       </v-list-item>
 
       <v-list-item id="overview-button" :to="{ name: 'overview' }">
@@ -76,9 +60,13 @@
 
       <v-menu bottom offset-x>
         <template v-slot:activator="{ on: menu }">
-          <v-list-item id="database-list-button" v-on="{ ...menu }">
+          <v-list-item
+            id="database-list-button"
+            v-on="{ ...menu }"
+            @click="$emit('closeSelection')"
+          >
             <v-list-item-icon>
-              <v-icon>mdi-database-plus</v-icon>
+              <v-icon>mdi-database</v-icon>
             </v-list-item-icon>
             <v-badge
               id="number-of-databases"
@@ -91,7 +79,7 @@
             </v-badge>
 
             <v-list-item-content>
-              <v-list-item-title>Database</v-list-item-title>
+              <v-list-item-title>Databases</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -161,7 +149,6 @@ import {
 } from "@vue/composition-api";
 import AddDatabase from "@/components/databases/AddDatabase.vue";
 import RemoveDatabase from "@/components/databases/RemoveDatabase.vue";
-import PluginsOverview from "../components/plugins/PluginsOverview.vue";
 import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
 import AvailableDatabasesList from "@/components/databases/AvailableDatabasesList.vue";
 import { Database } from "@/types/database";
@@ -178,7 +165,6 @@ interface Data {
 
 export default defineComponent({
   components: {
-    PluginsOverview,
     WorkloadGeneration,
     AddDatabase,
     AvailableDatabasesList,
