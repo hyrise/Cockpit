@@ -245,7 +245,7 @@ class BackgroundJobManager(object):
         system_data: Dict[str, Union[int, float]] = self._create_system_data_dict(
             utilization_df, system_df, mocked_database_threads
         )
-        time_stamp = int(time()) * 1_000_000_000
+        time_stamp = time_ns()
 
         with StorageCursor(
             self._storage_host,
