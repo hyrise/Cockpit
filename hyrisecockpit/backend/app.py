@@ -13,7 +13,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
-from jsonschema import ValidationError, validate
+from jsonschema import validate
 from zmq import REQ, Context, Socket
 
 from hyrisecockpit.message import response_schema
@@ -578,10 +578,7 @@ class Throughput(Resource):
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
 
         throughput: Dict[str, int] = {}
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT * FROM throughput WHERE time = $offsetts;",
@@ -608,10 +605,7 @@ class DetailedThroughput(Resource):
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -641,10 +635,7 @@ class DetailedLatency(Resource):
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -674,10 +665,7 @@ class Latency(Resource):
         offset_seconds = 3
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
         latency: Dict[str, float] = {}
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT * FROM latency WHERE time = $offsetts;",
@@ -704,10 +692,7 @@ class DetailedQueryInformation(Resource):
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -767,10 +752,7 @@ class System(Resource):
     def get(self) -> Union[int, Response]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
         system: Dict[str, Dict] = {}
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("cpu"), * FROM system_data', database=database,
@@ -796,10 +778,7 @@ class Chunks(Resource):
     def get(self) -> Union[int, Response]:
         """Return chunks data information for every database."""
         chunks: Dict[str, Dict] = {}
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("chunks_data_meta_information") FROM chunks_data',
@@ -823,10 +802,7 @@ class Storage(Resource):
     def get(self) -> Union[int, Response]:
         """Return storage metadata from database manager."""
         storage: Dict[str, Dict] = {}
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("storage_meta_information") FROM storage',
@@ -850,10 +826,7 @@ class KruegerData(Resource):
     def get(self) -> Union[int, List[Dict[str, Dict[str, Dict]]]]:
         """Provide mock data for a Krügergraph."""
         krueger_data: List[Dict] = []
-        try:
-            active_databases = _get_active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("executed"), * FROM krueger_data', database=database,
