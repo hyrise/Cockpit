@@ -1,8 +1,11 @@
 import { SetupContext, Ref, computed } from "@vue/composition-api";
-import { MetricProps, ComparisonMetricData, Metric } from "../types/metrics";
-import { getMetricChartConfiguration } from "./metrics";
-import { useDataEvents } from "../meta/events";
-import { getMetricRequestTime, getMetricFetchType } from "@/meta/metrics";
+import { MetricProps, ComparisonMetricData, Metric } from "@/types/metrics";
+import { useDataEvents } from "@/meta/events";
+import {
+  getMetricRequestTime,
+  getMetricChartConfiguration,
+  getMetricDataType
+} from "@/meta/metrics";
 import { useFormatting } from "@/meta/formatting";
 
 export function useLineChartComponent(
@@ -51,24 +54,21 @@ export function useUpdatingInterval(
   const { formatDateWithoutMilliSec, formatDateToHHMMSS } = useFormatting();
   return computed(() => {
     let currentTimeStamp = formatDateWithoutMilliSec(new Date());
-    let previousTimeStamp = new Date(
-      currentTimeStamp.getTime() - getMetricRequestTime(metric)
+    let type = "";
+    const intervalTime = Math.floor(
+      getMetricRequestTime(metric) / Math.pow(10, 3)
     );
-    if (timestamps.value.length === 1) {
-      currentTimeStamp = timestamps.value[0];
-      previousTimeStamp = new Date(
-        timestamps.value[0].getTime() - getMetricRequestTime(metric)
-      );
-    }
-    if (timestamps.value.length > 1) {
+    if (timestamps.value.length > 0) {
       currentTimeStamp = timestamps.value[timestamps.value.length - 1];
-      previousTimeStamp =
-        getMetricFetchType(metric) === "modify"
-          ? timestamps.value[0]
-          : timestamps.value[timestamps.value.length - 2];
     }
-    return `${formatDateToHHMMSS(previousTimeStamp)} - ${formatDateToHHMMSS(
-      currentTimeStamp
-    )}`;
+    if (getMetricDataType(metric) === "interval") {
+      type =
+        intervalTime > 1
+          ? `Interval: last ${intervalTime} seconds`
+          : "Interval: last second";
+    } else {
+      type = `Snapshot: ${formatDateToHHMMSS(currentTimeStamp)}`;
+    }
+    return type;
   });
 }
