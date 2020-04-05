@@ -135,6 +135,46 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
     return roundNumber(part / total, 100, Math.pow(10, 4), false);
   }
 
+  function getEncodingData(rawData: any): string {
+    const totalAmount = rawData.reduce(
+      (accumulator: number, currentEncoding: any) =>
+        accumulator + currentEncoding.amount,
+      0
+    );
+
+    return rawData.reduce(
+      (
+        encodingText: string,
+        currentEncoding: any,
+        encodingIndex: number,
+        encodingArray: [any]
+      ) => {
+        const compressionText = currentEncoding.compression.reduce(
+          (
+            text: string,
+            compression: string,
+            compressionIndex: number,
+            compressionArray: [number]
+          ) =>
+            text +
+            compression +
+            (compressionIndex === compressionArray.length ? "" : ", "),
+          ""
+        );
+        return (
+          encodingText +
+          currentEncoding.amount / totalAmount +
+          ": " +
+          currentEncoding.name +
+          " (" +
+          compressionText +
+          (encodingIndex === encodingArray.length ? ")" : "), ")
+        );
+      },
+      ""
+    );
+  }
+
   Object.entries(data[primaryKey]).forEach(
     ([table, tableData]: [string, any]) => {
       labels.push(table);
