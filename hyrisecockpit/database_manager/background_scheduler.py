@@ -244,32 +244,22 @@ class BackgroundJobManager(object):
         ) as log:
             log.log_plugin_log(plugin_log)
 
-    def _create_cpu_data_dict(
-        self, utilization_df, system_df
+    def _create_system_data_dict(
+        self, utilization_df, system_df, database_threads: int
     ) -> Dict[str, Union[int, float]]:
         return {
             "cpu_system_usage": float(utilization_df["cpu_system_usage"][0]),
             "cpu_process_usage": float(utilization_df["cpu_process_usage"][0]),
             "cpu_count": int(system_df["cpu_count"][0]),
             "cpu_clock_speed": int(system_df["cpu_clock_speed"][0]),
+            "free_memory": int(utilization_df["system_memory_free_bytes"][0]),
+            "used_memory": int(utilization_df["process_physical_memory_bytes"][0]),
+            "total_memory": int(system_df["system_memory_total_bytes"][0]),
+            "database_threads": database_threads,
         }
-
-    def _create_memory_data_dict(
-        self, utilization_df, system_df
-    ) -> Dict[str, Union[int, float]]:
-        memory_data: Dict[str, Union[int, float]] = {
-            "free": int(utilization_df["system_memory_free_bytes"][0]),
-            "used": int(utilization_df["process_physical_memory_bytes"][0]),
-            "total": int(system_df["system_memory_total_bytes"][0]),
-        }
-
-        memory_data["percent"] = memory_data["used"] / memory_data["total"]
-        return memory_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
-        time_stamp = time_ns()
-
         utilization_df = self._sql_to_data_frame(
             "SELECT * FROM meta_system_utilization;"
         )
@@ -278,13 +268,11 @@ class BackgroundJobManager(object):
         if utilization_df.empty or system_df.empty:
             return
 
-        cpu_data: Dict[str, Union[int, float]] = self._create_cpu_data_dict(
-            utilization_df, system_df
+        mocked_database_threads = 16
+        system_data: Dict[str, Union[int, float]] = self._create_system_data_dict(
+            utilization_df, system_df, mocked_database_threads
         )
-        memory_data: Dict[str, Union[int, float]] = self._create_memory_data_dict(
-            utilization_df, system_df
-        )
-        mocked_database_threads = "16"
+        time_stamp = int(time()) * 1_000_000_000
 
         with StorageCursor(
             self._storage_host,
@@ -293,12 +281,9 @@ class BackgroundJobManager(object):
             self._storage_password,
             self._database_id,
         ) as log:
-            system_data = {
-                "cpu": dumps(cpu_data),
-                "memory": dumps(memory_data),
-                "database_threads": mocked_database_threads,
-            }
-            log.log_meta_information("system_data", system_data, time_stamp)
+            log.log_meta_information(
+                "system_data", system_data, time_stamp,
+            )
 
     def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
