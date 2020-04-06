@@ -8,7 +8,7 @@ from json import loads
 from time import time_ns
 from typing import Any, Dict, List, Union
 
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
@@ -628,23 +628,17 @@ class Throughput(Resource):
     """Throughput information of all databases."""
 
     @monitor.doc(model=[model_throughput])
-    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
-        startts_rounded: int = int(
-            monitor.payload["startts"] / 1_000_000_000
-        ) * 1_000_000_000
-        endts_rounded: int = int(
-            monitor.payload["endts"] / 1_000_000_000
-        ) * 1_000_000_000
+        rough_startts: int = int(request.args.get("startts"))  # type: ignore
+        rough_endts: int = int(request.args.get("endts"))  # type: ignore
+
+        startts_rounded: int = int(rough_startts / 1_000_000_000) * 1_000_000_000
+        endts_rounded: int = int(rough_endts / 1_000_000_000) * 1_000_000_000
 
         # take nearest whole numbers of seconds
-        startts: int = startts_rounded if monitor.payload[
-            "startts"
-        ] % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if monitor.payload[
-            "endts"
-        ] % 1_000_000_000 == 0 else endts_rounded + 1
+        startts: int = startts_rounded if rough_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if rough_endts % 1_000_000_000 == 0 else endts_rounded + 1
 
         response: List = []
         try:
