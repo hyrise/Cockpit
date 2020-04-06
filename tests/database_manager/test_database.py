@@ -620,6 +620,7 @@ class TestDatabase(object):
     def test_executes_sql_query(self, database: Database) -> None:
         """Test execute sql query."""
         database._database_blocked.value = False
+        database._id = "Identification?"
         global mocked_pool_cur
         mocked_pool_cur.fetchall.return_value = [
             (
@@ -633,6 +634,7 @@ class TestDatabase(object):
         )
 
         expected = {
+            "id": "Identification?",
             "successful": True,
             "results": [
                 (
@@ -641,6 +643,7 @@ class TestDatabase(object):
                 )
             ],
             "col_names": ["bad", "joke"],
+            "error_message": "",
         }
 
         result = database.execute_sql_query("SELECT funny FROM not_funny")
@@ -662,13 +665,16 @@ class TestDatabase(object):
             raise Error
 
         database._database_blocked.value = False
+        database._id = "Identification?"
         global mocked_pool_cur
         mocked_pool_cur.execute.side_effect = raise_exception
 
         expected = {
+            "id": "Identification?",
             "successful": False,
-            "results": "",
+            "results": [],
             "col_names": [],
+            "error_message": "",
         }
 
         result = database.execute_sql_query("SELECT funny FROM not_funny")
