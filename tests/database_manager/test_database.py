@@ -626,6 +626,8 @@ class TestDatabase(object):
             (
                 "I'm planning to make a film series on databases",
                 "I've got the first part ready, but I can't think of a SQL.",
+                None,
+                42,
             )
         ]
         mocked_pool_cur.cur.description = (
@@ -637,10 +639,12 @@ class TestDatabase(object):
             "id": "Identification?",
             "successful": True,
             "results": [
-                (
+                [
                     "I'm planning to make a film series on databases",
                     "I've got the first part ready, but I can't think of a SQL.",
-                )
+                    "None",
+                    "42",
+                ]
             ],
             "col_names": ["bad", "joke"],
             "error_message": "",
