@@ -154,3 +154,17 @@ class TestCursor:
 
         cursor.drop_database()
         cursor._connection.drop_database.assert_called_once_with("database_name")
+
+    def test_creates_continuous_query(self):
+        """Test creating of a continuous query in Influx database."""
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._database = "database_name"
+        cursor._connection = MagicMock()
+        cursor._connection.create_continuous_query.return_value = None
+
+        cursor.create_continuous_query(
+            "query_name", "query statement", "resample_options"
+        )
+        cursor._connection.create_continuous_query.assert_called_once_with(
+            "query_name", "query statement", "database_name", "resample_options"
+        )
