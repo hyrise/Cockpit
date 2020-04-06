@@ -5,6 +5,7 @@ If run as a module, a flask server application will be started.
 """
 
 from json import loads
+from threading import RLock
 from time import time, time_ns
 from typing import Any, Dict, List, Union
 
@@ -12,10 +13,10 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 from influxdb import InfluxDBClient
-from jsonschema import ValidationError, validate
+from jsonschema import validate
 from zmq import REQ, Context, Socket
 
-from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.message import response_schema
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
@@ -31,6 +32,8 @@ from hyrisecockpit.settings import (
 )
 
 context = Context(io_threads=1)
+multiprocess_lock = RLock()
+active_databases: List[str] = []
 
 db_manager_socket = context.socket(REQ)
 db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
@@ -591,19 +594,27 @@ model_execute_sql_results = control.clone(
 
 def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
-    socket.send_json(message)
-    response: Response = socket.recv_json()
+    with multiprocess_lock:
+        socket.send_json(message)
+        response: Response = socket.recv_json()
     validate(instance=response, schema=response_schema)
     return response
 
 
-def _active_databases() -> List[str]:
+def _add_active_database(database_id: str) -> None:
+    global active_databases
+    active_databases.append(database_id)
+
+
+def _remove_active_database(database_id: str) -> None:
+    global active_databases
+    active_databases.remove(database_id)
+
+
+def _get_active_databases() -> List[str]:
     """Get a list of active databases."""
-    response: Response = _send_message(
-        db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
-    )
-    validate(instance=response["body"], schema=get_databases_response_schema)
-    return [database["id"] for database in response["body"]["databases"]]
+    global active_databases
+    return active_databases
 
 
 @monitor.route("/throughput")
@@ -617,10 +628,7 @@ class Throughput(Resource):
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
 
         throughput: Dict[str, int] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT * FROM throughput WHERE time = $offsetts;",
@@ -647,10 +655,7 @@ class DetailedThroughput(Resource):
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -680,10 +685,7 @@ class DetailedLatency(Resource):
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -713,10 +715,7 @@ class Latency(Resource):
         offset_seconds = 3
         offsetts = (int(time()) - offset_seconds) * 1_000_000_000
         latency: Dict[str, float] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT * FROM latency WHERE time = $offsetts;",
@@ -743,10 +742,7 @@ class DetailedQueryInformation(Resource):
         currentts = time_ns()
         startts = currentts - 2_000_000_000
         endts = currentts - 1_000_000_000
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         response: List[Dict] = []
         for database in active_databases:
             result = storage_connection.query(
@@ -795,7 +791,7 @@ class FailedTasks(Resource):
                     )["failed_queries", None]
                 ),
             }
-            for database in _active_databases()
+            for database in _get_active_databases()
         ]
 
 
@@ -806,10 +802,7 @@ class System(Resource):
     def get(self) -> Union[int, Response]:
         """Return cpu and memory information for every database and the number of thread it is using from database manager."""
         system: Dict[str, Dict] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 "SELECT LAST(cpu_count) as cpu_count, * FROM system_data;",
@@ -846,10 +839,7 @@ class Chunks(Resource):
     def get(self) -> Union[int, Response]:
         """Return chunks data information for every database."""
         chunks: Dict[str, Dict] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("chunks_data_meta_information") FROM chunks_data',
@@ -873,10 +863,7 @@ class Storage(Resource):
     def get(self) -> Union[int, Response]:
         """Return storage metadata from database manager."""
         storage: Dict[str, Dict] = {}
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("storage_meta_information") FROM storage',
@@ -900,10 +887,7 @@ class KruegerData(Resource):
     def get(self) -> Union[int, List[Dict[str, Dict[str, Dict]]]]:
         """Provide mock data for a Krügergraph."""
         krueger_data: List[Dict] = []
-        try:
-            active_databases = _active_databases()
-        except ValidationError:
-            return 500
+        active_databases = _get_active_databases()
         for database in active_databases:
             result = storage_connection.query(
                 'SELECT LAST("executed"), * FROM krueger_data', database=database,
@@ -961,6 +945,8 @@ class Database(Resource):
             },
         )
         response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] == 200:
+            _add_active_database(control.payload["id"])
         return response
 
     @control.doc(body=model_control_database)
@@ -971,6 +957,8 @@ class Database(Resource):
             body={"id": control.payload["id"]},
         )
         response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] == 200:
+            _remove_active_database(control.payload["id"])
         return response
 
 
@@ -1118,7 +1106,7 @@ class PluginLog(Resource):
                     )
                 ],
             }
-            for database in _active_databases()
+            for database in _get_active_databases()
         ]
 
 
