@@ -11,7 +11,10 @@ from pandas.core.frame import DataFrame as DataframeType
 from psycopg2 import DatabaseError, InterfaceError
 from pytest import fixture, mark
 
-from hyrisecockpit.database_manager.background_scheduler import BackgroundJobManager
+from hyrisecockpit.database_manager.background_scheduler import (
+    BackgroundJobManager,
+    StorageDataType,
+)
 
 database_id: str = "MongoDB"
 get_database_blocked: Callable[[], Value] = lambda: Value("b", False)  # noqa: E731
@@ -465,10 +468,11 @@ class TestBackgroundJobManager:
 
         mocked_storage_cursor = MagicMock()
 
-    def test_successfully_create_cpu_data_dict(
+    def test_successfully_create_system_data_dict(
         self, background_job_manager: BackgroundJobManager
     ):
-        """Test creates cpu data dict successfully."""
+        """Test creates system data dict successfully."""
+        fake_database_threads: int = 16
         fake_utilization_df: DataFrame = DataFrame(
             {
                 "cpu_system_usage": [120],
@@ -489,46 +493,16 @@ class TestBackgroundJobManager:
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
+            "free_memory": 0,
+            "used_memory": 42,
+            "total_memory": 1234,
+            "database_threads": fake_database_threads,
         }
 
         received_dict: Dict[
             str, Union[int, float]
-        ] = background_job_manager._create_cpu_data_dict(
-            fake_utilization_df, fake_system_df
-        )
-
-        assert received_dict == expected_dict
-
-    def test_successfully_create_memory_data_dict(
-        self, background_job_manager: BackgroundJobManager
-    ):
-        """Test creates memory data dict successfully."""
-        fake_utilization_df: DataFrame = DataFrame(
-            {
-                "cpu_system_usage": [120],
-                "cpu_process_usage": [300],
-                "system_memory_free_bytes": [0],
-                "process_physical_memory_bytes": [42],
-            }
-        )
-        fake_system_df: DataFrame = DataFrame(
-            {
-                "cpu_count": [16],
-                "cpu_clock_speed": [120],
-                "system_memory_total_bytes": [42],
-            }
-        )
-        expected_dict: Dict[str, int] = {
-            "free": 0,
-            "used": 42,
-            "total": 42,
-            "percent": 1,
-        }
-
-        received_dict: Dict[
-            str, Union[int, float]
-        ] = background_job_manager._create_memory_data_dict(
-            fake_utilization_df, fake_system_df
+        ] = background_job_manager._create_system_data_dict(
+            fake_utilization_df, fake_system_df, fake_database_threads
         )
 
         assert received_dict == expected_dict
@@ -537,49 +511,37 @@ class TestBackgroundJobManager:
         "hyrisecockpit.database_manager.background_scheduler.StorageCursor",
         get_mocked_storage_cursor,
     )
-    @patch("hyrisecockpit.database_manager.background_scheduler.time_ns", lambda: 42)
+    @patch("hyrisecockpit.database_manager.background_scheduler.time", lambda: 42)
     def test_logs_updated_system_data(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test logs updated system data."""
         fake_not_empty_df: DataFrame = DataFrame({"column1": [1]})
-        fake_cpu_dict: Dict[str, float] = {
+        fake_system_dict: Dict[str, float] = {
             "cpu_system_usage": 120.0,
             "cpu_process_usage": 300.0,
             "cpu_count": 16,
             "cpu_clock_speed": 120,
-        }
-        fake_memory_dict: Dict[str, int] = {
-            "free": 0,
-            "used": 42,
-            "total": 42,
-            "percent": 1,
+            "free_memory": 0,
+            "used_memory": 42,
+            "total_memory": 1234,
+            "database_threads": 16,
         }
 
         mocked_sql_to_data_frame: MagicMock = MagicMock()
         mocked_sql_to_data_frame.return_value = fake_not_empty_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        mocked_create_cpu_data_dict: MagicMock = MagicMock()
-        mocked_create_cpu_data_dict.return_value = fake_cpu_dict
-        background_job_manager._create_cpu_data_dict = mocked_create_cpu_data_dict  # type: ignore
-
-        mocked_create_memory_data_dict: MagicMock = MagicMock()
-        mocked_create_memory_data_dict.return_value = fake_memory_dict
-        background_job_manager._create_memory_data_dict = mocked_create_memory_data_dict  # type: ignore
+        mocked_create_system_data_dict: MagicMock = MagicMock()
+        mocked_create_system_data_dict.return_value = fake_system_dict
+        background_job_manager._create_system_data_dict = mocked_create_system_data_dict  # type: ignore
 
         background_job_manager._update_system_data()
-
-        expected_function_argument: Dict[str, str] = {
-            "cpu": dumps(fake_cpu_dict),
-            "memory": dumps(fake_memory_dict),
-            "database_threads": "16",
-        }
 
         global mocked_storage_cursor
 
         mocked_storage_cursor.log_meta_information.assert_called_once_with(
-            "system_data", expected_function_argument, 42
+            "system_data", fake_system_dict, 42_000_000_000
         )
 
         mocked_storage_cursor = MagicMock()
@@ -630,6 +592,11 @@ class TestBackgroundJobManager:
                 "column_name": ["c_custkey", "c_nationkey", "s_address"],
                 "column_data_type": ["int", "string", "string"],
                 "encoding_type": ["Dictionary", "Dictionary", "Dictionary"],
+                "vector_compression_type": [
+                    "FixedSize2ByteAligned",
+                    "FixedSize2ByteAligned",
+                    "FixedSize2ByteAligned",
+                ],
                 "estimated_size_in_bytes": [9000, 1000, 400],
             }
         )
@@ -638,9 +605,7 @@ class TestBackgroundJobManager:
         mocked_sql_to_data_frame.return_value = fake_storage_df
         background_job_manager._sql_to_data_frame = mocked_sql_to_data_frame  # type: ignore
 
-        expected_storage_dict: Dict[
-            str, Dict[str, Union[int, Dict[str, Dict[str, Union[int, str, List[str]]]]]]
-        ] = {
+        expected_storage_dict: StorageDataType = {
             "customer": {
                 "size": 10000,
                 "number_columns": 2,
@@ -648,12 +613,24 @@ class TestBackgroundJobManager:
                     "c_custkey": {
                         "size": 9000,
                         "data_type": "int",
-                        "encoding": ["Dictionary"],
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "amount": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
                     },
                     "c_nationkey": {
                         "size": 1000,
                         "data_type": "string",
-                        "encoding": ["Dictionary"],
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "amount": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
                     },
                 },
             },
@@ -664,7 +641,13 @@ class TestBackgroundJobManager:
                     "s_address": {
                         "size": 400,
                         "data_type": "string",
-                        "encoding": ["Dictionary"],
+                        "encoding": [
+                            {
+                                "name": "Dictionary",
+                                "amount": 1,
+                                "compression": ["FixedSize2ByteAligned"],
+                            }
+                        ],
                     }
                 },
             },
@@ -712,26 +695,22 @@ class TestBackgroundJobManager:
         fake_folder_name: str = "hyriseDown"
         fake_table_names: List[str] = ["keep", "on", "going", "please!!!"]
 
-        received_queries: List[
-            Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]
-        ] = background_job_manager._generate_table_loading_queries(
+        received_queries = background_job_manager._generate_table_loading_queries(
             fake_table_names, fake_folder_name
         )
 
-        expected_queries: List[
-            Tuple[str, Tuple[Tuple[Union[str, int], Optional[str]], ...]]
-        ] = [
+        expected_queries = [
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("keep", "as_is"), ("hyriseDown", "as_is"), ("keep", "as_is"),),
+                (("keep", "as_is"), (fake_folder_name, "as_is"), ("keep", "as_is"),),
             ),
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("on", "as_is"), ("hyriseDown", "as_is"), ("on", "as_is"),),
+                (("on", "as_is"), (fake_folder_name, "as_is"), ("on", "as_is"),),
             ),
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
-                (("going", "as_is"), ("hyriseDown", "as_is"), ("going", "as_is"),),
+                (("going", "as_is"), (fake_folder_name, "as_is"), ("going", "as_is"),),
             ),
             (
                 "COPY %s FROM '/usr/local/hyrise/cached_tables/%s/%s.bin';",
@@ -753,34 +732,19 @@ class TestBackgroundJobManager:
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test successfully formats query parameters."""
-        parameters: Tuple[Tuple[str, str], Tuple[str, None], Tuple[str, None]] = (
+        parameters = (
             ("keep", "as_is",),
             ("hyriseDown", None,),
             ("keep", None,),
         )
-        received: Optional[
-            Tuple[Any, ...]
-        ] = background_job_manager._format_query_parameters(parameters)
-
-        expected_formatted_parameters: Tuple[str, str, str] = (
-            "AsIs(keep)",
-            "hyriseDown",
-            "keep",
-        )
-
-        assert received == expected_formatted_parameters
+        received = background_job_manager._format_query_parameters(parameters)
+        assert received == ("AsIs(keep)", "hyriseDown", "keep")
 
     def test_doesnt_format_no_parameters(
         self, background_job_manager: BackgroundJobManager
     ) -> None:
         """Test doesn't format when there are no parameters."""
-        parameters = None
-        received: Optional[
-            Tuple[Any, ...]
-        ] = background_job_manager._format_query_parameters(parameters)
-        expected_formatted_parameters = None
-
-        assert received == expected_formatted_parameters
+        assert background_job_manager._format_query_parameters(None) is None
 
     @patch(
         "hyrisecockpit.database_manager.background_scheduler.PoolCursor",
@@ -1213,11 +1177,11 @@ class TestBackgroundJobManager:
             fake_existing_table_names
         )
 
-        received_queries: List[
-            Tuple[Any, ...]
-        ] = background_job_manager._generate_table_drop_queries(["table_names"],)
+        received_queries = background_job_manager._generate_table_drop_queries(
+            ["table_names"],
+        )
 
-        expected_queries: List[Tuple[Any, ...]] = [
+        expected_queries = [
             ("DROP TABLE %s;", (("keep", "as_is"),),),
             ("DROP TABLE %s;", (("hyrise", "as_is"),),),
             ("DROP TABLE %s;", (("alive", "as_is"),),),

@@ -5,7 +5,6 @@
       :evaluations="[false]"
     />
     <div class="mx-6">
-      <database-metric-selection class="select" :select-metrics="false" />
       <database-query-tables :selected-databases="selectedDatabases" />
       <unselected-warning :condition="selectedDatabases">
         <template #message>
@@ -25,7 +24,7 @@
         align="center"
       >
         <metric-tile
-          v-for="metric in watchedMetrics"
+          v-for="metric in selectedMetrics"
           :key="metric"
           class="flex-item"
           :metric="metric"
@@ -50,13 +49,13 @@ import {
 import { Metric, workloadMetrics } from "../types/metrics";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
-import LinearLoader from "../components/alerts/linearLoader.vue";
+import LinearLoader from "../components/alerts/LinearLoader.vue";
 import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
-import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 import { MetricViewData } from "../types/views";
-import { useSelectionHandling } from "../meta/views";
-import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
+import { useSelectionHandling } from "@/meta/selection";
+import UnselectedWarning from "@/components/alerts/UnselectedWarning.vue";
 import MetricTile from "@/components/container/MetricTile.vue";
+import SelectionList from "@/components/selection/SelectionList.vue";
 
 interface Props {}
 interface Data extends MetricViewData {
@@ -69,8 +68,8 @@ export default defineComponent({
     MetricTile,
     LinearLoader,
     DatabaseQueryTables,
-    DatabaseMetricSelection,
-    UnselectedWarning
+    UnselectedWarning,
+    SelectionList
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
@@ -92,7 +91,7 @@ export default defineComponent({
     return {
       watchedInstances,
       watchedMetrics: workloadMetrics,
-      ...useSelectionHandling()
+      ...useSelectionHandling(context, "workload")
     };
   }
 });

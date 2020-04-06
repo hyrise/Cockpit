@@ -4,7 +4,7 @@ from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
 from time import time, time_ns
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -14,6 +14,33 @@ from psycopg2.extensions import AsIs
 from .cursor import PoolCursor, StorageCursor
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
+
+
+class Encoding(TypedDict):
+    """Type of an encoding in a storage dictionary."""
+
+    name: str
+    amount: int
+    compression: List[str]
+
+
+class ColumnData(TypedDict):
+    """Type of column data in a storage dictionary."""
+
+    size: int
+    data_type: str
+    encoding: List[Encoding]
+
+
+class TableData(TypedDict):
+    """Type of table data in a storage dictionary."""
+
+    size: int
+    number_columns: int
+    data: Dict[str, ColumnData]
+
+
+StorageDataType = Dict[str, TableData]
 
 
 class BackgroundJobManager(object):
@@ -233,32 +260,22 @@ class BackgroundJobManager(object):
         ) as log:
             log.log_plugin_log(plugin_log)
 
-    def _create_cpu_data_dict(
-        self, utilization_df, system_df
+    def _create_system_data_dict(
+        self, utilization_df, system_df, database_threads: int
     ) -> Dict[str, Union[int, float]]:
         return {
             "cpu_system_usage": float(utilization_df["cpu_system_usage"][0]),
             "cpu_process_usage": float(utilization_df["cpu_process_usage"][0]),
             "cpu_count": int(system_df["cpu_count"][0]),
             "cpu_clock_speed": int(system_df["cpu_clock_speed"][0]),
+            "free_memory": int(utilization_df["system_memory_free_bytes"][0]),
+            "used_memory": int(utilization_df["process_physical_memory_bytes"][0]),
+            "total_memory": int(system_df["system_memory_total_bytes"][0]),
+            "database_threads": database_threads,
         }
-
-    def _create_memory_data_dict(
-        self, utilization_df, system_df
-    ) -> Dict[str, Union[int, float]]:
-        memory_data: Dict[str, Union[int, float]] = {
-            "free": int(utilization_df["system_memory_free_bytes"][0]),
-            "used": int(utilization_df["process_physical_memory_bytes"][0]),
-            "total": int(system_df["system_memory_total_bytes"][0]),
-        }
-
-        memory_data["percent"] = memory_data["used"] / memory_data["total"]
-        return memory_data
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
-        time_stamp = time_ns()
-
         utilization_df = self._sql_to_data_frame(
             "SELECT * FROM meta_system_utilization;"
         )
@@ -267,13 +284,11 @@ class BackgroundJobManager(object):
         if utilization_df.empty or system_df.empty:
             return
 
-        cpu_data: Dict[str, Union[int, float]] = self._create_cpu_data_dict(
-            utilization_df, system_df
+        mocked_database_threads = 16
+        system_data: Dict[str, Union[int, float]] = self._create_system_data_dict(
+            utilization_df, system_df, mocked_database_threads
         )
-        memory_data: Dict[str, Union[int, float]] = self._create_memory_data_dict(
-            utilization_df, system_df
-        )
-        mocked_database_threads = "16"
+        time_stamp = int(time()) * 1_000_000_000
 
         with StorageCursor(
             self._storage_host,
@@ -282,12 +297,9 @@ class BackgroundJobManager(object):
             self._storage_password,
             self._database_id,
         ) as log:
-            system_data = {
-                "cpu": dumps(cpu_data),
-                "memory": dumps(memory_data),
-                "database_threads": mocked_database_threads,
-            }
-            log.log_meta_information("system_data", system_data, time_stamp)
+            log.log_meta_information(
+                "system_data", system_data, time_stamp,
+            )
 
     def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
@@ -301,30 +313,47 @@ class BackgroundJobManager(object):
             .sum()
         )
 
+        vector_compression_type = DataFrame(
+            meta_segments["vector_compression_type"]
+            .groupby(level=["table_name", "column_name"])
+            .apply(set)
+            .apply(list)
+        )
+
         encoding: DataFrame = DataFrame(
             meta_segments["encoding_type"]
             .groupby(level=["table_name", "column_name"])
-            .apply(set)
+            .apply(list)
         )
-        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
+
+        combined_encoding = encoding.join(vector_compression_type)
+
+        for _, row in combined_encoding.iterrows():
+            row["encoding_type"] = [
+                {
+                    "name": encoding,
+                    "amount": row["encoding_type"].count(encoding),
+                    "compression": row["vector_compression_type"],
+                }
+                for encoding in set(row["encoding_type"])
+            ]
+
         datatype: DataFrame = meta_segments.reset_index().set_index(
             ["table_name", "column_name"]
         )[["column_data_type"]]
 
-        result: DataFrame = size.join(encoding).join(datatype)
+        result: DataFrame = size.join(combined_encoding).join(datatype)
         return result
 
-    def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
+    def _create_storage_data_dictionary(self, result: DataFrame) -> StorageDataType:
         """Sort storage data to dictionary."""
-        output: Dict = {}
+        output: StorageDataType = {}
         grouped = result.reset_index().groupby("table_name")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
             for _, row in grouped.get_group(column).iterrows():
-                output[column]["number_columns"] = output[column]["number_columns"] + 1
-                output[column]["size"] = (
-                    output[column]["size"] + row["estimated_size_in_bytes"]
-                )
+                output[column]["number_columns"] += 1
+                output[column]["size"] += row["estimated_size_in_bytes"]
                 output[column]["data"][row["column_name"]] = {
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
