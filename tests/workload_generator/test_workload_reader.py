@@ -7,13 +7,13 @@ from hyrisecockpit.exception import (
     EmptyWorkloadFolderException,
     NotExistingWorkloadFolderException,
 )
-from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
+from hyrisecockpit.workload_generator.reader import WorkloadReader
 
 
 class TestWorkloadReader:
     """Tests for the WorkloadReader class."""
 
-    @patch("hyrisecockpit.workload_generator.workload_reader.exists")
+    @patch("hyrisecockpit.workload_generator.reader.exists")
     def test_catches_not_existing_workload_folder_exception(self, mock_path_function):
         """Ensure not existing workload causes exception."""
         mock_path_function.return_value = False
@@ -22,8 +22,8 @@ class TestWorkloadReader:
             reader._get_workload_folder("absolute_path", "tpch")
         assert str(e.value) == "Workload tpch not found: directory doesn't exist"
 
-    @patch("hyrisecockpit.workload_generator.workload_reader.exists",)
-    @patch("hyrisecockpit.workload_generator.workload_reader.listdir",)
+    @patch("hyrisecockpit.workload_generator.reader.exists",)
+    @patch("hyrisecockpit.workload_generator.reader.listdir",)
     def test_catches_empty_workload_folder_exception(
         self, mock_list_function, mock_path_function
     ):
@@ -35,8 +35,8 @@ class TestWorkloadReader:
             reader._get_workload_folder("absolute_path", "tpch")
         assert str(e.value) == "Workload tpch directory is empty"
 
-    @patch("hyrisecockpit.workload_generator.workload_reader.exists",)
-    @patch("hyrisecockpit.workload_generator.workload_reader.listdir",)
+    @patch("hyrisecockpit.workload_generator.reader.exists",)
+    @patch("hyrisecockpit.workload_generator.reader.listdir",)
     def test_gets_workload_folder_from_existing_directory(
         self, mock_list_function, mock_path_function
     ):
@@ -46,7 +46,7 @@ class TestWorkloadReader:
         reader = WorkloadReader()
         assert reader._get_workload_folder("absolute_path", "tpch") == ["file"]
 
-    @patch("hyrisecockpit.workload_generator.workload_reader.dirname",)
+    @patch("hyrisecockpit.workload_generator.reader.dirname",)
     def test_creates_absolute_workload_path(self, mock_dirname):
         """Create absolute workload path."""
         mock_dirname.return_value = "absolute_workload_reader_path"
@@ -56,8 +56,8 @@ class TestWorkloadReader:
             == "absolute_workload_reader_path/relative_workload_path"
         )
 
-    @patch("hyrisecockpit.workload_generator.workload_reader.fsdecode",)
-    @patch("hyrisecockpit.workload_generator.workload_reader.open",)
+    @patch("hyrisecockpit.workload_generator.reader.fsdecode",)
+    @patch("hyrisecockpit.workload_generator.reader.open",)
     def test_reads_content_of_workload_folder(self, mock_open, mock_fsdecode):
         """Read content of workload folder."""
         mock_fsdecode.side_effect = lambda file_name: file_name

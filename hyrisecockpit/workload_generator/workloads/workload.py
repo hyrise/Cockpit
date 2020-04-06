@@ -4,7 +4,7 @@ from secrets import choice
 from typing import Dict, List, NamedTuple, Optional, Tuple, Union
 
 from hyrisecockpit.exception import QueryTypeNotFoundException
-from hyrisecockpit.workload_generator.workload_reader import WorkloadReader
+from hyrisecockpit.workload_generator.reader import WorkloadReader
 
 
 class Query(NamedTuple):

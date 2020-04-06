@@ -27,7 +27,7 @@ class TestWorkload:
 
     @fixture
     @patch(
-        "hyrisecockpit.workload_generator.workload_reader.WorkloadReader",
+        "hyrisecockpit.workload_generator.reader.WorkloadReader",
         get_fake_workload_reader,
     )
     @patch(
