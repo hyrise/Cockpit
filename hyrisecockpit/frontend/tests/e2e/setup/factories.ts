@@ -71,12 +71,19 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
 
 // STORAGE DATA
 
+function fakeEncodingData(): Object {
+  return {
+    amount: faker.random.number(),
+    compression: [faker.random.word()]
+  };
+}
+
 function fakeColumnStorageData(columnId: string): Object {
   const storageData: any = {};
   storageData[columnId] = {
     size: faker.random.number(),
     data_type: faker.database.type(),
-    encoding: [faker.random.word()]
+    encoding: [fakeEncodingData()]
   };
   return storageData;
 }
@@ -239,5 +246,8 @@ export function fakeDatabasePluginLogs(
   databaseId: string,
   pluginIds: string[]
 ): Object {
-  return { id: databaseId, plugin_log: pluginIds.map(id => fakePluginLog(id)) };
+  return {
+    id: databaseId,
+    plugin_log: pluginIds.map(id => fakePluginLog(id))
+  };
 }
