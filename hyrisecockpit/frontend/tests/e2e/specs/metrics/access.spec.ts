@@ -51,7 +51,6 @@ describe("Show access", () => {
         getViewSelector("comparisonButton"),
         getRoute("comparison")
       );
-      cy.wait(1000);
       cy.wait("@" + getGetAlias("chunks"));
       cy.get("@" + getGetAlias("chunks")).should((xhr: any) => {
         data = xhr.response.body.body.chunks_data;
