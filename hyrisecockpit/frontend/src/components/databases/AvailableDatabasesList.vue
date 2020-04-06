@@ -9,17 +9,18 @@
             <v-chip
               id="add-database-button"
               class="button"
-              color="primary--text"
+              color="white primary--text"
               v-on="on"
               @click="$emit('addDatabase')"
             >
-              <v-icon dark size="20">mdi-plus</v-icon>
+              <v-icon color="primary" size="26">mdi-plus</v-icon>
             </v-chip>
           </template>
           <span>Add Database</span>
         </v-tooltip>
       </v-card-title>
     </v-card>
+    <v-divider class="my-2" />
     <v-list-item class="mt-1" v-for="database in databases" :key="database.id">
       <v-list-item-title>
         <database-chip
