@@ -1,7 +1,7 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Union
 
 from psycopg2 import Error, pool
 
@@ -228,7 +228,7 @@ class Database(object):
 
     def execute_sql_query(
         self, query
-    ) -> Optional[Dict[str, Union[str, bool, List[Tuple]]]]:
+    ) -> Optional[Dict[str, Union[str, bool, List[List[str]]]]]:
         """Execute sql query on database."""
         if not self._database_blocked.value:
             try:
@@ -238,7 +238,9 @@ class Database(object):
                     return {
                         "id": self._id,
                         "successful": True,
-                        "results": cur.fetchall(),
+                        "results": [
+                            [str(col) for col in row] for row in cur.fetchall()
+                        ],
                         "col_names": col_names,
                         "error_message": "",
                     }
