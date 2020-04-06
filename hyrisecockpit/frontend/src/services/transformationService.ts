@@ -157,17 +157,18 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           ) =>
             text +
             compression +
-            (compressionIndex === compressionArray.length - 1 ? "" : ", "),
+            (compressionIndex === compressionArray.length - 1 ? "" : ",<br>"),
           ""
         );
         return (
           encodingText +
+          "<br> " +
           getPercentage(currentEncoding.amount, totalAmount) +
           "%: " +
           currentEncoding.name +
-          " (" +
+          "<br> (" +
           compressionText +
-          (encodingIndex === encodingArray.length - 1 ? ")" : "), ")
+          (encodingIndex === encodingArray.length - 1 ? ")" : ")<br>")
         );
       },
       ""
