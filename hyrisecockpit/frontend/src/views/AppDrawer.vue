@@ -1,7 +1,7 @@
 <template>
-  <v-navigation-drawer app fixed width="145">
+  <v-navigation-drawer app fixed width="180">
     <v-list>
-      <v-list-item two-line class="mt-0 mb-0">
+      <v-list-item two-line class="my-0">
         <v-list-item-avatar tile class="mt-0 mr-2">
           <img src="../../src/assets/images/hyrise_logo.png" />
         </v-list-item-avatar>
@@ -20,9 +20,9 @@
         </v-list-item-content>
         <v-list-item-icon>
           <v-icon
+            id="selection-list-button"
             dense
             color="secondary"
-            id="selection-list-button"
             @click="$emit('toggleSelection')"
             >mdi-cog-outline</v-icon
           >
@@ -61,7 +61,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="body-2 font-weight-light"
-            >Metrics</v-list-item-title
+            >Workload Metrics</v-list-item-title
           >
         </v-list-item-content>
       </v-list-item>
