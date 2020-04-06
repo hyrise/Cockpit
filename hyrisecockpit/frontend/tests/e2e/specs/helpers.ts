@@ -29,3 +29,7 @@ export function roundNumber(
   const rounded = Math.floor(data * factor) / ratio;
   return even ? Math.floor(rounded) : rounded;
 }
+
+export function formatDateToHHMMSS(date: Date): string {
+  return date.toLocaleTimeString("de-DE");
+}

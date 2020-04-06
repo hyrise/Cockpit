@@ -10,7 +10,7 @@ import {
 } from "./helpers";
 import { clickContentOfSelect } from "../helpers";
 
-const backend = useBackendMock({ databases: 2 });
+const backend = useBackendMock();
 
 let databases: any[] = [];
 let data: any = {};
