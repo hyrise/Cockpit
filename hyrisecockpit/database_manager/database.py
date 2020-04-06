@@ -236,12 +236,20 @@ class Database(object):
                     cur.execute(query, None)
                     col_names = [col[0] for col in cur.cur.description]
                     return {
+                        "id": self._id,
                         "successful": True,
                         "results": cur.fetchall(),
                         "col_names": col_names,
+                        "error_message": "",
                     }
             except Error as e:
-                return {"successful": False, "results": str(e), "col_names": []}
+                return {
+                    "id": self._id,
+                    "successful": False,
+                    "results": [],
+                    "col_names": [],
+                    "error_message": str(e),
+                }
         return None
 
     def close(self) -> None:
