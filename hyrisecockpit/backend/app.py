@@ -550,6 +550,49 @@ model_execute_sql = control.clone(
 )
 
 
+class StrnigOrInterger(fields.Raw):
+    """Custom string or integer field."""
+
+    def format(self, value):
+        """Format value."""
+        return value
+
+
+model_execute_sql_results = control.clone(
+    "Query results",
+    model_database,
+    {
+        "successful": fields.Boolean(
+            title="Successful execution",
+            description="Description if there was an error while executing.",
+            required=True,
+            example=True,
+        ),
+        "results": fields.List(
+            fields.List(StrnigOrInterger()),
+            title="Results",
+            description="Results from query execution.",
+            required=True,
+            example=[0, "foo"],
+        ),
+        "col_names": fields.List(
+            fields.String(
+                title="Column Names",
+                description="List of column names.",
+                required=False,
+                example="names",
+            )
+        ),
+        "error_message": fields.String(
+            title="Error message",
+            description="Error message if query execution wasn't successful.",
+            required=False,
+            example="Table not found",
+        ),
+    },
+)
+
+
 def _send_message(socket: Socket, message: Request) -> Response:
     """Send an IPC message with data to a database interface, return the repsonse."""
     socket.send_json(message)
@@ -1113,6 +1156,7 @@ class PluginSettings(Resource):
 class Sql(Resource):
     """Execute SQL query on database."""
 
+    @control.doc(model=model_execute_sql_results)
     @control.doc(body=model_execute_sql)
     def post(self) -> Response:
         """Execute SQL query."""
