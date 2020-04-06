@@ -269,6 +269,99 @@ model_queue_length = monitor.clone(
     },
 )
 
+model_system_data = monitor.clone(
+    "System data",
+    model_database,
+    {
+        "system_data": fields.List(
+            fields.Nested(
+                monitor.model(
+                    "System data values",
+                    {
+                        "timestamp": fields.Integer(
+                            title="Timestamp",
+                            description="Timestamp in nanoseconds since epoch",
+                            required=True,
+                            example=1585762457000000000,
+                        ),
+                        "system_data": fields.Nested(
+                            monitor.model(
+                                "System data for the provided timestamp",
+                                {
+                                    "cpu": fields.Nested(
+                                        monitor.model(
+                                            "CPU data values",
+                                            {
+                                                "cpu_system_usage": fields.Float(
+                                                    title="CPU system usage",
+                                                    description="CPU system usage in %",
+                                                    required=True,
+                                                    example=0.458248466,
+                                                ),
+                                                "cpu_process_usage": fields.Float(
+                                                    title="CPU process usage",
+                                                    description="CPU process usage in %",
+                                                    required=True,
+                                                    example=10.8125,
+                                                ),
+                                                "cpu_count": fields.Integer(
+                                                    title="Number CPUs",
+                                                    description="Number CPUs",
+                                                    required=True,
+                                                    example=16,
+                                                ),
+                                                "cpu_clock_speed": fields.Integer(
+                                                    title="CPU clock speed",
+                                                    description="CPU frequency",
+                                                    required=True,
+                                                    example=2600,
+                                                ),
+                                            },
+                                        )
+                                    ),
+                                    "memory": fields.Nested(
+                                        monitor.model(
+                                            "Main memory data",
+                                            {
+                                                "free": fields.Integer(
+                                                    title="Free memory",
+                                                    description="Number of free bytes",
+                                                    required=True,
+                                                    example=13030227968,
+                                                ),
+                                                "used": fields.Integer(
+                                                    title="Used memory",
+                                                    description="Number of used bytes",
+                                                    required=True,
+                                                    example=579780000,
+                                                ),
+                                                "total": fields.Integer(
+                                                    title="Total memory",
+                                                    description="Total number of memory bytes",
+                                                    required=True,
+                                                    example=33724911616,
+                                                ),
+                                            },
+                                        )
+                                    ),
+                                    "database_threads": fields.Integer(
+                                        title="Database threads",
+                                        description="Number of database threads",
+                                        required=True,
+                                        example=16,
+                                    ),
+                                },
+                            )
+                        ),
+                    },
+                )
+            ),
+            required=True,
+        ),
+    },
+)
+
+
 model_workload_composition = monitor.model(
     "Workload composition",
     {
@@ -862,6 +955,7 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
+    @monitor.doc(model=[model_system_data])
     def get(self) -> Union[int, List]:
         """Return cpu and memory information for every database and the number of threads it is using from database manager."""
         startts: int = int(request.args.get("startts"))  # type: ignore
