@@ -141,7 +141,6 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
         accumulator + currentEncoding.amount,
       0
     );
-
     return rawData.reduce(
       (
         encodingText: string,
@@ -158,17 +157,17 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           ) =>
             text +
             compression +
-            (compressionIndex === compressionArray.length ? "" : ", "),
+            (compressionIndex === compressionArray.length - 1 ? "" : ", "),
           ""
         );
         return (
           encodingText +
-          currentEncoding.amount / totalAmount +
-          ": " +
+          getPercentage(currentEncoding.amount, totalAmount) +
+          "%: " +
           currentEncoding.name +
           " (" +
           compressionText +
-          (encodingIndex === encodingArray.length ? ")" : "), ")
+          (encodingIndex === encodingArray.length - 1 ? ")" : "), ")
         );
       },
       ""
@@ -198,7 +197,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           sizes.push(getRoundedData(attributeData.size));
           descriptions.push({
             size: `${getRoundedData(attributeData.size)} MB`,
-            encoding: `encoding: ${attributeData.encoding}`,
+            encoding: `encoding: ${getEncodingData(attributeData.encoding)}`,
             dataType: `data type: ${attributeData.data_type}`,
             percentOfDatabase: `${getPercentage(
               getRoundedData(attributeData.size),
