@@ -9,8 +9,8 @@ import {
   fakeDatabasePluginsData,
   fakeDatabasePluginSettings,
   fakeDatabasePluginLogs,
-  fakeIds
-} from "./factories";
+  fakeIds,
+} from './factories';
 import {
   assignFakeData,
   fakeDataByIds,
@@ -18,14 +18,14 @@ import {
   Entity,
   Request,
   benchmarks,
-  empty
-} from "./helpers";
-import { useCallbacks } from "./callbacks";
+  empty,
+} from './helpers';
+import { useCallbacks } from './callbacks';
 
 /* mocks containing fake data */
 
 export function useMocks(
-  numbers: Record<Entity, number>
+  numbers: Record<Entity, number>,
 ): {
   renewMocks: () => void;
   renewMockResponses: () => void;
@@ -36,7 +36,7 @@ export function useMocks(
   const callbacks = useCallbacks(
     addMockedId,
     removeMockedId,
-    renewMockResponses
+    renewMockResponses,
   );
   let mockedIds: Record<Entity, string[]> = mockIds();
   let responseMocks: Record<Request, any> = mockResponses();
@@ -59,18 +59,18 @@ export function useMocks(
   }
 
   function mockIds(): Record<Entity, string[]> {
-    const plugins = fakeIds(numbers.plugins, "plugin-");
+    const plugins = fakeIds(numbers.plugins, 'plugin-');
     return {
-      databases: fakeIds(numbers.databases, "database-"),
-      tables: fakeIds(numbers.tables, "table-"),
-      columns: fakeIds(numbers.columns, "column-"),
+      databases: fakeIds(numbers.databases, 'database-'),
+      tables: fakeIds(numbers.tables, 'table-'),
+      columns: fakeIds(numbers.columns, 'column-'),
       chunks: [],
       queries: [],
       plugins: plugins,
       activated_plugins: generateUniqueRandomNumbers(
         numbers.activated_plugins,
-        plugins.length
-      ).map(index => plugins[index])
+        plugins.length,
+      ).map((index) => plugins[index]),
     };
   }
 
@@ -79,69 +79,69 @@ export function useMocks(
 
     responseMocks.database = fakeDataByIds(
       mockedIds.databases,
-      fakeDatabaseData
+      fakeDatabaseData,
     );
     responseMocks.storage = {
       storage: assignFakeData(
-        mockedIds.databases.map(id =>
-          fakeDatabaseStorageData(id, mockedIds.tables, mockedIds.columns)
-        )
-      )
+        mockedIds.databases.map((id) =>
+          fakeDatabaseStorageData(id, mockedIds.tables, mockedIds.columns),
+        ),
+      ),
     };
     responseMocks.system = {
       system_data: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeDatabaseSystemData)
-      )
+        fakeDataByIds(mockedIds.databases, fakeDatabaseSystemData),
+      ),
     };
     responseMocks.throughput = {
       throughput: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
+        fakeDataByIds(mockedIds.databases, fakeNumberData),
+      ),
     };
     responseMocks.latency = {
       latency: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
+        fakeDataByIds(mockedIds.databases, fakeNumberData),
+      ),
     };
     responseMocks.queue_length = {
       queue_length: assignFakeData(
-        fakeDataByIds(mockedIds.databases, fakeNumberData)
-      )
+        fakeDataByIds(mockedIds.databases, fakeNumberData),
+      ),
     };
     responseMocks.krueger_data = fakeDataByIds(
       mockedIds.databases,
-      fakeKruegerData
+      fakeKruegerData,
     );
     responseMocks.chunks = {
       chunks_data: assignFakeData(
-        mockedIds.databases.map(id =>
+        mockedIds.databases.map((id) =>
           fakeDatabaseChunksData(
             id,
             mockedIds.tables,
             mockedIds.columns,
-            numbers.chunks
-          )
-        )
-      )
+            numbers.chunks,
+          ),
+        ),
+      ),
     };
-    responseMocks.detailed_query_information = mockedIds.databases.map(id =>
-      fakeDatabaseQueryInformationData(id, numbers.queries)
+    responseMocks.detailed_query_information = mockedIds.databases.map((id) =>
+      fakeDatabaseQueryInformationData(id, numbers.queries),
     );
     //TODO: handle loaded tables for every database
     responseMocks.data = benchmarks;
     responseMocks.available_plugins = mockedIds.plugins;
     // NOTE: currently all databases have the same plugins activated
-    responseMocks.plugin = mockedIds.databases.map(id =>
-      fakeDatabasePluginsData(id, mockedIds.activated_plugins)
+    responseMocks.plugin = mockedIds.databases.map((id) =>
+      fakeDatabasePluginsData(id, mockedIds.activated_plugins),
     );
     responseMocks.plugin_settings = {
-      plugin_settings: mockedIds.databases.map(id =>
-        fakeDatabasePluginSettings(id, mockedIds.activated_plugins)
-      )
+      plugin_settings: mockedIds.databases.map((id) =>
+        fakeDatabasePluginSettings(id, mockedIds.activated_plugins),
+      ),
     };
     // NOTE: currently all databases have exactly one log entry
-    responseMocks.plugin_log = mockedIds.databases.map(id =>
-      fakeDatabasePluginLogs(id, mockedIds.plugins)
+    responseMocks.plugin_log = mockedIds.databases.map((id) =>
+      fakeDatabasePluginLogs(id, mockedIds.plugins),
     );
     return responseMocks as Record<Request, any>;
   }
@@ -152,14 +152,15 @@ export function useMocks(
 
   function removeMockedId(entity: Entity, id: string): void {
     mockedIds[entity] = mockedIds[entity].filter(
-      availableId => availableId !== id
+      (availableId) => availableId !== id,
     );
   }
 
   function mockPostCallbacks(): Partial<Record<Request, (id: string) => void>> {
     //TODO: add callbacks here
     const postCallbackMocks: Partial<Record<Request, (id: string) => void>> = {
-      database: callbacks.handleAddDatabase
+      database: callbacks.handleAddDatabase,
+      plugin: callbacks.handleAddActivePlugin,
     };
 
     return postCallbackMocks;
@@ -173,7 +174,8 @@ export function useMocks(
       Request,
       (id: string) => void
     >> = {
-      database: callbacks.handleRemoveDatabase
+      database: callbacks.handleRemoveDatabase,
+      plugin: callbacks.handleRemoveActivePlugin,
     };
 
     return deleteCallbackMocks;
@@ -196,6 +198,6 @@ export function useMocks(
     renewMockResponses,
     getMockedResponse,
     getMockedPostCallback,
-    getMockedDeleteCallback
+    getMockedDeleteCallback,
   };
 }
