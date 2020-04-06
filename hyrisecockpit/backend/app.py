@@ -885,8 +885,8 @@ class System(Resource):
     @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return cpu and memory information for every database and the number of threads it is using from database manager."""
-        startts: int = monitor.payload["startts"]
-        endts: int = monitor.payload["endts"]
+        startts: int = int(request.args.get("startts"))  # type: ignore
+        endts: int = int(request.args.get("endts"))  # type: ignore
 
         response: List = []
         try:
