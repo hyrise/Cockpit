@@ -8,7 +8,8 @@ import {
   assertCorrectActivePlugins,
   assertCorrectPlugins,
   assertCorrectPluginLog,
-  assertCorrectPluginSettings
+  assertCorrectPluginSettings,
+  getChangeSettingsSelector
 } from "./helpers";
 import { testElementNoExistence } from "../abstractTests";
 
@@ -112,12 +113,25 @@ describe("When observing the plugins overview", () => {
       clickElement(getViewSelector("pluginOverviewButton"));
       cy.get(getSelector("pluginOverview")).within(() => {
         databases.forEach((database: any, idx: number) => {
+          const activePlugins = availablePlugins.reduce(
+            (activePlugins: Object[], plugin: any, idx: number) => {
+              const pluginData = databasesActivePlugins.find(
+                (db: any) => db.id === database.id
+              );
+              if (pluginData.plugins.includes(plugin)) {
+                activePlugins.push({
+                  plugin: plugin,
+                  idx: idx
+                });
+              }
+              return activePlugins;
+            },
+            []
+          );
           cy.get("button")
             .eq(idx + 1)
             .click();
-          cy.get("button")
-            .eq(idx + 2)
-            .click();
+          cy.get(getChangeSettingsSelector(activePlugins[0].plugin)).click();
 
           assertCorrectPluginSettings(database.id, databasesPluginSettings);
 

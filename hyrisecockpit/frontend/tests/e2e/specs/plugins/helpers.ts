@@ -1,32 +1,37 @@
-import { getSelectorByConfig, formatDateToHHMMSS } from '../helpers';
+import { getSelectorByConfig, formatDateToHHMMSS } from "../helpers";
 
 const selectors: Record<string, string> = {
-  pluginOverview: getSelectorByConfig('div', 'plugin-overview'),
-  settingName: getSelectorByConfig('div', 'setting-name'),
-  settingValue: getSelectorByConfig('input', 'setting-value'),
-  settingDescription: getSelectorByConfig('span', 'setting-description'),
-  settingHelpIcon: getSelectorByConfig('button', 'setting-help-icon'),
+  pluginOverview: getSelectorByConfig("div", "plugin-overview"),
+  settingName: getSelectorByConfig("div", "setting-name"),
+  settingValue: getSelectorByConfig("input", "setting-value"),
+  settingDescription: getSelectorByConfig("span", "setting-description"),
+  settingHelpIcon: getSelectorByConfig("button", "setting-help-icon"),
+  saveSettingsButton: getSelectorByConfig("button", "setting-save")
 };
 
 export function getSelector(component: string): string {
   return selectors[component];
 }
 
+export function getChangeSettingsSelector(plugin: string): string {
+  return getSelectorByConfig("button", `${plugin}-change-button`);
+}
+
 export function assertCorrectActivePlugins(
   database: string,
   availablePlugins: any[],
-  activePluginData: any[],
+  activePluginData: any[]
 ): void {
   const databaseActivePluginData = activePluginData.find(
-    (data: any) => data.id === database,
+    (data: any) => data.id === database
   );
 
   availablePlugins.forEach((plugin: any, idx: number) => {
-    cy.get('input[type=checkbox]')
+    cy.get("input[type=checkbox]")
       .eq(idx)
       .then((checkbox: any) => {
         expect(checkbox[0].checked).to.eq(
-          databaseActivePluginData.plugins.includes(plugin),
+          databaseActivePluginData.plugins.includes(plugin)
         );
       });
   });
@@ -41,52 +46,63 @@ export function assertCorrectPlugins(availablePlugins: any[]): void {
 export function assertCorrectPluginLog(
   database: string,
   pluginLogs: any[],
-  content: string,
+  content: string
 ): void {
   const databasePluginLog = pluginLogs.find(
-    (data: any) => data.id === database,
+    (data: any) => data.id === database
   );
   databasePluginLog.plugin_log.forEach((plugin: any) => {
     expect(content.includes(plugin.reporter)).to.eq(true);
     expect(content.includes(plugin.message)).to.eq(true);
     expect(
       content.includes(
-        formatDateToHHMMSS(new Date(plugin.timestamp)).toString(),
-      ),
+        formatDateToHHMMSS(new Date(plugin.timestamp)).toString()
+      )
     ).to.eq(true);
   });
 }
 
 export function assertCorrectPluginSettings(
   database: string,
-  pluginSettings: any[],
+  pluginSettings: any[]
 ): void {
   const databasePluginSetings = pluginSettings.find(
-    (data: any) => data.id === database,
+    (data: any) => data.id === database
   );
   databasePluginSetings.plugin_settings.forEach((plugin: any) => {
-    cy.get(getSelector('settingName')).within(() => {
+    cy.get(getSelector("settingName")).within(() => {
       cy.contains(getPluginName(plugin.name));
     });
-    cy.get(getSelector('settingValue')).then((value: any) => {
+    cy.get(getSelector("settingValue")).then((value: any) => {
       expect(plugin.value.toString()).to.eq(value[0].value);
     });
-    cy.get(getSelector('settingHelpIcon')).click({ force: true });
-    cy.get(getSelector('settingDescription'))
+    cy.get(getSelector("settingHelpIcon")).click({ force: true });
+    cy.get(getSelector("settingDescription"))
       .parents()
       .contains(plugin.description);
   });
 }
 
 function getPluginName(pluginName: string): string {
-  return pluginName.substr(pluginName.indexOf('_') + 1);
+  return pluginName.substr(pluginName.indexOf("_") + 1);
 }
 
 export function assertRequestValues(
   database: string,
   plugin: string,
-  requestData: any,
+  requestData: any
 ): void {
   expect(requestData.id).to.eq(database);
   expect(requestData.plugin).to.eq(plugin);
+}
+
+export function assertSettingsRequestValues(
+  database: string,
+  plugin: string,
+  value: string,
+  requestData: any
+): void {
+  expect(requestData.id).to.eq(database);
+  expect(requestData.name).to.eq(plugin);
+  expect(requestData.value).to.eq(value);
 }
