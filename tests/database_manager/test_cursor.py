@@ -134,3 +134,13 @@ class TestCursor:
         cursor._connection.write_points.assert_called_once_with(
             [expected_point], database="database"
         )
+
+    def test_creates_database(self):
+        """Test creating of an Influx database."""
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._database = "database_name"
+        cursor._connection = MagicMock()
+        cursor._connection.create_database.return_value = None
+
+        cursor.create_database()
+        cursor._connection.create_database.assert_called_once_with("database_name")
