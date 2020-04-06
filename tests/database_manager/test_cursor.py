@@ -12,9 +12,6 @@ class TestCursor:
     """Tests Cursor classes."""
 
     @fixture
-    @patch(
-        "hyrisecockpit.database_manager.cursor.PoolCursor._initialize", MagicMock(),
-    )
     def pool_cursor(self) -> PoolCursor:
         """Return patched pool cursor object."""
         return PoolCursor(MagicMock())
@@ -144,28 +141,21 @@ class TestCursor:
             [expected_point], database="database"
         )
 
-    @patch("hyrisecockpit.database_manager.cursor.PoolCursor._initialize",)
-    def test_initializes_pool_cursor_correctly(self, mocked_initialize) -> None:
+    def test_initializes_pool_cursor_correctly(self) -> None:
         """Test initializes pool cursor correctly."""
-        mocked_pool: MagicMock = MagicMock()
-        pool_cursor: PoolCursor = PoolCursor(mocked_pool)
-
-        pool_cursor.pool == mocked_pool
-        mocked_initialize.assert_called_once()
-
-    def test_initializes_connection_correctly(self) -> None:
-        """Test initialize connection and cursor correctly."""
         mocked_pool: MagicMock = MagicMock()
         mocked_connection: MagicMock = MagicMock()
         mocked_cursor: MagicMock = MagicMock()
-
         mocked_connection.cursor.return_value = mocked_cursor
         mocked_pool.getconn.return_value = mocked_connection
-
         pool_cursor: PoolCursor = PoolCursor(mocked_pool)
 
-        assert pool_cursor._connection == mocked_connection
+        mocked_pool.getconn.assert_called_once()
         mocked_connection.set_session.assert_called_once_with(autocommit=True)
+        mocked_connection.cursor.assert_called_once()
+
+        assert pool_cursor.pool == mocked_pool
+        assert pool_cursor._connection == mocked_connection
         assert pool_cursor._cur == mocked_cursor
 
     def test_executes(self, pool_cursor) -> None:
