@@ -550,14 +550,6 @@ model_execute_sql = control.clone(
 )
 
 
-class StrnigOrInterger(fields.Raw):
-    """Custom string or integer field."""
-
-    def format(self, value):
-        """Format value."""
-        return value
-
-
 model_execute_sql_results = control.clone(
     "Query results",
     model_database,
@@ -569,11 +561,15 @@ model_execute_sql_results = control.clone(
             example=True,
         ),
         "results": fields.List(
-            fields.List(StrnigOrInterger()),
+            fields.List(fields.Strnig()),
             title="Results",
             description="Results from query execution.",
             required=True,
-            example=[0, "foo"],
+            example=[
+                ["1", "100", "abc'def"],
+                ["2", "None", "dada"],
+                ["3", "42", "bar"],
+            ],
         ),
         "col_names": fields.List(
             fields.String(
