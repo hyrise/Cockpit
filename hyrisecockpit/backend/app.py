@@ -828,8 +828,8 @@ class QueueLength(Resource):
     @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return queue length information in a given time range."""
-        startts: int = monitor.payload["startts"]
-        endts: int = monitor.payload["endts"]
+        startts: int = int(request.args.get("startts"))  # type: ignore
+        endts: int = int(request.args.get("endts"))  # type: ignore
 
         response: List = []
         try:
