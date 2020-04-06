@@ -72,9 +72,9 @@ export function assertCorrectPluginSettings(
       expect(plugin.value.toString()).to.eq(value[0].value);
     });
     cy.get(getSelector("settingHelpIcon")).click({ force: true });
-    cy.get(getSelector("settingDescription")).then((value: any) => {
-      // TODO
-    });
+    cy.get(getSelector("settingDescription"))
+      .parents()
+      .contains(plugin.description);
   });
 }
 
