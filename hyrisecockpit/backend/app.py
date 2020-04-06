@@ -269,24 +269,6 @@ model_queue_length = monitor.clone(
     },
 )
 
-model_time_interval = monitor.clone(
-    "Time interval",
-    {
-        "startts": fields.Integer(
-            title="Start timestamp",
-            description="Timestamp in nanoseconds since epoch",
-            required=True,
-            example=1585837018000000000,
-        ),
-        "endts": fields.Integer(
-            title="End timestamp",
-            description="Timestamp in nanoseconds since epoch",
-            required=True,
-            example=1585837025000000000,
-        ),
-    },
-)
-
 model_workload_composition = monitor.model(
     "Workload composition",
     {
@@ -743,7 +725,6 @@ class Latency(Resource):
     """Latency information of all databases."""
 
     @monitor.doc(model=[model_latency])
-    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return latency information in a given time range."""
         rough_startts: int = int(request.args.get("startts"))  # type: ignore
@@ -825,7 +806,6 @@ class QueueLength(Resource):
     """Queue length information of all databases."""
 
     @monitor.doc(model=[model_queue_length])
-    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return queue length information in a given time range."""
         startts: int = int(request.args.get("startts"))  # type: ignore
@@ -882,7 +862,6 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return cpu and memory information for every database and the number of threads it is using from database manager."""
         startts: int = int(request.args.get("startts"))  # type: ignore
