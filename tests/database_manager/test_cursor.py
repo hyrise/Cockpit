@@ -144,3 +144,13 @@ class TestCursor:
 
         cursor.create_database()
         cursor._connection.create_database.assert_called_once_with("database_name")
+
+    def test_drops_database(self):
+        """Test dropping of an Influx database."""
+        cursor = StorageCursor("host", "port", "user", "password", "database")
+        cursor._database = "database_name"
+        cursor._connection = MagicMock()
+        cursor._connection.drop_database.return_value = None
+
+        cursor.drop_database()
+        cursor._connection.drop_database.assert_called_once_with("database_name")
