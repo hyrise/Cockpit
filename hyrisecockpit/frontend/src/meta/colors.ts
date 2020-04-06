@@ -33,3 +33,10 @@ export const colorDefinition: Record<Colors, Hex> = {
   darkred: "#e31a1c",
   darkviolet: "#6a3d9a"
 };
+
+export const databaseColorDefinition: Record<string, any> = {
+  "vm-york": colorDefinition.blue,
+  "vm-citadelle": colorDefinition.orange,
+  "vm-aurora": colorDefinition.green,
+  "vm-momentum": colorDefinition.red
+};

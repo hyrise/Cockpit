@@ -5,13 +5,13 @@ import {
   DatabaseResponse
 } from "../types/database";
 import axios from "axios";
-import { colorDefinition } from "../meta/colors";
+import { colorDefinition, databaseColorDefinition } from "../meta/colors";
 import { monitorBackend, controlBackend } from "../../config";
 import { useDataTransformationHelpers } from "./transformationService";
 import { useDatabaseEvents } from "../meta/events";
 
 export function useDatabaseService(): DatabaseService {
-  let usedColors: any = 0;
+  let usedColors: any = Object.keys(databaseColorDefinition).length;
   const {
     emitDatabaseAddedEvent,
     emitDatabaseRemovedEvent
@@ -30,9 +30,12 @@ export function useDatabaseService(): DatabaseService {
     return databases;
   }
 
-  function getDatabaseColor(): string {
-    const color = Object.values(colorDefinition)[usedColors];
-    usedColors += 1;
+  function getDatabaseColor(databaseID: string): string {
+    let color = databaseColorDefinition[databaseID];
+    if (color === undefined) {
+      color = Object.values(colorDefinition)[usedColors];
+      usedColors += 1;
+    }
     return color;
   }
 
@@ -113,7 +116,7 @@ export function useDatabaseService(): DatabaseService {
   }
 
   function resetColors(): void {
-    usedColors = 0;
+    usedColors = Object.keys(databaseColorDefinition).length;
   }
 
   return {

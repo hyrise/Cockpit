@@ -73,7 +73,7 @@ export function useDatabaseController(): DatabaseController {
     );
     return reactive({
       id: database.id,
-      color: databaseService.getDatabaseColor(),
+      color: databaseService.getDatabaseColor(database.id),
       systemDetails: {
         host: database.host,
         memoryCapacity: cpuInformation!.memoryCapacity,
