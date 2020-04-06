@@ -36,6 +36,14 @@ services:
       - /tmp/cockpit/influxdb:/var/lib/influxdb
     ports:
       - "8086:8086"
+
+  frontend:
+    image: node:buster
+    command: bash -c "npm install && npm run build"
+    volumes:
+      - ./hyrisecockpit/frontend:/usr/local/Cockpit/hyrisecockpit/frontend
+    ports:
+      - "8080:8080"
   
   hyrise:
     image: hyrise:bensk1_multithreaded
