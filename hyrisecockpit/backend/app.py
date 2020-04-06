@@ -746,21 +746,15 @@ class Latency(Resource):
     @monitor.doc(body=model_time_interval)
     def get(self) -> Union[int, List]:
         """Return latency information in a given time range."""
-        startts_rounded: int = int(
-            monitor.payload["startts"] / 1_000_000_000
-        ) * 1_000_000_000
-        endts_rounded: int = int(
-            monitor.payload["endts"] / 1_000_000_000
-        ) * 1_000_000_000
+        rough_startts: int = int(request.args.get("startts"))  # type: ignore
+        rough_endts: int = int(request.args.get("endts"))  # type: ignore
+
+        startts_rounded: int = int(rough_startts / 1_000_000_000) * 1_000_000_000
+        endts_rounded: int = int(rough_endts / 1_000_000_000) * 1_000_000_000
 
         # take nearest whole numbers of seconds
-        startts: int = startts_rounded if monitor.payload[
-            "startts"
-        ] % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
-        endts: int = endts_rounded if monitor.payload[
-            "endts"
-        ] % 1_000_000_000 == 0 else endts_rounded + 1
-
+        startts: int = startts_rounded if rough_startts % 1_000_000_000 == 0 else startts_rounded + 1_000_000_000
+        endts: int = endts_rounded if rough_endts % 1_000_000_000 == 0 else endts_rounded + 1
         response: List = []
         try:
             active_databases = _active_databases()
