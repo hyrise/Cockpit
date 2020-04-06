@@ -702,7 +702,13 @@ def _active_databases() -> List[str]:
 class Throughput(Resource):
     """Throughput information of all databases."""
 
-    @monitor.doc(model=[model_throughput])
+    @monitor.doc(
+        model=[model_throughput],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
     def get(self) -> Union[int, List]:
         """Return throughput information in a given time range."""
         rough_startts: int = int(request.args.get("startts"))  # type: ignore
@@ -817,7 +823,13 @@ class DetailedLatency(Resource):
 class Latency(Resource):
     """Latency information of all databases."""
 
-    @monitor.doc(model=[model_latency])
+    @monitor.doc(
+        model=[model_latency],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
     def get(self) -> Union[int, List]:
         """Return latency information in a given time range."""
         rough_startts: int = int(request.args.get("startts"))  # type: ignore
@@ -898,7 +910,13 @@ class DetailedQueryInformation(Resource):
 class QueueLength(Resource):
     """Queue length information of all databases."""
 
-    @monitor.doc(model=[model_queue_length])
+    @monitor.doc(
+        model=[model_queue_length],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
     def get(self) -> Union[int, List]:
         """Return queue length information in a given time range."""
         startts: int = int(request.args.get("startts"))  # type: ignore
@@ -955,7 +973,13 @@ class FailedTasks(Resource):
 class System(Resource):
     """System data information of all databases."""
 
-    @monitor.doc(model=[model_system_data])
+    @monitor.doc(
+        model=[model_system_data],
+        params={
+            "startts": "Start of a time interval",
+            "endts": "End of a time interval",
+        },
+    )
     def get(self) -> Union[int, List]:
         """Return cpu and memory information for every database and the number of threads it is using from database manager."""
         startts: int = int(request.args.get("startts"))  # type: ignore
