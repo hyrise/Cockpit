@@ -28,10 +28,6 @@ class PoolCursor:
     def __init__(self, connection_pool: pool) -> None:
         """Initialize a PoolCursor."""
         self.pool: pool = connection_pool
-        self._initialize()
-
-    def _initialize(self) -> None:
-        """Initialize connection and cursor."""
         self._connection = self.pool.getconn()
         self._connection.set_session(autocommit=True)
         self._cur = self._connection.cursor()
