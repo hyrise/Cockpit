@@ -1,189 +1,141 @@
 """Module for WorkloadGenerator testing."""
 
-from typing import Any, Dict
 from unittest.mock import MagicMock, patch
 
-from pytest import fixture, mark
+from pytest import fixture
 
 from hyrisecockpit.response import get_response
-from hyrisecockpit.workload_generator.generator import Workload, WorkloadGenerator
-
-generator_listening = "generator_listening"
-generator_port = "10000"
-workload_listening = "workload_listening"
-workload_pub_port = "20000"
-default_workload_location = "default_workload_location"
+from hyrisecockpit.workload_generator.generator import WorkloadGenerator
 
 
-folder_name = "myFolder123"
-frequency = 123
-fake_workload = [("dummy_query", None, folder_name, "query_no")]
+@fixture
+def generator_listening() -> str:
+    """Get the host address where the generator is listening."""
+    return "generator_listening"
 
 
-def get_fake_workload(*args) -> MagicMock:
-    """Get fake workload."""
-    workload = MagicMock()
-    workload.generate_workload.return_value = fake_workload
-    workload.folder_name = folder_name
-    workload.frequency = frequency
-    return workload
+@fixture
+def generator_port() -> str:
+    """Get the host port where the generator is listening."""
+    return "10000"
+
+
+@fixture
+def workload_listening() -> str:
+    """Get the host address where the workload is publishing."""
+    return "workload_listening"
+
+
+@fixture
+def workload_pub_port() -> str:
+    """Get the host port where the workload is publishing."""
+    return "20000"
+
+
+@fixture
+@patch.object(
+    WorkloadGenerator, "_init_server", lambda *args: None,
+)
+@patch.object(
+    WorkloadGenerator, "_init_scheduler", lambda *args: None,
+)
+@patch(
+    "hyrisecockpit.workload_generator.generator.Server", lambda *args: None,
+)
+def generator(
+    generator_listening, generator_port, workload_listening, workload_pub_port
+) -> WorkloadGenerator:
+    """Instance of WorkloadGenerator without binding of sockets."""
+    return WorkloadGenerator(
+        generator_listening, generator_port, workload_listening, workload_pub_port,
+    )
 
 
 class TestWorkloadGenerator:
     """Tests for the WorkloadGenerator class."""
 
-    @fixture
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._init_server",
-        lambda *args: None,
-    )
-    @patch(
-        "hyrisecockpit.workload_generator.generator.Server", lambda *args: None,
-    )
-    @patch(
-        "hyrisecockpit.workload_generator.generator.WorkloadGenerator._init_scheduler",
-        lambda *args: None,
-    )
-    def isolated_generator(self) -> Any:
-        """Instance of WorkloadGenerator without binding of sockets."""
-        return WorkloadGenerator(
-            generator_listening,
-            generator_port,
-            workload_listening,
-            workload_pub_port,
-            default_workload_location,
-        )
+    def test_creates(self, generator: WorkloadGenerator):
+        """A WorkloadGenerator can be created."""
+        assert generator
 
-    def test_initializes_socket_attributes(self, isolated_generator: WorkloadGenerator):
-        """Test initialization of socket hosts and ports."""
-        assert isolated_generator._workload_listening == workload_listening
-        assert isolated_generator._workload_pub_port == workload_pub_port
-
-    def test_initializes_workload_attributes(
-        self, isolated_generator: WorkloadGenerator
+    def test_initializes(
+        self,
+        generator: WorkloadGenerator,
+        generator_listening: str,
+        generator_port: str,
+        workload_listening: str,
+        workload_pub_port: str,
     ):
-        """Test initialization of workload attributes."""
-        assert isolated_generator._frequency == 0
-        assert (
-            isolated_generator._default_workload_location == default_workload_location
-        )
+        """A WorkloadGenerator initializes all attributes."""
+        assert generator._workload_listening == workload_listening
+        assert generator._workload_pub_port == workload_pub_port
 
-    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    def test_starts_a_workload(self, isolated_generator: WorkloadGenerator):
+    def test_starts_a_workload(self, generator: WorkloadGenerator):
         """Test starting of the workload generation."""
-        workload_id = "myID"
-        body = {
-            "workload_id": workload_id,
-            "folder_name": "benchmark_name",
-            "frequency": 100,
-        }
-        assert isolated_generator._workloads == {}
-        response = isolated_generator._call_start_workload(body)
-
-        assert list(isolated_generator._workloads.keys()) == [workload_id]
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        with patch(
+            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
+        ) as mock_get:
+            mock_get.return_value = {"Query1": ["SELECT 1;"]}
+            response = generator._call_start_workload(
+                {"folder_name": folder_name, "frequency": 100}
+            )
+            mock_get.assert_called_once_with(folder_name)
         assert response["header"] == get_response(200)["header"]
         assert "workload" in response["body"]
+        assert list(generator._workloads.keys()) == [folder_name]
 
-    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    def test_stops_a_workload(self, isolated_generator: WorkloadGenerator):
+    def test_does_not_start_a_workload_if_it_cannot_be_found(
+        self, generator: WorkloadGenerator
+    ):
+        """Test starting of the workload generation."""
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        with patch(
+            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
+        ) as mock_get:
+            mock_get.return_value = None
+            response = generator._call_start_workload(
+                {"folder_name": folder_name, "frequency": 100}
+            )
+            mock_get.assert_called_once_with(folder_name)
+        assert response == get_response(404)
+        assert list(generator._workloads.keys()) == []
+
+    def test_does_not_start_a_workload_if_it_is_already_started(
+        self, generator: WorkloadGenerator
+    ):
+        """Test starting of the workload generation."""
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        generator._workloads[folder_name] = MagicMock()
+        with patch(
+            "hyrisecockpit.workload_generator.reader.WorkloadReader.get"
+        ) as mock_get:
+            response = generator._call_start_workload(
+                {"folder_name": folder_name, "frequency": 100}
+            )
+            mock_get.assert_not_called()
+        assert response == get_response(409)
+        assert list(generator._workloads.keys()) == [folder_name]
+
+    def test_stops_a_workload(self, generator: WorkloadGenerator):
         """Test stopping of the workload generation."""
-        workload_id = "myID2"
-        assert isolated_generator._workloads == {}
-        isolated_generator._workloads[workload_id] = MagicMock()
-        response = isolated_generator._call_stop_workload({"workload_id": workload_id})
-        assert isolated_generator._workloads == {}
-
+        folder_name = "myFolder"
+        assert generator._workloads == {}
+        generator._workloads[folder_name] = MagicMock()
+        response = generator._call_stop_workload({"folder_name": folder_name})
         expected_response = get_response(200)
-        expected_response["body"]["workload_id"] = workload_id
+        expected_response["body"]["folder_name"] = folder_name
         assert response == expected_response
+        assert generator._workloads == {}
 
-    @patch("hyrisecockpit.workload_generator.generator.Workload", get_fake_workload)
-    def test_generates_a_workload(self, isolated_generator: WorkloadGenerator):
-        """Test workload generation."""
-        isolated_generator._pub_socket = MagicMock()
-
-        assert isolated_generator._workloads == {}
-        isolated_generator._generate_workload()
-        isolated_generator._pub_socket.send_json.assert_not_called()
-
-        workload_id = "myID3"
-        expected_response = get_response(200)
-        expected_response["body"] = {"querylist": fake_workload}
-        isolated_generator._workloads[workload_id] = MagicMock()
-        isolated_generator._workloads[workload_id].generate_workload.return_value = fake_workload  # type: ignore
-        isolated_generator._generate_workload()
-        isolated_generator._workloads[workload_id].generate_workload.assert_called_once()  # type: ignore
-        isolated_generator._pub_socket.send_json.assert_called_once_with(
-            expected_response
-        )
-
-    @mark.parametrize("workloads", [{}, {"1": get_fake_workload()}])
-    def test_gets_all_workloads(
-        self, isolated_generator: WorkloadGenerator, workloads: Dict[str, Workload],
+    def test_does_not_stop_a_workload_if_there_is_none(
+        self, generator: WorkloadGenerator
     ):
-        """Test get_all_workloads."""
-        assert isolated_generator._workloads == {}
-        isolated_generator._workloads = workloads
-        response = isolated_generator._call_get_all_workloads({})
-        expected_response = get_response(200)
-        expected_response["body"]["workloads"] = [
-            {
-                "workload_id": workload_id,
-                "folder_name": workload.folder_name,
-                "frequency": workload.frequency,
-            }
-            for workload_id, workload in workloads.items()
-        ]
-        assert response == expected_response
-
-    @mark.parametrize(
-        "workloads",
-        [
-            {},
-            {"1": get_fake_workload()},
-            {"1": get_fake_workload(), "2": get_fake_workload()},
-        ],
-    )
-    def test_gets_a_workload(
-        self, isolated_generator: WorkloadGenerator, workloads: Dict[str, Workload],
-    ):
-        """Test gets a workload."""
-        assert isolated_generator._workloads == {}
-        isolated_generator._workloads = workloads
-
-        for workload_id, workload in workloads.items():
-            response = isolated_generator._call_get_workload(
-                {"workload_id": workload_id}
-            )
-            expected_response = get_response(200)
-            expected_response["body"]["workload"] = {
-                "workload_id": workload_id,
-                "folder_name": workload.folder_name,
-                "frequency": workload.frequency,
-            }
-            assert response == expected_response
-
-    @mark.parametrize(
-        "workloads",
-        [
-            {},
-            {"1": get_fake_workload()},
-            {"1": get_fake_workload(), "2": get_fake_workload()},
-        ],
-    )
-    def test_update_workload(
-        self, isolated_generator: WorkloadGenerator, workloads: Dict[str, Workload],
-    ):
-        """Test update a workload."""
-        assert isolated_generator._workloads == {}
-        isolated_generator._workloads = workloads
-
-        for workload_id, workload in workloads.items():
-            new_workload = get_fake_workload()
-            response = isolated_generator._call_update_workload(
-                {"workload_id": workload_id, "workload": new_workload}
-            )
-            expected_response = get_response(200)
-            expected_response["body"]["workload_id"] = workload_id
-            assert response == expected_response
-            workload.update.assert_called_once_with(new_workload)  # type: ignore
+        """Test stopping of the workload generation."""
+        assert generator._workloads == {}
+        response = generator._call_stop_workload({"folder_name": "myFolder"})
+        assert response == get_response(404)
+        assert generator._workloads == {}
