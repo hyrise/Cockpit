@@ -147,11 +147,12 @@ class TestSystem:
 
         sleep(5.0)  # wait until default tables are loaded
 
-        response = self.backend.start_workload("tpch_0.1", 200)
+        self.check_loading_default_tables("test_database1")
+
+        response = self.backend.start_workload("tpch_0.1", 300)
         assert response == get_response(200)  # nosec
 
-        sleep(5.0)  # wait until default tables are loaded
-        sleep(2.0)  # wait for query executions
+        sleep(4.0)  # wait for query executions
 
         metrics = ["throughput", "latency", "queue_length"]
         for metric in metrics:
