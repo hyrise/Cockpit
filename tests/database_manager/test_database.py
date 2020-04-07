@@ -632,3 +632,38 @@ class TestDatabase(object):
         mocked_worker_pool.terminate.assert_called_once()
         mocked_background_scheduler.close.assert_called_once()
         mocked_connection_pool.closeall.assert_called_once()
+
+    @patch("hyrisecockpit.database_manager.database.StorageCursor",)
+    def test_initializes_influx(
+        self, mock_storage_cursor_constructor: MagicMock, database: Database
+    ) -> None:
+        """Test set plug-in setting while the database is blocked."""
+        mock_storage_cursor = MagicMock()
+        mock_storage_cursor.create_database.return_value = None
+        mock_storage_cursor.drop_database.return_value = None
+        mock_storage_cursor.create_continuous_query.return_value = None
+        mock_storage_cursor_constructor.return_value.__enter__.return_value = (
+            mock_storage_cursor
+        )
+
+        throughput_query = """SELECT count("latency") AS "throughput"
+                INTO "throughput"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+        latency_query = """SELECT mean("latency") AS "latency"
+                INTO "latency"
+                FROM "successful_queries"
+                GROUP BY time(1s)"""
+        resample_options = "EVERY 1s FOR 5s"
+
+        database._initialize_influx()
+
+        mock_storage_cursor_constructor.assert_called_once()
+        mock_storage_cursor.drop_database.assert_called_once()
+        mock_storage_cursor.create_database.assert_called_once()
+        mock_storage_cursor.create_continuous_query.assert_any_call(
+            "throughput_calculation", throughput_query, resample_options
+        )
+        mock_storage_cursor.create_continuous_query.assert_any_call(
+            "latency_calculation", latency_query, resample_options
+        )
