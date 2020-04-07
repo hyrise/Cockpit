@@ -216,9 +216,9 @@ type PluginSetting = {
   description: string;
 };
 
-function fakePluginSetting(): PluginSetting {
+function fakePluginSetting(plugin: string): PluginSetting {
   return {
-    name: faker.random.word(),
+    name: plugin + "Plugin_" + faker.random.word(),
     value: faker.random.number(),
     description: faker.random.words()
   };
@@ -230,7 +230,7 @@ export function fakeDatabasePluginSettings(
 ): Object {
   return {
     id: databaseId,
-    plugin_settings: plugins.map(() => fakePluginSetting())
+    plugin_settings: plugins.map(plugin => fakePluginSetting(plugin))
   };
 }
 
