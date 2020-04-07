@@ -8,7 +8,7 @@ import {
   getDetailsSelectorWithID
 } from "../metrics/helpers";
 
-const backend = useBackendMock({ databases: 2 });
+const backend = useBackendMock();
 
 let database: any = {};
 let data: any = {};
