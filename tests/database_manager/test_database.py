@@ -633,7 +633,7 @@ class TestDatabase(object):
         mocked_background_scheduler.close.assert_called_once()
         mocked_connection_pool.closeall.assert_called_once()
 
-    @patch("hyrisecockpit.database_manager.database.StorageCursor",)
+    @patch("hyrisecockpit.database_manager.database.StorageCursor")
     def test_initializes_influx(
         self, mock_storage_cursor_constructor: MagicMock, database: Database
     ) -> None:
