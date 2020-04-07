@@ -61,12 +61,12 @@ class CockpitBackend:
         url = f"http://{self._backend_host}:{self._backend_port}/control/{property}"
         return get(url, timeout=REQUEST_TIMEOUT).json()
 
-    def add_database(self, id: str, host: str):
+    def add_database(self, id: str, host: str, port: str):
         """Add database."""
         body = {
             "id": id,
             "host": host,
-            "port": "5432",
+            "port": port,
             "number_workers": 8,
             "dbname": "postgres",
             "user": "serviceuser",

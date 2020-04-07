@@ -10,6 +10,7 @@ from system_tests.cockpit_generator import CockpitGenerator
 from system_tests.cockpit_manager import CockpitManager
 from system_tests.settings import (
     DATABASE_HOST,
+    DATABASE_PORT,
     STORAGE_HOST,
     STORAGE_PASSWORD,
     STORAGE_PORT,
@@ -114,7 +115,9 @@ class TestSystem:
 
     def test_database_handling(self):
         """Add and remove database."""
-        response = self.backend.add_database("test_database1", DATABASE_HOST)
+        response = self.backend.add_database(
+            "test_database1", DATABASE_HOST, DATABASE_PORT
+        )
         assert response == get_response(200)  # nosec
 
         available_databases = self.backend.get_control_property("database")
@@ -142,7 +145,9 @@ class TestSystem:
 
     def test_execute_workload(self):
         """Execute workload."""
-        response = self.backend.add_database("test_database1", DATABASE_HOST)
+        response = self.backend.add_database(
+            "test_database1", DATABASE_HOST, DATABASE_PORT
+        )
         assert response == get_response(200)  # nosec
 
         sleep(5.0)  # wait until default tables are loaded
