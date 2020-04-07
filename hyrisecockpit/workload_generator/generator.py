@@ -9,17 +9,12 @@ from typing import Callable, Dict, Optional, Tuple, Type
 from apscheduler.schedulers.background import BackgroundScheduler
 from zmq import PUB, Context
 
-from hyrisecockpit.exception import (
-    EmptyWorkloadFolderException,
-    NotExistingWorkloadFolderException,
-    QueryTypeNotFoundException,
-    QueryTypesNotSpecifiedException,
-)
-from hyrisecockpit.message import start_workload_request_schema
 from hyrisecockpit.request import Body
-from hyrisecockpit.response import Response, get_error_response, get_response
+from hyrisecockpit.response import Response, get_response
 from hyrisecockpit.server import Server
-from hyrisecockpit.workload_generator.workloads.workload import Workload
+
+from .reader import WorkloadReader
+from .workload import Workload
 
 
 class WorkloadGenerator(object):
@@ -31,25 +26,19 @@ class WorkloadGenerator(object):
         generator_port: str,
         workload_listening: str,
         workload_pub_port: str,
-        default_workload_location: str,
     ) -> None:
         """Initialize a WorkloadGenerator."""
         self._workload_listening = workload_listening
         self._workload_pub_port = workload_pub_port
-        self._default_workload_location = default_workload_location
         server_calls: Dict[str, Tuple[Callable[[Body], Response], Optional[Dict]]] = {
             "get all workloads": (self._call_get_all_workloads, None),
-            "start workload": (
-                self._call_start_workload,
-                start_workload_request_schema,
-            ),
+            "start workload": (self._call_start_workload, None,),
             "get workload": (self._call_get_workload, None),
             "stop workload": (self._call_stop_workload, None),
             "update workload": (self._call_update_workload, None),
         }
         self._server = Server(generator_listening, generator_port, server_calls)
 
-        self._frequency = 0
         self._workloads: Dict[str, Workload] = {}
         self._init_server()
         self._init_scheduler()
@@ -85,87 +74,72 @@ class WorkloadGenerator(object):
     def _call_get_all_workloads(self, body: Body) -> Response:
         response = get_response(200)
         response["body"]["workloads"] = [
-            {
-                "workload_id": workload_id,
-                "frequency": workload.frequency,
-                "folder_name": workload.folder_name,
-            }
-            for workload_id, workload in self._workloads.items()
+            {"folder_name": folder_name, "frequency": workload.frequency}
+            for folder_name, workload in self._workloads.items()
         ]
         return response
 
     def _call_start_workload(self, body: Body) -> Response:
-        workload_id: str = body["workload_id"]
-        frequency: int = body["frequency"]
         folder_name: str = body["folder_name"]
-        if workload_id not in self._workloads:
-            try:
-                self._workloads[workload_id] = Workload(
-                    folder_name, self._default_workload_location, frequency
-                )
-            except (
-                NotExistingWorkloadFolderException,
-                EmptyWorkloadFolderException,
-                QueryTypeNotFoundException,
-                QueryTypesNotSpecifiedException,
-            ) as e:
-                return get_error_response(400, str(e))
-            else:
+        frequency: int = body["frequency"]
+        if folder_name not in self._workloads:
+            queries = WorkloadReader.get(folder_name)
+            if queries is not None:
+                self._workloads[folder_name] = Workload(frequency, queries)
                 response = get_response(200)
                 response["body"]["workload"] = {
-                    "workload_id": workload_id,
-                    "frequency": self._workloads[workload_id].frequency,
-                    "folder_name": self._workloads[workload_id].folder_name,
+                    "folder_name": folder_name,
+                    "frequency": self._workloads[folder_name].frequency,
                 }
+            else:
+                return get_response(404)
         else:
             response = get_response(409)
         return response
 
     def _call_get_workload(self, body: Body) -> Response:
-        workload_id: str = body["workload_id"]
+        folder_name: str = body["folder_name"]
         try:
-            workload = self._workloads[workload_id]
+            workload = self._workloads[folder_name]
         except KeyError:
             response = get_response(404)
         else:
             response = get_response(200)
             response["body"]["workload"] = {
-                "workload_id": workload_id,
+                "folder_name": folder_name,
                 "frequency": workload.frequency,
-                "folder_name": workload.folder_name,
+                "weights": workload.weights,
             }
         return response
 
     def _call_stop_workload(self, body: Body) -> Response:
-        workload_id: str = body["workload_id"]
+        folder_name: str = body["folder_name"]
         try:
-            self._workloads.pop(workload_id)
+            self._workloads.pop(folder_name)
         except KeyError:
             response = get_response(404)
         else:
             response = get_response(200)
-            response["body"]["workload_id"] = workload_id
+            response["body"]["folder_name"] = folder_name
         return response
 
     def _call_update_workload(self, body: Body) -> Response:
-        workload_id: str = body["workload_id"]
+        folder_name: str = body["folder_name"]
         new_workload: Dict = body["workload"]  # TODO make this a typed dict
         try:
-            workload = self._workloads[workload_id]
+            workload = self._workloads[folder_name]
         except KeyError:
             response = get_response(404)
         else:
             workload.update(new_workload)
             response = get_response(200)
-            response["body"]["workload_id"] = workload_id
+            response["body"]["folder_name"] = folder_name
         return response
 
     def _generate_workload(self) -> None:
         for workload in self._workloads.values():
             response = get_response(200)
-            response["body"]["querylist"] = [
-                tuple(query) for query in workload.generate_workload()
-            ]
+            response["body"]["querylist"] = [tuple(query) for query in workload.get()]
             self._pub_socket.send_json(response)
 
     def start(self) -> None:
