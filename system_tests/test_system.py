@@ -105,13 +105,30 @@ class TestSystem:
                 "dbname": "postgres",
             }
         ]
+
         sleep(5.0)  # wait until default tables are loaded
 
-        table_processing_status = self.backend.get_monitor_property(
-            "process_table_status"
-        )
-        expected_status = {"id": "test_database1", "process_table_status": False}
-        assert expected_status in table_processing_status  # nosec
+        expected_status = [
+            {
+                "id": "test_database1",
+                "database_blocked_status": False,
+                "worker_pool_status": "closed",
+                "loaded_benchmarks": ["tpch_0.1"],
+                "loaded_tables": [
+                    {"table_name": "customer", "benchmark": "tpch_0.1"},
+                    {"table_name": "lineitem", "benchmark": "tpch_0.1"},
+                    {"table_name": "nation", "benchmark": "tpch_0.1"},
+                    {"table_name": "orders", "benchmark": "tpch_0.1"},
+                    {"table_name": "part", "benchmark": "tpch_0.1"},
+                    {"table_name": "partsupp", "benchmark": "tpch_0.1"},
+                    {"table_name": "region", "benchmark": "tpch_0.1"},
+                    {"table_name": "supplier", "benchmark": "tpch_0.1"},
+                ],
+            }
+        ]
+
+        status = self.backend.get_monitor_property("status")
+        assert expected_status == status  # nosec
 
         influx_databases = influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
