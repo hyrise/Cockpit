@@ -54,6 +54,28 @@ class TestSystem:
         assert self.backend.get_stderr() == ""  # nosec
         assert self.manager.get_stderr() == ""  # nosec
 
+    def check_loading_default_tables(self, database_id: str) -> None:
+        """Check if database has successfully load default tables."""
+        expected_status = {
+            "id": database_id,
+            "database_blocked_status": False,
+            "worker_pool_status": "closed",
+            "loaded_benchmarks": ["tpch_0.1"],
+            "loaded_tables": [
+                {"table_name": "customer", "benchmark": "tpch_0.1"},
+                {"table_name": "lineitem", "benchmark": "tpch_0.1"},
+                {"table_name": "nation", "benchmark": "tpch_0.1"},
+                {"table_name": "orders", "benchmark": "tpch_0.1"},
+                {"table_name": "part", "benchmark": "tpch_0.1"},
+                {"table_name": "partsupp", "benchmark": "tpch_0.1"},
+                {"table_name": "region", "benchmark": "tpch_0.1"},
+                {"table_name": "supplier", "benchmark": "tpch_0.1"},
+            ],
+        }
+
+        status = self.backend.get_monitor_property("status")
+        assert expected_status in status  # nosec
+
     def test_database_manager_initialization(self):
         """Ensure initialized database manager has no monitor metrics."""
         metrics = [
@@ -108,27 +130,7 @@ class TestSystem:
 
         sleep(5.0)  # wait until default tables are loaded
 
-        expected_status = [
-            {
-                "id": "test_database1",
-                "database_blocked_status": False,
-                "worker_pool_status": "closed",
-                "loaded_benchmarks": ["tpch_0.1"],
-                "loaded_tables": [
-                    {"table_name": "customer", "benchmark": "tpch_0.1"},
-                    {"table_name": "lineitem", "benchmark": "tpch_0.1"},
-                    {"table_name": "nation", "benchmark": "tpch_0.1"},
-                    {"table_name": "orders", "benchmark": "tpch_0.1"},
-                    {"table_name": "part", "benchmark": "tpch_0.1"},
-                    {"table_name": "partsupp", "benchmark": "tpch_0.1"},
-                    {"table_name": "region", "benchmark": "tpch_0.1"},
-                    {"table_name": "supplier", "benchmark": "tpch_0.1"},
-                ],
-            }
-        ]
-
-        status = self.backend.get_monitor_property("status")
-        assert expected_status == status  # nosec
+        self.check_loading_default_tables("test_database1")
 
         influx_databases = influx_client.get_list_database()
         assert {"name": "test_database1"} in influx_databases  # nosec
