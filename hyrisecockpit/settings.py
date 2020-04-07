@@ -40,3 +40,6 @@ STORAGE_HOST: str = getenv("STORAGE_HOST", "influxdb")
 STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
 STORAGE_USER: str = getenv("STORAGE_USER", "root")
 STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
+
+FLASK_ENV: str = getenv("FLASK_ENV", "development")
+FLASK_DEBUG: bool = bool(getenv("FLASK_DEBUG", True))
