@@ -9,6 +9,8 @@ export function useCallbacks(
 ): {
   handleAddDatabase: (id: string) => void;
   handleRemoveDatabase: (id: string) => void;
+  handleAddActivePlugin: (id: string) => void;
+  handleRemoveActivePlugin: (id: string) => void;
 } {
   // DATABASES
   function handleAddDatabase(id: string): void {
@@ -21,5 +23,21 @@ export function useCallbacks(
     renewFunction();
   }
 
-  return { handleAddDatabase, handleRemoveDatabase };
+  // ACTIVE PLUGINS
+  function handleAddActivePlugin(id: string): void {
+    addFunction("activated_plugins", id);
+    renewFunction();
+  }
+
+  function handleRemoveActivePlugin(id: string): void {
+    removeFunction("activated_plugins", id);
+    renewFunction();
+  }
+
+  return {
+    handleAddDatabase,
+    handleRemoveDatabase,
+    handleAddActivePlugin,
+    handleRemoveActivePlugin
+  };
 }
