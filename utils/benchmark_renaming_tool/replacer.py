@@ -2,8 +2,8 @@
 import re
 from os import fsencode, listdir
 
-from table_names import table_names as tables
-from utils.endpoint_benchmark.print_colors import print_green
+from utils.benchmark_renaming_tool.table_names import table_names as tables
+from utils.endpoint_benchmark.print_colors import print_green, print_red
 
 
 class NotExistingWorkloadFolderException(Exception):
@@ -41,6 +41,23 @@ class Replacer:
                 f"Workload {self.workload} directory is empty"
             )
 
+    def replace(self, pattern, file_names):
+        """Replace table names."""
+        for file_name in file_names:
+            with open(
+                f"{self.path_to_original}/{self.workload}_{self.scale}/{file_name}", "r"
+            ) as f_read:
+                row_queries = f_read.read()
+
+            new_queries = pattern.sub(
+                lambda m: self.replacement_dict[m.group(0)], row_queries
+            )
+            with open(
+                f"{self.path_to_new}/{self.workload}_{self.scale}/{file_name}", "w"
+            ) as f_write:
+                f_write.write(new_queries)
+                print_green(f"{file_name} " + "\N{check mark}")
+
     def start(self):
         """Start replacing of table names."""
         try:
@@ -54,17 +71,12 @@ class Replacer:
             f"{self.path_to_original}/{self.workload}_{self.scale}"
         )
 
-        for file_name in file_names:
-
-            with open(
-                f"{self.path_to_original}/{self.workload}_{self.scale}/{file_name}", "r"
-            ) as f_read:
-                with open(
-                    f"{self.path_to_new}/{self.workload}_{self.scale}/{file_name}", "w"
-                ) as f_write:
-                    row_queries = f_read.read()
-                    new_queries = pattern.sub(
-                        lambda m: self.replacement_dict[m.group(0)], row_queries
-                    )
-                    f_write.write(new_queries)
-                    print_green(f"{file_name} " + "\N{check mark}")
+        if self.path_to_original != self.path_to_new:
+            self.replace(pattern, file_names)
+        else:
+            print_red(
+                "Destination and source are the same. Files will be irrevocable overwritten.\n"
+            )
+            answer = input("Do you want to continue? [Y/N]  ").upper()  # nosec
+            if answer == "Y":
+                self.replace(pattern, file_names)

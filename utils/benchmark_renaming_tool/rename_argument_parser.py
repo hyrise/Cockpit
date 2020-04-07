@@ -1,6 +1,7 @@
 """Module for parsing arguments from command line."""
 import argparse
 from json import dumps
+from os import getcwd
 
 from utils.endpoint_benchmark.print_colors import print_red
 
@@ -15,6 +16,9 @@ class ArgumentParser:
         )
         self._workloads = ["tpch", "tpcds", "job"]
         self._scale = {"tpch": ["0.1", "1"], "tpcds": ["1"], "job": ["1"]}
+        self.default_path_to_queries = (
+            getcwd() + "/hyrisecockpit/workload_generator/workloads/workload_queries"
+        )
         self._add_arguments()
 
     def _add_arguments(self):
@@ -45,6 +49,7 @@ class ArgumentParser:
             metavar="",
             type=str,
             nargs="?",
+            default=self.default_path_to_queries,
             help="source path from orginal query files",
         )
         self.parser.add_argument(
@@ -54,6 +59,7 @@ class ArgumentParser:
             metavar="",
             type=str,
             nargs="?",
+            default=self.default_path_to_queries,
             help="destination path for the renamed query files.",
         )
 

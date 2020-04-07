@@ -4,7 +4,6 @@ from utils.benchmark_renaming_tool.replacer import Replacer
 from utils.endpoint_benchmark.print_colors import print_yellow
 
 if __name__ == "__main__":
-
     argp = ArgumentParser()
     config = argp.get_configuration()
     if not config:
