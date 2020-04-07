@@ -495,6 +495,8 @@ class System(Resource):
                         "free": system_value["free_memory"],
                         "used": system_value["used_memory"],
                         "total": system_value["total_memory"],
+                        "percent": system_value["used_memory"]
+                        / system_value["total_memory"],
                     },
                     "database_threads": system_value["database_threads"],
                 }
