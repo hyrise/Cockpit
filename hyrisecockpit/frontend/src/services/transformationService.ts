@@ -135,6 +135,46 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
     return roundNumber(part / total, 100, Math.pow(10, 4), false);
   }
 
+  function getEncodingData(rawData: any): string {
+    const totalAmount = rawData.reduce(
+      (accumulator: number, currentEncoding: any) =>
+        accumulator + currentEncoding.amount,
+      0
+    );
+    return rawData.reduce(
+      (
+        encodingText: string,
+        currentEncoding: any,
+        encodingIndex: number,
+        encodingArray: [any]
+      ) => {
+        const compressionText = currentEncoding.compression.reduce(
+          (
+            text: string,
+            compression: string,
+            compressionIndex: number,
+            compressionArray: [number]
+          ) =>
+            text +
+            compression +
+            (compressionIndex === compressionArray.length - 1 ? "" : ",<br>"),
+          ""
+        );
+        return (
+          encodingText +
+          "<br> " +
+          getPercentage(currentEncoding.amount, totalAmount) +
+          "%: " +
+          currentEncoding.name +
+          "<br> (" +
+          compressionText +
+          (encodingIndex === encodingArray.length - 1 ? ")" : ")<br>")
+        );
+      },
+      ""
+    );
+  }
+
   Object.entries(data[primaryKey]).forEach(
     ([table, tableData]: [string, any]) => {
       labels.push(table);
@@ -158,7 +198,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           sizes.push(getRoundedData(attributeData.size));
           descriptions.push({
             size: `${getRoundedData(attributeData.size)} MB`,
-            encoding: `encoding: ${attributeData.encoding}`,
+            encoding: `encoding: ${getEncodingData(attributeData.encoding)}`,
             dataType: `data type: ${attributeData.data_type}`,
             percentOfDatabase: `${getPercentage(
               getRoundedData(attributeData.size),

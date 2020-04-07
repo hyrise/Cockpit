@@ -71,12 +71,19 @@ export function fakeDatabaseSystemData(databaseId: string): Object {
 
 // STORAGE DATA
 
+function fakeEncodingData(): Object {
+  return {
+    amount: faker.random.number(),
+    compression: [faker.random.word()]
+  };
+}
+
 function fakeColumnStorageData(columnId: string): Object {
   const storageData: any = {};
   storageData[columnId] = {
     size: faker.random.number(),
     data_type: faker.database.type(),
-    encoding: [faker.random.word()]
+    encoding: [fakeEncodingData()]
   };
   return storageData;
 }
@@ -209,9 +216,9 @@ type PluginSetting = {
   description: string;
 };
 
-function fakePluginSetting(): PluginSetting {
+function fakePluginSetting(plugin: string): PluginSetting {
   return {
-    name: faker.random.word(),
+    name: plugin + "Plugin_" + faker.random.word(),
     value: faker.random.number(),
     description: faker.random.words()
   };
@@ -223,7 +230,7 @@ export function fakeDatabasePluginSettings(
 ): Object {
   return {
     id: databaseId,
-    plugin_settings: plugins.map(() => fakePluginSetting())
+    plugin_settings: plugins.map(plugin => fakePluginSetting(plugin))
   };
 }
 
@@ -239,5 +246,8 @@ export function fakeDatabasePluginLogs(
   databaseId: string,
   pluginIds: string[]
 ): Object {
-  return { id: databaseId, plugin_log: pluginIds.map(id => fakePluginLog(id)) };
+  return {
+    id: databaseId,
+    plugin_log: pluginIds.map(id => fakePluginLog(id))
+  };
 }
