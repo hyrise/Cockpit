@@ -28,5 +28,4 @@ STORAGE_PORT: str = getenv("STORAGE_PORT", "8086")
 STORAGE_USER: str = getenv("STORAGE_USER", "root")
 STORAGE_PASSWORD: str = getenv("STORAGE_PASSWORD", "root")
 
-DATABASE1_HOST: str = getenv("DATABASE1_HOST", "vm-momentum.eaalab.hpi.uni-potsdam.de")
-DATABASE2_HOST: str = getenv("DATABASE2_HOST", "vm-citadelle.eaalab.hpi.uni-potsdam.de")
+DATABASE_HOST: str = getenv("DATABASE_HOST", "vm-momentum.eaalab.hpi.uni-potsdam.de")
