@@ -3,6 +3,7 @@ import re
 from os import fsencode, listdir
 
 from table_names import table_names as tables
+from utils.endpoint_benchmark.print_colors import print_green, print_yellow
 
 
 class NotExistingWorkloadFolderException(Exception):
@@ -66,7 +67,7 @@ class Replacer:
                         lambda m: self.replacement_dict[m.group(0)], row_queries
                     )
                     f_write.write(new_queries)
-                    print(f"{file_name} renamed")
+                    print_green(f"{file_name} " + "\N{check mark}")
 
 
 if __name__ == "__main__":
@@ -80,4 +81,7 @@ if __name__ == "__main__":
             "workload": workload[0],
             "scale": workload[1],
         }
+        print_yellow(f"\nReplace {workload[0]} tables to scale {workload[1]} \n")
         Replacer(config).start()  # type: ignore
+
+    print("\nAll done" + " \N{grinning face with smiling eyes}\n")
