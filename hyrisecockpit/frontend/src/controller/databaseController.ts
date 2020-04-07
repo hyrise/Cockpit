@@ -25,7 +25,7 @@ export function useDatabaseController(): DatabaseController {
 
   eventBus.$on("STORAGE_DATA_CHANGED", (data: any) => {
     if (!allDatabasesExist(Object.keys(data))) {
-      updateDatabases();
+      //updateDatabases();
     } else {
       updateDatabaseStorageInformation(data);
     }
@@ -33,7 +33,7 @@ export function useDatabaseController(): DatabaseController {
 
   eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
     if (!allDatabasesExist(data.map((entry: any) => entry.id))) {
-      updateDatabases();
+      //updateDatabases();
     } else {
       updateDatabaseCPUInformation(data);
     }

@@ -21,11 +21,7 @@ export function useMetricService(metric: Metric): MetricService {
   );
   const historicFetching = ref(false);
 
-  const {
-    formatDateWithoutMilliSec,
-    subSeconds,
-    formatDateToNanoSec
-  } = useFormatting();
+  const { subSeconds, formatDateToNanoSec } = useFormatting();
 
   function getData(start?: Date, end?: Date): void {
     queryReadyState.value = false;
@@ -39,7 +35,7 @@ export function useMetricService(metric: Metric): MetricService {
       : formatDateToNanoSec(currentTimestamp);
 
     fetchData(startTime, endTime).then(result => {
-      useUpdatingData(result, metric); //TODO: fix this
+      useUpdatingData(result, metric);
       if (metricMetaData.fetchType === "modify") {
         result.forEach((data: any) => {
           handleDataChange(

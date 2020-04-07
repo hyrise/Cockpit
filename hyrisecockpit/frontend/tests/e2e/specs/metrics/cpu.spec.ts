@@ -31,13 +31,10 @@ describe("Show cpu", () => {
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = value.cpu.cpu_process_usage;
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] =
+            entry.system_data[0].system_data.cpu.cpu_process_usage;
+        });
       });
     });
     describe("observing the chart data", () => {
@@ -84,13 +81,10 @@ describe("Show cpu", () => {
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = value.cpu.cpu_process_usage;
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] =
+            entry.system_data[0].system_data.cpu.cpu_process_usage;
+        });
       });
     });
     describe("observing the chart data", () => {

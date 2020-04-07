@@ -31,13 +31,9 @@ describe("Show ram", () => {
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = value.memory.percent;
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] = entry.system_data[0].system_data.memory.percent;
+        });
       });
     });
     describe("observing the chart data", () => {
@@ -84,13 +80,9 @@ describe("Show ram", () => {
       cy.wait("@" + getGetAlias("system"));
       cy.get("@" + getGetAlias("system")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = value.memory.percent;
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] = entry.system_data[0].system_data.memory.percent;
+        });
       });
     });
     describe("observing the chart data", () => {

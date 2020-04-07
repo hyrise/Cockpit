@@ -71,7 +71,7 @@ export function useDatabaseService(): DatabaseService {
 
   function getDatabasesInformation(response: any): DatabaseResponse[] {
     const databases: DatabaseResponse[] = [];
-    Object.values(response).forEach((data: any) => {
+    response.forEach((data: any) => {
       databases.push({
         id: data.id,
         host: data.host,
@@ -83,7 +83,7 @@ export function useDatabaseService(): DatabaseService {
 
   function getCPUInformation(response: any): DatabaseCPUResponse[] {
     const databasesWithCPUInformation: DatabaseCPUResponse[] = [];
-    Object.values(response).forEach((databaseData: any) => {
+    response.forEach((databaseData: any) => {
       const cpuData =
         databaseData.system_data[databaseData.system_data.length - 1] || [];
       databasesWithCPUInformation.push({

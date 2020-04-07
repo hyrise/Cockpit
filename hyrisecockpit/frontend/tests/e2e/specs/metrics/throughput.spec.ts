@@ -9,6 +9,7 @@ import {
   assertLineChartData,
   assertMetricDetails
 } from "./helpers";
+import { assignToObject } from "../helpers";
 
 const backend = useBackendMock();
 
@@ -30,7 +31,7 @@ describe("Show throughput", () => {
       testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
       cy.wait("@" + getGetAlias("throughput"));
       cy.get("@" + getGetAlias("throughput")).should((xhr: any) => {
-        data = Object.values(xhr.response.body.body)[0];
+        data = assignToObject(xhr.response.body, "throughput");
       });
     });
     describe("observing the chart data", () => {
@@ -75,7 +76,7 @@ describe("Show throughput", () => {
       );
       cy.wait("@" + getGetAlias("throughput"));
       cy.get("@" + getGetAlias("throughput")).should((xhr: any) => {
-        data = Object.values(xhr.response.body.body)[0];
+        data = assignToObject(xhr.response.body, "throughput");
       });
     });
     describe("observing the chart data", () => {

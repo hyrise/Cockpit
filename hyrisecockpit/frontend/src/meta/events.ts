@@ -52,7 +52,7 @@ export function useWindowEvents(): {
     start: Date,
     end: Date
   ): void {
-    eventBus.$emit("PAGE_CHANGED", { metrics, start, end });
+    eventBus.$emit("HISTORIC_RANGE_CHANGED", { metrics, start, end });
   }
 
   return { emitPageChangedEvent, emitHistoricRangeChangedEvent };

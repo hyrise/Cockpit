@@ -16,20 +16,20 @@ export function useMetricController(): MetricController {
 
   eventBus.$on("WATCHED_METRICS_CHANGED", (payload: Metric[]) => {
     stop();
-    start(payload);
+    start(payload || []);
   });
 
   eventBus.$on("PAGE_CHANGED", (payload: Metric[]) => {
     const currentDate = new Date();
     stop();
-    start(payload, new Date(subSeconds(currentDate, 30)), currentDate);
+    start(payload || [], new Date(subSeconds(currentDate, 30)), currentDate);
   });
 
   eventBus.$on(
     "HISTORIC_RANGE_CHANGED",
     (payload: { metrics: Metric[]; start: Date; end: Date }) => {
       stop();
-      start(payload.metrics, payload.start, payload.end); //TODO: fire only once when watching historic data
+      start(payload.metrics || [], payload.start, payload.end); //TODO: fire only once when watching historic data
     }
   );
 

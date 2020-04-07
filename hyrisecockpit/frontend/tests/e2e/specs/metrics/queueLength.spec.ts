@@ -9,6 +9,7 @@ import {
   assertMetricDetails,
   assertLineChartData
 } from "./helpers";
+import { assignToObject } from "../helpers";
 
 const backend = useBackendMock();
 
@@ -30,7 +31,7 @@ describe("Show queue length", () => {
       testRedirection(getViewSelector("overviewButton"), getRoute("overview"));
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).should((xhr: any) => {
-        data = Object.values(xhr.response.body.body)[0];
+        data = assignToObject(xhr.response.body, "queue_length");
       });
     });
     describe("observing the chart data", () => {
@@ -75,7 +76,7 @@ describe("Show queue length", () => {
       );
       cy.wait("@" + getGetAlias("queue_length"));
       cy.get("@" + getGetAlias("queue_length")).should((xhr: any) => {
-        data = Object.values(xhr.response.body.body)[0];
+        data = assignToObject(xhr.response.body, "queue_length");
       });
     });
     describe("observing the chart data", () => {

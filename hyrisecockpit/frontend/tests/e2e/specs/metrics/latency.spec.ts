@@ -32,13 +32,12 @@ describe("Show latency", () => {
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = roundNumber(value, Math.pow(10, 6));
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] = roundNumber(
+            entry.latency[0].latency,
+            Math.pow(10, 6)
+          );
+        });
       });
     });
     describe("observing the chart data", () => {
@@ -84,13 +83,12 @@ describe("Show latency", () => {
       cy.wait("@" + getGetAlias("latency"));
       cy.get("@" + getGetAlias("latency")).should((xhr: any) => {
         data = {};
-        Object.entries(Object.values(xhr.response.body.body)[0] as any).forEach(
-          ([database, value]: [any, any]) => {
-            const entry: any = {};
-            entry[database] = roundNumber(value, Math.pow(10, 6));
-            data = { ...data, ...entry };
-          }
-        );
+        xhr.response.body.forEach((entry: any) => {
+          data[entry.id] = roundNumber(
+            entry.latency[0].latency,
+            Math.pow(10, 6)
+          );
+        });
       });
     });
     describe("observing the chart data", () => {

@@ -33,7 +33,9 @@ describe("When observing the database details", () => {
     });
     cy.wait("@" + getGetAlias("system"));
     cy.get("@" + getGetAlias("system")).should((xhr: any) => {
-      databasesSystemData = Object.values(xhr.response.body.body.system_data);
+      databasesSystemData = xhr.response.body.map(
+        (entry: any) => entry.system_data[0]
+      );
     });
     cy.wait("@" + getGetAlias("storage"));
     cy.get("@" + getGetAlias("storage")).should((xhr: any) => {
@@ -127,10 +129,14 @@ describe("When observing the database details", () => {
           .contains(database.number_workers);
         cy.get(getSelector("cpuDetails"))
           .eq(idx)
-          .contains(databasesSystemData[idx].cpu.cpu_count.toString());
+          .contains(
+            databasesSystemData[idx].system_data.cpu.cpu_count.toString()
+          );
         cy.get(getSelector("memoryCapacityDetails"))
           .eq(idx)
-          .contains(getDatabaseMainMemoryCapacity(databasesSystemData[idx]));
+          .contains(
+            getDatabaseMainMemoryCapacity(databasesSystemData[idx].system_data)
+          );
         cy.get(getSelector("memoryFootprintDetails"))
           .eq(idx)
           .contains(getDatabaseMemoryFootprint(databasesStorageData[idx]));
