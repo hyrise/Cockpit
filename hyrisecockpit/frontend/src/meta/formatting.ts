@@ -31,7 +31,6 @@ export function useFormatting(): {
   }
 
   function subSeconds(date: Date, seconds: number): Date {
-    console.log(date, new Date(date.getTime() - seconds * Math.pow(10, 3)));
     return new Date(date.getTime() - seconds * Math.pow(10, 3));
   }
 

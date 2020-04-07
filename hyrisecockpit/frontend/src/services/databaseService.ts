@@ -47,12 +47,11 @@ export function useDatabaseService(): DatabaseService {
     await axios
       .get(monitorBackend + "system", {
         params: {
-          startts: formatDateToNanoSec(currentDate),
-          endts: formatDateToNanoSec(subSeconds(currentDate, 10))
+          startts: formatDateToNanoSec(subSeconds(currentDate, 1)),
+          endts: formatDateToNanoSec(currentDate)
         }
       })
       .then(response => {
-        console.log(response);
         databasesWithCPUInformation = getCPUInformation(response.data);
       });
     return databasesWithCPUInformation;

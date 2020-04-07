@@ -36,6 +36,28 @@ export function useMetricEvents(): {
   };
 }
 
+export function useWindowEvents(): {
+  emitPageChangedEvent: (metrics: Metric[]) => void;
+  emitHistoricRangeChangedEvent: (
+    metrics: Metric[],
+    start: Date,
+    end: Date
+  ) => void;
+} {
+  function emitPageChangedEvent(metrics: Metric[]): void {
+    eventBus.$emit("PAGE_CHANGED", metrics);
+  }
+  function emitHistoricRangeChangedEvent(
+    metrics: Metric[],
+    start: Date,
+    end: Date
+  ): void {
+    eventBus.$emit("PAGE_CHANGED", { metrics, start, end });
+  }
+
+  return { emitPageChangedEvent, emitHistoricRangeChangedEvent };
+}
+
 export function useDatabaseEvents(): {
   emitSelectedDatabasesChangedEvent: (databases?: string[]) => void;
   emitDatabaseAddedEvent: () => void;

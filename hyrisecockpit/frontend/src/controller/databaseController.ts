@@ -32,7 +32,7 @@ export function useDatabaseController(): DatabaseController {
   });
 
   eventBus.$on("CPU_DATA_CHANGED", (data: any) => {
-    if (!allDatabasesExist(Object.keys(data))) {
+    if (!allDatabasesExist(data.map((entry: any) => entry.id))) {
       updateDatabases();
     } else {
       updateDatabaseCPUInformation(data);
