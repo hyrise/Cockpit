@@ -83,7 +83,7 @@ export function useMetricService(metric: Metric): MetricService {
     return dataCopy;
   }
 
-  function getDataIfReady(): void {
+  function getDataIfReady(start?: Date, end?: Date): void {
     if (queryReadyState.value) {
       getData();
     }

@@ -17,7 +17,7 @@ export function usePluginService(): PluginService {
   } = usePluginTransformationSevice();
 
   getPlugins();
-  setInterval(() => getPluginLogs(), 1000);
+  //setInterval(() => getPluginLogs(), 1000);
   getPluginSettings();
 
   eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {

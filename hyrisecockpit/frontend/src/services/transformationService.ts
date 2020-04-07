@@ -293,7 +293,7 @@ export function useDataTransformationHelpers(): {
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
-      data.memory.total,
+      data?.memory?.total ?? 0,
       Math.pow(10, 3),
       1 / Math.pow(10, 6),
       false
@@ -313,12 +313,12 @@ export function usePluginTransformationSevice(): any {
     return data.reduce((result: string[], currentDatabase: any) => {
       return currentDatabase.plugins
         ? [
-            ...result,
-            ...currentDatabase.plugins.map(
-              (plugin: string) =>
-                currentDatabase.id + "_" + plugin.replace("Plugin", "")
-            )
-          ]
+          ...result,
+          ...currentDatabase.plugins.map(
+            (plugin: string) =>
+              currentDatabase.id + "_" + plugin.replace("Plugin", "")
+          )
+        ]
         : result;
     }, []);
   }
@@ -352,9 +352,9 @@ export function usePluginTransformationSevice(): any {
             );
             allSettings[pluginName]
               ? (allSettings[pluginName] = [
-                  ...allSettings[pluginName],
-                  currentSetting
-                ])
+                ...allSettings[pluginName],
+                currentSetting
+              ])
               : (allSettings[pluginName] = [currentSetting]);
             return allSettings;
           },
