@@ -637,7 +637,7 @@ class TestDatabase(object):
     def test_initializes_influx(
         self, mock_storage_cursor_constructor: MagicMock, database: Database
     ) -> None:
-        """Test set plug-in setting while the database is blocked."""
+        """Test intialization of the corresponding influx database."""
         mock_storage_cursor = MagicMock()
         mock_storage_cursor.create_database.return_value = None
         mock_storage_cursor.drop_database.return_value = None
