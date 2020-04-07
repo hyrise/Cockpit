@@ -33,7 +33,8 @@ export function useDatabaseService(): DatabaseService {
     const hashedDatabaseID = require("crypto")
       .createHash("sha1")
       .update(databaseID)
-      .digest("hex");
+      .digest("hex")
+      .substring(0, 8);
     const index =
       parseInt(hashedDatabaseID, 16) % Object.keys(colorDefinition).length;
     let color = Object.values(colorDefinition)[index];
