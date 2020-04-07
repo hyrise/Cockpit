@@ -7,37 +7,19 @@ If run as a module, a flask server application will be started.
 from typing import Dict, List, Union
 
 from flask_restx import Namespace, Resource, fields
-from influxdb import InfluxDBClient
-from jsonschema import validate
-from zmq import REQ, Context, Socket
 
-from hyrisecockpit.message import get_databases_response_schema, response_schema
+from hyrisecockpit.api.app.shared import (
+    _add_active_database,
+    _get_active_databases,
+    _remove_active_database,
+    _send_message,
+    db_manager_socket,
+    generator_socket,
+    storage_connection,
+)
 from hyrisecockpit.plugins import available_plugins
 from hyrisecockpit.request import Header, Request
 from hyrisecockpit.response import Response, get_error_response, get_response
-from hyrisecockpit.settings import (
-    DB_MANAGER_HOST,
-    DB_MANAGER_PORT,
-    GENERATOR_HOST,
-    GENERATOR_PORT,
-    STORAGE_HOST,
-    STORAGE_PASSWORD,
-    STORAGE_PORT,
-    STORAGE_USER,
-)
-
-context = Context(io_threads=1)
-
-db_manager_socket = context.socket(REQ)
-db_manager_socket.connect(f"tcp://{DB_MANAGER_HOST}:{DB_MANAGER_PORT}")
-
-generator_socket = context.socket(REQ)
-generator_socket.connect(f"tcp://{GENERATOR_HOST}:{GENERATOR_PORT}")
-
-
-storage_connection = InfluxDBClient(
-    STORAGE_HOST, STORAGE_PORT, STORAGE_USER, STORAGE_PASSWORD
-)
 
 api = Namespace("control", description="Control multiple databases at once.")
 
@@ -274,23 +256,6 @@ model_get_plugin_setting = api.clone(
 )
 
 
-def _send_message(socket: Socket, message: Request) -> Response:
-    """Send an IPC message with data to a database interface, return the repsonse."""
-    socket.send_json(message)
-    response: Response = socket.recv_json()
-    validate(instance=response, schema=response_schema)
-    return response
-
-
-def _active_databases() -> List[str]:
-    """Get a list of active databases."""
-    response: Response = _send_message(
-        db_manager_socket, {"header": {"message": "get databases"}, "body": {}}
-    )
-    validate(instance=response["body"], schema=get_databases_response_schema)
-    return [database["id"] for database in response["body"]["databases"]]
-
-
 @api.route("/database", methods=["GET", "POST", "DELETE"])
 class Database(Resource):
     """Manages databases."""
@@ -318,6 +283,8 @@ class Database(Resource):
             },
         )
         response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] == 200:
+            _add_active_database(api.payload["id"])
         return response
 
     @api.doc(body=model_control_database)
@@ -327,6 +294,8 @@ class Database(Resource):
             header=Header(message="delete database"), body={"id": api.payload["id"]},
         )
         response = _send_message(db_manager_socket, message)
+        if response["header"]["status"] == 200:
+            _remove_active_database(api.payload["id"])
         return response
 
 
@@ -474,7 +443,7 @@ class PluginLog(Resource):
                     )
                 ],
             }
-            for database in _active_databases()
+            for database in _get_active_databases()
         ]
 
 

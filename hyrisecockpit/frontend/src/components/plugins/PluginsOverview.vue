@@ -34,6 +34,7 @@
                 @change="onClickPluginSwitch(database, plugin)"
               />
               <v-btn
+                :id="`${plugin}-change-button`"
                 v-if="canSettingsBeChanged(database, plugin)"
                 @click="toggleSettingsView(database, plugin)"
                 text
