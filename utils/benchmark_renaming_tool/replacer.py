@@ -3,7 +3,7 @@ import re
 from os import fsencode, listdir
 
 from table_names import table_names as tables
-from utils.endpoint_benchmark.print_colors import print_green, print_yellow
+from utils.endpoint_benchmark.print_colors import print_green
 
 
 class NotExistingWorkloadFolderException(Exception):
@@ -38,7 +38,7 @@ class Replacer:
         folder_names = self._get_file_names(self.path_to_new)
         if f"{self.workload}_{self.scale}" not in folder_names:
             raise NotExistingWorkloadFolderException(
-                f"Workload {workload} directory is empty"
+                f"Workload {self.workload} directory is empty"
             )
 
     def start(self):
@@ -68,20 +68,3 @@ class Replacer:
                     )
                     f_write.write(new_queries)
                     print_green(f"{file_name} " + "\N{check mark}")
-
-
-if __name__ == "__main__":
-
-    workloads = [("tpch", 1,), ("tpch", 0.1,), ("tpcds", 1,)]
-
-    for workload in workloads:
-        config = {
-            "path_to_original": "",
-            "path_to_new": "",
-            "workload": workload[0],
-            "scale": workload[1],
-        }
-        print_yellow(f"\nReplace {workload[0]} tables to scale {workload[1]} \n")
-        Replacer(config).start()  # type: ignore
-
-    print("\nAll done" + " \N{grinning face with smiling eyes}\n")
