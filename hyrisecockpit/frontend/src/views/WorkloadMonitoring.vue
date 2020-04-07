@@ -5,7 +5,6 @@
       :evaluations="[false]"
     />
     <div class="mx-6">
-      <database-metric-selection class="select" :select-metrics="false" />
       <database-query-tables :selected-databases="selectedDatabases" />
       <unselected-warning :condition="selectedDatabases">
         <template #message>
@@ -14,15 +13,26 @@
       </unselected-warning>
       <v-card color="primary">
         <v-card-title class="white--text">
-          Workload metrics
+          Workload Metrics
         </v-card-title>
       </v-card>
-      <metrics-tile-list
+      <v-container
         v-if="$databaseController.databasesUpdated.value"
-        :selected-databases="watchedInstances"
-        :show-details="false"
-        :selected-metrics="watchedMetrics"
-      />
+        class="grey lighten-5 flex"
+        fluid
+        justify="center"
+        align="center"
+      >
+        <metric-tile
+          v-for="metric in selectedMetrics"
+          :key="metric"
+          class="flex-item"
+          :metric="metric"
+          :selected-databases="watchedInstances"
+          :show-details="false"
+          :graph-id="metric"
+        />
+      </v-container>
     </div>
   </div>
 </template>
@@ -37,15 +47,15 @@ import {
   watch
 } from "@vue/composition-api";
 import { Metric, workloadMetrics } from "../types/metrics";
-import MetricsTileList from "../components/container/MetricsTileList.vue";
 import { useMetricEvents } from "../meta/events";
 import { Database } from "../types/database";
-import LinearLoader from "../components/alerts/linearLoader.vue";
+import LinearLoader from "../components/alerts/LinearLoader.vue";
 import DatabaseQueryTables from "@/components/queries/DatabaseQueryTables.vue";
-import DatabaseMetricSelection from "../components/selection/DatabaseMetricSelection.vue";
 import { MetricViewData } from "../types/views";
-import { useSelectionHandling } from "../meta/views";
-import UnselectedWarning from "@/components/alerts/unselectedWarning.vue";
+import { useSelectionHandling } from "@/meta/selection";
+import UnselectedWarning from "@/components/alerts/UnselectedWarning.vue";
+import MetricTile from "@/components/container/MetricTile.vue";
+import SelectionList from "@/components/selection/SelectionList.vue";
 
 interface Props {}
 interface Data extends MetricViewData {
@@ -55,11 +65,11 @@ interface Data extends MetricViewData {
 export default defineComponent({
   name: "WorkloadMonitoring",
   components: {
-    MetricsTileList,
+    MetricTile,
     LinearLoader,
     DatabaseQueryTables,
-    DatabaseMetricSelection,
-    UnselectedWarning
+    UnselectedWarning,
+    SelectionList
   },
   setup(props: Props, context: SetupContext): Data {
     const { emitWatchedMetricsChangedEvent } = useMetricEvents();
@@ -81,7 +91,7 @@ export default defineComponent({
     return {
       watchedInstances,
       watchedMetrics: workloadMetrics,
-      ...useSelectionHandling()
+      ...useSelectionHandling(context, "workload")
     };
   }
 });
@@ -90,5 +100,15 @@ export default defineComponent({
 .select {
   margin-top: 0.5%;
   margin-bottom: 0.5%;
+}
+.flex {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.flex-item {
+  flex: 0 0 49%;
+  margin: 5px 0.5% 5px 0.5%;
 }
 </style>

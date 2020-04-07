@@ -1,97 +1,159 @@
 <template>
-  <v-navigation-drawer v-model="open" app width="110">
-    <v-toolbar class="text-center secondary">
-      <v-img
-        src="../../src/components/images/hyrise_logo.png"
-        class="ml-2 mb-2"
-        max-width="55"
-        max-height="55"
-      >
-      </v-img>
-    </v-toolbar>
-    <v-card-text
-      class="text-center primary white--text overline"
-      max-height="30"
-      >Views</v-card-text
-    >
-    <v-card class="text-center" elevation="0" :to="{ name: 'overview' }">
-      <v-icon class="text-center mt-4" size="40">
-        mdi-speedometer
-      </v-icon>
-      <v-card-text class="justify-center card-title overline pt-1">
-        Overview
-      </v-card-text>
-    </v-card>
-    <v-card class="text-center" elevation="0" :to="{ name: 'comparison' }">
-      <v-icon class="mt-2" size="40">
-        mdi-database-search
-      </v-icon>
-      <v-card-text class="justify-center card-title overline pt-1">
-        Comparison
-      </v-card-text>
-    </v-card>
-    <v-card class="text-center" elevation="0" :to="{ name: 'workload' }">
-      <v-icon class="mt-2" size="40">
-        mdi-align-vertical-bottom
-      </v-icon>
-      <v-card-text class="justify-center card-title overline pt-1">
-        Workload metrics
-      </v-card-text>
-    </v-card>
-    <v-card-text
-      class="text-center primary white--text overline"
-      max-height="30"
-      >Settings</v-card-text
-    >
-    <workload-generation
-      :open="showWorkloadDialog"
-      @close="showWorkloadDialog = false"
-    />
-    <add-database
-      :open="showAddDatabaseDialog"
-      @close="showAddDatabaseDialog = false"
-    />
-    <v-menu bottom offset-x>
-      <template v-slot:activator="{ on: menu }">
-        <v-card class="text-center" elevation="0" v-on="{ ...menu }">
-          <v-badge
-            color="secondary primary--text"
-            :content="databaseCount"
-            offset-y="30"
-            offset-x="12"
-            bordered
+  <v-navigation-drawer app fixed width="180">
+    <v-list>
+      <v-list-item two-line class="my-0">
+        <v-list-item-avatar tile class="mt-0 mr-2">
+          <img src="../../src/assets/images/hyrise_logo.png" />
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title class="body-2 mb-2 font-weight-light"
+            >COCKPIT</v-list-item-title
           >
-            <v-icon class="mt-4" size="40">
-              mdi-database-plus
-            </v-icon>
-          </v-badge>
-          <v-card-text class="justify-center card-title overline pt-1">
-            Database
-          </v-card-text>
-        </v-card>
-      </template>
-      <available-databases-list @addDatabase="showAddDatabaseDialog = true" />
-    </v-menu>
+        </v-list-item-content>
+      </v-list-item>
 
-    <v-card class="text-center" elevation="0" @click="openWorkloadDialog()">
-      <v-icon class="mt-2" size="40">
-        mdi-account-cog
-      </v-icon>
-      <v-card-text class="justify-center overline pt-1">
-        Workload Generation
-      </v-card-text>
-    </v-card>
-    <v-card class="text-center" elevation="0" @click="togglePluginEditor()">
-      <v-icon class="mt-2" size="40">
-        mdi-alpha-p-box
-      </v-icon>
-      <v-card-text class="justify-center overline pt-1">
-        Plugins
-      </v-card-text>
-    </v-card>
+      <v-divider />
+
+      <v-list-item color="#02789D" input-value="true">
+        <v-list-item-content>
+          <v-list-item-title class="body-2">Views</v-list-item-title>
+        </v-list-item-content>
+        <v-list-item-icon>
+          <v-icon
+            id="selection-list-button"
+            dense
+            color="secondary"
+            @click="$emit('toggleSelection')"
+            >mdi-cog-outline</v-icon
+          >
+        </v-list-item-icon>
+      </v-list-item>
+      <v-divider />
+
+      <v-list-item id="overview-button" :to="{ name: 'overview' }">
+        <v-list-item-icon class="mr-2">
+          <v-icon>mdi-speedometer</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Overview</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item id="comparison-button" :to="{ name: 'comparison' }">
+        <v-list-item-icon class="mr-2">
+          <v-icon>mdi-database-search</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Comparison</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item id="workload-monitoring-button" :to="{ name: 'workload' }">
+        <v-list-item-icon class="mr-2">
+          <v-icon>mdi-align-vertical-bottom</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Workload Metrics</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider />
+      <v-list-item color="#02789D" input-value="true">
+        <v-list-item-content>
+          <v-list-item-title class="body-2">Settings</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider />
+
+      <v-menu bottom offset-x>
+        <template v-slot:activator="{ on: menu }">
+          <v-list-item
+            id="database-list-button"
+            v-on="{ ...menu }"
+            @click="$emit('closeSelection')"
+          >
+            <v-list-item-icon class="mr-2">
+              <v-icon>mdi-database</v-icon>
+            </v-list-item-icon>
+            <v-badge
+              id="number-of-databases"
+              color="secondary primary--text"
+              :content="databaseCount"
+              offset-y="1"
+              offset-x="40"
+              bordered
+            >
+            </v-badge>
+
+            <v-list-item-content>
+              <v-list-item-title class="body-2 font-weight-light"
+                >Databases</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+        <available-databases-list
+          @addDatabase="showAddDatabaseDialog = true"
+          @removeDatabase="handleDatabaseDeletion"
+        />
+      </v-menu>
+
+      <workload-generation
+        :open="showWorkloadDialog"
+        @close="showWorkloadDialog = false"
+      />
+
+      <v-list-item
+        id="workload-generation-button"
+        @click="showWorkloadDialog = true"
+      >
+        <v-list-item-icon class="mr-2">
+          <v-icon>mdi-account-cog</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Workload</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+
+      <add-database
+        :open="showAddDatabaseDialog"
+        @close="showAddDatabaseDialog = false"
+      />
+      <remove-database
+        :open="showRemoveDatabaseDialog"
+        :database-id="removedDatabaseId"
+        @close="showRemoveDatabaseDialog = false"
+      />
+
+      <v-list-item id="plugin-overview-button" @click="$emit('openPlugins')">
+        <v-list-item-icon class="mr-2">
+          <v-icon>mdi-alpha-p-box</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title class="body-2 font-weight-light"
+            >Plugins</v-list-item-title
+          >
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+    <v-divider />
+
     <v-footer absolute class="font-weight-medium">
       <v-img
-        src="../../src/components/images/hpi_logo_bw.png"
+        src="../../src/assets/images/hpi_logo_bw.png"
         max-width="80"
         max-height="80"
       >
@@ -108,60 +170,46 @@ import {
   Ref,
   computed
 } from "@vue/composition-api";
-import addDatabase from "../components/addDatabase.vue";
-import PluginsOverview from "../components/plugins/PluginsOverview.vue";
+import AddDatabase from "@/components/databases/AddDatabase.vue";
+import RemoveDatabase from "@/components/databases/RemoveDatabase.vue";
 import WorkloadGeneration from "../components/workload/WorkloadGeneration.vue";
-import AvailableDatabasesList from "@/components/details/AvailableDatabasesList.vue";
-
-interface Props {
-  open: boolean;
-}
+import AvailableDatabasesList from "@/components/databases/AvailableDatabasesList.vue";
+import { Database } from "@/types/database";
 
 interface Data {
   showPluginEditor: Ref<boolean>;
-  togglePluginEditor: () => void;
   showWorkloadDialog: Ref<boolean>;
-  openWorkloadDialog: () => void;
   showAddDatabaseDialog: Ref<boolean>;
+  showRemoveDatabaseDialog: Ref<boolean>;
   databaseCount: Ref<string>;
+  handleDatabaseDeletion: (database: Database) => void;
+  removedDatabaseId: Ref<string>;
 }
 
 export default defineComponent({
   components: {
-    PluginsOverview,
     WorkloadGeneration,
-    addDatabase,
-    AvailableDatabasesList
+    AddDatabase,
+    AvailableDatabasesList,
+    RemoveDatabase
   },
-  setup(
-    props: {
-      open: {
-        type: Boolean;
-        default: true;
-      };
-    },
-    context: SetupContext
-  ): Data {
-    const showPluginEditor = ref<boolean>(false);
-    const showWorkloadDialog = ref<boolean>(false);
-    const showAddDatabaseDialog = ref<boolean>(false);
-
-    function togglePluginEditor(): void {
-      context.emit("openPlugins");
+  setup(props: {}, context: SetupContext): Data {
+    const showRemoveDatabaseDialog = ref(false);
+    const removedDatabaseId = ref<string>("");
+    function handleDatabaseDeletion(database: Database): void {
+      removedDatabaseId.value = database.id;
+      showRemoveDatabaseDialog.value = true;
     }
-    function openWorkloadDialog(): void {
-      showWorkloadDialog.value = true;
-    }
-
     return {
-      showPluginEditor,
-      togglePluginEditor,
-      showWorkloadDialog,
-      openWorkloadDialog,
-      showAddDatabaseDialog,
+      showPluginEditor: ref(false),
+      showWorkloadDialog: ref(false),
+      showAddDatabaseDialog: ref(false),
+      showRemoveDatabaseDialog,
       databaseCount: computed(() =>
         context.root.$databaseController.availableDatabasesById.value.length.toString()
-      )
+      ),
+      handleDatabaseDeletion,
+      removedDatabaseId
     };
   }
 });

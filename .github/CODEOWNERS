@@ -5,19 +5,16 @@
 
 # DevOps
 # @caterinamandel98 @cH3n7i @fabianhe
-/ @caterinamandel98 @cH3n7i @fabianhe
+/* @caterinamandel98 @cH3n7i @fabianhe
 /.github/ @caterinamandel98 @cH3n7i @fabianhe
 /docker/ @caterinamandel98 @cH3n7i @fabianhe
 /hyrise/ @caterinamandel98 @cH3n7i @fabianhe
-
-# Utils
-# @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
-/utils/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 
 # Backend
 # @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /hyrisecockpit/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 /tests/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
+/utils/ @Alexander-Dubrawski @caterinamandel98 @cH3n7i @fabianhe @PeterTsayun
 
 # Frontend
 # @kathwill @MaxSchneider1337 @monasobh @schTi

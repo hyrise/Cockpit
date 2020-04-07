@@ -2,35 +2,34 @@ import { ref } from "@vue/composition-api";
 import axios from "axios";
 import { controlBackend } from "../../config";
 import { PluginService } from "../types/services";
+import { eventBus } from "../plugins/eventBus";
+import { usePluginTransformationSevice } from "../services/transformationService";
 
 export function usePluginService(): PluginService {
   const plugins = ref<string[]>([]);
   const activePlugins = ref<string[]>([]);
   const pluginLogs = ref<any>({});
   const pluginSettings = ref<any>({});
+  const {
+    getActivePluginData,
+    getPluginLogsData,
+    getPluginSettingsData
+  } = usePluginTransformationSevice();
 
   getPlugins();
   setInterval(() => getPluginLogs(), 1000);
   getPluginSettings();
 
+  eventBus.$on(["DATABASE_ADDED", "DATABASE_REMOVED"], () => {
+    getPlugins();
+    getPluginSettings();
+  });
+
   function getPlugins(): void {
     axios.get(controlBackend + "available_plugins").then(allPluginsResponse => {
       plugins.value = allPluginsResponse.data;
       axios.get(controlBackend + "plugin").then(activePluginsResponse => {
-        activePlugins.value = activePluginsResponse.data.reduce(
-          (result: string[], currentDatabase: any) => {
-            return currentDatabase.plugins
-              ? [
-                  ...result,
-                  ...currentDatabase.plugins.map(
-                    (plugin: string) =>
-                      currentDatabase.id + "_" + plugin.replace("Plugin", "")
-                  )
-                ]
-              : result;
-          },
-          []
-        );
+        activePlugins.value = getActivePluginData(activePluginsResponse.data);
       });
     });
   }
@@ -60,50 +59,14 @@ export function usePluginService(): PluginService {
 
   function getPluginLogs(): Promise<void> {
     return axios.get(controlBackend + "plugin_log").then(response => {
-      pluginLogs.value = response.data.reduce(
-        (result: any, currentDatabase: any) => {
-          result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
-            (databaseLog: string, currentLog: any) => {
-              return (
-                databaseLog +
-                `${currentLog.reporter} [${new Date(
-                  parseInt(currentLog.timestamp)
-                ).toLocaleTimeString()}]: ${currentLog.message}\n`
-              );
-            },
-            ""
-          );
-          return result;
-        },
-        {}
-      );
+      pluginLogs.value = getPluginLogsData(response.data);
     });
   }
 
   function getPluginSettings(): void {
     axios.get(controlBackend + "plugin_settings").then(response => {
-      pluginSettings.value = response.data.body.plugin_settings.reduce(
-        (result: any, currentDatabase: any) => {
-          const allDatabaseSettings = currentDatabase.plugin_settings.reduce(
-            (allSettings: any, currentSetting: any) => {
-              const pluginName = currentSetting.name.substring(
-                0,
-                currentSetting.name.indexOf("Plugin")
-              );
-              allSettings[pluginName]
-                ? (allSettings[pluginName] = [
-                    ...allSettings[pluginName],
-                    currentSetting
-                  ])
-                : (allSettings[pluginName] = [currentSetting]);
-              return allSettings;
-            },
-            {}
-          );
-          result[currentDatabase.id] = allDatabaseSettings;
-          return result;
-        },
-        {}
+      pluginSettings.value = getPluginSettingsData(
+        response.data.body.plugin_settings
       );
     });
   }

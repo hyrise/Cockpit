@@ -25,7 +25,11 @@ export function getTransferredWorkload(workload: Workload): string {
 export function getDisplayedWorkload(workload: Workload): string {
   return workloadProjectionData[workload].displayed;
 }
-
+export function getWorkloadFromTransferred(transferred: string): Workload {
+  return Object.keys(workloadProjectionData).find(
+    workload => getTransferredWorkload(workload as Workload) === transferred
+  )! as Workload;
+}
 export function getDisplayedFromTransferred(transferred: string): string {
   return Object.values(workloadProjectionData).find(
     workload => workload.transferred === transferred

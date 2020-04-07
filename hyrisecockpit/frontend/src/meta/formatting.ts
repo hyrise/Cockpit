@@ -7,6 +7,7 @@ export function useFormatting(): {
     factor?: number,
     even?: boolean
   ) => number;
+  formatDateToHHMMSS: (date: Date) => string;
 } {
   function formatNumberWithCommas(data: number): string {
     const parts = data.toString().split(".");
@@ -27,6 +28,10 @@ export function useFormatting(): {
     return date;
   }
 
+  function formatDateToHHMMSS(date: Date): string {
+    return date.toLocaleTimeString("de-DE");
+  }
+
   function roundNumber(
     data: number,
     ratio: number,
@@ -37,5 +42,26 @@ export function useFormatting(): {
     return even ? Math.floor(rounded) : rounded;
   }
 
-  return { formatNumberWithCommas, formatDateWithoutMilliSec, roundNumber };
+  return {
+    formatNumberWithCommas,
+    formatDateWithoutMilliSec,
+    roundNumber,
+    formatDateToHHMMSS
+  };
+}
+
+export function useSorting(): {
+  sortElements: <T>(selected: T[], available: T[]) => T[];
+} {
+  function sortElements<T>(selected: T[], available: T[]): T[] {
+    const sorted: T[] = [];
+    available.forEach(availableElement => {
+      const relatedSelectedElement = selected.find(
+        selectedElement => selectedElement === availableElement
+      );
+      if (relatedSelectedElement) sorted.push(relatedSelectedElement);
+    });
+    return sorted;
+  }
+  return { sortElements };
 }

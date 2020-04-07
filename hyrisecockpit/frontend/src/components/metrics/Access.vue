@@ -1,15 +1,16 @@
 <template>
   <div>
-    <div class="mt-12">
+    <div>
       <metric-detailed-view>
         <template #header>
           Access Frequency
         </template>
         <template #content>
           <v-select
+            :id="'1' + 'access-select'"
             v-model="selectedTable"
-            :items="tables"
             class="select"
+            :items="tables"
             chips
             label="table"
             outlined
@@ -25,14 +26,14 @@
         </template>
       </metric-detailed-view>
       <v-select
+        :id="'2' + 'access-select'"
         v-model="selectedTable"
-        :items="tables"
         class="select"
+        :items="tables"
         chips
         label="table"
         outlined
         prepend-icon="mdi-table"
-        width="100"
       />
       <Heatmap
         :graph-id="'2' + graphId || 'access'"

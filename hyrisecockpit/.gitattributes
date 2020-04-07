@@ -1,5 +1,0 @@
-# Exclude workload queries from Repo statistics 
-# https://github.com/github/linguist#using-gitattributes
-
-special-vendored-path/* linguist-vendored
-*.sql -linguist-vendored

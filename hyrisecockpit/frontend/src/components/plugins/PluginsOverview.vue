@@ -16,7 +16,9 @@
     >
       <v-expansion-panel v-for="database in databases" :key="database">
         <v-expansion-panel-header class="title">
-          {{ database }}
+          <v-list-item class="item">
+            <database-chip :database-id="database" />
+          </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div v-for="plugin in plugins" :key="plugin">
@@ -32,6 +34,7 @@
                 @change="onClickPluginSwitch(database, plugin)"
               />
               <v-btn
+                :id="`${plugin}-change-button`"
                 v-if="canSettingsBeChanged(database, plugin)"
                 @click="toggleSettingsView(database, plugin)"
                 text
@@ -41,17 +44,20 @@
                 </v-icon>
               </v-btn>
             </div>
-            <div
-              v-for="setting in pluginSettings[database][plugin]"
-              :key="setting.name"
-            >
-              <PluginSetting
-                v-if="showSettings[database + '_' + plugin]"
-                :setting="setting"
-                :databaseId="database"
-                :pluginId="plugin"
-              />
-            </div>
+            <v-expand-transition>
+              <div v-if="showSettings[database + '_' + plugin]">
+                <div
+                  v-for="setting in pluginSettings[database][plugin]"
+                  :key="setting.name"
+                >
+                  <PluginSetting
+                    :setting="setting"
+                    :databaseId="database"
+                    :pluginId="plugin"
+                  />
+                </div>
+              </div>
+            </v-expand-transition>
           </div>
           <PluginsLog :logText="pluginLogs[database]" />
         </v-expansion-panel-content>
@@ -74,6 +80,7 @@ import { Database } from "../../types/database";
 import PluginsLog from "./PluginsLog.vue";
 import PluginSetting from "./PluginSetting.vue";
 import useDragElement from "../../meta/draggable";
+import DatabaseChip from "../details/DatabaseChip.vue";
 
 interface Props {
   onClose: () => void;
@@ -101,7 +108,8 @@ export default defineComponent({
   name: "PluginOverview",
   components: {
     PluginsLog,
-    PluginSetting
+    PluginSetting,
+    DatabaseChip
   },
   props: {
     onClose: {
@@ -138,6 +146,7 @@ export default defineComponent({
     ): boolean {
       return (
         activePlugins.value.find(x => x === databseId + "_" + pluginId) &&
+        pluginSettings.value[databseId] &&
         pluginSettings.value[databseId][pluginId]
       );
     }
@@ -195,7 +204,8 @@ export default defineComponent({
 }
 .plugin-overview {
   position: fixed;
-  top: 70px;
+  top: 20px;
+  right: 10px;
   z-index: 11;
   width: 500px;
 }
@@ -207,5 +217,8 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.item {
+  padding: 0px;
 }
 </style>

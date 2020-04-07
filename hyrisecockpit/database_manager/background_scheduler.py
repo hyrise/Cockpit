@@ -3,8 +3,8 @@
 from copy import deepcopy
 from json import dumps
 from multiprocessing import Process, Value
-from time import time_ns
-from typing import Dict, List, Optional, Tuple, Union
+from time import time, time_ns
+from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from pandas import DataFrame
@@ -14,6 +14,34 @@ from psycopg2.extensions import AsIs
 
 from .cursor import PoolCursor, StorageCursor
 from .table_names import table_names as _table_names
+from .worker_pool import WorkerPool
+
+
+class Encoding(TypedDict):
+    """Type of an encoding in a storage dictionary."""
+
+    name: str
+    amount: int
+    compression: List[str]
+
+
+class ColumnData(TypedDict):
+    """Type of column data in a storage dictionary."""
+
+    size: int
+    data_type: str
+    encoding: List[Encoding]
+
+
+class TableData(TypedDict):
+    """Type of table data in a storage dictionary."""
+
+    size: int
+    number_columns: int
+    data: Dict[str, ColumnData]
+
+
+StorageDataType = Dict[str, TableData]
 
 
 class BackgroundJobManager(object):
@@ -25,6 +53,7 @@ class BackgroundJobManager(object):
         database_blocked: Value,
         connection_pool: pool,
         loaded_tables: Dict[str, Optional[str]],
+        worker_pool: WorkerPool,
         storage_host: str,
         storage_password: str,
         storage_port: str,
@@ -34,6 +63,7 @@ class BackgroundJobManager(object):
         self._database_id: str = database_id
         self._database_blocked: Value = database_blocked
         self._connection_pool: pool = connection_pool
+        self._worker_pool: WorkerPool = worker_pool
         self._storage_host: str = storage_host
         self._storage_password: str = storage_password
         self._storage_port: str = storage_port
@@ -60,6 +90,9 @@ class BackgroundJobManager(object):
         self._update_plugin_log_job = self._scheduler.add_job(
             func=self._update_plugin_log, trigger="interval", seconds=1,
         )
+        self._update_queue_length_job = self._scheduler.add_job(
+            func=self._update_queue_length, trigger="interval", seconds=1,
+        )
 
     def start(self) -> None:
         """Start background scheduler."""
@@ -72,7 +105,22 @@ class BackgroundJobManager(object):
         self._update_chunks_data_job.remove()
         self._update_storage_data_job.remove()
         self._update_plugin_log_job.remove()
+        self._update_queue_length_job.remove()
         self._scheduler.shutdown()
+
+    def _update_queue_length(self) -> None:
+        queue_length: int = self._worker_pool.get_queue_length()
+        time_stamp: int = int(time()) * 1_000_000_000
+        with StorageCursor(
+            self._storage_host,
+            self._storage_port,
+            self._storage_user,
+            self._storage_password,
+            self._database_id,
+        ) as log:
+            log.log_meta_information(
+                "queue_length", {"queue_length": queue_length}, time_stamp,
+            )
 
     def _update_krueger_data(self) -> None:
         time_stamp = time_ns()
@@ -110,6 +158,41 @@ class BackgroundJobManager(object):
         else:
             with PoolCursor(self._connection_pool) as cur:
                 return read_sql_query(sql, cur.connection)
+
+    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
+        """Calculate difference base - substractor."""
+        for table_name in base.keys():
+            if table_name in substractor.keys():
+                for column_name in base[table_name].keys():
+                    if column_name in substractor[table_name].keys():
+                        if len(base[table_name][column_name]) == len(
+                            substractor[table_name][column_name]
+                        ):
+                            base[table_name][column_name] = [
+                                base[table_name][column_name][i]
+                                - substractor[table_name][column_name][i]
+                                for i in range(len(base[table_name][column_name]))
+                            ]
+        return base
+
+    def _create_chunks_dictionary(
+        self, meta_segments: DataFrame
+    ) -> Dict:  # TODO refactoring
+        chunks_data: Dict = {}
+        grouped_tables = meta_segments.reset_index().groupby("table_name")
+
+        for table_name in grouped_tables.groups:
+            chunks_data[table_name] = {}
+            table = grouped_tables.get_group(table_name)
+            grouped_columns = table.reset_index().groupby("column_name")
+
+            for column_name in grouped_columns.groups:
+                column = grouped_columns.get_group(column_name)
+                access_data = []
+                for _, row in column.iterrows():
+                    access_data.append(row["access_count"])
+                chunks_data[table_name][column_name] = access_data
+        return chunks_data
 
     def _update_chunks_data(self) -> None:
         """Update chunks data for database instance."""
@@ -161,67 +244,35 @@ class BackgroundJobManager(object):
         ) as log:
             log.log_plugin_log(plugin_log)
 
-    def _calculate_chunks_difference(self, base: Dict, substractor: Dict) -> Dict:
-        """Calculate difference base - substractor."""
-        for table_name in base.keys():
-            if table_name in substractor.keys():
-                for column_name in base[table_name].keys():
-                    if column_name in substractor[table_name].keys():
-                        if len(base[table_name][column_name]) == len(
-                            substractor[table_name][column_name]
-                        ):
-                            base[table_name][column_name] = [
-                                base[table_name][column_name][i]
-                                - substractor[table_name][column_name][i]
-                                for i in range(len(base[table_name][column_name]))
-                            ]
-        return base
-
-    def _create_chunks_dictionary(self, meta_segments: DataFrame) -> Dict:
-        chunks_data: Dict = {}
-        grouped_tables = meta_segments.reset_index().groupby("table_name")
-
-        for table_name in grouped_tables.groups:
-            chunks_data[table_name] = {}
-            table = grouped_tables.get_group(table_name)
-            grouped_columns = table.reset_index().groupby("column_name")
-
-            for column_name in grouped_columns.groups:
-                column = grouped_columns.get_group(column_name)
-                access_data = []
-                for _, row in column.iterrows():
-                    access_data.append(row["access_count"])
-                chunks_data[table_name][column_name] = access_data
-        return chunks_data
+    def _create_system_data_dict(
+        self, utilization_df, system_df, database_threads: int
+    ) -> Dict[str, Union[int, float]]:
+        return {
+            "cpu_system_usage": float(utilization_df["cpu_system_usage"][0]),
+            "cpu_process_usage": float(utilization_df["cpu_process_usage"][0]),
+            "cpu_count": int(system_df["cpu_count"][0]),
+            "cpu_clock_speed": int(system_df["cpu_clock_speed"][0]),
+            "free_memory": int(utilization_df["system_memory_free_bytes"][0]),
+            "used_memory": int(utilization_df["process_physical_memory_bytes"][0]),
+            "total_memory": int(system_df["system_memory_total_bytes"][0]),
+            "database_threads": database_threads,
+        }
 
     def _update_system_data(self) -> None:
         """Update system data for database instance."""
-        time_stamp = time_ns()
+        utilization_df = self._sql_to_data_frame(
+            "SELECT * FROM meta_system_utilization;"
+        )
+        system_df = self._sql_to_data_frame("SELECT * FROM meta_system_information;")
 
-        system_utilization_sql = "SELECT * FROM meta_system_utilization;"
-        utilization_segments = self._sql_to_data_frame(system_utilization_sql)
-
-        system_information_sql = "SELECT * FROM meta_system_information;"
-        system_segments = self._sql_to_data_frame(system_information_sql)
-
-        if utilization_segments.empty or system_segments.empty:
+        if utilization_df.empty or system_df.empty:
             return
 
-        cpu_data = {
-            "cpu_system_usage": float(utilization_segments["cpu_system_usage"][0]),
-            "cpu_process_usage": float(utilization_segments["cpu_process_usage"][0]),
-            "cpu_count": int(system_segments["cpu_count"][0]),
-            "cpu_clock_speed": int(system_segments["cpu_clock_speed"][0]),
-        }
-        memory_data: Dict[str, Union[int, float]] = {
-            "free": int(utilization_segments["system_memory_free_bytes"][0]),
-            "used": int(utilization_segments["process_physical_memory_bytes"][0]),
-            "total": int(system_segments["system_memory_total_bytes"][0]),
-        }
-
-        memory_data["percent"] = memory_data["used"] / memory_data["total"]
-
-        database_threads = "8"
+        mocked_database_threads = 16
+        system_data: Dict[str, Union[int, float]] = self._create_system_data_dict(
+            utilization_df, system_df, mocked_database_threads
+        )
+        time_stamp = int(time()) * 1_000_000_000
 
         with StorageCursor(
             self._storage_host,
@@ -230,12 +281,9 @@ class BackgroundJobManager(object):
             self._storage_password,
             self._database_id,
         ) as log:
-            system_data = {
-                "cpu": dumps(cpu_data),
-                "memory": dumps(memory_data),
-                "database_threads": database_threads,
-            }
-            log.log_meta_information("system_data", system_data, time_stamp)
+            log.log_meta_information(
+                "system_data", system_data, time_stamp,
+            )
 
     def _create_storage_data_dataframe(self, meta_segments: DataFrame) -> DataFrame:
         meta_segments.set_index(
@@ -249,30 +297,47 @@ class BackgroundJobManager(object):
             .sum()
         )
 
+        vector_compression_type = DataFrame(
+            meta_segments["vector_compression_type"]
+            .groupby(level=["table_name", "column_name"])
+            .apply(set)
+            .apply(list)
+        )
+
         encoding: DataFrame = DataFrame(
             meta_segments["encoding_type"]
             .groupby(level=["table_name", "column_name"])
-            .apply(set)
+            .apply(list)
         )
-        encoding["encoding_type"] = encoding["encoding_type"].apply(list)
+
+        combined_encoding = encoding.join(vector_compression_type)
+
+        for _, row in combined_encoding.iterrows():
+            row["encoding_type"] = [
+                {
+                    "name": encoding,
+                    "amount": row["encoding_type"].count(encoding),
+                    "compression": row["vector_compression_type"],
+                }
+                for encoding in set(row["encoding_type"])
+            ]
+
         datatype: DataFrame = meta_segments.reset_index().set_index(
             ["table_name", "column_name"]
         )[["column_data_type"]]
 
-        result: DataFrame = size.join(encoding).join(datatype)
+        result: DataFrame = size.join(combined_encoding).join(datatype)
         return result
 
-    def _create_storage_data_dictionary(self, result: DataFrame) -> Dict:
+    def _create_storage_data_dictionary(self, result: DataFrame) -> StorageDataType:
         """Sort storage data to dictionary."""
-        output: Dict = {}
+        output: StorageDataType = {}
         grouped = result.reset_index().groupby("table_name")
         for column in grouped.groups:
             output[column] = {"size": 0, "number_columns": 0, "data": {}}
             for _, row in grouped.get_group(column).iterrows():
-                output[column]["number_columns"] = output[column]["number_columns"] + 1
-                output[column]["size"] = (
-                    output[column]["size"] + row["estimated_size_in_bytes"]
-                )
+                output[column]["number_columns"] += 1
+                output[column]["size"] += row["estimated_size_in_bytes"]
                 output[column]["data"][row["column_name"]] = {
                     "size": row["estimated_size_in_bytes"],
                     "data_type": row["column_data_type"],
@@ -313,16 +378,20 @@ class BackgroundJobManager(object):
             for name in table_names
         ]
 
-    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
-        query, not_formatted_parameters = query_tuple
+    def _format_query_parameters(self, parameters) -> Optional[Tuple[Any, ...]]:
         formatted_parameters = (
             tuple(
                 AsIs(parameter) if protocol == "as_is" else parameter
-                for parameter, protocol in not_formatted_parameters
+                for parameter, protocol in parameters
             )
-            if not_formatted_parameters is not None
+            if parameters is not None
             else None
         )
+        return formatted_parameters
+
+    def _execute_table_query(self, query_tuple: Tuple, success_flag: Value,) -> None:
+        query, parameters = query_tuple
+        formatted_parameters = self._format_query_parameters(parameters)
         with PoolCursor(self._connection_pool) as cur:
             try:
                 cur.execute(query, formatted_parameters)
@@ -336,7 +405,6 @@ class BackgroundJobManager(object):
             Process(target=self._execute_table_query, args=(query, success_flag),)
             for query, success_flag in zip(queries, success_flags)
         ]
-
         for process in processes:
             process.start()
         for process in processes:
@@ -354,15 +422,15 @@ class BackgroundJobManager(object):
         self._execute_queries_parallel(table_names, table_loading_queries, folder_name)
         self._database_blocked.value = False
 
-    def _get_load_table_names(self, benchmark_variation: str):
+    def _get_load_table_names(self, workload_type: str):
         """Get table names to load."""
         table_names = []
-        full_table_names = _table_names.get(benchmark_variation.split("_")[0])
+        full_table_names = _table_names.get(workload_type.split("_")[0])
         if full_table_names is not None:
             table_names = [
                 table_name
                 for table_name in full_table_names
-                if self._loaded_tables[table_name] != benchmark_variation
+                if self._loaded_tables[table_name] != workload_type
             ]
         return table_names
 
@@ -371,7 +439,7 @@ class BackgroundJobManager(object):
         if self._database_blocked.value:
             return False
 
-        table_names = self._get_load_table_names(folder_name)
+        table_names = self._get_load_table_names(workload_type=folder_name)
         if not table_names:
             return True
 
@@ -413,23 +481,21 @@ class BackgroundJobManager(object):
             return False
 
     def _get_existing_tables(self, table_names: List[str]) -> Dict:
-        """Check wich tables exists and which not."""
-        existing_tables = []
-        not_existing_tables = []
+        """Check which tables exists and which not."""
+        existing_tables: List = []
+        not_existing_tables: List = []
         with PoolCursor(self._connection_pool) as cur:
+            cur.execute("SELECT table_name FROM meta_tables;", None)
+            results = cur.fetchall()
+            loaded_tables = [row[0] for row in results]
             for name in table_names:
-                cur.execute(
-                    "SELECT table_name FROM meta_tables WHERE table_name=%s;", (name,)
-                )
-                if cur.fetchone():
+                if name in loaded_tables:
                     existing_tables.append(name)
                     continue
                 not_existing_tables.append(name)
         return {"existing": existing_tables, "not_existing": not_existing_tables}
 
-    def _generate_table_drop_queries(
-        self, table_names: List[str], folder_name: str
-    ) -> List[Tuple]:
+    def _generate_table_drop_queries(self, table_names: List[str]) -> List[Tuple]:
         # TODO folder_name is unused? This deletes all tables
         """Generate queries in tuple form that drop tables."""
         return [
@@ -437,9 +503,9 @@ class BackgroundJobManager(object):
             for name in self._get_existing_tables(table_names)["existing"]
         ]
 
-    def _delete_tables_job(self, table_names: List[str], folder_name: str) -> None:
+    def _delete_tables_job(self, table_names: List[str]) -> None:
         """Delete tables."""
-        table_drop_queries = self._generate_table_drop_queries(table_names, folder_name)
+        table_drop_queries = self._generate_table_drop_queries(table_names)
         self._execute_queries_parallel(table_names, table_drop_queries, None)
         self._database_blocked.value = False
 
@@ -461,7 +527,5 @@ class BackgroundJobManager(object):
             return True
 
         self._database_blocked.value = True
-        self._scheduler.add_job(
-            func=self._delete_tables_job, args=(table_names, folder_name,)
-        )
+        self._scheduler.add_job(func=self._delete_tables_job, args=(table_names,))
         return True

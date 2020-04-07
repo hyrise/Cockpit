@@ -128,11 +128,51 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
   ];
 
   function getRoundedData(value: number): number {
-    return roundNumber(value, 100, 1 / Math.pow(10, 4), false);
+    return roundNumber(value, 1000, 1 / Math.pow(10, 3), false);
   }
 
   function getPercentage(part: number, total: number): number {
     return roundNumber(part / total, 100, Math.pow(10, 4), false);
+  }
+
+  function getEncodingData(rawData: any): string {
+    const totalAmount = rawData.reduce(
+      (accumulator: number, currentEncoding: any) =>
+        accumulator + currentEncoding.amount,
+      0
+    );
+    return rawData.reduce(
+      (
+        encodingText: string,
+        currentEncoding: any,
+        encodingIndex: number,
+        encodingArray: [any]
+      ) => {
+        const compressionText = currentEncoding.compression.reduce(
+          (
+            text: string,
+            compression: string,
+            compressionIndex: number,
+            compressionArray: [number]
+          ) =>
+            text +
+            compression +
+            (compressionIndex === compressionArray.length - 1 ? "" : ",<br>"),
+          ""
+        );
+        return (
+          encodingText +
+          "<br> " +
+          getPercentage(currentEncoding.amount, totalAmount) +
+          "%: " +
+          currentEncoding.name +
+          "<br> (" +
+          compressionText +
+          (encodingIndex === encodingArray.length - 1 ? ")" : ")<br>")
+        );
+      },
+      ""
+    );
   }
 
   Object.entries(data[primaryKey]).forEach(
@@ -148,7 +188,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           getTableMemoryFootprint(tableData.data),
           totalDatabaseMemory
         )} % of total footprint`,
-        percentOfTable: `100% of ${table}`
+        percentOfTable: `100 % of ${table}`
       });
       Object.entries(tableData.data).forEach(
         ([attribute, attributeData]: [string, any]) => {
@@ -158,7 +198,7 @@ function getStorageData(data: any, primaryKey: string = ""): StorageData {
           sizes.push(getRoundedData(attributeData.size));
           descriptions.push({
             size: `${getRoundedData(attributeData.size)} MB`,
-            encoding: `encoding: ${attributeData.encoding}`,
+            encoding: `encoding: ${getEncodingData(attributeData.encoding)}`,
             dataType: `data type: ${attributeData.data_type}`,
             percentOfDatabase: `${getPercentage(
               getRoundedData(attributeData.size),
@@ -244,7 +284,12 @@ export function useDataTransformationHelpers(): {
       memory.push(getTableMemoryFootprint(tableData.data));
     });
 
-    return memory.reduce((total, tableMemory) => total + tableMemory, 0);
+    return roundNumber(
+      memory.reduce((total, tableMemory) => total + tableMemory, 0),
+      Math.pow(10, 3),
+      Math.pow(10, 3),
+      false
+    );
   }
   function getDatabaseMainMemoryCapacity(data: any): number {
     return roundNumber(
@@ -258,5 +303,71 @@ export function useDataTransformationHelpers(): {
     getDatabaseMemoryFootprint,
     getDatabaseMainMemoryCapacity,
     getTableMemoryFootprint
+  };
+}
+
+export function usePluginTransformationSevice(): any {
+  const { formatDateToHHMMSS } = useFormatting();
+
+  function getActivePluginData(data: any): any {
+    return data.reduce((result: string[], currentDatabase: any) => {
+      return currentDatabase.plugins
+        ? [
+            ...result,
+            ...currentDatabase.plugins.map(
+              (plugin: string) =>
+                currentDatabase.id + "_" + plugin.replace("Plugin", "")
+            )
+          ]
+        : result;
+    }, []);
+  }
+
+  function getPluginLogsData(data: any): any {
+    return data.reduce((result: any, currentDatabase: any) => {
+      result[currentDatabase.id] = currentDatabase.plugin_log.reduce(
+        (databaseLog: string, currentLog: any) => {
+          return (
+            databaseLog +
+            `${currentLog.reporter} [${formatDateToHHMMSS(
+              new Date(parseInt(currentLog.timestamp))
+            )}]: ${currentLog.message}\n`
+          );
+        },
+        ""
+      );
+      return result;
+    }, {});
+  }
+
+  function getPluginSettingsData(data: any): any {
+    return data.reduce((result: any, currentDatabase: any) => {
+      const allDatabaseSettings =
+        currentDatabase.plugin_settings &&
+        currentDatabase.plugin_settings.reduce(
+          (allSettings: any, currentSetting: any) => {
+            const pluginName = currentSetting.name.substring(
+              0,
+              currentSetting.name.indexOf("Plugin")
+            );
+            allSettings[pluginName]
+              ? (allSettings[pluginName] = [
+                  ...allSettings[pluginName],
+                  currentSetting
+                ])
+              : (allSettings[pluginName] = [currentSetting]);
+            return allSettings;
+          },
+          {}
+        );
+      result[currentDatabase.id] = allDatabaseSettings;
+      return result;
+    }, {});
+  }
+
+  return {
+    getActivePluginData,
+    getPluginLogsData,
+    getPluginSettingsData
   };
 }

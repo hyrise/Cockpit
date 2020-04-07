@@ -33,7 +33,7 @@ class ArgumentValidation:
         self._workloads = ["tpch_0.1", "tpch_1", "tpcds_1", "job", "no-ops", "none"]
         self._table_names = ["tpch_0.1", "tpch_1", "tpcds_1", "none", "workload"]
         self._databases = ["db1", "db2", "none"]
-        self._plugins = ["wrk", "displayReply"]
+        self._plugins = ["wrk", "displayReply", "multiProcessWrk"]
         self._close_argumernts = ["workload", "database", "none"]
         self._validate_calls = {
             "end_points": self._validate_enpoints,

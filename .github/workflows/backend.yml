@@ -23,4 +23,4 @@ jobs:
         pipenv run pre-commit run --all-files
     - name: Run all python tests
       run: |
-        pipenv run pytest tests/
+        pipenv run pytest tests/ --cov=hyrisecockpit --cov-fail-under=58
