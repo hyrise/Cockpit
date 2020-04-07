@@ -10,7 +10,7 @@ import {
 } from "./helpers";
 import { clickContentOfSelect } from "../helpers";
 
-const backend = useBackendMock({ databases: 2 });
+const backend = useBackendMock();
 
 let databases: any[] = [];
 let data: any = {};
@@ -51,7 +51,6 @@ describe("Show access", () => {
         getViewSelector("comparisonButton"),
         getRoute("comparison")
       );
-      cy.wait(1000);
       cy.wait("@" + getGetAlias("chunks"));
       cy.get("@" + getGetAlias("chunks")).should((xhr: any) => {
         data = xhr.response.body.body.chunks_data;

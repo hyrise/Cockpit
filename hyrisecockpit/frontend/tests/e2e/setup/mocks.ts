@@ -159,7 +159,8 @@ export function useMocks(
   function mockPostCallbacks(): Partial<Record<Request, (id: string) => void>> {
     //TODO: add callbacks here
     const postCallbackMocks: Partial<Record<Request, (id: string) => void>> = {
-      database: callbacks.handleAddDatabase
+      database: callbacks.handleAddDatabase,
+      plugin: callbacks.handleAddActivePlugin
     };
 
     return postCallbackMocks;
@@ -173,7 +174,8 @@ export function useMocks(
       Request,
       (id: string) => void
     >> = {
-      database: callbacks.handleRemoveDatabase
+      database: callbacks.handleRemoveDatabase,
+      plugin: callbacks.handleRemoveActivePlugin
     };
 
     return deleteCallbackMocks;
