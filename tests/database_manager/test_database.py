@@ -5,7 +5,7 @@ from multiprocessing.sharedctypes import Synchronized as ValueType
 from typing import Any, Dict, List, Optional
 from unittest.mock import MagicMock, patch
 
-from psycopg2 import DatabaseError, InterfaceError, pool, Error
+from psycopg2 import DatabaseError, Error, InterfaceError, pool
 from pytest import fixture, mark
 
 from hyrisecockpit.database_manager.database import Database
@@ -660,11 +660,10 @@ class TestDatabase(object):
 
         assert type(result) is list
         assert result[:] == expected[:]  # type: ignore
-        
-        
+
     @patch(
         "hyrisecockpit.database_manager.database.PoolCursor", get_mocked_pool_cursor,
-    )    
+    )
     @mark.parametrize(
         "exceptions", [DatabaseError(), InterfaceError()],
     )
@@ -775,8 +774,6 @@ class TestDatabase(object):
         mocked_pool_cur.execute.assert_not_called()
 
         reset_mocked_pool_cursor()
-        
-
 
     def test_closes_database(self, database: Database) -> None:
         """Test closing of database."""
