@@ -1,13 +1,14 @@
 """The database object represents the instance of a database."""
 
 from multiprocessing import Value
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 
 from psycopg2 import Error, pool
 
 from .background_scheduler import BackgroundJobManager
 from .cursor import PoolCursor, StorageCursor
 from .driver import Driver
+from .interfaces import SqlResultInterface
 from .table_names import table_names as _table_names
 from .worker_pool import WorkerPool
 
@@ -226,32 +227,28 @@ class Database(object):
         else:
             return None
 
-    def execute_sql_query(
-        self, query
-    ) -> Optional[Dict[str, Union[str, bool, List[List[str]]]]]:
+    def execute_sql_query(self, query) -> Optional[SqlResultInterface]:
         """Execute sql query on database."""
         if not self._database_blocked.value:
             try:
                 with PoolCursor(self._connection_pool) as cur:
                     cur.execute(query, None)
                     col_names = [col[0] for col in cur.cur.description]
-                    return {
-                        "id": self._id,
-                        "successful": True,
-                        "results": [
-                            [str(col) for col in row] for row in cur.fetchall()
-                        ],
-                        "col_names": col_names,
-                        "error_message": "",
-                    }
+                    return SqlResultInterface(
+                        id=self._id,
+                        successful=True,
+                        results=[[str(col) for col in row] for row in cur.fetchall()],
+                        col_names=col_names,
+                        error_message="",
+                    )
             except Error as e:
-                return {
-                    "id": self._id,
-                    "successful": False,
-                    "results": [],
-                    "col_names": [],
-                    "error_message": str(e),
-                }
+                return SqlResultInterface(
+                    id=self._id,
+                    successful=False,
+                    results=[],
+                    col_names=[],
+                    error_message=str(e),
+                )
         return None
 
     def close(self) -> None:
