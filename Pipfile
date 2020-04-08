@@ -35,8 +35,10 @@ apscheduler = "*"
 jsonschema = "*"
 influxdb = "*"
 flask-restx = "*"
-werkzeug = "==0.16.1"
 iso8601 = "*"
+werkzeug = "==0.16"
+flask-accepts = "*"
+marshmallow = "*"
 
 [requires]
 python_version = "3.8.2"

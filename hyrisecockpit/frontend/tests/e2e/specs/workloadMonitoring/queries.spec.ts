@@ -4,7 +4,7 @@ import { getGetAlias, generateRandomInt } from "../../setup/helpers";
 import { getSelector as getViewSelector, getRoute } from "../views/helpers";
 import { getSelector, assertQueryData } from "./helpers";
 
-const backend = useBackendMock({ databases: 2 });
+const backend = useBackendMock();
 
 let databases: any[] = [];
 let data: any = [];
