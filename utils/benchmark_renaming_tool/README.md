@@ -12,6 +12,7 @@ Please use this tool at the top level `Cockpit/`
 
 ```python -m utils.benchmark_renaming_tool.rename_tables -w tpch -s 1```
 
+If you want to use a scale of 0.1 please define the argument as 0_1. 
 
 ```
 Replace tpch tables to scale 1
@@ -76,5 +77,5 @@ Secondly, add the new workload to `utils.benchmark_renaming_tool.rename_argument
 
 ```python 
 self._workloads = ["tpch", "tpcds", "job", "your_new_benchmark"]
-self._scale = {"tpch": ["0.1", "1"], "tpcds": ["1"], "job": ["1"], "your_new_benchmark": ["42", "1"]}
+self._scale = {"tpch": ["0_1", "1"], "tpcds": ["1"], "job": ["1"], "your_new_benchmark": ["42", "1"]}
 ```

@@ -15,7 +15,7 @@ class ArgumentParser:
             formatter_class=argparse.ArgumentDefaultsHelpFormatter
         )
         self._workloads = ["tpch", "tpcds", "job"]
-        self._scale = {"tpch": ["0.1", "1"], "tpcds": ["1"], "job": ["1"]}
+        self._scale = {"tpch": ["0_1", "1"], "tpcds": ["1"], "job": ["1"]}
         self.default_path_to_queries = (
             getcwd() + "/hyrisecockpit/workload_generator/workloads/workload_queries"
         )
@@ -43,7 +43,7 @@ class ArgumentParser:
             + dumps(self._scale),
         )
         self.parser.add_argument(
-            "--sourc",
+            "--source",
             "-sc",
             dest="source",
             metavar="",
